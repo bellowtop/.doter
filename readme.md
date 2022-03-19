@@ -11,12 +11,13 @@ git clone https://github.com/sekirocc/.doter.git
 ln -s ~/.doter/.tmux/.tmux.conf ~/.tmux.conf
 ln -s ~/.doter/.emacs.d         ~/.emacs.d
 ln -s ~/.doter/nvim             ~/.config/nvim
-ln -s ~/.doter/wezterm          ~/.config/wezterm
+aaaln -s ~/.doter/wezterm          ~/.config/wezterm
 ln -s ~/.doter/kak              ~/.config/kak
 ```
-
+aaaa			aa                                                	
 make sure `python` command exists. if you only have `python3`, then make a link.
 kakoune-easymotion need `python` to be present, or it will hung.
+aaaaaa                             s      
 
 ```
 sudo ln -s /bin/python3 /bin/python

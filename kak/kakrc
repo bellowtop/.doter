@@ -19,9 +19,36 @@ map global select-mode <space> <space> -docstring '<space>'
 colorscheme dracula
 add-highlighter global/ number-lines
 add-highlighter global/ show-whitespaces -tab "▏" -lf " " -nbsp "⋅" -spc " "
+add-highlighter global/show-trailing-whitespaces regex '\h+$' 0:Error
+
 
 def file-find -params 1 -shell-script-candidates %{ find . -type f } %{ edit %arg{1} }
-map -docstring "file" global goto 'f' '<esc>: file-find '
+map global goto 'f' '<esc>: file-find '  -docstring 'jump back'
+
+
+
+
+
+# Custom plugin loading.
+# 
+# to ease development of plugins
+# try to load from cwd, otherwise load from config
+# potentially dangerous
+# also not ideal since errors from sourcing are silenced
+def -hidden source-here-or-in -params 2 %{
+     try %{ source "%arg{1}" } catch %{ source "%arg{2}/%arg{1}" }
+}
+
+# loading surround
+source-here-or-in   surround.kak               "%val{config}"
+source-here-or-in   expand-tabs.kak               "%val{config}"
+
+map global user s       ': surround-lock <ret>' 		-docstring 'surround-lock selections'
+map global user t       ': expandtab <ret>' 			-docstring 'set expand tabs'
+map global user R       ': replace-tabs-to-spaces <ret>' 	-docstring 'replace tabs to spaces'
+map global user T       ': remove-trailing-spaces <ret>' 	-docstring 'remove trailing spaces'
+
+
 
 
 
@@ -36,6 +63,13 @@ map -docstring "file" global goto 'f' '<esc>: file-find '
 
 
 
+# c d never yank!
+map global normal c       '<a-c>'
+map global normal <a-c>   'c'
+map global normal d       '<a-d>'
+map global normal <a-d>   'd'
+
+
 
 map global normal \; <c-d>
 map global normal \' <c-u>
@@ -46,8 +80,18 @@ map global normal <a-.> '\<tab>' -docstring 'jump forward'
 
 set-option global grepcmd 'rg -C 3 --column'
 
-map global select-mode g ':grep '   -docstring 'grep in project'
+map global select-mode g ':grep '       -docstring 'grep in project'
 map global select-mode w ':write<ret>'  -docstring 'save buffer'
+
+
+
+plug "alexherbo2/auto-pairs.kak" config %{
+    set-option global auto_pairs ( ) { } [ ] '"' '"' "'" "'" ` ` “ ” ‘ ’ « » ‹ ›
+    evaluate-commands 'enable-auto-pairs'
+}
+
+
+
 
 
 
@@ -91,6 +135,11 @@ plug "https://gitlab.com/fsub/kakoune-mark" %{
 }
 
 
+
+
+plug "occivink/kakoune-expand" config %{
+    map global user e ': expand<ret>' -docstring "expand"
+}
 
 
 
@@ -178,6 +227,7 @@ map global normal <a-f> %{:easy-motion-b<ret>} -docstring "Easy motion backward"
 
 
 
+
 # ==============================================================================
 # EXAMPLES
 # ==============================================================================
@@ -187,7 +237,7 @@ map global normal <a-f> %{:easy-motion-b<ret>} -docstring "Easy motion backward"
 # PARAGRAPH
 # ==============================================================================
 declare-user-mode paragraph
-declare-option str 'paragraph_select' '<a-a>pj[p'
+declare-option str 'paragraph_select' '<a-i>pj[p'
 map global select-mode p "%opt{paragraph_select}: enter-user-mode -lock paragraph<ret>" -docstring 'paragraph'
 map global paragraph L '>'                              -docstring 'move left'
 map global paragraph H '<'                              -docstring 'move right'
@@ -197,7 +247,7 @@ map global paragraph j "]p%opt{paragraph_select}"       -docstring 'select down'
 map global paragraph k "[p%opt{paragraph_select}"       -docstring 'select up'
 map global paragraph d "d%opt{paragraph_select}"        -docstring 'delete'
 map global paragraph y y                                -docstring 'yank'
-map global paragraph q '<esc>'
+map global paragraph q ': fail<ret>'                    -docstring 'quit'
 
 
 # ==============================================================================
@@ -213,7 +263,7 @@ map global line j 'jgllGh'     -docstring 'select down'
 map global line k 'kgllGh'     -docstring 'select up'
 map global line d d            -docstring 'delete'
 map global line y y            -docstring 'yank'
-map global line q '<esc>'
+map global line q ': fail<ret>'                    -docstring 'quit'
 
 # ==============================================================================
 # Window
@@ -227,5 +277,11 @@ map global window l ':tmux-repl-impl select-pane -R<ret>'  -docstring 'Select ri
 map global window q ':tmux-repl-impl kill-pane<ret>'       -docstring 'Select right pane'
 map global window v ':tmux-terminal-horizontal kak -c %val{session}<ret>'       -docstring 'Select right pane'
 map global window s ':tmux-terminal-vertical   kak -c %val{session}<ret>'       -docstring 'Select right pane'
+
+
+
+
+
+
 
 
