@@ -12,3 +12,17 @@ ln -s .doter/nvim 		.config/nvim
 ln -s .doter/wezterm 		.config/wezterm
 ln -s .doter/kak 		.config/kak
 ```
+
+
+you may need to backup
+
+
+```
+cd ~ && mkdir -p ~/.dot_backup
+
+mv .tmux.conf         ~/.dot_backup
+mv .emacs.d           ~/.dot_backup
+mv .config/nvim       ~/.dot_backup
+mv .config/wezterm    ~/.dot_backup
+mv .config/kak        ~/.dot_backup
+```
