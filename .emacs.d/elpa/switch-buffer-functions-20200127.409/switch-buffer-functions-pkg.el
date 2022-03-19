@@ -1,0 +1,2 @@
+;;; Generated package description from switch-buffer-functions.el  -*- no-byte-compile: t -*-
+(define-package "switch-buffer-functions" "20200127.409" "Hook run when current buffer changed" 'nil :commit "95a846baa93bac4c3b3c028b9d53507f1042b23a" :authors '(("10sr <8slashes+el [at] gmail [dot] com>")) :maintainer '("10sr <8slashes+el [at] gmail [dot] com>") :keywords '("hook" "utility") :url "https://github.com/10sr/switch-buffer-functions-el")
