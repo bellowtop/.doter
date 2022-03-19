@@ -145,6 +145,24 @@ plug "occivink/kakoune-expand" config %{
 
 
 
+
+plug "andreyorst/kaktree" config %{
+    hook global WinSetOption filetype=kaktree %{
+        remove-highlighter buffer/numbers
+        remove-highlighter buffer/matching
+        remove-highlighter buffer/wrap
+        remove-highlighter buffer/show-whitespaces
+    }
+    kaktree-enable
+}
+map global select-mode n :kaktree-toggle<ret> -docstring 'toggle file tree'
+
+
+
+
+
+
+
 plug "sekirocc/visual-mode.kak" demand visual-mode %{
     map global visual-mode G 'Ge'
     map global visual-mode H <a-H>
