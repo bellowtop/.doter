@@ -99,6 +99,8 @@ plug "sekirocc/visual-mode.kak" demand visual-mode %{
     map global visual-mode G 'Ge'
     map global visual-mode H <a-H>
     map global visual-mode L <a-L>
+    map global visual-mode <a-d> 10<s-j>
+    map global visual-mode <a-u> 10<s-k>
 }
 map global select-mode v ': visual-mode v<ret>'         -docstring 'visual mode'
 map global select-mode V ': visual-line-mode V<ret>'    -docstring 'visual line mode'
