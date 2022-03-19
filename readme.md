@@ -14,10 +14,9 @@ ln -s ~/.doter/nvim             ~/.config/nvim
 aaaln -s ~/.doter/wezterm          ~/.config/wezterm
 ln -s ~/.doter/kak              ~/.config/kak
 ```
-aaaa			aa                                                	
+
 make sure `python` command exists. if you only have `python3`, then make a link.
 kakoune-easymotion need `python` to be present, or it will hung.
-aaaaaa                             s      
 
 ```
 sudo ln -s /bin/python3 /bin/python

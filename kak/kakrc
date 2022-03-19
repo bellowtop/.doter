@@ -114,10 +114,11 @@ map global select-mode f ': fzf-mode<ret>' -docstring "fzf mode"
 
 
 plug 'delapouite/kakoune-buffers' %{
-  map global normal ^ q
-  map global normal <a-^> Q
-  map global normal q ': enter-buffers-mode<ret>' -docstring 'buffers'
-  map global normal Q ': enter-user-mode -lock buffers<ret>' -docstring 'buffers (lock)'
+  map global normal ^ t
+  map global normal <a-^> T
+  map global normal t ': enter-buffers-mode<ret>' -docstring 'buffers'
+  map global normal T ': enter-user-mode -lock buffers<ret>' -docstring 'buffers (lock)'
+  map global buffers t ': pick-buffers<ret>' -docstring 'pick buffers'
 }
 
 
