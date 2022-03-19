@@ -1,11 +1,11 @@
 ## Credit
+
 initially copy from [dotfiles](https://github.com/bew/dotfiles.git)
 
 ## Usage
 
-```
-git clone https://github.com/sekirocc/wezterm.git ~/.config  
-```
+I lives in `~/.config/wezterm`
+
 
 ## config for wezterm
 

@@ -1,6 +1,8 @@
 
 ## Installation
 
+I lives in `~/.config/nvim`
+
 NeoVim configuration, use vim-plug to manage plugins.
 
 ```

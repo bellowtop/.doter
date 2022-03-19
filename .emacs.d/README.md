@@ -1,9 +1,6 @@
 # install
 
-cd ~
-
-git clone https://github.com/sekirocc/.emacs.d.git
-
+I lives in `~/.emacs.d`
 
 ## dependency packages(binaries)
 
@@ -14,5 +11,6 @@ rtags
 
 ripgrep
 
+```
 
 

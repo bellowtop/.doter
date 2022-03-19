@@ -2,10 +2,14 @@ source "%val{config}/plugins/plug.kak/rc/plug.kak"
 plug "andreyorst/plug.kak" noload
 
 # set global idle_timeout 50
+set -add global ui_options terminal_enable_mouse=false
+set -add global ui_options terminal_assistant=none
+set -add global startup_info_version 20330413
+
 
 # ==============================================================================
 # DEFINE SELECT MODE
-# ==============================================================================
+#k ==============================================================================
 declare-user-mode select-mode
 map global normal <space> ': enter-user-mode select-mode<ret>'
 map global select-mode <space> <space> -docstring '<space>'
@@ -33,10 +37,6 @@ map -docstring "file" global goto 'f' '<esc>: file-find '
 
 
 
-set -add global ui_options terminal_enable_mouse=false
-set -add global ui_options terminal_assistant=none
-set -add global startup_info_version 20330413
-
 map global normal \; <c-d>
 map global normal \' <c-u>
 
@@ -47,7 +47,7 @@ map global normal <a-.> '\<tab>' -docstring 'jump forward'
 set-option global grepcmd 'rg -C 3 --column'
 
 map global select-mode g ':grep '   -docstring 'grep in project'
-map global select-mode s ':write<ret>'  -docstring 'save buffer'
+map global select-mode w ':write<ret>'  -docstring 'save buffer'
 
 
 
@@ -86,8 +86,8 @@ plug "occivink/kakoune-find"
 
 
 plug "https://gitlab.com/fsub/kakoune-mark" %{
-    map global select-mode m :mark-word<ret>
-    map global select-mode c :mark-clear<ret>
+    map global select-mode m :mark-word<ret> -docstring 'mark word'
+    map global select-mode c :mark-clear<ret> -docstring 'mark clear'
 }
 
 
@@ -219,7 +219,7 @@ map global line q '<esc>'
 # Window
 # ==============================================================================
 declare-user-mode window
-map global select-mode w ': enter-user-mode window<ret>' -docstring 'window'
+map global user w ': enter-user-mode window<ret>' -docstring 'window'
 map global window h ':tmux-repl-impl select-pane -L<ret>'  -docstring 'Select left pane'
 map global window j ':tmux-repl-impl select-pane -D<ret>'  -docstring 'Select below pane'
 map global window k ':tmux-repl-impl select-pane -U<ret>'  -docstring 'Select above pane'
