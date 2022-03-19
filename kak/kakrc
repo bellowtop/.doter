@@ -30,7 +30,7 @@ map global goto 'f' '<esc>: file-find '  -docstring 'jump back'
 
 
 # Custom plugin loading.
-# 
+#
 # to ease development of plugins
 # try to load from cwd, otherwise load from config
 # potentially dangerous
@@ -149,11 +149,16 @@ plug "sekirocc/visual-mode.kak" demand visual-mode %{
     map global visual-mode G 'Ge'
     map global visual-mode H <a-H>
     map global visual-mode L <a-L>
-    map global visual-mode <a-d> 10<s-j>
-    map global visual-mode <a-u> 10<s-k>
+    map global visual-mode n <s-j>
+    map global visual-mode p <s-k>
+    map global visual-mode <a-n> 10<s-j>
+    map global visual-mode <a-p> 10<s-k>
+    map global visual-mode q ': fail<ret>'
 }
-map global select-mode v ': visual-mode v<ret>'         -docstring 'visual mode'
-map global select-mode V ': visual-line-mode V<ret>'    -docstring 'visual line mode'
+map global normal v ': visual-mode v<ret>'
+map global normal V ': visual-line-mode V<ret>'
+map global normal <a-v> 'v'
+map global normal <a-s-v> '<s-v>'
 
 
 
@@ -220,8 +225,7 @@ plug "danr/kakoune-easymotion" config %{
     face global EasyMotionForeground rgb:ffff00,rgb:1e1f29+fg
     face global EasyMotionSelected yellow+b
 }
-map global normal f     %{:easy-motion-w<ret>} -docstring "Easy motion forward"
-map global normal <a-f> %{:easy-motion-b<ret>} -docstring "Easy motion backward"
+map global normal f     %{:easy-motion-word<ret>} -docstring "Easy motion"
 
 
 
