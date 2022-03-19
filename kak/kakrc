@@ -1,0 +1,231 @@
+source "%val{config}/plugins/plug.kak/rc/plug.kak"
+plug "andreyorst/plug.kak" noload
+
+# set global idle_timeout 50
+
+# ==============================================================================
+# DEFINE SELECT MODE
+# ==============================================================================
+declare-user-mode select-mode
+map global normal <space> ': enter-user-mode select-mode<ret>'
+map global select-mode <space> <space> -docstring '<space>'
+
+
+
+colorscheme dracula
+add-highlighter global/ number-lines
+add-highlighter global/ show-whitespaces -tab "▏" -lf " " -nbsp "⋅" -spc " "
+
+def file-find -params 1 -shell-script-candidates %{ find . -type f } %{ edit %arg{1} }
+map -docstring "file" global goto 'f' '<esc>: file-find '
+
+
+
+
+
+# plug "krornus/kakoune-toggle-map" %{
+#     plug "krornus/kakoune-hlsearch" %{
+#         toggle-map global select-mode c hlsearch-on hlsearch-off
+#     }
+# }
+
+
+
+
+
+set -add global ui_options terminal_enable_mouse=false
+set -add global ui_options terminal_assistant=none
+set -add global startup_info_version 20330413
+
+map global normal \; <c-d>
+map global normal \' <c-u>
+
+
+map global normal <a-,> '\<c-o>' -docstring 'jump back'
+map global normal <a-.> '\<tab>' -docstring 'jump forward'
+
+set-option global grepcmd 'rg -C 3 --column'
+
+map global select-mode g ':grep '   -docstring 'grep in project'
+map global select-mode s ':write<ret>'  -docstring 'save buffer'
+
+
+
+
+
+
+
+plug "andreyorst/fzf.kak" config %{
+} defer "fzf-file" %{
+    set-option global fzf_file_command 'fdfind --hidden --no-ignore --type f --exclude .git --exclude vendor'
+    set-option global fzf_highlight_command 'bat'
+} defer "fzf-cd" %{
+    set-option global fzf_cd_command 'fdfind --follow --no-ignore --hidden --type d --exclude .git --exclude vendor'
+} defer "fzf-grep" %{
+    set-option global fzf_grep_command 'rg'
+}
+map global select-mode f ': fzf-mode<ret>' -docstring "fzf mode"
+
+
+
+
+plug 'delapouite/kakoune-buffers' %{
+  map global normal ^ q
+  map global normal <a-^> Q
+  map global normal q b
+  map global normal Q B
+  map global normal <a-q> <a-b>
+  map global normal <a-Q> <a-B>
+  map global normal b ': enter-buffers-mode<ret>' -docstring 'buffers'
+  map global normal B ': enter-user-mode -lock buffers<ret>' -docstring 'buffers (lock)'
+}
+
+
+
+
+plug "occivink/kakoune-find"
+
+
+
+
+
+plug "https://gitlab.com/fsub/kakoune-mark" %{
+    map global select-mode m :mark-word<ret>
+    map global select-mode c :mark-clear<ret>
+}
+
+
+
+
+
+
+plug "https://gitlab.com/dead10ck/visual-mode.kak" demand visual-mode %{
+    map global visual-mode G 'Ge'
+}
+map global select-mode v ': visual-mode v<ret>'         -docstring 'visual mode'
+map global select-mode V ': visual-line-mode V<ret>'    -docstring 'visual line mode'
+
+
+
+
+
+
+plug "kak-lsp/kak-lsp" do %{
+    cargo install --locked --force --path .
+} config %{
+    face global Reference rgb:000000,rgb:00ff00
+
+    # define-command lsp-restart %{ lsp-stop; lsp-start }
+
+    set-option global lsp_completion_trigger "execute-keys 'h<a-h><a-k>\S[^\s,=;*(){}\[\]]\z<ret>'"
+    set-option global lsp_diagnostic_line_error_sign "!"
+    set-option global lsp_diagnostic_line_warning_sign "?"
+    hook global WinSetOption filetype=(go|c|cpp|objc|nim|crystal|python|latex|javascript|typescript) %{
+        # # Highlight when normal key move, as fast as possible
+        # hook -group lsp global NormalKey .* %{
+        #     lsp-did-change
+        #     evaluate-commands %sh{
+        #         if $kak_opt_lsp_auto_highlight_references; then echo lsp-highlight-references; fi
+        #         if $kak_opt_lsp_auto_show_code_actions; then echo "lsp-did-change-and-then 'lsp-code-actions-request false'"; fi
+        #     }
+        # }
+
+        # lsp-start
+        lsp-enable-window
+        echo -debug "Enabling LSP for filtetype %opt{filetype}"
+
+        # lsp-auto-hover-enable
+        # lsp-auto-hover-insert-mode-disable
+        set-option global lsp_auto_highlight_references true
+        set-option global lsp_hover_anchor true
+
+        # Semantic highlighting
+        # TODO maybe there's more servers that support this
+        hook -once global WinSetOption filetype=rust %{
+            hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
+            hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
+            hook window -group semantic-tokens InsertIdle .* lsp-semantic-tokens
+            hook -once -always window WinSetOption filetype=.* %{
+                 remove-hooks window semantic-tokens
+            }
+        }
+
+        # Other things
+        hook window BufWritePre .* lsp-formatting-sync # this breaks shit
+        # hook window BufWritePost .* lsp-diagnostics
+        hook -always global KakEnd .* lsp-exit
+        hook global WinSetOption filetype=rust %{
+            set-option window lsp_server_configuration rust.clippy_preference="on"
+        }
+    }
+}
+map global user g %{: enter-user-mode lsp<ret>} -docstring "lsp mode"
+
+
+
+
+
+
+plug "danr/kakoune-easymotion" config %{
+    face global EasyMotionForeground rgb:ffff00,rgb:1e1f29+fg
+    face global EasyMotionSelected yellow+b
+}
+map global normal f     %{:easy-motion-w<ret>} -docstring "Easy motion forward"
+map global normal <a-f> %{:easy-motion-b<ret>} -docstring "Easy motion backward"
+
+
+
+
+
+
+# ==============================================================================
+# EXAMPLES
+# ==============================================================================
+# https://github.com/andreyorst/dotfiles/blob/187ebb84f9542b76a4f3c3e08f9533cd8187faa1/.config/kak/mnemonic-user-mode.kak
+
+# ==============================================================================
+# PARAGRAPH
+# ==============================================================================
+declare-user-mode paragraph
+declare-option str 'paragraph_select' '<a-a>pj[p'
+map global select-mode p "%opt{paragraph_select}: enter-user-mode -lock paragraph<ret>" -docstring 'paragraph'
+map global paragraph L '>'                              -docstring 'move left'
+map global paragraph H '<'                              -docstring 'move right'
+map global paragraph K "d[pP[p%opt{paragraph_select}"   -docstring 'move up'
+map global paragraph J "d]pp]p[p%opt{paragraph_select}" -docstring 'move down'
+map global paragraph j "]p%opt{paragraph_select}"       -docstring 'select down'
+map global paragraph k "[p%opt{paragraph_select}"       -docstring 'select up'
+map global paragraph d "d%opt{paragraph_select}"        -docstring 'delete'
+map global paragraph y y                                -docstring 'yank'
+map global paragraph q '<esc>'
+
+
+# ==============================================================================
+# LINE
+# ==============================================================================
+declare-user-mode line
+map global select-mode l 'gllGh: enter-user-mode -lock line<ret>' -docstring 'line'
+map global line H '<'          -docstring 'move right'
+map global line J "dpjgllGh"   -docstring 'move down'
+map global line K 'dkkpjgllGh' -docstring 'move up'
+map global line L '>'          -docstring 'move left'
+map global line j 'jgllGh'     -docstring 'select down'
+map global line k 'kgllGh'     -docstring 'select up'
+map global line d d            -docstring 'delete'
+map global line y y            -docstring 'yank'
+map global line q '<esc>'
+
+# ==============================================================================
+# Window
+# ==============================================================================
+declare-user-mode window
+map global select-mode w ': enter-user-mode window<ret>' -docstring 'window'
+map global window h ':tmux-repl-impl select-pane -L<ret>'  -docstring 'Select left pane'
+map global window j ':tmux-repl-impl select-pane -D<ret>'  -docstring 'Select below pane'
+map global window k ':tmux-repl-impl select-pane -U<ret>'  -docstring 'Select above pane'
+map global window l ':tmux-repl-impl select-pane -R<ret>'  -docstring 'Select right pane'
+map global window q ':tmux-repl-impl kill-pane<ret>'       -docstring 'Select right pane'
+map global window v ':tmux-terminal-horizontal kak -c %val{session}<ret>'       -docstring 'Select right pane'
+map global window s ':tmux-terminal-vertical   kak -c %val{session}<ret>'       -docstring 'Select right pane'
+
+
