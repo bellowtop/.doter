@@ -25,6 +25,32 @@
 ;;    (setq mac-option-modifier 'super
 ;;          mac-command-modifier 'meta))
 
+
+
+
+
+
+;;;;;; catch ESC in terminal(-nw) ;;;;;;;;;;;;
+(defvar personal/fast-keyseq-timeout 50)
+(defun personal/-tty-ESC-filter (map)
+  (if (and (equal (this-single-command-keys) [?\e])
+           (sit-for (/ personal/fast-keyseq-timeout 1000.0)))
+      [escape] map))
+(defun personal/-lookup-key (map key)
+  (catch 'found
+    (map-keymap (lambda (k b) (if (equal key k) (throw 'found b))) map)))
+(defun personal/catch-tty-ESC ()
+  "Setup key mappings of current terminal to turn a tty's ESC into `escape'."
+  (when (memq (terminal-live-p (frame-terminal)) '(t pc))
+    (let ((esc-binding (personal/-lookup-key input-decode-map ?\e)))
+      (define-key input-decode-map
+        [?\e] `(menu-item "" ,esc-binding :filter personal/-tty-ESC-filter)))))
+(personal/catch-tty-ESC)
+
+
+
+
+
 (setq visible-bell t)
 (setq ring-bell-function #'ignore)
 
@@ -86,12 +112,12 @@
  ;; If there is more than one, they won't work right.
  '(highlight ((t (:background "maroon" :foreground "#e6e6e8"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
+ '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
  '(isearch ((t (:background "#ffff00" :foreground "#000000" :underline nil :weight normal))))
  '(lazy-highlight ((t (:background "#ffff00" :foreground "#000000" :underline nil :weight normal))))
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(vertical-border ((t (:foreground "#00ff00" :background "#000000")))))
@@ -127,7 +153,7 @@
   (setq lsp-signature-auto-activate nil)
   (setq lsp-diagnostics-provider :none)
   (setq lsp-imenu-sort-methods '(position))
-  (setq lsp-headerline-breadcrumb-icons-enable nil)
+  (setq lsp-headerline-breadcrumb-enable nil)
 )
 
 (use-package lsp-ui
@@ -156,6 +182,12 @@
   :config
   (setq lsp-ui-sideline-ignore-duplicate t)
 )
+
+(lsp-headerline-breadcrumb-mode -1)
+
+;; https://emacs.stackexchange.com/questions/64970/how-can-i-disable-lsp-headerline
+;; (add-hook 'lsp-mode-hook #'lsp-headerline-breadcrumb-mode)
+
 
 (add-hook 'go-mode-hook 'lsp-deferred)
 (add-hook 'rust-mode-hook 'lsp-deferred)
@@ -188,7 +220,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -209,6 +241,7 @@
   :bind
   ("M-j" . iedit-mode)
 )
+
 
 
 
@@ -608,7 +641,135 @@
 )
 
 
+
+
+
+(defun my-god-above-newline-and-insert-mode()
+  (interactive)
+  (previous-line)
+  (end-of-line)
+  (newline-and-indent)
+  (god-mode-all)
+  )
+
+
+(setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*scratch"))
+(require 'god-mode)
+(setq god-exempt-major-modes nil)
+(setq god-exempt-predicates nil)
+
+(defun my-test-if-special-buffer(bufname)
+  (interactive)
+  (seq-filter
+    (lambda (n) (string-prefix-p n bufname))
+    special-buffers)
+)
+
+(defun my-god-mode ()
+  (interactive)
+  (if (my-test-if-special-buffer (string-trim (buffer-name)))
+            (progn
+                (message "is special buffer")
+                (ignore)
+            )
+            (progn
+                (message "not a special buffer")
+                (god-local-mode 1)                  ;; start local mode
+             )
+    nil)
+)
+
+(defun my-god-below-newline-and-insert-mode()
+  (interactive)
+  (end-of-line)
+  (newline-and-indent)
+  (god-mode-all)
+  )
+
+(defun my-god-mwin-end-and-insert-mode()
+  (interactive)
+  (mwim-end-of-code-or-line)
+  (god-mode-all)
+  )
+
+(defun my-god-mwin-beginning-and-insert-mode()
+  (interactive)
+  (mwim-beginning-of-code-or-line)
+  (god-mode-all)
+  )
+
+(defun my-god-char-forward-and-insert-mode()
+  (interactive)
+  (forward-char)
+  (god-mode-all)
+  )
+
+(defun my-god-end-of-word ()
+  "Move to the next 'last character' of a word."
+  (interactive)
+  (forward-char)
+  (re-search-forward "\\w\\b" nil t)
+  (goto-char (match-beginning 0)))
+
+(defun my-active-god-mode ()
+  (interactive)
+  (lambda (window) (message "%s is active" (current-buffer)))
+  (god-local-mode)
+)
+
+
+
+(global-set-key (kbd "<escape>")
+                '(lambda ()
+                  (interactive)
+                  (my-god-mode)
+                  (ignore-errors (helm-keyboard-quit))
+                  (ignore-errors (minibuffer-keyboard-quit))
+                  (ignore-errors (keyboard-quit))
+                  )
+                )
+
+
+(add-hook 'switch-buffer-functions
+        (lambda (prev curr)
+          (cl-assert (eq curr (current-buffer)))  ;; Always t
+          (message "%S -> %S -> %S" prev curr (string-trim (buffer-name curr)))
+          (my-god-mode)
+        ))
+
+
+(defun my-god-mode-update-mode-line ()
+  (cond
+   (god-local-mode
+    (set-face-attribute 'mode-line nil
+                        :background "yellow"
+                        :foreground "black")
+    (set-face-attribute 'mode-line-inactive nil
+                        :background "#565063"
+                        :foreground "white"
+                        :box '(:line-width 8 :color "#565063")
+                        :overline nil
+                        :underline nil))
+   ;; below, the default color is borrowed from monokai theme
+   (t
+    (set-face-attribute 'mode-line nil
+                        :foreground "#F5F5F5"
+                        :background "#1B1E1C")
+    (set-face-attribute 'mode-line-inactive nil
+                        :foreground "#8B8878"
+                        :background "#1B1E1C"))
+   ))
+
+(add-hook 'god-mode-enabled-hook  'my-god-mode-update-mode-line)
+(add-hook 'god-mode-disabled-hook  'my-god-mode-update-mode-line)
+
+
+
+
+
 (toggle-truncate-lines t)
+
+
 
 
 
@@ -745,8 +906,8 @@ _m_: next      _M_: prev     _a_: all      _s_: skip next       _S_: skip prev
 
 
 
+ '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
 
-;; (add-hook 'post-command-hook 'my-god-mode-update-mode-line)
 
 (with-eval-after-load 'subr-x
         (setq-default mode-line-buffer-identification
@@ -775,6 +936,22 @@ _m_: next      _M_: prev     _a_: all      _s_: skip next       _S_: skip prev
   (forward-char)
   (re-search-forward "\\w\\b" nil t)
   (goto-char (match-beginning 0)))
+
+
+
+
+
+(defun my-select-current-line-and-forward-line (arg)
+  "Select the current line and move the cursor by ARG lines IF
+no region is selected.
+If a region is already selected when calling this command, only move
+the cursor by ARG lines."
+  (interactive "p")
+  (when (not (use-region-p))
+    (forward-line 0)
+    (set-mark-command nil))
+  (forward-line arg))
+
 
 
 
@@ -833,6 +1010,44 @@ _m_: next      _M_: prev     _a_: all      _s_: skip next       _S_: skip prev
 
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
+
+
+
+
+
+    ;; God mode key mappings
+    (define-key god-local-mode-map (kbd "i") #'god-mode-all) ; toggle to disable god-mod globally
+    (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
+    (define-key god-local-mode-map (kbd "w") #'forward-word)
+    (define-key god-local-mode-map (kbd "b") #'backward-word)
+    (define-key god-local-mode-map (kbd "k") #'previous-line)
+    (define-key god-local-mode-map (kbd "j") #'next-line)
+    (define-key god-local-mode-map (kbd "l") #'forward-char)
+    (define-key god-local-mode-map (kbd "h") #'backward-char)
+    (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)
+    (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)
+    (define-key god-local-mode-map (kbd "v") #'set-mark-command)
+    (define-key god-local-mode-map (kbd "V") #'my-select-current-line-and-forward-line)
+    (define-key god-local-mode-map (kbd "y") #'kill-ring-save)
+    (define-key god-local-mode-map (kbd "d") #'kill-region)
+    (define-key god-local-mode-map (kbd "p") #'yank)
+    (define-key god-local-mode-map (kbd "u") #'undo)
+    (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
+    (define-key god-local-mode-map (kbd "O") #'my-god-above-newline-and-insert-mode)
+    (define-key god-local-mode-map (kbd "a") #'my-god-char-forward-and-insert-mode)
+    (define-key god-local-mode-map (kbd "A") #'my-god-mwin-end-and-insert-mode)
+    (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
+    (define-key god-local-mode-map (kbd "e") #'my-god-end-of-word)
+
+    (define-key god-local-mode-map (kbd "z") #'recenter)
+
+    (define-key god-local-mode-map (kbd "C-m") #'next-line)
+    (define-key god-local-mode-map (kbd ";") #'scroll-up-command)
+    (define-key god-local-mode-map (kbd "'") #'scroll-down-command)
+    (define-key god-local-mode-map (kbd "\\") #'recenter)
+
+
+
 
 
     ;; projectile
