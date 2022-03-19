@@ -23,7 +23,7 @@ sudo ln -s /bin/python3 /bin/python
 ```
 
 
-you may need to backup your configs first.
+you may need to backup your old configs first.
 
 
 ```
