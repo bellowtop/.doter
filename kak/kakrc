@@ -153,12 +153,14 @@ plug "sekirocc/visual-mode.kak" demand visual-mode %{
     map global visual-mode p <s-k>
     map global visual-mode <a-n> 10<s-j>
     map global visual-mode <a-p> 10<s-k>
+
+    map global visual-mode <a-m> 'vv' # temporarily goto normal mode, invoke view mode, center cursor, then go back visual-mode again (because we are 'lock').
     map global visual-mode q ': fail<ret>'
 }
 map global normal v ': visual-mode v<ret>'
 map global normal V ': visual-line-mode V<ret>'
-map global normal <a-v> 'v'
-map global normal <a-s-v> '<s-v>'
+map global normal <a-m> 'vv'
+map global normal <a-s-m> '<s-v>'
 
 
 
