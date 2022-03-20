@@ -19,7 +19,7 @@ map global select-mode <space> <space> -docstring '<space>'
 colorscheme dracula
 add-highlighter global/ number-lines
 add-highlighter global/ show-whitespaces -tab "▏" -lf " " -nbsp "⋅" -spc " "
-add-highlighter global/show-trailing-whitespaces regex '\h+$' 0:Error
+add-highlighter global/search dynregex '%reg{/}' 0:PrimarySelection
 
 
 def file-find -params 1 -shell-script-candidates %{ find . -type f } %{ edit %arg{1} }
@@ -80,7 +80,7 @@ map global normal <a-.> '\<tab>' -docstring 'jump forward'
 
 set-option global grepcmd 'rg -C 3 --column'
 
-map global select-mode g ':grep '       -docstring 'grep in project'
+map global select-mode g '<a-i>w\*<ret> :grep '       -docstring 'grep in project'
 map global select-mode w ':write<ret>'  -docstring 'save buffer'
 
 
@@ -91,6 +91,13 @@ plug "alexherbo2/auto-pairs.kak" config %{
 }
 
 
+
+
+
+declare-user-mode gbuff-mode
+map global gbuff-mode n ':grep-next-match<ret>'  -docstring 'next match'
+map global gbuff-mode p ':grep-previous-match<ret>'  -docstring 'previous match'
+map global user g %{: enter-user-mode -lock gbuff-mode<ret>} -docstring "grep mode"
 
 
 
@@ -127,6 +134,16 @@ plug 'delapouite/kakoune-buffers' %{
 plug "occivink/kakoune-find"
 
 
+
+
+# plug "kkga/ui.kak"
+# hook global WinCreate .* %{
+#     ui-line-numbers-toggle
+#     ui-cursorline-toggle
+#     ui-trailing-spaces-toggle
+#     ui-matching-toggle
+#     ui-search-toggle
+# }
 
 
 
@@ -234,7 +251,7 @@ plug "kak-lsp/kak-lsp" do %{
         }
     }
 }
-map global user g %{: enter-user-mode lsp<ret>} -docstring "lsp mode"
+map global user l %{: enter-user-mode lsp<ret>} -docstring "lsp mode"
 
 
 
@@ -309,4 +326,5 @@ map global window s ':tmux-terminal-vertical   kak -c %val{session}<ret>'       
 
 
 
+map global user l %{: enter-user-mode lsp<ret>} -docstring "lsp mode"
 
