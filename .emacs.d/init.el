@@ -1023,8 +1023,6 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "j") #'next-line)
     (define-key god-local-mode-map (kbd "l") #'forward-char)
     (define-key god-local-mode-map (kbd "h") #'backward-char)
-    (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)
-    (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)
     (define-key god-local-mode-map (kbd "v") #'set-mark-command)
     (define-key god-local-mode-map (kbd "V") #'my-select-current-line-and-forward-line)
     (define-key god-local-mode-map (kbd "y") #'kill-ring-save)
@@ -1039,8 +1037,10 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "e") #'my-god-end-of-word)
 
     (define-key god-local-mode-map (kbd "M-m") #'recenter-top-bottom)
-    (define-key god-local-mode-map (kbd "M-g C-.") #'beginning-of-buffer) ;; gg. to top
-    (define-key god-local-mode-map (kbd "G") #'end-of-buffer)             ;; G   to bottom
+    (define-key god-local-mode-map (kbd "M-j") #'end-of-buffer)             ;; gj   to bottom
+    (define-key god-local-mode-map (kbd "M-k") #'beginning-of-buffer)             ;; gk   to bottom
+    (define-key god-local-mode-map (kbd "M-l") #'mwim-end-of-code-or-line)
+    (define-key god-local-mode-map (kbd "M-h") #'mwim-beginning-of-code-or-line)
 
     ;; (define-key god-local-mode-map (kbd "C-m") #'next-line)
     (define-key god-local-mode-map (kbd ";") #'scroll-up-command)
