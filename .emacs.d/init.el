@@ -939,6 +939,17 @@ _m_: next      _M_: prev     _a_: all      _s_: skip next       _S_: skip prev
 
 
 
+;; not working!!
+(defun my-delete-forward-char ()
+  "delete current char, goto insert mode"
+  (interactive)
+  (delete-forward-char)
+  (god-mode-all)
+  )
+
+
+
+
 
 
 (defun my-select-current-line-and-forward-line (arg)
@@ -1024,9 +1035,11 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "l") #'forward-char)
     (define-key god-local-mode-map (kbd "h") #'backward-char)
     (define-key god-local-mode-map (kbd "v") #'set-mark-command)
+    (define-key god-local-mode-map (kbd "x") #'my-select-current-line-and-forward-line)
     (define-key god-local-mode-map (kbd "V") #'my-select-current-line-and-forward-line)
     (define-key god-local-mode-map (kbd "y") #'kill-ring-save)
     (define-key god-local-mode-map (kbd "d") #'delete-forward-char)
+    (define-key god-local-mode-map (kbd "c") #'my-delete-forward-char)
     (define-key god-local-mode-map (kbd "p") #'yank)
     (define-key god-local-mode-map (kbd "u") #'undo)
     (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
@@ -1037,10 +1050,20 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "e") #'my-god-end-of-word)
 
     (define-key god-local-mode-map (kbd "M-m") #'recenter-top-bottom)
-    (define-key god-local-mode-map (kbd "M-j") #'end-of-buffer)             ;; gj   to bottom
-    (define-key god-local-mode-map (kbd "M-k") #'beginning-of-buffer)             ;; gk   to bottom
-    (define-key god-local-mode-map (kbd "M-l") #'mwim-end-of-code-or-line)
-    (define-key god-local-mode-map (kbd "M-h") #'mwim-beginning-of-code-or-line)
+    (define-key god-local-mode-map (kbd "M-j") #'end-of-buffer)                     ;; gj   to bottom
+    (define-key god-local-mode-map (kbd "M-k") #'beginning-of-buffer)               ;; gk   to bottom
+    (define-key god-local-mode-map (kbd "M-l") #'mwim-end-of-code-or-line)          ;; gl   to line right
+    (define-key god-local-mode-map (kbd "M-h") #'mwim-beginning-of-code-or-line)    ;; gh   to line left
+    (define-key god-local-mode-map (kbd "M-a") #'flip-buffer-to-window)             ;; ga   last buffer
+    (define-key god-local-mode-map (kbd "M-b") #'switch-to-buffer)                  ;; gb   buffer list
+
+
+
+    (define-key god-local-mode-map (kbd "/") #'isearch-forward)
+    (define-key isearch-mode-map (kbd "M-n") 'isearch-repeat-forward)
+    (define-key isearch-mode-map (kbd "M-p") 'isearch-repeat-backward)
+
+
 
     ;; (define-key god-local-mode-map (kbd "C-m") #'next-line)
     (define-key god-local-mode-map (kbd ";") #'scroll-up-command)
