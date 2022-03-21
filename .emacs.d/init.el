@@ -225,7 +225,7 @@
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
  '(warning-suppress-log-types '((lsp-mode) (lsp-mode)))
- '(warning-suppress-types '((lsp-mode))))
+ '(warning-suppress-types '((use-package) (lsp-mode))))
 
 
 
