@@ -1042,7 +1042,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "M-g C-.") #'beginning-of-buffer) ;; gg. to top
     (define-key god-local-mode-map (kbd "G") #'end-of-buffer)             ;; G   to bottom
 
-    (define-key god-local-mode-map (kbd "C-m") #'next-line)
+    ;; (define-key god-local-mode-map (kbd "C-m") #'next-line)
     (define-key god-local-mode-map (kbd ";") #'scroll-up-command)
     (define-key god-local-mode-map (kbd "'") #'scroll-down-command)
     (define-key god-local-mode-map (kbd "\\") #'recenter)
