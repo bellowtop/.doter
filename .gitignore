@@ -16,6 +16,7 @@ anaconda-mode/
 /session.*
 /custom.el
 *.elc
+eln-cache
 company-statistics-cache.el
 CVS
 .svn
