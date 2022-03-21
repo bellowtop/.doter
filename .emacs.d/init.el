@@ -954,7 +954,6 @@ the cursor by ARG lines."
 
 
 
-
 (use-package highlight-parentheses
   :ensure t)
 (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
@@ -1029,7 +1028,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "v") #'set-mark-command)
     (define-key god-local-mode-map (kbd "V") #'my-select-current-line-and-forward-line)
     (define-key god-local-mode-map (kbd "y") #'kill-ring-save)
-    (define-key god-local-mode-map (kbd "d") #'kill-region)
+    (define-key god-local-mode-map (kbd "d") #'delete-forward-char)
     (define-key god-local-mode-map (kbd "p") #'yank)
     (define-key god-local-mode-map (kbd "u") #'undo)
     (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
@@ -1039,7 +1038,9 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
     (define-key god-local-mode-map (kbd "e") #'my-god-end-of-word)
 
-    (define-key god-local-mode-map (kbd "z") #'recenter)
+    (define-key god-local-mode-map (kbd "M-m") #'recenter-top-bottom)
+    (define-key god-local-mode-map (kbd "M-g C-.") #'beginning-of-buffer) ;; gg. to top
+    (define-key god-local-mode-map (kbd "G") #'end-of-buffer)             ;; G   to bottom
 
     (define-key god-local-mode-map (kbd "C-m") #'next-line)
     (define-key god-local-mode-map (kbd ";") #'scroll-up-command)
