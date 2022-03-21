@@ -1039,7 +1039,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "V") #'my-select-current-line-and-forward-line)
     (define-key god-local-mode-map (kbd "y") #'kill-ring-save)
     (define-key god-local-mode-map (kbd "d") #'delete-forward-char)
-    (define-key god-local-mode-map (kbd "c") #'my-delete-forward-char)
+    ;; (define-key god-local-mode-map (kbd "c") #'my-delete-forward-char)
     (define-key god-local-mode-map (kbd "p") #'yank)
     (define-key god-local-mode-map (kbd "u") #'undo)
     (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
