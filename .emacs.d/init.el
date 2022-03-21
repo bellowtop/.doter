@@ -252,7 +252,8 @@
 (use-package ace-window
   :ensure t
   :bind
-  ("M-o" . ace-window)
+  ("M-o" . ace-select-window)
+  ("M-i" . delete-window)
   :delight
   :config
   (ace-window-display-mode 1)
@@ -669,11 +670,11 @@
   (interactive)
   (if (my-test-if-special-buffer (string-trim (buffer-name)))
             (progn
-                (message "is special buffer")
+                (message "%s is special buffer" (buffer-name))
                 (ignore)
             )
             (progn
-                (message "not a special buffer")
+                (message "%s not a special buffer" (buffer-name))
                 (god-local-mode 1)                  ;; start local mode
              )
     nil)
