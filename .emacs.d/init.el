@@ -120,7 +120,8 @@
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
- '(vertical-border ((t (:foreground "#00ff00" :background "#000000")))))
+ '(vertical-border ((t (:foreground "#00ff00"))))
+ )
 
 
 ;; Set symbol for the border
