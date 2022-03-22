@@ -224,7 +224,7 @@
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
- '(warning-suppress-log-types '((lsp-mode) (lsp-mode)))
+ '(warning-suppress-log-types '((comp) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 
 
@@ -1057,12 +1057,14 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "M-h") #'mwim-beginning-of-code-or-line)    ;; gh   to line left
     (define-key god-local-mode-map (kbd "M-a") #'flip-buffer-to-window)             ;; ga   last buffer
     (define-key god-local-mode-map (kbd "M-b") #'switch-to-buffer)                  ;; gb   buffer list
+    (define-key god-local-mode-map (kbd "C-c C-f") #'projectile-find-file)          ;; cf   find file
 
 
 
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
     (define-key isearch-mode-map (kbd "M-n") 'isearch-repeat-forward)
     (define-key isearch-mode-map (kbd "M-p") 'isearch-repeat-backward)
+
 
 
 
