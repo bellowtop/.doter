@@ -681,6 +681,11 @@
     nil)
 )
 
+(defun my-quit-god-mode()
+  (interactive)
+  (god-local-mode -1)
+  )
+
 (defun my-god-below-newline-and-insert-mode()
   (interactive)
   (end-of-line)
@@ -727,6 +732,7 @@
                   (my-god-mode)
                   (ignore-errors (helm-keyboard-quit))
                   (ignore-errors (minibuffer-keyboard-quit))
+                  (ignore-errors (mc/keyboard-quit))
                   (ignore-errors (keyboard-quit))
                   )
                 )
@@ -872,6 +878,7 @@ _m_: next      _M_: prev     _a_: all      _s_: skip next       _S_: skip prev
   "View result under cursor in other window."
   (interactive)
   (deadgrep-visit-result-other-window)
+
   (hs-show-all)
   (recenter)
   (other-window 1)
@@ -1030,7 +1037,7 @@ the cursor by ARG lines."
 
     ;; (define-key map (kbd "C-c C-j") 'lsp-find-definition)
 
-    (define-key map (kbd "M-t") 'flip-buffer-to-window)
+    (define-key map (kbd "C-c t") 'flip-buffer-to-window)
 
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
@@ -1040,7 +1047,7 @@ the cursor by ARG lines."
 
 
     ;; God mode key mappings
-    (define-key god-local-mode-map (kbd "i") #'god-mode-all) ; toggle to disable god-mod globally
+    (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode) ; toggle to disable god-mod globally
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
     (define-key god-local-mode-map (kbd "w") #'forward-word)
     (define-key god-local-mode-map (kbd "b") #'backward-word)
@@ -1066,12 +1073,12 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "d") #'kill-region)                         ;; d   to cut (same as C-w)
 
     (define-key god-local-mode-map (kbd "M-m") #'recenter-top-bottom)
-    (define-key god-local-mode-map (kbd "M-j") #'end-of-buffer)                     ;; gj   to bottom
-    (define-key god-local-mode-map (kbd "M-k") #'beginning-of-buffer)               ;; gk   to bottom
+    (define-key god-local-mode-map (kbd "M-b") #'end-of-buffer)                     ;; gj   to bottom
+    (define-key god-local-mode-map (kbd "M-t") #'beginning-of-buffer)               ;; gk   to bottom
     (define-key god-local-mode-map (kbd "M-l") #'mwim-end-of-code-or-line)          ;; gl   to line right
     (define-key god-local-mode-map (kbd "M-h") #'mwim-beginning-of-code-or-line)    ;; gh   to line left
     (define-key god-local-mode-map (kbd "M-a") #'flip-buffer-to-window)             ;; ga   last buffer
-    (define-key god-local-mode-map (kbd "M-b") #'switch-to-buffer)                  ;; gb   buffer list
+    (define-key god-local-mode-map (kbd "M-g") #'switch-to-buffer)                  ;; gb   buffer list
     (define-key god-local-mode-map (kbd "C-c C-f") #'projectile-find-file)          ;; cf   find file
 
 
@@ -1082,18 +1089,18 @@ the cursor by ARG lines."
 
     (define-key god-local-mode-map (kbd "C-*") 'my-search-selection)
 
-
-
+    (define-key god-local-mode-map (kbd "C-c C-n") #'mc/mark-next-like-this)
+    (define-key god-local-mode-map (kbd "C-c C-p") #'mc/mark-previous-like-this)
+    (define-key god-local-mode-map (kbd "C-c C-a") #'mc/mark-all-like-this)
+    (define-key god-local-mode-map (kbd "C-c C-s") #'mc/skip-to-next-like-this)
+    (define-key god-local-mode-map (kbd "C-c C-S") #'mc/skip-to-previous-like-this)
 
 
 
     ;; (define-key god-local-mode-map (kbd "C-m") #'next-line)
+
     (define-key god-local-mode-map (kbd ";") #'scroll-up-command)
     (define-key god-local-mode-map (kbd "'") #'scroll-down-command)
-    (define-key god-local-mode-map (kbd "\\") #'recenter)
-
-
-
 
 
     ;; projectile
