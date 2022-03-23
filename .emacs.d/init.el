@@ -29,7 +29,6 @@
 
 
 
-
 ;;;;;; catch ESC in terminal(-nw) ;;;;;;;;;;;;
 (defvar personal/fast-keyseq-timeout 50)
 (defun personal/-tty-ESC-filter (map)
@@ -1089,11 +1088,13 @@ the cursor by ARG lines."
 
     (define-key god-local-mode-map (kbd "C-*") 'my-search-selection)
 
-    (define-key god-local-mode-map (kbd "C-c C-n") #'mc/mark-next-like-this)
-    (define-key god-local-mode-map (kbd "C-c C-p") #'mc/mark-previous-like-this)
-    (define-key god-local-mode-map (kbd "C-c C-a") #'mc/mark-all-like-this)
-    (define-key god-local-mode-map (kbd "C-c C-s") #'mc/skip-to-next-like-this)
-    (define-key god-local-mode-map (kbd "C-c C-S") #'mc/skip-to-previous-like-this)
+    (define-key god-local-mode-map (kbd "C-, C-n") #'mc/mark-next-like-this)
+    (define-key god-local-mode-map (kbd "C-, C-p") #'mc/mark-previous-like-this)
+    (define-key god-local-mode-map (kbd "C-, C-a") #'mc/mark-all-like-this)
+    (define-key god-local-mode-map (kbd "C-, C-s") #'mc/skip-to-next-like-this)
+    (define-key god-local-mode-map (kbd "C-, C-S") #'mc/skip-to-previous-like-this)
+
+    (define-key god-local-mode-map (kbd "C-, C-w") #'save-buffer)
 
 
 
