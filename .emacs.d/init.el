@@ -899,6 +899,18 @@ _m_: next      _M_: prev     _a_: all      _s_: skip next       _S_: skip prev
 )
 
 
+(defun my-search-selection (beg end)
+      "search for selected text"
+      (interactive "r")
+      (let (
+            (selection (buffer-substring-no-properties beg end))
+           )
+        (deactivate-mark)
+        (isearch-mode t nil nil nil)
+        (isearch-yank-string selection)
+      )
+    )
+
 
 ;;;  treats underscores as part of words
 (superword-mode 1)
@@ -1067,6 +1079,10 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
     (define-key isearch-mode-map (kbd "M-n") 'isearch-repeat-forward)
     (define-key isearch-mode-map (kbd "M-p") 'isearch-repeat-backward)
+
+    (define-key god-local-mode-map (kbd "C-*") 'my-search-selection)
+
+
 
 
 
