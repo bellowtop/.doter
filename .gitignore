@@ -16,6 +16,7 @@ anaconda-mode/
 /session.*
 /custom.el
 *.elc
+eln-cache
 company-statistics-cache.el
 CVS
 .svn
@@ -41,7 +42,6 @@ semanticdb/
 abbrev_defs
 /swank
 /swank
-/.mc-lists.el
 TAGS
 GTAGS
 GPATH

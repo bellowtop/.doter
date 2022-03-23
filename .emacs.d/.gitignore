@@ -41,7 +41,6 @@ semanticdb/
 abbrev_defs
 /swank
 /swank
-/.mc-lists.el
 TAGS
 GTAGS
 GPATH
