@@ -1050,7 +1050,8 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "A") #'my-god-mwin-end-and-insert-mode)
     (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
     ;; (define-key god-local-mode-map (kbd "e") #'my-god-end-of-word)
-    (define-key god-local-mode-map (kbd "e") #'kill-region)                         ;; e   to cut (same as C-w)
+    (define-key god-local-mode-map (kbd "e") #'delete-forward-char)                         ;; e  delete
+    (define-key god-local-mode-map (kbd "d") #'kill-region)                         ;; d   to cut (same as C-w)
 
     (define-key god-local-mode-map (kbd "M-m") #'recenter-top-bottom)
     (define-key god-local-mode-map (kbd "M-j") #'end-of-buffer)                     ;; gj   to bottom
