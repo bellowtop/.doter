@@ -119,8 +119,7 @@
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
- '(vertical-border ((t (:foreground "#00ff00"))))
- )
+ '(vertical-border ((t (:foreground "#00ff00")))))
 
 
 ;; Set symbol for the border
@@ -220,7 +219,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -260,7 +259,8 @@
   )
 
 ;; alternatively, use Shift-<left> Shift-<right> to move cursor to window
-(windmove-default-keybindings 'control)
+;; for iTerms2 user, disable alt-> alt-< to send alt-f alt-b in `profile->keys`
+ (windmove-default-keybindings 'meta)
 
 
 ;; (use-package centaur-tabs
@@ -326,8 +326,8 @@
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 
-(global-auto-revert-mode t)
-(global-hl-line-mode t)
+;; (global-auto-revert-mode t)
+;; (global-hl-line-mode t)
 
 
 (defun my-go-mode-hook ()
@@ -385,8 +385,10 @@
 
 (require 'helm)
 (helm-mode 1)
-(define-key helm-map (kbd "TAB") (lookup-key helm-map (kbd "<down>")))
-(define-key helm-map (kbd "<backtab>") (lookup-key helm-map (kbd "<up>")))
+(define-key helm-map (kbd "TAB")       #'helm-next-line)
+(define-key helm-map (kbd "<backtab>") #'helm-previous-line)
+
+;; (setq helm-move-to-line-cycle-in-source t)
 (setq helm-display-buffer-default-height 0.4)
 (setq helm-default-display-buffer-functions '(display-buffer-in-side-window))
 
@@ -497,8 +499,8 @@
 ;; (sml/setup)
 
 
-;; (require 'doom-modeline)
-;; (doom-modeline-mode 1)
+(require 'doom-modeline)
+(doom-modeline-mode 1)
 
 
 
@@ -655,7 +657,7 @@
   )
 
 
-(setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*scratch"))
+(setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*scratch" "*Help*" "*lsp-log*"))
 (require 'god-mode)
 (setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
@@ -671,11 +673,11 @@
   (interactive)
   (if (my-test-if-special-buffer (string-trim (buffer-name)))
             (progn
-                (message "%s is special buffer" (buffer-name))
+                ;; (message "%s is special buffer" (buffer-name))
                 (ignore)
             )
             (progn
-                (message "%s not a special buffer" (buffer-name))
+                ;; (message "%s not a special buffer" (buffer-name))
                 (god-local-mode 1)                  ;; start local mode
              )
     nil)
@@ -741,7 +743,7 @@
 (add-hook 'switch-buffer-functions
         (lambda (prev curr)
           (cl-assert (eq curr (current-buffer)))  ;; Always t
-          (message "%S -> %S -> %S" prev curr (string-trim (buffer-name curr)))
+          ;; (message "%S -> %S -> %S" prev curr (string-trim (buffer-name curr)))
           (my-god-mode)
         ))
 
@@ -750,7 +752,7 @@
   (cond
    (god-local-mode
     (set-face-attribute 'mode-line nil
-                        :background "yellow"
+                        :background "green"
                         :foreground "black")
     (set-face-attribute 'mode-line-inactive nil
                         :background "#565063"
@@ -768,8 +770,8 @@
                         :background "#1B1E1C"))
    ))
 
-(add-hook 'god-mode-enabled-hook  'my-god-mode-update-mode-line)
-(add-hook 'god-mode-disabled-hook  'my-god-mode-update-mode-line)
+;; (add-hook 'god-mode-enabled-hook  'my-god-mode-update-mode-line)
+;; (add-hook 'god-mode-disabled-hook  'my-god-mode-update-mode-line)
 
 
 
@@ -930,13 +932,15 @@ _m_: next      _M_: prev     _a_: all      _s_: skip next       _S_: skip prev
  '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
 
 
-(with-eval-after-load 'subr-x
-        (setq-default mode-line-buffer-identification
-                '(:eval (format-mode-line (propertized-buffer-identification (or (when-let* ((buffer-file-truename buffer-file-truename)
-                (prj (cdr-safe (project-current)))
-                (prj-parent (file-name-directory (directory-file-name (expand-file-name prj)))))
-                        (concat (file-relative-name (file-name-directory buffer-file-truename) prj-parent) (file-name-nondirectory buffer-file-truename)))
-"%b"))))))
+;; (with-eval-after-load 'subr-x
+;;         (setq-default mode-line-buffer-identification
+;;                 '(:eval (format-mode-line (propertized-buffer-identification (or (when-let* ((buffer-file-truename buffer-file-truename)
+;;                 (prj (cdr-safe (project-current)))
+;;                 (prj-parent (file-name-directory (directory-file-name (expand-file-name prj)))))
+;;                         (concat (file-relative-name (file-name-directory buffer-file-truename) prj-parent) (file-name-nondirectory buffer-file-truename)))
+;; "%b"))))))
+
+
 
 
 
@@ -1079,15 +1083,15 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "M-h") #'mwim-beginning-of-code-or-line)    ;; gh   to line left
     (define-key god-local-mode-map (kbd "M-a") #'flip-buffer-to-window)             ;; ga   last buffer
     (define-key god-local-mode-map (kbd "M-g") #'switch-to-buffer)                  ;; gb   buffer list
-    (define-key god-local-mode-map (kbd "C-c C-f") #'projectile-find-file)          ;; cf   find file
+    (define-key god-local-mode-map (kbd "M-f") #'projectile-find-file)          ;; cf   find file
 
 
-
+    (define-key god-local-mode-map (kbd "*") 'my-search-selection)
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
-    (define-key isearch-mode-map (kbd "M-n") 'isearch-repeat-forward)
-    (define-key isearch-mode-map (kbd "M-p") 'isearch-repeat-backward)
+    (define-key isearch-mode-map (kbd "TAB")       'isearch-repeat-forward)
+    (define-key isearch-mode-map (kbd "<backtab>") 'isearch-repeat-backward)
 
-    (define-key god-local-mode-map (kbd "C-*") 'my-search-selection)
+
 
     (define-key god-local-mode-map (kbd "C-, C-n") #'mc/mark-next-like-this)
     (define-key god-local-mode-map (kbd "C-, C-p") #'mc/mark-previous-like-this)
@@ -1095,7 +1099,12 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-, C-s") #'mc/skip-to-next-like-this)
     (define-key god-local-mode-map (kbd "C-, C-S") #'mc/skip-to-previous-like-this)
 
-    (define-key god-local-mode-map (kbd "C-, C-w") #'save-buffer)
+    (define-key god-local-mode-map (kbd "C-. C-w") #'save-buffer)
+
+    (define-key god-local-mode-map (kbd "C-, C-w C-l") #'windmove-right)
+    (define-key god-local-mode-map (kbd "C-, C-w C-h") #'windmove-left)
+    (define-key god-local-mode-map (kbd "C-, C-w C-j") #'windmove-up)
+    (define-key god-local-mode-map (kbd "C-, C-w C-k") #'windmove-down)
 
 
 
