@@ -657,7 +657,8 @@
   )
 
 
-(setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*scratch" "*Help*" "*lsp-log*"))
+;; (setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*scratch" "*Help*" "*lsp-log*"))
+(setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*"))
 (require 'god-mode)
 (setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
@@ -773,6 +774,21 @@
 ;; (add-hook 'god-mode-enabled-hook  'my-god-mode-update-mode-line)
 ;; (add-hook 'god-mode-disabled-hook  'my-god-mode-update-mode-line)
 
+
+; This mortal mode is designed to allow temporary departures from god mode
+; The idea is that within god-mode, you can hit shift-i, type in a few characters
+; and then hit enter to return to god-mode. To avoid clobbering the previous bindings,
+; we wrap up this behavior in a minor-mode.
+(define-minor-mode mortal-mode
+  "Allow temporary departures from god-mode."
+  :lighter " mortal"
+  :keymap '(((kbd "C-q") . (lambda ()
+                          "Exit mortal-mode and resume god mode." (interactive)
+                          (god-local-mode-resume)
+                          (mortal-mode 0))))
+  (when mortal-mode
+    (god-local-mode-pause)))
+(define-key god-local-mode-map (kbd "I") 'mortal-mode)
 
 
 
@@ -1074,6 +1090,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
     ;; (define-key god-local-mode-map (kbd "e") #'my-god-end-of-word)
     (define-key god-local-mode-map (kbd "e") #'delete-forward-char)                         ;; e  delete
+    ;; (define-key god-local-mode-map (kbd "r") #'my-replace-char)                         ;; e  delete
     (define-key god-local-mode-map (kbd "d") #'kill-region)                         ;; d   to cut (same as C-w)
 
     (define-key god-local-mode-map (kbd "M-m") #'recenter-top-bottom)
@@ -1103,8 +1120,16 @@ the cursor by ARG lines."
 
     (define-key god-local-mode-map (kbd "C-, C-w C-l") #'windmove-right)
     (define-key god-local-mode-map (kbd "C-, C-w C-h") #'windmove-left)
-    (define-key god-local-mode-map (kbd "C-, C-w C-j") #'windmove-up)
-    (define-key god-local-mode-map (kbd "C-, C-w C-k") #'windmove-down)
+    (define-key god-local-mode-map (kbd "C-, C-w C-k") #'windmove-up)
+    (define-key god-local-mode-map (kbd "C-, C-w C-j") #'windmove-down)
+    (define-key god-local-mode-map (kbd "C-, C-w C-q") #'delete-window)
+    (define-key god-local-mode-map (kbd "C-, C-w C-v") #'split-window-right)
+    (define-key god-local-mode-map (kbd "C-, C-w C-s") #'split-window-below)
+
+    (define-key god-local-mode-map (kbd "C-, C-b C-h") #'switch-to-prev-buffer)
+    (define-key god-local-mode-map (kbd "C-, C-b C-l") #'switch-to-next-buffer)
+    (define-key god-local-mode-map (kbd "C-, C-b C-k") #'delete-buffer)
+    (define-key god-local-mode-map (kbd "C-, C-b C-b") #'switch-to-buffer)
 
 
 
