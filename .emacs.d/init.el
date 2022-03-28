@@ -131,6 +131,7 @@
 
 (global-set-key [remap lsp-ui-peek-find-definitions] 'my-lsp-ui-peek-find-definitions )
 (global-set-key [remap xref-pop-marker-stack] 'my-xref-pop-marker-stack )
+(global-set-key [remap xref-go-back] 'my-xref-go-back)
 (defun my-lsp-ui-peek-find-definitions()
   (interactive)
   (lsp-ui-peek-find-definitions)
@@ -139,6 +140,11 @@
 (defun my-xref-pop-marker-stack()
   (interactive)
   (xref-pop-marker-stack)
+  (recenter)
+)
+(defun my-xref-go-back()
+  (interactive)
+  (xref-go-back)
   (recenter)
 )
 
@@ -1122,7 +1128,8 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-, C-w C-h") #'windmove-left)
     (define-key god-local-mode-map (kbd "C-, C-w C-k") #'windmove-up)
     (define-key god-local-mode-map (kbd "C-, C-w C-j") #'windmove-down)
-    (define-key god-local-mode-map (kbd "C-, C-w C-q") #'delete-window)
+    (define-key god-local-mode-map (kbd "C-, C-w C-q") #'delete-window)      ;; delete this window
+    (define-key god-local-mode-map (kbd "C-, C-w C-d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "C-, C-w C-v") #'split-window-right)
     (define-key god-local-mode-map (kbd "C-, C-w C-s") #'split-window-below)
 
