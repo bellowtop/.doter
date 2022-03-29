@@ -153,6 +153,7 @@ nnoremap <leader>o :CtrlSF
 nnoremap <leader>O :CtrlSFOpen <CR>
 nnoremap <Leader>p yiw :CtrlSF "<C-R>""<CR>
 vnoremap <Leader>p y<ESC> :CtrlSF "<C-R>""
+let g:ctrlsf_backend='rg'  " or ag/ack
 let g:ctrlsf_auto_focus = { "at": "start" }
 let g:ctrlsf_search_mode = 'async'
 let g:ctrlsf_extra_backend_args = {'rg': '--no-ignore'}
