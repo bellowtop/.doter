@@ -27,6 +27,9 @@
 
 
 
+(global-unset-key [(control z)])
+
+
 
 
 ;;;;;; catch ESC in terminal(-nw) ;;;;;;;;;;;;
@@ -1107,6 +1110,10 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "M-a") #'flip-buffer-to-window)             ;; ga   last buffer
     (define-key god-local-mode-map (kbd "M-g") #'switch-to-buffer)                  ;; gb   buffer list
     (define-key god-local-mode-map (kbd "M-f") #'projectile-find-file)          ;; cf   find file
+
+
+    (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
+    (define-key god-local-mode-map (kbd "C-z C-o") #'my-toggle-fold)
 
 
     (define-key god-local-mode-map (kbd "*") 'my-search-selection)
