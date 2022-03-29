@@ -22,9 +22,23 @@ kakoune-easymotion need `python` to be present, or it will hung.
 sudo ln -s /bin/python3 /bin/python
 ```
 
+#### nvim
+
+install plug.vim
+```
+curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+nvim +PlugInstall +qall
+
+
+```
+
+
+
+#### backup
 
 you may need to backup your old configs first.
-
 
 ```
 mkdir -p ~/.dot_backup
