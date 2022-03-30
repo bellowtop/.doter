@@ -120,6 +120,8 @@
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+ '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+ '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(vertical-border ((t (:foreground "#00ff00")))))
@@ -859,17 +861,28 @@
 )
 
 
+(defun my-mc/mark-next-like-this (arg)
+  (interactive "p")
+  (mc/mark-next-like-this arg)
+  (mc/cycle-forward)
+  )
+
+(defun my-mc/mark-previous-like-this (arg)
+  (interactive "p")
+  (mc/mark-previous-like-this arg)
+  (mc/cycle-forward)
+  )
 
 (use-package multiple-cursors
   :ensure   t
-  ;;; :bind (
-  ;;;        ("C-c m n" . mc/mark-next-like-this)
-  ;;;        ("C-c m p" . mc/mark-previous-like-this)
-  ;;;        ("C-c m a" . mc/mark-all-like-this)
-  ;;;        ("C-c m s" . mc/skip-to-next-like-this)
-  ;;;        ("C-c m S" . mc/skip-to-previous-like-this)
-  ;;;        ("C-c C-SPC" . mc/edit-lines)
-  ;;;        )
+  :bind (
+         ("C-c m n" . my-mc/mark-next-like-this)
+         ("C-c m p" . my-mc/mark-previous-like-this)
+         ("C-c m a" . mc/mark-all-like-this)
+         ("C-c m s" . mc/skip-to-next-like-this)
+         ("C-c m S" . mc/skip-to-previous-like-this)
+         ("C-c C-SPC" . mc/edit-lines)
+         )
   )
 
 
@@ -877,10 +890,10 @@
 (require 'hydra)
 (defhydra multiple-cursors-menu (global-map "C-c m")
   "
-_m_: next      _M_: prev     _a_: all      _s_: skip next       _S_: skip prev
+_n_: next      _p_: prev     _a_: all      _s_: skip next       _S_: skip prev
 "
-  ("m" mc/mark-next-like-this)
-  ("M" mc/mark-previous-like-this)
+  ("n" my-mc/mark-next-like-this)
+  ("p" my-mc/mark-previous-like-this)
   ("a" mc/mark-all-like-this)
   ("s" mc/skip-to-next-like-this)
   ("S" mc/skip-to-previous-like-this)
@@ -1126,8 +1139,8 @@ the cursor by ARG lines."
 
 
 
-    (define-key god-local-mode-map (kbd "C-, C-n") #'mc/mark-next-like-this)
-    (define-key god-local-mode-map (kbd "C-, C-p") #'mc/mark-previous-like-this)
+    (define-key god-local-mode-map (kbd "C-, C-n") #'my-mc/mark-next-like-this)
+    (define-key god-local-mode-map (kbd "C-, C-p") #'my-mc/mark-previous-like-this)
     (define-key god-local-mode-map (kbd "C-, C-a") #'mc/mark-all-like-this)
     (define-key god-local-mode-map (kbd "C-, C-s") #'mc/skip-to-next-like-this)
     (define-key god-local-mode-map (kbd "C-, C-S") #'mc/skip-to-previous-like-this)
