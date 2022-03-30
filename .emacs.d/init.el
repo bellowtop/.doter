@@ -228,7 +228,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -928,6 +928,9 @@ _m_: next      _M_: prev     _a_: all      _s_: skip next       _S_: skip prev
           ("p"    . deadgrep-backward-match)
           ("N"    . deadgrep-forward-filename)
           ("P"    . deadgrep-backward-filename)
+          ("C-x C-q" . deadgrep-edit-mode)
+    :map deadgrep-edit-mode-map
+         ("C-c C-c" . deadgrep-mode)
     )
   )
 )
