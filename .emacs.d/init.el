@@ -861,43 +861,38 @@
 )
 
 
-(defun my-mc/mark-next-like-this (arg)
-  (interactive "p")
-  (mc/mark-next-like-this arg)
-  (mc/cycle-forward)
-  )
-
-(defun my-mc/mark-previous-like-this (arg)
-  (interactive "p")
-  (mc/mark-previous-like-this arg)
-  (mc/cycle-forward)
-  )
-
 (use-package multiple-cursors
   :ensure   t
   :bind (
-         ("C-c m n" . my-mc/mark-next-like-this)
-         ("C-c m p" . my-mc/mark-previous-like-this)
-         ("C-c m a" . mc/mark-all-like-this)
-         ("C-c m s" . mc/skip-to-next-like-this)
-         ("C-c m S" . mc/skip-to-previous-like-this)
+         ("C-x C-n" . mc/mark-next-like-this)
          ("C-c C-SPC" . mc/edit-lines)
          )
   )
 
+(with-eval-after-load 'multiple-cursors-core
+    (define-key mc/keymap (kbd "TAB") 'mc/cycle-forward)
+    (define-key mc/keymap (kbd "<backtab>") 'mc/cycle-backward)
+    (define-key mc/keymap (kbd "C-x C-n") 'mc/mark-next-like-this)
+    (define-key mc/keymap (kbd "C-x C-p") 'mc/mark-previous-like-this)
+    (define-key mc/keymap (kbd "C-x C-a") 'mc/mark-all-like-this) 
+    (define-key mc/keymap (kbd "C-x C-s") 'mc/skip-to-next-like-this) 
+    (define-key mc/keymap (kbd "C-x C-r") 'mc/skip-to-previous-like-this)
+    (define-key mc/keymap (kbd "C-x C-x") 'mc/unmark-next-like-this)
+    (define-key mc/keymap (kbd "C-x C-d") 'mc/unmark-previous-like-this)
+  )
 
-;; Have to use require, not use-package
-(require 'hydra)
-(defhydra multiple-cursors-menu (global-map "C-c m")
-  "
-_n_: next      _p_: prev     _a_: all      _s_: skip next       _S_: skip prev
-"
-  ("n" my-mc/mark-next-like-this)
-  ("p" my-mc/mark-previous-like-this)
-  ("a" mc/mark-all-like-this)
-  ("s" mc/skip-to-next-like-this)
-  ("S" mc/skip-to-previous-like-this)
-)
+;;;  ;; Have to use require, not use-package
+;;;  (require 'hydra)
+;;;  (defhydra multiple-cursors-menu (global-map "C-c m")
+;;;    "
+;;;  _n_: next      _p_: prev     _a_: all      _s_: skip next       _S_: skip prev
+;;;  "
+;;;    ("n" my-mc/mark-next-like-this)
+;;;    ("p" my-mc/mark-previous-like-this)
+;;;    ("a" mc/mark-all-like-this)
+;;;    ("s" mc/skip-to-next-like-this)
+;;;    ("S" mc/skip-to-previous-like-this)
+;;;  )
 
 
 (defun my-deadgrep-visit-result ()
@@ -1133,11 +1128,11 @@ the cursor by ARG lines."
 
 
 
-    (define-key god-local-mode-map (kbd "C-SPC C-n") #'my-mc/mark-next-like-this)
-    (define-key god-local-mode-map (kbd "C-SPC C-p") #'my-mc/mark-previous-like-this)
-    (define-key god-local-mode-map (kbd "C-SPC C-m C-s") #'mc/skip-to-next-like-this)
-    (define-key god-local-mode-map (kbd "C-SPC C-m C-S") #'mc/skip-to-previous-like-this)
-    (define-key god-local-mode-map (kbd "C-SPC C-m C-a") #'mc/mark-all-like-this)
+    (define-key god-local-mode-map (kbd "C-x C-n") #'mc/mark-next-like-this)
+    ;;  (define-key god-local-mode-map (kbd "C-, C-p") #'my-mc/mark-previous-like-this)
+    ;;  (define-key god-local-mode-map (kbd "C-, C-s") #'mc/skip-to-next-like-this)
+    ;;  (define-key god-local-mode-map (kbd "C-, C-r") #'mc/skip-to-previous-like-this)
+    ;;  (define-key god-local-mode-map (kbd "C-, C-a") #'mc/mark-all-like-this)
 
     (define-key god-local-mode-map (kbd "C-. C-w") #'save-buffer)
     (define-key god-local-mode-map (kbd "C-. C-b") #'switch-to-buffer)

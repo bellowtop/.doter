@@ -57,6 +57,7 @@
 	mwim-end-of-code-or-line
 	my-god-char-forward-and-insert-mode
 	my-quit-god-mode
+	my-replace-char
 	org-beginning-of-line
 	org-ctrl-c-ctrl-c
 	org-cycle
@@ -119,12 +120,14 @@
 	dakra/counsel-search-project-empty
 	dap-tooltip-mouse-motion
 	delete-window
+	describe-key
 	end-of-buffer
 	exwm-windmove-down
 	exwm-windmove-left
 	exwm-windmove-right
 	exwm-windmove-up
 	gcm-scroll-down
+	gcm-scroll-up
 	god-local-mode
 	handle-select-window
 	handle-switch-frame
