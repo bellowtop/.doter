@@ -1118,6 +1118,12 @@ the cursor by ARG lines."
 
     (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "C-z C-o") #'my-toggle-fold)
+    (define-key god-local-mode-map (kbd "C-z C-z") #'recenter-top-bottom)
+    (define-key god-local-mode-map (kbd "C-z C-b") #'end-of-buffer)                     ;; , j   to bottom
+    (define-key god-local-mode-map (kbd "C-z C-t") #'beginning-of-buffer)               ;; , k   to bottom
+
+    (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)          ;; , l   to line right
+    (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)    ;; , h   to line left
 
 
     (define-key god-local-mode-map (kbd "*") 'my-search-selection)
@@ -1136,12 +1142,6 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-. C-w") #'save-buffer)
     (define-key god-local-mode-map (kbd "C-. C-b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "C-. C-f") #'projectile-find-file)          ;; cf   find file
-
-    (define-key god-local-mode-map (kbd "C-, C-m") #'recenter-top-bottom)
-    (define-key god-local-mode-map (kbd "C-, C-b") #'end-of-buffer)                     ;; , j   to bottom
-    (define-key god-local-mode-map (kbd "C-, C-t") #'beginning-of-buffer)               ;; , k   to bottom
-    (define-key god-local-mode-map (kbd "C-, C-l") #'mwim-end-of-code-or-line)          ;; , l   to line right
-    (define-key god-local-mode-map (kbd "C-, C-h") #'mwim-beginning-of-code-or-line)    ;; , h   to line left
 
 
     (define-key god-local-mode-map (kbd "C-SPC C-w C-l") #'windmove-right)
