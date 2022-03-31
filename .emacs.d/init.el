@@ -1158,6 +1158,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-SPC C-b C-k") #'delete-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-b C-b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-b C-a") #'flip-buffer-to-window)             ;; b a   last buffer
+    (define-key god-local-mode-map (kbd "C-SPC C-.") #'er/expand-region)             ;; b a   last buffer
 
 
 
