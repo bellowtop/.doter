@@ -1005,14 +1005,13 @@ _n_: next      _p_: prev     _a_: all      _s_: skip next       _S_: skip prev
 
 
 
-;; not working!!
-(defun my-delete-forward-char ()
+(defun my-replace-char ()
   "delete current char, goto insert mode"
   (interactive)
-  (delete-forward-char)
-  (god-mode-all)
+  (delete-forward-char 1)
+  ;; (call-interactively (key-binding (kbd "q")))
+  (my-quit-god-mode)
   )
-
 
 
 
@@ -1092,7 +1091,6 @@ the cursor by ARG lines."
 
 
     ;; God mode key mappings
-    (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode) ; toggle to disable god-mod globally
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
     (define-key god-local-mode-map (kbd "w") #'forward-word)
     (define-key god-local-mode-map (kbd "b") #'backward-word)
@@ -1101,31 +1099,21 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "l") #'forward-char)
     (define-key god-local-mode-map (kbd "h") #'backward-char)
     (define-key god-local-mode-map (kbd "v") #'set-mark-command)
-    (define-key god-local-mode-map (kbd "X") #'my-select-current-line-and-forward-line)
+    (define-key god-local-mode-map (kbd "P") #'mark-paragraph)
     (define-key god-local-mode-map (kbd "V") #'my-select-current-line-and-forward-line)
     (define-key god-local-mode-map (kbd "y") #'kill-ring-save)
-    (define-key god-local-mode-map (kbd "d") #'delete-forward-char)
-    ;; (define-key god-local-mode-map (kbd "c") #'my-delete-forward-char)
     (define-key god-local-mode-map (kbd "p") #'yank)
     (define-key god-local-mode-map (kbd "u") #'undo)
     (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
     (define-key god-local-mode-map (kbd "O") #'my-god-above-newline-and-insert-mode)
     (define-key god-local-mode-map (kbd "a") #'my-god-char-forward-and-insert-mode)
     (define-key god-local-mode-map (kbd "A") #'my-god-mwin-end-and-insert-mode)
+    (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode) ; toggle to disable god-mod globally
     (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
-    ;; (define-key god-local-mode-map (kbd "e") #'my-god-end-of-word)
-    (define-key god-local-mode-map (kbd "e") #'delete-forward-char)                         ;; e  delete
-    ;; (define-key god-local-mode-map (kbd "r") #'my-replace-char)                         ;; e  delete
-    (define-key god-local-mode-map (kbd "d") #'kill-region)                         ;; d   to cut (same as C-w)
 
-    (define-key god-local-mode-map (kbd "M-m") #'recenter-top-bottom)
-    (define-key god-local-mode-map (kbd "M-b") #'end-of-buffer)                     ;; gj   to bottom
-    (define-key god-local-mode-map (kbd "M-t") #'beginning-of-buffer)               ;; gk   to bottom
-    (define-key god-local-mode-map (kbd "M-l") #'mwim-end-of-code-or-line)          ;; gl   to line right
-    (define-key god-local-mode-map (kbd "M-h") #'mwim-beginning-of-code-or-line)    ;; gh   to line left
-    (define-key god-local-mode-map (kbd "M-a") #'flip-buffer-to-window)             ;; ga   last buffer
-    (define-key god-local-mode-map (kbd "M-g") #'switch-to-buffer)                  ;; gb   buffer list
-    (define-key god-local-mode-map (kbd "M-f") #'projectile-find-file)          ;; cf   find file
+    (define-key god-local-mode-map (kbd "d") #'delete-forward-char)                         ;; e  delete
+    (define-key god-local-mode-map (kbd "r") #'my-replace-char)                         ;; e  delete
+    (define-key god-local-mode-map (kbd "X") #'kill-region)                         ;; d   to cut (same as C-w)
 
 
     (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
@@ -1139,27 +1127,37 @@ the cursor by ARG lines."
 
 
 
-    (define-key god-local-mode-map (kbd "C-, C-n") #'my-mc/mark-next-like-this)
-    (define-key god-local-mode-map (kbd "C-, C-p") #'my-mc/mark-previous-like-this)
-    (define-key god-local-mode-map (kbd "C-, C-a") #'mc/mark-all-like-this)
-    (define-key god-local-mode-map (kbd "C-, C-s") #'mc/skip-to-next-like-this)
-    (define-key god-local-mode-map (kbd "C-, C-S") #'mc/skip-to-previous-like-this)
+    (define-key god-local-mode-map (kbd "C-SPC C-n") #'my-mc/mark-next-like-this)
+    (define-key god-local-mode-map (kbd "C-SPC C-p") #'my-mc/mark-previous-like-this)
+    (define-key god-local-mode-map (kbd "C-SPC C-m C-s") #'mc/skip-to-next-like-this)
+    (define-key god-local-mode-map (kbd "C-SPC C-m C-S") #'mc/skip-to-previous-like-this)
+    (define-key god-local-mode-map (kbd "C-SPC C-m C-a") #'mc/mark-all-like-this)
 
     (define-key god-local-mode-map (kbd "C-. C-w") #'save-buffer)
+    (define-key god-local-mode-map (kbd "C-. C-b") #'switch-to-buffer)
+    (define-key god-local-mode-map (kbd "C-. C-f") #'projectile-find-file)          ;; cf   find file
 
-    (define-key god-local-mode-map (kbd "C-, C-w C-l") #'windmove-right)
-    (define-key god-local-mode-map (kbd "C-, C-w C-h") #'windmove-left)
-    (define-key god-local-mode-map (kbd "C-, C-w C-k") #'windmove-up)
-    (define-key god-local-mode-map (kbd "C-, C-w C-j") #'windmove-down)
-    (define-key god-local-mode-map (kbd "C-, C-w C-q") #'delete-window)      ;; delete this window
-    (define-key god-local-mode-map (kbd "C-, C-w C-d") #'delete-other-windows)  ;; delete other window
-    (define-key god-local-mode-map (kbd "C-, C-w C-v") #'split-window-right)
-    (define-key god-local-mode-map (kbd "C-, C-w C-s") #'split-window-below)
+    (define-key god-local-mode-map (kbd "C-, C-m") #'recenter-top-bottom)
+    (define-key god-local-mode-map (kbd "C-, C-b") #'end-of-buffer)                     ;; , j   to bottom
+    (define-key god-local-mode-map (kbd "C-, C-t") #'beginning-of-buffer)               ;; , k   to bottom
+    (define-key god-local-mode-map (kbd "C-, C-l") #'mwim-end-of-code-or-line)          ;; , l   to line right
+    (define-key god-local-mode-map (kbd "C-, C-h") #'mwim-beginning-of-code-or-line)    ;; , h   to line left
 
-    (define-key god-local-mode-map (kbd "C-, C-b C-h") #'switch-to-prev-buffer)
-    (define-key god-local-mode-map (kbd "C-, C-b C-l") #'switch-to-next-buffer)
-    (define-key god-local-mode-map (kbd "C-, C-b C-k") #'delete-buffer)
-    (define-key god-local-mode-map (kbd "C-, C-b C-b") #'switch-to-buffer)
+
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-l") #'windmove-right)
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-h") #'windmove-left)
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-k") #'windmove-up)
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-j") #'windmove-down)
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-q") #'delete-window)      ;; delete this window
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-d") #'delete-other-windows)  ;; delete other window
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-v") #'split-window-right)
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-s") #'split-window-below)
+
+    (define-key god-local-mode-map (kbd "C-SPC C-b C-h") #'switch-to-prev-buffer)
+    (define-key god-local-mode-map (kbd "C-SPC C-b C-l") #'switch-to-next-buffer)
+    (define-key god-local-mode-map (kbd "C-SPC C-b C-k") #'delete-buffer)
+    (define-key god-local-mode-map (kbd "C-SPC C-b C-b") #'switch-to-buffer)
+    (define-key god-local-mode-map (kbd "C-SPC C-b C-a") #'flip-buffer-to-window)             ;; b a   last buffer
 
 
 

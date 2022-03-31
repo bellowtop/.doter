@@ -53,6 +53,8 @@
 	markdown-exdent-or-delete
 	markdown-outdent-or-delete
 	mouse-yank-primary
+	mwim-beginning-of-code-or-line
+	mwim-end-of-code-or-line
 	my-god-char-forward-and-insert-mode
 	my-quit-god-mode
 	org-beginning-of-line
@@ -133,32 +135,27 @@
 	ivy-wgrep-change-to-wgrep-mode
 	magit-section-backward
 	magit-section-forward
-	mc/vertical-align-with-space
-
-	multiple-cursors-menu/mc/mark-all-like-this
-	multiple-cursors-menu/mc/mark-next-like-this
-	multiple-cursors-menu/mc/mark-previous-like-this
-    multiple-cursors-menu/mc/skip-to-next-like-this
-    multiple-cursors-menu/mc/skip-to-previous-like-this
-
-	multiple-cursors-menu/my-mc/mark-all-like-this
-    multiple-cursors-menu/my-mc/mark-next-like-this
-    multiple-cursors-menu/my-mc/mark-previous-like-this
-    multiple-cursors-menu/my-mc/skip-to-next-like-this
-    multiple-cursors-menu/my-mc/skip-to-previous-like-this
-
-	my-mc/mark-all-like-this
-	my-mc/mark-next-like-this
-	my-mc/mark-previous-like-this
-    my-mc/skip-to-next-like-this
-    my-mc/skip-to-previous-like-this
-
 	mc/mark-all-like-this
 	mc/mark-next-like-this
 	mc/mark-previous-like-this
-    mc/skip-to-next-like-this
-    mc/skip-to-previous-like-this
-
+	mc/skip-to-next-like-this
+	mc/skip-to-previous-like-this
+	mc/vertical-align-with-space
+	multiple-cursors-menu/mc/mark-all-like-this
+	multiple-cursors-menu/mc/mark-next-like-this
+	multiple-cursors-menu/mc/mark-previous-like-this
+	multiple-cursors-menu/mc/skip-to-next-like-this
+	multiple-cursors-menu/mc/skip-to-previous-like-this
+	multiple-cursors-menu/my-mc/mark-all-like-this
+	multiple-cursors-menu/my-mc/mark-next-like-this
+	multiple-cursors-menu/my-mc/mark-previous-like-this
+	multiple-cursors-menu/my-mc/skip-to-next-like-this
+	multiple-cursors-menu/my-mc/skip-to-previous-like-this
+	my-mc/mark-all-like-this
+	my-mc/mark-next-like-this
+	my-mc/mark-previous-like-this
+	my-mc/skip-to-next-like-this
+	my-mc/skip-to-previous-like-this
 	org-clock-goto
 	org-edit-src-save
 	smart-region
