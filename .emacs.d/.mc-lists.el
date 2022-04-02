@@ -161,6 +161,7 @@
 	my-mc/skip-to-previous-like-this
 	org-clock-goto
 	org-edit-src-save
+	scroll-half-page-up
 	smart-region
 	swiper-mc
 	undefined

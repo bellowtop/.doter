@@ -589,7 +589,7 @@
 (defun my-hide-all()
   (interactive)
   (hs-minor-mode)
-  ; (hs-hide-all)
+  (hs-hide-all)
 )
 (add-hook 'prog-mode-hook 'my-hide-all)
 
@@ -739,14 +739,18 @@
 )
 
 
+(require 'god-mode-isearch)
+(define-key isearch-mode-map (kbd "TAB") #'god-mode-isearch-activate)
+(define-key god-mode-isearch-map (kbd "TAB") #'god-mode-isearch-disable)
 
 (global-set-key (kbd "<escape>")
                 '(lambda ()
                   (interactive)
                   (my-god-mode)
+                  (if isearch-mode (isearch-abort))
                   (ignore-errors (helm-keyboard-quit))
                   (ignore-errors (minibuffer-keyboard-quit))
-                  (ignore-errors (mc/keyboard-quit))
+                  ;; (ignore-errors (mc/keyboard-quit))
                   (ignore-errors (keyboard-quit))
                   )
                 )
@@ -869,17 +873,46 @@
          )
   )
 
+
+(defun my-mc/mark-next-like-this (arg)
+  (interactive "p")
+  (mc/mark-next-like-this arg)
+  (mc/cycle-forward)
+  )
+
+(defun my-mc/mark-previous-like-this (arg)
+  (interactive "p")
+  (mc/mark-previous-like-this arg)
+  (mc/cycle-forward)
+  )
+
+
 (with-eval-after-load 'multiple-cursors-core
     (define-key mc/keymap (kbd "TAB") 'mc/cycle-forward)
     (define-key mc/keymap (kbd "<backtab>") 'mc/cycle-backward)
-    (define-key mc/keymap (kbd "C-x C-n") 'mc/mark-next-like-this)
-    (define-key mc/keymap (kbd "C-x C-p") 'mc/mark-previous-like-this)
+    (define-key mc/keymap (kbd "C-x C-n") 'my-mc/mark-next-like-this)
+    (define-key mc/keymap (kbd "C-x C-p") 'my-mc/mark-previous-like-this)
     (define-key mc/keymap (kbd "C-x C-a") 'mc/mark-all-like-this) 
     (define-key mc/keymap (kbd "C-x C-s") 'mc/skip-to-next-like-this) 
     (define-key mc/keymap (kbd "C-x C-r") 'mc/skip-to-previous-like-this)
     (define-key mc/keymap (kbd "C-x C-x") 'mc/unmark-next-like-this)
     (define-key mc/keymap (kbd "C-x C-d") 'mc/unmark-previous-like-this)
+
+    (add-hook 'multiple-cursors-mode-enabled-hook '(lambda ()
+                                                              (if (and lsp-enable-symbol-highlighting t)
+                                                                (lsp-toggle-symbol-highlight)
+                                                                (message "is already not highlight")
+                                                                )
+                                                              ))
+    (add-hook 'multiple-cursors-mode-disabled-hook '(lambda ()
+                                                              (if (not lsp-enable-symbol-highlighting)
+                                                                (lsp-toggle-symbol-highlight)
+                                                                (message "is enabled highlight")
+                                                                )
+                                                              ))
   )
+
+
 
 ;;;  ;; Have to use require, not use-package
 ;;;  (require 'hydra)
@@ -944,15 +977,22 @@
 )
 
 
-(defun my-search-selection (beg end)
+(defun my-search-selection ()
       "search for selected text"
-      (interactive "r")
-      (let (
-            (selection (buffer-substring-no-properties beg end))
-           )
-        (deactivate-mark)
-        (isearch-mode t nil nil nil)
-        (isearch-yank-string selection)
+      (interactive
+        (progn
+            (if (region-active-p)
+               (message "search the marked region")
+               (er/mark-symbol)
+               )
+            (let (
+                  (selection (buffer-substring-no-properties (mark) (point)))
+                 )
+              (deactivate-mark)
+              (isearch-mode t nil nil nil)
+              (isearch-yank-string selection)
+            )
+        )
       )
     )
 
@@ -965,7 +1005,7 @@
 
 
 
- '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
+ ;; '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
 
 
 ;; (with-eval-after-load 'subr-x
@@ -1123,12 +1163,10 @@ the cursor by ARG lines."
 
     (define-key god-local-mode-map (kbd "*") 'my-search-selection)
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
-    (define-key isearch-mode-map (kbd "TAB")       'isearch-repeat-forward)
-    (define-key isearch-mode-map (kbd "<backtab>") 'isearch-repeat-backward)
 
 
 
-    (define-key god-local-mode-map (kbd "C-x C-n") #'mc/mark-next-like-this)
+    (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
     ;;  (define-key god-local-mode-map (kbd "C-, C-p") #'my-mc/mark-previous-like-this)
     ;;  (define-key god-local-mode-map (kbd "C-, C-s") #'mc/skip-to-next-like-this)
     ;;  (define-key god-local-mode-map (kbd "C-, C-r") #'mc/skip-to-previous-like-this)
@@ -1136,7 +1174,8 @@ the cursor by ARG lines."
 
     (define-key god-local-mode-map (kbd "C-. C-w") #'save-buffer)
     (define-key god-local-mode-map (kbd "C-. C-b") #'switch-to-buffer)
-    (define-key god-local-mode-map (kbd "C-. C-f") #'projectile-find-file)          ;; cf   find file
+    (define-key god-local-mode-map (kbd "C-. C-f") #'projectile-find-file)
+    (define-key god-local-mode-map (kbd "C-. C-.") #'er/expand-region)
 
 
     (define-key god-local-mode-map (kbd "C-SPC C-w C-l") #'windmove-right)
@@ -1153,7 +1192,6 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-SPC C-b C-k") #'delete-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-b C-b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-b C-a") #'flip-buffer-to-window)             ;; b a   last buffer
-    (define-key god-local-mode-map (kbd "C-SPC C-.") #'er/expand-region)             ;; b a   last buffer
 
 
 
