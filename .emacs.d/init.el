@@ -1049,6 +1049,14 @@
   )
 
 
+(defun my-kill-word (arg)
+  "delete current word, goto insert mode"
+  (interactive "p")
+  (kill-word arg)
+  (my-quit-god-mode)
+  )
+
+
 
 
 
@@ -1147,7 +1155,8 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
 
     (define-key god-local-mode-map (kbd "d") #'delete-forward-char)                         ;; e  delete
-    (define-key god-local-mode-map (kbd "r") #'my-replace-char)                         ;; e  delete
+    (define-key god-local-mode-map (kbd "s") #'my-replace-char)                         ;; e  delete
+    (define-key god-local-mode-map (kbd "C-c C-w") #'my-kill-word)                         ;; e  delete
     (define-key god-local-mode-map (kbd "X") #'kill-region)                         ;; d   to cut (same as C-w)
 
 
@@ -1161,7 +1170,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)    ;; , h   to line left
 
 
-    (define-key god-local-mode-map (kbd "*") 'my-search-selection)
+    (define-key god-local-mode-map (kbd "*") #'my-search-selection)
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
 
 
