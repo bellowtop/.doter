@@ -1216,7 +1216,7 @@ the cursor by ARG lines."
 
     (define-key god-local-mode-map (kbd ";") #'scroll-up-command)
     (define-key god-local-mode-map (kbd "'") #'scroll-down-command)
-    (define-key god-local-mode-map (kbd "\\") #'recenter)
+    (define-key god-local-mode-map (kbd "\\") #'recenter-top-bottom)
 
 
     ;; projectile
