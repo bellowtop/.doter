@@ -755,8 +755,15 @@
     ;; (ignore-errors (mc/keyboard-quit))
     (ignore-errors (keyboard-quit))
 )
-(global-set-key (kbd "C-q") 'my-quit)
-(global-set-key (kbd "<escape>") 'my-quit)
+
+(global-set-key (kbd "C-q")      '(lambda () (interactive)
+                                    (if (bound-and-true-p multiple-cursors-mode) (mc/keyboard-quit))
+                                    (my-quit))
+)
+(global-set-key (kbd "<escape>") '(lambda () (interactive)
+                                    (if (bound-and-true-p multiple-cursors-mode) (mc/keyboard-quit))
+                                    (my-quit))
+)
 
 
 (add-hook 'switch-buffer-functions

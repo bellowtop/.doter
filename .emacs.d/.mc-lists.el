@@ -171,4 +171,5 @@
 	undo-redo
 	windmove-swap-states-left
 	windmove-swap-states-right
+	my-quit
 	))
