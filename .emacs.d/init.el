@@ -581,7 +581,8 @@
 (defun my-toggle-fold ()
   (interactive)
   (save-excursion
-    (sp-backward-sexp)
+    (mwim-end-of-code-or-line)
+    (beginning-of-defun)
     (hs-toggle-hiding)))
 
 
@@ -1169,7 +1170,6 @@ the cursor by ARG lines."
 
 
     (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
-    (define-key god-local-mode-map (kbd "C-z C-o") #'my-toggle-fold)
     (define-key god-local-mode-map (kbd "C-z C-z") #'recenter-top-bottom)
     (define-key god-local-mode-map (kbd "C-z C-b") #'end-of-buffer)                     ;; , j   to bottom
     (define-key god-local-mode-map (kbd "C-z C-t") #'beginning-of-buffer)               ;; , k   to bottom
