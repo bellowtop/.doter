@@ -1182,6 +1182,8 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
 
 
+    (define-key god-local-mode-map (kbd "A") #'beginning-of-defun)    ;; , h   to line left
+    (define-key god-local-mode-map (kbd "E") #'end-of-defun)    ;; , h   to line left
 
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
     ;;  (define-key god-local-mode-map (kbd "C-, C-p") #'my-mc/mark-previous-like-this)
