@@ -743,17 +743,19 @@
 (define-key isearch-mode-map (kbd "TAB") #'god-mode-isearch-activate)
 (define-key god-mode-isearch-map (kbd "TAB") #'god-mode-isearch-disable)
 
-(global-set-key (kbd "<escape>")
-                '(lambda ()
-                  (interactive)
-                  (my-god-mode)
-                  (if isearch-mode (isearch-abort))
-                  (ignore-errors (helm-keyboard-quit))
-                  (ignore-errors (minibuffer-keyboard-quit))
-                  ;; (ignore-errors (mc/keyboard-quit))
-                  (ignore-errors (keyboard-quit))
-                  )
-                )
+
+
+(defun my-quit ()
+    (interactive)
+    (my-god-mode)
+    (if isearch-mode (isearch-abort))
+    (ignore-errors (helm-keyboard-quit))
+    (ignore-errors (minibuffer-keyboard-quit))
+    ;; (ignore-errors (mc/keyboard-quit))
+    (ignore-errors (keyboard-quit))
+)
+(global-set-key (kbd "C-q") 'my-quit)
+(global-set-key (kbd "<escape>") 'my-quit)
 
 
 (add-hook 'switch-buffer-functions
@@ -1057,6 +1059,12 @@
   )
 
 
+(defun my-save-buffer ()
+  "delete current word, goto insert mode"
+  (interactive)
+  (save-buffer)
+  (my-god-mode)
+  )
 
 
 
@@ -1101,7 +1109,7 @@ the cursor by ARG lines."
     (define-key map (kbd "C-c o") #'helm-occur)
 
     (define-key map (kbd "M-u") 'upcase-dwim)
-    (define-key map (kbd "C-j") 'save-buffer)
+    (define-key map (kbd "C-j") 'my-save-buffer)
 
     (define-key map (kbd "C-c s") 'my-helm-ag-thing-at-point)
 
@@ -1181,7 +1189,7 @@ the cursor by ARG lines."
     ;;  (define-key god-local-mode-map (kbd "C-, C-r") #'mc/skip-to-previous-like-this)
     ;;  (define-key god-local-mode-map (kbd "C-, C-a") #'mc/mark-all-like-this)
 
-    (define-key god-local-mode-map (kbd "C-. C-w") #'save-buffer)
+    (define-key god-local-mode-map (kbd "C-. C-w") #'my-save-buffer)
     (define-key god-local-mode-map (kbd "C-. C-b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "C-. C-f") #'projectile-find-file)
     (define-key god-local-mode-map (kbd "C-. C-.") #'er/expand-region)
