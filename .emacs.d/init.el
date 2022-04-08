@@ -112,6 +112,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+ '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(highlight ((t (:background "maroon" :foreground "#e6e6e8"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
@@ -120,8 +122,6 @@
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(vertical-border ((t (:foreground "#00ff00")))))
@@ -230,7 +230,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -894,8 +894,8 @@
     (define-key mc/keymap (kbd "<backtab>") 'mc/cycle-backward)
     (define-key mc/keymap (kbd "C-x C-n") 'my-mc/mark-next-like-this)
     (define-key mc/keymap (kbd "C-x C-p") 'my-mc/mark-previous-like-this)
-    (define-key mc/keymap (kbd "C-x C-a") 'mc/mark-all-like-this) 
-    (define-key mc/keymap (kbd "C-x C-s") 'mc/skip-to-next-like-this) 
+    (define-key mc/keymap (kbd "C-x C-a") 'mc/mark-all-like-this)
+    (define-key mc/keymap (kbd "C-x C-s") 'mc/skip-to-next-like-this)
     (define-key mc/keymap (kbd "C-x C-r") 'mc/skip-to-previous-like-this)
     (define-key mc/keymap (kbd "C-x C-x") 'mc/unmark-next-like-this)
     (define-key mc/keymap (kbd "C-x C-d") 'mc/unmark-previous-like-this)
