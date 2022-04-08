@@ -752,16 +752,15 @@
     (if isearch-mode (isearch-abort))
     (ignore-errors (helm-keyboard-quit))
     (ignore-errors (minibuffer-keyboard-quit))
-    ;; (ignore-errors (mc/keyboard-quit))
     (ignore-errors (keyboard-quit))
 )
 
 (global-set-key (kbd "C-q")      '(lambda () (interactive)
-                                    (if (bound-and-true-p multiple-cursors-mode) (progn (mc/keyboard-quit) (mc/keyboard-quit) ) ) ;; have to double quit, i don't know why
+                                    ;; (if (bound-and-true-p multiple-cursors-mode) (progn (mc/keyboard-quit) (mc/keyboard-quit) ) ) ;; have to double quit, i don't know why
                                     (my-quit))
 )
 (global-set-key (kbd "<escape>") '(lambda () (interactive)
-                                    (if (bound-and-true-p multiple-cursors-mode) (progn (mc/keyboard-quit) (mc/keyboard-quit) ) ) ;; have to double quit, i don't know why
+                                    ;; (if (bound-and-true-p multiple-cursors-mode) (progn (mc/keyboard-quit) (mc/keyboard-quit) ) ) ;; have to double quit, i don't know why
                                     (my-quit))
 )
 
