@@ -230,7 +230,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -349,23 +349,25 @@
 
 
 
-
-;; put this to .clang-format
-;; --
-;;   BasedOnStyle: LLVM
-;;   UseTab: Never
-;;   IndentWidth: 8
-;;   TabWidth: 8
-(defun my-c-mode-common-hook ()
- (c-set-offset 'substatement-open 0)
- (setq c++-tab-always-indent t)
- (setq c-basic-offset 8)                  ;; Default is 2
- (setq c-indent-level 8)                  ;; Default is 2
- (setq tab-stop-list '(8 12 16 20 24 28 32 36 40 44 48 52 56 60))
- (setq tab-width 8)
- (setq indent-tabs-mode nil)  ; use spaces only if nil
- )
-(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+;;; Use Google C Style instead
+;;;
+;;;  ;; put this to .clang-format
+;;;  ;; --
+;;;  ;;   BasedOnStyle: LLVM
+;;;  ;;   UseTab: Never
+;;;  ;;   IndentWidth: 8
+;;;  ;;   TabWidth: 8
+;;;  (defun my-c-mode-common-hook ()
+;;;   (c-set-offset 'substatement-open 0)
+;;;   (setq c++-tab-always-indent t)
+;;;   (setq c-basic-offset 8)                  ;; Default is 2
+;;;   (setq c-indent-level 8)                  ;; Default is 2
+;;;   (setq tab-stop-list '(8 12 16 20 24 28 32 36 40 44 48 52 56 60))
+;;;   (setq tab-width 8)
+;;;   (setq indent-tabs-mode nil)  ; use spaces only if nil
+;;;   )
+;;;  (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
+(add-hook 'c-mode-common-hook 'google-set-c-style)
 
 
 
@@ -1129,7 +1131,7 @@ the cursor by ARG lines."
     ;; (define-key map (kbd "M-{") 'un-indent-by-removing-4-spaces)
     ;; (define-key map (kbd "M-}") 'indent-region)
 
-    (define-key map (kbd "C-o") 'my-toggle-fold)
+    (define-key map (kbd "C-o") 'hs-toggle-hiding)
     (define-key map (kbd "C-M-o") 'my-hs-toggle-all)
 
     ;(define-key map (kbd "C-c C-p") 'my-show-file-name)
