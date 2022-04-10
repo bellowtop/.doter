@@ -1183,8 +1183,8 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "y") #'kill-ring-save)
     (define-key god-local-mode-map (kbd "p") #'yank)
     (define-key god-local-mode-map (kbd "u") #'undo)
-    ;; (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
-    ;; (define-key god-local-mode-map (kbd "O") #'my-god-above-newline-and-insert-mode)
+    (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
+    (define-key god-local-mode-map (kbd "O") #'my-god-above-newline-and-insert-mode)
     ;; (define-key god-local-mode-map (kbd "a") #'my-god-char-forward-and-insert-mode)
     ;; (define-key god-local-mode-map (kbd "A") #'my-god-mwin-end-and-insert-mode)
     (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode) ; toggle to disable god-mod globally
@@ -1197,6 +1197,8 @@ the cursor by ARG lines."
 
 
     (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
+    (define-key god-local-mode-map (kbd "C-z C-o") #'hs-toggle-hiding)
+
     (define-key god-local-mode-map (kbd "C-z C-z") #'recenter-top-bottom)
     (define-key god-local-mode-map (kbd "C-z C-b") #'end-of-buffer)                     ;; , j   to bottom
     (define-key god-local-mode-map (kbd "C-z C-t") #'beginning-of-buffer)               ;; , k   to bottom
