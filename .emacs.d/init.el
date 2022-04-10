@@ -326,12 +326,6 @@
     )
 
 
-(defun my-join-lines (arg)
-  (interactive "p")
-  (end-of-line)
-  (delete-char 1)
-  (delete-horizontal-space)
-  (insert " "))
 
 
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
@@ -1090,6 +1084,30 @@ the cursor by ARG lines."
 
 
 
+
+(defun my-join-lines (arg)
+  "Apply join-line over region."
+  (interactive "p")
+  (forward-line 0)  ;; goto line begin
+  (if (use-region-p)
+          (let ((beg (region-beginning))
+                        (end (copy-marker (region-end))))
+                (goto-char beg)
+                (while (< (point) end)
+                  (join-line 1))
+                )
+    (progn
+      (set-mark-command nil)
+      (end-of-line)
+      (join-line -1)
+    )
+))
+
+
+
+
+
+
 (use-package highlight-parentheses
   :ensure t)
 (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
@@ -1161,6 +1179,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "v") #'set-mark-command)
     ;; (define-key god-local-mode-map (kbd "P") #'mark-paragraph)
     (define-key god-local-mode-map (kbd "V") #'my-select-current-line-and-forward-line)
+    (define-key god-local-mode-map (kbd "J") #'my-join-lines)
     (define-key god-local-mode-map (kbd "y") #'kill-ring-save)
     (define-key god-local-mode-map (kbd "p") #'yank)
     (define-key god-local-mode-map (kbd "u") #'undo)
