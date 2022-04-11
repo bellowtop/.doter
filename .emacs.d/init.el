@@ -832,6 +832,7 @@
 
 (defun my-neotree-find()
   (interactive)
+  (unless (fboundp 'neo-global--window-exists-p) (neotree-show))
   (unless (neo-global--window-exists-p) (neotree-show))
   (neotree-find)
 )
@@ -1224,7 +1225,7 @@ the cursor by ARG lines."
 
     (define-key god-local-mode-map (kbd "*") #'my-search-selection)
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
-
+    (define-key god-local-mode-map (kbd "@") #'my-neotree-find)
 
     (define-key god-local-mode-map (kbd "A") #'beginning-of-defun)    ;; , h   to line left
     (define-key god-local-mode-map (kbd "E") #'end-of-defun)    ;; , h   to line left
@@ -1242,7 +1243,6 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-, C-.") #'er/expand-region)
 
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
-
 
     (define-key god-local-mode-map (kbd "C-SPC C-w C-l") #'windmove-right)
     (define-key god-local-mode-map (kbd "C-SPC C-w C-h") #'windmove-left)
