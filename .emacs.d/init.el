@@ -752,11 +752,11 @@
 )
 
 (global-set-key (kbd "C-q")      '(lambda () (interactive)
-                                    ;; (if (bound-and-true-p multiple-cursors-mode) (progn (mc/keyboard-quit) (mc/keyboard-quit) ) ) ;; have to double quit, i don't know why
+                                    (if (bound-and-true-p multiple-cursors-mode) (progn (mc/keyboard-quit) (mc/keyboard-quit) ) ) ;; have to double quit, i don't know why
                                     (my-quit))
 )
 (global-set-key (kbd "<escape>") '(lambda () (interactive)
-                                    ;; (if (bound-and-true-p multiple-cursors-mode) (progn (mc/keyboard-quit) (mc/keyboard-quit) ) ) ;; have to double quit, i don't know why
+                                    (if (bound-and-true-p multiple-cursors-mode) (progn (mc/keyboard-quit) (mc/keyboard-quit) ) ) ;; have to double quit, i don't know why
                                     (my-quit))
 )
 
@@ -879,16 +879,25 @@
   )
 
 
+
 (defun my-mc/mark-next-like-this (arg)
   (interactive "p")
-  (mc/mark-next-like-this arg)
+  (if (region-active-p)
+               (message "search the marked region")
+               (er/mark-symbol)
+               )
+  (mc/mark-next-like-this-word arg)
   (mc/cycle-forward)
   )
 
 (defun my-mc/mark-previous-like-this (arg)
   (interactive "p")
-  (mc/mark-previous-like-this arg)
-  (mc/cycle-forward)
+  (if (region-active-p)
+               (message "search the marked region")
+               (er/mark-symbol)
+               )
+  (mc/mark-previous-like-this-word arg)
+  (mc/cycle-backward)
   )
 
 
@@ -1215,15 +1224,18 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "E") #'end-of-defun)    ;; , h   to line left
 
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
+    (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)
     ;;  (define-key god-local-mode-map (kbd "C-, C-p") #'my-mc/mark-previous-like-this)
     ;;  (define-key god-local-mode-map (kbd "C-, C-s") #'mc/skip-to-next-like-this)
     ;;  (define-key god-local-mode-map (kbd "C-, C-r") #'mc/skip-to-previous-like-this)
     ;;  (define-key god-local-mode-map (kbd "C-, C-a") #'mc/mark-all-like-this)
 
-    (define-key god-local-mode-map (kbd "C-. C-w") #'my-save-buffer)
-    (define-key god-local-mode-map (kbd "C-. C-b") #'switch-to-buffer)
-    (define-key god-local-mode-map (kbd "C-. C-f") #'projectile-find-file)
-    (define-key god-local-mode-map (kbd "C-. C-.") #'er/expand-region)
+    (define-key god-local-mode-map (kbd "C-, C-w") #'my-save-buffer)
+    (define-key god-local-mode-map (kbd "C-, C-b") #'switch-to-buffer)
+    (define-key god-local-mode-map (kbd "C-, C-f") #'projectile-find-file)
+    (define-key god-local-mode-map (kbd "C-, C-.") #'er/expand-region)
+
+    (define-key god-local-mode-map (kbd "C-.") #'repeat)
 
 
     (define-key god-local-mode-map (kbd "C-SPC C-w C-l") #'windmove-right)
@@ -1234,6 +1246,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-SPC C-w C-d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "C-SPC C-w C-v") #'split-window-right)
     (define-key god-local-mode-map (kbd "C-SPC C-w C-s") #'split-window-below)
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-w") #'ace-select-window)
 
     (define-key god-local-mode-map (kbd "C-SPC C-b C-h") #'switch-to-prev-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-b C-l") #'switch-to-next-buffer)

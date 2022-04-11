@@ -131,6 +131,7 @@
 	god-local-mode
 	handle-select-window
 	handle-switch-frame
+	helm-confirm-and-exit-minibuffer
 	helpful-key
 	i3-windmove-left
 	iedit-switch-to-mc-mode
@@ -159,8 +160,10 @@
 	my-mc/mark-previous-like-this
 	my-mc/skip-to-next-like-this
 	my-mc/skip-to-previous-like-this
+	my-quit
 	org-clock-goto
 	org-edit-src-save
+	repeat
 	scroll-half-page-up
 	smart-region
 	swiper-mc
@@ -171,5 +174,4 @@
 	undo-redo
 	windmove-swap-states-left
 	windmove-swap-states-right
-	my-quit
 	))
