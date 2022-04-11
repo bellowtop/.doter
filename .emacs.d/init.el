@@ -887,7 +887,10 @@
                (er/mark-symbol)
                )
   (mc/mark-next-like-this-word arg)
-  (mc/cycle-forward)
+  ;; copy from multiple-cursors-20211112.2223/mc-cycle-cursors.el
+  (mc/cycle (mc/furthest-cursor-after-point)
+            (mc/first-fake-cursor-after (point-min))
+               "We're already at the last cursor.")
   )
 
 (defun my-mc/mark-previous-like-this (arg)
@@ -897,7 +900,10 @@
                (er/mark-symbol)
                )
   (mc/mark-previous-like-this-word arg)
-  (mc/cycle-backward)
+  ;; copy from multiple-cursors-20211112.2223/mc-cycle-cursors.el
+  (mc/cycle (mc/furthest-cursor-before-point)
+            (mc/last-fake-cursor-before (point-max))
+              "We're already at the last cursor")
   )
 
 
@@ -1247,6 +1253,8 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-SPC C-w C-v") #'split-window-right)
     (define-key god-local-mode-map (kbd "C-SPC C-w C-s") #'split-window-below)
     (define-key god-local-mode-map (kbd "C-SPC C-w C-w") #'ace-select-window)
+
+    (define-key god-local-mode-map (kbd "C-SPC C-S-l") #'display-line-numbers-mode)
 
     (define-key god-local-mode-map (kbd "C-SPC C-b C-h") #'switch-to-prev-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-b C-l") #'switch-to-next-buffer)
