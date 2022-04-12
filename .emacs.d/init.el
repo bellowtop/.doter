@@ -736,9 +736,30 @@
 )
 
 
+;; donot warnning, just wrap search
+(defun isearch-repeat-forward+ ()
+  (interactive)
+  (unless isearch-forward
+    (goto-char isearch-other-end))
+  (isearch-repeat-forward)
+  (unless isearch-success
+    (isearch-repeat-forward)))
+(defun isearch-repeat-backward+ ()
+  (interactive)
+  (when (and isearch-forward isearch-other-end)
+    (goto-char isearch-other-end))
+  (isearch-repeat-backward)
+  (unless isearch-success
+    (isearch-repeat-backward)))
+
 (require 'god-mode-isearch)
 (define-key isearch-mode-map (kbd "TAB") #'god-mode-isearch-activate)
 (define-key god-mode-isearch-map (kbd "TAB") #'god-mode-isearch-disable)
+
+(define-key god-mode-isearch-map (kbd "s") 'isearch-repeat-forward+)
+(define-key god-mode-isearch-map (kbd "r") 'isearch-repeat-backward+)
+(define-key isearch-mode-map (kbd "C-s") 'isearch-repeat-forward+)
+(define-key isearch-mode-map (kbd "C-r") 'isearch-repeat-backward+)
 
 
 
