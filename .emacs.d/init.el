@@ -762,6 +762,29 @@
 (define-key isearch-mode-map (kbd "C-r") 'isearch-repeat-backward+)
 
 
+(defun my-search-selection ()
+      "search for selected text"
+      (interactive
+        (progn
+            (if (region-active-p)
+               (message "search the marked region")
+               (er/mark-symbol)
+               )
+            (let (
+                  (selection (buffer-substring-no-properties (mark) (point)))
+                 )
+              (deactivate-mark)
+              (isearch-mode t nil nil nil)
+              ;; activate god-mode-isearch
+              (god-mode-isearch-activate)
+              (isearch-yank-string selection)
+            )
+        )
+      )
+    )
+
+
+
 
 (defun my-quit ()
     (interactive)
@@ -871,8 +894,8 @@
   ;; (setq neo-toggle-window-keep-p 't)
   :bind (
        ;; ("C-c w o" . neotree-toggle)
-       ("C-c h" . my-neotree-toggle)
-       ("C-c j" . my-neotree-find)
+       ;; ("C-c l" . my-neotree-toggle)
+       ;; ("C-c j" . my-neotree-find)
   )
 )
 
@@ -1018,25 +1041,6 @@
   )
 )
 
-
-(defun my-search-selection ()
-      "search for selected text"
-      (interactive
-        (progn
-            (if (region-active-p)
-               (message "search the marked region")
-               (er/mark-symbol)
-               )
-            (let (
-                  (selection (buffer-substring-no-properties (mark) (point)))
-                 )
-              (deactivate-mark)
-              (isearch-mode t nil nil nil)
-              (isearch-yank-string selection)
-            )
-        )
-      )
-    )
 
 
 ;;;  treats underscores as part of words
@@ -1245,9 +1249,6 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "*") #'my-search-selection)
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
 
-    (define-key god-local-mode-map (kbd "@") #'my-neotree-find)
-
-    (define-key god-local-mode-map (kbd "C-SPC C-n") #'my-neotree-toggle)
 
     (define-key god-local-mode-map (kbd "A") #'beginning-of-defun)    ;; , h   to line left
     (define-key god-local-mode-map (kbd "E") #'end-of-defun)    ;; , h   to line left
@@ -1265,6 +1266,8 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-SPC C-f") #'projectile-find-file)
     (define-key god-local-mode-map (kbd "C-SPC C-w") #'my-save-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-k") #'kill-this-buffer)
+    (define-key god-local-mode-map (kbd "C-SPC C-n") #'my-neotree-toggle)
+    (define-key god-local-mode-map (kbd "@") #'my-neotree-find)
     (define-key god-local-mode-map (kbd "C-SPC C-S-l") #'display-line-numbers-mode)
 
     (define-key god-local-mode-map (kbd "C-, C-w C-l") #'windmove-right)
