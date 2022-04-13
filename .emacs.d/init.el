@@ -5,7 +5,7 @@
 ;; (define-key input-decode-map [?\C-m] [C-m])
 
 ;; Set garbage collection threshold to 1GB.
-(setq gc-cons-threshold #x20000000)
+;; (setq gc-cons-threshold #x20000000)
 
 
 (require 'package)
@@ -574,12 +574,11 @@
 
 
 
-(defun my-toggle-fold ()
+(defun my-hs-toggle-hiding ()
   (interactive)
-  (save-excursion
-    (mwim-end-of-code-or-line)
-    (beginning-of-defun)
-    (hs-toggle-hiding)))
+   (if (hs-already-hidden-p)
+       (hs-show-block)
+     (hs-hide-block)))
 
 
 
@@ -1186,7 +1185,7 @@ the cursor by ARG lines."
     ;; (define-key map (kbd "M-{") 'un-indent-by-removing-4-spaces)
     ;; (define-key map (kbd "M-}") 'indent-region)
 
-    (define-key map (kbd "C-o") 'hs-toggle-hiding)
+    (define-key map (kbd "C-o") 'my-hs-toggle-hiding)
     (define-key map (kbd "C-M-o") 'my-hs-toggle-all)
 
     ;(define-key map (kbd "C-c C-p") 'my-show-file-name)
@@ -1227,14 +1226,15 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode) ; toggle to disable god-mod globally
     ;; (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
 
-    (define-key god-local-mode-map (kbd "d") #'delete-forward-char)                         ;; e  delete
+    (define-key god-local-mode-map (kbd "x") #'delete-forward-char)                         ;; e  delete
     (define-key god-local-mode-map (kbd "s") #'my-replace-char)                         ;; e  delete
     (define-key god-local-mode-map (kbd "C-c C-w") #'my-kill-word)                         ;; e  delete
-    (define-key god-local-mode-map (kbd "X") #'kill-region)                         ;; d   to cut (same as C-w)
+    (define-key god-local-mode-map (kbd "d") #'kill-region)                         ;; d   to cut (same as C-w)
 
 
     (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
-    (define-key god-local-mode-map (kbd "C-z C-o") #'hs-toggle-hiding)
+    (define-key god-local-mode-map (kbd "C-z C-o") #'my-hs-toggle-hiding)
+    (define-key god-local-mode-map (kbd "q") #'my-hs-toggle-hiding)
 
     (define-key god-local-mode-map (kbd "C-z C-z") #'recenter-top-bottom)
     (define-key god-local-mode-map (kbd "C-z C-b") #'end-of-buffer)                     ;; , j   to bottom
@@ -1266,6 +1266,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-SPC C-b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-f") #'projectile-find-file)
     (define-key god-local-mode-map (kbd "C-SPC C-w") #'my-save-buffer)
+    (define-key god-local-mode-map (kbd "C-SPC C-k") #'kill-this-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-S-l") #'display-line-numbers-mode)
 
     (define-key god-local-mode-map (kbd "C-, C-w C-l") #'windmove-right)
