@@ -1163,8 +1163,6 @@ the cursor by ARG lines."
     ;; (define-key map (kbd "C-x C-b") #'switch-to-buffer)
 
     (define-key map (kbd "C-x C-f") #'helm-find-files)
-    ;; (define-key map (kbd "C-x C-p") #'projectile-find-file)
-
     (define-key map (kbd "C-x C-k") #'kill-this-buffer)
 
     (define-key map (kbd "C-a") 'mwim-beginning-of-code-or-line)
@@ -1174,37 +1172,13 @@ the cursor by ARG lines."
 
     (define-key map (kbd "C-c .") 'er/expand-region)
     (define-key map (kbd "C-c v") 'set-rectangular-region-anchor)
-    (define-key map (kbd "C-c o") #'helm-occur)
-
-    (define-key map (kbd "M-u") 'upcase-dwim)
-    (define-key map (kbd "C-j") 'my-save-buffer)
-
+    (define-key map (kbd "C-c o") 'helm-occur)
     (define-key map (kbd "C-c s") 'my-helm-ag-thing-at-point)
 
-    ;; (define-key map (kbd "C-M-u") 'backward-sexp)
-    ;; (define-key map (kbd "C-M-d") 'forward-sexp)
-
-    ;; (define-key map (kbd "C-M-u") 'my-backward-sexp)
-    ;; (define-key map (kbd "C-M-d") 'my-forward-sexp)
-
-    ;; (define-key map (kbd "M-{") 'un-indent-by-removing-4-spaces)
-    ;; (define-key map (kbd "M-}") 'indent-region)
-
-    ;; (define-key map (kbd "C-o") 'my-hs-toggle-hiding)
-    ;; (define-key map (kbd "C-M-o") 'my-hs-toggle-all)
-
-    ;(define-key map (kbd "C-c C-p") 'my-show-file-name)
-
-    ;; (define-key map (kbd "C-:") 'avy-goto-char)
+    (define-key map (kbd "C-j") 'my-save-buffer)
     (define-key map (kbd "M-;") 'avy-goto-word-0)
-
-    ;; (define-key map (kbd "C-c C-j") 'lsp-find-definition)
-
-    (define-key map (kbd "C-c t") 'flip-buffer-to-window)
-
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
-
 
 
 
@@ -1235,12 +1209,15 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-c C-w") #'my-kill-word)                         ;; e  delete
     (define-key god-local-mode-map (kbd "d") #'kill-region)                         ;; d   to cut (same as C-w)
 
-
     (define-key god-local-mode-map (kbd "q") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "C-z C-z") #'recenter-top-bottom)
     (define-key god-local-mode-map (kbd "C-z C-b") #'end-of-buffer)                     ;; , j   to bottom
     (define-key god-local-mode-map (kbd "C-z C-t") #'beginning-of-buffer)               ;; , k   to bottom
+
+    (define-key god-local-mode-map (kbd "C-c C-v") #'set-rectangular-region-anchor)
+    (define-key god-local-mode-map (kbd "C-c C-o") #'helm-occur)
+    (define-key god-local-mode-map (kbd "C-c C-s") #'my-helm-ag-thing-at-point)
 
     (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)          ;; , l   to line right
     (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)    ;; , h   to line left
