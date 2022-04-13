@@ -261,9 +261,6 @@
 
 (use-package ace-window
   :ensure t
-  :bind
-  ("M-o" . ace-select-window)
-  ("M-i" . delete-window)
   :delight
   :config
   (ace-window-display-mode 1)
