@@ -230,7 +230,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -742,14 +742,18 @@
     (goto-char isearch-other-end))
   (isearch-repeat-forward)
   (unless isearch-success
-    (isearch-repeat-forward)))
+    (isearch-repeat-forward))
+  (recenter)
+)
 (defun isearch-repeat-backward+ ()
   (interactive)
   (when (and isearch-forward isearch-other-end)
     (goto-char isearch-other-end))
   (isearch-repeat-backward)
   (unless isearch-success
-    (isearch-repeat-backward)))
+    (isearch-repeat-backward))
+  (recenter)
+)
 
 (require 'god-mode-isearch)
 (define-key isearch-mode-map (kbd "TAB") #'god-mode-isearch-activate)
@@ -1185,8 +1189,8 @@ the cursor by ARG lines."
     ;; (define-key map (kbd "M-{") 'un-indent-by-removing-4-spaces)
     ;; (define-key map (kbd "M-}") 'indent-region)
 
-    (define-key map (kbd "C-o") 'my-hs-toggle-hiding)
-    (define-key map (kbd "C-M-o") 'my-hs-toggle-all)
+    ;; (define-key map (kbd "C-o") 'my-hs-toggle-hiding)
+    ;; (define-key map (kbd "C-M-o") 'my-hs-toggle-all)
 
     ;(define-key map (kbd "C-c C-p") 'my-show-file-name)
 
@@ -1213,7 +1217,6 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "l") #'forward-char)
     (define-key god-local-mode-map (kbd "h") #'backward-char)
     (define-key god-local-mode-map (kbd "v") #'set-mark-command)
-    ;; (define-key god-local-mode-map (kbd "P") #'mark-paragraph)
     (define-key god-local-mode-map (kbd "V") #'my-select-current-line-and-forward-line)
     (define-key god-local-mode-map (kbd "J") #'my-join-lines)
     (define-key god-local-mode-map (kbd "y") #'kill-ring-save)
@@ -1232,10 +1235,8 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "d") #'kill-region)                         ;; d   to cut (same as C-w)
 
 
-    (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
-    (define-key god-local-mode-map (kbd "C-z C-o") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "q") #'my-hs-toggle-hiding)
-
+    (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "C-z C-z") #'recenter-top-bottom)
     (define-key god-local-mode-map (kbd "C-z C-b") #'end-of-buffer)                     ;; , j   to bottom
     (define-key god-local-mode-map (kbd "C-z C-t") #'beginning-of-buffer)               ;; , k   to bottom
