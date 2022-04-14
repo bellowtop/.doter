@@ -246,10 +246,6 @@
 (setq whitespace-line-column 85)
 
 
-(require 'undo-tree)
-(global-undo-tree-mode)
-
-
 (use-package iedit
   :ensure t
   :bind
@@ -986,6 +982,13 @@
                                                                 )
                                                               ))
   )
+
+
+
+
+(require 'undo-tree)
+(global-undo-tree-mode)
+
 
 
 ;; Have to use require, not use-package
