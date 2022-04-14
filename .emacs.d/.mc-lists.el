@@ -33,6 +33,7 @@
 	emmet-expand-line
 	emmet-next-edit-point
 	end-of-defun
+	er/mark-symbol
 	eval-last-sexp
 	god-mode-all
 	god-mode-self-insert

@@ -11,6 +11,7 @@ anaconda-mode/
 .wg-file.el
 /url/cache
 /.emacs.desktop
+.undo-tree-files
 /auto-save-list
 /.session
 /session.*

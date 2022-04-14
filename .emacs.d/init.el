@@ -987,6 +987,7 @@
 
 
 (require 'undo-tree)
+(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.undo-tree-files")))
 (global-undo-tree-mode)
 
 
