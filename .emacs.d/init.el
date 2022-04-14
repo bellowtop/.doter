@@ -460,7 +460,7 @@
 ;; (global-set-key [remap scroll-down-command] 'golden-ratio-scroll-screen-down)
 ;; (global-set-key [remap scroll-up-command] 'golden-ratio-scroll-screen-up)
 
- (setq scroll-margin 0
+ (setq scroll-margin 10
        scroll-conservatively 101
        scroll-up-aggressively 0.01
        scroll-down-aggressively 0.01
@@ -741,7 +741,7 @@
   (isearch-repeat-forward)
   (unless isearch-success
     (isearch-repeat-forward))
-  (recenter)
+  ;; (recenter)
 )
 (defun isearch-repeat-backward+ ()
   (interactive)
@@ -750,7 +750,7 @@
   (isearch-repeat-backward)
   (unless isearch-success
     (isearch-repeat-backward))
-  (recenter)
+  ;; (recenter)
 )
 
 (require 'god-mode-isearch)
