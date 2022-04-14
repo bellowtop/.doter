@@ -1058,6 +1058,13 @@
 
 
 
+(use-package key-chord
+  :ensure t
+  )
+(key-chord-mode 1)
+
+
+
  ;; '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
 
 
@@ -1260,7 +1267,6 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-SPC C-w C-s") #'split-window-below)
     (define-key god-local-mode-map (kbd "C-SPC C-w C-w") #'ace-select-window)
 
-    (define-key god-local-mode-map (kbd "C-, C-,") #'er/mark-symbol)
     (define-key god-local-mode-map (kbd "C-, C-w") #'my-save-buffer)
     (define-key god-local-mode-map (kbd "C-, C-k") #'kill-this-buffer)
 
@@ -1270,7 +1276,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-, C-b C-b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "C-, C-b C-a") #'flip-buffer-to-window)             ;; b a   last buffer
 
-
+    (key-chord-define god-local-mode-map ",,"  #'er/mark-symbol)
 
     ;; (define-key god-local-mode-map (kbd "C-m") #'next-line)
 
