@@ -246,6 +246,9 @@
 (setq whitespace-line-column 85)
 
 
+(require 'undo-tree)
+(global-undo-tree-mode)
+
 
 (use-package iedit
   :ensure t
@@ -985,6 +988,16 @@
   )
 
 
+;; Have to use require, not use-package
+(require 'hydra)
+(defhydra undo-tree-menu (global-map "C-c u")
+  "
+_u_: undo      _r_: redo
+"
+  ("u" undo-tree-undo)
+  ("r" undo-tree-redo)
+)
+
 
 ;;;  ;; Have to use require, not use-package
 ;;;  (require 'hydra)
@@ -1208,7 +1221,8 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "J") #'my-join-lines)
     (define-key god-local-mode-map (kbd "y") #'kill-ring-save)
     (define-key god-local-mode-map (kbd "p") #'yank)
-    (define-key god-local-mode-map (kbd "u") #'undo)
+    (define-key god-local-mode-map (kbd "u") #'undo-tree-undo)
+    (define-key god-local-mode-map (kbd "C-r") #'undo-tree-redo)
     (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
     (define-key god-local-mode-map (kbd "O") #'my-god-above-newline-and-insert-mode)
     ;; (define-key god-local-mode-map (kbd "a") #'my-god-char-forward-and-insert-mode)
