@@ -1246,22 +1246,23 @@ the cursor by ARG lines."
 
     (define-key god-local-mode-map (kbd "C-SPC C-b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-f") #'projectile-find-file)
-    (define-key god-local-mode-map (kbd "C-SPC C-w") #'my-save-buffer)
-    (define-key god-local-mode-map (kbd "C-SPC C-k") #'kill-this-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-n") #'my-neotree-toggle)
-    (define-key god-local-mode-map (kbd "@") #'my-neotree-find)
     (define-key god-local-mode-map (kbd "C-SPC C-S-l") #'display-line-numbers-mode)
+    (define-key god-local-mode-map (kbd "@") #'my-neotree-find)
 
-    (define-key god-local-mode-map (kbd "C-, C-w C-l") #'windmove-right)
-    (define-key god-local-mode-map (kbd "C-, C-w C-h") #'windmove-left)
-    (define-key god-local-mode-map (kbd "C-, C-w C-k") #'windmove-up)
-    (define-key god-local-mode-map (kbd "C-, C-w C-j") #'windmove-down)
-    (define-key god-local-mode-map (kbd "C-, C-w C-q") #'delete-window)      ;; delete this window
-    (define-key god-local-mode-map (kbd "C-, C-w C-d") #'delete-other-windows)  ;; delete other window
-    (define-key god-local-mode-map (kbd "C-, C-w C-v") #'split-window-right)
-    (define-key god-local-mode-map (kbd "C-, C-w C-s") #'split-window-below)
-    (define-key god-local-mode-map (kbd "C-, C-w C-w") #'ace-select-window)
-    (define-key god-local-mode-map (kbd "C-, C-,") #'er/expand-region)
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-l") #'windmove-right)
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-h") #'windmove-left)
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-k") #'windmove-up)
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-j") #'windmove-down)
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-q") #'delete-window)      ;; delete this window
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-d") #'delete-other-windows)  ;; delete other window
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-v") #'split-window-right)
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-s") #'split-window-below)
+    (define-key god-local-mode-map (kbd "C-SPC C-w C-w") #'ace-select-window)
+
+    (define-key god-local-mode-map (kbd "C-, C-,") #'er/mark-symbol)
+    (define-key god-local-mode-map (kbd "C-, C-w") #'my-save-buffer)
+    (define-key god-local-mode-map (kbd "C-, C-k") #'kill-this-buffer)
 
     (define-key god-local-mode-map (kbd "C-, C-b C-h") #'switch-to-prev-buffer)
     (define-key god-local-mode-map (kbd "C-, C-b C-l") #'switch-to-next-buffer)

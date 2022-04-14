@@ -162,13 +162,13 @@
 	my-mc/skip-to-next-like-this
 	my-mc/skip-to-previous-like-this
 	my-quit
+	my-save-buffer
 	org-clock-goto
 	org-edit-src-save
 	repeat
 	scroll-half-page-up
 	smart-region
 	swiper-mc
-	switch-to-buffer
 	undefined
 	undo-fu-only-redo
 	undo-fu-only-undo
