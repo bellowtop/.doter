@@ -155,6 +155,7 @@
 	multiple-cursors-menu/my-mc/mark-previous-like-this
 	multiple-cursors-menu/my-mc/skip-to-next-like-this
 	multiple-cursors-menu/my-mc/skip-to-previous-like-this
+	my-god-mode
 	my-mc/mark-all-like-this
 	my-mc/mark-next-like-this
 	my-mc/mark-previous-like-this
@@ -167,6 +168,7 @@
 	scroll-half-page-up
 	smart-region
 	swiper-mc
+	switch-to-buffer
 	undefined
 	undo-fu-only-redo
 	undo-fu-only-undo

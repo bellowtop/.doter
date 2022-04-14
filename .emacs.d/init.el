@@ -760,10 +760,13 @@
 (define-key isearch-mode-map (kbd "RET") #'god-mode-isearch-activate)
 (define-key god-mode-isearch-map (kbd "RET") #'isearch-exit)
 
-(define-key god-mode-isearch-map (kbd "s") 'isearch-repeat-forward+)
-(define-key god-mode-isearch-map (kbd "r") 'isearch-repeat-backward+)
 (define-key isearch-mode-map (kbd "C-s") 'isearch-repeat-forward+)
 (define-key isearch-mode-map (kbd "C-r") 'isearch-repeat-backward+)
+(define-key god-mode-isearch-map (kbd "s") 'isearch-repeat-forward+)
+(define-key god-mode-isearch-map (kbd "r") 'isearch-repeat-backward+)
+;; like vim
+(define-key god-mode-isearch-map (kbd "n") 'isearch-repeat-forward+)
+(define-key god-mode-isearch-map (kbd "N") 'isearch-repeat-backward+)
 
 
 (defun my-search-selection ()
@@ -799,10 +802,10 @@
     (ignore-errors (keyboard-quit))
 )
 
-(global-set-key (kbd "C-q")      '(lambda () (interactive)
-                                    (if (bound-and-true-p multiple-cursors-mode) (progn (mc/keyboard-quit) (mc/keyboard-quit) ) ) ;; have to double quit, i don't know why
-                                    (my-quit))
-)
+;; (global-set-key (kbd "C-q")      '(lambda () (interactive)
+;;                                     (if (bound-and-true-p multiple-cursors-mode) (progn (mc/keyboard-quit) (mc/keyboard-quit) ) ) ;; have to double quit, i don't know why
+;;                                     (my-quit))
+;; )
 (global-set-key (kbd "<escape>") '(lambda () (interactive)
                                     (if (bound-and-true-p multiple-cursors-mode) (progn (mc/keyboard-quit) (mc/keyboard-quit) ) ) ;; have to double quit, i don't know why
                                     (my-quit))
@@ -1184,9 +1187,7 @@ the cursor by ARG lines."
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
 
-
-
-
+    (define-key map (kbd "C-q") 'my-god-mode)
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
     (define-key god-local-mode-map (kbd "w") #'forward-word)
@@ -1213,7 +1214,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-c C-w") #'my-kill-word)                         ;; e  delete
     (define-key god-local-mode-map (kbd "d") #'kill-region)                         ;; d   to cut (same as C-w)
 
-    (define-key god-local-mode-map (kbd "q") #'my-hs-toggle-hiding)
+    ;; (define-key god-local-mode-map (kbd "q") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "C-z C-z") #'recenter-top-bottom)
     (define-key god-local-mode-map (kbd "C-z C-b") #'end-of-buffer)                     ;; , j   to bottom
