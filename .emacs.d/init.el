@@ -1205,7 +1205,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode) ; toggle to disable god-mod globally
     ;; (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
 
-    (define-key god-local-mode-map (kbd "x") #'delete-forward-char)                         ;; e  delete
+    ;; (define-key god-local-mode-map (kbd "x") #'delete-forward-char)                         ;; e  delete
     (define-key god-local-mode-map (kbd "s") #'my-replace-char)                         ;; e  delete
     (define-key god-local-mode-map (kbd "C-c C-w") #'my-kill-word)                         ;; e  delete
     (define-key god-local-mode-map (kbd "d") #'kill-region)                         ;; d   to cut (same as C-w)
