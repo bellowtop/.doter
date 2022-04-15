@@ -249,7 +249,7 @@
 (use-package iedit
   :ensure t
   :bind
-  ("M-j" . iedit-mode)
+  ("C-c i" . iedit-mode)
 )
 
 
@@ -1222,11 +1222,11 @@ the cursor by ARG lines."
     (define-key map (kbd "C-c s") 'my-helm-ag-thing-at-point)
     (define-key map (kbd "C-c d") 'avy-goto-word-0)
 
-    (define-key map (kbd "C-j") 'my-save-buffer)
+    (define-key map (kbd "M-;") 'my-god-mode)
+    (define-key map (kbd "M-j") 'my-save-buffer)
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
 
-    (define-key map (kbd "M-;") 'my-god-mode)
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
     (define-key god-local-mode-map (kbd "w") #'forward-word)
