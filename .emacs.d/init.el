@@ -119,6 +119,7 @@
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
  ;; '(isearch ((t (:background "#ffff00" :foreground "#000000" :underline nil :weight normal))))
+ '(region ((t (:background "#86dc2f" :foreground "#262626" :underline nil :weight normal))))
  '(lazy-highlight ((t (:background "#86dc2f" :foreground "#262626" :underline nil :weight normal))))
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
@@ -1263,7 +1264,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-c C-w") #'my-kill-word)                         ;; e  delete
     (define-key god-local-mode-map (kbd "d") #'kill-region)                         ;; d   to cut (same as C-w)
 
-    (define-key god-local-mode-map (kbd "q") #'my-hs-toggle-hiding)
+    (define-key god-local-mode-map (kbd "m") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "C-z C-z") #'recenter-top-bottom)
     (define-key god-local-mode-map (kbd "C-z C-b") #'end-of-buffer)                     ;; , j   to bottom
