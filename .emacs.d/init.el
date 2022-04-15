@@ -852,7 +852,7 @@
 (define-minor-mode mortal-mode
   "Allow temporary departures from god-mode."
   :lighter " mortal"
-  :keymap '(((kbd "M-/") . (lambda ()
+  :keymap '(((kbd "M-;") . (lambda ()
                           "Exit mortal-mode and resume god mode." (interactive)
                           (god-local-mode-resume)
                           (mortal-mode 0))))
@@ -1220,13 +1220,13 @@ the cursor by ARG lines."
     (define-key map (kbd "C-c v") 'set-rectangular-region-anchor)
     (define-key map (kbd "C-c o") 'helm-occur)
     (define-key map (kbd "C-c s") 'my-helm-ag-thing-at-point)
+    (define-key map (kbd "C-c d") 'avy-goto-word-0)
 
     (define-key map (kbd "C-j") 'my-save-buffer)
-    (define-key map (kbd "M-;") 'avy-goto-word-0)
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
 
-    (define-key map (kbd "M-/") 'my-god-mode)
+    (define-key map (kbd "M-;") 'my-god-mode)
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
     (define-key god-local-mode-map (kbd "w") #'forward-word)
