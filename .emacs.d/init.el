@@ -852,7 +852,7 @@
 (define-minor-mode mortal-mode
   "Allow temporary departures from god-mode."
   :lighter " mortal"
-  :keymap '(((kbd "C-q") . (lambda ()
+  :keymap '(((kbd "M-/") . (lambda ()
                           "Exit mortal-mode and resume god mode." (interactive)
                           (god-local-mode-resume)
                           (mortal-mode 0))))
@@ -989,6 +989,21 @@
 (require 'undo-tree)
 (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.undo-tree-files")))
 (global-undo-tree-mode)
+
+;; Suppress the message saying that the undo history file was
+;; saved (because this happens every single time you save a file).
+(defun radian--undo-tree-suppress-undo-history-saved-message
+    (undo-tree-save-history &rest args)
+  (let ((inhibit-message t))
+    (apply undo-tree-save-history args)))
+;; Suppress the message saying that the undo history could not be
+;; loaded because the file changed outside of Emacs.
+(defun radian--undo-tree-suppress-buffer-modified-message
+    (undo-tree-load-history &rest args)
+  (let ((inhibit-message t))
+    (apply undo-tree-load-history args)))
+(advice-add #'undo-tree-load-history :around
+            #'radian--undo-tree-suppress-buffer-modified-message)
 
 
 
@@ -1211,7 +1226,7 @@ the cursor by ARG lines."
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
 
-    (define-key map (kbd "C-q") 'my-god-mode)
+    (define-key map (kbd "M-/") 'my-god-mode)
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
     (define-key god-local-mode-map (kbd "w") #'forward-word)
@@ -1239,7 +1254,7 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-c C-w") #'my-kill-word)                         ;; e  delete
     (define-key god-local-mode-map (kbd "d") #'kill-region)                         ;; d   to cut (same as C-w)
 
-    ;; (define-key god-local-mode-map (kbd "q") #'my-hs-toggle-hiding)
+    (define-key god-local-mode-map (kbd "q") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "C-z C-z") #'recenter-top-bottom)
     (define-key god-local-mode-map (kbd "C-z C-b") #'end-of-buffer)                     ;; , j   to bottom
