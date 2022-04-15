@@ -116,16 +116,16 @@
  '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(highlight ((t (:background "maroon" :foreground "#e6e6e8"))))
+ '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
- ;; '(isearch ((t (:background "#ffff00" :foreground "#000000" :underline nil :weight normal))))
- '(region ((t (:background "#86dc2f" :foreground "#262626" :underline nil :weight normal))))
  '(lazy-highlight ((t (:background "#86dc2f" :foreground "#262626" :underline nil :weight normal))))
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
+ '(region ((t (:background "#86dc2f" :foreground "#262626" :underline nil :weight normal))))
  '(vertical-border ((t (:foreground "#00ff00")))))
 
 
@@ -232,7 +232,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -1202,6 +1202,28 @@ the cursor by ARG lines."
 
 
 
+(defun my-goto-match-paren (arg)
+  "Go to the matching parenthesis if on parenthesis. Else go to the
+opening parenthesis one level up."
+  (interactive "p")
+  (cond ((looking-at "\\s\(") (forward-list 1))
+        (t
+         (backward-char 1)
+         (cond ((looking-at "\\s\)")
+                (forward-char 1) (backward-list 1))
+               (t
+                (while (not (looking-at "\\s("))
+                  (backward-char 1)
+                  (cond ((looking-at "\\s\)")
+                         (message "->> )")
+                         (forward-char 1)
+                         (backward-list 1)
+                         (backward-char 1)))
+                  ))))))
+
+
+
+
 
 
 (use-package highlight-parentheses
@@ -1263,7 +1285,8 @@ the cursor by ARG lines."
     (define-key god-local-mode-map (kbd "C-c C-w") #'my-kill-word)                         ;; e  delete
     (define-key god-local-mode-map (kbd "d") #'kill-region)                         ;; d   to cut (same as C-w)
 
-    (define-key god-local-mode-map (kbd "m") #'my-hs-toggle-hiding)
+    (define-key god-local-mode-map (kbd "r") #'my-hs-toggle-hiding)
+    (define-key god-local-mode-map (kbd "m") #'my-goto-match-paren)
     (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "C-z C-z") #'recenter-top-bottom)
     (define-key god-local-mode-map (kbd "C-z C-b") #'end-of-buffer)                     ;; , j   to bottom
