@@ -791,6 +791,14 @@
 
 
 
+(defun my-quit-mc-mode-if-need ()
+    (interactive)
+    (if (bound-and-true-p multiple-cursors-mode)
+      (progn (mc/keyboard-quit) (mc/keyboard-quit))  ;; have to double quit, i don't know why
+    )
+  )
+
+
 
 (defun my-quit ()
     (interactive)
@@ -802,11 +810,11 @@
 )
 
 ;; (global-set-key (kbd "C-q")      '(lambda () (interactive)
-;;                                     (if (bound-and-true-p multiple-cursors-mode) (progn (mc/keyboard-quit) (mc/keyboard-quit) ) ) ;; have to double quit, i don't know why
+;;                                     (my-quit-mc-mode-if-need)
 ;;                                     (my-quit))
 ;; )
 (global-set-key (kbd "<escape>") '(lambda () (interactive)
-                                    (if (bound-and-true-p multiple-cursors-mode) (progn (mc/keyboard-quit) (mc/keyboard-quit) ) ) ;; have to double quit, i don't know why
+                                    (my-quit-mc-mode-if-need)
                                     (my-quit))
 )
 
@@ -1154,6 +1162,7 @@ _u_: undo      _r_: redo
   (interactive)
   (save-buffer)
   (my-god-mode)
+  (my-quit-mc-mode-if-need)
   )
 
 
