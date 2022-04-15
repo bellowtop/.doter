@@ -1223,7 +1223,7 @@ the cursor by ARG lines."
     (define-key map (kbd "C-c d") 'avy-goto-word-0)
 
     (define-key map (kbd "M-;") 'my-god-mode)
-    (define-key map (kbd "M-j") 'my-save-buffer)
+    (define-key map (kbd "M-s") 'my-save-buffer)
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
 
