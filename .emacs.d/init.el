@@ -154,7 +154,7 @@
   (xref-go-back)
   (recenter)
 )
-
+(add-hook 'xref-after-jump-hook 'hs-show-all)
 
 
 
