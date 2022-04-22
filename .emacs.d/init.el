@@ -115,7 +115,8 @@
  ;; If there is more than one, they won't work right.
  '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- '(highlight ((t (:background "maroon" :foreground "#e6e6e8"))))
+ ;; '(highlight ((t (:background "maroon" :foreground "#e6e6e8"))))
+ '(highlight ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
  '(lazy-highlight ((t (:background "#86dc2f" :foreground "#262626" :underline nil :weight normal))))
@@ -157,8 +158,11 @@
   (xref-go-back)
   (recenter)
 )
-(add-hook 'xref-after-jump-hook 'hs-show-all)
-(add-hook 'xref-after-jump-hook 'xref-pulse-momentarily)
+
+
+;; override jump hook
+(setq xref-after-jump-hook '(hs-show-all recenter xref-pulse-momentarily))
+
 
 
 
