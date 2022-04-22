@@ -169,6 +169,7 @@
 (use-package lsp-mode
   :defer t
   :init
+  (setq lsp-enable-links nil)
   (setq lsp-keymap-prefix "C-c l" )
   (setq lsp-signature-auto-activate nil)
   (setq lsp-diagnostics-provider :none)
