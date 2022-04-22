@@ -116,7 +116,6 @@
  '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(highlight ((t (:background "maroon" :foreground "#e6e6e8"))))
- '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
  '(lazy-highlight ((t (:background "#86dc2f" :foreground "#262626" :underline nil :weight normal))))
@@ -126,7 +125,11 @@
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(region ((t (:background "#86dc2f" :foreground "#262626" :underline nil :weight normal))))
+ '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(vertical-border ((t (:foreground "#00ff00")))))
+
+
+;; (global-font-lock-mode -1)
 
 
 ;; Set symbol for the border
@@ -155,6 +158,7 @@
   (recenter)
 )
 (add-hook 'xref-after-jump-hook 'hs-show-all)
+(add-hook 'xref-after-jump-hook 'xref-pulse-momentarily)
 
 
 
@@ -232,7 +236,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -459,7 +463,7 @@
 ;; (global-set-key [remap scroll-down-command] 'golden-ratio-scroll-screen-down)
 ;; (global-set-key [remap scroll-up-command] 'golden-ratio-scroll-screen-up)
 
- (setq scroll-margin 10
+ (setq scroll-margin 3
        scroll-conservatively 101
        scroll-up-aggressively 0.01
        scroll-down-aggressively 0.01
@@ -651,18 +655,12 @@
 
 
 
+(require 'mwim)
 
-(defun my-god-above-newline-and-insert-mode()
-  (interactive)
-  (previous-line)
-  (end-of-line)
-  (newline-and-indent)
-  (god-mode-all)
-  )
 
 
 ;; (setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*scratch" "*Help*" "*lsp-log*"))
-(setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*"))
+(setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Help*"))
 (require 'god-mode)
 (setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
@@ -693,6 +691,14 @@
   (god-local-mode -1)
   )
 
+(defun my-god-above-newline-and-insert-mode()
+  (interactive)
+  (previous-line)
+  (end-of-line)
+  (newline-and-indent)
+  (god-mode-all)
+  )
+
 (defun my-god-below-newline-and-insert-mode()
   (interactive)
   (end-of-line)
@@ -718,7 +724,7 @@
   (god-mode-all)
   )
 
-(defun my-god-end-of-word ()
+(defun my-move-to-end-of-word ()
   "Move to the next 'last character' of a word."
   (interactive)
   (forward-char)
@@ -731,6 +737,19 @@
   (god-local-mode)
 )
 
+(defun my-delete-to-beginning(args)
+  (interactive "p")
+  (set-mark-command nil)
+  (mwim-beginning-of-code-or-line)
+  (delete-region (region-beginning) (region-end))
+  )
+
+(defun my-delete-to-end(args)
+  (interactive "p")
+  (set-mark-command nil)
+  (mwim-end-of-line)
+  (delete-region (region-beginning) (region-end))
+  )
 
 ;; donot warnning, just wrap search
 (defun isearch-repeat-forward+ ()
@@ -1040,6 +1059,10 @@ _u_: undo      _r_: redo
 ;;;  )
 
 
+
+
+
+
 (defun my-deadgrep-visit-result ()
   (interactive)
   (deadgrep-visit-result)
@@ -1100,8 +1123,34 @@ _u_: undo      _r_: redo
 
 (use-package key-chord
   :ensure t
+  :config
   )
+(setq key-chord-two-keys-delay 1.0)
+(setq key-chord-one-key-delay 1.1)
+
 (key-chord-mode 1)
+
+(defun my-key-chord-define (keymap keys command)
+  "Define in KEYMAP, a key-chord of the two keys in KEYS starting a COMMAND.
+KEYS can be a string or a vector of two elements. Currently only
+elements that corresponds to ascii codes in the range 32 to 126
+can be used.
+COMMAND can be an interactive function, a string, or nil.
+If COMMAND is nil, the key-chord is removed."
+  (if (/= 2 (length keys))
+      (error "Key-chord keys must have two elements"))
+  ;; Exotic chars in a string are >255 but define-key wants 128..255
+  ;; for those.
+  (let ((key1 (logand 255 (aref keys 0)))
+        (key2 (logand 255 (aref keys 1))))
+    (if (eq key1 key2)
+        (define-key keymap (vector 'key-chord key1 key2) command)
+      (define-key keymap (vector 'key-chord key1 key2) command)
+      ;; (define-key keymap (vector 'key-chord key2 key1) command)   ;; sekiroc:: donot reverse bind!
+      )))
+
+
+
 
 
 
@@ -1122,7 +1171,8 @@ _u_: undo      _r_: redo
 
 
 ;; must be set as global
-(global-set-key (kbd "M-k") '(lambda () (interactive) (kill-line 0)) )
+(global-set-key (kbd "M-k") #'my-delete-to-beginning )
+(global-set-key (kbd "C-k") #'my-delete-to-end )
 (global-set-key (kbd "C-g") '(lambda ()
                                (interactive)
                                (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
@@ -1257,6 +1307,8 @@ opening parenthesis one level up."
     (define-key map (kbd "M-s") 'my-save-buffer)
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
+    (define-key map (kbd "M-o") 'ace-select-window)
+
 
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
@@ -1280,10 +1332,21 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode) ; toggle to disable god-mod globally
     ;; (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
 
-    ;; (define-key god-local-mode-map (kbd "x") #'delete-forward-char)                         ;; e  delete
-    (define-key god-local-mode-map (kbd "s") #'my-replace-char)                         ;; e  delete
-    (define-key god-local-mode-map (kbd "C-c C-w") #'my-kill-word)                         ;; e  delete
-    (define-key god-local-mode-map (kbd "d") #'kill-region)                         ;; d   to cut (same as C-w)
+    ;; (define-key god-local-mode-map (kbd "x") #'delete-forward-char)
+    (define-key god-local-mode-map (kbd "s") #'my-replace-char)
+    (define-key god-local-mode-map (kbd "C-c C-w") #'my-kill-word)
+
+    (define-key god-local-mode-map (kbd "d") #'kill-region)
+    ;; (define-key god-local-mode-map (kbd "X") #'kill-region)
+    ;; (define-key god-local-mode-map (kbd "D") #'delete-char)
+    ;; (define-key god-local-mode-map (kbd "d") #'(lambda () (interactive)()))   ;; placeholder
+    ;; (my-key-chord-define god-local-mode-map "dd"  #'kill-region)
+    ;; (my-key-chord-define god-local-mode-map "dw"  #'kill-word)
+    ;; (my-key-chord-define god-local-mode-map "dL"  #'my-delete-to-end)   ;; delete to end
+    ;; (my-key-chord-define god-local-mode-map "dH"  #'my-delete-to-beginning)  ;; delete to begin
+    ;; (my-key-chord-define god-local-mode-map "de"  #'my-delete-to-end)   ;; delete to end
+    ;; (my-key-chord-define god-local-mode-map "da"  #'my-delete-to-beginning)  ;; delete to begin
+
 
     (define-key god-local-mode-map (kbd "r") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "m") #'my-goto-match-paren)
@@ -1341,7 +1404,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-, C-b C-b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "C-, C-b C-a") #'flip-buffer-to-window)             ;; b a   last buffer
 
-    (key-chord-define god-local-mode-map ",,"  #'er/mark-symbol)
+    (my-key-chord-define god-local-mode-map ",,"  #'er/mark-symbol)
 
     ;; (define-key god-local-mode-map (kbd "C-m") #'next-line)
 
@@ -1357,12 +1420,20 @@ opening parenthesis one level up."
     map)
   "my-keys-minor-mode keymap.")
 
+
+
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
   :init-value t
   :lighter " my-keys")
-
 (my-keys-minor-mode 1)
+
+
+
+
+
+
+
 
 (defun my-minibuffer-setup-hook ()
   (my-keys-minor-mode 0))
