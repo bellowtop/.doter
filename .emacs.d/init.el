@@ -1342,6 +1342,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-c C-w") #'my-kill-word)
 
     (define-key god-local-mode-map (kbd "d") #'kill-region)
+    (define-key god-local-mode-map (kbd "-") #'delete-char)
     ;; (define-key god-local-mode-map (kbd "X") #'kill-region)
     ;; (define-key god-local-mode-map (kbd "D") #'delete-char)
     ;; (define-key god-local-mode-map (kbd "d") #'(lambda () (interactive)()))   ;; placeholder
