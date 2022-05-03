@@ -14,6 +14,17 @@ ln -s ~/.doter/nvim             ~/.config/nvim
 ln -s ~/.doter/wezterm          ~/.config/wezterm
 ln -s ~/.doter/kak              ~/.config/kak
 ```
+#### common tools
+
+```
+sudo apt install silversearcher-ag
+sudo apt install ripgrep
+sudo apt install fd-find
+sudo apt install xclip
+```
+
+
+#### kak
 
 make sure `python` command exists. if you only have `python3`, then make a link.
 kakoune-easymotion need `python` to be present, or it will hung.
