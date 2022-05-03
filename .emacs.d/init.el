@@ -989,6 +989,18 @@
               "We're already at the last cursor")
   )
 
+(defun my-mc/skip-to-next-like-this (arg)
+  (interactive "p")
+  ;; copy from multiple-cursors-20211112.2223/mc-cycle-cursors.el
+  (mc/cycle (mc/furthest-cursor-before-point)
+            (mc/last-fake-cursor-before (point-max))
+              "We're already at the last cursor")
+  (mc/skip-to-next-like-this)
+  ;; copy from multiple-cursors-20211112.2223/mc-cycle-cursors.el
+  (mc/cycle (mc/furthest-cursor-after-point)
+            (mc/first-fake-cursor-after (point-min))
+               "We're already at the last cursor.")
+  )
 
 (with-eval-after-load 'multiple-cursors-core
     (define-key mc/keymap (kbd "TAB") 'mc/cycle-forward)
@@ -996,7 +1008,7 @@
     (define-key mc/keymap (kbd "C-x C-n") 'my-mc/mark-next-like-this)
     (define-key mc/keymap (kbd "C-x C-p") 'my-mc/mark-previous-like-this)
     (define-key mc/keymap (kbd "C-x C-a") 'mc/mark-all-like-this)
-    (define-key mc/keymap (kbd "C-x C-s") 'mc/skip-to-next-like-this)
+    (define-key mc/keymap (kbd "C-x C-s") 'my-mc/skip-to-next-like-this)
     (define-key mc/keymap (kbd "C-x C-r") 'mc/skip-to-previous-like-this)
     (define-key mc/keymap (kbd "C-x C-x") 'mc/unmark-next-like-this)
     (define-key mc/keymap (kbd "C-x C-d") 'mc/unmark-previous-like-this)
@@ -1092,6 +1104,20 @@ _u_: undo      _r_: redo
   (other-window 1)
   )
 
+(defun my-deadgrep-edit-enter()
+  (interactive)
+  (global-undo-tree-mode -1)
+  (remove-hook 'before-save-hook #'delete-trailing-whitespace)
+  (deadgrep-edit-mode)
+  )
+
+(defun my-deadgrep-edit-exit()
+  (interactive)
+  (global-undo-tree-mode 1)
+  (add-hook 'before-save-hook #'delete-trailing-whitespace)
+  (deadgrep-mode)
+  )
+
 (use-package deadgrep
   :ensure t
   :config
@@ -1109,9 +1135,9 @@ _u_: undo      _r_: redo
           ("p"    . deadgrep-backward-match)
           ("N"    . deadgrep-forward-filename)
           ("P"    . deadgrep-backward-filename)
-          ("C-x C-q" . deadgrep-edit-mode)
+          ("C-x C-q" . my-deadgrep-edit-enter)
     :map deadgrep-edit-mode-map
-         ("C-c C-c" . deadgrep-mode)
+         ("C-c C-c" . my-deadgrep-edit-exit)
     )
   )
 )
