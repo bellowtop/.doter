@@ -78,7 +78,8 @@
     (load-theme 'spacemacs-dark t)
 )
 (when (display-graphic-p)
-    (load-theme 'dracula t)
+    (load-theme 'spacemacs-dark t)
+    ;; (load-theme 'dracula t)
     ;; (load-theme 'kaolin-ocean t)
 )
 
