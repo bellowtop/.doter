@@ -73,18 +73,26 @@
   (doom-themes-neotree-config)
   )
 
+;;  ;; copy background from vim's bogster
+;;  (setq spacemacs-theme-custom-colors
+;;    '((bg1        .    "#161c23" ))
+;;  )
+
 (unless (display-graphic-p)
+    (load-theme 'doom-xcode t)
+    ;; (load-theme 'spacemacs-dark t)
     ;;(load-theme 'dracula t)
-    (load-theme 'spacemacs-dark t)
 )
 (when (display-graphic-p)
-    (load-theme 'spacemacs-dark t)
+    (load-theme 'doom-xcode t)
+    ;; (load-theme 'spacemacs-dark t)
     ;; (load-theme 'dracula t)
     ;; (load-theme 'kaolin-ocean t)
 )
 
+
 (unless (display-graphic-p)
-  (set-face-attribute 'default nil :background "nil")
+  ; (set-face-attribute 'default nil :background "nil")
   (set-face-attribute 'line-number nil :background "nil")
   (set-face-attribute 'line-number-current-line nil :background "nil")
 )
@@ -116,7 +124,6 @@
  ;; If there is more than one, they won't work right.
  '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- ;; '(highlight ((t (:background "maroon" :foreground "#e6e6e8"))))
  '(highlight ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
@@ -128,8 +135,10 @@
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(region ((t (:background "#86dc2f" :foreground "#262626" :underline nil :weight normal))))
  '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- '(vertical-border ((t (:foreground "#00ff00")))))
+ )
 
+(set-face-background 'vertical-border (face-background 'default))
+(set-face-foreground 'vertical-border "#00ff00")
 
 ;; (global-font-lock-mode -1)
 
@@ -238,7 +247,7 @@
  '(ansi-color-names-vector
    ["#14141e" "#e84c58" "#35BF88" "#dbac66" "#4ca6e8" "#c79af4" "#6bd9db" "#e6e6e8"])
  '(custom-safe-themes
-   '("1436985fac77baf06193993d88fa7d6b358ad7d600c1e52d12e64a2f07f07176" "25a62bce420d4964a8c5c8079d989d33e708bd70c90977041dce9da10c41ab4a" "9faadda7354abf39736f1f70a0b671219c20406f3c83c76162bc2f5256319ff5" "aae54abad4ea9b61e6ce2591732331d93c2cac7a154d11fd1b44cdd0be69b4e4" "a61f08cfc7728d2cb21e12132acb05b21ed6e9f14e1342b936e9c03616a2b401" "2cc34c4e0033e1dd26c41c9f2dc0acd8bcfbb3edeb30c686c941cc4fa540c5ab" "626492d87426dbe828dc3ed886fe913c13600c55c04b1d62bdb1680869633785" "3080956d3b44a537fa2af292806c239304acb84959be129f8014c9470f8a3ca6" "d2b3341ed2c786cefe1b9a4b9d4a023b68e3f2c3f2ace7f2a4cdaa5021c35c57" "e09b0d90563545be26823d77b303d7f862d4e298374d7903fbf310c102192add" "b5f8f2440106661f5a29695602f867c61b015bce8add3eb79ddfc8f6592e723d" "cbdf8c2e1b2b5c15b34ddb5063f1b21514c7169ff20e081d39cf57ffee89bc1e" "3ab20589e7267ac9d2762402c794c9d9038c1c14c74361265283caf3b367efea" "06ed754b259cb54c30c658502f843937ff19f8b53597ac28577ec33bb084fa52" "e266d44fa3b75406394b979a3addc9b7f202348099cfde69e74ee6432f781336" "e8567ee21a39c68dbf20e40d29a0f6c1c05681935a41e206f142ab83126153ca" "d516f1e3e5504c26b1123caa311476dc66d26d379539d12f9f4ed51f10629df3" "2050674326d536ddd3dcea87e077d27071cfbbe974a4540b1a57b6b672f64c51" "f00a605fb19cb258ad7e0d99c007f226f24d767d01bf31f3828ce6688cbdeb22" "6128465c3d56c2630732d98a3d1c2438c76a2f296f3c795ebda534d62bb8a0e3" "11cc65061e0a5410d6489af42f1d0f0478dbd181a9660f81a692ddc5f948bf34" "3c7a784b90f7abebb213869a21e84da462c26a1fda7e5bd0ffebf6ba12dbd041" "249e100de137f516d56bcf2e98c1e3f9e1e8a6dce50726c974fa6838fbfcec6b" "733ef3e3ffcca378df65a5b28db91bf1eeb37b04d769eda28c85980a6df5fa37" "c95813797eb70f520f9245b349ff087600e2bd211a681c7a5602d039c91a6428" "d9a28a009cda74d1d53b1fbd050f31af7a1a105aa2d53738e9aa2515908cac4c" "57e3f215bef8784157991c4957965aa31bac935aca011b29d7d8e113a652b693" "5f19cb23200e0ac301d42b880641128833067d341d22344806cdad48e6ec62f6" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "8d7b028e7b7843ae00498f68fad28f3c6258eda0650fe7e17bfb017d51d0e2a2" "da53441eb1a2a6c50217ee685a850c259e9974a8fa60e899d393040b4b8cc922" "cf922a7a5c514fad79c483048257c5d8f242b21987af0db813d3f0b138dfaf53" "234dbb732ef054b109a9e5ee5b499632c63cc24f7c2383a849815dacc1727cb6" "8146edab0de2007a99a2361041015331af706e7907de9d6a330a3493a541e5a6" "1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "e6f3a4a582ffb5de0471c9b640a5f0212ccf258a987ba421ae2659f1eaa39b09" "47db50ff66e35d3a440485357fb6acb767c100e135ccdf459060407f8baea7b2" "1d44ec8ec6ec6e6be32f2f73edf398620bb721afeed50f75df6b12ccff0fbb15" "745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d" "0466adb5554ea3055d0353d363832446cd8be7b799c39839f387abb631ea0995" "23c806e34594a583ea5bbf5adf9a964afe4f28b4467d28777bcba0d35aa0872e" "97db542a8a1731ef44b60bc97406c1eb7ed4528b0d7296997cbb53969df852d6" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
+   '("6c98bc9f39e8f8fd6da5b9c74a624cbb3782b4be8abae8fd84cbc43053d7c175" "a0be7a38e2de974d1598cf247f607d5c1841dbcef1ccd97cded8bea95a7c7639" "1436985fac77baf06193993d88fa7d6b358ad7d600c1e52d12e64a2f07f07176" "25a62bce420d4964a8c5c8079d989d33e708bd70c90977041dce9da10c41ab4a" "9faadda7354abf39736f1f70a0b671219c20406f3c83c76162bc2f5256319ff5" "aae54abad4ea9b61e6ce2591732331d93c2cac7a154d11fd1b44cdd0be69b4e4" "a61f08cfc7728d2cb21e12132acb05b21ed6e9f14e1342b936e9c03616a2b401" "2cc34c4e0033e1dd26c41c9f2dc0acd8bcfbb3edeb30c686c941cc4fa540c5ab" "626492d87426dbe828dc3ed886fe913c13600c55c04b1d62bdb1680869633785" "3080956d3b44a537fa2af292806c239304acb84959be129f8014c9470f8a3ca6" "d2b3341ed2c786cefe1b9a4b9d4a023b68e3f2c3f2ace7f2a4cdaa5021c35c57" "e09b0d90563545be26823d77b303d7f862d4e298374d7903fbf310c102192add" "b5f8f2440106661f5a29695602f867c61b015bce8add3eb79ddfc8f6592e723d" "cbdf8c2e1b2b5c15b34ddb5063f1b21514c7169ff20e081d39cf57ffee89bc1e" "3ab20589e7267ac9d2762402c794c9d9038c1c14c74361265283caf3b367efea" "06ed754b259cb54c30c658502f843937ff19f8b53597ac28577ec33bb084fa52" "e266d44fa3b75406394b979a3addc9b7f202348099cfde69e74ee6432f781336" "e8567ee21a39c68dbf20e40d29a0f6c1c05681935a41e206f142ab83126153ca" "d516f1e3e5504c26b1123caa311476dc66d26d379539d12f9f4ed51f10629df3" "2050674326d536ddd3dcea87e077d27071cfbbe974a4540b1a57b6b672f64c51" "f00a605fb19cb258ad7e0d99c007f226f24d767d01bf31f3828ce6688cbdeb22" "6128465c3d56c2630732d98a3d1c2438c76a2f296f3c795ebda534d62bb8a0e3" "11cc65061e0a5410d6489af42f1d0f0478dbd181a9660f81a692ddc5f948bf34" "3c7a784b90f7abebb213869a21e84da462c26a1fda7e5bd0ffebf6ba12dbd041" "249e100de137f516d56bcf2e98c1e3f9e1e8a6dce50726c974fa6838fbfcec6b" "733ef3e3ffcca378df65a5b28db91bf1eeb37b04d769eda28c85980a6df5fa37" "c95813797eb70f520f9245b349ff087600e2bd211a681c7a5602d039c91a6428" "d9a28a009cda74d1d53b1fbd050f31af7a1a105aa2d53738e9aa2515908cac4c" "57e3f215bef8784157991c4957965aa31bac935aca011b29d7d8e113a652b693" "5f19cb23200e0ac301d42b880641128833067d341d22344806cdad48e6ec62f6" "e8df30cd7fb42e56a4efc585540a2e63b0c6eeb9f4dc053373e05d774332fc13" "8d7b028e7b7843ae00498f68fad28f3c6258eda0650fe7e17bfb017d51d0e2a2" "da53441eb1a2a6c50217ee685a850c259e9974a8fa60e899d393040b4b8cc922" "cf922a7a5c514fad79c483048257c5d8f242b21987af0db813d3f0b138dfaf53" "234dbb732ef054b109a9e5ee5b499632c63cc24f7c2383a849815dacc1727cb6" "8146edab0de2007a99a2361041015331af706e7907de9d6a330a3493a541e5a6" "1d5e33500bc9548f800f9e248b57d1b2a9ecde79cb40c0b1398dec51ee820daf" "e6f3a4a582ffb5de0471c9b640a5f0212ccf258a987ba421ae2659f1eaa39b09" "47db50ff66e35d3a440485357fb6acb767c100e135ccdf459060407f8baea7b2" "1d44ec8ec6ec6e6be32f2f73edf398620bb721afeed50f75df6b12ccff0fbb15" "745d03d647c4b118f671c49214420639cb3af7152e81f132478ed1c649d4597d" "0466adb5554ea3055d0353d363832446cd8be7b799c39839f387abb631ea0995" "23c806e34594a583ea5bbf5adf9a964afe4f28b4467d28777bcba0d35aa0872e" "97db542a8a1731ef44b60bc97406c1eb7ed4528b0d7296997cbb53969df852d6" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "b3775ba758e7d31f3bb849e7c9e48ff60929a792961a2d536edec8f68c671ca5" "b89a4f5916c29a235d0600ad5a0849b1c50fab16c2c518e1d98f0412367e7f97" "96998f6f11ef9f551b427b8853d947a7857ea5a578c75aa9c4e7c73fe04d10b4" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
@@ -666,7 +675,7 @@
 
 
 ;; (setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*scratch" "*Help*" "*lsp-log*"))
-(setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Help*"))
+(setq special-buffers (list "*Ibuffer*" "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Help*"))
 (require 'god-mode)
 (setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
@@ -1321,6 +1330,7 @@ opening parenthesis one level up."
     ;; (define-key map (kbd "C-M-b") #'switch-to-buffer)
     ;; (define-key map (kbd "C-x C-b") #'switch-to-buffer)
 
+    (define-key map (kbd "C-x C-b") #'ibuffer)
     (define-key map (kbd "C-x C-f") #'helm-find-files)
     (define-key map (kbd "C-x C-k") #'kill-this-buffer)
 
@@ -1429,15 +1439,14 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-SPC C-w C-w") #'ace-select-window)
 
     (define-key god-local-mode-map (kbd "C-, C-w") #'my-save-buffer)
-    (define-key god-local-mode-map (kbd "C-, C-k") #'kill-this-buffer)
+    (define-key god-local-mode-map (kbd "C-, C-b") #'flip-buffer-to-window)
+    (define-key god-local-mode-map (kbd "C-, C-,") #'er/mark-symbol)             ;; b a   last buffer
 
-    (define-key god-local-mode-map (kbd "C-, C-b C-h") #'switch-to-prev-buffer)
-    (define-key god-local-mode-map (kbd "C-, C-b C-l") #'switch-to-next-buffer)
-    (define-key god-local-mode-map (kbd "C-, C-b C-k") #'delete-buffer)
-    (define-key god-local-mode-map (kbd "C-, C-b C-b") #'switch-to-buffer)
-    (define-key god-local-mode-map (kbd "C-, C-b C-a") #'flip-buffer-to-window)             ;; b a   last buffer
+    ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)
+    ;; (define-key god-local-mode-map (kbd "C-, C-l") #'switch-to-next-buffer)
 
-    (my-key-chord-define god-local-mode-map ",,"  #'er/mark-symbol)
+
+    ;; (my-key-chord-define god-local-mode-map ",,"  #'er/mark-symbol)
 
     ;; (define-key god-local-mode-map (kbd "C-m") #'next-line)
 
