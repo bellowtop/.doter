@@ -90,7 +90,7 @@
 ;;      ;; (load-theme 'kaolin-ocean t)
 ;;  )
 
-(load-theme 'doom-xcode t)
+(load-theme 'spacemacs-dark t)
 
 (unless (display-graphic-p)
   ; (set-face-attribute 'default nil :background "nil")
