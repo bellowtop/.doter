@@ -280,7 +280,7 @@
 
 ;; line number fixed width
 (setq display-line-numbers-width-start t)
-;; (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 
 
