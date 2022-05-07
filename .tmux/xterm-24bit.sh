@@ -10,7 +10,7 @@ EOF
 
 /usr/bin/tic -x -o ~/.terminfo /tmp/xterm-24bit.terminfo
 
-echo "\nexport TERM=xterm-24bit\n" >> ~/.bashrc
-echo "\nexport TERM=xterm-24bit\n" >> ~/.zshrc
+echo -e "\nexport TERM=xterm-24bit\n" >> ~/.bashrc
+echo -e "\nexport TERM=xterm-24bit\n" >> ~/.zshrc
 
 
