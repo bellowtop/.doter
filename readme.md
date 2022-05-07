@@ -14,6 +14,7 @@ ln -s ~/.doter/nvim             ~/.config/nvim
 ln -s ~/.doter/wezterm          ~/.config/wezterm
 ln -s ~/.doter/kak              ~/.config/kak
 ```
+
 #### common tools
 
 ```
@@ -39,6 +40,7 @@ sudo ln -s /bin/python3 /bin/python
 #### nvim
 
 install plug.vim
+
 ```
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -46,6 +48,14 @@ curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
 nvim +PlugInstall +qall
 
 
+```
+
+#### tmux
+
+install 24bit terminfo.
+
+```
+bash ~/.doter/.tmux/xterm-24bit.sh
 ```
 
 

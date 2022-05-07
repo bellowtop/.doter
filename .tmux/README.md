@@ -1,10 +1,5 @@
 ## Install
 
-```
-$ cd
-$ git clone https://github.com/sekirocc/.tmux.git
-$ ln -s .tmux/.tmux.conf .
-```
 
 ## Trouble
 
