@@ -92,11 +92,12 @@
 
 (load-theme 'spacemacs-dark t)
 
-(unless (display-graphic-p)
-  ; (set-face-attribute 'default nil :background "nil")
-  (set-face-attribute 'line-number nil :background "nil")
-  (set-face-attribute 'line-number-current-line nil :background "nil")
-)
+;;  (unless (display-graphic-p)
+;;    ; (set-face-attribute 'default nil :background "nil")
+;;    ;; (set-face-attribute 'line-number nil :background "nil")
+;;    ;; (set-face-attribute 'line-number-current-line nil :background "nil")
+;;  )
+
 
 (setq-default line-spacing 0)
 (when (display-graphic-p)
@@ -140,6 +141,8 @@
 
 (set-face-background 'vertical-border (face-background 'default))
 (set-face-foreground 'vertical-border "#00ff00")
+
+(set-face-background 'line-number (face-background 'default))
 
 ;; (global-font-lock-mode -1)
 
@@ -275,6 +278,8 @@
 
 
 
+;; line number fixed width
+(setq display-line-numbers-width-start t)
 ;; (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 
