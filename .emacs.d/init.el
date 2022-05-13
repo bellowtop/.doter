@@ -102,7 +102,7 @@
 
 (setq-default line-spacing 0)
 (when (display-graphic-p)
-  (set-face-attribute 'default nil :font "Dejavu Sans Mono for Powerline-12")
+  ;; (set-face-attribute 'default nil :font "Dejavu Sans Mono for Powerline-12")
   (set-cursor-color "red")
 )
 
@@ -512,10 +512,10 @@
   (scroll-other-window (- 0 (/ (window-body-height) 2))))
 
 
-(global-set-key [remap scroll-down-command] 'scroll-half-page-down)
-(global-set-key [remap scroll-up-command] 'scroll-half-page-up)
-(define-key global-map [(meta up)] '(lambda() (interactive) (scroll-other-window-half-page-down)))
-(define-key global-map [(meta down)] '(lambda() (interactive) (scroll-other-window-half-page-up)))
+(global-set-key [remap scroll-down-command] #'scroll-half-page-down)
+(global-set-key [remap scroll-up-command] #'scroll-half-page-up)
+(define-key global-map [(meta up)] #'(lambda() (interactive) (scroll-other-window-half-page-down)))
+(define-key global-map [(meta down)] #'(lambda() (interactive) (scroll-other-window-half-page-up)))
 
 
 (add-to-list 'default-frame-alist
@@ -853,7 +853,7 @@
 ;;                                     (my-quit-mc-mode-if-need)
 ;;                                     (my-quit))
 ;; )
-(global-set-key (kbd "<escape>") '(lambda () (interactive)
+(global-set-key (kbd "<escape>") #'(lambda () (interactive)
                                     (my-quit-mc-mode-if-need)
                                     (my-quit))
 )
@@ -1029,13 +1029,13 @@
     (define-key mc/keymap (kbd "C-x C-x") 'mc/unmark-next-like-this)
     (define-key mc/keymap (kbd "C-x C-d") 'mc/unmark-previous-like-this)
 
-    (add-hook 'multiple-cursors-mode-enabled-hook '(lambda ()
+    (add-hook 'multiple-cursors-mode-enabled-hook #'(lambda ()
                                                               (if (and lsp-enable-symbol-highlighting t)
                                                                 (lsp-toggle-symbol-highlight)
                                                                 (message "is already not highlight")
                                                                 )
                                                               ))
-    (add-hook 'multiple-cursors-mode-disabled-hook '(lambda ()
+    (add-hook 'multiple-cursors-mode-disabled-hook #'(lambda ()
                                                               (if (not lsp-enable-symbol-highlighting)
                                                                 (lsp-toggle-symbol-highlight)
                                                                 (message "is enabled highlight")
@@ -1220,7 +1220,7 @@ If COMMAND is nil, the key-chord is removed."
 ;; must be set as global
 (global-set-key (kbd "M-k") #'my-delete-to-beginning )
 (global-set-key (kbd "C-k") #'my-delete-to-end )
-(global-set-key (kbd "C-g") '(lambda ()
+(global-set-key (kbd "C-g") #'(lambda ()
                                (interactive)
                                (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
                                (keyboard-quit)
