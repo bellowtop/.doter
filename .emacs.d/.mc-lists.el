@@ -140,6 +140,7 @@
 	ivy-wgrep-change-to-wgrep-mode
 	magit-section-backward
 	magit-section-forward
+	markdown-cycle
 	mc/mark-all-like-this
 	mc/mark-next-like-this
 	mc/mark-previous-like-this
