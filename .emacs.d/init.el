@@ -281,6 +281,7 @@
 ;; line number fixed width
 (setq display-line-numbers-width-start t)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'markdown-mode-hook 'display-line-numbers-mode)
 
 
 
@@ -724,8 +725,12 @@
 (defun my-toggle-god-mode()
   (interactive)
     (if (bound-and-true-p god-local-mode)
-      (my-quit-god-mode)
-      (my-god-mode)
+      (progn
+        (my-quit-god-mode)
+        )
+      (progn
+        (my-god-mode)
+        )
     )
   )
 
@@ -907,7 +912,19 @@
    ))
 
 (defun my-god-mode-update-cursor-type ()
-  (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar)))
+  (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
+
+    ;; (if (bound-and-true-p god-local-mode)
+    ;;     (set-face-attribute 'line-number nil :foreground "#00ff00")
+    ;;     (set-face-attribute 'line-number nil :foreground "#3f4040")
+    ;; )
+
+    (if (bound-and-true-p god-local-mode)
+        (set-face-attribute 'line-number-current-line nil :foreground "#00ff00")
+        (set-face-attribute 'line-number-current-line nil :foreground "#FD8F3F")
+    )
+
+)
 
 (add-hook 'god-mode-enabled-hook  'my-god-mode-update-cursor-type)
 (add-hook 'god-mode-disabled-hook  'my-god-mode-update-cursor-type)
