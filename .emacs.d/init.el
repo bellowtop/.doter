@@ -716,6 +716,23 @@
   (god-local-mode -1)
   )
 
+
+
+
+
+
+(defun my-toggle-god-mode()
+  (interactive)
+    (if (bound-and-true-p god-local-mode)
+      (my-quit-god-mode)
+      (my-god-mode)
+    )
+  )
+
+
+
+
+
 (defun my-god-above-newline-and-insert-mode()
   (interactive)
   (previous-line)
@@ -755,12 +772,6 @@
   (forward-char)
   (re-search-forward "\\w\\b" nil t)
   (goto-char (match-beginning 0)))
-
-(defun my-active-god-mode ()
-  (interactive)
-  (lambda (window) (message "%s is active" (current-buffer)))
-  (god-local-mode)
-)
 
 (defun my-delete-to-beginning(args)
   (interactive "p")
@@ -853,6 +864,8 @@
     (ignore-errors (keyboard-quit))
 )
 
+
+
 ;; (global-set-key (kbd "C-q")      '(lambda () (interactive)
 ;;                                     (my-quit-mc-mode-if-need)
 ;;                                     (my-quit))
@@ -893,24 +906,11 @@
                         :background "#1B1E1C"))
    ))
 
-;; (add-hook 'god-mode-enabled-hook  'my-god-mode-update-mode-line)
-;; (add-hook 'god-mode-disabled-hook  'my-god-mode-update-mode-line)
+(defun my-god-mode-update-cursor-type ()
+  (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar)))
 
-
-; This mortal mode is designed to allow temporary departures from god mode
-; The idea is that within god-mode, you can hit shift-i, type in a few characters
-; and then hit enter to return to god-mode. To avoid clobbering the previous bindings,
-; we wrap up this behavior in a minor-mode.
-(define-minor-mode mortal-mode
-  "Allow temporary departures from god-mode."
-  :lighter " mortal"
-  :keymap '(((kbd "M-;") . (lambda ()
-                          "Exit mortal-mode and resume god mode." (interactive)
-                          (god-local-mode-resume)
-                          (mortal-mode 0))))
-  (when mortal-mode
-    (god-local-mode-pause)))
-(define-key god-local-mode-map (kbd "I") 'mortal-mode)
+(add-hook 'god-mode-enabled-hook  'my-god-mode-update-cursor-type)
+(add-hook 'god-mode-disabled-hook  'my-god-mode-update-cursor-type)
 
 
 
@@ -1353,14 +1353,13 @@ opening parenthesis one level up."
     (define-key map (kbd "C-c v") 'set-rectangular-region-anchor)
     (define-key map (kbd "C-c o") 'helm-occur)
     (define-key map (kbd "C-c s") 'my-helm-ag-thing-at-point)
-    (define-key map (kbd "C-c d") 'avy-goto-word-0)
 
-    (define-key map (kbd "M-;") 'my-god-mode)
+    (define-key map (kbd "M-;") 'avy-goto-word-0)
     (define-key map (kbd "M-s") 'my-save-buffer)
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
     (define-key map (kbd "M-o") 'ace-select-window)
-
+    (define-key map (kbd "M-q") 'my-toggle-god-mode)
 
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
