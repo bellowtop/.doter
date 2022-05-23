@@ -1,0 +1,5 @@
+source ~/.config/nvim/init.vim
+set ideajoin
+
+let mapleader="f"
+set easymotion
