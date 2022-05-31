@@ -1442,6 +1442,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "E") #'end-of-defun)    ;; , h   to line left
 
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
+    (define-key god-local-mode-map (kbd "C-~") #'upcase-char)
 
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
     (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)
