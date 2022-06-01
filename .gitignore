@@ -11,6 +11,8 @@ anaconda-mode/
 .wg-file.el
 /url/cache
 /.emacs.desktop
+/.emacs.d/eclipse.jdt.ls/
+/.emacs.d/workspace/
 .undo-tree-files
 /auto-save-list
 /.session

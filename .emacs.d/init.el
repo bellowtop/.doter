@@ -18,6 +18,10 @@
 (add-to-list 'exec-path "/usr/local/bin/")
 (add-to-list 'exec-path "/usr/bin/")
 
+(setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
+(setenv "PATH" (concat "/usr/bin:" (getenv "PATH")))
+
+
 ;; (setq  x-meta-keysym 'super
 ;;         x-super-keysym 'meta)
 ;;
@@ -102,7 +106,7 @@
 
 (setq-default line-spacing 0)
 (when (display-graphic-p)
-  ;; (set-face-attribute 'default nil :font "Dejavu Sans Mono for Powerline-12")
+  (set-face-attribute 'default nil :font "Dejavu Sans Mono for Powerline-14")
   (set-cursor-color "red")
 )
 
@@ -224,11 +228,15 @@
 ;; (add-hook 'lsp-mode-hook #'lsp-headerline-breadcrumb-mode)
 
 
+(require 'lsp-java)
+
+
 (add-hook 'go-mode-hook 'lsp-deferred)
 (add-hook 'rust-mode-hook 'lsp-deferred)
 (add-hook 'c-mode-hook 'lsp-deferred)
 (add-hook 'c++-mode-hook 'lsp-deferred)
 (add-hook 'erlang-mode-hook 'lsp-deferred)
+(add-hook 'java-mode-hook 'lsp-deferred)
 
 (use-package lsp-python-ms
   :defer t
@@ -255,7 +263,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -686,7 +694,7 @@
 
 
 ;; (setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*scratch" "*Help*" "*lsp-log*"))
-(setq special-buffers (list "*Ibuffer*" "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Help*"))
+(setq special-buffers (list "Treemacs" "*Ibuffer*" "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Help*" "helm-*"))
 (require 'god-mode)
 (setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
