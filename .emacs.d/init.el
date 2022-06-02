@@ -849,13 +849,23 @@ t
         (progn
             (if (region-active-p)
                (message "search the marked region")
-               (er/mark-symbol)
+               (progn
+                 ;; (er/mark-symbol)
+                 (er/mark-word)
+                 (setq my-search-selection-is-word-search 1)   ;; set flag
                )
+            )
             (let (
                   (selection (buffer-substring-no-properties (mark) (point)))
                  )
               (deactivate-mark)
               (isearch-mode t nil nil nil)
+
+              (if (boundp 'my-search-selection-is-word-search) ;; test flag
+                (isearch-toggle-word)
+              )
+              (makunbound 'my-search-selection-is-word-search) ;; clear flag anyway
+
               ;; activate god-mode-isearch
               (god-mode-isearch-activate)
               (isearch-yank-string selection)
