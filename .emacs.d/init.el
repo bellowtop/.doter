@@ -105,10 +105,14 @@
 
 
 (setq-default line-spacing 0)
-(when (display-graphic-p)
-  (set-face-attribute 'default nil :font "Dejavu Sans Mono for Powerline-14")
-  (set-cursor-color "red")
-)
+;; (when (display-graphic-p)
+;;   (set-face-attribute 'default nil :font "Dejavu Sans Mono for Powerline-14")
+;;   (set-cursor-color "red")
+;; )
+
+(set-face-attribute 'default nil :font "Dejavu Sans Mono for Powerline-14")
+(add-to-list 'default-frame-alist '(font . "Dejavu Sans Mono for Powerline-14"))
+(set-cursor-color "red")
 
 ;; (set-face-attribute 'region nil :background "#666")
 
@@ -133,20 +137,23 @@
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(highlight ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
- '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
- '(lazy-highlight ((t (:background "#86dc2f" :foreground "#262626" :underline nil :weight normal))))
+ '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
+ '(lazy-highlight ((t (:background "yellow" :foreground "black" :inverse-video nil))))
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
- '(region ((t (:background "#86dc2f" :foreground "#262626" :underline nil :weight normal))))
+ '(region ((t (:background "#9ac76c" :foreground "#262626" :underline nil :weight normal))))
+ '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0)))
  '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal)))))
+
+t
 
 (set-face-background 'vertical-border (face-background 'default))
 (set-face-foreground 'vertical-border "#00ff00")
 
-(set-face-background 'line-number (face-background 'default))
+;; (set-face-background 'line-number (face-background 'default))
 
 ;; (global-font-lock-mode -1)
 
@@ -694,7 +701,7 @@
 
 
 ;; (setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*scratch" "*Help*" "*lsp-log*"))
-(setq special-buffers (list "Treemacs" "*Ibuffer*" "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Help*" "helm-*"))
+(setq special-buffers (list "*Ibuffer*" "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Help*" "helm-*"))
 (require 'god-mode)
 (setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
@@ -858,6 +865,24 @@
     )
 
 
+(defun my-disable-lsp-highlighting()
+    (if (and lsp-enable-symbol-highlighting t)
+      (lsp-toggle-symbol-highlight)
+      (message "is already not highlight")
+      )
+)
+
+(defun my-enable-lsp-highlighting()
+    (if (not lsp-enable-symbol-highlighting)
+      (lsp-toggle-symbol-highlight)
+      (message "is enabled highlight")
+      )
+)
+
+(add-hook 'isearch-mode-hook #'my-disable-lsp-highlighting)
+(add-hook 'isearch-mode-end-hook #'my-enable-lsp-highlighting)
+
+
 
 (defun my-quit-mc-mode-if-need ()
     (interactive)
@@ -944,45 +969,66 @@
 
 
 
-
-
-(defun my-neotree-toggle()
-  (interactive)
-  (if (and (fboundp 'neo-global--window-exists-p) (neo-global--window-exists-p))
-    (neotree-toggle)
-    (progn
-       (neotree-show)
-       ;; (neo-global--select-window) ;; work with neo-toggle-window-keep-p
-    )
-  )
-)
-
-(defun my-neotree-find()
-  (interactive)
-  (unless (fboundp 'neo-global--window-exists-p) (neotree-show))
-  (unless (neo-global--window-exists-p) (neotree-show))
-  (neotree-find)
+(use-package all-the-icons
+    :config 
+        (setq all-the-icons-scale-factor 1.0)
+        (setq all-the-icons-default-adjust 0.0)
 )
 
 
-(setq all-the-icons-scale-factor 1)
-(setq all-the-icons-default-adjust 0.0)
-(use-package neotree
+
+
+;;; (defun my-neotree-toggle()
+;;;   (interactive)
+;;;   (if (and (fboundp 'neo-global--window-exists-p) (neo-global--window-exists-p))
+;;;     (neotree-toggle)
+;;;     (progn
+;;;        (neotree-show)
+;;;        ;; (neo-global--select-window) ;; work with neo-toggle-window-keep-p
+;;;     )
+;;;   )
+;;; )
+;;; 
+;;; (defun my-neotree-find()
+;;;   (interactive)
+;;;   (unless (fboundp 'neo-global--window-exists-p) (neotree-show))
+;;;   (unless (neo-global--window-exists-p) (neotree-show))
+;;;   (neotree-find)
+;;; )
+;;; 
+;;; 
+
+;;; (use-package neotree
+;;;   :ensure t
+;;;   :init
+;;;   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+;;;   (setq neo-confirm-create-file 'off-p)
+;;;   (setq neo-confirm-create-directory 'off-p)
+;;;   (setq neo-smart-open 't)
+;;;   (setq neo-window-fixed-size nil)
+;;;   
+;;;   ;; (setq neo-toggle-window-keep-p 't)
+;;;   :bind (
+;;;        ;; ("C-c w o" . neotree-toggle)
+;;;        ;; ("C-c l" . my-neotree-toggle)
+;;;        ;; ("C-c j" . my-neotree-find)
+;;;   )
+;;; )
+
+
+(use-package treemacs
   :ensure t
   :init
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
-  (setq neo-confirm-create-file 'off-p)
-  (setq neo-confirm-create-directory 'off-p)
-  (setq neo-smart-open 't)
-  ;; (setq neo-toggle-window-keep-p 't)
-  :bind (
-       ;; ("C-c w o" . neotree-toggle)
-       ;; ("C-c l" . my-neotree-toggle)
-       ;; ("C-c j" . my-neotree-find)
-  )
+  :config
+  (treemacs-resize-icons 18)
+
+   :bind (
+        ;; ("C-c w o" . neotree-toggle)
+        ("C-c n" . treemacs)
+        ("C-c t" . treemacs-toggle-node)
+        ;; ("C-c j" . my-neotree-find)
+   )
 )
-
-
 
 
 (defun my-helm-ag-thing-at-point ()
@@ -1058,18 +1104,8 @@
     (define-key mc/keymap (kbd "C-x C-x") 'mc/unmark-next-like-this)
     (define-key mc/keymap (kbd "C-x C-d") 'mc/unmark-previous-like-this)
 
-    (add-hook 'multiple-cursors-mode-enabled-hook #'(lambda ()
-                                                              (if (and lsp-enable-symbol-highlighting t)
-                                                                (lsp-toggle-symbol-highlight)
-                                                                (message "is already not highlight")
-                                                                )
-                                                              ))
-    (add-hook 'multiple-cursors-mode-disabled-hook #'(lambda ()
-                                                              (if (not lsp-enable-symbol-highlighting)
-                                                                (lsp-toggle-symbol-highlight)
-                                                                (message "is enabled highlight")
-                                                                )
-                                                              ))
+    (add-hook 'multiple-cursors-mode-enabled-hook #'my-disable-lsp-highlighting)
+    (add-hook 'multiple-cursors-mode-disabled-hook #'my-enable-lsp-highlighting)
   )
 
 
@@ -1461,9 +1497,11 @@ opening parenthesis one level up."
 
     (define-key god-local-mode-map (kbd "C-SPC C-b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-f") #'projectile-find-file)
-    (define-key god-local-mode-map (kbd "C-SPC C-n") #'my-neotree-toggle)
     (define-key god-local-mode-map (kbd "C-SPC C-S-l") #'display-line-numbers-mode)
-    (define-key god-local-mode-map (kbd "@") #'my-neotree-find)
+
+    (define-key god-local-mode-map (kbd "C-SPC C-n") #'treemacs)
+    (define-key god-local-mode-map (kbd "@") #'(lambda() (interactive) (treemacs-find-file) (treemacs-select-window)))
+    (define-key god-local-mode-map (kbd "C-SPC C-@") #'treemacs-add-and-display-current-project)
 
     (define-key god-local-mode-map (kbd "C-SPC C-w C-l") #'windmove-right)
     (define-key god-local-mode-map (kbd "C-SPC C-w C-h") #'windmove-left)
