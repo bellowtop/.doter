@@ -862,7 +862,10 @@ t
               (isearch-mode t nil nil nil)
 
               (if (boundp 'my-search-selection-is-word-search) ;; test flag
-                (isearch-toggle-word)
+                (progn
+                    (isearch-toggle-word)
+                    (isearch-toggle-case-fold)
+                )
               )
               (makunbound 'my-search-selection-is-word-search) ;; clear flag anyway
 
