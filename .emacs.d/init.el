@@ -849,24 +849,20 @@ t
             (if (region-active-p)
                (message "search the marked region")
                (progn
-                 ;; (er/mark-symbol)
                  (er/mark-word)
-                 (setq my-search-selection-is-word-search 1)   ;; set flag
+                 (setq my-search-selection-is-word-search 1)                                         ;; set flag
                )
             )
             (let (
                   (selection (buffer-substring-no-properties (mark) (point)))
+                  (case-fold-search (if (boundp 'my-search-selection-is-word-search) nil 'default))  ;; test flag
                  )
+
               (deactivate-mark)
               (isearch-mode t nil nil nil)
 
-              (if (boundp 'my-search-selection-is-word-search) ;; test flag
-                (progn
-                    (isearch-toggle-word)
-                    (isearch-toggle-case-fold)
-                )
-              )
-              (makunbound 'my-search-selection-is-word-search) ;; clear flag anyway
+              (if (boundp 'my-search-selection-is-word-search) (isearch-toggle-word))                ;; test flag
+              (makunbound 'my-search-selection-is-word-search)                                       ;; clear flag anyway
 
               ;; activate god-mode-isearch
               (god-mode-isearch-activate)
@@ -874,7 +870,7 @@ t
             )
         )
       )
-    )
+)
 
 
 (defun my-disable-lsp-highlighting()
@@ -982,7 +978,7 @@ t
 
 
 (use-package all-the-icons
-    :config 
+    :config
         (setq all-the-icons-scale-factor 1.0)
         (setq all-the-icons-default-adjust 0.0)
 )
@@ -1000,15 +996,15 @@ t
 ;;;     )
 ;;;   )
 ;;; )
-;;; 
+;;;
 ;;; (defun my-neotree-find()
 ;;;   (interactive)
 ;;;   (unless (fboundp 'neo-global--window-exists-p) (neotree-show))
 ;;;   (unless (neo-global--window-exists-p) (neotree-show))
 ;;;   (neotree-find)
 ;;; )
-;;; 
-;;; 
+;;;
+;;;
 
 ;;; (use-package neotree
 ;;;   :ensure t
@@ -1018,7 +1014,7 @@ t
 ;;;   (setq neo-confirm-create-directory 'off-p)
 ;;;   (setq neo-smart-open 't)
 ;;;   (setq neo-window-fixed-size nil)
-;;;   
+;;;
 ;;;   ;; (setq neo-toggle-window-keep-p 't)
 ;;;   :bind (
 ;;;        ;; ("C-c w o" . neotree-toggle)
@@ -1527,7 +1523,7 @@ opening parenthesis one level up."
 
     (define-key god-local-mode-map (kbd "C-, C-w") #'my-save-buffer)
     (define-key god-local-mode-map (kbd "C-, C-b") #'flip-buffer-to-window)
-    (define-key god-local-mode-map (kbd "C-, C-,") #'er/mark-symbol)             ;; b a   last buffer
+    (define-key god-local-mode-map (kbd "C-, C-,") #'er/mark-word)             ;; b a   last buffer
 
     ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)
     ;; (define-key god-local-mode-map (kbd "C-, C-l") #'switch-to-next-buffer)
