@@ -358,12 +358,11 @@ t
 
 ;; delete all other buffers, only keep current one.
 (defun my-only-current-buffer ()
-  (interactive)
-    (mapc 'kill-buffer (cdr (buffer-list (current-buffer))))
-    (message "killed other buffers")
-    )
-
-
+    "Kill all other buffers."
+    (interactive)
+    (mapc 'kill-buffer
+          (delq (current-buffer)
+                (remove-if-not 'buffer-file-name (buffer-list)))))
 
 
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
