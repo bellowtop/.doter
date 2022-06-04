@@ -148,7 +148,9 @@
  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0)))
  '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal)))))
 
-t
+
+(set-face-attribute 'mode-line nil :underline "#165419")
+(set-face-attribute 'mode-line-inactive nil :underline "#165419")
 
 (set-face-background 'vertical-border (face-background 'default))
 (set-face-foreground 'vertical-border "#00ff00")
@@ -547,6 +549,7 @@ t
 ;; (sml/setup)
 
 
+(setq doom-modeline-icon nil)
 (require 'doom-modeline)
 (doom-modeline-mode 1)
 
