@@ -830,7 +830,8 @@ t
 (define-key isearch-mode-map (kbd "TAB") #'god-mode-isearch-activate)
 (define-key god-mode-isearch-map (kbd "TAB") #'god-mode-isearch-disable)
 ;; RET to god, then RET to exit
-(define-key isearch-mode-map (kbd "RET") #'god-mode-isearch-activate)
+;; (define-key isearch-mode-map (kbd "RET") #'god-mode-isearch-activate)
+(define-key isearch-mode-map (kbd "RET") #'isearch-exit)
 (define-key god-mode-isearch-map (kbd "RET") #'isearch-exit)
 
 (define-key isearch-mode-map (kbd "C-s") 'isearch-repeat-forward+)
