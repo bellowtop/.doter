@@ -969,7 +969,7 @@
 
     (if (bound-and-true-p god-local-mode)
         (set-face-attribute 'line-number-current-line nil :foreground "#00ff00")
-        (set-face-attribute 'line-number-current-line nil :foreground "#FD8F3F")
+        (set-face-attribute 'line-number-current-line nil :foreground "#3f4040")
     )
 
 )
