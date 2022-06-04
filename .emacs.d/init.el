@@ -149,8 +149,9 @@
  '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal)))))
 
 
-(set-face-attribute 'mode-line nil :underline "#165419")
-(set-face-attribute 'mode-line-inactive nil :underline "#165419")
+(set-face-attribute 'mode-line nil :underline "#00ff00")
+(set-face-attribute 'mode-line-inactive nil :underline "#209920")
+
 
 (set-face-background 'vertical-border (face-background 'default))
 (set-face-foreground 'vertical-border "#00ff00")
@@ -549,7 +550,9 @@
 ;; (sml/setup)
 
 
+(setq doom-modeline-height 1)
 (setq doom-modeline-icon nil)
+(setq doom-modeline-bar-width -1)
 (require 'doom-modeline)
 (doom-modeline-mode 1)
 
