@@ -246,7 +246,14 @@
 
 ;; 0.57.0 works with java 1.8
 ;; (setq lsp-java-jdt-download-url  "https://download.eclipse.org/jdtls/milestones/0.57.0/jdt-language-server-0.57.0-202006172108.tar.gz")
-(require 'lsp-java)
+
+(setq lsp-java-jdt-download-url  "https://download.eclipse.org/jdtls/milestones/1.9.0/jdt-language-server-1.9.0-202203031534.tar.gz")
+(use-package lsp-java
+    :ensure t
+    :init
+    ; (setq lsp-java-format-settings-url (lsp--path-to-uri (substitute-in-file-name "file://$HOME/.emacs.d/.eclipse-java-formatter.xml" )))      ;; not work!
+    ; (setq lsp-java-format-settings-profile '"GoogleStyle")                                                                                    ;; not work!
+)
 
 
 (add-hook 'go-mode-hook 'lsp-deferred)
@@ -281,7 +288,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(exec-path-from-shell meghanada lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -412,6 +419,13 @@
 (add-hook 'c-mode-hook 'google-set-c-style)
 (add-hook 'c++-mode-hook 'google-set-c-style)
 
+
+(defun my-java-mode-hook ()
+     (setq c-basic-offset 4)                  ;; Default is 2
+     (setq c-indent-level 4)                  ;; Default is 2
+     (setq indent-tabs-mode nil)              ;; use spaces only if nil
+)
+(add-hook 'java-mode-hook 'my-java-mode-hook)
 
 
 
