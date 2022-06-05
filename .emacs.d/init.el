@@ -37,6 +37,13 @@
 
 
 
+
+
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
+
+
+
+
 (global-unset-key [(control z)])
 
 
@@ -579,11 +586,30 @@
 ;; (sml/setup)
 
 
-(setq doom-modeline-height 1)
-(setq doom-modeline-icon nil)
-(setq doom-modeline-bar-width -1)
-(require 'doom-modeline)
-(doom-modeline-mode 1)
+
+
+
+
+;; if graphic mode, use awesome-tray
+(when (display-graphic-p)
+    (setq awesome-tray-mode-line-active-color '"#00ff00")
+    (require 'awesome-tray)
+    (awesome-tray-mode 1)
+)
+;; if terminal mode, use doom modeline
+(unless (display-graphic-p)
+    (setq doom-modeline-height 1)
+    (setq doom-modeline-icon nil)
+    (setq doom-modeline-bar-width -1)
+    (require 'doom-modeline)
+    (doom-modeline-mode 1)
+)
+
+
+
+
+
+
 
 
 
@@ -725,6 +751,9 @@
 (when (display-graphic-p)
 (scroll-bar-mode -1)
 (tab-bar-mode -1)
+(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))  ;; dark themes use "dark"
+
 )
 
 
