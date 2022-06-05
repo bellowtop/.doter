@@ -205,6 +205,9 @@
   (recenter)
 )
 
+(add-hook 'prog-mode-hook (lambda () (view-mode -1))) ;; never goto view mode
+
+
 
 ;; override jump hook
 (setq xref-after-jump-hook '(hs-show-all recenter xref-pulse-momentarily))
