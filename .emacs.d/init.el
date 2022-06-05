@@ -22,6 +22,12 @@
 (setenv "PATH" (concat "/usr/bin:" (getenv "PATH")))
 
 
+(use-package exec-path-from-shell
+    :config
+    (exec-path-from-shell-initialize)
+)
+
+
 ;; (setq  x-meta-keysym 'super
 ;;         x-super-keysym 'meta)
 ;;
@@ -145,8 +151,8 @@
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(region ((t (:background "#9ac76c" :foreground "#262626" :underline nil :weight normal))))
- '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0)))
- '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal)))))
+ '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+ '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0))))
 
 
 (set-face-attribute 'mode-line nil :underline "#00ff00")
@@ -238,6 +244,8 @@
 ;; (add-hook 'lsp-mode-hook #'lsp-headerline-breadcrumb-mode)
 
 
+;; 0.57.0 works with java 1.8
+;; (setq lsp-java-jdt-download-url  "https://download.eclipse.org/jdtls/milestones/0.57.0/jdt-language-server-0.57.0-202006172108.tar.gz")
 (require 'lsp-java)
 
 
@@ -273,7 +281,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(exec-path-from-shell meghanada lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -401,7 +409,9 @@
 ;;;   (setq indent-tabs-mode nil)  ; use spaces only if nil
 ;;;   )
 ;;;  (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
-(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-hook 'google-set-c-style)
+(add-hook 'c++-mode-hook 'google-set-c-style)
+
 
 
 
@@ -1419,6 +1429,8 @@ opening parenthesis one level up."
     (define-key map (kbd "C-x C-b") #'ibuffer)
     (define-key map (kbd "C-x C-f") #'helm-find-files)
     (define-key map (kbd "C-x C-k") #'kill-this-buffer)
+
+    (define-key map (kbd "C-c C-e") #'eval-region)
 
     (define-key map (kbd "C-a") 'mwim-beginning-of-code-or-line)
     (define-key map (kbd "C-e") 'mwim-end-of-code-or-line)

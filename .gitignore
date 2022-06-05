@@ -14,6 +14,7 @@ anaconda-mode/
 /.emacs.d/eclipse.jdt.ls/
 /.emacs.d/workspace/
 /.emacs.d/.dap-breakpoints
+/.emacs.d/meghanada/
 .undo-tree-files
 /auto-save-list
 /.session
