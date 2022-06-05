@@ -155,9 +155,14 @@
  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0))))
 
 
-(set-face-attribute 'mode-line nil :underline "#00ff00")
-(set-face-attribute 'mode-line-inactive nil :underline "#209920")
+;; (set-face-attribute 'mode-line nil :underline "#00ff00")
+;; (set-face-attribute 'mode-line-inactive nil :underline "#209920")
 
+;; Display dividers between windows
+(setq window-divider-default-places t
+      window-divider-default-bottom-width 1
+      window-divider-default-right-width 1)
+(add-hook 'window-setup-hook #'window-divider-mode)
 
 (set-face-background 'vertical-border (face-background 'default))
 (set-face-foreground 'vertical-border "#00ff00")
