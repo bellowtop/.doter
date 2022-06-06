@@ -102,7 +102,7 @@ endfunction
 
 
 let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
-let $FZF_DEFAULT_OPTS=" --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
+let $FZF_DEFAULT_OPTS=" --reverse --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
 
 """ search files with current word
 nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":call fzf#vim#files('.', {'options':'--query '.expand('<cword>')})<CR>"
@@ -563,6 +563,7 @@ inoremap <C-a> <C-o>^
 inoremap <C-b> <Left>
 inoremap <C-f> <Right>
 inoremap <C-k> <C-o>D
+inoremap <M-k> <C-o>d0
 inoremap <C-t> <C-o>O
 
 

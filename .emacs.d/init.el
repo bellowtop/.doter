@@ -479,6 +479,7 @@
 
 (require 'helm)
 (helm-mode 1)
+(define-key helm-map (kbd "C-u")       #'my-delete-to-beginning)
 (define-key helm-map (kbd "TAB")       #'helm-next-line)
 (define-key helm-map (kbd "<backtab>") #'helm-previous-line)
 
