@@ -112,6 +112,7 @@ nnoremap <silent> <expr> <Leader>t (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" :
 nnoremap <silent> <expr> <Leader>m (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Rg <C-R><C-W><CR>"
 
 
+
 lua << EOF
 require'nvim-tree'.setup {
     renderer = {
@@ -493,8 +494,8 @@ noremap  L $
 vnoremap H ^
 vnoremap L g_
 
-nnoremap <C-m> %
-vnoremap <C-m> %
+nnoremap m %
+vnoremap m %
 
 
 nnoremap <C-h>      :bprev<CR>

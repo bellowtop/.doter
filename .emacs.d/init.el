@@ -700,7 +700,7 @@
   (hs-minor-mode)
   (hs-hide-all)
 )
-(add-hook 'prog-mode-hook 'my-hide-all)
+;; (add-hook 'prog-mode-hook 'my-hide-all)
 
 
 
@@ -1582,7 +1582,9 @@ opening parenthesis one level up."
     ;;  (define-key god-local-mode-map (kbd "C-, C-a") #'mc/mark-all-like-this)
 
     (define-key god-local-mode-map (kbd "C-SPC C-b") #'switch-to-buffer)
+    (define-key god-local-mode-map (kbd "C-SPC C-k") #'kill-this-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-f") #'projectile-find-file)
+    (define-key god-local-mode-map (kbd "C-SPC C-m") #'deadgrep)
     (define-key god-local-mode-map (kbd "C-SPC C-S-l") #'display-line-numbers-mode)
 
     (define-key god-local-mode-map (kbd "C-SPC C-n") #'treemacs)
