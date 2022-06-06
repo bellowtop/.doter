@@ -107,7 +107,10 @@ let $FZF_DEFAULT_OPTS=" --preview 'bat --color=always --style=header,grid --line
 
 
 lua << EOF
-    require'nvim-tree'.setup {}
+    vim.g.nvim_tree_show_icons = { folders = 0 }
+    vim.g.nvim_tree_group_empty = 1
+    require'nvim-tree'.setup {
+    }
 EOF
 
 nnoremap <Leader>n :NvimTreeToggle<CR>
