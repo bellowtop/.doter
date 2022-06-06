@@ -107,9 +107,25 @@ let $FZF_DEFAULT_OPTS=" --preview 'bat --color=always --style=header,grid --line
 
 
 lua << EOF
-    vim.g.nvim_tree_show_icons = { folders = 0 }
-    vim.g.nvim_tree_group_empty = 1
-    require'nvim-tree'.setup {
+require'nvim-tree'.setup {
+    renderer = {
+        group_empty = true,
+        icons = {
+            show = {
+                file = false,
+                folder = false,
+                },
+            },
+        indent_markers = {
+            enable = true,
+            icons = {
+                corner = "└─",
+                item = "├─",
+                edge = "│ ",
+                none = "  ",
+                },
+            }
+        }
     }
 EOF
 
