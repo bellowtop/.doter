@@ -31,6 +31,14 @@
 )
 
 
+(use-package benchmark-init
+  :ensure t
+  :config
+  ;; To disable collection of benchmark data after init is done.
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
+
+
 ;; (setq  x-meta-keysym 'super
 ;;         x-super-keysym 'meta)
 ;;
@@ -214,8 +222,13 @@
 ;; override jump hook
 (setq xref-after-jump-hook '(hs-show-all recenter xref-pulse-momentarily))
 
+;; never goto view mode
+(add-hook 'view-mode-hook (lambda () (View-exit)))
 
 
+
+;; https://emacs.stackexchange.com/questions/64970/how-can-i-disable-lsp-headerline
+;; (add-hook 'lsp-mode-hook #'lsp-headerline-breadcrumb-mode)
 
 (use-package lsp-mode
   :defer t
@@ -226,6 +239,16 @@
   (setq lsp-diagnostics-provider :none)
   (setq lsp-imenu-sort-methods '(position))
   (setq lsp-headerline-breadcrumb-enable nil)
+  :config
+  (lsp-headerline-breadcrumb-mode -1)
+  :hook
+  (go-mode 'lsp-deferred)
+  (rust-mode 'lsp-deferred)
+  (c-mode 'lsp-deferred)
+  (c++-mode 'lsp-deferred)
+  (erlang-mode 'lsp-deferred)
+  (java-mode 'lsp-deferred)
+  (python-mode 'lsp-deferred)
 )
 
 (use-package lsp-ui
@@ -255,10 +278,6 @@
   (setq lsp-ui-sideline-ignore-duplicate t)
 )
 
-(lsp-headerline-breadcrumb-mode -1)
-
-;; https://emacs.stackexchange.com/questions/64970/how-can-i-disable-lsp-headerline
-;; (add-hook 'lsp-mode-hook #'lsp-headerline-breadcrumb-mode)
 
 
 ;; 0.57.0 works with java 1.8
@@ -267,33 +286,22 @@
 ;; (setq lsp-java--download-root "https://gitee.com/liujiacai/lsp-java/raw/master/install/")
 (setq lsp-java-jdt-download-url  "https://download.eclipse.org/jdtls/milestones/1.9.0/jdt-language-server-1.9.0-202203031534.tar.gz")
 (use-package lsp-java
-    :ensure t
+    :defer t
     :init
     ; (setq lsp-java-format-settings-url (lsp--path-to-uri (substitute-in-file-name "file://$HOME/.emacs.d/.eclipse-java-formatter.xml" )))      ;; not work!
     ; (setq lsp-java-format-settings-profile '"GoogleStyle")                                                                                    ;; not work!
 )
 
-
-(add-hook 'go-mode-hook 'lsp-deferred)
-(add-hook 'rust-mode-hook 'lsp-deferred)
-(add-hook 'c-mode-hook 'lsp-deferred)
-(add-hook 'c++-mode-hook 'lsp-deferred)
-(add-hook 'erlang-mode-hook 'lsp-deferred)
-(add-hook 'java-mode-hook 'lsp-deferred)
-
-
-
-(add-hook 'view-mode-hook (lambda () (View-exit))) ;; never goto view mode
-
-
 (use-package lsp-python-ms
   :defer t
   :init
   (setq lsp-python-ms-auto-install-server t)
-  :hook
-  (python-mode . (lambda ()
-                          (require 'lsp-python-ms)
-                          (lsp-deferred))))
+)
+
+
+
+
+
 
 
 
@@ -311,7 +319,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -327,7 +335,7 @@
 
 
 (use-package iedit
-  :ensure t
+  :defer t
   :bind
   ("C-c i" . iedit-mode)
 )
@@ -342,7 +350,7 @@
 
 
 (use-package ace-window
-  :ensure t
+  :defer t
   :delight
   :config
   (ace-window-display-mode 1)
@@ -379,14 +387,11 @@
   :init
 )
 
-
-
 (use-package scala-mode
+  :defer t
   :interpreter
   ("scala" . scala-mode)
 )
-
-
 
 (use-package yaml-mode
     :defer t
@@ -495,7 +500,6 @@
   (recenter)
 )
 
-
 (require 'rtags)
 (add-hook 'c-mode-hook 'rtags-start-process-unless-running)
 (add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
@@ -503,9 +507,10 @@
 (use-package rtags
   :ensure t
   :hook (c++-mode . rtags-start-process-unless-running)
-  :config (setq rtags-completions-enabled t
-                rtags-use-helm t
-        )
+  :config
+  (setq rtags-completions-enabled t)
+  (setq rtags-use-helm t)
+  (setq rtags-display-result-backend 'helm)
   :bind (
        ("C-c e" . my-rtags-find-symbol-at-point)
        ("C-c n" . rtags-location-stack-forward)
@@ -524,9 +529,6 @@
        ("C-c r t" . rtags-symbol-type)
        ("C-c r I" . rtags-include-file)
        ("C-c r i" . rtags-get-include-file-for-symbol)))
-
-(setq rtags-display-result-backend 'helm)
-
 
 
 
