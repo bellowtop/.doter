@@ -105,16 +105,16 @@ let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
 let $FZF_DEFAULT_OPTS=" --reverse --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
 
 """ search files with current word
-" nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":call fzf#vim#files('.', {'options':'--query '.expand('<cword>')})<CR>"
-" nnoremap <silent> <expr> <Leader>b (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Buffers<CR>"
-" nnoremap <silent> <expr> <Leader>t (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":BTags<CR>"
+nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":call fzf#vim#files('.', {'options':'--query '.expand('<cword>')})<CR>"
+nnoremap <silent> <expr> <Leader>b (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Buffers<CR>"
+nnoremap <silent> <expr> <Leader>t (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":BTags<CR>"
 """ grep with current word
 " nnoremap <silent> <expr> <Leader>m (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    " yiw :Rg <C-R><C-W> "
 
-nnoremap <Leader>f :call fzf#vim#files('.', {'options':'--query <C-R><C-W>'})<left><left><left>
+" nnoremap <Leader>f :call fzf#vim#files('.', {'options':'--query <C-R><C-W>'})<left><left><left>
 nnoremap <Leader>m yiw :Rg <C-R><C-W>
-nnoremap <Leader>b :Buffers <CR>
-nnoremap <Leader>t :BTags <CR>
+" nnoremap <Leader>b :Buffers <CR>
+" nnoremap <Leader>t :BTags <CR>
 
 
 lua << EOF
