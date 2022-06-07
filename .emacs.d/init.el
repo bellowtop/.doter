@@ -1495,6 +1495,8 @@ opening parenthesis one level up."
 
 
 
+
+
 (defvar my-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-x") #'helm-M-x)
@@ -1524,6 +1526,14 @@ opening parenthesis one level up."
     (define-key map (kbd "M-p") 'gcm-scroll-up)
     (define-key map (kbd "M-o") 'ace-select-window)
     (define-key map (kbd "M-q") 'my-toggle-god-mode)
+
+
+    (define-prefix-command 'my-god-mode-leader-key)
+    (define-prefix-command 'my-god-mode-dummmy-key)
+    (define-prefix-command 'my-god-mode-viewer-key)
+    (define-key god-local-mode-map (kbd "SPC") 'my-god-mode-leader-key)
+    (define-key god-local-mode-map (kbd ",")   'my-god-mode-dummmy-key)
+    (define-key god-local-mode-map (kbd "z")   'my-god-mode-viewer-key)
 
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
@@ -1566,10 +1576,10 @@ opening parenthesis one level up."
 
     (define-key god-local-mode-map (kbd "r") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "m") #'my-goto-match-paren)
-    (define-key god-local-mode-map (kbd "C-z C-m") #'my-hs-toggle-all)
-    (define-key god-local-mode-map (kbd "C-z C-z") #'recenter-top-bottom)
-    (define-key god-local-mode-map (kbd "C-z C-b") #'end-of-buffer)                     ;; , j   to bottom
-    (define-key god-local-mode-map (kbd "C-z C-t") #'beginning-of-buffer)               ;; , k   to bottom
+    (define-key god-local-mode-map (kbd "z m") #'my-hs-toggle-all)
+    (define-key god-local-mode-map (kbd "z z") #'recenter-top-bottom)
+    (define-key god-local-mode-map (kbd "z b") #'end-of-buffer)                     ;; , j   to bottom
+    (define-key god-local-mode-map (kbd "z t") #'beginning-of-buffer)               ;; , k   to bottom
 
     (define-key god-local-mode-map (kbd "C-c C-v") #'set-rectangular-region-anchor)
     (define-key god-local-mode-map (kbd "C-c C-o") #'helm-occur)
@@ -1598,32 +1608,35 @@ opening parenthesis one level up."
     ;;  (define-key god-local-mode-map (kbd "C-, C-r") #'mc/skip-to-previous-like-this)
     ;;  (define-key god-local-mode-map (kbd "C-, C-a") #'mc/mark-all-like-this)
 
-    (define-key god-local-mode-map (kbd "C-SPC C-b") #'switch-to-buffer)
-    (define-key god-local-mode-map (kbd "C-SPC C-k") #'kill-this-buffer)
-    (define-key god-local-mode-map (kbd "C-SPC C-K") #'my-only-current-buffer)
-    (define-key god-local-mode-map (kbd "C-SPC C-f") #'projectile-find-file)
-    (define-key god-local-mode-map (kbd "C-SPC C-m") #'deadgrep)
-    (define-key god-local-mode-map (kbd "C-SPC C-S-l") #'display-line-numbers-mode)
+    (define-key god-local-mode-map (kbd "SPC b") #'switch-to-buffer)
+    (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
+    (define-key god-local-mode-map (kbd "SPC K") #'my-only-current-buffer)
+    (define-key god-local-mode-map (kbd "SPC f") #'projectile-find-file)
+    (define-key god-local-mode-map (kbd "SPC m") #'deadgrep)
+    (define-key god-local-mode-map (kbd "SPC L") #'display-line-numbers-mode)
 
-    (define-key god-local-mode-map (kbd "C-SPC C-t") #'treemacs)
-    (define-key god-local-mode-map (kbd "C-SPC C-n") #'my-neotree-toggle)
+    (define-key god-local-mode-map (kbd "SPC t") #'treemacs)
+    (define-key god-local-mode-map (kbd "SPC n") #'my-neotree-toggle)
 
     (define-key god-local-mode-map (kbd "@") #'(lambda() (interactive) (treemacs-find-file) (treemacs-select-window)))
-    (define-key god-local-mode-map (kbd "C-SPC C-@") #'treemacs-add-and-display-current-project)
+    (define-key god-local-mode-map (kbd "SPC @") #'treemacs-add-and-display-current-project)
 
-    (define-key god-local-mode-map (kbd "C-SPC C-w C-l") #'windmove-right)
-    (define-key god-local-mode-map (kbd "C-SPC C-w C-h") #'windmove-left)
-    (define-key god-local-mode-map (kbd "C-SPC C-w C-k") #'windmove-up)
-    (define-key god-local-mode-map (kbd "C-SPC C-w C-j") #'windmove-down)
-    (define-key god-local-mode-map (kbd "C-SPC C-w C-q") #'delete-window)      ;; delete this window
-    (define-key god-local-mode-map (kbd "C-SPC C-w C-d") #'delete-other-windows)  ;; delete other window
-    (define-key god-local-mode-map (kbd "C-SPC C-w C-v") #'split-window-right)
-    (define-key god-local-mode-map (kbd "C-SPC C-w C-s") #'split-window-below)
-    (define-key god-local-mode-map (kbd "C-SPC C-w C-w") #'ace-select-window)
+    (define-key god-local-mode-map (kbd "SPC w l") #'windmove-right)
+    (define-key god-local-mode-map (kbd "SPC w h") #'windmove-left)
+    (define-key god-local-mode-map (kbd "SPC w k") #'windmove-up)
+    (define-key god-local-mode-map (kbd "SPC w j") #'windmove-down)
+    (define-key god-local-mode-map (kbd "SPC w q") #'delete-window)      ;; delete this window
+    (define-key god-local-mode-map (kbd "SPC w d") #'delete-other-windows)  ;; delete other window
+    (define-key god-local-mode-map (kbd "SPC w v") #'split-window-right)
+    (define-key god-local-mode-map (kbd "SPC w s") #'split-window-below)
+    (define-key god-local-mode-map (kbd "SPC w w") #'ace-select-window)
 
-    (define-key god-local-mode-map (kbd "C-, C-w") #'my-save-buffer)
-    (define-key god-local-mode-map (kbd "C-, C-b") #'flip-buffer-to-window)
-    (define-key god-local-mode-map (kbd "C-, C-,") #'er/mark-word)             ;; b a   last buffer
+    ;;
+    ;; dummmy key
+    ;;
+    (define-key god-local-mode-map (kbd ", w") #'my-save-buffer)
+    (define-key god-local-mode-map (kbd ", b") #'flip-buffer-to-window)
+    (define-key god-local-mode-map (kbd ", ,") #'er/mark-symbol)             ;; b a   last buffer
 
     ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)
     ;; (define-key god-local-mode-map (kbd "C-, C-l") #'switch-to-next-buffer)
