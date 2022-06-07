@@ -226,6 +226,15 @@
 (add-hook 'view-mode-hook (lambda () (View-exit)))
 
 
+(add-hook 'go-mode-hook 'lsp-deferred)
+(add-hook 'rust-mode-hook 'lsp-deferred)
+(add-hook 'c-mode-hook 'lsp-deferred)
+(add-hook 'c++-mode-hook 'lsp-deferred)
+(add-hook 'erlang-mode-hook 'lsp-deferred)
+(add-hook 'java-mode-hook 'lsp-deferred)
+(add-hook 'python-mode-hook 'lsp-deferred)
+
+
 
 ;; https://emacs.stackexchange.com/questions/64970/how-can-i-disable-lsp-headerline
 ;; (add-hook 'lsp-mode-hook #'lsp-headerline-breadcrumb-mode)
@@ -242,13 +251,6 @@
   :config
   (lsp-headerline-breadcrumb-mode -1)
   :hook
-  (go-mode 'lsp-deferred)
-  (rust-mode 'lsp-deferred)
-  (c-mode 'lsp-deferred)
-  (c++-mode 'lsp-deferred)
-  (erlang-mode 'lsp-deferred)
-  (java-mode 'lsp-deferred)
-  (python-mode 'lsp-deferred)
 )
 
 (use-package lsp-ui
@@ -483,10 +485,13 @@
 
 
 (require 'helm)
+(require 'helm-command)
 (helm-mode 1)
 (define-key helm-map (kbd "C-u")       #'my-delete-to-beginning)
+(define-key helm-M-x-map (kbd "C-u")   #'my-delete-to-beginning)
 (define-key helm-map (kbd "TAB")       #'helm-next-line)
 (define-key helm-map (kbd "<backtab>") #'helm-previous-line)
+
 
 ;; (setq helm-move-to-line-cycle-in-source t)
 (setq helm-display-buffer-default-height 0.4)
@@ -500,13 +505,11 @@
   (recenter)
 )
 
-(require 'rtags)
-(add-hook 'c-mode-hook 'rtags-start-process-unless-running)
-(add-hook 'c++-mode-hook 'rtags-start-process-unless-running)
-
 (use-package rtags
   :ensure t
-  :hook (c++-mode . rtags-start-process-unless-running)
+  :hook 
+  (c++-mode . rtags-start-process-unless-running)
+  (c-mode . rtags-start-process-unless-running)
   :config
   (setq rtags-completions-enabled t)
   (setq rtags-use-helm t)
