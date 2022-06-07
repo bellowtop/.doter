@@ -612,6 +612,11 @@
     (setq awesome-tray-mode-line-active-color '"#00ff00")
     (require 'awesome-tray)
     (awesome-tray-mode 1)
+
+    (global-set-key [escape] 'my-god-mode)
+    (define-key input-decode-map [?\C-\[] (kbd "<C-[>"))
+    (global-set-key (kbd "<C-[>") 'my-god-mode)
+
 )
 ;; if terminal mode, use doom modeline
 (unless (display-graphic-p)
@@ -1140,11 +1145,13 @@
 
 (use-package multiple-cursors
   :ensure   t
+  :config
+  (setq mc/match-cursor-style nil)
   :bind (
          ("C-x C-n" . mc/mark-next-like-this)
          ("C-c C-SPC" . mc/edit-lines)
-         )
   )
+)
 
 
 

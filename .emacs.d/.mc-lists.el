@@ -56,7 +56,10 @@
 	mouse-yank-primary
 	mwim-beginning-of-code-or-line
 	mwim-end-of-code-or-line
+	my-delete-to-beginning
+	my-delete-to-end
 	my-god-char-forward-and-insert-mode
+	my-join-lines
 	my-quit-god-mode
 	my-replace-char
 	org-beginning-of-line
