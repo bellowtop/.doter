@@ -956,17 +956,21 @@
 
 
 (defun my-disable-lsp-highlighting()
+  (if (boundp 'lsp-enable-symbol-highlighting)
     (if (and lsp-enable-symbol-highlighting t)
       (lsp-toggle-symbol-highlight)
       (message "is already not highlight")
       )
+  )
 )
 
 (defun my-enable-lsp-highlighting()
+  (if (boundp 'lsp-enable-symbol-highlighting)
     (if (not lsp-enable-symbol-highlighting)
       (lsp-toggle-symbol-highlight)
       (message "is enabled highlight")
       )
+  )
 )
 
 (add-hook 'isearch-mode-hook #'my-disable-lsp-highlighting)
@@ -1061,23 +1065,43 @@
 
 (use-package all-the-icons
     :config
-        (setq all-the-icons-scale-factor 1.0)
-        (setq all-the-icons-default-adjust 0.0)
+    (setq all-the-icons-scale-factor 1.0)
+    (setq all-the-icons-default-adjust 0.0)
 )
 
 
 
+(use-package neotree
+  :ensure t
+  :init
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+  (setq neo-confirm-create-file 'off-p)
+  (setq neo-confirm-create-directory 'off-p)
+  (setq neo-smart-open 't)
+  (setq neo-window-fixed-size nil)
+  ;; (setq neo-toggle-window-keep-p 't)
+)
 
-;;; (defun my-neotree-toggle()
-;;;   (interactive)
-;;;   (if (and (fboundp 'neo-global--window-exists-p) (neo-global--window-exists-p))
-;;;     (neotree-toggle)
-;;;     (progn
-;;;        (neotree-show)
-;;;        ;; (neo-global--select-window) ;; work with neo-toggle-window-keep-p
-;;;     )
-;;;   )
-;;; )
+(defun neotree-project-dir ()
+    "Open NeoTree using the git root."
+    (interactive)
+    (let ((project-dir (projectile-project-root))
+          (file-name (buffer-file-name)))
+      (neotree-toggle)
+      (if project-dir
+          (if (neo-global--window-exists-p)
+              (progn
+                (neotree-dir project-dir)
+                (neotree-find file-name)))
+        (message "Could not find git project root."))))
+
+(defun my-neotree-toggle()
+  (interactive)
+  (if (and (fboundp 'neo-global--window-exists-p) (neo-global--window-exists-p))
+    (neotree-project-dir)
+    (neotree-show)
+  )
+)
 ;;;
 ;;; (defun my-neotree-find()
 ;;;   (interactive)
@@ -1088,35 +1112,15 @@
 ;;;
 ;;;
 
-;;; (use-package neotree
-;;;   :ensure t
-;;;   :init
-;;;   (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
-;;;   (setq neo-confirm-create-file 'off-p)
-;;;   (setq neo-confirm-create-directory 'off-p)
-;;;   (setq neo-smart-open 't)
-;;;   (setq neo-window-fixed-size nil)
-;;;
-;;;   ;; (setq neo-toggle-window-keep-p 't)
-;;;   :bind (
-;;;        ;; ("C-c w o" . neotree-toggle)
-;;;        ;; ("C-c l" . my-neotree-toggle)
-;;;        ;; ("C-c j" . my-neotree-find)
-;;;   )
-;;; )
-
 
 (use-package treemacs
   :ensure t
   :init
   :config
   (treemacs-resize-icons 18)
-
    :bind (
-        ;; ("C-c w o" . neotree-toggle)
         ("C-c n" . treemacs)
         ("C-c t" . treemacs-toggle-node)
-        ;; ("C-c j" . my-neotree-find)
    )
 )
 
@@ -1589,11 +1593,14 @@ opening parenthesis one level up."
 
     (define-key god-local-mode-map (kbd "C-SPC C-b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-k") #'kill-this-buffer)
+    (define-key god-local-mode-map (kbd "C-SPC C-K") #'my-only-current-buffer)
     (define-key god-local-mode-map (kbd "C-SPC C-f") #'projectile-find-file)
     (define-key god-local-mode-map (kbd "C-SPC C-m") #'deadgrep)
     (define-key god-local-mode-map (kbd "C-SPC C-S-l") #'display-line-numbers-mode)
 
-    (define-key god-local-mode-map (kbd "C-SPC C-n") #'treemacs)
+    (define-key god-local-mode-map (kbd "C-SPC C-t") #'treemacs)
+    (define-key god-local-mode-map (kbd "C-SPC C-n") #'my-neotree-toggle)
+
     (define-key god-local-mode-map (kbd "@") #'(lambda() (interactive) (treemacs-find-file) (treemacs-select-window)))
     (define-key god-local-mode-map (kbd "C-SPC C-@") #'treemacs-add-and-display-current-project)
 

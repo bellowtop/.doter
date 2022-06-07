@@ -192,7 +192,7 @@ let g:ctrlsf_extra_backend_args = {'rg': '--no-ignore'}
 
 
 
-command! -nargs=? -complete=buffer -bang BL :call BufOnly('<args>', '<bang>')
+" command! -nargs=? -complete=buffer -bang BL :call BufOnly('<args>', '<bang>')
 
 
 
@@ -506,6 +506,8 @@ nnoremap <C-h>      :bprev<CR>
 nnoremap <C-l>      :bnext<CR>
 
 nnoremap <Leader>k  :Bclose<CR>
+nnoremap <Leader>K  :BufOnly<CR>
+
 nnoremap <Leader>x  <C-w>c
 nnoremap <Leader>w  <C-w>
 
