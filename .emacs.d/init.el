@@ -1525,7 +1525,7 @@ opening parenthesis one level up."
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
     (define-key map (kbd "M-o") 'ace-select-window)
-    (define-key map (kbd "M-q") 'my-toggle-god-mode)
+    (define-key map (kbd "C-q") 'my-toggle-god-mode)
 
 
     (define-prefix-command 'my-god-mode-leader-key)

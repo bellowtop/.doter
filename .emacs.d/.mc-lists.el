@@ -50,6 +50,7 @@
 	kill-sexp
 	kmacro-end-or-call-macro
 	ledger-magic-tab
+	mark-paragraph
 	markdown-enter-key
 	markdown-exdent-or-delete
 	markdown-outdent-or-delete
@@ -62,6 +63,7 @@
 	my-join-lines
 	my-quit-god-mode
 	my-replace-char
+	my-toggle-god-mode
 	org-beginning-of-line
 	org-ctrl-c-ctrl-c
 	org-cycle
@@ -181,4 +183,5 @@
 	undo-redo
 	windmove-swap-states-left
 	windmove-swap-states-right
+	yaml-electric-bar-and-angle
 	))
