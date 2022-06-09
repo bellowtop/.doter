@@ -98,7 +98,7 @@
   :config
   (setq doom-themes-enable-bold nil    ; if nil, bold is universally disabled
         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
-  (doom-themes-neotree-config)
+  ;; (doom-themes-neotree-config)
   )
 
 ;;  ;; copy background from vim's bogster
@@ -1076,10 +1076,11 @@
 
 
 
+(setq neo-theme 'ascii)
 (use-package neotree
-  :ensure t
+  :defer t
   :init
-  (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+  (setq neo-theme 'ascii)
   (setq neo-confirm-create-file 'off-p)
   (setq neo-confirm-create-directory 'off-p)
   (setq neo-smart-open 't)
@@ -1548,6 +1549,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "J") #'my-join-lines)
     (define-key god-local-mode-map (kbd "y") #'kill-ring-save)
     (define-key god-local-mode-map (kbd "p") #'yank)
+    (define-key god-local-mode-map (kbd "P") #'yank) ;; same as yank
     (define-key god-local-mode-map (kbd "u") #'undo-tree-undo)
     (define-key god-local-mode-map (kbd "C-r") #'undo-tree-redo)
     (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
