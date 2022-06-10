@@ -183,5 +183,4 @@
 	undo-redo
 	windmove-swap-states-left
 	windmove-swap-states-right
-	yaml-electric-bar-and-angle
 	))

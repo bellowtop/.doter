@@ -1076,11 +1076,11 @@
 
 
 
-(setq neo-theme 'ascii)
 (use-package neotree
   :defer t
   :init
-  (setq neo-theme 'ascii)
+  (setq neo-theme 'arrow)
+  ;; (setq neo-auto-indent-point 't)
   (setq neo-confirm-create-file 'off-p)
   (setq neo-confirm-create-directory 'off-p)
   (setq neo-smart-open 't)
