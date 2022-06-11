@@ -99,40 +99,17 @@
   (setq doom-themes-enable-bold nil    ; if nil, bold is universally disabled
         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
   ;; (doom-themes-neotree-config)
+  (load-theme 'doom-xcode t)
   )
 
-;;  ;; copy background from vim's bogster
-;;  (setq spacemacs-theme-custom-colors
-;;    '((bg1        .    "#161c23" ))
-;;  )
-
-;;  (unless (display-graphic-p)
-;;      (load-theme 'doom-xcode t)
 ;;      ;; (load-theme 'spacemacs-dark t)
 ;;      ;;(load-theme 'dracula t)
-;;  )
-;;  (when (display-graphic-p)
-;;      (load-theme 'doom-xcode t)
 ;;      ;; (load-theme 'spacemacs-dark t)
 ;;      ;; (load-theme 'dracula t)
 ;;      ;; (load-theme 'kaolin-ocean t)
-;;  )
-
-;; (load-theme 'spacemacs-dark t)
-(load-theme 'doom-xcode t)
-
-;;  (unless (display-graphic-p)
-;;    ; (set-face-attribute 'default nil :background "nil")
-;;    ;; (set-face-attribute 'line-number nil :background "nil")
-;;    ;; (set-face-attribute 'line-number-current-line nil :background "nil")
-;;  )
 
 
 (setq-default line-spacing 0)
-;; (when (display-graphic-p)
-;;   (set-face-attribute 'default nil :font "Dejavu Sans Mono for Powerline-14")
-;;   (set-cursor-color "red")
-;; )
 
 (set-face-attribute 'default nil :font "Dejavu Sans Mono for Powerline-14")
 (add-to-list 'default-frame-alist '(font . "Dejavu Sans Mono for Powerline-14"))
@@ -171,6 +148,8 @@
  '(region ((t (:background "#9ac76c" :foreground "#262626" :underline nil :weight normal))))
  '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0))))
+
+
 
 
 ;; (set-face-attribute 'mode-line nil :underline "#00ff00")
@@ -321,7 +300,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -417,7 +396,6 @@
 
 
 ;; (global-auto-revert-mode t)
-;; (global-hl-line-mode t)
 
 
 (defun my-go-mode-hook ()
@@ -507,7 +485,7 @@
 
 (use-package rtags
   :ensure t
-  :hook 
+  :hook
   (c++-mode . rtags-start-process-unless-running)
   (c-mode . rtags-start-process-unless-running)
   :config
@@ -605,20 +583,47 @@
 
 
 
+(defun my-escape-key ()
+    (interactive)
+    (my-god-mode)
+    (if isearch-mode (isearch-abort))
+    (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
+    (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
+    (keyboard-quit)
+)
+
+(global-set-key (kbd "<escape>") #'my-escape-key)
+(define-key helm-map (kbd "<escape>") #'helm-keyboard-quit)
 
 
-;; if graphic mode, use awesome-tray
+
+
+;; must be set as global
+(global-set-key (kbd "M-k") #'my-delete-to-beginning )
+(global-set-key (kbd "C-k") #'my-delete-to-end )
+
+
+
+
+(smerge-mode -1)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+
 (when (display-graphic-p)
     (setq awesome-tray-mode-line-active-color '"#00ff00")
     (require 'awesome-tray)
     (awesome-tray-mode 1)
 
-    (global-set-key [escape] 'my-god-mode)
-    (define-key input-decode-map [?\C-\[] (kbd "<C-[>"))
-    (global-set-key (kbd "<C-[>") 'my-god-mode)
+    (scroll-bar-mode -1)
+    (tab-bar-mode -1)
+    (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+    (add-to-list 'default-frame-alist '(ns-appearance . dark))  ;; dark themes use "dark"
 
+    (global-set-key [escape] 'my-escape-key)
+    (define-key input-decode-map [?\C-\[] (kbd "<C-[>"))
+    (global-set-key (kbd "<C-[>") 'my-escape-key)
 )
-;; if terminal mode, use doom modeline
+
 (unless (display-graphic-p)
     (setq doom-modeline-height 1)
     (setq doom-modeline-icon nil)
@@ -627,9 +632,16 @@
     (doom-modeline-mode 1)
 )
 
+;;  (unless (display-graphic-p)
+;;    ; (set-face-attribute 'default nil :background "nil")
+;;    ;; (set-face-attribute 'line-number nil :background "nil")
+;;    ;; (set-face-attribute 'line-number-current-line nil :background "nil")
+;;  )
 
-
-
+;; (when (display-graphic-p)
+;;   (set-face-attribute 'default nil :font "Dejavu Sans Mono for Powerline-14")
+;;   (set-cursor-color "red")
+;; )
 
 
 
@@ -764,22 +776,6 @@
 (xclip-mode 1)
 
 
-(smerge-mode -1)
-
-
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-
-(when (display-graphic-p)
-(scroll-bar-mode -1)
-(tab-bar-mode -1)
-(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist '(ns-appearance . dark))  ;; dark themes use "dark"
-
-)
-
-
-
 
 (require 'mwim)
 
@@ -825,12 +821,8 @@
 (defun my-toggle-god-mode()
   (interactive)
     (if (bound-and-true-p god-local-mode)
-      (progn
         (my-quit-god-mode)
-        )
-      (progn
         (my-god-mode)
-        )
     )
   )
 
@@ -936,7 +928,7 @@
             (if (region-active-p)
                (message "search the marked region")
                (progn
-                 (er/mark-word)
+                 (er/mark-symbol)
                  (setq my-search-selection-is-word-search 1)                                         ;; set flag
                )
             )
@@ -957,6 +949,12 @@
             )
         )
       )
+)
+
+(defun my-isearch-forward ()
+      (interactive)
+      (isearch-mode t nil nil nil)
+      (god-mode-isearch-activate)
 )
 
 
@@ -983,23 +981,23 @@
 
 
 
-(defun my-quit-mc-mode-if-need ()
-    (interactive)
-    (if (bound-and-true-p multiple-cursors-mode)
-      (progn (mc/keyboard-quit) (mc/keyboard-quit))  ;; have to double quit, i don't know why
-    )
-  )
+;; (defun my-quit-mc-mode-if-need ()
+;;     (interactive)
+;;     (if (bound-and-true-p multiple-cursors-mode)
+;;       (progn (mc/keyboard-quit) (mc/keyboard-quit))  ;; have to double quit, i don't know why
+;;     )
+;;   )
 
 
 
-(defun my-quit ()
-    (interactive)
-    (my-god-mode)
-    (if isearch-mode (isearch-abort))
-    (ignore-errors (helm-keyboard-quit))
-    (ignore-errors (minibuffer-keyboard-quit))
-    (ignore-errors (keyboard-quit))
-)
+;; (defun my-quit ()
+;;     (interactive)
+;;     (my-god-mode)
+;;     (if isearch-mode (isearch-abort))
+;;     (ignore-errors (helm-keyboard-quit))
+;;     (ignore-errors (minibuffer-keyboard-quit))
+;;     (ignore-errors (keyboard-quit))
+;; )
 
 
 
@@ -1007,11 +1005,8 @@
 ;;                                     (my-quit-mc-mode-if-need)
 ;;                                     (my-quit))
 ;; )
-(global-set-key (kbd "<escape>") #'(lambda () (interactive)
-                                    (my-quit-mc-mode-if-need)
-                                    (my-quit))
-)
 
+(global-hl-line-mode 1)
 
 (add-hook 'switch-buffer-functions
         (lambda (prev curr)
@@ -1046,14 +1041,17 @@
 (defun my-god-mode-update-cursor-type ()
   (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
 
-    ;; (if (bound-and-true-p god-local-mode)
-    ;;     (set-face-attribute 'line-number nil :foreground "#00ff00")
-    ;;     (set-face-attribute 'line-number nil :foreground "#3f4040")
-    ;; )
-
     (if (bound-and-true-p god-local-mode)
+      (progn
+        (set-face-attribute 'hl-line nil :inherit nil :background "deepskyblue4")
         (set-face-attribute 'line-number-current-line nil :foreground "#00ff00")
+        (setq cursor-type 'box)
+      )
+      (progn
+        (set-face-attribute 'hl-line nil :inherit nil :background "gray6")
         (set-face-attribute 'line-number-current-line nil :foreground "#3f4040")
+        (setq cursor-type 'bar)
+      )
     )
 
 )
@@ -1384,14 +1382,6 @@ If COMMAND is nil, the key-chord is removed."
 
 
 
-;; must be set as global
-(global-set-key (kbd "M-k") #'my-delete-to-beginning )
-(global-set-key (kbd "C-k") #'my-delete-to-end )
-(global-set-key (kbd "C-g") #'(lambda ()
-                               (interactive)
-                               (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
-                               (keyboard-quit)
-                            ))
 
 
 
@@ -1404,6 +1394,20 @@ If COMMAND is nil, the key-chord is removed."
 
 
 
+
+
+(defun my-delete-char (arg)
+  (interactive "p")
+   (if (use-region-p)
+     (let ((beg (region-beginning))
+           (end (copy-marker (region-end))))
+          (delete-region beg end)
+     )
+     (delete-forward-char 1)
+   )
+)
+
+
 (defun my-replace-char ()
   "delete current char, goto insert mode"
   (interactive)
@@ -1413,12 +1417,6 @@ If COMMAND is nil, the key-chord is removed."
   )
 
 
-(defun my-kill-word (arg)
-  "delete current word, goto insert mode"
-  (interactive "p")
-  (kill-word arg)
-  (my-quit-god-mode)
-  )
 
 
 (defun my-save-buffer ()
@@ -1426,9 +1424,8 @@ If COMMAND is nil, the key-chord is removed."
   (interactive)
   (save-buffer)
   (my-god-mode)
-  (my-quit-mc-mode-if-need)
+  ;; (my-quit-mc-mode-if-need)
   )
-
 
 
 (defun my-select-current-line-and-forward-line (arg)
@@ -1532,9 +1529,11 @@ opening parenthesis one level up."
     (define-prefix-command 'my-god-mode-leader-key)
     (define-prefix-command 'my-god-mode-dummmy-key)
     (define-prefix-command 'my-god-mode-viewer-key)
+    (define-prefix-command 'my-god-mode-delete-key)
     (define-key god-local-mode-map (kbd "SPC") 'my-god-mode-leader-key)
     (define-key god-local-mode-map (kbd ",")   'my-god-mode-dummmy-key)
     (define-key god-local-mode-map (kbd "z")   'my-god-mode-viewer-key)
+    (define-key god-local-mode-map (kbd "d")   'my-god-mode-delete-key)
 
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
@@ -1554,51 +1553,37 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-r") #'undo-tree-redo)
     (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
     (define-key god-local-mode-map (kbd "O") #'my-god-above-newline-and-insert-mode)
-    ;; (define-key god-local-mode-map (kbd "a") #'my-god-char-forward-and-insert-mode)
-    ;; (define-key god-local-mode-map (kbd "A") #'my-god-mwin-end-and-insert-mode)
-    (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode) ; toggle to disable god-mod globally
-    ;; (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
-
-    ;; (define-key god-local-mode-map (kbd "x") #'delete-forward-char)
-    (define-key god-local-mode-map (kbd "s") #'my-replace-char)
-    (define-key god-local-mode-map (kbd "C-c C-w") #'my-kill-word)
-
-    (define-key god-local-mode-map (kbd "d") #'kill-region)
-    (define-key god-local-mode-map (kbd "-") #'delete-char)
-    ;; (define-key god-local-mode-map (kbd "X") #'kill-region)
-    ;; (define-key god-local-mode-map (kbd "D") #'delete-char)
-    ;; (define-key god-local-mode-map (kbd "d") #'(lambda () (interactive)()))   ;; placeholder
-    ;; (my-key-chord-define god-local-mode-map "dd"  #'kill-region)
-    ;; (my-key-chord-define god-local-mode-map "dw"  #'kill-word)
-    ;; (my-key-chord-define god-local-mode-map "dL"  #'my-delete-to-end)   ;; delete to end
-    ;; (my-key-chord-define god-local-mode-map "dH"  #'my-delete-to-beginning)  ;; delete to begin
-    ;; (my-key-chord-define god-local-mode-map "de"  #'my-delete-to-end)   ;; delete to end
-    ;; (my-key-chord-define god-local-mode-map "da"  #'my-delete-to-beginning)  ;; delete to begin
-
-
+    (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode)
     (define-key god-local-mode-map (kbd "r") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "m") #'my-goto-match-paren)
+
+    (define-key god-local-mode-map (kbd "s") #'my-replace-char)
+    (define-key god-local-mode-map (kbd "x") #'my-delete-char)
+
+    (define-key god-local-mode-map (kbd "d d") #'kill-whole-line)
+    (define-key god-local-mode-map (kbd "d L") #'my-delete-to-end)
+    (define-key god-local-mode-map (kbd "d H") #'my-delete-to-beginning)
+    (define-key god-local-mode-map (kbd "d w") #'kill-word)
+
     (define-key god-local-mode-map (kbd "z m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "z z") #'recenter-top-bottom)
-    (define-key god-local-mode-map (kbd "z b") #'end-of-buffer)                     ;; , j   to bottom
-    (define-key god-local-mode-map (kbd "z t") #'beginning-of-buffer)               ;; , k   to bottom
+    (define-key god-local-mode-map (kbd "z b") #'end-of-buffer)
+    (define-key god-local-mode-map (kbd "z t") #'beginning-of-buffer)
 
     (define-key god-local-mode-map (kbd "C-c C-v") #'set-rectangular-region-anchor)
     (define-key god-local-mode-map (kbd "C-c C-o") #'helm-occur)
     (define-key god-local-mode-map (kbd "C-c C-s") #'my-helm-ag-thing-at-point)
 
-    (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)          ;; , l   to line right
-    (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)    ;; , h   to line left
-
+    (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)
+    (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)
+    (define-key god-local-mode-map (kbd "A") #'beginning-of-defun)
+    (define-key god-local-mode-map (kbd "E") #'end-of-defun)
 
     (define-key god-local-mode-map (kbd "*") #'my-search-selection)
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
-
+    (define-key god-local-mode-map (kbd "n") #'my-isearch-forward)
     (define-key god-local-mode-map (kbd ":") #'helm-M-x)
 
-
-    (define-key god-local-mode-map (kbd "A") #'beginning-of-defun)    ;; , h   to line left
-    (define-key god-local-mode-map (kbd "E") #'end-of-defun)    ;; , h   to line left
 
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
     (define-key god-local-mode-map (kbd "C-~") #'upcase-char)
@@ -1623,15 +1608,15 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "@") #'(lambda() (interactive) (treemacs-find-file) (treemacs-select-window)))
     (define-key god-local-mode-map (kbd "SPC @") #'treemacs-add-and-display-current-project)
 
-    (define-key god-local-mode-map (kbd "SPC w l") #'windmove-right)
-    (define-key god-local-mode-map (kbd "SPC w h") #'windmove-left)
-    (define-key god-local-mode-map (kbd "SPC w k") #'windmove-up)
-    (define-key god-local-mode-map (kbd "SPC w j") #'windmove-down)
-    (define-key god-local-mode-map (kbd "SPC w q") #'delete-window)      ;; delete this window
-    (define-key god-local-mode-map (kbd "SPC w d") #'delete-other-windows)  ;; delete other window
-    (define-key god-local-mode-map (kbd "SPC w v") #'split-window-right)
-    (define-key god-local-mode-map (kbd "SPC w s") #'split-window-below)
-    (define-key god-local-mode-map (kbd "SPC w w") #'ace-select-window)
+    (define-key god-local-mode-map (kbd "C-w l") #'windmove-right)
+    (define-key god-local-mode-map (kbd "C-w h") #'windmove-left)
+    (define-key god-local-mode-map (kbd "C-w k") #'windmove-up)
+    (define-key god-local-mode-map (kbd "C-w j") #'windmove-down)
+    (define-key god-local-mode-map (kbd "C-w q") #'delete-window)      ;; delete this window
+    (define-key god-local-mode-map (kbd "C-w d") #'delete-other-windows)  ;; delete other window
+    (define-key god-local-mode-map (kbd "C-w v") #'split-window-right)
+    (define-key god-local-mode-map (kbd "C-w s") #'split-window-below)
+    (define-key god-local-mode-map (kbd "C-w w") #'ace-select-window)
 
     ;;
     ;; dummmy key
@@ -1642,7 +1627,6 @@ opening parenthesis one level up."
 
     ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)
     ;; (define-key god-local-mode-map (kbd "C-, C-l") #'switch-to-next-buffer)
-
 
     ;; (my-key-chord-define god-local-mode-map ",,"  #'er/mark-symbol)
 
@@ -1672,6 +1656,18 @@ opening parenthesis one level up."
 
 
 
+(use-package selected
+  :ensure t
+  :commands selected-minor-mode
+  :bind (:map selected-keymap
+              ("v" . keyboard-quit)  ;; deactive region
+              ("d" . kill-region)
+              ("x" . kill-region)
+              ("C-n" . my-mc/mark-next-like-this)
+              ("C-p" . my-mc/mark-previous-like-this)
+        )
+)
+(selected-global-mode 1)
 
 
 
@@ -1679,3 +1675,8 @@ opening parenthesis one level up."
   (my-keys-minor-mode 0))
 
 (add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
+
+
+
+
+
