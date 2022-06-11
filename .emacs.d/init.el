@@ -474,6 +474,16 @@
 ;; (setq helm-move-to-line-cycle-in-source t)
 (setq helm-display-buffer-default-height 0.4)
 (setq helm-default-display-buffer-functions '(display-buffer-in-side-window))
+(setq helm-boring-buffer-regexp-list (list
+                      (rx "*helm")
+                      (rx "*Message")
+                      (rx "*Help")
+                      (rx "*Echo Area")
+                      (rx "*Minibuf")
+                      (rx "*lsp")
+                      (rx "*jdtls")
+                      (rx " *")
+                      ))
 
 
 
@@ -1595,7 +1605,7 @@ opening parenthesis one level up."
     ;;  (define-key god-local-mode-map (kbd "C-, C-r") #'mc/skip-to-previous-like-this)
     ;;  (define-key god-local-mode-map (kbd "C-, C-a") #'mc/mark-all-like-this)
 
-    (define-key god-local-mode-map (kbd "SPC b") #'switch-to-buffer)
+    (define-key god-local-mode-map (kbd "SPC b") #'helm-buffers-list)
     (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
     (define-key god-local-mode-map (kbd "SPC K") #'my-only-current-buffer)
     (define-key god-local-mode-map (kbd "SPC f") #'projectile-find-file)
