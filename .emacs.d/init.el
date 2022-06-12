@@ -50,7 +50,7 @@
 
 
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/elisp"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/emacswiki.org"))
 
 
 
@@ -196,7 +196,11 @@
 ;; )
 
 
-(defun my-recenter (&optional ARG PRED) (recenter))
+(defun my-recenter (&optional ARG PRED) 
+  (recenter)
+  ;; from crosshairs.el
+  ;; (flash-crosshairs)
+)
 
 (advice-add 'xref-go-back                   :after 'my-recenter)
 (advice-add 'xref-pop-marker-stack          :after 'my-recenter)
@@ -1038,6 +1042,9 @@
 ;; )
 
 (global-hl-line-mode 1)
+;;; from elisp
+(require 'crosshairs)
+
 
 (add-hook 'switch-buffer-functions
         (lambda (prev curr)
@@ -1290,31 +1297,30 @@ _u_: undo      _r_: redo
 
 
 
+(advice-add 'deadgrep-visit-result                        :after 'my-recenter)
+(advice-add 'deadgrep-visit-result-other-window           :after 'my-recenter)
 
 
-(defun my-deadgrep-visit-result ()
-  (interactive)
-  (deadgrep-visit-result)
-  (hs-show-all)
-  (recenter)
-  )
+;; (defun my-deadgrep-visit-result ()
+;;   (interactive)
+;;   (deadgrep-visit-result)
+;;   (recenter)
+;;   )
 
-(defun my-deadgrep-visit-file-other-window ()
-  (interactive)
-  (deadgrep-visit-result-other-window)
-  (hs-show-all)
-  (recenter)
-  )
+;; (defun my-deadgrep-visit-file-other-window ()
+;;   (interactive)
+;;   (deadgrep-visit-result-other-window)
+;;   (recenter)
+;;   )
 
-(defun my-deadgrep-view-file ()
-  "View result under cursor in other window."
-  (interactive)
-  (deadgrep-visit-result-other-window)
-
-  (hs-show-all)
-  (recenter)
-  (other-window 1)
-  )
+;; (defun my-deadgrep-view-file ()
+;;   "View result under cursor in other window."
+;;   (interactive)
+;;   (deadgrep-visit-result-other-window)
+;; 
+;;   (recenter)
+;;   (other-window 1)
+;;   )
 
 (defun my-deadgrep-edit-enter()
   (interactive)
@@ -1337,9 +1343,9 @@ _u_: undo      _r_: redo
   :bind(
     ("C-c g" . deadgrep)
     (:map deadgrep-mode-map
-          ("RET"  . my-deadgrep-visit-result)
-          ("o"    . my-deadgrep-visit-file-other-window)
-          ("v"    . my-deadgrep-view-file)
+          ("RET"  . deadgrep-visit-result)
+          ("o"    . deadgrep-visit-result-other-window)
+          ("v"    . (lambda () (interactive) (deadgrep-visit-result-other-window) (other-window 1)))
           ("S"    . deadgrep-search-term)
           ("D"    . deadgrep-directory)
           ("g"    . deadgrep-restart)
