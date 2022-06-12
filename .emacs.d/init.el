@@ -176,30 +176,40 @@
 
 
 
-(global-set-key [remap lsp-ui-peek-find-definitions] 'my-lsp-ui-peek-find-definitions )
-(global-set-key [remap xref-pop-marker-stack] 'my-xref-pop-marker-stack )
-(global-set-key [remap xref-go-back] 'my-xref-go-back)
-(defun my-lsp-ui-peek-find-definitions()
-  (interactive)
-  (lsp-ui-peek-find-definitions)
-  (recenter)
-)
-(defun my-xref-pop-marker-stack()
-  (interactive)
-  (xref-pop-marker-stack)
-  (recenter)
-)
-(defun my-xref-go-back()
-  (interactive)
-  (xref-go-back)
-  (recenter)
-)
+;; (global-set-key [remap lsp-ui-peek-find-definitions] 'my-lsp-ui-peek-find-definitions )
+;; (global-set-key [remap xref-pop-marker-stack] 'my-xref-pop-marker-stack )
+;; (global-set-key [remap xref-go-back] 'my-xref-go-back)
+;; (defun my-lsp-ui-peek-find-definitions()
+;;   (interactive)
+;;   (lsp-ui-peek-find-definitions)
+;;   (recenter)
+;; )
+;; (defun my-xref-pop-marker-stack()
+;;   (interactive)
+;;   (xref-pop-marker-stack)
+;;   (recenter)
+;; )
+;; (defun my-xref-go-back()
+;;   (interactive)
+;;   (xref-go-back)
+;;   (recenter)
+;; )
+
+
+(defun my-recenter (&optional ARG PRED) (recenter))
+
+(advice-add 'xref-go-back                   :after 'my-recenter)
+(advice-add 'xref-pop-marker-stack          :after 'my-recenter)
+(advice-add 'lsp-ui-peek-find-definitions   :after 'my-recenter)
+(advice-add 'pop-global-mark                :after 'my-recenter)
+(advice-add 'xref-after-jump-hook           :after 'my-recenter)
+
 
 
 
 
 ;; override jump hook
-(setq xref-after-jump-hook '(hs-show-all recenter xref-pulse-momentarily))
+;; (setq xref-after-jump-hook '(hs-show-all recenter xref-pulse-momentarily))
 
 ;; never goto view mode
 (add-hook 'view-mode-hook (lambda () (View-exit)))
@@ -424,8 +434,16 @@
 ;;;   (setq indent-tabs-mode nil)  ; use spaces only if nil
 ;;;   )
 ;;;  (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
-(add-hook 'c-mode-hook 'google-set-c-style)
-(add-hook 'c++-mode-hook 'google-set-c-style)
+
+;;; or just google
+;; (add-hook 'c-mode-hook 'google-set-c-style)
+;; (add-hook 'c++-mode-hook 'google-set-c-style)
+
+
+;;; or just clang-format, from elisp
+(require 'clang-format)
+
+
 
 
 (defun my-java-mode-hook ()
@@ -604,6 +622,8 @@
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
 (define-key helm-map (kbd "<escape>") #'helm-keyboard-quit)
+(define-key minibuffer-local-map (kbd "<escape>") #'minibuffer-keyboard-quit)
+
 
 
 
@@ -620,6 +640,7 @@
 (tool-bar-mode -1)
 
 (when (display-graphic-p)
+    ;; awesome-tray is from elisp sub-directory
     (setq awesome-tray-mode-line-active-color '"#00ff00")
     (require 'awesome-tray)
     (awesome-tray-mode 1)
@@ -1675,6 +1696,11 @@ opening parenthesis one level up."
               ("x" . kill-region)
               ("C-n" . my-mc/mark-next-like-this)
               ("C-p" . my-mc/mark-previous-like-this)
+              ("C-c i" . clang-format-region)
+              ("C-c f" . clang-format-buffer)
+
+              ("g g" . (lambda () (interactive) (beginning-of-buffer) (keyboard-quit) ))
+              ("G" .   (lambda () (interactive) (end-of-buffer) (keyboard-quit) ))
         )
 )
 (selected-global-mode 1)
