@@ -444,7 +444,7 @@
 ;; (add-hook 'c++-mode-hook 'google-set-c-style)
 
 
-;;; or just clang-format, from elisp
+;;; or just clang-format, from emacswiki
 (require 'clang-format)
 
 
@@ -644,7 +644,7 @@
 (tool-bar-mode -1)
 
 (when (display-graphic-p)
-    ;; awesome-tray is from elisp sub-directory
+    ;; awesome-tray is from emacswiki sub-directory
     (setq awesome-tray-mode-line-active-color '"#00ff00")
     (require 'awesome-tray)
     (awesome-tray-mode 1)
@@ -1042,7 +1042,7 @@
 ;; )
 
 (global-hl-line-mode 1)
-;;; from elisp
+;;; from emacswiki
 (require 'crosshairs)
 
 
