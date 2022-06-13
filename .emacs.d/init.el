@@ -1551,9 +1551,13 @@ opening parenthesis one level up."
     (define-key map (kbd "<end>") 'mwim-end-of-line-or-code)
 
     (define-key map (kbd "C-c .") 'er/expand-region)
+
     (define-key map (kbd "C-c v") 'set-rectangular-region-anchor)
     (define-key map (kbd "C-c o") 'helm-occur)
     (define-key map (kbd "C-c s") 'my-helm-ag-thing-at-point)
+    (define-key map (kbd "C-c C-v") #'set-rectangular-region-anchor)
+    (define-key map (kbd "C-c C-o") #'helm-occur)
+    (define-key map (kbd "C-c C-s") #'my-helm-ag-thing-at-point)
 
     (define-key map (kbd "M-;") 'avy-goto-word-0)
     (define-key map (kbd "M-s") 'my-save-buffer)
@@ -1566,11 +1570,9 @@ opening parenthesis one level up."
     (define-prefix-command 'my-god-mode-leader-key)
     (define-prefix-command 'my-god-mode-dummmy-key)
     (define-prefix-command 'my-god-mode-viewer-key)
-    (define-prefix-command 'my-god-mode-delete-key)
     (define-key god-local-mode-map (kbd "SPC") 'my-god-mode-leader-key)
     (define-key god-local-mode-map (kbd ",")   'my-god-mode-dummmy-key)
     (define-key god-local-mode-map (kbd "z")   'my-god-mode-viewer-key)
-    (define-key god-local-mode-map (kbd "d")   'my-god-mode-delete-key)
 
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
@@ -1596,20 +1598,12 @@ opening parenthesis one level up."
 
     (define-key god-local-mode-map (kbd "s") #'my-replace-char)
     (define-key god-local-mode-map (kbd "x") #'my-delete-char)
+    (define-key god-local-mode-map (kbd "d") #'kill-whole-line)
 
-    (define-key god-local-mode-map (kbd "d d") #'kill-whole-line)
-    (define-key god-local-mode-map (kbd "d L") #'my-delete-to-end)
-    (define-key god-local-mode-map (kbd "d H") #'my-delete-to-beginning)
-    (define-key god-local-mode-map (kbd "d w") #'kill-word)
-
-    (define-key god-local-mode-map (kbd "z m") #'my-hs-toggle-all)
-    (define-key god-local-mode-map (kbd "z z") #'recenter-top-bottom)
-    (define-key god-local-mode-map (kbd "z b") #'end-of-buffer)
-    (define-key god-local-mode-map (kbd "z t") #'beginning-of-buffer)
-
-    (define-key god-local-mode-map (kbd "C-c C-v") #'set-rectangular-region-anchor)
-    (define-key god-local-mode-map (kbd "C-c C-o") #'helm-occur)
-    (define-key god-local-mode-map (kbd "C-c C-s") #'my-helm-ag-thing-at-point)
+    (define-key god-local-mode-map (kbd "z h") #'my-hs-toggle-all)
+    (define-key god-local-mode-map (kbd "z v") #'recenter-top-bottom)
+    (define-key god-local-mode-map (kbd "z j") #'end-of-buffer)
+    (define-key god-local-mode-map (kbd "z k") #'beginning-of-buffer)
 
     (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)
     (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)
@@ -1621,16 +1615,11 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "n") #'my-isearch-forward)
     (define-key god-local-mode-map (kbd ":") #'helm-M-x)
 
-
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
     (define-key god-local-mode-map (kbd "C-~") #'upcase-char)
 
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
     (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)
-    ;;  (define-key god-local-mode-map (kbd "C-, C-p") #'my-mc/mark-previous-like-this)
-    ;;  (define-key god-local-mode-map (kbd "C-, C-s") #'mc/skip-to-next-like-this)
-    ;;  (define-key god-local-mode-map (kbd "C-, C-r") #'mc/skip-to-previous-like-this)
-    ;;  (define-key god-local-mode-map (kbd "C-, C-a") #'mc/mark-all-like-this)
 
     (define-key god-local-mode-map (kbd "SPC b") #'helm-buffers-list)
     (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
@@ -1671,7 +1660,7 @@ opening parenthesis one level up."
 
     (define-key god-local-mode-map (kbd ";") #'scroll-up-command)
     (define-key god-local-mode-map (kbd "'") #'scroll-down-command)
-    (define-key god-local-mode-map (kbd "\\") #'recenter-top-bottom)
+    ;; (define-key god-local-mode-map (kbd "\\") #'recenter-top-bottom)
 
 
     ;; projectile
