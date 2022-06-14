@@ -111,6 +111,7 @@
 	whole-line-or-region-kill-region
 	whole-line-or-region-sp-kill-region
 	whole-line-or-region-yank
+	xterm-paste
 	yaml-electric-backspace
 	yaml-electric-dash-and-dot
 	yas-expand

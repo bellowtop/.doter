@@ -1081,12 +1081,12 @@
 
     (if (bound-and-true-p god-local-mode)
       (progn
-        (set-face-attribute 'hl-line nil :inherit nil :background "deepskyblue4")
+        (set-face-attribute 'hl-line nil :inherit nil :background "mediumpurple4")
         (set-face-attribute 'line-number-current-line nil :foreground "#00ff00")
         (setq cursor-type 'box)
       )
       (progn
-        (set-face-attribute 'hl-line nil :inherit nil :background "gray6")
+        (set-face-attribute 'hl-line nil :inherit nil :background "gray12")
         (set-face-attribute 'line-number-current-line nil :foreground "#3f4040")
         (setq cursor-type 'bar)
       )
@@ -1325,6 +1325,7 @@ _u_: undo      _r_: redo
 (defun my-deadgrep-edit-enter()
   (interactive)
   (global-undo-tree-mode -1)
+  (undo-tree-mode -1)
   (remove-hook 'before-save-hook #'delete-trailing-whitespace)
   (deadgrep-edit-mode)
   )
@@ -1332,6 +1333,7 @@ _u_: undo      _r_: redo
 (defun my-deadgrep-edit-exit()
   (interactive)
   (global-undo-tree-mode 1)
+  (undo-tree-mode 1)
   (add-hook 'before-save-hook #'delete-trailing-whitespace)
   (deadgrep-mode)
   )
@@ -1607,6 +1609,8 @@ opening parenthesis one level up."
 
     (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)
     (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)
+    (define-key god-local-mode-map (kbd "$") #'mwim-end-of-code-or-line)
+    (define-key god-local-mode-map (kbd "0") #'mwim-beginning-of-code-or-line)
     (define-key god-local-mode-map (kbd "A") #'beginning-of-defun)
     (define-key god-local-mode-map (kbd "E") #'end-of-defun)
 
@@ -1643,6 +1647,16 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-w v") #'split-window-right)
     (define-key god-local-mode-map (kbd "C-w s") #'split-window-below)
     (define-key god-local-mode-map (kbd "C-w w") #'ace-select-window)
+
+    (define-key god-local-mode-map (kbd "C-w C-l") #'windmove-right)
+    (define-key god-local-mode-map (kbd "C-w C-h") #'windmove-left)
+    (define-key god-local-mode-map (kbd "C-w C-k") #'windmove-up)
+    (define-key god-local-mode-map (kbd "C-w C-j") #'windmove-down)
+    (define-key god-local-mode-map (kbd "C-w C-q") #'delete-window)      ;; delete this window
+    (define-key god-local-mode-map (kbd "C-w C-d") #'delete-other-windows)  ;; delete other window
+    (define-key god-local-mode-map (kbd "C-w C-v") #'split-window-right)
+    (define-key god-local-mode-map (kbd "C-w C-s") #'split-window-below)
+    (define-key god-local-mode-map (kbd "C-w C-w") #'ace-select-window)
 
     ;;
     ;; dummmy key
@@ -1694,8 +1708,8 @@ opening parenthesis one level up."
               ("C-c i" . clang-format-region)
               ("C-c f" . clang-format-buffer)
 
-              ("g g" . (lambda () (interactive) (beginning-of-buffer) (keyboard-quit) ))
-              ("G" .   (lambda () (interactive) (end-of-buffer) (keyboard-quit) ))
+              ;; ("g g" . (lambda () (interactive) (beginning-of-buffer) (keyboard-quit) ))
+              ;; ("G" .   (lambda () (interactive) (end-of-buffer) (keyboard-quit) ))
         )
 )
 (selected-global-mode 1)
