@@ -753,9 +753,10 @@
 
 
 
+(hs-minor-mode 1)
+
 (defun my-hide-all()
   (interactive)
-  (hs-minor-mode)
   (hs-hide-all)
 )
 ;; (add-hook 'prog-mode-hook 'my-hide-all)
@@ -1081,7 +1082,7 @@
 
     (if (bound-and-true-p god-local-mode)
       (progn
-        (set-face-attribute 'hl-line nil :inherit nil :background "mediumpurple4")
+        (set-face-attribute 'hl-line nil :inherit nil :background 'unspecified)
         (set-face-attribute 'line-number-current-line nil :foreground "#00ff00")
         (setq cursor-type 'box)
       )
@@ -1625,10 +1626,11 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
     (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)
 
-    (define-key god-local-mode-map (kbd "SPC b") #'helm-buffers-list)
+    (define-key god-local-mode-map (kbd "SPC b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
     (define-key god-local-mode-map (kbd "SPC K") #'my-only-current-buffer)
     (define-key god-local-mode-map (kbd "SPC f") #'projectile-find-file)
+    (define-key god-local-mode-map (kbd "SPC p") #'helm-find-files)
     (define-key god-local-mode-map (kbd "SPC m") #'deadgrep)
     (define-key god-local-mode-map (kbd "SPC L") #'display-line-numbers-mode)
 
@@ -1703,8 +1705,6 @@ opening parenthesis one level up."
               ("v" . keyboard-quit)  ;; deactive region
               ("d" . kill-region)
               ("x" . kill-region)
-              ("C-n" . my-mc/mark-next-like-this)
-              ("C-p" . my-mc/mark-previous-like-this)
               ("C-c i" . clang-format-region)
               ("C-c f" . clang-format-buffer)
 
