@@ -196,7 +196,7 @@
 ;; )
 
 
-(defun my-recenter (&optional ARG PRED) 
+(defun my-recenter (&optional ARG PRED)
   (recenter)
   ;; from crosshairs.el
   ;; (flash-crosshairs)
@@ -314,7 +314,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values '((eval progn (pp-buffer) (indent-buffer))))
@@ -736,6 +736,7 @@
 (defun my-hs-toggle-all ()
   "If anything isn't hidden, run `hs-hide-all', else run `hs-show-all'."
   (interactive)
+  (hs-minor-mode 1)
   (let ((starting-ov-count (length (overlays-in (point-min) (point-max)))))
     (hs-hide-all)
     (when (equal (length (overlays-in (point-min) (point-max))) starting-ov-count)
@@ -747,16 +748,17 @@
 
 (defun my-hs-toggle-hiding ()
   (interactive)
+  (hs-minor-mode 1)
    (if (hs-already-hidden-p)
        (hs-show-block)
      (hs-hide-block)))
 
 
 
-(hs-minor-mode 1)
 
 (defun my-hide-all()
   (interactive)
+  (hs-minor-mode 1)
   (hs-hide-all)
 )
 ;; (add-hook 'prog-mode-hook 'my-hide-all)
@@ -1318,7 +1320,7 @@ _u_: undo      _r_: redo
 ;;   "View result under cursor in other window."
 ;;   (interactive)
 ;;   (deadgrep-visit-result-other-window)
-;; 
+;;
 ;;   (recenter)
 ;;   (other-window 1)
 ;;   )
@@ -1720,8 +1722,3 @@ opening parenthesis one level up."
   (my-keys-minor-mode 0))
 
 (add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
-
-
-
-
-

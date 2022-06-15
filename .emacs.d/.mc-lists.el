@@ -57,13 +57,13 @@
 	mouse-yank-primary
 	mwim-beginning-of-code-or-line
 	mwim-end-of-code-or-line
+	my-delete-char
 	my-delete-to-beginning
 	my-delete-to-end
 	my-god-char-forward-and-insert-mode
 	my-join-lines
 	my-quit-god-mode
 	my-replace-char
-	my-toggle-god-mode
 	org-beginning-of-line
 	org-ctrl-c-ctrl-c
 	org-cycle
@@ -172,6 +172,7 @@
 	my-mc/skip-to-previous-like-this
 	my-quit
 	my-save-buffer
+	my-toggle-god-mode
 	org-clock-goto
 	org-edit-src-save
 	repeat
