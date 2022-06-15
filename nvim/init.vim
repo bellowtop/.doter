@@ -70,9 +70,10 @@ Plug 'hrsh7th/vim-vsnip'
 call plug#end()
 
 
-augroup vimrc_rooter
-    autocmd VimEnter * :Rooter
-augroup END
+let g:rooter_manual_only = 1
+" augroup vimrc_rooter
+"     autocmd VimEnter * :Rooter
+" augroup END
 
 
 
@@ -105,7 +106,8 @@ let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
 let $FZF_DEFAULT_OPTS=" --reverse --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
 
 """ search files with current word
-nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":call fzf#vim#files('.', {'options':'--query '.expand('<cword>')})<CR>"
+" nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":call fzf#vim#files('.', {'options':'--query '.expand('<cword>')})<CR>"
+nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Files<CR>"
 nnoremap <silent> <expr> <Leader>b (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Buffers<CR>"
 nnoremap <silent> <expr> <Leader>t (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":BTags<CR>"
 """ grep with current word
