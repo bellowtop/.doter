@@ -820,7 +820,7 @@
 
 
 ;; (setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*scratch" "*Help*" "*lsp-log*"))
-(setq special-buffers (list "*Ibuffer*" "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Help*" "helm-*"))
+(setq special-buffers (list "*Ibuffer*" "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Help*" "helm-*" "*ansi-term*"))
 (require 'god-mode)
 (setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
@@ -1568,7 +1568,7 @@ opening parenthesis one level up."
     (define-key map (kbd "M-s") 'my-save-buffer)
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
-    (define-key map (kbd "M-o") 'ace-select-window)
+    (define-key map (kbd "M-o") 'other-window)
     (define-key map (kbd "C-q") 'my-toggle-god-mode)
 
 
@@ -1605,8 +1605,8 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "x") #'my-delete-char)
     (define-key god-local-mode-map (kbd "d") #'kill-whole-line)
 
-    (define-key god-local-mode-map (kbd "z h") #'my-hs-toggle-all)
-    (define-key god-local-mode-map (kbd "z v") #'recenter-top-bottom)
+    (define-key god-local-mode-map (kbd "z m") #'my-hs-toggle-all)
+    (define-key god-local-mode-map (kbd "z z") #'recenter-top-bottom)
     (define-key god-local-mode-map (kbd "z j") #'end-of-buffer)
     (define-key god-local-mode-map (kbd "z k") #'beginning-of-buffer)
 
@@ -1660,7 +1660,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-w C-d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "C-w C-v") #'split-window-right)
     (define-key god-local-mode-map (kbd "C-w C-s") #'split-window-below)
-    (define-key god-local-mode-map (kbd "C-w C-w") #'ace-select-window)
+    (define-key god-local-mode-map (kbd "C-w C-w") #'other-window)
 
     ;;
     ;; dummmy key
