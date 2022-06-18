@@ -314,7 +314,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values
@@ -340,11 +340,6 @@
 )
 
 
-
-;; line number fixed width
-(setq display-line-numbers-width-start t)
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
-(add-hook 'markdown-mode-hook 'display-line-numbers-mode)
 
 
 
@@ -393,12 +388,28 @@
 )
 
 (use-package yaml-mode
-    :defer t
+    :ensure t
     :init
     :config
     (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+    (add-to-list 'auto-mode-alist '("\\.yml\\.j2\\'" . yaml-mode))
+    (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
+    (add-to-list 'auto-mode-alist '("\\.yaml\\.j2\\'" . yaml-mode))
 )
 
+
+
+(use-package ansible
+  :defer t
+)
+
+
+;; line number fixed width
+(setq display-line-numbers-width-start t)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+(add-hook 'markdown-mode-hook 'display-line-numbers-mode)
+(add-hook 'yaml-mode-hook 'display-line-numbers-mode)
+(add-hook 'yaml-mode-hook '(lambda () (ansible 1)))
 
 
 ;; delete all other buffers, only keep current one.
