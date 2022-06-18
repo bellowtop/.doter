@@ -1590,9 +1590,11 @@ opening parenthesis one level up."
     (define-prefix-command 'my-god-mode-leader-key)
     (define-prefix-command 'my-god-mode-dummmy-key)
     (define-prefix-command 'my-god-mode-viewer-key)
+    (define-prefix-command 'my-god-mode-window-key)
     (define-key god-local-mode-map (kbd "SPC") 'my-god-mode-leader-key)
     (define-key god-local-mode-map (kbd ",")   'my-god-mode-dummmy-key)
     (define-key god-local-mode-map (kbd "z")   'my-god-mode-viewer-key)
+    (define-key god-local-mode-map (kbd "q")   'my-god-mode-viewer-key)
 
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
@@ -1657,6 +1659,16 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "@") #'(lambda() (interactive) (treemacs-find-file) (treemacs-select-window)))
     (define-key god-local-mode-map (kbd "SPC @") #'treemacs-add-and-display-current-project)
 
+    (define-key god-local-mode-map (kbd "q l") #'windmove-right)
+    (define-key god-local-mode-map (kbd "q h") #'windmove-left)
+    (define-key god-local-mode-map (kbd "q k") #'windmove-up)
+    (define-key god-local-mode-map (kbd "q j") #'windmove-down)
+    (define-key god-local-mode-map (kbd "q Q") #'delete-window)      ;; delete this window
+    (define-key god-local-mode-map (kbd "q d") #'delete-other-windows)  ;; delete other window
+    (define-key god-local-mode-map (kbd "q v") #'split-window-right)
+    (define-key god-local-mode-map (kbd "q s") #'split-window-below)
+    (define-key god-local-mode-map (kbd "q w") #'ace-select-window)
+
     (define-key god-local-mode-map (kbd "C-w l") #'windmove-right)
     (define-key god-local-mode-map (kbd "C-w h") #'windmove-left)
     (define-key god-local-mode-map (kbd "C-w k") #'windmove-up)
@@ -1665,17 +1677,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-w d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "C-w v") #'split-window-right)
     (define-key god-local-mode-map (kbd "C-w s") #'split-window-below)
-    (define-key god-local-mode-map (kbd "C-w w") #'ace-select-window)
-
-    (define-key god-local-mode-map (kbd "C-w C-l") #'windmove-right)
-    (define-key god-local-mode-map (kbd "C-w C-h") #'windmove-left)
-    (define-key god-local-mode-map (kbd "C-w C-k") #'windmove-up)
-    (define-key god-local-mode-map (kbd "C-w C-j") #'windmove-down)
-    (define-key god-local-mode-map (kbd "C-w C-q") #'delete-window)      ;; delete this window
-    (define-key god-local-mode-map (kbd "C-w C-d") #'delete-other-windows)  ;; delete other window
-    (define-key god-local-mode-map (kbd "C-w C-v") #'split-window-right)
-    (define-key god-local-mode-map (kbd "C-w C-s") #'split-window-below)
-    (define-key god-local-mode-map (kbd "C-w C-w") #'other-window)
+    (define-key god-local-mode-map (kbd "C-w w") #'other-window)
 
     ;;
     ;; dummmy key
