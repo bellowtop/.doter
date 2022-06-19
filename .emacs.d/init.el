@@ -1667,13 +1667,13 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "q d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "q v") #'split-window-right)
     (define-key god-local-mode-map (kbd "q s") #'split-window-below)
-    (define-key god-local-mode-map (kbd "q w") #'ace-select-window)
+    (define-key god-local-mode-map (kbd "q q") #'other-window)
 
     (define-key god-local-mode-map (kbd "C-w l") #'windmove-right)
     (define-key god-local-mode-map (kbd "C-w h") #'windmove-left)
     (define-key god-local-mode-map (kbd "C-w k") #'windmove-up)
     (define-key god-local-mode-map (kbd "C-w j") #'windmove-down)
-    (define-key god-local-mode-map (kbd "C-w q") #'delete-window)      ;; delete this window
+    (define-key god-local-mode-map (kbd "C-w Q") #'delete-window)      ;; delete this window
     (define-key god-local-mode-map (kbd "C-w d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "C-w v") #'split-window-right)
     (define-key god-local-mode-map (kbd "C-w s") #'split-window-below)
