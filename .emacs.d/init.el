@@ -1594,7 +1594,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "SPC") 'my-god-mode-leader-key)
     (define-key god-local-mode-map (kbd ",")   'my-god-mode-dummmy-key)
     (define-key god-local-mode-map (kbd "z")   'my-god-mode-viewer-key)
-    (define-key god-local-mode-map (kbd "q")   'my-god-mode-viewer-key)
+    (define-key god-local-mode-map (kbd "q")   'my-god-mode-window-key)
 
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
