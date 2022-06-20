@@ -1008,6 +1008,15 @@
       (interactive)
       (isearch-mode t nil nil nil)
       (god-mode-isearch-activate)
+      (isearch-repeat-forward+)
+)
+
+
+(defun my-isearch-backward ()
+      (interactive)
+      (isearch-mode nil nil nil nil)
+      (god-mode-isearch-activate)
+      (isearch-repeat-backward+)
 )
 
 
@@ -1637,6 +1646,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "*") #'my-search-selection)
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
     (define-key god-local-mode-map (kbd "n") #'my-isearch-forward)
+    (define-key god-local-mode-map (kbd "N") #'my-isearch-backward)
     (define-key god-local-mode-map (kbd ":") #'helm-M-x)
 
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
