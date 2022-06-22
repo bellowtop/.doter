@@ -282,9 +282,9 @@ end
 ---
 --- LSP server config
 ---
--- Use a loop to conveniently both setup defined servers 
+-- Use a loop to conveniently both setup defined servers
 -- and map buffer local keybindings when the language server attaches
--- 
+--
 -- local servers = { "gopls", "clangd", "rust_analyzer" }
 -- for _, lsp in ipairs(servers) do
 --   nvim_lsp[lsp].setup { on_attach = on_attach }
@@ -329,7 +329,7 @@ lua <<EOF
   -- Set configuration for specific filetype.
   cmp.setup.filetype('gitcommit', {
     sources = cmp.config.sources({
-      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it. 
+      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
     }, {
       { name = 'buffer' },
     })
@@ -597,6 +597,15 @@ inoremap <C-t> <C-o>O
 
 inoremap <C-q> <Esc>
 nnoremap <C-q> a
+
+" q as window prefix
+" qq to cycle windows
+" qQ to delete current window
+" qd to delete all ther windows
+nnoremap q     <C-w>
+nnoremap qq    <C-w><C-w>
+nnoremap qQ    <C-w>q
+nnoremap qd    <C-w>o
 
 
 nnoremap <silent> >  :exe "vertical resize +20"<CR>
