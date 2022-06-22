@@ -595,6 +595,9 @@ inoremap <M-k> <C-o>d0
 inoremap <C-t> <C-o>O
 
 
+inoremap <C-q> <Esc>
+nnoremap <C-q> a
+
 
 nnoremap <silent> >  :exe "vertical resize +20"<CR>
 nnoremap <silent> <  :exe "vertical resize -20"<CR>
