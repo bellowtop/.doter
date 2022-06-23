@@ -608,6 +608,15 @@ nnoremap qQ    <C-w>q
 nnoremap qd    <C-w>o
 
 
+
+" val, vil
+vnoremap al :<C-U>normal 0v$h<CR>
+omap al :normal val<CR>
+vnoremap il :<C-U>normal ^vg_<CR>
+omap il :normal vil<CR>
+
+
+
 nnoremap <silent> >  :exe "vertical resize +20"<CR>
 nnoremap <silent> <  :exe "vertical resize -20"<CR>
 
