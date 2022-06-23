@@ -215,8 +215,6 @@
 ;; override jump hook
 ;; (setq xref-after-jump-hook '(hs-show-all recenter xref-pulse-momentarily))
 
-;; never goto view mode
-(add-hook 'view-mode-hook (lambda () (View-exit)))
 
 
 (add-hook 'go-mode-hook 'lsp-deferred)
@@ -409,7 +407,7 @@
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'markdown-mode-hook 'display-line-numbers-mode)
 (add-hook 'yaml-mode-hook 'display-line-numbers-mode)
-(add-hook 'yaml-mode-hook '(lambda () (ansible 1)))
+(add-hook 'yaml-mode-hook #'(lambda () (ansible 1)))
 
 
 ;; delete all other buffers, only keep current one.
@@ -1689,9 +1687,6 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-w s") #'split-window-below)
     (define-key god-local-mode-map (kbd "C-w w") #'other-window)
 
-    ;;
-    ;; dummmy key
-    ;;
     (define-key god-local-mode-map (kbd ", w") #'my-save-buffer)
     (define-key god-local-mode-map (kbd ", b") #'flip-buffer-to-window)
     (define-key god-local-mode-map (kbd ", ,") #'er/mark-symbol)             ;; b a   last buffer
@@ -1710,18 +1705,53 @@ opening parenthesis one level up."
 
     ;; projectile
     (define-key projectile-mode-map (kbd "C-c f") 'projectile-command-map)
-
-
     map)
   "my-keys-minor-mode keymap.")
-
-
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
   :init-value t
   :lighter " my-keys")
+
+;; Active my keys minor mode
 (my-keys-minor-mode 1)
+
+;; Diactive my keys for minibuffer
+(add-hook 'minibuffer-setup-hook #'(lambda () (my-keys-minor-mode 0)))
+
+
+
+
+(defvar special-buffer-keys-minor-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd ";") #'scroll-up-command)
+    (define-key map (kbd "'") #'scroll-down-command)
+    (define-key map (kbd "k") #'previous-line)
+    (define-key map (kbd "j") #'next-line)
+    (define-key map (kbd "l") #'forward-char)
+    (define-key map (kbd "h") #'backward-char)
+    (define-key map (kbd "C-w l") #'windmove-right)
+    (define-key map (kbd "C-w h") #'windmove-left)
+    (define-key map (kbd "C-w k") #'windmove-up)
+    (define-key map (kbd "C-w j") #'windmove-down)
+    (define-key map (kbd "C-w Q") #'delete-window)      ;; delete this window
+    (define-key map (kbd "C-w d") #'delete-other-windows)  ;; delete other window
+    (define-key map (kbd "C-w v") #'split-window-right)
+    (define-key map (kbd "C-w s") #'split-window-below)
+    (define-key map (kbd "C-w w") #'other-window)
+    map)
+  "special-buffer-keys-minor keymap.")
+(define-minor-mode special-buffer-keys-minor
+  "A minor mode add some bindings for special-buffers."
+  :init-value t
+  :lighter " my-special-buffer-keys")
+
+
+
+(add-hook 'view-mode-hook        'View-exit)
+(add-hook 'view-mode-hook        'special-buffer-keys-minor)
+(add-hook 'deadgrep-finished-hook 'special-buffer-keys-minor)
+(add-hook 'help-mode-hook         'special-buffer-keys-minor)
 
 
 
@@ -1743,9 +1773,3 @@ opening parenthesis one level up."
 )
 (selected-global-mode 1)
 
-
-
-(defun my-minibuffer-setup-hook ()
-  (my-keys-minor-mode 0))
-
-(add-hook 'minibuffer-setup-hook 'my-minibuffer-setup-hook)
