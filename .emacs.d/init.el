@@ -832,6 +832,9 @@
 (require 'mwim)
 
 
+(require 'cl)
+
+
 
 ;; (setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*scratch" "*Help*" "*lsp-log*"))
 (setq special-buffers (list "*Messages*" "HELLO" "*Ibuffer*" "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Helm Help*" "*Help*" "*info*" "helm-*" "*ansi-term*" "*fzf*"))
@@ -847,16 +850,19 @@
 )
 
 
-(defun my-god-mode ()
+(defun* my-god-mode ()
   (interactive)
+
+  ;; Mini buffer must not use my keybindings
+  (if (string-prefix-p "*Minibuf" (string-trim (buffer-name)))
+      (return-from my-god-mode)
+  )
+
   (if (my-test-if-special-buffer (string-trim (buffer-name)))
             (progn
                 ;; (message "%s is special buffer" (buffer-name))
                 (ignore)
-                ;; Mini buffer must not use my keybindings
-                (unless (string-prefix-p "*Minibuf" (string-trim (buffer-name)))
-                    (my-special-buffer-keys-minor-mode 1)
-                  )
+                (my-special-buffer-keys-minor-mode 1)
             )
             (progn
                 ;; (message "%s not a special buffer" (buffer-name))
