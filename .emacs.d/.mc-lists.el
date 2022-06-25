@@ -104,6 +104,7 @@
 	sp-wrap-round
 	sql-delete-backward-char
 	sql-magic-go
+	upcase-char
 	upcase-region
 	wdired--self-insert
 	web-mode-comment-or-uncomment

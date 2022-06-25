@@ -1631,6 +1631,7 @@ opening parenthesis one level up."
 
     (define-key map (kbd "M-;") 'avy-goto-word-0)
     (define-key map (kbd "M-s") 'my-save-buffer)
+    (define-key map (kbd "C-j") 'my-save-buffer)
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
     (define-key map (kbd "M-o") 'other-window)
@@ -1799,6 +1800,8 @@ opening parenthesis one level up."
 ;; Diactive my all special keys for minibuffer
 (add-hook 'minibuffer-setup-hook #'(lambda () (my-keys-minor-mode 0)))
 (add-hook 'minibuffer-setup-hook #'(lambda () (my-special-buffer-keys-minor-mode 0)))
+(add-hook 'helm-minibuffer-set-up-hook #'(lambda () (my-special-buffer-keys-minor-mode 0)))
+
 
 
 
