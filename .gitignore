@@ -10,13 +10,14 @@ pyim/
 anaconda-mode/
 .wg-file.el
 /url/cache
+
+/.emacs.d/.local/*
+!/.emacs.d/.local/.gitkeep
+
 /.emacs.desktop
 /.emacs.d/eclipse.jdt.ls/
-/.emacs.d/workspace/
-/.emacs.d/workspaces/
 /.emacs.d/projects
 /.emacs.d/share
-/.emacs.d/.local
 /.emacs.d/eglot-eclipse-jdt-cache
 /.emacs.d/.dap-breakpoints
 /.emacs.d/meghanada/

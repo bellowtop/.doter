@@ -51,6 +51,7 @@
 
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/emacswiki.org"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 
 
 
@@ -218,37 +219,20 @@
 
 
 
+(require 'init-funcs)
+
+(require 'init-eglot)
+
+(require 'init-lang-java)
+
+(require 'download-lombok)
 
 
 
 
-(require 'f)
-
-(defvar lsp-java-lombok--jar-path
-  (if (boundp 'doom-cache-dir)
-      (f-join doom-cache-dir "lombok/lombok.jar")
-    (f-join user-emacs-directory ".local/cache/lombok/lombok.jar")))
-
-(defun lsp-java-lombok-download ()
-  "Download the latest lombok jar."
-  (make-directory (f-dirname lsp-java-lombok--jar-path) t)
-  (when (f-exists-p lsp-java-lombok--jar-path)
-    (f-delete lsp-java-lombok--jar-path))
-  (lsp--info "Downloading lombok...")
-  (url-copy-file "https://projectlombok.org/downloads/lombok.jar" lsp-java-lombok--jar-path))
-
-(defun lsp-java-lombok-init ()
-  "Download lombok and set vmargs."
-  (unless (f-exists-p lsp-java-lombok--jar-path)
-    (lsp-java-lombok-download))
-)
-(lsp-java-lombok-init)
-
-(setq eglot-java-eclipse-jdt-args "-javaagent:/home/nickelchen/.emacs.d/.local/cache/lombok/lombok.jar")
 
 
-
-(defun joindirs (root &rest dirs)
+(defun my-joindirs (root &rest dirs)
   "Joins a series of directories together, like Python's os.path.join,
   (dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") => /tmp/a/b/c"
   (if (not dirs)
@@ -259,49 +243,8 @@
 
 
 
-(use-package 'company
-    :ensure t
-)
 
 
-(use-package eglot
-  :init
-  (company-mode)
-  :hook
-  (
-   (python-mode . eglot-ensure)
-   (c-mode . eglot-ensure)
-   (c++-mode . eglot-ensure)
-   (java-mode . eglot-ensure)
-   )
-  :config
-  (setcdr (assq 'java-mode eglot-server-programs)
-          `("jdtls" "-data" ,(joindirs "~/.emacs.d" "workspace")
-            ,(concat "--jvm-arg=-javaagent:" (joindirs "~/.emacs.d" ".local/cache/lombok/lombok.jar"))
-            ,(concat "--jvm-arg=-Xbootclasspath/a:" (joindirs "~/.emacs.d" ".local/cache/lombok/lombok.jar"))
-            "--jvm-arg=-XX:+UseG1GC"
-            "--jvm-arg=-XX:+UseStringDeduplication"
-            ))
-  :custom
-  ((eglot-autoshutdown t))
-)
-
-
-
-
-
-
-
-
-
-
-
-(add-hook 'go-mode-hook 'eglot-ensure)
-(add-hook 'rust-mode-hook 'eglot-ensure)
-(add-hook 'c-mode-hook 'eglot-ensure)
-(add-hook 'c++-mode-hook 'eglot-ensure)
-(add-hook 'erlang-mode-hook 'eglot-ensure)
-(add-hook 'python-mode-hook 'eglot-ensure)
 
 
 
@@ -324,7 +267,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(auto-complete smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(jdecomp auto-complete smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values
@@ -829,7 +772,7 @@
 
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
-(setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
+(setq backup-directory-alist '(("" . "~/.emacs.d/.local/backup")))
 (setq recenter-redisplay nil)
 
 
@@ -1299,7 +1242,7 @@
 
 
 (require 'undo-tree)
-(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.undo-tree-files")))
+(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.local/.undo-tree-files")))
 (global-undo-tree-mode)
 
 ;; Suppress the message saying that the undo history file was
