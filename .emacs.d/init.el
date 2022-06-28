@@ -259,9 +259,14 @@
 
 
 
+(use-package 'company
+    :ensure t
+)
 
 
 (use-package eglot
+  :init
+  (company-mode)
   :hook
   (
    (python-mode . eglot-ensure)
