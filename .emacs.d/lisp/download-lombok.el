@@ -19,7 +19,5 @@
     (lsp-java-lombok-download))
 )
 
-(add-hook 'java-mode-hook #'lsp-java-lombok-init)
-
 
 (provide 'download-lombok)
