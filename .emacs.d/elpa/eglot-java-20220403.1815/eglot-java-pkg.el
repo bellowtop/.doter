@@ -1,0 +1,2 @@
+;;; Generated package description from eglot-java.el  -*- no-byte-compile: t -*-
+(define-package "eglot-java" "20220403.1815" "Java extension for the eglot LSP client" '((emacs "26.1") (eglot "1.0") (jsonrpc "1.0.0")) :commit "da76eb69b3f86992d62302649a987f157b7b7371" :authors '(("Yves Zoundi" . "yves_zoundi@hotmail.com")) :maintainer '("Yves Zoundi" . "yves_zoundi@hotmail.com") :keywords '("convenience" "languages") :url "https://github.com/yveszoundi/eglot-java")

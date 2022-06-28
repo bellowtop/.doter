@@ -15,7 +15,9 @@ anaconda-mode/
 /.emacs.d/workspace/
 /.emacs.d/workspaces/
 /.emacs.d/projects
+/.emacs.d/share
 /.emacs.d/.local
+/.emacs.d/eglot-eclipse-jdt-cache
 /.emacs.d/.dap-breakpoints
 /.emacs.d/meghanada/
 .undo-tree-files

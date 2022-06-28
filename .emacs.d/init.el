@@ -218,60 +218,6 @@
 
 
 
-(add-hook 'go-mode-hook 'lsp-deferred)
-(add-hook 'rust-mode-hook 'lsp-deferred)
-(add-hook 'c-mode-hook 'lsp-deferred)
-(add-hook 'c++-mode-hook 'lsp-deferred)
-(add-hook 'erlang-mode-hook 'lsp-deferred)
-(add-hook 'java-mode-hook 'lsp-deferred)
-(add-hook 'python-mode-hook 'lsp-deferred)
-
-
-
-;; https://emacs.stackexchange.com/questions/64970/how-can-i-disable-lsp-headerline
-;; (add-hook 'lsp-mode-hook #'lsp-headerline-breadcrumb-mode)
-
-(use-package lsp-mode
-  :defer t
-  :init
-  (setq lsp-enable-links nil)
-  (setq lsp-keymap-prefix "C-c l" )
-  (setq lsp-signature-auto-activate nil)
-  (setq lsp-diagnostics-provider :none)
-  (setq lsp-imenu-sort-methods '(position))
-  (setq lsp-headerline-breadcrumb-enable nil)
-  :config
-  (lsp-headerline-breadcrumb-mode -1)
-  :hook
-)
-
-(use-package lsp-ui
-  :defer t
-  :init
-  (setq lsp-ui-doc-enable                 nil
-        lsp-ui-doc-include-signature      t
-        lsp-ui-doc-position               'top
-        lsp-ui-doc-header                 nil
-        lsp-ui-doc-border                 "white"
-        lsp-ui-sideline-enable            nil
-        lsp-ui-peek-enable                nil
-        lsp-ui-sideline-delay             1
-        lsp-ui-sideline-ignore-duplicate  t
-        lsp-ui-peek-always-show           nil
-        lsp-ui-flycheck-enable            nil
-        lsp-enable-snippet                nil
-   )
-  :bind
-  (:map lsp-ui-mode-map
-        ([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
-        ([remap xref-find-references] . lsp-ui-peek-find-references)
-        ;; ("C-c u" . lsp-ui-imenu)
-        ("C-c k" . lsp-ui-doc-show)
-   )
-  :config
-  (setq lsp-ui-sideline-ignore-duplicate t)
-)
-
 
 
 
@@ -289,38 +235,68 @@
   (when (f-exists-p lsp-java-lombok--jar-path)
     (f-delete lsp-java-lombok--jar-path))
   (lsp--info "Downloading lombok...")
-  (url-copy-file "https://projectlombok.org/downloads/lombok.jar"
-                 lsp-java-lombok--jar-path))
+  (url-copy-file "https://projectlombok.org/downloads/lombok.jar" lsp-java-lombok--jar-path))
 
 (defun lsp-java-lombok-init ()
   "Download lombok and set vmargs."
   (unless (f-exists-p lsp-java-lombok--jar-path)
     (lsp-java-lombok-download))
-  (add-to-list 'lsp-java-vmargs
-               (concat "-javaagent:" lsp-java-lombok--jar-path)))
+)
+(lsp-java-lombok-init)
+
+(setq eglot-java-eclipse-jdt-args "-javaagent:/home/nickelchen/.emacs.d/.local/cache/lombok/lombok.jar")
 
 
 
-;; 0.57.0 works with java 1.8
-;; (setq lsp-java-jdt-download-url  "https://download.eclipse.org/jdtls/milestones/0.57.0/jdt-language-server-0.57.0-202006172108.tar.gz")
+(defun joindirs (root &rest dirs)
+  "Joins a series of directories together, like Python's os.path.join,
+  (dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") => /tmp/a/b/c"
+  (if (not dirs)
+      root
+    (apply 'joindirs
+           (expand-file-name (car dirs) root)
+           (cdr dirs))))
 
-;; (setq lsp-java--download-root "https://gitee.com/liujiacai/lsp-java/raw/master/install/")
-(setq lsp-java-jdt-download-url  "https://download.eclipse.org/jdtls/milestones/1.9.0/jdt-language-server-1.9.0-202203031534.tar.gz")
-(use-package lsp-java
-    :defer t
-    :init
-    ; (setq lsp-java-format-settings-url (lsp--path-to-uri (substitute-in-file-name "file://$HOME/.emacs.d/.eclipse-java-formatter.xml" )))      ;; not work!
-    ; (setq lsp-java-format-settings-profile '"GoogleStyle")                                                                                    ;; not work!
-    :config
-    (lsp-java-lombok-init)
+
+
+
+
+(use-package eglot
+  :hook
+  (
+   (python-mode . eglot-ensure)
+   (c-mode . eglot-ensure)
+   (c++-mode . eglot-ensure)
+   (java-mode . eglot-ensure)
+   )
+  :config
+  (setcdr (assq 'java-mode eglot-server-programs)
+          `("jdtls" "-data" ,(joindirs "~/.emacs.d" "workspace")
+            ,(concat "--jvm-arg=-javaagent:" (joindirs "~/.emacs.d" ".local/cache/lombok/lombok.jar"))
+            ,(concat "--jvm-arg=-Xbootclasspath/a:" (joindirs "~/.emacs.d" ".local/cache/lombok/lombok.jar"))
+            "--jvm-arg=-XX:+UseG1GC"
+            "--jvm-arg=-XX:+UseStringDeduplication"
+            ))
+  :custom
+  ((eglot-autoshutdown t))
 )
 
-(use-package lsp-python-ms
-  :defer t
-  :init
-  (setq lsp-python-ms-auto-install-server t)
-)
 
+
+
+
+
+
+
+
+
+
+(add-hook 'go-mode-hook 'eglot-ensure)
+(add-hook 'rust-mode-hook 'eglot-ensure)
+(add-hook 'c-mode-hook 'eglot-ensure)
+(add-hook 'c++-mode-hook 'eglot-ensure)
+(add-hook 'erlang-mode-hook 'eglot-ensure)
+(add-hook 'python-mode-hook 'eglot-ensure)
 
 
 
@@ -343,7 +319,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(auto-complete smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(safe-local-variable-values
