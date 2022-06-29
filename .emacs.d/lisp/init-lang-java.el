@@ -42,8 +42,8 @@
                (:runtime [(:name "JavaSE-1.8" :path "/usr/lib/jvm/java-8-openjdk")
                           (:name "JavaSE-11" :path "/usr/lib/jvm/java-11-openjdk" :default t)
                           (:name "JavaSE-17" :path "/usr/lib/jvm/java-17-openjdk")])
-               ;; :format (:settings (:url ,(expand-file-name "~/projects/java-config/code_format.xml")
-               ;;                          :profile "my-profile"))
+               :format (:settings (:url ,(expand-file-name "~/.emacs.d/.local/eclipse-java-google-style.xml")
+                                        :profile "GoogleStyle"))
 
                ;; NOTE: https://github.com/redhat-developer/vscode-java/issues/406#issuecomment-356303715
                ;; > We enabled it by default so that workspace-wide errors can

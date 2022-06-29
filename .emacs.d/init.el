@@ -224,6 +224,8 @@
 
 
 (setq dap-java-test-runner (expand-file-name "~/.emacs.d/.local/eclipse.jdt.ls/test-runner/junit-platform-console-standalone.jar"))
+(setq dap-breakpoints-file (expand-file-name "~/.emacs.d/.local/.dap-breakpoints"))
+
 
 (setq eglot-java-junit-platform-console-standalone-jar (expand-file-name "~/.emacs.d/.local/eclipse.jdt.ls/test-runner/junit-platform-console-standalone.jar"))
 
@@ -294,6 +296,12 @@
 	   (indent-buffer))))
  '(warning-suppress-log-types '((comp) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
+
+
+
+
+;; lsp-mode session file
+(setq lsp-session-file (expand-file-name "~/.emacs.d/.local/.lsp-session-v1"))
 
 
 
@@ -1169,6 +1177,9 @@
 
 
 
+(setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
+(setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
+
 (use-package treemacs
   :ensure t
   :init
@@ -1193,6 +1204,9 @@
   )
 )
 
+
+
+(setq mc/list-file (expand-file-name "~/.emacs.d/.local/.mc-lists.el"))
 
 (use-package multiple-cursors
   :ensure   t
