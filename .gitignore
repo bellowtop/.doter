@@ -14,7 +14,7 @@ anaconda-mode/
 /.emacs.d/.local/*
 !/.emacs.d/.local/.gitkeep
 !/.emacs.d/.local/.dir-locals.el.sample
-!/.emacs.d/.local/.eclipse-java-formatter.xml
+!/.emacs.d/.local/eclipse-java-formatter.xml
 !/.emacs.d/.local/eclipse-java-google-style.xml
 
 /.emacs.desktop

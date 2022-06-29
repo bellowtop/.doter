@@ -444,6 +444,7 @@
 
 
 (defun my-java-mode-hook ()
+     (setq tab-width 4)                  ;; Default is 2
      (setq c-basic-offset 4)                  ;; Default is 2
      (setq c-indent-level 4)                  ;; Default is 2
      (setq indent-tabs-mode nil)              ;; use spaces only if nil
