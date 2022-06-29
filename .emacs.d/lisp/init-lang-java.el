@@ -1,5 +1,5 @@
 (defvar +java/junit-platform-console-standalone-jar
-  (expand-file-name "~/.emacs.d/.local/cache/language-server/java/junit-console/junit-platform-console-standalone.jar"))
+  (expand-file-name "~/.emacs.d/.local/eclipse.jdt.ls/test-runner/junit-platform-console-standalone.jar"))
 
 
 (add-hook-run-once 'java-mode-hook #'+java/eglot-setup)
