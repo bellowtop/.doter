@@ -1,3 +1,15 @@
+;; init-eglot.el --- language server protocol client eglot	-*- lexical-binding: t -*-
+
+;; Author: Zsxh Chen <bnbvbchen@gmail.com>
+;; URL: https://github.com/zsxh/emacs.d
+
+;;; Commentary:
+;;
+;;  Language Server Protocol Emacs Client Eglot
+;;
+
+;;; Code:
+
 (when (bound-and-true-p read-process-output-max)
   (setq read-process-output-max (* 1024 1024)))
 
@@ -45,8 +57,7 @@
 
   (defun +eglot/create-source-file (method uri filename)
     "Create source file and metadata in project root .eglot directory."
-    ;; (let* ((cache-dir (file-name-concat (project-root (eglot--current-project)) ".eglot"))
-    (let* ((cache-dir (file-name-concat (expand-file-name "~/.emacs.d/.local/cache") ".eglot"))
+    (let* ((cache-dir (file-name-concat (project-root (eglot--current-project)) ".eglot"))
            (source-file (expand-file-name (file-name-concat cache-dir filename))))
       (unless (file-readable-p source-file)
         (let ((content (jsonrpc-request (eglot--current-server-or-lose) method (list :uri uri)))
@@ -98,18 +109,16 @@
      "gt" '(eglot-find-typeDefinition :which-key "find-typeDefinition")
      "R" '(eglot-rename :which-key "rename"))))
 
+(use-package eldoc
+  :ensure nil
+  :defer t
+  :config
+  (setq eldoc-echo-area-use-multiline-p 1))
 
-
-
-
-;; (add-hook 'go-mode-hook 'eglot-ensure)
-;; (add-hook 'rust-mode-hook 'eglot-ensure)
-;; (add-hook 'c-mode-hook 'eglot-ensure)
-;; (add-hook 'c++-mode-hook 'eglot-ensure)
-;; (add-hook 'erlang-mode-hook 'eglot-ensure)
-;; (add-hook 'python-mode-hook 'eglot-ensure)
-
+(use-package eldoc-box
+  :commands (eldoc-box-eglot-help-at-point))
 
 
 (provide 'init-eglot)
 
+;;; init-eglot.el ends here
