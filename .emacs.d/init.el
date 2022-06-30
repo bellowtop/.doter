@@ -145,6 +145,7 @@
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+ '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(region ((t (:background "#9ac76c" :foreground "#262626" :underline nil :weight normal))))
@@ -1693,6 +1694,11 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-w s") #'split-window-below)
     (define-key god-local-mode-map (kbd "C-w w") #'other-window)
 
+    (define-key god-local-mode-map (kbd "C-w C-l") #'windmove-right)
+    (define-key god-local-mode-map (kbd "C-w C-h") #'windmove-left)
+    (define-key god-local-mode-map (kbd "C-w C-k") #'windmove-up)
+    (define-key god-local-mode-map (kbd "C-w C-j") #'windmove-down)
+
     (define-key god-local-mode-map (kbd ", w") #'my-save-buffer)
     (define-key god-local-mode-map (kbd ", b") #'flip-buffer-to-window)
     (define-key god-local-mode-map (kbd ", ,") #'er/mark-symbol)             ;; b a   last buffer
@@ -1743,6 +1749,11 @@ opening parenthesis one level up."
     (define-key map (kbd "C-w v") #'split-window-right)
     (define-key map (kbd "C-w s") #'split-window-below)
     (define-key map (kbd "C-w w") #'other-window)
+
+    (define-key map (kbd "C-w C-l") #'windmove-right)
+    (define-key map (kbd "C-w C-h") #'windmove-left)
+    (define-key map (kbd "C-w C-k") #'windmove-up)
+    (define-key map (kbd "C-w C-j") #'windmove-down)
     map)
   "my-special-buffer-keys-minor-mode keymap.")
 (define-minor-mode my-special-buffer-keys-minor-mode
