@@ -40,4 +40,14 @@ wget https://projectlombok.org/downloads/lombok.jar
 
 lsp-java-lombok-init
 
+
+# jdtls
+
+mkdir -p ~/.local/share/jdtls
+wget https://download.eclipse.org/jdtls/milestones/1.9.0/jdt-language-server-1.9.0-202203031534.tar.gz
+tar zxvf jdt-language-server-1.9.0-202203031534.tar.gz -C ~/.local/share/jdtls
+sudo ln -s ~/.local/share/jdtls/bin/jdtls /usr/local/bin/jdtls
+
+# test jdtls
+jdtls
 ```
