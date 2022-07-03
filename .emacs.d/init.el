@@ -823,7 +823,8 @@
 
 
 ;; (setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*scratch" "*Help*" "*lsp-log*"))
-(setq special-buffers (list "*Messages*" "HELLO" "*Ibuffer*" "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Helm Help*" "*Help*" "*info*" "helm-*" "*ansi-term*" "*fzf*"))
+
+(setq special-buffers (list "*Messages*" "HELLO" "*Ibuffer*" "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Helm Help*" "*Help*" "*info*" "helm-*" "*ansi-term*" "*fzf*" "*NeoTree*"))
 (require 'god-mode)
 (setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
@@ -1147,6 +1148,12 @@
   (setq neo-window-fixed-size nil)
   ;; (setq neo-toggle-window-keep-p 't)
 )
+(with-eval-after-load 'neotree
+  (define-key neotree-mode-map (kbd "L") #'(lambda () (interactive) (setq neo-window-width (/ (display-pixel-width) 2)) (neotree-hide) (my-neotree-find)))
+  (define-key neotree-mode-map (kbd "H") #'(lambda () (interactive) (setq neo-window-width 35) (neotree-hide) (my-neotree-find)))
+  (define-key neotree-mode-map (kbd "t") #'(lambda () (interactive) (neotree-hidden-file-toggle)))
+)
+
 
 (defun neotree-project-dir ()
     "Open NeoTree using the git root."
