@@ -469,12 +469,22 @@
   (sp-local-pair 'prog-mode "{" nil :post-handlers '((indent-between-pair "RET")))
   (sp-local-pair 'prog-mode "[" nil :post-handlers '((indent-between-pair "RET")))
   (sp-local-pair 'prog-mode "(" nil :post-handlers '((indent-between-pair "RET")))
-  :bind
-  (
-    ("C-c p d" . sp-splice-sexp)
-    ("C-c p s" . sp-rewrap-sexp)
-   )
+  (sp-local-pair 'prog-mode ")" nil :post-handlers '((indent-between-pair "RET")))
+  ;; :bind
+  ;; (
+  ;;   ("C-c p d" . sp-splice-sexp)
+  ;;   ("C-c p s" . sp-rewrap-sexp)
+  ;;  )
 )
+
+
+
+(require 'emacs-surround)
+;; (global-set-key (kbd "C-c p") 'emacs-surround)
+(add-to-list 'emacs-surround-alist '("}" . ("{ " . " }")))
+(add-to-list 'emacs-surround-alist '(")" . ("( " . " )")))
+(add-to-list 'emacs-surround-alist '("]" . ("[ " . " ]")))
+
 
 
 
@@ -1709,6 +1719,9 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd ", w") #'my-save-buffer)
     (define-key god-local-mode-map (kbd ", b") #'flip-buffer-to-window)
     (define-key god-local-mode-map (kbd ", ,") #'er/mark-symbol)             ;; b a   last buffer
+
+    (define-key god-local-mode-map (kbd ", s") #'emacs-surround)
+
 
     ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)
     ;; (define-key god-local-mode-map (kbd "C-, C-l") #'switch-to-next-buffer)
