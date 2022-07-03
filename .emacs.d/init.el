@@ -444,13 +444,12 @@
 
 
 
-(defun my-java-mode-hook ()
-     (setq tab-width 4)                  ;; Default is 2
-     (setq c-basic-offset 4)                  ;; Default is 2
-     (setq c-indent-level 4)                  ;; Default is 2
-     (setq indent-tabs-mode nil)              ;; use spaces only if nil
+(defun my-tab-4-indent ()
+    (setq tab-width 4)                  ;; Default is 2
+    (setq c-basic-offset 4)                  ;; Default is 2
+    (setq c-indent-level 4)                  ;; Default is 2
+    (setq indent-tabs-mode nil)              ;; use spaces only if nil
 )
-(add-hook 'java-mode-hook 'my-java-mode-hook)
 
 
 
@@ -1733,6 +1732,12 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd ";") #'scroll-up-command)
     (define-key god-local-mode-map (kbd "'") #'scroll-down-command)
     ;; (define-key god-local-mode-map (kbd "\\") #'recenter-top-bottom)
+
+
+
+    (add-hook 'java-mode-hook 'my-tab-4-indent)
+    (add-hook 'c-mode-hook 'my-tab-4-indent)
+    (add-hook 'c++-mode-hook 'my-tab-4-indent)
 
 
     ;; projectile
