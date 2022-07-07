@@ -387,6 +387,7 @@
 (setq display-line-numbers-width-start t)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'markdown-mode-hook 'display-line-numbers-mode)
+(add-hook 'nxml-mode-hook 'display-line-numbers-mode)
 (add-hook 'yaml-mode-hook 'display-line-numbers-mode)
 (add-hook 'yaml-mode-hook #'(lambda () (ansible 1)))
 
@@ -892,9 +893,9 @@
 
 (defun my-god-above-newline-and-insert-mode()
   (interactive)
-  (previous-line)
-  (end-of-line)
+  (beginning-of-line)
   (newline-and-indent)
+  (previous-line)
   (god-mode-all)
   )
 
@@ -1740,6 +1741,7 @@ opening parenthesis one level up."
     (add-hook 'java-mode-hook 'my-tab-4-indent)
     (add-hook 'c-mode-hook 'my-tab-4-indent)
     (add-hook 'c++-mode-hook 'my-tab-4-indent)
+    (add-hook 'nxml-mode-hook 'my-tab-4-indent)
 
 
     ;; projectile
