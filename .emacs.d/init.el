@@ -1161,6 +1161,8 @@
   (define-key neotree-mode-map (kbd "L") #'(lambda () (interactive) (setq neo-window-width (/ (display-pixel-width) 2)) (neotree-hide) (my-neotree-find)))
   (define-key neotree-mode-map (kbd "H") #'(lambda () (interactive) (setq neo-window-width 35) (neotree-hide) (my-neotree-find)))
   (define-key neotree-mode-map (kbd "t") #'(lambda () (interactive) (neotree-hidden-file-toggle)))
+  (define-key neotree-mode-map (kbd "a") 'mwim-beginning-of-code-or-line)
+  (define-key neotree-mode-map (kbd "e") 'mwim-end-of-code-or-line)
 )
 
 
@@ -1811,6 +1813,9 @@ opening parenthesis one level up."
               ("x" . kill-region)
               ("C-c i" . clang-format-region)
               ("C-c f" . clang-format-buffer)
+
+              ("C-c C-n" . my-mc/mark-next-like-this)
+              ("C-c C-p" . my-mc/mark-previous-like-this)
 
               ;; ("g g" . (lambda () (interactive) (beginning-of-buffer) (keyboard-quit) ))
               ;; ("G" .   (lambda () (interactive) (end-of-buffer) (keyboard-quit) ))
