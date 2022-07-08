@@ -1657,13 +1657,14 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
     (define-key god-local-mode-map (kbd "O") #'my-god-above-newline-and-insert-mode)
     (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode)
-    (define-key god-local-mode-map (kbd "r") #'my-hs-toggle-hiding)
+    (define-key god-local-mode-map (kbd "r") #'keyboard-quit-context+)
     (define-key god-local-mode-map (kbd "m") #'my-goto-match-paren)
 
     (define-key god-local-mode-map (kbd "s") #'my-replace-char)
     (define-key god-local-mode-map (kbd "x") #'my-delete-char)
     (define-key god-local-mode-map (kbd "d") #'kill-whole-line)
 
+    (define-key god-local-mode-map (kbd "z o") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "z m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "z z") #'recenter-top-bottom)
     (define-key god-local-mode-map (kbd "z j") #'end-of-buffer)
