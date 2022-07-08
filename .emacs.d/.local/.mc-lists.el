@@ -64,6 +64,7 @@
 	my-join-lines
 	my-quit-god-mode
 	my-replace-char
+	nxml-electric-slash
 	org-beginning-of-line
 	org-ctrl-c-ctrl-c
 	org-cycle
