@@ -897,9 +897,11 @@ respectively."
 
 
 
-;; (setq special-buffers (list "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*scratch" "*Help*" "*lsp-log*"))
+;; special-buffers are not affected by god-mode bindings, but affected by my-special-buffer-keys-minor-mode-map
+(setq special-buffers (list "*Messages*" "HELLO" "*Ibuffer*" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Helm Help*" "*Help*" "*info*" "helm-*" "*ansi-term*" "*fzf*" "*NeoTree*"))
+;; special-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
+(setq special-buffers-left-alone (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf"))
 
-(setq special-buffers (list "*Messages*" "HELLO" "*Ibuffer*" "*Minibuf" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Helm Help*" "*Help*" "*info*" "helm-*" "*ansi-term*" "*fzf*" "*NeoTree*"))
 (require 'god-mode)
 (setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
@@ -911,14 +913,21 @@ respectively."
     special-buffers)
 )
 
+(defun my-test-if-special-buffer-left-alone(bufname)
+  (interactive)
+  (seq-filter
+    (lambda (n) (string-prefix-p n bufname))
+    special-buffers-left-alone)
+)
 
 (defun* my-god-mode ()
   (interactive)
 
-  ;; Mini buffer must not use my keybindings
-  (if (string-prefix-p "*Minibuf" (string-trim (buffer-name)))
+  (if (my-test-if-special-buffer-left-alone (string-trim (buffer-name)))
       (return-from my-god-mode)
-  )
+    )
+
+  ;; (message "is not left-alone")
 
   (if (my-test-if-special-buffer (string-trim (buffer-name)))
             (progn
@@ -951,6 +960,16 @@ respectively."
         (my-god-mode)
     )
   )
+
+
+
+
+(defun my-god-mode-with-switch-any-buffer(prev curr)
+    (cl-assert (eq curr (current-buffer)))  ;; Always t
+    ;; (message "%S -> %S -> %S" prev curr (string-trim (buffer-name curr)))
+    (my-god-mode)
+  )
+(add-hook 'switch-buffer-functions #'my-god-mode-with-switch-any-buffer)
 
 
 
@@ -1145,13 +1164,6 @@ respectively."
 ;;; from emacswiki
 (require 'crosshairs)
 
-
-(add-hook 'switch-buffer-functions
-        (lambda (prev curr)
-          (cl-assert (eq curr (current-buffer)))  ;; Always t
-          ;; (message "%S -> %S -> %S" prev curr (string-trim (buffer-name curr)))
-          (my-god-mode)
-        ))
 
 
 (defun my-god-mode-update-mode-line ()
@@ -1438,19 +1450,26 @@ _u_: undo      _r_: redo
 ;;   (other-window 1)
 ;;   )
 
+
 (defun my-deadgrep-edit-enter()
   (interactive)
   (global-undo-tree-mode -1)
   (undo-tree-mode -1)
+  (my-quit-god-mode)
   (remove-hook 'before-save-hook #'delete-trailing-whitespace)
-  (deadgrep-edit-mode)
+  (remove-hook 'switch-buffer-functions #'my-god-mode-with-switch-any-buffer)
+  (my-special-buffer-keys-minor-mode 0)
   )
+
 
 (defun my-deadgrep-edit-exit()
   (interactive)
   (global-undo-tree-mode 1)
   (undo-tree-mode 1)
+  (my-god-mode)
   (add-hook 'before-save-hook #'delete-trailing-whitespace)
+  (add-hook 'switch-buffer-functions #'my-god-mode-with-switch-any-buffer)
+  (my-special-buffer-keys-minor-mode 1)
   (deadgrep-mode)
   )
 
@@ -1471,11 +1490,12 @@ _u_: undo      _r_: redo
           ("p"    . deadgrep-backward-match)
           ("N"    . deadgrep-forward-filename)
           ("P"    . deadgrep-backward-filename)
-          ("C-x C-q" . my-deadgrep-edit-enter)
+          ("C-x C-q" . deadgrep-edit-mode)
     :map deadgrep-edit-mode-map
          ("C-c C-c" . my-deadgrep-edit-exit)
     )
   )
+  :hook (deadgrep-edit-mode . my-deadgrep-edit-enter)
 )
 
 
