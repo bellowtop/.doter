@@ -898,7 +898,7 @@ respectively."
 
 
 ;; special-buffers are not affected by god-mode bindings, but affected by my-special-buffer-keys-minor-mode-map
-(setq special-buffers (list "*Messages*" "HELLO" "*Ibuffer*" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Helm Help*" "*Help*" "*info*" "helm-*" "*ansi-term*" "*fzf*" "*NeoTree*"))
+(setq special-buffers (list "*Treemacs" "*Messages*" "HELLO" "*Ibuffer*" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Helm Help*" "*Help*" "*info*" "helm-*" "*ansi-term*" "*fzf*" "*NeoTree*"))
 ;; special-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
 (setq special-buffers-left-alone (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf"))
 
