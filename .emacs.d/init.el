@@ -505,7 +505,7 @@ STRING is a single-character string that marks the opening character.
 defines the functions WRAP-WITH-PAREN and WRAP-WITH-BRACKET,
 respectively."
   `(progn
-     ,@(loop for (key . val) in pairs
+     ,@(cl-loop for (key . val) in pairs
              collect
              `(defun ,(read (concat
                              "my-wrap-region-with-"
@@ -1160,7 +1160,9 @@ respectively."
 ;;                                     (my-quit))
 ;; )
 
+
 (global-hl-line-mode 1)
+
 ;;; from emacswiki
 (require 'crosshairs)
 
@@ -1193,12 +1195,19 @@ respectively."
 
     (if (bound-and-true-p god-local-mode)
       (progn
-        (set-face-attribute 'hl-line nil :inherit nil :background 'unspecified)
+        ;; only terminal need this
+        (unless (display-graphic-p)
+                (set-face-attribute 'hl-line nil :inherit nil :background 'unspecified)
+        )
         (set-face-attribute 'line-number-current-line nil :foreground "#00ff00")
         (setq cursor-type 'box)
       )
+
       (progn
-        (set-face-attribute 'hl-line nil :inherit nil :background "gray12")
+        ;; only terminal need this
+        (unless (display-graphic-p)
+                (set-face-attribute 'hl-line nil :inherit nil :background "gray12")
+        )
         (set-face-attribute 'line-number-current-line nil :foreground "#3f4040")
         (setq cursor-type 'bar)
       )
