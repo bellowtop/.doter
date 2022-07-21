@@ -245,7 +245,7 @@
 
 (require 'download-lombok)
 
-
+(require 'init-lang-go)
 
 
 
