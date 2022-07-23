@@ -894,42 +894,77 @@ respectively."
 (require 'mwim)
 
 
+(defun buffer-mode (&optional buffer-or-name)
+  "Returns the major mode associated with a buffer.
+If buffer-or-name is nil return current buffer's mode."
+  (buffer-local-value 'major-mode
+   (if buffer-or-name (get-buffer buffer-or-name) (current-buffer))))
+
+
 
 
 
 ;; special-buffers are not affected by god-mode bindings, but affected by my-special-buffer-keys-minor-mode-map
-(setq special-buffers (list "*Treemacs" "*Messages*" "HELLO" "*Ibuffer*" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Helm Help*" "*Help*" "*info*" "helm-*" "*ansi-term*" "*fzf*" "*NeoTree*"))
-;; special-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
-(setq special-buffers-left-alone (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf"))
+(setq special-buffers (list "*Backtrace*" "*Pos-Frame-Read*" "*Treemacs" "*Messages*" "HELLO" "*Ibuffer*" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Helm Help*" "*Help*" "*info*" "helm-*" "*ansi-term*" "*fzf*" "*NeoTree*"))
+
+;; legendary-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
+(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf"))
+
+(setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "dired-mode" ))
 
 (require 'god-mode)
 (setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
 
-(defun my-test-if-special-buffer(bufname)
+(defun my-god-this-is-special-buffer (bufname)
   (interactive)
-  (seq-filter
-    (lambda (n) (string-prefix-p n bufname))
-    special-buffers)
+  (let
+    (
+     (this-buffer-name (string-trim bufname))
+    )
+    (seq-filter
+      (lambda (n) (string-prefix-p n this-buffer-name))
+      special-buffers)
+   )
+
 )
 
-(defun my-test-if-special-buffer-left-alone(bufname)
+(defun* my-god-this-is-legendary-buffer (bufname)
   (interactive)
-  (seq-filter
-    (lambda (n) (string-prefix-p n bufname))
-    special-buffers-left-alone)
+  ;; (message "buffer-mode type is %s" (type-of (buffer-mode bufname))) ==> symbol
+  ;;;; use symbol-name convert symbol to string; And for the reverse, (intern "some-string") to get symbol
+  (let
+    (
+     (this-buffer-name (string-trim bufname))
+     (this-buffer-mode (symbol-name (buffer-mode bufname)))
+    )
+    ;; (message "this-buffer-name %s" this-buffer-name)
+    ;; (message "this-buffer-mode %s" this-buffer-mode)
+    (or
+        (seq-filter
+          (lambda (n) (string-prefix-p n this-buffer-name))
+          legendary-buffers)
+        (seq-filter
+          (lambda (n) (string-prefix-p n this-buffer-mode))
+          legendary-modes)
+    )
+  )
 )
 
 (defun* my-god-mode ()
   (interactive)
 
-  (if (my-test-if-special-buffer-left-alone (string-trim (buffer-name)))
-      (return-from my-god-mode)
+  (if (my-god-this-is-legendary-buffer (buffer-name))
+        (progn
+            ;; (message "%s is legendary buffer" (buffer-name))
+            (return-from my-god-mode)
+        )
+        (progn
+            ;; (message "%s is not legendary buffer, continue" (buffer-name))
+         )
     )
 
-  ;; (message "is not left-alone")
-
-  (if (my-test-if-special-buffer (string-trim (buffer-name)))
+  (if (my-god-this-is-special-buffer (buffer-name))
             (progn
                 ;; (message "%s is special buffer" (buffer-name))
                 (ignore)
