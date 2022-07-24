@@ -905,12 +905,31 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 ;; special-buffers are not affected by god-mode bindings, but affected by my-special-buffer-keys-minor-mode-map
-(setq special-buffers (list "*Backtrace*" "*Pos-Frame-Read*" "*Treemacs" "*Messages*" "HELLO" "*Ibuffer*" "*deadgrep" "*xref" "*Buffer" "*Packages" "*lsp-log*" "*Helm Help*" "*Help*" "*info*" "helm-*" "*ansi-term*" "*fzf*" "*NeoTree*"))
+(setq special-buffers (list
+                        "*Backtrace*"
+                        "*Pos-Frame-Read*"
+                        "*Treemacs"
+                        "*Messages*"
+                        "HELLO"
+                        "*Ibuffer*"
+                        "*deadgrep"
+                        "*xref"
+                        "*Buffer"
+                        "*Packages"
+                        "*lsp-log*"
+                        "*Help*"
+                        "*info*"
+                        "helm-*"
+                        "*helm-mode-switch-to-buffer*"
+                        "*Helm Help*"
+                        "*ansi-term*"
+                        "*fzf*"
+                        "*NeoTree*"))
 
 ;; legendary-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
 (setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf"))
 
-(setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "dired-mode" ))
+(setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "dired-mode" "cfrs-input-mode" ))
 
 (require 'god-mode)
 (setq god-exempt-major-modes nil)
@@ -1196,6 +1215,7 @@ If buffer-or-name is nil return current buffer's mode."
 ;; )
 
 
+(setq hl-line-inhibit-highlighting-for-modes '(dired-mode deadgrep-mode deadgrep-edit-mode treemacs-mode))
 (global-hl-line-mode 1)
 
 ;;; from emacswiki
@@ -1277,7 +1297,8 @@ If buffer-or-name is nil return current buffer's mode."
   (setq neo-confirm-create-directory 'off-p)
   (setq neo-smart-open 't)
   (setq neo-window-fixed-size nil)
-  (setq neo-window-width (/ (display-pixel-width) 4))
+  ;; (setq neo-window-width (/ (display-pixel-width) 4))
+  (setq neo-window-width 45)
   ;; (setq neo-toggle-window-keep-p 't)
 )
 (with-eval-after-load 'neotree
@@ -1352,10 +1373,10 @@ If buffer-or-name is nil return current buffer's mode."
 
 (setq mc/list-file (expand-file-name "~/.emacs.d/.local/.mc-lists.el"))
 
+(setq mc/match-cursor-style nil)
 (use-package multiple-cursors
-  :ensure   t
+  :ensure t
   :config
-  (setq mc/match-cursor-style nil)
   :bind (
          ("C-x C-n" . mc/mark-next-like-this)
          ("C-c C-SPC" . mc/edit-lines)
@@ -1713,6 +1734,34 @@ opening parenthesis one level up."
 
 
 
+(defun my-ibuffer-hook ()
+      ;; add another sorting method for ibuffer (allow the grouping of
+      ;; filenames and dired buffers
+    (define-ibuffer-sorter filename-or-dired
+      "Sort the buffers by their pathname."
+      (:description "filenames plus dired")
+      (string-lessp 
+       (with-current-buffer (car a)
+         (or buffer-file-name
+             (if (eq major-mode 'dired-mode)
+                 (expand-file-name dired-directory))
+             ;; so that all non pathnames are at the end
+             "~"))
+       (with-current-buffer (car b)
+         (or buffer-file-name
+             (if (eq major-mode 'dired-mode)
+                 (expand-file-name dired-directory))
+             ;; so that all non pathnames are at the end
+             "~"))))
+    (define-key ibuffer-mode-map (kbd "s p") 'ibuffer-do-sort-by-filename-or-dired)
+
+    ;; sort now please!
+    (ibuffer-do-sort-by-filename-or-dired)
+)
+(add-hook 'ibuffer-mode-hook 'my-ibuffer-hook)
+
+
+
 
 (defvar my-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
@@ -1948,6 +1997,8 @@ opening parenthesis one level up."
               ("C-c i" . clang-format-region)
               ("C-c f" . clang-format-buffer)
 
+              ("M-d" . my-mc/mark-next-like-this)
+              ("M-D" . my-mc/mark-previous-like-this)
               ("C-c C-n" . my-mc/mark-next-like-this)
               ("C-c C-p" . my-mc/mark-previous-like-this)
 

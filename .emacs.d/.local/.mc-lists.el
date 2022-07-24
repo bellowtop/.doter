@@ -46,6 +46,7 @@
 	indent-rigidly
 	indent-rigidly-right
 	keyboard-escape-quit
+	keyboard-quit-context+
 	kill-region
 	kill-sexp
 	kmacro-end-or-call-macro
