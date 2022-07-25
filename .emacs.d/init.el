@@ -1701,6 +1701,35 @@ the cursor by ARG lines."
 ))
 
 
+(defun my-is-beginning-of-line ()
+  (interactive)
+  (= (point)
+    (line-beginning-position)
+  ))
+
+
+(defun my-is-end-of-line ()
+  (interactive)
+  (= (point)
+    (line-end-position)
+  ))
+
+
+(defun my-forward-char-no-cross-line()
+  (interactive)
+  (unless (my-is-end-of-line)
+    (forward-char)
+  )
+)
+
+(defun my-backward-char-no-cross-line()
+  (interactive)
+  (unless (my-is-beginning-of-line)
+    (backward-char)
+  )
+)
+
+
 
 
 (defun my-goto-match-paren (arg)
@@ -1814,8 +1843,8 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "b") #'backward-word)
     (define-key god-local-mode-map (kbd "k") #'previous-line)
     (define-key god-local-mode-map (kbd "j") #'next-line)
-    (define-key god-local-mode-map (kbd "l") #'forward-char)
-    (define-key god-local-mode-map (kbd "h") #'backward-char)
+    (define-key god-local-mode-map (kbd "l") #'my-forward-char-no-cross-line)
+    (define-key god-local-mode-map (kbd "h") #'my-backward-char-no-cross-line)
     (define-key god-local-mode-map (kbd "v") #'set-mark-command)
     (define-key god-local-mode-map (kbd "V") #'my-select-current-line-and-forward-line)
     (define-key god-local-mode-map (kbd "J") #'my-join-lines)
