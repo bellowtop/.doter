@@ -62,6 +62,7 @@
 	my-delete-char
 	my-delete-to-beginning
 	my-delete-to-end
+	my-forward-char-no-cross-line
 	my-god-char-forward-and-insert-mode
 	my-join-lines
 	my-quit-god-mode
