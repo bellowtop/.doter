@@ -110,11 +110,11 @@ let $FZF_DEFAULT_OPTS=" --reverse --preview 'bat --color=always --style=header,g
 nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Files<CR>"
 nnoremap <silent> <expr> <Leader>b (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Buffers<CR>"
 nnoremap <silent> <expr> <Leader>t (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":BTags<CR>"
-nnoremap <silent> <expr> <Leader>m (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Rg<CR>"
+" nnoremap <silent> <expr> <Leader>m (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Rg<CR>"
 """ grep with current word
 " nnoremap <silent> <expr> <Leader>m (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    " yiw :Rg <C-R><C-W> "
 " nnoremap <Leader>f :call fzf#vim#files('.', {'options':'--query <C-R><C-W>'})<left><left><left>
-vnoremap <Leader>m y<ESC> :Rg <C-R>"<CR>
+" vnoremap <Leader>m y<ESC> :Rg <C-R>"<CR>
 
 " nnoremap <Leader>b :Buffers <CR>
 " nnoremap <Leader>t :BTags <CR>
@@ -176,10 +176,8 @@ autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
 
 
 
-nnoremap <leader>o :CtrlSF
-nnoremap <leader>O :CtrlSFOpen <CR>
-nnoremap <Leader>p yiw :CtrlSF "<C-R>""<CR>
-vnoremap <Leader>p y<ESC> :CtrlSF "<C-R>""
+nnoremap <Leader>m yiw :CtrlSF "<C-R>""<CR>
+vnoremap <Leader>m y<ESC> :CtrlSF "<C-R>""
 let g:ctrlsf_backend='rg'  " or ag/ack
 let g:ctrlsf_auto_focus = { "at": "start" }
 let g:ctrlsf_search_mode = 'async'
