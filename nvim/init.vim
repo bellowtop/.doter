@@ -176,8 +176,8 @@ autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
 
 
 
-nnoremap <Leader>m yiw :CtrlSF "<C-R>""<CR>
-vnoremap <Leader>m y<ESC> :CtrlSF "<C-R>""
+nnoremap <Leader>m yiw :CtrlSF "<C-R>""
+vnoremap <Leader>m y<ESC> :CtrlSF "<C-R>""<CR>
 let g:ctrlsf_backend='rg'  " or ag/ack
 let g:ctrlsf_auto_focus = { "at": "start" }
 let g:ctrlsf_search_mode = 'async'
