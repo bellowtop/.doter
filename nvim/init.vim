@@ -124,12 +124,6 @@ lua << EOF
 require'nvim-tree'.setup {
     renderer = {
         group_empty = true,
-        icons = {
-            show = {
-                file = false,
-                folder = false,
-                },
-            },
         indent_markers = {
             enable = true,
             icons = {
