@@ -12,8 +12,9 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 
 Plug 'neovim/nvim-lspconfig'
-" Plug 'folke/trouble.nvim'
 Plug 'kevinhwang91/nvim-bqf'
+
+" Plug 'folke/trouble.nvim'
 
 " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 " Plug 'junegunn/fzf.vim'
@@ -130,6 +131,11 @@ nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
 
 
+
+
+
+
+let g:surround_no_insert_mappings = 1
 
 
 
@@ -291,10 +297,13 @@ end
 -- Use a loop to conveniently both setup defined servers
 -- and map buffer local keybindings when the language server attaches
 --
--- local servers = { "gopls", "clangd", "rust_analyzer" }
--- for _, lsp in ipairs(servers) do
---   nvim_lsp[lsp].setup { on_attach = on_attach }
--- end
+
+local servers = { "gopls", "clangd", "rust_analyzer" }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup { on_attach = on_attach }
+end
+
+
 EOF
 
 
@@ -544,6 +553,9 @@ noremap  <C-j>      :w<CR>
 noremap! <C-j> <ESC>:w<CR>
 noremap  <Leader>j  :w<CR>
 
+nnoremap <C-g> <ESC><ESC><ESC>
+inoremap <C-g> <ESC><ESC><ESC>
+vnoremap <C-g> <ESC><ESC><ESC>
 
 vnoremap <C-r> "hy:%sno#<C-r>h##gc<left><left><left>
 nnoremap S     :%sno##g<LEFT><LEFT>
@@ -551,6 +563,9 @@ inoremap <C-y> <C-r>"
 
 nnoremap ;  <C-d>
 nnoremap '  <C-u>
+vnoremap ;  <C-d>
+vnoremap '  <C-u>
+
 nnoremap \  zz
 nnoremap \|  zt
 " nnoremap ; zz
@@ -583,7 +598,7 @@ cnoremap <Esc>b         <S-Left>
 cnoremap <Esc><Right>   <S-Right>
 cnoremap <Esc>f         <S-Right>
 cnoremap <Esc><BS>      <C-W>
-cnoremap <C-G>          <C-C>
+" cnoremap <C-G>          <C-C>
 
 
 
