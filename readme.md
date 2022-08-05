@@ -54,7 +54,7 @@ nvim +PlugInstall +qall
 
 download patched-fonts
 
-https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete%20Mono.ttf?raw=true
+wget "https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/DejaVuSansMono/Regular/complete/DejaVu%20Sans%20Mono%20Nerd%20Font%20Complete.ttf?raw=true" -O DejaVu-Sans-Mono-Nerd-Font-Complete.ttf
 
 #### tmux
 

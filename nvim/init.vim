@@ -790,6 +790,9 @@ function! ToggleFold()
 endfunc
 nnoremap zm :call ToggleFold() <Enter>
 nnoremap zo zA
+" default no fold
+setlocal foldlevelstart=99
+
 
 function! s:CopyToTmux()
   let [lnum1, col1] = getpos("'<")[1:2]
