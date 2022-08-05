@@ -536,6 +536,9 @@ nnoremap <leader>l  :nohlsearch<CR>
 nnoremap <Leader>c  :let @+=expand('%:p')<CR>
 
 
+" switch to last buffer
+nnoremap ,b  <C-6>
+
 " map C-j in all modes to save buffer
 noremap  <C-j>      :w<CR>
 noremap! <C-j> <ESC>:w<CR>
