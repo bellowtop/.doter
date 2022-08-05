@@ -15,9 +15,13 @@ Plug 'neovim/nvim-lspconfig'
 " Plug 'folke/trouble.nvim'
 Plug 'kevinhwang91/nvim-bqf'
 
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
 
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+
+
 Plug 'Konfekt/FastFold'
 Plug 'tmhedberg/SimpylFold'
 Plug 'jiangmiao/auto-pairs'
@@ -102,22 +106,32 @@ endfunction
 
 
 
-let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
-let $FZF_DEFAULT_OPTS=" --reverse --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
+"         let g:fzf_layout = { 'window': 'call CreateCenteredFloatingWindow()' }
+"         let $FZF_DEFAULT_OPTS=" --reverse --preview 'bat --color=always --style=header,grid --line-range :300 {}'"
+"         
+"         """ search files with current word
+"         " nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":call fzf#vim#files('.', {'options':'--query '.expand('<cword>')})<CR>"
+"         nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Files<CR>"
+"         nnoremap <silent> <expr> <Leader>b (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Buffers<CR>"
+"         nnoremap <silent> <expr> <Leader>t (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":BTags<CR>"
+"         " nnoremap <silent> <expr> <Leader>m (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Rg<CR>"
+"         """ grep with current word
+"         " nnoremap <silent> <expr> <Leader>m (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    " yiw :Rg <C-R><C-W> "
+"         " nnoremap <Leader>f :call fzf#vim#files('.', {'options':'--query <C-R><C-W>'})<left><left><left>
+"         " vnoremap <Leader>m y<ESC> :Rg <C-R>"<CR>
+"         
+"         " nnoremap <Leader>b :Buffers <CR>
+"         " nnoremap <Leader>t :BTags <CR>
 
-""" search files with current word
-" nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":call fzf#vim#files('.', {'options':'--query '.expand('<cword>')})<CR>"
-nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Files<CR>"
-nnoremap <silent> <expr> <Leader>b (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Buffers<CR>"
-nnoremap <silent> <expr> <Leader>t (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":BTags<CR>"
-" nnoremap <silent> <expr> <Leader>m (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    ":Rg<CR>"
-""" grep with current word
-" nnoremap <silent> <expr> <Leader>m (expand('%') =~ 'NvimTree' ? "\<c-w>\<c-w>" : '').    " yiw :Rg <C-R><C-W> "
-" nnoremap <Leader>f :call fzf#vim#files('.', {'options':'--query <C-R><C-W>'})<left><left><left>
-" vnoremap <Leader>m y<ESC> :Rg <C-R>"<CR>
 
-" nnoremap <Leader>b :Buffers <CR>
-" nnoremap <Leader>t :BTags <CR>
+
+nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
+
+
+
+
 
 
 lua << EOF
