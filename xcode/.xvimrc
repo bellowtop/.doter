@@ -16,6 +16,12 @@ set hlsearch
 
 
 
+""
+"" SEE https://github.com/keith/dotfiles/blob/main/xvimrc
+""
+nnoremap ,b :xccmd toggleBreakpointAtCurrentLine<CR>
+
+
 
 
 
