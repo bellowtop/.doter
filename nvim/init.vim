@@ -50,7 +50,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 
 Plug 'folke/which-key.nvim'
-Plug 'mhinz/vim-startify'
+" Plug 'mhinz/vim-startify'
 Plug 'airblade/vim-rooter'
 
 
@@ -129,7 +129,52 @@ endfunction
 nnoremap <leader>f <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>g <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <leader>b <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <C-g>     <ESC><ESC><ESC>
 
+
+
+lua << EOF
+-- reference:
+-- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua#L136
+
+local actions = require "telescope.actions"
+local config = require "telescope.config"
+
+require('telescope').setup{
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-g>"] = actions.close,
+      },
+      n = {
+        ["<C-g>"] = actions.close,
+      },
+    }
+  },
+}
+EOF
+
+
+
+
+
+
+
+
+lua << EOF
+require('bqf').setup({
+    func_map = {
+        closeall = '<C-g>',
+    },
+    filter = {
+        fzf = {
+            action_for = {
+                ['ctrl-g'] = 'closeall',
+            },
+        }
+    }
+})
+EOF
 
 
 
@@ -524,8 +569,10 @@ nnoremap m %
 vnoremap m %
 
 
-nnoremap <C-h>      :bprev<CR>
-nnoremap <C-l>      :bnext<CR>
+nnoremap <C-l>      zz
+
+nnoremap <Leader>h      :bprev<CR>
+nnoremap <Leader>l      :bnext<CR>
 
 nnoremap <Leader>k  :Bclose<CR>
 nnoremap <Leader>K  :BufOnly<CR>
@@ -540,7 +587,7 @@ nnoremap <Leader>R  :retab<CR>
 nnoremap <Leader>.  :@:<CR>
 " nnoremap <Leader>ev :e $MYVIMRC<CR>
 " nnoremap <Leader>es :so $MYVIMRC<CR>
-nnoremap <leader>l  :nohlsearch<CR>
+nnoremap <leader>;  :nohlsearch<CR>
 " nnoremap <Leader>=  :wincmd =<CR>
 nnoremap <Leader>c  :let @+=expand('%:p')<CR>
 

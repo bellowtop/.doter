@@ -1896,6 +1896,9 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "SPC m") #'deadgrep)
     (define-key god-local-mode-map (kbd "SPC L") #'display-line-numbers-mode)
 
+    (define-key god-local-mode-map (kbd "SPC l") #'previous-buffer)
+    (define-key god-local-mode-map (kbd "SPC h") #'next-buffer)
+
     (define-key god-local-mode-map (kbd "SPC t") #'treemacs)
     (define-key god-local-mode-map (kbd "SPC n") #'my-neotree-toggle)
     (define-key god-local-mode-map (kbd "SPC N") #'my-neotree-find)
@@ -1917,7 +1920,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-w h") #'windmove-left)
     (define-key god-local-mode-map (kbd "C-w k") #'windmove-up)
     (define-key god-local-mode-map (kbd "C-w j") #'windmove-down)
-    (define-key god-local-mode-map (kbd "C-w Q") #'delete-window)      ;; delete this window
+    (define-key god-local-mode-map (kbd "C-w x") #'delete-window)      ;; delete this window
     (define-key god-local-mode-map (kbd "C-w d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "C-w v") #'split-window-right)
     (define-key god-local-mode-map (kbd "C-w s") #'split-window-below)
