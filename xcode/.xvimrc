@@ -1,0 +1,123 @@
+" Comments
+nnoremap gcc :xcmenucmd Comment Selection<CR>
+vnoremap gc  :xcmenucmd Comment Selection<CR>
+
+" Emulate CTRL-P
+noremap <C-p> :xccmd openQuickly<CR>
+
+" Case-insensitive searching.
+set ignorecase
+" But case-sensitive if expression contains a capital letter.
+set smartcase
+
+set hlsearch
+
+
+
+
+
+
+
+
+
+
+
+"""""""""""""""""""""""""""""""""""""""
+"""""""" Settings for Mappings """""""""
+"""""""""""""""""""""""""""""""""""""""
+
+nnoremap J mzJ`z
+" noremap  H 0
+noremap  H ^
+noremap  L $
+" vnoremap H 0
+vnoremap H ^
+vnoremap L $
+
+nnoremap m %
+vnoremap m %
+
+
+nnoremap <C-l>      zz
+
+
+nnoremap <C-g> <ESC><ESC><ESC>
+inoremap <C-g> <ESC><ESC><ESC>
+vnoremap <C-g> <ESC><ESC><ESC>
+
+
+nnoremap ;  <C-d>
+nnoremap '  <C-u>
+vnoremap ;  <C-d>
+vnoremap '  <C-u>
+
+nnoremap \\  zz
+nnoremap \|  zt
+
+vnoremap // y/<C-R>"<CR>"
+
+vnoremap p "_dp
+vnoremap P "_dP
+
+
+
+
+
+
+
+
+set wildmenu wildmode=full
+set wildchar=<Tab> wildcharm=<C-Z>
+
+command! Jsonf :execute '%!python2 -m json.tool'
+  \ | :execute '%!python2 -c "import re,sys;sys.stdout.write(re.sub(r\"\\\u[0-9a-f]{4}\", lambda m:m.group().decode(\"unicode_escape\").encode(\"utf-8\"), sys.stdin.read()))"'
+
+
+
+inoremap <C-e> <C-o>$
+inoremap <C-a> <C-o>^
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+inoremap <C-k> <C-o>D
+inoremap <M-k> <C-o>d0
+inoremap <C-t> <C-o>O
+
+
+inoremap <C-q> <Esc>
+nnoremap <C-q> a
+
+" q as window prefix
+" qq to cycle windows
+" qQ to delete current window
+" qd to delete all ther windows
+nnoremap q     <C-w>
+nnoremap qq    <C-w><C-w>
+nnoremap qQ    <C-w>q
+nnoremap qd    <C-w>o
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

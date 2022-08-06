@@ -709,19 +709,26 @@ respectively."
 
 
 
-
-(smerge-mode -1)
-(menu-bar-mode -1)
 (tool-bar-mode -1)
+(menu-bar-mode -1)
+(smerge-mode -1)
+(scroll-bar-mode -1)
+(tab-bar-mode -1)
+
+
+; (smerge-mode -1)
+; (menu-bar-mode -1)
+; (tool-bar-mode -1)
 
 (when (display-graphic-p)
     ;; awesome-tray is from emacswiki sub-directory
     (setq awesome-tray-mode-line-active-color '"#00ff00")
+
     (require 'awesome-tray)
     (awesome-tray-mode 1)
 
-    (scroll-bar-mode -1)
-    (tab-bar-mode -1)
+    ;; (scroll-bar-mode -1)
+    ;; (tab-bar-mode -1)
     (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
     (add-to-list 'default-frame-alist '(ns-appearance . dark))  ;; dark themes use "dark"
 
@@ -1350,6 +1357,7 @@ If buffer-or-name is nil return current buffer's mode."
   :init
   :config
   (treemacs-resize-icons 18)
+  (treemacs-follow-mode -1)
    :bind (
         ("C-c n" . treemacs)
         ("C-c t" . treemacs-toggle-node)
@@ -1827,6 +1835,8 @@ opening parenthesis one level up."
     (define-key map (kbd "M-o") 'other-window)
     (define-key map (kbd "C-q") 'my-toggle-god-mode)
 
+    (define-key map (kbd "M-u") 'upcase-dwim)
+    (define-key map (kbd "M-d") 'downcase-dwim)
 
     (define-prefix-command 'my-god-mode-leader-key)
     (define-prefix-command 'my-god-mode-dummmy-key)
@@ -1889,12 +1899,14 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)
 
     (define-key god-local-mode-map (kbd "SPC b") #'switch-to-buffer)
+    (define-key god-local-mode-map (kbd "SPC B") #'ibuffer)
     (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
     (define-key god-local-mode-map (kbd "SPC K") #'my-only-current-buffer)
     (define-key god-local-mode-map (kbd "SPC f") #'projectile-find-file)
     (define-key god-local-mode-map (kbd "SPC p") #'helm-find-files)
     (define-key god-local-mode-map (kbd "SPC m") #'deadgrep)
     (define-key god-local-mode-map (kbd "SPC L") #'display-line-numbers-mode)
+    (define-key god-local-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
 
     (define-key god-local-mode-map (kbd "SPC l") #'previous-buffer)
     (define-key god-local-mode-map (kbd "SPC h") #'next-buffer)
@@ -1910,17 +1922,17 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "q h") #'windmove-left)
     (define-key god-local-mode-map (kbd "q k") #'windmove-up)
     (define-key god-local-mode-map (kbd "q j") #'windmove-down)
-    (define-key god-local-mode-map (kbd "q Q") #'delete-window)      ;; delete this window
-    (define-key god-local-mode-map (kbd "q d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "q v") #'split-window-right)
     (define-key god-local-mode-map (kbd "q s") #'split-window-below)
+    (define-key god-local-mode-map (kbd "q x") #'delete-window)         ;; delete this window
+    (define-key god-local-mode-map (kbd "q d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "q q") #'other-window)
 
     (define-key god-local-mode-map (kbd "C-w l") #'windmove-right)
     (define-key god-local-mode-map (kbd "C-w h") #'windmove-left)
     (define-key god-local-mode-map (kbd "C-w k") #'windmove-up)
     (define-key god-local-mode-map (kbd "C-w j") #'windmove-down)
-    (define-key god-local-mode-map (kbd "C-w x") #'delete-window)      ;; delete this window
+    (define-key god-local-mode-map (kbd "C-w q") #'delete-window)         ;; delete this window
     (define-key god-local-mode-map (kbd "C-w d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "C-w v") #'split-window-right)
     (define-key god-local-mode-map (kbd "C-w s") #'split-window-below)
