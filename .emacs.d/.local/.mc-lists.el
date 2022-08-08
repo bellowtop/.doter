@@ -59,6 +59,7 @@
 	mouse-yank-primary
 	mwim-beginning-of-code-or-line
 	mwim-end-of-code-or-line
+	my-backward-char-no-cross-line
 	my-delete-char
 	my-delete-to-beginning
 	my-delete-to-end

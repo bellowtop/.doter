@@ -1836,7 +1836,7 @@ opening parenthesis one level up."
     (define-key map (kbd "C-q") 'my-toggle-god-mode)
 
     (define-key map (kbd "M-u") 'upcase-dwim)
-    (define-key map (kbd "M-d") 'downcase-dwim)
+    (define-key map (kbd "M-l") 'downcase-dwim)
 
     (define-prefix-command 'my-god-mode-leader-key)
     (define-prefix-command 'my-god-mode-dummmy-key)
