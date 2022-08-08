@@ -41,6 +41,15 @@
 (require 'cl)
 
 
+;; Minimize garbage collection during startup
+(setq gc-cons-threshold most-positive-fixnum)
+
+;; Lower threshold back to 8 MiB (default is 800kB)
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq gc-cons-threshold (expt 2 23))))
+
+
 ;; (setq  x-meta-keysym 'super
 ;;         x-super-keysym 'meta)
 ;;
@@ -86,6 +95,8 @@
 
 (setq visible-bell t)
 (setq ring-bell-function #'ignore)
+
+(setq-default cursor-type 'bar)
 
 
 
@@ -1252,26 +1263,27 @@ If buffer-or-name is nil return current buffer's mode."
                         :background "#1B1E1C"))
    ))
 
+
 (defun my-god-mode-update-cursor-type ()
-  (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
+  ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
 
     (if (bound-and-true-p god-local-mode)
       (progn
         ;; only terminal need this
-        (unless (display-graphic-p)
-                (set-face-attribute 'hl-line nil :inherit nil :background 'unspecified)
-        )
+        ;; (unless (display-graphic-p)
+                (set-face-attribute 'hl-line nil :background (face-attribute 'default :background))
+        ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "#00ff00")
-        (setq cursor-type 'box)
+        ;; (setq cursor-type 'box)
       )
 
       (progn
         ;; only terminal need this
-        (unless (display-graphic-p)
-                (set-face-attribute 'hl-line nil :inherit nil :background "gray12")
-        )
+        ;; (unless (display-graphic-p)
+                (set-face-attribute 'hl-line nil :background "gray10")
+        ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "#3f4040")
-        (setq cursor-type 'bar)
+        ;; (setq cursor-type 'bar)
       )
     )
 
@@ -1777,7 +1789,7 @@ opening parenthesis one level up."
     (define-ibuffer-sorter filename-or-dired
       "Sort the buffers by their pathname."
       (:description "filenames plus dired")
-      (string-lessp 
+      (string-lessp
        (with-current-buffer (car a)
          (or buffer-file-name
              (if (eq major-mode 'dired-mode)
@@ -1797,6 +1809,21 @@ opening parenthesis one level up."
 )
 (add-hook 'ibuffer-mode-hook 'my-ibuffer-hook)
 
+
+(eval-after-load "dired" '(progn
+    (define-prefix-command 'my-god-mode-leader-key)
+    (define-key dired-mode-map (kbd "SPC") 'my-god-mode-leader-key)
+
+    (define-key dired-mode-map (kbd "SPC b") #'switch-to-buffer)
+    (define-key dired-mode-map (kbd "SPC B") #'ibuffer)
+    (define-key dired-mode-map (kbd "SPC k") #'kill-this-buffer)
+    (define-key dired-mode-map (kbd "SPC K") #'my-only-current-buffer)
+    (define-key dired-mode-map (kbd "SPC f") #'projectile-find-file)
+    (define-key dired-mode-map (kbd "SPC p") #'helm-find-files)
+    (define-key dired-mode-map (kbd "SPC m") #'deadgrep)
+    (define-key dired-mode-map (kbd "SPC L") #'display-line-numbers-mode)
+    (define-key dired-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
+  ))
 
 
 
