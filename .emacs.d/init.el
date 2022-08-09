@@ -1863,6 +1863,7 @@ opening parenthesis one level up."
 
     (define-key map (kbd "M-;") 'avy-goto-word-0)
     (define-key map (kbd "M-s") 'my-save-buffer)
+    (define-key map (kbd "C-j") 'my-save-buffer)
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
     (define-key map (kbd "M-o") 'other-window)
