@@ -1011,6 +1011,7 @@ If buffer-or-name is nil return current buffer's mode."
             (progn
                 ;; (message "%s is special buffer" (buffer-name))
                 (ignore)
+                (my-keys-minor-mode 0)
                 (my-special-buffer-keys-minor-mode 1)
             )
             (progn
@@ -1862,7 +1863,6 @@ opening parenthesis one level up."
 
     (define-key map (kbd "M-;") 'avy-goto-word-0)
     (define-key map (kbd "M-s") 'my-save-buffer)
-    (define-key map (kbd "C-j") 'my-save-buffer)
     (define-key map (kbd "M-n") 'gcm-scroll-down)
     (define-key map (kbd "M-p") 'gcm-scroll-up)
     (define-key map (kbd "M-o") 'other-window)
@@ -2041,6 +2041,9 @@ opening parenthesis one level up."
     (define-key map (kbd "C-w C-h") #'windmove-left)
     (define-key map (kbd "C-w C-k") #'windmove-up)
     (define-key map (kbd "C-w C-j") #'windmove-down)
+
+    (define-key map (kbd "C-w ,") #'flip-buffer-to-window)
+
     map)
   "my-special-buffer-keys-minor-mode keymap.")
 (define-minor-mode my-special-buffer-keys-minor-mode

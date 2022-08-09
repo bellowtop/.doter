@@ -16,6 +16,18 @@ ripgrep
 
 ```
 
+### rtags
+
+if use rtags to index C/C++ projects:
+
+```
+yay -Sy rtags
+
+
+# SEE https://github.com/Andersbakken/rtags#tldr-quickstart
+/bin/rdm &
+/bin/rc -J .
+```
 
 ### download jars for java
 
