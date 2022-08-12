@@ -132,8 +132,8 @@
 
 (setq-default line-spacing 0)
 
-(set-face-attribute 'default nil :font "Dejavu Sans Mono for Powerline-14")
-(add-to-list 'default-frame-alist '(font . "Dejavu Sans Mono for Powerline-14"))
+(set-face-attribute 'default nil :font "DejaVuSansMono Nerd Font-14")
+(add-to-list 'default-frame-alist '(font . "DejaVuSansMono Nerd Font-14"))
 (set-cursor-color "red")
 
 ;; (set-face-attribute 'region nil :background "#666")
