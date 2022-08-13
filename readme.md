@@ -13,6 +13,7 @@ ln -s ~/.doter/.emacs.d         ~/.emacs.d
 ln -s ~/.doter/idea/.ideavimrc  ~/.ideavimrc
 ln -s ~/.doter/xcode/.xvimrc    ~/.xvimrc
 ln -s ~/.doter/nvim             ~/.config/nvim
+ln -s ~/.doter/helix            ~/.config/helix
 ln -s ~/.doter/wezterm          ~/.config/wezterm
 ln -s ~/.doter/kak              ~/.config/kak
 ln -s ~/.doter/git              ~/.config/git
