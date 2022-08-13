@@ -424,8 +424,8 @@
     "Kill all other buffers."
     (interactive)
     (mapc 'kill-buffer
-          (delq (current-buffer)
-                (remove-if-not 'buffer-file-name (buffer-list)))))
+          ;; (delq (current-buffer) (remove-if-not 'buffer-file-name (buffer-list)))))     ;; this keep * buffers alive
+          (delq (current-buffer) (buffer-list))))                                          ;; this destroy them also
 
 
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
@@ -2033,6 +2033,7 @@ opening parenthesis one level up."
 
     (define-key map (kbd "M-;") #'avy-goto-word-0)
     (define-key map (kbd "M-o") #'other-window)
+    (define-key map (kbd "M-x") #'helm-M-x)
 
     (define-key map (kbd "C-w l") #'windmove-right)
     (define-key map (kbd "C-w h") #'windmove-left)
