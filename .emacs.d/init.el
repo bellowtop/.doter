@@ -1000,7 +1000,9 @@ If buffer-or-name is nil return current buffer's mode."
   (if (my-god-this-is-legendary-buffer (buffer-name))
         (progn
             ;; (message "%s is legendary buffer" (buffer-name))
-            (return-from my-god-mode)
+            (my-keys-minor-mode 0)
+            (my-special-buffer-keys-minor-mode 0)
+            (cl-return-from my-god-mode)
         )
         (progn
             ;; (message "%s is not legendary buffer, continue" (buffer-name))
