@@ -2030,6 +2030,10 @@ opening parenthesis one level up."
     (define-key map (kbd "j") #'next-line)
     (define-key map (kbd "l") #'forward-char)
     (define-key map (kbd "h") #'backward-char)
+
+    (define-key map (kbd "M-;") #'avy-goto-word-0)
+    (define-key map (kbd "M-o") #'other-window)
+
     (define-key map (kbd "C-w l") #'windmove-right)
     (define-key map (kbd "C-w h") #'windmove-left)
     (define-key map (kbd "C-w k") #'windmove-up)
