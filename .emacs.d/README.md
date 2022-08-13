@@ -63,3 +63,10 @@ sudo ln -s ~/.local/share/jdtls/bin/jdtls /usr/local/bin/jdtls
 # test jdtls
 jdtls
 ```
+
+
+### python
+
+```
+brew install autopep8
+```

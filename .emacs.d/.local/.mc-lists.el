@@ -68,6 +68,7 @@
 	my-join-lines
 	my-quit-god-mode
 	my-replace-char
+	my-select-current-line-and-forward-line
 	nxml-electric-slash
 	org-beginning-of-line
 	org-ctrl-c-ctrl-c
