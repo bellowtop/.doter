@@ -901,12 +901,25 @@ respectively."
 
 
 
-(setq auto-save-list-file-prefix (expand-file-name "~/.emacs.d/.local/auto-save-list/"))
-(setq create-lockfiles nil)
-(setq backup-directory-alist '(("" . "~/.emacs.d/.local/backup")))
 (setq recenter-redisplay nil)
 
-(setq recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
+
+
+;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/.
+(custom-set-variables
+  '(auto-save-list-file-prefix (expand-file-name "~/.emacs.d/.local/auto-save-list/"))
+  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/.local/autosaves/\\1" t)))
+  '(backup-directory-alist '((".*" . "~/.emacs.d/.local/backups/")))
+  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
+  '(create-lockfiles nil)
+)
+;; create the autosave dir if necessary, since emacs won't.
+(make-directory "~/.emacs.d/.local/auto-save-list/" t)
+(make-directory "~/.emacs.d/.local/autosaves/" t)
+(make-directory "~/.emacs.d/.local/backups" t)
+
+
+
 
 (which-key-mode 1)
 
@@ -1822,6 +1835,9 @@ opening parenthesis one level up."
 (eval-after-load "dired" '(progn
     (define-prefix-command 'my-god-mode-leader-key)
     (define-key dired-mode-map (kbd "SPC") 'my-god-mode-leader-key)
+
+    (define-key dired-mode-map (kbd "k") #'previous-line)
+    (define-key dired-mode-map (kbd "j") #'next-line)
 
     (define-key dired-mode-map (kbd "SPC b") #'switch-to-buffer)
     (define-key dired-mode-map (kbd "SPC B") #'ibuffer)
