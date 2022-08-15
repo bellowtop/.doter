@@ -334,7 +334,7 @@
 (use-package iedit
   :defer t
   :bind
-  ("C-c i" . iedit-mode)
+  ("M-'" . iedit-mode)
 )
 
 
@@ -1879,6 +1879,7 @@ opening parenthesis one level up."
     (define-key map (kbd "C-c C-o") #'helm-occur)
     (define-key map (kbd "C-c C-s") #'my-helm-ag-thing-at-point)
 
+    (define-key map (kbd "M-i") #'er/mark-symbol)
     (define-key map (kbd "M-;") 'avy-goto-word-0)
     (define-key map (kbd "M-s") 'my-save-buffer)
     (define-key map (kbd "C-j") 'my-save-buffer)
@@ -1997,7 +1998,6 @@ opening parenthesis one level up."
 
     (define-key god-local-mode-map (kbd ", w") #'my-save-buffer)
     (define-key god-local-mode-map (kbd ", b") #'flip-buffer-to-window)
-    (define-key god-local-mode-map (kbd ", ,") #'er/mark-symbol)             ;; b a   last buffer
 
     (define-key god-local-mode-map (kbd ", s") #'emacs-surround)
 
