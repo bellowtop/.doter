@@ -100,7 +100,11 @@
 
 
 
-(require 'expand-region)
+
+
+(use-package expand-region
+  :ensure
+  :bind ("M-i" . er/expand-region))
 
 
 
@@ -1879,7 +1883,7 @@ opening parenthesis one level up."
     (define-key map (kbd "C-c C-o") #'helm-occur)
     (define-key map (kbd "C-c C-s") #'my-helm-ag-thing-at-point)
 
-    (define-key map (kbd "M-i") #'er/mark-symbol)
+    ;; (define-key map (kbd "M-i") #'er/mark-symbol)
     (define-key map (kbd "M-;") 'avy-goto-word-0)
     (define-key map (kbd "M-s") 'my-save-buffer)
     (define-key map (kbd "C-j") 'my-save-buffer)
