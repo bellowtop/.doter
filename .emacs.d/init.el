@@ -966,6 +966,7 @@ If buffer-or-name is nil return current buffer's mode."
                         "helm-*"
                         ;; "*helm-mode-switch-to-buffer*"
                         "*Helm Help*"
+                        "*Flymake diagnostics"
                         "*ansi-term*"
                         "*fzf*"
                         "*NeoTree*"))
