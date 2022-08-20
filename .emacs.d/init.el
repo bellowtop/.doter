@@ -307,18 +307,23 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#14141e" "#e84c58" "#35BF88" "#dbac66" "#4ca6e8" "#c79af4" "#6bd9db" "#e6e6e8"])
+ '(auto-save-file-name-transforms '((".*" "~/.emacs.d/.local/autosaves/\\1" t)))
+ '(auto-save-list-file-prefix (expand-file-name "~/.emacs.d/.local/auto-save-list/"))
+ '(backup-directory-alist '((".*" . "~/.emacs.d/.local/backups/")))
+ '(create-lockfiles nil)
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(helm-projectile atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
+ '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
  '(safe-local-variable-values
    '((projectile-project-root . "~/deploy")
      (eval progn
 	   (pp-buffer)
 	   (indent-buffer))))
- '(warning-suppress-log-types '((comp) (use-package) (lsp-mode)))
+ '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 
 
@@ -599,6 +604,9 @@ respectively."
                       (rx " *")
                       ))
 
+
+(require 'helm-projectile)
+(helm-projectile-on)
 
 
 (defun my-rtags-find-symbol-at-point()
@@ -910,13 +918,7 @@ respectively."
 
 
 ;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/.
-(custom-set-variables
-  '(auto-save-list-file-prefix (expand-file-name "~/.emacs.d/.local/auto-save-list/"))
-  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/.local/autosaves/\\1" t)))
-  '(backup-directory-alist '((".*" . "~/.emacs.d/.local/backups/")))
-  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
-  '(create-lockfiles nil)
-)
+
 ;; create the autosave dir if necessary, since emacs won't.
 (make-directory "~/.emacs.d/.local/auto-save-list/" t)
 (make-directory "~/.emacs.d/.local/autosaves/" t)
@@ -960,6 +962,7 @@ If buffer-or-name is nil return current buffer's mode."
                         "*lsp-log*"
                         "*Help*"
                         "*info*"
+                        "*Warnings*"
                         "helm-*"
                         ;; "*helm-mode-switch-to-buffer*"
                         "*Helm Help*"
@@ -1847,7 +1850,7 @@ opening parenthesis one level up."
     (define-key dired-mode-map (kbd "SPC B") #'ibuffer)
     (define-key dired-mode-map (kbd "SPC k") #'kill-this-buffer)
     (define-key dired-mode-map (kbd "SPC K") #'my-only-current-buffer)
-    (define-key dired-mode-map (kbd "SPC f") #'projectile-find-file)
+    (define-key dired-mode-map (kbd "SPC f") #'helm-projectile)  ;;  projectile-find-file
     (define-key dired-mode-map (kbd "SPC p") #'helm-find-files)
     (define-key dired-mode-map (kbd "SPC m") #'deadgrep)
     (define-key dired-mode-map (kbd "SPC L") #'display-line-numbers-mode)
@@ -1959,7 +1962,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "SPC B") #'ibuffer)
     (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
     (define-key god-local-mode-map (kbd "SPC K") #'my-only-current-buffer)
-    (define-key god-local-mode-map (kbd "SPC f") #'projectile-find-file)
+    (define-key god-local-mode-map (kbd "SPC f") #'helm-projectile)  ;;  projectile-find-file
     (define-key god-local-mode-map (kbd "SPC p") #'helm-find-files)
     (define-key god-local-mode-map (kbd "SPC m") #'deadgrep)
     (define-key god-local-mode-map (kbd "SPC L") #'display-line-numbers-mode)
