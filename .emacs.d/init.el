@@ -270,6 +270,8 @@
 (require 'init-lang-go)
 
 
+(require 'init-lang-cpp)
+
 
 
 (defun my-joindirs (root &rest dirs)
@@ -290,6 +292,7 @@
 
 
 
+(require 'transpose-frame)
 
 
 (use-package yasnippet
@@ -315,7 +318,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(eldoc-box helm-projectile atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(transpose-frame eldoc-box helm-projectile atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
@@ -452,34 +455,6 @@
 
 
 
-;;; Use Google C Style instead
-;;;
-;;;  ;; put this to .clang-format
-;;;  ;; --
-;;;  ;;   BasedOnStyle: LLVM
-;;;  ;;   UseTab: Never
-;;;  ;;   IndentWidth: 8
-;;;  ;;   TabWidth: 8
-;;;  (defun my-c-mode-common-hook ()
-;;;   (c-set-offset 'substatement-open 0)
-;;;   (setq c++-tab-always-indent t)
-;;;   (setq c-basic-offset 8)                  ;; Default is 2
-;;;   (setq c-indent-level 8)                  ;; Default is 2
-;;;   (setq tab-stop-list '(8 12 16 20 24 28 32 36 40 44 48 52 56 60))
-;;;   (setq tab-width 8)
-;;;   (setq indent-tabs-mode nil)  ; use spaces only if nil
-;;;   )
-;;;  (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
-
-;;; or just google
-;; (add-hook 'c-mode-hook 'google-set-c-style)
-;; (add-hook 'c++-mode-hook 'google-set-c-style)
-
-
-;;; or just clang-format, from emacswiki
-(require 'clang-format)
-
-
 
 
 (defun my-tab-4-indent ()
@@ -608,41 +583,6 @@ respectively."
 
 (require 'helm-projectile)
 (helm-projectile-on)
-
-
-(defun my-rtags-find-symbol-at-point()
-  (interactive)
-  (rtags-find-symbol-at-point)
-  (recenter)
-)
-
-(use-package rtags
-  :ensure t
-  :hook
-  (c++-mode . rtags-start-process-unless-running)
-  (c-mode . rtags-start-process-unless-running)
-  :config
-  (setq rtags-completions-enabled t)
-  (setq rtags-use-helm t)
-  (setq rtags-display-result-backend 'helm)
-  :bind (
-       ("C-c e" . my-rtags-find-symbol-at-point)
-       ("C-c n" . rtags-location-stack-forward)
-       ("C-c b" . rtags-location-stack-back)
-       ("C-c u" . rtags-imenu)
-       ("C-c r E" . rtags-find-symbol)
-       ("C-c r O" . rtags-find-references)
-       ("C-c r o" . rtags-find-references-at-point)
-       ("C-c r s" . rtags-find-file)
-       ("C-c r v" . rtags-find-virtuals-at-point)
-       ("C-c r F" . rtags-fixit)
-       ("C-c r P" . rtags-preprocess-file)
-       ("C-c r R" . rtags-rename-symbol)
-       ("C-c r x" . rtags-show-rtags-buffer)
-       ("C-c r T" . rtags-print-symbol-info)
-       ("C-c r t" . rtags-symbol-type)
-       ("C-c r I" . rtags-include-file)
-       ("C-c r i" . rtags-get-include-file-for-symbol)))
 
 
 
