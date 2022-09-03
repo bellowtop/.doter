@@ -682,7 +682,7 @@ respectively."
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (smerge-mode -1)
-(scroll-bar-mode -1)
+;; (scroll-bar-mode -1)
 (tab-bar-mode -1)
 
 
@@ -697,7 +697,7 @@ respectively."
     (require 'awesome-tray)
     (awesome-tray-mode 1)
 
-    ;; (scroll-bar-mode -1)
+    (scroll-bar-mode -1)
     ;; (tab-bar-mode -1)
     (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
     (add-to-list 'default-frame-alist '(ns-appearance . dark))  ;; dark themes use "dark"
@@ -1418,6 +1418,9 @@ If buffer-or-name is nil return current buffer's mode."
 (with-eval-after-load 'multiple-cursors-core
     (define-key mc/keymap (kbd "TAB") 'mc/cycle-forward)
     (define-key mc/keymap (kbd "<backtab>") 'mc/cycle-backward)
+    (define-key mc/keymap (kbd "RET") 'newline) ;; give RET back to the newline function, use C-c C-c to exit
+    (define-key mc/keymap (kbd "C-c C-c") 'multiple-cursors-mode) ;; exit
+
     (define-key mc/keymap (kbd "C-x C-n") 'my-mc/mark-next-like-this)
     (define-key mc/keymap (kbd "C-x C-p") 'my-mc/mark-previous-like-this)
     (define-key mc/keymap (kbd "C-x C-a") 'mc/mark-all-like-this)
