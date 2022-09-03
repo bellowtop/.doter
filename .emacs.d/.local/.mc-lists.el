@@ -128,6 +128,7 @@
 (setq mc/cmds-to-run-once
       '(
 	beginning-of-buffer
+	comment-region
 	counsel-M-x
 	counsel-linux-app
 	counsel-projectile-switch-project
@@ -187,6 +188,7 @@
 	scroll-half-page-up
 	smart-region
 	swiper-mc
+	treemacs
 	undefined
 	undo-fu-only-redo
 	undo-fu-only-undo
