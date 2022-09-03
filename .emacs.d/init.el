@@ -102,9 +102,8 @@
 
 
 
-(use-package expand-region
-  :ensure
-  :bind ("M-i" . er/expand-region))
+(require 'expand-region)
+(global-set-key (kbd "M-i") 'er/expand-region)
 
 
 
