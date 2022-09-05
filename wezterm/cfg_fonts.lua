@@ -23,7 +23,7 @@ local function font_with_fallback(font_family)
   })
 end
 
-cfg.font = font_with_fallback("Droid Sans Mono for Powerline")
+cfg.font = font_with_fallback("DejaVuSansMono Nerd Font")
 
 -- Enable various OpenType features
 -- See https://docs.microsoft.com/en-us/typography/opentype/spec/featurelist
