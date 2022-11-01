@@ -453,6 +453,12 @@
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
 
+(defun my-c-mode-hook ()
+  (add-hook 'before-save-hook 'clang-format-buffer)
+)
+(add-hook 'c-mode-hook 'my-c-mode-hook)
+(add-hook 'c++-mode-hook 'my-c-mode-hook)
+
 
 
 
