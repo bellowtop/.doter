@@ -324,8 +324,8 @@
  '(safe-local-variable-values
    '((projectile-project-root . "~/deploy")
      (eval progn
-	   (pp-buffer)
-	   (indent-buffer))))
+       (pp-buffer)
+       (indent-buffer))))
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 
@@ -802,11 +802,23 @@ respectively."
   (interactive)
   (hs-minor-mode 1)
   (let ((starting-ov-count (length (overlays-in (point-min) (point-max)))))
-    (hs-hide-all)
+    (if (derived-mode-p 'c++-mode)
+        ; find namespace, go below one line, and then hide
+        (save-excursion
+            (goto-char (point-min))
+            (re-search-forward "namespace.*?{" nil t)
+            (next-line)
+            (hs-hide-level 1)
+          )
+        (hs-hide-all)
+      )
     (when (equal (length (overlays-in (point-min) (point-max))) starting-ov-count)
         (hs-show-all)
         (recenter)
       )))
+
+
+
 
 
 
