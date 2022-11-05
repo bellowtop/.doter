@@ -156,7 +156,7 @@
 ;; (load-theme 'kaolin-ocean t)
 ;; (load-theme 'doom-material t)
 
-;; (custom-set-faces
+(custom-set-faces
 ;;  ;; custom-set-faces was added by Custom.
 ;;  ;; If you edit it by hand, you could mess it up, so be careful.
 ;;  ;; Your init file should contain only one such instance.
@@ -175,7 +175,7 @@
 ;;  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
 ;;  '(region ((t (:background "#9ac76c" :foreground "#262626" :underline nil :weight normal))))
 ;;  '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-;;  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0))))
+  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0))))
 
 
 
