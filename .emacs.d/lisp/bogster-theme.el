@@ -1,0 +1,85 @@
+(require 'autothemer)
+
+
+(autothemer-deftheme
+ bogster "A theme to set the mood for Halloween"
+
+ ((((class color) (min-colors #xFFFFFF))) ;; We're only concerned with graphical Emacs
+
+  ;; Define our color palette
+
+  (bogster-base0        "#161c23")
+  (bogster-base1        "#232d38")
+  (bogster-base2        "#313f4e")
+  (bogster-base3        "#415367")
+  (bogster-base4        "#536984")
+  (bogster-base5        "#627d9d")
+  (bogster-base6        "#9ea4c2")
+  (bogster-base7        "#b6b6c9")
+  (bogster-base8        "#cbc7d0")
+  (bogster-fg0          "#c6b8ad")
+  (bogster-fg1          "#e5ded6")
+  (bogster-red          "#d32c5d")
+  (bogster-lred         "#dc597f")
+  (bogster-orange       "#dc7759")
+  (bogster-dyellow      "#A58023")
+  (bogster-yellow       "#dcb659")
+  (bogster-green        "#57a331")
+  (bogster-lgreen       "#7fdc59")
+  (bogster-dblue        "#1e758d")
+  (bogster-blue         "#36b2d4")
+  (bogster-lblue        "#59dcd8")
+  (bogster-purp         "#b759dc")
+  (bogster-pink         "#dc59c0")
+  (bogster-teal         "#23a580")
+  (bogster-lteal        "#59dcb7"))
+
+
+ ;; Customize faces
+(
+  (default                   (:foreground bogster-fg1 :background bogster-base0))
+  (cursor                    (:background bogster-red))
+  (region                    (:background bogster-base0 :inverse-video 't))
+  (mode-line                 (:foreground bogster-fg1 :background bogster-base3))
+  (font-lock-keyword-face    (:foreground bogster-lgreen))
+  (font-lock-constant-face   (:foreground bogster-lgreen))
+  (font-lock-string-face     (:foreground bogster-teal))
+
+  (font-lock-function-name-face     (:foreground bogster-lblue))
+  (font-lock-keyword-face     (:foreground bogster-yellow))
+  (font-lock-constant-face     (:foreground bogster-lteal))
+  (font-lock-type-face     (:foreground bogster-lred))
+
+  (font-lock-comment-face     (:foreground bogster-base5))
+
+  ;; (show-paren-match     (:background bogster-base3))
+
+  ;; search
+  (lazy-highlight     (:foreground bogster-base0 :background bogster-fg1))
+  ;; (lazy-highlight                        (:background "yellow" :foreground "black" :inverse-video nil))
+
+  (highlight                             (:background bogster-base1))
+  (hl-line                               (:background bogster-base1))
+
+  (line-number                           (:foreground bogster-base5 :background bogster-base0))
+
+  (deadgrep-match-face                   (:foreground "#000000" :background "#00ff00"))
+  (deadgrep-search-term-face             (:foreground "#000000" :background "#00ff00"))
+
+  (eglot-highlight-symbol-face           (:foreground "#000000" :background "#00ff00"))
+
+  (hydra-face-red                        (:foreground "chocolate"))
+  (iedit-occurrence                      (:background "yellow" :foreground "black" :inverse-video nil))
+  (lsp-face-highlight-read               (:foreground "#000000" :background "#00ff00"))
+  (lsp-face-highlight-textual            (:foreground "#000000" :background "#00ff00"))
+  (lsp-face-highlight-write              (:foreground "#000000" :background "#00ff00"))
+  (mc/region-face                        (:foreground "#ff77cc" :inverse-video t))
+  (next-error                            (:foreground "#000000" :background "#00ff00"))
+  ; (show-paren-match                      (:foreground "#000000" :background "#00ff00"))
+
+
+
+
+  (font-lock-builtin-face    (:foreground bogster-lgreen))))
+
+(provide-theme 'bogster)

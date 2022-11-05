@@ -148,6 +148,7 @@
 	handle-select-window
 	handle-switch-frame
 	helm-confirm-and-exit-minibuffer
+	help-for-help
 	helpful-key
 	i3-windmove-left
 	iedit-switch-to-mc-mode
