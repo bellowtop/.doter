@@ -63,13 +63,16 @@
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/emacswiki.org"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-
-
+(add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/lisp"))
 
 
 (global-unset-key [(control z)])
 
 
+
+(require 'autothemer)
+
+(load-theme 'bogster t)
 
 
 ;;;;;; catch ESC in terminal(-nw) ;;;;;;;;;;;;
@@ -129,7 +132,7 @@
 ;;      ;; (load-theme 'kaolin-ocean t)
 ;; (load-theme 'cyberpunk t)
 
-(load-theme 'atom-one-dark t)
+;; (load-theme 'atom-one-dark t)
 
 
 
@@ -137,7 +140,7 @@
 
 (set-face-attribute 'default nil :font "DejaVuSansMono Nerd Font-14")
 (add-to-list 'default-frame-alist '(font . "DejaVuSansMono Nerd Font-14"))
-(set-cursor-color "red")
+;; (set-cursor-color "red")
 
 ;; (set-face-attribute 'region nil :background "#666")
 
@@ -153,26 +156,26 @@
 ;; (load-theme 'kaolin-ocean t)
 ;; (load-theme 'doom-material t)
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- '(highlight ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
- '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
- '(lazy-highlight ((t (:background "yellow" :foreground "black" :inverse-video nil))))
- '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
- '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
- '(region ((t (:background "#9ac76c" :foreground "#262626" :underline nil :weight normal))))
- '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
- '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0))))
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+;;  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+;;  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+;;  '(highlight ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+;;  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
+;;  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
+;;  '(lazy-highlight ((t (:background "yellow" :foreground "black" :inverse-video nil))))
+;;  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+;;  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+;;  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+;;  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
+;;  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
+;;  '(region ((t (:background "#9ac76c" :foreground "#262626" :underline nil :weight normal))))
+;;  '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+;;  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0))))
 
 
 
@@ -317,15 +320,15 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(flymake-diagnostic-at-point transpose-frame eldoc-box helm-projectile atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(autothemer flymake-diagnostic-at-point transpose-frame eldoc-box helm-projectile atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
  '(safe-local-variable-values
    '((projectile-project-root . "~/deploy")
      (eval progn
-       (pp-buffer)
-       (indent-buffer))))
+	   (pp-buffer)
+	   (indent-buffer))))
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 
@@ -1247,26 +1250,31 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 (defun my-god-mode-update-mode-line ()
-  (cond
-   (god-local-mode
-    (set-face-attribute 'mode-line nil
-                        :background "green"
-                        :foreground "black")
-    (set-face-attribute 'mode-line-inactive nil
-                        :background "#565063"
-                        :foreground "white"
-                        :box '(:line-width 8 :color "#565063")
-                        :overline nil
-                        :underline nil))
-   ;; below, the default color is borrowed from monokai theme
-   (t
-    (set-face-attribute 'mode-line nil
-                        :foreground "#F5F5F5"
-                        :background "#1B1E1C")
-    (set-face-attribute 'mode-line-inactive nil
-                        :foreground "#8B8878"
-                        :background "#1B1E1C"))
-   ))
+  (if (bound-and-true-p god-local-mode)
+      (progn
+                (set-face-attribute 'mode-line nil :background "#232d38")
+      )
+
+      (progn
+                (set-face-attribute 'mode-line nil :background (face-attribute 'default :background))
+      )
+   )
+
+  ;;;  (cond
+  ;;;   (god-local-mode
+  ;;;
+  ;;;    ;; (set-face-attribute 'mode-line-inactive nil
+  ;;;    ;;                     :background "#565063"
+  ;;;    ;;                     :foreground "white"
+  ;;;    ;;                     :box '(:line-width 8 :color "#565063")
+  ;;;    ;;                     :overline nil
+  ;;;    ;;                     :underline nil))
+  ;;;   ;; below, the default color is borrowed from monokai theme
+  ;;;   (t
+  ;;;    ;; (set-face-attribute 'mode-line-inactive nil :foreground "#8B8878" :background "#1B1E1C"))
+  ;;;    ))
+  ;;;   )
+)
 
 
 (defun my-god-mode-update-cursor-type ()
@@ -1276,18 +1284,18 @@ If buffer-or-name is nil return current buffer's mode."
       (progn
         ;; only terminal need this
         ;; (unless (display-graphic-p)
-                (set-face-attribute 'hl-line nil :background (face-attribute 'default :background))
+                (set-face-attribute 'hl-line nil :background "#232d38")
         ;; )
-        (set-face-attribute 'line-number-current-line nil :foreground "#00ff00")
+        (set-face-attribute 'line-number-current-line nil :foreground "#23a580")
         ;; (setq cursor-type 'box)
       )
 
       (progn
         ;; only terminal need this
         ;; (unless (display-graphic-p)
-                (set-face-attribute 'hl-line nil :background "gray10")
+                (set-face-attribute 'hl-line nil :background (face-attribute 'default :background))
         ;; )
-        (set-face-attribute 'line-number-current-line nil :foreground "#3f4040")
+        (set-face-attribute 'line-number-current-line nil :foreground "#00ff00")
         ;; (setq cursor-type 'bar)
       )
     )
@@ -1296,6 +1304,9 @@ If buffer-or-name is nil return current buffer's mode."
 
 (add-hook 'god-mode-enabled-hook  'my-god-mode-update-cursor-type)
 (add-hook 'god-mode-disabled-hook  'my-god-mode-update-cursor-type)
+
+(add-hook 'god-mode-enabled-hook  'my-god-mode-update-mode-line)
+(add-hook 'god-mode-disabled-hook  'my-god-mode-update-mode-line)
 
 
 
