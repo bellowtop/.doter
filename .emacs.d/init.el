@@ -161,20 +161,22 @@
 ;;  ;; If you edit it by hand, you could mess it up, so be careful.
 ;;  ;; Your init file should contain only one such instance.
 ;;  ;; If there is more than one, they won't work right.
-;;  '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-;;  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-;;  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-;;  '(highlight ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-;;  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
-;;  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
-;;  '(lazy-highlight ((t (:background "yellow" :foreground "black" :inverse-video nil))))
-;;  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-;;  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-;;  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-;;  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
-;;  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
+  '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
+  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
+  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
+  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
+
 ;;  '(region ((t (:background "#9ac76c" :foreground "#262626" :underline nil :weight normal))))
 ;;  '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+;;  '(lazy-highlight ((t (:background "yellow" :foreground "black" :inverse-video nil))))
+;;  '(highlight ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+
   '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0))))
 
 
@@ -1193,26 +1195,35 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 (defun my-disable-lsp-highlighting()
+  (interactive)
   (if (boundp 'lsp-enable-symbol-highlighting)
     (if (and lsp-enable-symbol-highlighting t)
       (lsp-toggle-symbol-highlight)
       (message "is already not highlight")
       )
-  )
+    )
+  (set-face-attribute 'eglot-highlight-symbol-face nil :foreground 'unspecified :background 'unspecified)
 )
 
 (defun my-enable-lsp-highlighting()
+  (interactive)
   (if (boundp 'lsp-enable-symbol-highlighting)
     (if (not lsp-enable-symbol-highlighting)
       (lsp-toggle-symbol-highlight)
       (message "is enabled highlight")
       )
-  )
+    )
+  (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#000000" :background "#00ff00")
 )
 
 (add-hook 'isearch-mode-hook #'my-disable-lsp-highlighting)
 (add-hook 'isearch-mode-end-hook #'my-enable-lsp-highlighting)
 
+
+
+
+(add-hook 'activate-mark-hook #'my-disable-lsp-highlighting)
+(add-hook 'deactivate-mark-hook #'my-enable-lsp-highlighting)
 
 
 ;; (defun my-quit-mc-mode-if-need ()
@@ -2085,6 +2096,8 @@ opening parenthesis one level up."
 (add-hook 'minibuffer-setup-hook #'(lambda () (my-keys-minor-mode 0)))
 (add-hook 'minibuffer-setup-hook #'(lambda () (my-special-buffer-keys-minor-mode 0)))
 (add-hook 'helm-minibuffer-set-up-hook #'(lambda () (my-special-buffer-keys-minor-mode 0)))
+
+
 
 
 

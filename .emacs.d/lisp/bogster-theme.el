@@ -63,18 +63,7 @@
 
   (line-number                           (:foreground bogster-base5 :background bogster-base0))
 
-  (deadgrep-match-face                   (:foreground "#000000" :background "#00ff00"))
-  (deadgrep-search-term-face             (:foreground "#000000" :background "#00ff00"))
 
-  (eglot-highlight-symbol-face           (:foreground "#000000" :background "#00ff00"))
-
-  (hydra-face-red                        (:foreground "chocolate"))
-  (iedit-occurrence                      (:background "yellow" :foreground "black" :inverse-video nil))
-  (lsp-face-highlight-read               (:foreground "#000000" :background "#00ff00"))
-  (lsp-face-highlight-textual            (:foreground "#000000" :background "#00ff00"))
-  (lsp-face-highlight-write              (:foreground "#000000" :background "#00ff00"))
-  (mc/region-face                        (:foreground "#ff77cc" :inverse-video t))
-  (next-error                            (:foreground "#000000" :background "#00ff00"))
   ; (show-paren-match                      (:foreground "#000000" :background "#00ff00"))
 
 
