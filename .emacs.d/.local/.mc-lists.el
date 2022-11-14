@@ -112,6 +112,7 @@
 	sql-delete-backward-char
 	sql-magic-go
 	upcase-char
+	upcase-dwim
 	upcase-region
 	wdired--self-insert
 	web-mode-comment-or-uncomment
