@@ -157,27 +157,21 @@
 ;; (load-theme 'doom-material t)
 
 (custom-set-faces
-;;  ;; custom-set-faces was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-  '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
-  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
-  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
-  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
-
-;;  '(region ((t (:background "#9ac76c" :foreground "#262626" :underline nil :weight normal))))
-;;  '(show-paren-match ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-;;  '(lazy-highlight ((t (:background "yellow" :foreground "black" :inverse-video nil))))
-;;  '(highlight ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
-
-  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+ '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+ '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+ '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
+ '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
+ '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+ '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+ '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+ '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
+ '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
+ '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0))))
 
 
 
@@ -322,7 +316,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(autothemer flymake-diagnostic-at-point transpose-frame eldoc-box helm-projectile atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(zig-mode autothemer flymake-diagnostic-at-point transpose-frame eldoc-box helm-projectile atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
@@ -1213,7 +1207,8 @@ If buffer-or-name is nil return current buffer's mode."
       (message "is enabled highlight")
       )
     )
-  (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#000000" :background "#00ff00")
+  (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#000000" :background "#7fdc59")
+  ;; (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#dc59c0" :background 'unspecified)
 )
 
 (add-hook 'isearch-mode-hook #'my-disable-lsp-highlighting)
