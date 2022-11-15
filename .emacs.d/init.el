@@ -161,6 +161,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(auto-dim-other-buffers-face ((t (:background "#232d38"))))
  '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -316,7 +317,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(zig-mode autothemer flymake-diagnostic-at-point transpose-frame eldoc-box helm-projectile atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(auto-dim-other-buffers zig-mode autothemer flymake-diagnostic-at-point transpose-frame eldoc-box helm-projectile atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
@@ -435,8 +436,18 @@
     "Kill all other buffers."
     (interactive)
     (mapc 'kill-buffer
+          (delq (current-buffer) (remove-if-not 'buffer-file-name (buffer-list)))))     ;; this keep * buffers alive
+          ;; (delq (current-buffer) (buffer-list))))                                          ;; this destroy them also
+
+;; delete all other buffers, only keep current one.
+(defun my-only-current-buffer-include-specials ()
+    "Kill all other buffers."
+    (interactive)
+    (mapc 'kill-buffer
           ;; (delq (current-buffer) (remove-if-not 'buffer-file-name (buffer-list)))))     ;; this keep * buffers alive
           (delq (current-buffer) (buffer-list))))                                          ;; this destroy them also
+
+
 
 
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
@@ -1259,10 +1270,12 @@ If buffer-or-name is nil return current buffer's mode."
   (if (bound-and-true-p god-local-mode)
       (progn
                 (set-face-attribute 'mode-line nil :background "#232d38")
+                (auto-dim-other-buffers-mode -1)
       )
 
       (progn
                 (set-face-attribute 'mode-line nil :background (face-attribute 'default :background))
+                (auto-dim-other-buffers-mode 1)
       )
    )
 
@@ -1290,7 +1303,7 @@ If buffer-or-name is nil return current buffer's mode."
       (progn
         ;; only terminal need this
         ;; (unless (display-graphic-p)
-                (set-face-attribute 'hl-line nil :background "#232d38")
+                ;; (set-face-attribute 'hl-line nil :background "#232d38")
         ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "#23a580")
         ;; (setq cursor-type 'box)
@@ -1299,7 +1312,7 @@ If buffer-or-name is nil return current buffer's mode."
       (progn
         ;; only terminal need this
         ;; (unless (display-graphic-p)
-                (set-face-attribute 'hl-line nil :background (face-attribute 'default :background))
+                ;; (set-face-attribute 'hl-line nil :background (face-attribute 'default :background))
         ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "#00ff00")
         ;; (setq cursor-type 'bar)
@@ -1846,6 +1859,8 @@ opening parenthesis one level up."
     (define-key dired-mode-map (kbd "SPC B") #'ibuffer)
     (define-key dired-mode-map (kbd "SPC k") #'kill-this-buffer)
     (define-key dired-mode-map (kbd "SPC K") #'my-only-current-buffer)
+    (define-key dired-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
+
     (define-key dired-mode-map (kbd "SPC f") #'helm-projectile)  ;;  projectile-find-file
     (define-key dired-mode-map (kbd "SPC p") #'helm-find-files)
     (define-key dired-mode-map (kbd "SPC m") #'deadgrep)
@@ -1958,6 +1973,8 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "SPC B") #'ibuffer)
     (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
     (define-key god-local-mode-map (kbd "SPC K") #'my-only-current-buffer)
+    (define-key god-local-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
+
     (define-key god-local-mode-map (kbd "SPC f") #'helm-projectile)  ;;  projectile-find-file
     (define-key god-local-mode-map (kbd "SPC p") #'helm-find-files)
     (define-key god-local-mode-map (kbd "SPC m") #'deadgrep)
