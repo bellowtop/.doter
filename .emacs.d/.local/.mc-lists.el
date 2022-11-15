@@ -30,6 +30,7 @@
 	dakra-downcase-dwim
 	dakra-upcase-dwim
 	delete-horizontal-space
+	downcase-dwim
 	downcase-region
 	electric-newline-and-maybe-indent
 	emmet-expand-line
@@ -190,6 +191,7 @@
 	scroll-half-page-up
 	smart-region
 	swiper-mc
+	switch-to-buffer
 	treemacs
 	undefined
 	undo-fu-only-redo
