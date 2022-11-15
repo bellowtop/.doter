@@ -1886,6 +1886,9 @@ opening parenthesis one level up."
 (defvar my-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-x") #'helm-M-x)
+
+    (define-key map (kbd "C-M-.") #'xref-find-definitions-other-window )
+
     ;; (define-key map (kbd "C-M-f") #'projectile-find-file)
     ;; (define-key map (kbd "C-M-b") #'switch-to-buffer)
     ;; (define-key map (kbd "C-x C-b") #'switch-to-buffer)
