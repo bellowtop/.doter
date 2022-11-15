@@ -162,7 +162,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auto-dim-other-buffers-face ((t (:background "#232d38"))))
- '(deadgrep-match-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+ '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
@@ -172,7 +172,8 @@
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
- '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0))))
+ '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0)))
+ '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
 
 
 
@@ -1426,6 +1427,18 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+
+;; Source: https://www.emacswiki.org/emacs/misc-cmds.el
+(defun my-revert-buffer-no-confirm ()
+    "Revert buffer without confirmation."
+    (interactive)
+    (revert-buffer :ignore-auto :noconfirm)
+    (my-god-mode)
+    )
+
+
+
+
 (setq mc/list-file (expand-file-name "~/.emacs.d/.local/.mc-lists.el"))
 
 (setq mc/match-cursor-style nil)
@@ -1974,6 +1987,8 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
     (define-key god-local-mode-map (kbd "SPC K") #'my-only-current-buffer)
     (define-key god-local-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
+
+    (define-key god-local-mode-map (kbd "SPC R") #'my-revert-buffer-no-confirm)
 
     (define-key god-local-mode-map (kbd "SPC f") #'helm-projectile)  ;;  projectile-find-file
     (define-key god-local-mode-map (kbd "SPC p") #'helm-find-files)
