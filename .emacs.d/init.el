@@ -269,9 +269,9 @@
 
 (require 'init-lang-go)
 
-
 (require 'init-lang-cpp)
 
+(require 'init-lang-zig)
 
 
 (defun my-joindirs (root &rest dirs)
@@ -452,6 +452,8 @@
 
 
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
+
+
 
 
 ;; (global-auto-revert-mode t)
