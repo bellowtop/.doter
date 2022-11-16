@@ -91,3 +91,5 @@ package-quickstart.el
 .lsp-session*
 plugins/
 plugins/.build
+
+.DS_Store
