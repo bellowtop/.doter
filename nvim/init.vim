@@ -147,9 +147,11 @@ require('telescope').setup{
     mappings = {
       i = {
         ["<C-g>"] = actions.close,
+        ["<C-[>"] = actions.close,
       },
       n = {
         ["<C-g>"] = actions.close,
+        ["<C-[>"] = actions.close,
       },
     }
   },
@@ -600,6 +602,8 @@ vnoremap L g_
 nnoremap m %
 vnoremap m %
 
+" occur
+nnoremap g/ :vimgrep /<C-R>//j %<CR>\|:cw<CR>
 
 nnoremap <C-l>      zz
 
@@ -693,6 +697,7 @@ command! Jsonf :execute '%!python2 -m json.tool'
 inoremap <Esc><BS> <C-w>
 
 inoremap <C-n> <C-o>j
+inoremap <C-d> <C-o>x
 inoremap <C-p> <C-o>k
 inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>^
