@@ -689,6 +689,11 @@ command! Jsonf :execute '%!python2 -m json.tool'
 
 
 
+" alt-backspace to delete word
+inoremap <Esc><BS> <C-w>
+
+inoremap <C-n> <C-o>j
+inoremap <C-p> <C-o>k
 inoremap <C-e> <C-o>$
 inoremap <C-a> <C-o>^
 inoremap <C-b> <Left>
