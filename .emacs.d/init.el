@@ -1991,6 +1991,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "SPC B") #'ibuffer)
     (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
     (define-key god-local-mode-map (kbd "SPC K") #'my-only-current-buffer)
+    (define-key god-local-mode-map (kbd "SPC P P") #'my-show-file-name)
     (define-key god-local-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
 
     (define-key god-local-mode-map (kbd "SPC R") #'my-revert-buffer-no-confirm)
