@@ -37,16 +37,18 @@
 
  ;; Customize faces
 (
-  (default                   (:foreground bogster-fg1 :background bogster-base0))
+  (default                   (:foreground bogster-fg0 :background bogster-base0))
   (cursor                    (:background bogster-red))
   (region                    (:background bogster-base0 :inverse-video 't))
   (mode-line                 (:foreground bogster-fg1 :background bogster-base3))
-  (font-lock-keyword-face    (:foreground bogster-lgreen))
-  (font-lock-constant-face   (:foreground bogster-lgreen))
+  (font-lock-keyword-face    (:foreground bogster-green))
+  (font-lock-constant-face   (:foreground bogster-green))
   (font-lock-string-face     (:foreground bogster-teal))
 
-  (font-lock-function-name-face     (:foreground bogster-lblue))
+  (font-lock-function-name-face     (:foreground bogster-blue))
+  (font-lock-variable-name-face     (:foreground bogster-yellow))
   (font-lock-keyword-face     (:foreground bogster-yellow))
+
   (font-lock-constant-face     (:foreground bogster-lteal))
   (font-lock-type-face     (:foreground bogster-lred))
 
@@ -69,6 +71,6 @@
 
 
 
-  (font-lock-builtin-face    (:foreground bogster-lgreen))))
+  (font-lock-builtin-face    (:foreground bogster-green))))
 
 (provide-theme 'bogster)
