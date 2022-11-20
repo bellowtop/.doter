@@ -595,6 +595,7 @@ respectively."
 
 
 ;; (setq helm-move-to-line-cycle-in-source t)
+(setq helm-buffer-max-length 40)
 (setq helm-display-buffer-default-height 0.4)
 (setq helm-default-display-buffer-functions '(display-buffer-in-side-window))
 (setq helm-boring-buffer-regexp-list (list
@@ -2018,6 +2019,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "q j") #'windmove-down)
     (define-key god-local-mode-map (kbd "q v") #'split-window-right)
     (define-key god-local-mode-map (kbd "q s") #'split-window-below)
+    (define-key god-local-mode-map (kbd "q t") #'transpose-frame)
     (define-key god-local-mode-map (kbd "q x") #'delete-window)         ;; delete this window
     (define-key god-local-mode-map (kbd "q d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "q q") #'other-window)
@@ -2030,6 +2032,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-w d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "C-w v") #'split-window-right)
     (define-key god-local-mode-map (kbd "C-w s") #'split-window-below)
+    (define-key god-local-mode-map (kbd "C-w t") #'transpose-frame)
     (define-key god-local-mode-map (kbd "C-w w") #'other-window)
 
     (define-key god-local-mode-map (kbd "C-w C-l") #'windmove-right)
@@ -2039,6 +2042,7 @@ opening parenthesis one level up."
 
     (define-key god-local-mode-map (kbd ", w") #'my-save-buffer)
     (define-key god-local-mode-map (kbd ", b") #'flip-buffer-to-window)
+    (define-key god-local-mode-map (kbd ", o") #'cff-find-other-file)    ;; switch between c header/source file
 
     (define-key god-local-mode-map (kbd ", ,") #'eldoc-box-eglot-help-at-point)
     (define-key god-local-mode-map (kbd ", s") #'emacs-surround)
@@ -2101,6 +2105,7 @@ opening parenthesis one level up."
     (define-key map (kbd "C-w d") #'delete-other-windows)  ;; delete other window
     (define-key map (kbd "C-w v") #'split-window-right)
     (define-key map (kbd "C-w s") #'split-window-below)
+    (define-key map (kbd "C-w t") #'transpose-frame)
     (define-key map (kbd "C-w w") #'other-window)
 
     (define-key map (kbd "C-w C-l") #'windmove-right)

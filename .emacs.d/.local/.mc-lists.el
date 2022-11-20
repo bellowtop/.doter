@@ -20,6 +20,7 @@
 	c-electric-slash
 	c-electric-star
 	c-indent-line-or-region
+	cff-find-other-file
 	cljr-slash
 	comint-delchar-or-maybe-eof
 	comment-dwim-2
