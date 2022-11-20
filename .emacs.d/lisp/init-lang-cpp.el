@@ -77,6 +77,18 @@
 
 (add-hook 'c++-mode-hook 'eglot-ensure)
 
+
+(require 'cff)
+;; defines shortcut for find source/header file for the current
+;; file
+(add-hook 'c++-mode-hook
+          #'(lambda ()
+             (define-key c-mode-base-map (kbd "M-O") 'cff-find-other-file)))
+(add-hook 'c-mode-hook
+          #'(lambda ()
+             (define-key c-mode-base-map (kbd "M-O") 'cff-find-other-file)))
+
+
 (provide 'init-lang-cpp)
 
 ;;; init-lang-cpp.el ends here
