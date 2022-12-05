@@ -29,6 +29,9 @@ sudo apt install xclip
 
 # or macOS
 brew install ripgrep ag fd
+
+brew tap homebrew/cask-fonts
+brew install --cask font-dejavu-sans-mono-nerd-font
 ```
 
 
