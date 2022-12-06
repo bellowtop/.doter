@@ -347,9 +347,13 @@ end
 -- and map buffer local keybindings when the language server attaches
 --
 
+
+
 local servers = { "gopls", "clangd", "rust_analyzer", "zls" }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { on_attach = on_attach }
+  if vim.fn.executable(lsp) == 1 then
+    nvim_lsp[lsp].setup { on_attach = on_attach }
+  end
 end
 
 
@@ -441,13 +445,22 @@ lua <<EOF
     })
   })
 
-  -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
-    capabilities = capabilities
-  }
+
+
+
+local servers = { "gopls", "clangd", "rust_analyzer", "zls" }
+for _, lsp in ipairs(servers) do
+  if vim.fn.executable(lsp) == 1 then
+      local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+      require('lspconfig')[lsp].setup {
+        capabilities = capabilities
+      }
+  end
+end
+
+
 EOF
+
 
 
 
