@@ -32,6 +32,10 @@ brew install ripgrep ag fd
 
 brew tap homebrew/cask-fonts
 brew install --cask font-dejavu-sans-mono-nerd-font
+
+brew tap d12frosted/emacs-plus
+brew install d12frosted/emacs-plus/emacs-plus@30
+ln -s /opt/homebrew/opt/emacs-plus@30/Emacs.app /Applications
 ```
 
 
