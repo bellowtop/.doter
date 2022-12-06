@@ -24,6 +24,10 @@ require('packer').startup(function(use)
   use 'neovim/nvim-lspconfig'
   use 'kevinhwang91/nvim-bqf'
 
+  -- lspconfig for clangd
+  use 'p00f/clangd_extensions.nvim'
+
+
   use 'nvim-lua/plenary.nvim'
   use { 'nvim-telescope/telescope.nvim', tag =  '0.1.0' }
 
@@ -281,19 +285,19 @@ vim.api.nvim_set_keymap("n", "f", ":call DoingEasyMotion()<CR>", { noremap = tru
 -- vim-rooter
 --
 --
-vim.g.rooter_manual_only = 1
+-- vim.g.rooter_manual_only = 1
 
 --- replace for this
 ---  " augroup vimrc_rooter
 ---  "     autocmd VimEnter * 
 ---  " augroup END
 ---
-local rooter_augroup = vim.api.nvim_create_augroup('vimrc_rooter', {clear = true})
-vim.api.nvim_create_autocmd('VimEnter', {
-  pattern = '*',
-  group = rooter_augroup,
-  command = ':Rooter'
-})
+-- local rooter_augroup = vim.api.nvim_create_augroup('vimrc_rooter', {clear = true})
+-- vim.api.nvim_create_autocmd('VimEnter', {
+--   pattern = '*',
+--   group = rooter_augroup,
+--   command = ':Rooter'
+-- })
 
 
 
@@ -428,7 +432,11 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  print("aaaaa")
+
+  vim.cmd([[echo "aaaa"]])
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -470,16 +478,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function(...)
   end
   orig_handler(...)
 end
-
-
-
-local servers = { "gopls", "clangd", "rust_analyzer", "zls" }
-for _, lsp in ipairs(servers) do
-  if vim.fn.executable(lsp) == 1 then
-    require('lspconfig')[lsp].setup { on_attach = on_attach }
-  end
-end
-
 
 
 
@@ -575,13 +573,29 @@ cmp.setup.cmdline(':', {
 })
 
 
-local servers = { "gopls", "clangd", "rust_analyzer", "zls" }
+
+
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+
+
+
+
+
+local servers = { "gopls",  "rust_analyzer", "zls" }
 for _, lsp in ipairs(servers) do
-  -- if vim.fn.executable(lsp) == 1 then
-      local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-      require('lspconfig')[lsp].setup { capabilities = capabilities }
-  -- end
+  if vim.fn.executable(lsp) == 1 then
+      require('lspconfig')[lsp].setup { on_attach = on_attach, capabilities = capabilities }
+  end
 end
+
+
+require("clangd_extensions").setup{
+    server = {
+        on_attach = on_attach,
+    }
+}
 
 
 
