@@ -1889,6 +1889,7 @@ opening parenthesis one level up."
 (defvar my-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-x") #'helm-M-x)
+    (define-key map (kbd "C-h SPC") #'helm-all-mark-rings)
 
     (define-key map (kbd "C-M-.") #'xref-find-definitions-other-window )
 
@@ -1988,6 +1989,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
     (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)
 
+    (define-key god-local-mode-map (kbd "SPC SPC") #'helm-all-mark-rings)
     (define-key god-local-mode-map (kbd "SPC b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "SPC B") #'ibuffer)
     (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
