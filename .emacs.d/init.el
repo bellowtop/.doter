@@ -68,6 +68,8 @@
 
 (global-unset-key [(control z)])
 
+(setq warning-minimum-level :emergency)
+
 
 
 (require 'autothemer)
@@ -318,7 +320,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(reformatter auto-dim-other-buffers zig-mode autothemer flymake-diagnostic-at-point transpose-frame eldoc-box helm-projectile atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(impatient-mode reformatter auto-dim-other-buffers zig-mode autothemer flymake-diagnostic-at-point transpose-frame eldoc-box helm-projectile atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
@@ -350,6 +352,31 @@
   ("M-'" . iedit-mode)
 )
 
+
+
+
+;; render like github
+(defun markdown-html-github (buffer)
+  (princ (with-current-buffer buffer
+           (format "<!DOCTYPE html><html><script src=\"https://cdnjs.cloudflare.com/ajax/libs/he/1.1.1/he.js\"></script><link rel=\"stylesheet\" href=\"https://assets-cdn.github.com/assets/github-e6bb18b320358b77abe040d2eb46b547.css\"><link rel=\"stylesheet\" href=\"https://assets-cdn.github.com/assets/frameworks-95aff0b550d3fe338b645a4deebdcb1b.css\"><title>Impatient Markdown</title><div id=\"markdown-content\" style=\"display:none\">%s</div><div class=\"markdown-body\" style=\"max-width:968px;margin:0 auto;\"></div><script>fetch('https://api.github.com/markdown', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ \"text\": document.getElementById('markdown-content').innerHTML, \"mode\": \"gfm\", \"context\": \"knit-pk/homepage-nuxtjs\"}) }).then(response => response.text()).then(response => {document.querySelector('.markdown-body').innerHTML = he.decode(response)}).then(() => { fetch(\"https://gist.githubusercontent.com/FieryCod/b6938b29531b6ec72de25c76fa978b2c/raw/\").then(response => response.text()).then(eval)});</script></html>"
+                   (buffer-substring-no-properties (point-min) (point-max))))
+         (current-buffer)))
+
+
+(defun markdown-html (buffer)
+    (princ (with-current-buffer buffer
+      (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+    (current-buffer)))
+
+
+
+(use-package impatient-mode
+  :config
+  (add-hook 'markdown-mode-hook #'(lambda ()
+                                    (impatient-mode 1)
+                                    (imp-set-user-filter 'markdown-html-github)
+                                    ))
+  )
 
 
 
@@ -926,12 +953,13 @@ respectively."
 (require 'mwim)
 
 
+
+
 (defun buffer-mode (&optional buffer-or-name)
   "Returns the major mode associated with a buffer.
 If buffer-or-name is nil return current buffer's mode."
-  (buffer-local-value 'major-mode
-   (if buffer-or-name (get-buffer buffer-or-name) (current-buffer))))
-
+  (with-current-buffer (if buffer-or-name (get-buffer buffer-or-name) (current-buffer))
+     major-mode))
 
 
 
@@ -2030,12 +2058,12 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-w h") #'windmove-left)
     (define-key god-local-mode-map (kbd "C-w k") #'windmove-up)
     (define-key god-local-mode-map (kbd "C-w j") #'windmove-down)
-    (define-key god-local-mode-map (kbd "C-w q") #'delete-window)         ;; delete this window
-    (define-key god-local-mode-map (kbd "C-w d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "C-w v") #'split-window-right)
     (define-key god-local-mode-map (kbd "C-w s") #'split-window-below)
     (define-key god-local-mode-map (kbd "C-w t") #'transpose-frame)
-    (define-key god-local-mode-map (kbd "C-w w") #'other-window)
+    (define-key god-local-mode-map (kbd "C-w x") #'delete-window)         ;; delete this window
+    (define-key god-local-mode-map (kbd "C-w d") #'delete-other-windows)  ;; delete other window
+    (define-key god-local-mode-map (kbd "C-w q") #'other-window)
 
     (define-key god-local-mode-map (kbd "C-w C-l") #'windmove-right)
     (define-key god-local-mode-map (kbd "C-w C-h") #'windmove-left)
@@ -2048,6 +2076,9 @@ opening parenthesis one level up."
 
     (define-key god-local-mode-map (kbd ", ,") #'eldoc-box-eglot-help-at-point)
     (define-key god-local-mode-map (kbd ", s") #'emacs-surround)
+
+    (define-key god-local-mode-map (kbd ", r r") #'httpd-start)
+    (define-key god-local-mode-map (kbd ", r k") #'httpd-stop)
 
 
     ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)
