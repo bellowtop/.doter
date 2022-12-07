@@ -55,6 +55,7 @@ semanticdb/
 *.swp
 *~
 abbrev_defs
+/nvim/plugin/packer_compiled.lua
 /swank
 /swank
 TAGS
