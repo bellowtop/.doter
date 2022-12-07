@@ -767,6 +767,7 @@ respectively."
     (setq doom-modeline-height 1)
     (setq doom-modeline-icon nil)
     (setq doom-modeline-bar-width -1)
+    (setq doom-modeline-buffer-file-name-style 'relative-from-project)
     (require 'doom-modeline)
     (doom-modeline-mode 1)
 )
