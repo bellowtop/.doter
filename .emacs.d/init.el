@@ -164,6 +164,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auto-dim-other-buffers-face ((t (:background "#232d38"))))
+ '(helm-selection ((t (:background "#232d38" ))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -176,6 +177,7 @@
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0)))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
+
 
 
 
@@ -1815,7 +1817,30 @@ the cursor by ARG lines."
   (interactive)
   (= (point)
     (line-end-position)
-  ))
+    ))
+
+
+
+(defun my-enlarge-half-height ()
+  "Expand current window to use half of the other window's lines."
+  (interactive)
+  (enlarge-window (/ (window-body-height) 4)))
+
+(defun my-enlarge-half-width ()
+  "Expand current window to use half of the other window's lines."
+  (interactive)
+  (enlarge-window-horizontally (/ (window-body-width) 4)))
+
+(defun my-shrink-half-height ()
+  "Expand current window to use half of the other window's lines."
+  (interactive)
+  (shrink-window (/ (window-body-height) 4)))
+
+(defun my-shrink-half-width ()
+  "Expand current window to use half of the other window's lines."
+  (interactive)
+  (shrink-window-horizontally (/ (window-body-width) 4)))
+
 
 
 (defun my-forward-char-no-cross-line()
@@ -1940,11 +1965,12 @@ opening parenthesis one level up."
     (define-key map (kbd "C-c .") 'er/expand-region)
 
     (define-key map (kbd "C-c v") 'set-rectangular-region-anchor)
+    (define-key map (kbd "C-c C-v") 'set-rectangular-region-anchor)
+
     (define-key map (kbd "C-c o") 'helm-occur)
     (define-key map (kbd "C-c s") 'my-helm-ag-thing-at-point)
-    (define-key map (kbd "C-c C-v") #'set-rectangular-region-anchor)
-    (define-key map (kbd "C-c C-o") #'helm-occur)
-    (define-key map (kbd "C-c C-s") #'my-helm-ag-thing-at-point)
+    (define-key map (kbd "C-c C-o") 'helm-occur)
+    (define-key map (kbd "C-c C-s") 'my-helm-ag-thing-at-point)
 
     ;; (define-key map (kbd "M-i") #'er/mark-symbol)
     (define-key map (kbd "M-;") 'avy-goto-word-0)
@@ -2066,6 +2092,11 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-w d") #'delete-other-windows)  ;; delete other window
     (define-key god-local-mode-map (kbd "C-w q") #'other-window)
 
+    (define-key god-local-mode-map (kbd "C-w ]") #'my-enlarge-half-width)
+    (define-key god-local-mode-map (kbd "C-w [") #'my-shrink-half-width)
+    (define-key god-local-mode-map (kbd "C-w =") #'my-enlarge-half-height)
+    (define-key god-local-mode-map (kbd "C-w -") #'my-shrink-half-height)
+
     (define-key god-local-mode-map (kbd "C-w C-l") #'windmove-right)
     (define-key god-local-mode-map (kbd "C-w C-h") #'windmove-left)
     (define-key god-local-mode-map (kbd "C-w C-k") #'windmove-up)
@@ -2075,12 +2106,16 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd ", b") #'flip-buffer-to-window)
     (define-key god-local-mode-map (kbd ", o") #'cff-find-other-file)    ;; switch between c header/source file
 
-    (define-key god-local-mode-map (kbd ", ,") #'eldoc-box-eglot-help-at-point)
     (define-key god-local-mode-map (kbd ", s") #'emacs-surround)
 
     (define-key god-local-mode-map (kbd ", r r") #'httpd-start)
     (define-key god-local-mode-map (kbd ", r k") #'httpd-stop)
 
+    (define-key god-local-mode-map (kbd ", ,") #'eldoc-box-eglot-help-at-point)
+    (define-key god-local-mode-map (kbd ", g d") #'xref-find-definitions)
+    (define-key god-local-mode-map (kbd ", g r") #'xref-find-references)
+    (define-key god-local-mode-map (kbd ", g R") #'eglot-rename)
+    (define-key god-local-mode-map (kbd ", g i") #'eglot-find-implementation)
 
     ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)
     ;; (define-key god-local-mode-map (kbd "C-, C-l") #'switch-to-next-buffer)
@@ -2141,6 +2176,11 @@ opening parenthesis one level up."
     (define-key map (kbd "C-w s") #'split-window-below)
     (define-key map (kbd "C-w t") #'transpose-frame)
     (define-key map (kbd "C-w w") #'other-window)
+
+    (define-key map (kbd "C-w ]") #'my-enlarge-half-width)
+    (define-key map (kbd "C-w [") #'my-shrink-half-width)
+    (define-key map (kbd "C-w =") #'my-enlarge-half-height)
+    (define-key map (kbd "C-w -") #'my-shrink-half-height)
 
     (define-key map (kbd "C-w C-l") #'windmove-right)
     (define-key map (kbd "C-w C-h") #'windmove-left)
