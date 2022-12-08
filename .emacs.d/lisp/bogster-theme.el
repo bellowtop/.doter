@@ -36,41 +36,27 @@
 
 
  ;; Customize faces
-(
-  (default                   (:foreground bogster-fg0 :background bogster-base0))
-  (cursor                    (:background bogster-red))
-  (region                    (:background bogster-base0 :inverse-video 't))
-  (mode-line                 (:foreground bogster-fg1 :background bogster-base3))
-  (font-lock-keyword-face    (:foreground bogster-green))
-  (font-lock-constant-face   (:foreground bogster-green))
-  (font-lock-string-face     (:foreground bogster-teal))
+ (
+  (default                              (:foreground bogster-fg0 :background bogster-base0))
+  (cursor                               (:background bogster-red))
+  (region                               (:background bogster-base0 :inverse-video 't))
+  (mode-line                            (:foreground bogster-fg1 :background bogster-base3))
+  (font-lock-keyword-face               (:foreground bogster-green))
+  (font-lock-constant-face              (:foreground bogster-green))
+  (font-lock-string-face                (:foreground bogster-teal))
+  (font-lock-function-name-face         (:foreground bogster-blue))
+  (font-lock-variable-name-face         (:foreground bogster-yellow))
+  (font-lock-keyword-face               (:foreground bogster-yellow))
+  (font-lock-constant-face              (:foreground bogster-lteal))
+  (font-lock-type-face                  (:foreground bogster-lred))
+  (font-lock-comment-face               (:foreground bogster-base5))
+  (font-lock-builtin-face               (:foreground bogster-green))
+  (lazy-highlight                       (:foreground bogster-base0 :background bogster-fg1))
+  (highlight                            (:background bogster-base1))
+  (hl-line                              (:background bogster-base1))
+  (line-number                          (:foreground bogster-base5 :background bogster-base0))
+ )
 
-  (font-lock-function-name-face     (:foreground bogster-blue))
-  (font-lock-variable-name-face     (:foreground bogster-yellow))
-  (font-lock-keyword-face     (:foreground bogster-yellow))
-
-  (font-lock-constant-face     (:foreground bogster-lteal))
-  (font-lock-type-face     (:foreground bogster-lred))
-
-  (font-lock-comment-face     (:foreground bogster-base5))
-
-  ;; (show-paren-match     (:background bogster-base3))
-
-  ;; search
-  (lazy-highlight     (:foreground bogster-base0 :background bogster-fg1))
-  ;; (lazy-highlight                        (:background "yellow" :foreground "black" :inverse-video nil))
-
-  (highlight                             (:background bogster-base1))
-  (hl-line                               (:background bogster-base1))
-
-  (line-number                           (:foreground bogster-base5 :background bogster-base0))
-
-
-  ; (show-paren-match                      (:foreground "#000000" :background "#00ff00"))
-
-
-
-
-  (font-lock-builtin-face    (:foreground bogster-green))))
+)
 
 (provide-theme 'bogster)
