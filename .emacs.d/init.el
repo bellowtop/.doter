@@ -165,6 +165,7 @@
  ;; If there is more than one, they won't work right.
  '(auto-dim-other-buffers-face ((t (:background "#232d38"))))
  '(helm-selection ((t (:background "#232d38" ))))
+ '(helm-source-header ((t (:foreground "#00ff00" :weight normal ))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
