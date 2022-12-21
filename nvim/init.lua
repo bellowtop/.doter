@@ -423,6 +423,16 @@ vim.api.nvim_set_keymap("n", "<Leader>v",         ":Vista!!",  { noremap = true 
 --
 --
 
+local function get_forced_lsp_capabilities()
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = { "documentation", "detail", "additionalTextEdits" },
+  }
+  return capabilities
+end
+
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
@@ -433,13 +443,9 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
+local my_lsp_on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  print("aaaaa")
-
-  vim.cmd([[echo "aaaa"]])
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -470,7 +476,12 @@ local on_attach = function(client, bufnr)
   -----     ]], false)
   -----   end
 
+
+  require("cmp_nvim_lsp").default_capabilities(get_forced_lsp_capabilities())
 end
+
+
+
 
 
 local orig_handler = vim.lsp.handlers["textDocument/publishDiagnostics"]
@@ -579,8 +590,6 @@ cmp.setup.cmdline(':', {
 
 
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
 
 
 
@@ -589,14 +598,15 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 local servers = { "gopls",  "rust_analyzer", "zls" }
 for _, lsp in ipairs(servers) do
   if vim.fn.executable(lsp) == 1 then
-      require('lspconfig')[lsp].setup { on_attach = on_attach, capabilities = capabilities }
+      require('lspconfig')[lsp].setup { on_attach = my_lsp_on_attach, capabilities = get_forced_lsp_capabilities() }
   end
 end
 
 
 require("clangd_extensions").setup{
     server = {
-        on_attach = on_attach,
+        on_attach = my_lsp_on_attach,
+        capabilities = get_forced_lsp_capabilities(),
     }
 }
 
@@ -850,8 +860,8 @@ vim.api.nvim_set_keymap("n", "<C-l>", "zz", { noremap = true })
 
 
 vim.api.nvim_set_keymap("n", "<C-j>",     ":w<CR>", { noremap = true })
-vim.api.nvim_set_keymap("i", "<C-j>",     ":w<CR>", { noremap = true })
-vim.api.nvim_set_keymap("v", "<C-j>",     ":w<CR>", { noremap = true })
+vim.api.nvim_set_keymap("i", "<C-j>",     "<ESC>:w<CR>", { noremap = true })
+vim.api.nvim_set_keymap("v", "<C-j>",     "<ESC>:w<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>j", ":w<CR>", { noremap = true })
 
 
