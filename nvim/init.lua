@@ -309,9 +309,9 @@ vim.api.nvim_set_keymap("n", "f", ":call DoingEasyMotion()<CR>", { noremap = tru
 -- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua#L136
 
 vim.api.nvim_set_keymap("n", "<leader>f", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true } )
-vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua require('telescope.builtin').live_grep()<cr>",  { noremap = true } )
+vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua require('telescope.builtin').live_grep({layout_strategy='vertical'})<cr>",  { noremap = true } )
 vim.api.nvim_set_keymap("n", "<leader>b", "<cmd>lua require('telescope.builtin').buffers()<cr>",    { noremap = true } )
-vim.api.nvim_set_keymap("n", "<C-g>",     "<ESC><ESC><ESC>",                                        { noremap = true } )
+-- vim.api.nvim_set_keymap("n", "<C-g>",     "<ESC><ESC><ESC>",                                        { noremap = true } )
 
 local actions = require "telescope.actions"
 local telescope_config = require "telescope.config"
@@ -321,11 +321,13 @@ require('telescope').setup{
     mappings = {
       i = {
         ["<C-g>"] = actions.close,
-        ["<C-[>"] = actions.close,
+        ["<C-c>"] = actions.close,
+        -- ["<C-[>"] = actions.close,
       },
       n = {
         ["<C-g>"] = actions.close,
-        ["<C-[>"] = actions.close,
+        ["<C-c>"] = actions.close,
+        -- ["<C-[>"] = actions.close,
       },
     }
   },
@@ -382,7 +384,8 @@ require'nvim-tree'.setup {
 
 vim.api.nvim_set_keymap("n", "<leader>n", ":NvimTreeToggle<CR>",    { noremap = true } )
 vim.api.nvim_set_keymap("n", "<leader>r", ":NvimTreeRefresh<CR>",   { noremap = true } )
-vim.api.nvim_set_keymap("n", "@",         ":NvimTreeFindFile<CR>",  { noremap = true } )
+vim.api.nvim_set_keymap("n", "<leader>N", ":NvimTreeFindFile<CR>",  { noremap = true } )
+vim.api.nvim_set_keymap("n", "<leader>@", ":NvimTreeFindFile<CR>",  { noremap = true } )
 
 
 
@@ -651,8 +654,10 @@ vim.cmd([[
 -- ctrlsf
 --
 
-vim.api.nvim_set_keymap("n", "<Leader>m",         ":<Plug>CtrlSFCwordPath",  { noremap = true } )
-vim.api.nvim_set_keymap("v", "<Leader>m",         ":<Plug>CtrlSFVwordExec",  { noremap = true } )
+vim.api.nvim_set_keymap("n", "<Leader>m",         "<Plug>CtrlSFCwordPath<CR>",  { noremap = true } )
+vim.api.nvim_set_keymap("v", "<Leader>m",         "<Plug>CtrlSFVwordExec<CR>",  { noremap = true } )
+vim.api.nvim_set_keymap("n", "<Leader>O",         ":CtrlSFOpen<CR> ",           { noremap = true } )
+vim.api.nvim_set_keymap("n", "<Leader>o",         ":CtrlSF ",                   { noremap = true } )
 
 vim.g.ctrlsf_backend = 'rg'
 vim.g.ctrlsf_auto_focus = { at = "start" }
@@ -790,15 +795,15 @@ vim.api.nvim_set_keymap("n", "<C-q>", "a",     { noremap = true } )
 
 
 
----  q as window prefix
----  qq to cycle windows
----  qQ to delete current window
----  qd to delete all ther windows
---
-vim.api.nvim_set_keymap("n", "q", "<C-w>", { noremap = true })
-vim.api.nvim_set_keymap("n", "qq", "<C-w><C-w>", { noremap = true })
-vim.api.nvim_set_keymap("n", "qQ", "<C-w>q", { noremap = true })
-vim.api.nvim_set_keymap("n", "qd", "<C-w>o", { noremap = true })
+---   ---  q as window prefix
+---   ---  qq to cycle windows
+---   ---  qQ to delete current window
+---   ---  qd to delete all ther windows
+---   --
+---   vim.api.nvim_set_keymap("n", "q", "<C-w>", { noremap = true })
+---   vim.api.nvim_set_keymap("n", "qq", "<C-w><C-w>", { noremap = true })
+---   vim.api.nvim_set_keymap("n", "qQ", "<C-w>q", { noremap = true })
+---   vim.api.nvim_set_keymap("n", "qd", "<C-w>o", { noremap = true })
 
 
 
