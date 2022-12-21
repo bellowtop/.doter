@@ -721,11 +721,11 @@ autocmd BufNewFile,BufRead *.webapp set filetype=json
 autocmd BufNewFile,BufRead *.jshintrc set filetype=json
 autocmd BufNewFile,BufRead *.eslintrc set filetype=json
 autocmd BufNewFile,BufReadPost *.go set shiftwidth=4 softtabstop=4 expandtab!
-autocmd BufNewFile,BufReadPost *.cpp set shiftwidth=8 tabstop=8 softtabstop=8
-autocmd BufNewFile,BufReadPost *.cc  set shiftwidth=8 tabstop=8 softtabstop=8
-autocmd BufNewFile,BufReadPost *.c   set shiftwidth=8 tabstop=8 softtabstop=8
-autocmd BufNewFile,BufReadPost *.hh  set shiftwidth=8 tabstop=8 softtabstop=8
-autocmd BufNewFile,BufReadPost *.h   set shiftwidth=8 tabstop=8 softtabstop=8
+autocmd BufNewFile,BufReadPost *.cpp set shiftwidth=4 tabstop=4 softtabstop=4
+autocmd BufNewFile,BufReadPost *.cc  set shiftwidth=4 tabstop=4 softtabstop=4
+autocmd BufNewFile,BufReadPost *.c   set shiftwidth=4 tabstop=4 softtabstop=4
+autocmd BufNewFile,BufReadPost *.hh  set shiftwidth=4 tabstop=4 softtabstop=4
+autocmd BufNewFile,BufReadPost *.h   set shiftwidth=4 tabstop=4 softtabstop=4
 autocmd BufNewFile,BufReadPost *.coffee set shiftwidth=2 softtabstop=2
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 autocmd BufWritePost *.coffee silent make!
