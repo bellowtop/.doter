@@ -2073,16 +2073,16 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "@") #'(lambda() (interactive) (treemacs-find-file) (treemacs-select-window)))
     (define-key god-local-mode-map (kbd "SPC @") #'treemacs-add-and-display-current-project)
 
-    (define-key god-local-mode-map (kbd "q l") #'windmove-right)
-    (define-key god-local-mode-map (kbd "q h") #'windmove-left)
-    (define-key god-local-mode-map (kbd "q k") #'windmove-up)
-    (define-key god-local-mode-map (kbd "q j") #'windmove-down)
-    (define-key god-local-mode-map (kbd "q v") #'split-window-right)
-    (define-key god-local-mode-map (kbd "q s") #'split-window-below)
-    (define-key god-local-mode-map (kbd "q t") #'transpose-frame)
-    (define-key god-local-mode-map (kbd "q x") #'delete-window)         ;; delete this window
-    (define-key god-local-mode-map (kbd "q d") #'delete-other-windows)  ;; delete other window
-    (define-key god-local-mode-map (kbd "q q") #'other-window)
+    ;;  (define-key god-local-mode-map (kbd "q l") #'windmove-right)
+    ;;  (define-key god-local-mode-map (kbd "q h") #'windmove-left)
+    ;;  (define-key god-local-mode-map (kbd "q k") #'windmove-up)
+    ;;  (define-key god-local-mode-map (kbd "q j") #'windmove-down)
+    ;;  (define-key god-local-mode-map (kbd "q v") #'split-window-right)
+    ;;  (define-key god-local-mode-map (kbd "q s") #'split-window-below)
+    ;;  (define-key god-local-mode-map (kbd "q t") #'transpose-frame)
+    ;;  (define-key god-local-mode-map (kbd "q x") #'delete-window)         ;; delete this window
+    ;;  (define-key god-local-mode-map (kbd "q d") #'delete-other-windows)  ;; delete other window
+    ;;  (define-key god-local-mode-map (kbd "q q") #'other-window)
 
     (define-key god-local-mode-map (kbd "C-w l") #'windmove-right)
     (define-key god-local-mode-map (kbd "C-w h") #'windmove-left)
