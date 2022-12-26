@@ -1097,19 +1097,17 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
-
-(defun my-god-above-newline-and-insert-mode()
-  (interactive)
-  (beginning-of-line)
-  (newline-and-indent)
-  (previous-line)
-  (god-mode-all)
-  )
-
 (defun my-god-below-newline-and-insert-mode()
   (interactive)
   (end-of-line)
   (newline-and-indent)
+  (god-mode-all)
+  )
+
+(defun my-god-above-newline-and-insert-mode()
+  (interactive)
+  (previous-line)
+  (my-god-below-newline-and-insert-mode)
   (god-mode-all)
   )
 
