@@ -1551,6 +1551,7 @@ If buffer-or-name is nil return current buffer's mode."
 
 (require 'undo-tree)
 (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.local/.undo-tree-files")))
+(setq undo-tree-auto-save-history nil)
 (global-undo-tree-mode)
 
 ;; Suppress the message saying that the undo history file was
