@@ -17,14 +17,14 @@ function binds_for_mouse_select(button, streak, selection_mode)
     {
       mods="NONE",
       event={Down={streak=streak, button=button}},
-      action=wezterm.action{SelectTextAtMouseCursor=selection_mode},
+      action=wezterm.action.SelectTextAtMouseCursor "Cell",
     },
 
     -- Extend on Drag event
     {
       mods="NONE",
       event={Drag={streak=streak, button=button}},
-      action=wezterm.action{ExtendSelectionToMouseCursor=selection_mode},
+      action=wezterm.action.ExtendSelectionToMouseCursor "Cell",
     },
 
     -- Extend on SHIFT click
@@ -32,14 +32,14 @@ function binds_for_mouse_select(button, streak, selection_mode)
       mods="SHIFT",
       event={Up={streak=1, button="Left"}},
       -- Note that there is no `wezterm.action` here
-      action={ExtendSelectionToMouseCursor={}},
+      action=wezterm.action.ExtendSelectionToMouseCursor,
     },
 
     -- Complete on Up event
     {
       mods="NONE",
       event={Up={streak=streak, button=button}},
-      action=wezterm.action{CompleteSelection="PrimarySelection"}
+      action=wezterm.action.CompleteSelection "PrimarySelection"
     },
   }
 end
@@ -57,19 +57,19 @@ function binds_extend_mouse_select(button, streak, selection_mode)
     {
       mods="NONE",
       event={Down={streak=streak, button=button}},
-      action=wezterm.action{ExtendSelectionToMouseCursor=selection_mode},
+      action=wezterm.action.ExtendSelectionToMouseCursor "Cell",
     },
     {
       mods="NONE",
       event={Drag={streak=streak, button=button}},
-      action=wezterm.action{ExtendSelectionToMouseCursor=selection_mode},
+      action=wezterm.action.ExtendSelectionToMouseCursor "Cell",
     },
 
     -- Complete on Up event
     {
       mods="NONE",
       event={Up={streak=streak, button=button}},
-      action=wezterm.action{CompleteSelection="PrimarySelection"}
+      action=wezterm.action.CompleteSelection "PrimarySelection"
     },
   }
 end
@@ -101,14 +101,14 @@ table.insert(mouse_bindings, {
   -- Middle click pastes from the primary selection (for any other mods).
   wezterm.permute_any_or_no_mods({
     event={Down={streak=1, button="Middle"}},
-    action=wezterm.action{PasteFrom = "PrimarySelection"},
+    action=wezterm.action.PasteFrom "PrimarySelection",
   }),
   -- Alt-Middle click pastes from the clipboard selection
   -- NOTE: Must be last to overwrite the existing Alt-Middle binding done by permute_any_or_no_mods.
   {
     mods="ALT",
     event={Down={streak=1, button="Middle"}},
-    action=wezterm.action{PasteFrom = "Clipboard"},
+    action=wezterm.action.PasteFrom "Clipboard",
   },
 })
 
