@@ -1097,38 +1097,36 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
-
-(defun my-god-above-newline-and-insert-mode()
-  (interactive)
-  (beginning-of-line)
-  (newline-and-indent)
-  (previous-line)
-  (god-mode-all)
-  )
-
 (defun my-god-below-newline-and-insert-mode()
   (interactive)
   (end-of-line)
   (newline-and-indent)
-  (god-mode-all)
+  (my-quit-god-mode)
+  )
+
+(defun my-god-above-newline-and-insert-mode()
+  (interactive)
+  (previous-line)
+  (my-god-below-newline-and-insert-mode)
+  (my-quit-god-mode)
   )
 
 (defun my-god-mwin-end-and-insert-mode()
   (interactive)
   (mwim-end-of-code-or-line)
-  (god-mode-all)
+  (my-quit-god-mode)
   )
 
 (defun my-god-mwin-beginning-and-insert-mode()
   (interactive)
   (mwim-beginning-of-code-or-line)
-  (god-mode-all)
+  (my-quit-god-mode)
   )
 
 (defun my-god-char-forward-and-insert-mode()
   (interactive)
   (forward-char)
-  (god-mode-all)
+  (my-quit-god-mode)
   )
 
 (defun my-move-to-end-of-word ()
@@ -1940,6 +1938,16 @@ opening parenthesis one level up."
     (define-key dired-mode-map (kbd "SPC L") #'display-line-numbers-mode)
     (define-key dired-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
   ))
+
+
+
+
+(advice-add
+ 'helm-M-x
+ :before
+ (lambda (&rest r) (my-god-mode))
+ '((name . "my-god-mode-before-m-x")) ; convenient name for identifying or removing this advice later
+ )
 
 
 
