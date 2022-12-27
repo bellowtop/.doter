@@ -7,7 +7,7 @@ cfg.adjust_window_size_when_changing_font_size = false
 -- !! this one opens a separate win on first unknown glyph, stealing windows focus !!
 cfg.warn_about_missing_glyphs = false
 
-cfg.font_size = 11
+cfg.font_size = 16
 
 -- Makes FontAwesome's double-width glyphs display properly!
 cfg.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
@@ -19,11 +19,11 @@ local function font_with_fallback(font_family)
   -- family names, not file names
   return wezterm.font_with_fallback({
     font_family,
-    "Droid Sans Mono", -- nice double-spaced symbols!
+    "Source Code Pro for Powerline", -- nice double-spaced symbols!
   })
 end
 
-cfg.font = font_with_fallback("DejaVuSansMono Nerd Font")
+cfg.font = font_with_fallback("Source Code Pro for Powerline")
 
 -- Enable various OpenType features
 -- See https://docs.microsoft.com/en-us/typography/opentype/spec/featurelist
