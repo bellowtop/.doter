@@ -234,7 +234,7 @@ key_bindings:
   - { key: J,        mods: Command,       chars: "\x60\x6a" }                   # cmd+h  prev window, send `j
   - { key: K,        mods: Command,       chars: "\x60\x6b" }                   # cmd+l  next window, send `k
 
-  - { key: L,        mods: Command|Control, chars: "\x60\x0c"  }                  # cmd+shift+k  clear history, send `C
+  - { key: L,        mods: Command|Control, chars: "\x60\x0c"  }                  # cmd+control+l  clear history, send C-l
 
   - { key: T,        mods: Command,       chars: "\x60\x63" }                   # cmd+t  new window , send `c
   - { key: W,        mods: Command,       chars: "\x60\x58" }                   # cmd+w  kill pane  , send `X
