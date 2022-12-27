@@ -15,6 +15,7 @@ ln -s ~/.doter/xcode/.xvimrc    ~/.xvimrc
 ln -s ~/.doter/nvim             ~/.config/nvim
 ln -s ~/.doter/helix            ~/.config/helix
 ln -s ~/.doter/wezterm          ~/.config/wezterm
+ln -s ~/.doter/alacritty        ~/.config/alacritty
 ln -s ~/.doter/kak              ~/.config/kak
 ln -s ~/.doter/git              ~/.config/git
 ```
@@ -32,6 +33,7 @@ brew install ripgrep ag fd
 
 brew tap homebrew/cask-fonts
 brew install --cask font-dejavu-sans-mono-nerd-font
+brew install --cask font-source-code-pro-for-powerline
 
 brew tap d12frosted/emacs-plus
 brew install d12frosted/emacs-plus/emacs-plus@30
@@ -91,6 +93,7 @@ mv ~/.ideavimrc         ~/.dot_backup
 mv ~/.xvimrc            ~/.dot_backup
 mv ~/.config/nvim       ~/.dot_backup
 mv ~/.config/wezterm    ~/.dot_backup
+mv ~/.config/alacritty  ~/.dot_backup
 mv ~/.config/kak        ~/.dot_backup
 mv ~/.config/git        ~/.dot_backup
 ```
