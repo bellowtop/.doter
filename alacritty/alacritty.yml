@@ -229,13 +229,15 @@ key_bindings:
     #   ^^          this is the `
     #      ^^       this is the h
     #         ^^    this is the <Enter> key
-  - { key: H,        mods: Command,       chars: "\x60\x68" }                   # cmd+h  prev window, send `h
-  - { key: L,        mods: Command,       chars: "\x60\x6c" }                   # cmd+l  next window, send `l
+
   - { key: J,        mods: Command,       chars: "\x60\x6a" }                   # cmd+h  prev window, send `j
   - { key: K,        mods: Command,       chars: "\x60\x6b" }                   # cmd+l  next window, send `k
 
   - { key: L,        mods: Command|Control, chars: "\x60\x0c"  }                  # cmd+control+l  clear history, send C-l
 
+  # binding Cmd + H is useless, in macOS, cmd+h can never be sended to application at all.
+  # - { key: H,        mods: Command,       chars: "\x60\x68" }                   # cmd+h  prev window, send `h
+  - { key: L,        mods: Command,       chars: "\x60\x6c" }                   # cmd+l  next window, send `l
   - { key: T,        mods: Command,       chars: "\x60\x63" }                   # cmd+t  new window , send `c
   - { key: W,        mods: Command,       chars: "\x60\x58" }                   # cmd+w  kill pane  , send `X
 
