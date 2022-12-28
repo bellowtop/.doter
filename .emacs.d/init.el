@@ -2063,6 +2063,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "SPC P P") #'my-show-file-name)
     (define-key god-local-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
 
+    (define-key god-local-mode-map (kbd "SPC ,") #'eldoc-box-eglot-help-at-point)
     (define-key god-local-mode-map (kbd "SPC R") #'my-revert-buffer-no-confirm)
 
     (define-key god-local-mode-map (kbd "SPC f") #'helm-projectile)  ;;  projectile-find-file
@@ -2122,7 +2123,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd ", r r") #'httpd-start)
     (define-key god-local-mode-map (kbd ", r k") #'httpd-stop)
 
-    (define-key god-local-mode-map (kbd ", ,") #'eldoc-box-eglot-help-at-point)
+    (define-key god-local-mode-map (kbd ", ,") #'delete-other-windows)
     (define-key god-local-mode-map (kbd ", g d") #'xref-find-definitions)
     (define-key god-local-mode-map (kbd ", g r") #'xref-find-references)
     (define-key god-local-mode-map (kbd ", g R") #'eglot-rename)
