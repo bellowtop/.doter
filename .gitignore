@@ -18,7 +18,6 @@ anaconda-mode/
 !/.emacs.d/.local/eclipse-java-google-style.xml
 !/.emacs.d/.local/.mc-lists.el
 
-/karabiner/karabiner.json
 /karabiner/automatic_backups
 
 /.emacs.desktop
