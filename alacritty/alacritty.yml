@@ -59,7 +59,7 @@ window:
 scrolling:
   # maximum number of lines in the scrollback buffer. Specifying '0' will
   # disable scrolling.
-  history: 0
+  history: 1000
 
   # Number of lines the viewport will move for every line scrolled when
   # scrollback is enabled (history > 0).
@@ -94,7 +94,7 @@ font:
     # style: "Medium Italic"
 
   # Point size of the font
-  size: 18.0
+  size: 16.0
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
@@ -110,6 +110,8 @@ font:
     y: 0
 
   # Thin stroke font rendering (macOS only)
+  use_thin_strokes: true
+  # for latest Alacritty, use following
   # defaults write -g AppleFontSmoothing -int 0
 
 # When true, bold text is drawn using the bright variant of colors.
@@ -241,6 +243,18 @@ key_bindings:
 
   - { key: LBracket,        mods: Command|Shift,       chars: "\x60\x68" }                   # cmd+shift+[  prev window, send `h
   - { key: RBracket,        mods: Command|Shift,       chars: "\x60\x6c" }                   # cmd+shift+]  next window, send `l
+
+
+  - { key: Key1,      mods: Command,       chars: "\x601"                       }  #  cmd+1 , send `1
+  - { key: Key2,      mods: Command,       chars: "\x602"                       }  #  cmd+2 , send `2
+  - { key: Key3,      mods: Command,       chars: "\x603"                       }  #  cmd+3 , send `3
+  - { key: Key4,      mods: Command,       chars: "\x604"                       }  #  cmd+4 , send `4
+  - { key: Key5,      mods: Command,       chars: "\x605"                       }  #  cmd+5 , send `5
+  - { key: Key6,      mods: Command,       chars: "\x606"                       }  #  cmd+6 , send `6
+  - { key: Key7,      mods: Command,       chars: "\x607"                       }  #  cmd+7 , send `7
+  - { key: Key8,      mods: Command,       chars: "\x608"                       }  #  cmd+8 , send `8
+  - { key: Key9,      mods: Command,       chars: "\x609"                       }  #  cmd+9 , send `9
+  - { key: Key0,      mods: Command,       chars: "\x600"                       }  #  cmd+0 , send `0
 
   - { key: Home,                          chars: "\x1bOH",   mode: AppCursor   }
   - { key: Home,                          chars: "\x1b[H",   mode: ~AppCursor  }
