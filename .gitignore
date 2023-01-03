@@ -11,6 +11,8 @@ anaconda-mode/
 .wg-file.el
 /url/cache
 
+/tmux/plugins/
+
 /.emacs.d/.local/*
 !/.emacs.d/.local/.gitkeep
 !/.emacs.d/.local/.dir-locals.el.sample
