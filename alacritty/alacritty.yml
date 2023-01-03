@@ -74,6 +74,8 @@ font:
     style: Medium
     # family: "Fira Code"
     family: "Source Code Pro for Powerline"
+    # family: "SauceCodePro Nerd Font"
+
     # style: Retina
 
   # The bold font face
