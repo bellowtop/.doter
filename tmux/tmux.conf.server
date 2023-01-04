@@ -18,8 +18,8 @@ set -g history-limit 10000
 # use send-prefix to pass C-s through to application
 # and unbind C-b to free it up
 
-set -g prefix C-s
-bind C-s send-prefix
+set -g prefix `
+bind ` send-prefix
 unbind C-b
 
 # shorten command delay
