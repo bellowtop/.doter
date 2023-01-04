@@ -29,7 +29,10 @@ require('packer').startup(function(use)
 
 
   use 'nvim-lua/plenary.nvim'
+
   use { 'nvim-telescope/telescope.nvim', tag =  '0.1.0' }
+  use { "nvim-telescope/telescope-file-browser.nvim" }
+
 
   use 'Konfekt/FastFold'
   use 'tmhedberg/SimpylFold'
@@ -311,6 +314,8 @@ vim.api.nvim_set_keymap("n", "f", ":call DoingEasyMotion()<CR>", { noremap = tru
 vim.api.nvim_set_keymap("n", "<leader>f", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true } )
 vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua require('telescope.builtin').live_grep({layout_strategy='vertical'})<cr>",  { noremap = true } )
 vim.api.nvim_set_keymap("n", "<leader>b", "<cmd>lua require('telescope.builtin').buffers()<cr>",    { noremap = true } )
+vim.api.nvim_set_keymap("n", "<leader>p", ":Telescope file_browser<cr>",    { noremap = true } )
+
 -- vim.api.nvim_set_keymap("n", "<C-g>",     "<ESC><ESC><ESC>",                                        { noremap = true } )
 
 local actions = require "telescope.actions"
@@ -332,6 +337,7 @@ require('telescope').setup{
     }
   },
 }
+require("telescope").load_extension "file_browser"
 
 
 
