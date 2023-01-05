@@ -246,6 +246,7 @@ key_bindings:
   - { key: L,         mods: Command,          chars: "\x14\x6c"                   } # cmd+l  next window, send C-t l
   - { key: T,         mods: Command,          chars: "\x14\x63"                   } # cmd+t  new window , send C-t c
   - { key: W,         mods: Command,          chars: "\x14\x58"                   } # cmd+w  kill pane  , send C-t X
+  - { key: M,         mods: Command,          chars: "\x14\x5b"                   } # cmd+m               send ctrl-t [
   - { key: LBracket,  mods: Command|Shift,    chars: "\x14\x68"                   } # cmd+shift+[  prev window, send C-t h
   - { key: RBracket,  mods: Command|Shift,    chars: "\x14\x6c"                   } # cmd+shift+]  next window, send C-t l
   - { key: Key1,      mods: Command,          chars: "\x141"                      } # cmd+1 , send C-t 1
