@@ -40,7 +40,7 @@ window:
   # - none: neither borders nor title bar
   # - transparent: title bar, transparent background and title bar buttons
   # - buttonless: title bar, transparent background, but no title bar buttons
-  decorations: buttonless
+  decorations: transparent
 
   # Startup Mode (changes require restart)
   #
@@ -245,8 +245,8 @@ key_bindings:
   - { key: J,         mods: Command,          chars: "\x14\x6a"                   } # cmd+h  prev window, send C-t j
   - { key: L,         mods: Command,          chars: "\x14\x6c"                   } # cmd+l  next window, send C-t l
   - { key: T,         mods: Command,          chars: "\x14\x63"                   } # cmd+t  new window , send C-t c
-  - { key: D,         mods: Command,          chars: "\x14\x58"                   } # cmd+d  kill pane  , send C-t X
-  - { key: M,         mods: Command,          chars: "\x14\x5b"                   } # cmd+m               send ctrl-t [
+  - { key: W,         mods: Command,          chars: "\x14\x58"                   } # cmd+d  kill pane  , send C-t X
+  - { key: R,         mods: Command,          chars: "\x14\x5b"                   } # cmd+m               send ctrl-t [
   - { key: LBracket,  mods: Command|Shift,    chars: "\x14\x68"                   } # cmd+shift+[  prev window, send C-t h
   - { key: RBracket,  mods: Command|Shift,    chars: "\x14\x6c"                   } # cmd+shift+]  next window, send C-t l
   - { key: Key1,      mods: Command,          chars: "\x141"                      } # cmd+1 , send C-t 1
