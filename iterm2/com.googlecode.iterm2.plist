@@ -6,6 +6,8 @@
 	<false/>
 	<key>AllowClipboardAccess</key>
 	<true/>
+	<key>AlternateMouseScroll</key>
+	<true/>
 	<key>CompactMinimalTabBarHeight</key>
 	<real>24</real>
 	<key>Custom Color Presets</key>
