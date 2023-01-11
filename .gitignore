@@ -13,7 +13,7 @@ anaconda-mode/
 
 /tmux/plugins/
 
-/iterm2/AppSupport/
+/iterm2/AppSupport
 
 /.emacs.d/.local/*
 !/.emacs.d/.local/.gitkeep
