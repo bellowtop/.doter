@@ -246,7 +246,8 @@ key_bindings:
   - { key: L,         mods: Command,          chars: "\x14\x6c"                   } # cmd+l  next window, send C-t l
   - { key: T,         mods: Command,          chars: "\x14\x63"                   } # cmd+t  new window , send C-t c
   - { key: W,         mods: Command,          chars: "\x14\x58"                   } # cmd+d  kill pane  , send C-t X
-  - { key: R,         mods: Command,          chars: "\x14\x5b"                   } # cmd+m               send ctrl-t [
+  - { key: R,         mods: Command,          chars: "\x14\x5b"                   } # cmd+r               send ctrl-t [
+  - { key: M,         mods: Command,          chars: "\x14\x6d"                   } # cmd+m               toggle mouse
   - { key: LBracket,  mods: Command|Shift,    chars: "\x14\x68"                   } # cmd+shift+[  prev window, send C-t h
   - { key: RBracket,  mods: Command|Shift,    chars: "\x14\x6c"                   } # cmd+shift+]  next window, send C-t l
   - { key: Key1,      mods: Command,          chars: "\x141"                      } # cmd+1 , send C-t 1
@@ -283,7 +284,8 @@ key_bindings:
   - { key: Right,    mods: Alt,               chars: "\x1b[1;3C"                   }
   - { key: Right,                             chars: "\x1b[C",   mode: ~AppCursor  }
   - { key: Right,                             chars: "\x1bOC",   mode: AppCursor   }
-  - { key: Up,       mods: Shift,             chars: "\x1b[1;2A"                   }
+    # - { key: Up,       mods: Shift,             chars: "\x1b[1;2A"                   }
+  - { key: Up,       mods: Shift,             action: ScrollPageUp                 }
   - { key: Up,       mods: Control,           chars: "\x1b[1;5A"                   }
   - { key: Up,       mods: Alt,               chars: "\x1b[1;3A"                   }
   - { key: Up,                                chars: "\x1b[A",   mode: ~AppCursor  }
