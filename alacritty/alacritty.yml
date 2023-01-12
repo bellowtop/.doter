@@ -242,24 +242,26 @@ key_bindings:
   ### binding Cmd + H is useless, in macOS, cmd+h can never be sended to application at all.
   # - { key: H,        mods: Command,       chars: "\x60\x68" }                   # cmd+h  prev window, send C-t h
 
-  - { key: J,         mods: Command,          chars: "\x14\x6a"                   } # cmd+h  prev window, send C-t j
-  - { key: L,         mods: Command,          chars: "\x14\x6c"                   } # cmd+l  next window, send C-t l
-  - { key: T,         mods: Command,          chars: "\x14\x63"                   } # cmd+t  new window , send C-t c
-  - { key: W,         mods: Command,          chars: "\x14\x58"                   } # cmd+d  kill pane  , send C-t X
-  - { key: R,         mods: Command,          chars: "\x14\x5b"                   } # cmd+r               send ctrl-t [
-  - { key: M,         mods: Command,          chars: "\x14\x6d"                   } # cmd+m               toggle mouse
-  - { key: LBracket,  mods: Command|Shift,    chars: "\x14\x68"                   } # cmd+shift+[  prev window, send C-t h
-  - { key: RBracket,  mods: Command|Shift,    chars: "\x14\x6c"                   } # cmd+shift+]  next window, send C-t l
-  - { key: Key1,      mods: Command,          chars: "\x141"                      } # cmd+1 , send C-t 1
-  - { key: Key2,      mods: Command,          chars: "\x142"                      } # cmd+2 , send C-t 2
-  - { key: Key3,      mods: Command,          chars: "\x143"                      } # cmd+3 , send C-t 3
-  - { key: Key4,      mods: Command,          chars: "\x144"                      } # cmd+4 , send C-t 4
-  - { key: Key5,      mods: Command,          chars: "\x145"                      } # cmd+5 , send C-t 5
-  - { key: Key6,      mods: Command,          chars: "\x146"                      } # cmd+6 , send C-t 6
-  - { key: Key7,      mods: Command,          chars: "\x147"                      } # cmd+7 , send C-t 7
-  - { key: Key8,      mods: Command,          chars: "\x148"                      } # cmd+8 , send C-t 8
-  - { key: Key9,      mods: Command,          chars: "\x149"                      } # cmd+9 , send C-t 9
-  - { key: Key0,      mods: Command,          chars: "\x140"                      } # cmd+0 , send C-t 0
+  - { key: J,         mods: Command|Shift,    chars: "\x13\x0a"                   } # cmd+shift+j  next session,  send C-s C-j
+  - { key: K,         mods: Command|Shift,    chars: "\x13\x0b"                   } # cmd+shift+k  next session,  send C-s C-k
+  - { key: LBracket,  mods: Command|Shift,    chars: "\x13\x68"                   } # cmd+shift+[  prev window,   send C-s h
+  - { key: RBracket,  mods: Command|Shift,    chars: "\x13\x6c"                   } # cmd+shift+]  next window,   send C-s l
+  - { key: L,         mods: Command,          chars: "\x13\x6c"                   } # cmd+l        next window,   send C-s l
+
+  - { key: T,         mods: Command,          chars: "\x13\x6e"                   } # cmd+t  new window,          send C-s c
+  - { key: W,         mods: Command,          chars: "\x13\x78"                   } # cmd+d  kill pane,           send C-s X
+  - { key: R,         mods: Command,          chars: "\x13\x5b"                   } # cmd+r  selection mode,      send C-s [
+  - { key: M,         mods: Command,          chars: "\x13\x6d"                   } # cmd+m  toggle mouse,        send C-s m
+  - { key: Key1,      mods: Command,          chars: "\x131"                      } # cmd+1 ,                     send C-s 1
+  - { key: Key2,      mods: Command,          chars: "\x132"                      } # cmd+2 ,                     send C-s 2
+  - { key: Key3,      mods: Command,          chars: "\x133"                      } # cmd+3 ,                     send C-s 3
+  - { key: Key4,      mods: Command,          chars: "\x134"                      } # cmd+4 ,                     send C-s 4
+  - { key: Key5,      mods: Command,          chars: "\x135"                      } # cmd+5 ,                     send C-s 5
+  - { key: Key6,      mods: Command,          chars: "\x136"                      } # cmd+6 ,                     send C-s 6
+  - { key: Key7,      mods: Command,          chars: "\x137"                      } # cmd+7 ,                     send C-s 7
+  - { key: Key8,      mods: Command,          chars: "\x138"                      } # cmd+8 ,                     send C-s 8
+  - { key: Key9,      mods: Command,          chars: "\x139"                      } # cmd+9 ,                     send C-s 9
+  - { key: Key0,      mods: Command,          chars: "\x130"                      } # cmd+0 ,                     send C-s 0
 
   - { key: Home,                              chars: "\x1bOH",   mode: AppCursor   }
   - { key: Home,                              chars: "\x1b[H",   mode: ~AppCursor  }
