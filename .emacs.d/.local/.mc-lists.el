@@ -68,6 +68,7 @@
 	my-delete-to-end
 	my-forward-char-no-cross-line
 	my-god-char-forward-and-insert-mode
+	my-goto-match-paren
 	my-join-lines
 	my-quit-god-mode
 	my-replace-char
