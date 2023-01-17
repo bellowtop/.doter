@@ -4,60 +4,47 @@ local cfg = {}
 
 cfg.disable_default_key_bindings = true
 
-  -- NOTE: For bindings with mod SHIFT and a letter, the `key` field (the letter)
-  --       must be uppercase'd and the mods should NOT contain 'SHIFT'.
 cfg.keys = {
-  -- {mods = "SHIFT", key = "PageUp", action = wezterm.action{ScrollByPage = -1}},
-  -- {mods = "SHIFT", key = "PageDown", action = wezterm.action{ScrollByPage = 1}},
-
-  -- Wezterm features
-  { key = 'q', mods = 'SUPER', action = wezterm.action.QuitApplication },
-  { key = 'n', mods = 'SUPER', action = wezterm.action.SpawnWindow },
-
-  { key = 't', mods = 'SUPER|SHIFT', action = wezterm.action.SpawnTab 'CurrentPaneDomain', },
-
-  { mods = "SUPER|SHIFT",   key = "{",   action = wezterm.action.ActivateTabRelative(-1)    }, -- cmd+shift+[  prev window
-  { mods = "SUPER|SHIFT",   key = "}",   action = wezterm.action.ActivateTabRelative(1)     }, -- cmd+shift+]  next window
-
-
-
-  {mods = "SUPER",  key = "k", action = wezterm.action{ClearScrollback = "ScrollbackAndViewport"}}, -- Ctrl-Shift-l
-  {mods = "SUPER",  key = "f", action = wezterm.action{Search = {CaseInSensitiveString = ""}}}, -- Ctrl-Shift-f
-
-  -- Copy (to Clipboard) / Paste (from Clipboard or PrimarySelection)
-  {mods = "SUPER",   key = "c", action = wezterm.action{CopyTo = "Clipboard"}}, -- Ctrl-Shift-c
-  {mods = "SUPER",   key = "v", action = wezterm.action{PasteFrom = "Clipboard"}}, -- Ctrl-Shift-v
-  -- {mods = "SHIFT",   key = "Insert", action = wezterm.action{PasteFrom = "PrimarySelection"}},
 
   -- Tabs
-  -- {mods = "SUPER",   key = "n", action = wezterm.action{SpawnTab="DefaultDomain"}}, -- Ctrl-Shift-t
+  -- {mods = "SUPER",   key = "n", action = wezterm.action{SpawnTab="DefaultDomain"}},
   -- {mods = "SUPER",   key = "l", action = wezterm.action{ActivateTabRelative=1}},
   -- {mods = "SUPER",   key = "h", action = wezterm.action{ActivateTabRelative=-1}},
   -- {mods = "SUPER",   key = "w", action = wezterm.action{CloseCurrentTab={confirm=true}}}, -- Ctrl-Shift-w
 
+  -- Wezterm features
+  { mods = 'SUPER',             key = 'q',  action = wezterm.action.QuitApplication },
+  { mods = 'SUPER',             key = 'n',  action = wezterm.action.SpawnWindow },
 
-  { mods = "SUPER|SHIFT",   key = "j",   action = wezterm.action.SendString '\x13\x0a'     }, -- cmd+shift+j  next session,  send C-s C-j
-  { mods = "SUPER|SHIFT",   key = "k",   action = wezterm.action.SendString '\x13\x0b'     }, -- cmd+shift+k  next session,  send C-s C-k
+  { mods = 'SUPER|SHIFT',       key = 't',  action = wezterm.action.SpawnTab 'CurrentPaneDomain', },
 
-  { mods = "SUPER",   key = "h",   action = wezterm.action.SendString '\x13\x68'     }, -- cmd+h        next window,   send C-s h
-  { mods = "SUPER",   key = "l",   action = wezterm.action.SendString '\x13\x6c'     }, -- cmd+l        next window,   send C-s l
+  { mods = "SUPER|SHIFT",       key = "{",  action = wezterm.action.ActivateTabRelative(-1)    }, -- cmd+shift+[  prev tab
+  { mods = "SUPER|SHIFT",       key = "}",  action = wezterm.action.ActivateTabRelative(1)     }, -- cmd+shift+]  next tab
 
-  { mods = "SUPER",   key = "t",   action = wezterm.action.SendString '\x13\x6e'     }, -- cmd+t  new window,          send C-s c
-  { mods = "SUPER",   key = "w",   action = wezterm.action.SendString '\x13\x78'     }, -- cmd+d  kill pane,           send C-s X
-  { mods = "SUPER",   key = "r",   action = wezterm.action.SendString '\x13\x5b'     }, -- cmd+r  selection mode,      send C-s [
-  { mods = "SUPER",   key = "m",   action = wezterm.action.SendString '\x13\x6d'     }, -- cmd+m  toggle mouse,        send C-s m
+  { mods = "SUPER",             key = "k",  action = wezterm.action{ClearScrollback = "ScrollbackAndViewport"}},
+  { mods = "SUPER",             key = "f",  action = wezterm.action{Search = {CaseInSensitiveString = ""}}},
+
+  { mods = "SUPER",             key = "c",  action = wezterm.action{CopyTo = "Clipboard"}},
+  { mods = "SUPER",             key = "v",  action = wezterm.action{PasteFrom = "Clipboard"}},
+
+  { mods = "SUPER|SHIFT",       key = "j",  action = wezterm.action.SendString '\x13\x0a'     }, -- cmd+shift+j  next session,  send C-s C-j
+  { mods = "SUPER|SHIFT",       key = "k",  action = wezterm.action.SendString '\x13\x0b'     }, -- cmd+shift+k  next session,  send C-s C-k
+
+  { mods = "SUPER",             key = "h",  action = wezterm.action.SendString '\x13\x68'     }, -- cmd+h        next window,   send C-s h
+  { mods = "SUPER",             key = "l",  action = wezterm.action.SendString '\x13\x6c'     }, -- cmd+l        next window,   send C-s l
+
+  { mods = "SUPER",             key = "t",  action = wezterm.action.SendString '\x13\x6e'     }, -- cmd+t  new window,          send C-s c
+  { mods = "SUPER",             key = "w",  action = wezterm.action.SendString '\x13\x78'     }, -- cmd+d  kill pane,           send C-s X
+  { mods = "SUPER",             key = "r",  action = wezterm.action.SendString '\x13\x5b'     }, -- cmd+r  selection mode,      send C-s [
+  { mods = "SUPER",             key = "m",  action = wezterm.action.SendString '\x13\x6d'     }, -- cmd+m  toggle mouse,        send C-s m
 
 
-  { key = '=', mods = 'SUPER', action = wezterm.action.IncreaseFontSize },
-  { key = '-', mods = 'SUPER', action = wezterm.action.DecreaseFontSize },
+  { mods = 'SUPER',             key = '=',  action = wezterm.action.IncreaseFontSize },
+  { mods = 'SUPER',             key = '-',  action = wezterm.action.DecreaseFontSize },
 
+  { mods = "CTRL",              key = "X",  action = "ShowLauncher"},
 
-  -- {mods = "CTRL", key = "X", action = "ShowLauncher"},
-
-  -- Font size
   -- {mods = "CTRL", key = "0", action = "ResetFontSize"}, -- Ctrl-Shift-0
-  -- {mods = "CTRL", key = "6", action = "DecreaseFontSize"}, -- Ctrl-Shift-- (key with -)
-  -- {mods = "CTRL", key = "+", action = "IncreaseFontSize"}, -- Ctrl-Shift-+ (key with =)
 }
 
 wezterm.on("my-toggle-ligature", function(win, _pane)
