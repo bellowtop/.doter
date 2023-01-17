@@ -19,7 +19,7 @@ local function font_with_fallback(font_family)
   -- family names, not file names
   return wezterm.font_with_fallback({
     font_family,
-    "Source Code Pro for Powerline", -- nice double-spaced symbols!
+    "DejavuSansMono Nerd Font", -- nice double-spaced symbols!
   })
 end
 

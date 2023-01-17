@@ -257,7 +257,7 @@ key_bindings:
   - { key: Key3,      mods: Command,          chars: "\x133"                      } # cmd+3 ,                     send C-s 3
   - { key: Key4,      mods: Command,          chars: "\x134"                      } # cmd+4 ,                     send C-s 4
   - { key: Key5,      mods: Command,          chars: "\x135"                      } # cmd+5 ,                     send C-s 5
-  - { key: Key6,      mods: Command,          chars: "\x136"                      } # cmd+6 ,                     send C-s 6
+  # - { key: Key6,      mods: Command,          chars: "\x136"                      } # cmd+6 ,                     send C-s 6
   - { key: Key7,      mods: Command,          chars: "\x137"                      } # cmd+7 ,                     send C-s 7
   - { key: Key8,      mods: Command,          chars: "\x138"                      } # cmd+8 ,                     send C-s 8
   - { key: Key9,      mods: Command,          chars: "\x139"                      } # cmd+9 ,                     send C-s 9
@@ -375,7 +375,7 @@ key_bindings:
   - { key: Key3,      mods: Alt,              chars: "\x1b3"                       }
   - { key: Key4,      mods: Alt,              chars: "\x1b4"                       }
   - { key: Key5,      mods: Alt,              chars: "\x1b5"                       }
-  - { key: Key6,      mods: Alt,              chars: "\x1b6"                       }
+  # - { key: Key6,      mods: Alt,              chars: "\x1b6"                       }
   - { key: Key7,      mods: Alt,              chars: "\x1b7"                       }
   - { key: Key8,      mods: Alt,              chars: "\x1b8"                       }
   - { key: Key9,      mods: Alt,              chars: "\x1b9"                       }

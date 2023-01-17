@@ -8,10 +8,13 @@ local mytable = require "lib/mystdlib".mytable
 
 local cfg_misc = {
   window_close_confirmation = "NeverPrompt",
+  window_decorations = "RESIZE",
   check_for_updates = false,
 
+  default_cursor_style = 'SteadyBar',
+
   -- Avoid unexpected config breakage and unusable terminal
-  automatically_reload_config = false,
+  automatically_reload_config = true,
 
   -- Make sure word selection stops on most punctuations.
   -- Note that dot (.) & slash (/) are allowed though for
@@ -57,12 +60,10 @@ local cfg_misc = {
 
 local cfg_colors = {
   color_scheme = "Dracula",
-  -- colors = require("cfg_bew_colors"),
 }
 
 -- Font
 ------------------------------------------
-
 local cfg_fonts = require("cfg_fonts")
 
 -- Key/Mouse bindings
@@ -82,7 +83,7 @@ local config = mytable.merge_all(
   cfg_colors,
   cfg_fonts,
   cfg_key_bindings,
-  cfg_mouse_bindings,
+  -- cfg_mouse_bindings,
   {} -- so the last table can have an ending comma for git diffs :)
 )
 

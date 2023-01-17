@@ -39,7 +39,7 @@ function binds_for_mouse_select(button, streak, selection_mode)
     {
       mods="NONE",
       event={Up={streak=streak, button=button}},
-      action=wezterm.action.CompleteSelection "PrimarySelection"
+      action=wezterm.action.CompleteSelection "PrimarySelection",
     },
   }
 end
@@ -69,7 +69,7 @@ function binds_extend_mouse_select(button, streak, selection_mode)
     {
       mods="NONE",
       event={Up={streak=streak, button=button}},
-      action=wezterm.action.CompleteSelection "PrimarySelection"
+      action=wezterm.action.CompleteSelection "PrimarySelection",
     },
   }
 end
