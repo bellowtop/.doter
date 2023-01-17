@@ -5,8 +5,8 @@ local col = {}
 col.background = "#191919"
 col.foreground = "#eeeeee"
 
-col.cursor_bg = "#eeeeee"
-col.cursor_fg = "#202020"
+col.cursor_bg = "#000000"
+col.cursor_fg = "#ff0000"
 col.cursor_border = "#eeeeee" -- same as cursor_bg
 
 col.ansi = {

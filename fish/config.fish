@@ -2,7 +2,7 @@ if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
-set -U fish_greeting "🐟"
+set -U fish_greeting $(echo -ne "\e[6 q") ## "🐟"
 
 alias em="emacs -nw"
 alias vim="nvim"
