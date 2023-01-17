@@ -20,6 +20,11 @@ function j -a ip
 end
 
 
+function kk
+    echo -ne "\e[6 q"
+end
+
+
 set -x GOROOT  /usr/local/go
 set -x GOPATH  $HOME/work/workspaces/go
 
