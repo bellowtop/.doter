@@ -12,18 +12,11 @@ cfg.font_size = 16
 -- Makes FontAwesome's double-width glyphs display properly!
 cfg.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
 
--- default font config comes from fontconfig and manages to find a lot of fonts,
--- but to have a more all-included config I'll list everything myself.
 
-local function font_with_fallback(font_family)
-  -- family names, not file names
-  return wezterm.font_with_fallback({
-    font_family,
-    "DejavuSansMono Nerd Font", -- nice double-spaced symbols!
-  })
-end
-
-cfg.font = font_with_fallback("Source Code Pro for Powerline")
+cfg.font = wezterm.font_with_fallback{
+    { family = "Source Code Pro for Powerline" },
+    { family = "DejavuSansMono Nerd Font" },
+}
 
 -- Enable various OpenType features
 -- See https://docs.microsoft.com/en-us/typography/opentype/spec/featurelist
