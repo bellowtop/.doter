@@ -1303,15 +1303,17 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-god-mode-update-mode-line ()
   (if (bound-and-true-p god-local-mode)
       (progn
-                (set-face-attribute 'mode-line nil :background "#232d38")
+                (set-face-attribute 'mode-line nil :background "#38424B")
                 (auto-dim-other-buffers-mode -1)
       )
-
       (progn
-                (set-face-attribute 'mode-line nil :background (face-attribute 'default :background))
+                (set-face-attribute 'mode-line nil :background "#38424B")
                 (auto-dim-other-buffers-mode 1)
       )
-   )
+      )
+  )
+
+
 
   ;;;  (cond
   ;;;   (god-local-mode
@@ -1330,30 +1332,33 @@ If buffer-or-name is nil return current buffer's mode."
 )
 
 
+
 (defun my-god-mode-update-cursor-type ()
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
-
     (if (bound-and-true-p god-local-mode)
       (progn
         ;; only terminal need this
         ;; (unless (display-graphic-p)
-                ;; (set-face-attribute 'hl-line nil :background "#232d38")
+                (set-face-attribute 'hl-line nil :foreground nil :background nil)
+                (set-face-foreground 'vertical-border "#627d9d")
         ;; )
-        (set-face-attribute 'line-number-current-line nil :foreground "#23a580")
+        (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
         ;; (setq cursor-type 'box)
       )
-
       (progn
         ;; only terminal need this
         ;; (unless (display-graphic-p)
-                ;; (set-face-attribute 'hl-line nil :background (face-attribute 'default :background))
+                (set-face-attribute 'hl-line nil :foreground nil :background "#232d38")
+                (set-face-foreground 'vertical-border "#00ff00")
         ;; )
-        (set-face-attribute 'line-number-current-line nil :foreground "#00ff00")
+        (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
         ;; (setq cursor-type 'bar)
       )
     )
+    )
 
-)
+
+
 
 (add-hook 'god-mode-enabled-hook  'my-god-mode-update-cursor-type)
 (add-hook 'god-mode-disabled-hook  'my-god-mode-update-cursor-type)
