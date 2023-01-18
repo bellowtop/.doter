@@ -38,12 +38,29 @@ cfg.keys = {
   { mods = "SUPER",             key = "r",  action = wezterm.action.SendString '\x13\x5b'     }, -- cmd+r  selection mode,      send C-s [
   { mods = "SUPER",             key = "m",  action = wezterm.action.SendString '\x13\x6d'     }, -- cmd+m  toggle mouse,        send C-s m
 
+  { mods = "SUPER",             key = "1",  action = wezterm.action.SendString '\x13\x31'     }, -- cmd+m  toggle mouse,        send C-s m
+  { mods = "SUPER",             key = "2",  action = wezterm.action.SendString '\x13\x32'     }, -- cmd+m  toggle mouse,        send C-s m
+  { mods = "SUPER",             key = "3",  action = wezterm.action.SendString '\x13\x33'     }, -- cmd+m  toggle mouse,        send C-s m
+  { mods = "SUPER",             key = "4",  action = wezterm.action.SendString '\x13\x34'     }, -- cmd+m  toggle mouse,        send C-s m
+  { mods = "SUPER",             key = "5",  action = wezterm.action.SendString '\x13\x35'     }, -- cmd+m  toggle mouse,        send C-s m
+  { mods = "SUPER",             key = "6",  action = wezterm.action.SendString '\x13\x36'     }, -- cmd+m  toggle mouse,        send C-s m
+  { mods = "SUPER",             key = "7",  action = wezterm.action.SendString '\x13\x37'     }, -- cmd+m  toggle mouse,        send C-s m
+  { mods = "SUPER",             key = "8",  action = wezterm.action.SendString '\x13\x38'     }, -- cmd+m  toggle mouse,        send C-s m
+  { mods = "SUPER",             key = "9",  action = wezterm.action.SendString '\x13\x39'     }, -- cmd+m  toggle mouse,        send C-s m
+  { mods = "SUPER",             key = "0",  action = wezterm.action.SendString '\x13\x30'     }, -- cmd+m  toggle mouse,        send C-s m
+
+
+
+
+
+
 
   { mods = 'SUPER',             key = '=',  action = wezterm.action.IncreaseFontSize },
   { mods = 'SUPER',             key = '-',  action = wezterm.action.DecreaseFontSize },
 
   { mods = "CTRL",              key = "X",  action = "ShowLauncher"},
   { mods = "CTRL",              key = "q",  action = wezterm.action.SendString '\x11'         }, -- ctrl-q      send ctrl-q
+  { mods = "CTRL",              key = "/",  action = wezterm.action.SendString '\x1f'         }, -- ctrl-/      send ctrl-/, which is equal with ctrl-_
 
   -- {mods = "CTRL", key = "0", action = "ResetFontSize"}, -- Ctrl-Shift-0
 }
