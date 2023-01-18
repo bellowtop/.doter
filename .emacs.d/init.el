@@ -177,6 +177,8 @@
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0)))
+ '(avy-lead-face ((t (:foreground "#ff77cc" :background nil))))
+ '(avy-lead-face-0 ((t (:foreground "#ff77cc" :background nil))))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
 
 
@@ -922,12 +924,23 @@ respectively."
 
 
 (require 'avy)
-(set-face-attribute 'avy-lead-face nil :foreground "#000000" :background "#ffff00")
-(set-face-attribute 'avy-lead-face-0 nil :foreground "#000000" :background "#ffff00")
 ;; (set-face-attribute 'avy-lead-face nil :foreground "#ffffff" :background "#ff0000")
 ;; (set-face-attribute 'avy-lead-face-0 nil :foreground "#ffffff" :background "#ff0000")
 (setq avy-keys (list ?a ?c ?d ?e ?f ?h ?i ?j ?k ?l ?m ?n ?o ?s ?v ?w ?\;))
+(setq avy-background 't)
 
+
+(advice-add 'avy-goto-word-0
+ :before
+ (lambda (&rest r) (my-disable-code-intelligence))
+ '((name . "avy-start"))
+ )
+
+(advice-add 'avy-handler-default
+ :before
+ (lambda (&rest r) (my-enable-code-intelligence))
+ '((name . "avy-end"))
+ )
 
 
 
@@ -1233,37 +1246,50 @@ If buffer-or-name is nil return current buffer's mode."
 )
 
 
-(defun my-disable-lsp-highlighting()
+(defvar my-code-intelligence 't "enable by default")
+
+(defun my-disable-code-intelligence()
   (interactive)
-  (if (boundp 'lsp-enable-symbol-highlighting)
-    (if (and lsp-enable-symbol-highlighting t)
-      (lsp-toggle-symbol-highlight)
-      (message "is already not highlight")
+    (if my-code-intelligence
+      (progn
+        (set-face-attribute 'eglot-highlight-symbol-face nil :foreground 'unspecified :background 'unspecified)
+        (smartparens-global-mode -1)
+        (smartparens-mode -1)
+        (electric-indent-mode -1)
+        (global-undo-tree-mode -1)
+        (undo-tree-mode -1)
+
+        (setq my-code-intelligence nil)
+        (message "code-intelligence is disabled.")
       )
     )
-  (set-face-attribute 'eglot-highlight-symbol-face nil :foreground 'unspecified :background 'unspecified)
 )
 
-(defun my-enable-lsp-highlighting()
+(defun my-enable-code-intelligence()
   (interactive)
-  (if (boundp 'lsp-enable-symbol-highlighting)
-    (if (not lsp-enable-symbol-highlighting)
-      (lsp-toggle-symbol-highlight)
-      (message "is enabled highlight")
+    (if (not my-code-intelligence)
+      (progn
+        (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#000000" :background "#7fdc59")
+        (smartparens-global-mode 1)
+        (smartparens-mode 1)
+        (electric-indent-mode 1)
+        (global-undo-tree-mode 1)
+        (undo-tree-mode 1)
+
+        (setq my-code-intelligence 't)
+        (message "code-intelligence is enabled.")
       )
     )
-  (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#000000" :background "#7fdc59")
-  ;; (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#dc59c0" :background 'unspecified)
 )
 
-(add-hook 'isearch-mode-hook #'my-disable-lsp-highlighting)
-(add-hook 'isearch-mode-end-hook #'my-enable-lsp-highlighting)
+(add-hook 'isearch-mode-hook #'my-disable-code-intelligence)
+(add-hook 'isearch-mode-end-hook #'my-enable-code-intelligence)
 
 
 
 
-(add-hook 'activate-mark-hook #'my-disable-lsp-highlighting)
-(add-hook 'deactivate-mark-hook #'my-enable-lsp-highlighting)
+(add-hook 'activate-mark-hook #'my-disable-code-intelligence)
+(add-hook 'deactivate-mark-hook #'my-enable-code-intelligence)
 
 
 ;; (defun my-quit-mc-mode-if-need ()
@@ -1329,7 +1355,7 @@ If buffer-or-name is nil return current buffer's mode."
   ;;;    ;; (set-face-attribute 'mode-line-inactive nil :foreground "#8B8878" :background "#1B1E1C"))
   ;;;    ))
   ;;;   )
-)
+
 
 
 
@@ -1545,8 +1571,8 @@ If buffer-or-name is nil return current buffer's mode."
     (define-key mc/keymap (kbd "C-x C-x") 'mc/unmark-next-like-this)
     (define-key mc/keymap (kbd "C-x C-d") 'mc/unmark-previous-like-this)
 
-    (add-hook 'multiple-cursors-mode-enabled-hook #'my-disable-lsp-highlighting)
-    (add-hook 'multiple-cursors-mode-disabled-hook #'my-enable-lsp-highlighting)
+    (add-hook 'multiple-cursors-mode-enabled-hook #'my-disable-code-intelligence)
+    (add-hook 'multiple-cursors-mode-disabled-hook #'my-enable-code-intelligence)
   )
 
 
@@ -1629,8 +1655,7 @@ _u_: undo      _r_: redo
 
 (defun my-deadgrep-edit-enter()
   (interactive)
-  (global-undo-tree-mode -1)
-  (undo-tree-mode -1)
+  (my-disable-code-intelligence)
   (my-quit-god-mode)
   (remove-hook 'before-save-hook #'delete-trailing-whitespace)
   (remove-hook 'switch-buffer-functions #'my-god-mode-with-switch-any-buffer)
@@ -1640,8 +1665,7 @@ _u_: undo      _r_: redo
 
 (defun my-deadgrep-edit-exit()
   (interactive)
-  (global-undo-tree-mode 1)
-  (undo-tree-mode 1)
+  (my-enable-code-intelligence)
   (my-god-mode)
   (add-hook 'before-save-hook #'delete-trailing-whitespace)
   (add-hook 'switch-buffer-functions #'my-god-mode-with-switch-any-buffer)
