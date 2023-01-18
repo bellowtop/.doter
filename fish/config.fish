@@ -25,7 +25,7 @@ function kk
 end
 
 # let prompt show the last dirname `the_dir`, while not the `~/c/d/e/f/s/e/the_dir`
-alias prompt_pwd="basename $PWD"
+# alias prompt_pwd="basename $PWD"
 
 set -x GOROOT  /usr/local/go
 set -x GOPATH  $HOME/work/workspaces/go
