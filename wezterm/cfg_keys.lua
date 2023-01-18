@@ -43,6 +43,7 @@ cfg.keys = {
   { mods = 'SUPER',             key = '-',  action = wezterm.action.DecreaseFontSize },
 
   { mods = "CTRL",              key = "X",  action = "ShowLauncher"},
+  { mods = "CTRL",              key = "q",  action = wezterm.action.SendString '\x11'         }, -- ctrl-q      send ctrl-q
 
   -- {mods = "CTRL", key = "0", action = "ResetFontSize"}, -- Ctrl-Shift-0
 }
