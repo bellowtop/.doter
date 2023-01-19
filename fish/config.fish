@@ -24,6 +24,10 @@ function kk
     echo -ne "\e[6 q"
 end
 
+function kl
+    tmux send-keys -R \; clear-history
+end
+
 # let prompt show the last dirname `the_dir`, while not the `~/c/d/e/f/s/e/the_dir`
 # alias prompt_pwd="basename $PWD"
 
