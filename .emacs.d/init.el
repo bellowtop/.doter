@@ -111,6 +111,25 @@
 (global-set-key (kbd "M-i") 'er/expand-region)
 
 
+(advice-add 'er--prepare-expanding
+    :before
+    (lambda (&rest r)
+      (my-disable-code-intelligence))
+    '((name . "er-start"))
+)
+
+;; if er/contract-region is called with 0 as args, it means quit
+(advice-add 'er/contract-region
+    :before
+    (lambda (&rest args)
+      (if (eq (car args) 0) (my-enable-code-intelligence))
+      )
+    '((name . "er-end"))
+)
+
+
+
+
 
 (toggle-truncate-lines t)
 
@@ -185,7 +204,7 @@
 
 
 
-;; (set-face-attribute 'mode-line nil :underline "#00ff00")
+;; (set-face-attribute 'mode-line :underline "#00ff00")
 ;; (set-face-attribute 'mode-line-inactive nil :underline "#209920")
 
 ;; Display dividers between windows
@@ -1248,15 +1267,24 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defvar my-code-intelligence 't "enable by default")
 
+(defun my-disable-eglot-highlight()
+  (interactive)
+        (set-face-attribute 'eglot-highlight-symbol-face nil :foreground 'unspecified :background 'unspecified)
+  )
+(defun my-enable-eglot-highlight()
+  (interactive)
+        (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#000000" :background "#7fdc59")
+  )
+
 (defun my-disable-code-intelligence()
   (interactive)
     (if my-code-intelligence
       (progn
-        (set-face-attribute 'eglot-highlight-symbol-face nil :foreground 'unspecified :background 'unspecified)
+        (my-disable-eglot-highlight)
         (smartparens-global-mode -1)
         (smartparens-mode -1)
         (electric-indent-mode -1)
-        (global-undo-tree-mode -1)
+        ;; (global-undo-tree-mode -1)
         (undo-tree-mode -1)
 
         (setq my-code-intelligence nil)
@@ -1269,11 +1297,11 @@ If buffer-or-name is nil return current buffer's mode."
   (interactive)
     (if (not my-code-intelligence)
       (progn
-        (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#000000" :background "#7fdc59")
+        (my-enable-eglot-highlight)
         (smartparens-global-mode 1)
         (smartparens-mode 1)
         (electric-indent-mode 1)
-        (global-undo-tree-mode 1)
+        ;; (global-undo-tree-mode 1)
         (undo-tree-mode 1)
 
         (setq my-code-intelligence 't)
@@ -1286,10 +1314,6 @@ If buffer-or-name is nil return current buffer's mode."
 (add-hook 'isearch-mode-end-hook #'my-enable-code-intelligence)
 
 
-
-
-(add-hook 'activate-mark-hook #'my-disable-code-intelligence)
-(add-hook 'deactivate-mark-hook #'my-enable-code-intelligence)
 
 
 ;; (defun my-quit-mc-mode-if-need ()
@@ -1365,7 +1389,7 @@ If buffer-or-name is nil return current buffer's mode."
       (progn
         ;; only terminal need this
         ;; (unless (display-graphic-p)
-                (set-face-attribute 'hl-line nil :foreground nil :background nil)
+                (set-face-attribute 'hl-line nil :foreground 'unspecified :background 'unspecified)
                 (set-face-foreground 'vertical-border "#627d9d")
         ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
@@ -1374,7 +1398,7 @@ If buffer-or-name is nil return current buffer's mode."
       (progn
         ;; only terminal need this
         ;; (unless (display-graphic-p)
-                (set-face-attribute 'hl-line nil :foreground nil :background "#232d38")
+                (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#232d38")
                 (set-face-foreground 'vertical-border "#00ff00")
         ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
@@ -1581,7 +1605,7 @@ If buffer-or-name is nil return current buffer's mode."
 (require 'undo-tree)
 (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.local/.undo-tree-files")))
 (setq undo-tree-auto-save-history nil)
-(global-undo-tree-mode)
+;; (global-undo-tree-mode)
 
 ;; Suppress the message saying that the undo history file was
 ;; saved (because this happens every single time you save a file).
@@ -1597,6 +1621,8 @@ If buffer-or-name is nil return current buffer's mode."
     (apply undo-tree-load-history args)))
 (advice-add #'undo-tree-load-history :around
             #'radian--undo-tree-suppress-buffer-modified-message)
+
+(add-hook 'prog-mode-hook #'undo-tree-mode)
 
 
 
@@ -2285,3 +2311,15 @@ opening parenthesis one level up."
         )
 )
 (selected-global-mode 1)
+
+;; this function is called with 1 when region is activated, -1 when region is deactivated
+(advice-add 'selected-region-active-mode
+    :after
+    (lambda (&rest args)
+      (if (eq (car args) 1)
+        (my-disable-eglot-highlight)
+        (my-enable-eglot-highlight)
+        )
+    '((name . "selected-region-active-mode-after"))
+  )
+)
