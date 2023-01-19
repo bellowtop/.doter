@@ -110,22 +110,24 @@
 (require 'expand-region)
 (global-set-key (kbd "M-i") 'er/expand-region)
 
-
-(advice-add 'er--prepare-expanding
-    :before
-    (lambda (&rest r)
-      (my-disable-code-intelligence))
-    '((name . "er-start"))
-)
-
-;; if er/contract-region is called with 0 as args, it means quit
-(advice-add 'er/contract-region
-    :before
-    (lambda (&rest args)
-      (if (eq (car args) 0) (my-enable-code-intelligence))
-      )
-    '((name . "er-end"))
-)
+;;;;
+;;;; already handled by selected-region-active-mode
+;;;;
+;;; (advice-add 'er--prepare-expanding
+;;;     :before
+;;;     (lambda (&rest r)
+;;;       (my-disable-code-intelligence))
+;;;     '((name . "er-start"))
+;;; )
+;;; 
+;;; ;; if er/contract-region is called with 0 as args, it means quit
+;;; (advice-add 'er/contract-region
+;;;     :before
+;;;     (lambda (&rest args)
+;;;       (if (eq (car args) 0) (my-enable-code-intelligence))
+;;;       )
+;;;     '((name . "er-end"))
+;;; )
 
 
 
@@ -953,13 +955,21 @@ respectively."
  :before
  (lambda (&rest r) (my-disable-code-intelligence))
  '((name . "avy-start"))
- )
+)
 
+;; avy aborted
 (advice-add 'avy-handler-default
  :before
  (lambda (&rest r) (my-enable-code-intelligence))
- '((name . "avy-end"))
- )
+ '((name . "avy-aborted-end"))
+)
+;; avy success
+(advice-add 'avy-action-goto
+ :before
+ (lambda (&rest r) (my-enable-code-intelligence))
+ '((name . "avy-success-end"))
+)
+
 
 
 
@@ -1389,7 +1399,7 @@ If buffer-or-name is nil return current buffer's mode."
       (progn
         ;; only terminal need this
         ;; (unless (display-graphic-p)
-                (set-face-attribute 'hl-line nil :foreground 'unspecified :background 'unspecified)
+                (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#364D2D")
                 (set-face-foreground 'vertical-border "#627d9d")
         ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
@@ -1398,7 +1408,7 @@ If buffer-or-name is nil return current buffer's mode."
       (progn
         ;; only terminal need this
         ;; (unless (display-graphic-p)
-                (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#232d38")
+                (set-face-attribute 'hl-line nil :foreground 'unspecified :background 'unspecified)
                 (set-face-foreground 'vertical-border "#00ff00")
         ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
@@ -2088,8 +2098,8 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "z o") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "z m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "z z") #'recenter-top-bottom)
-    (define-key god-local-mode-map (kbd "z j") #'end-of-buffer)
-    (define-key god-local-mode-map (kbd "z k") #'beginning-of-buffer)
+    (define-key god-local-mode-map (kbd "z k") #'end-of-buffer)
+    (define-key god-local-mode-map (kbd "z j") #'beginning-of-buffer)
 
     (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)
     (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)
