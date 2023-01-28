@@ -2098,8 +2098,8 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "z o") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "z m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "z z") #'recenter-top-bottom)
-    (define-key god-local-mode-map (kbd "z k") #'end-of-buffer)
-    (define-key god-local-mode-map (kbd "z j") #'beginning-of-buffer)
+    (define-key god-local-mode-map (kbd "z .") #'end-of-buffer)
+    (define-key god-local-mode-map (kbd "z ,") #'beginning-of-buffer)
 
     (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)
     (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)
