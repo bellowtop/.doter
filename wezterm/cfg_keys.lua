@@ -36,7 +36,7 @@ cfg.keys = {
   { mods = "SUPER",             key = "t",  action = wezterm.action.SendString '\x13\x6e'     }, -- cmd+t  new window,          send C-s c
   { mods = "SUPER",             key = "w",  action = wezterm.action.SendString '\x13\x78'     }, -- cmd+d  kill pane,           send C-s X
   { mods = "SUPER",             key = "r",  action = wezterm.action.SendString '\x13\x5b'     }, -- cmd+r  selection mode,      send C-s [
-  { mods = "SUPER",             key = "m",  action = wezterm.action.SendString '\x13\x6d'     }, -- cmd+m  toggle mouse,        send C-s m
+  { mods = "SUPER",             key = "e",  action = wezterm.action.SendString '\x13\x6d'     }, -- cmd+m  toggle mouse,        send C-s m
 
   { mods = "SUPER",             key = "1",  action = wezterm.action.SendString '\x13\x31'     }, -- cmd+m  toggle mouse,        send C-s m
   { mods = "SUPER",             key = "2",  action = wezterm.action.SendString '\x13\x32'     }, -- cmd+m  toggle mouse,        send C-s m
