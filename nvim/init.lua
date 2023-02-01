@@ -363,6 +363,30 @@ require('bqf').setup({
 
 
 
+--
+-- auto-pairs
+--
+--
+vim.g.AutoPairsShortcutToggle = ''
+vim.g.AutoPairsShortcutJump = ''
+
+
+
+
+
+--
+-- vim-multiple-cursors
+--
+--
+
+vim.g.multi_cursor_use_default_mapping = 0
+vim.g.multi_cursor_start_word_key      = '<M-d>'
+vim.g.multi_cursor_next_key            = '<M-d>'
+vim.g.multi_cursor_skip_key            = '<C-x>'
+vim.g.multi_cursor_quit_key            = '<Esc>'
+
+
+
 
 
 
@@ -1105,6 +1129,9 @@ vim.api.nvim_set_keymap("o", "il", ":normal vil<CR>", { noremap = true })
 
 
 
+
+vim.api.nvim_set_keymap("n", "<M-n>", "<C-e>",    { noremap = true } )
+vim.api.nvim_set_keymap("n", "<M-p>", "<C-y>",    { noremap = true } )
 
 
 

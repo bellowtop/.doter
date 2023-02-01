@@ -1,5 +1,29 @@
-source ~/.config/nvim/init.vim
 set ideajoin
 
-let mapleader="f"
+let mapleader=" "
 set easymotion
+
+let g:EasyMotion_do_mapping = 0               "Disable easymotion default bindings
+map f <Plug>(easymotion-bd-w)
+
+
+set multicursor
+map q     <Plug>(multicursor-ms/)
+map <C-m> <Plug>(multicursor-mcv)
+map Z     <Plug>(multicursor-mcr)
+
+map H ^
+map L $
+
+
+map ; <C-d>
+map ' <C-u>
+
+map <M-n> <C-e>
+map <M-p> <C-y>
+
+map <C-l> zz
+
+
+map <leader>vv :e ~/.ideavimrc<CR>
+map <leader>vr :source ~/.ideavimrc<CR>
