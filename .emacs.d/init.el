@@ -119,7 +119,7 @@
 ;;;       (my-disable-code-intelligence))
 ;;;     '((name . "er-start"))
 ;;; )
-;;; 
+;;;
 ;;; ;; if er/contract-region is called with 0 as args, it means quit
 ;;; (advice-add 'er/contract-region
 ;;;     :before
@@ -185,11 +185,13 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auto-dim-other-buffers-face ((t (:background "#232d38"))))
- '(helm-selection ((t (:background "#232d38" ))))
- '(helm-source-header ((t (:foreground "#00ff00" :weight normal ))))
+ '(avy-lead-face ((t (:foreground "#ff77cc" :background nil))))
+ '(avy-lead-face-0 ((t (:foreground "#ff77cc" :background nil))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+ '(helm-selection ((t (:background "#232d38"))))
+ '(helm-source-header ((t (:foreground "#00ff00" :weight normal))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
@@ -198,8 +200,6 @@
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0)))
- '(avy-lead-face ((t (:foreground "#ff77cc" :background nil))))
- '(avy-lead-face-0 ((t (:foreground "#ff77cc" :background nil))))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
 
 
@@ -316,6 +316,12 @@
 ;; company-mode
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; http://company-mode.github.io/manual/Getting-Started.html#Initial-Setup
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "TAB") #'company-select-next-if-tooltip-visible-or-complete-selection)
+  (define-key company-active-map (kbd "<backtab>") #'company-select-previous-or-abort)
+  (define-key company-active-map (kbd "RET") #'company-complete-selection))
+
 
 
 
@@ -346,7 +352,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(impatient-mode reformatter auto-dim-other-buffers zig-mode autothemer flymake-diagnostic-at-point transpose-frame eldoc-box helm-projectile atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
+   '(beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers zig-mode autothemer flymake-diagnostic-at-point transpose-frame eldoc-box helm-projectile atom-one-dark-theme py-autopep8 jdecomp smart-jump eglot-java eglot yasnippet-snippets ansible moe-theme selected benchmark-init with-proxy exec-path-from-shell lsp-java valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style lua-mode phi-search doom-modeline dracula-theme switch-buffer-functions iedit scala-mode multiple-cursors rtags yasnippet erlang highlight-parentheses all-the-icons undo-tree nimbus-theme challenger-deep-theme kaolin-themes spacemacs-theme afternoon-theme ivy golden-ratio-scroll-screen smooth-scrolling yaml-mode projectile-mode doom-themes smart-mode-line cyberpunk-theme cmake-mode magit lsp-python-ms protobuf-mode vue-mode web-mode centaur-tabs xclip smartparens god-mode rust-mode flycheck mwim which-key deadgrep ripgrep lsp-ui neotree expand-region easy-kill projectile helm-rg helm-ag use-package helm fzf company lsp-mode go-mode))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
@@ -1360,6 +1366,10 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+(beacon-mode 1)
+
+
+
 (defun my-god-mode-update-mode-line ()
   (if (bound-and-true-p god-local-mode)
       (progn
@@ -1909,6 +1919,18 @@ the cursor by ARG lines."
 
 
 
+
+(defun my-delete-other-windows ()
+  (interactive)
+  (delete-other-windows)
+  (recenter-top-bottom)
+  )
+
+
+
+
+
+
 (defun my-forward-char-no-cross-line()
   (interactive)
   (unless (my-is-end-of-line)
@@ -2188,7 +2210,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd ", r r") #'httpd-start)
     (define-key god-local-mode-map (kbd ", r k") #'httpd-stop)
 
-    (define-key god-local-mode-map (kbd ", ,") #'delete-other-windows)
+    (define-key god-local-mode-map (kbd ", ,") #'my-delete-other-windows)
     (define-key god-local-mode-map (kbd ", g d") #'xref-find-definitions)
     (define-key god-local-mode-map (kbd ", g r") #'xref-find-references)
     (define-key god-local-mode-map (kbd ", g R") #'eglot-rename)
