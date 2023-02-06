@@ -2,15 +2,17 @@ set ideajoin
 
 let mapleader=" "
 set easymotion
+set multiple-cursors
+
+
 
 let g:EasyMotion_do_mapping = 0               "Disable easymotion default bindings
 map f <Plug>(easymotion-bd-w)
 
 
-set multicursor
-map q     <Plug>(multicursor-ms/)
-map <C-m> <Plug>(multicursor-mcv)
-map Z     <Plug>(multicursor-mcr)
+
+map <C-n> <Plug>NextOccurrence
+
 
 map H ^
 map L $
@@ -23,6 +25,8 @@ map <M-n> <C-e>
 map <M-p> <C-y>
 
 map <C-l> zz
+
+map m %
 
 
 map <leader>vv :e ~/.ideavimrc<CR>

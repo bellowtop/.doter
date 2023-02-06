@@ -1112,11 +1112,17 @@ If buffer-or-name is nil return current buffer's mode."
                 (my-special-buffer-keys-minor-mode 0)
              )
     nil)
+
+    ;; if also selected mode, then activate our keymap
+    (if (bound-and-true-p selected-minor-mode)
+        (my-god-and-selected-minor-mode 1)
+    )
 )
 
 (defun my-quit-god-mode()
   (interactive)
   (god-local-mode -1)
+  (my-god-and-selected-minor-mode -1)
   )
 
 
@@ -2349,9 +2355,36 @@ opening parenthesis one level up."
     :after
     (lambda (&rest args)
       (if (eq (car args) 1)
-        (my-disable-eglot-highlight)
-        (my-enable-eglot-highlight)
-        )
+        (progn
+            (message "rection active")
+            (my-disable-eglot-highlight)
+            ;; if also god-local-mode, then active my mode
+            (if (bound-and-true-p god-local-mode)
+                 (my-god-and-selected-minor-mode 1)
+            )
+          )
+        (progn
+            (message "no rection active")
+            (my-enable-eglot-highlight)
+            ;; disable my mode too.
+            (my-god-and-selected-minor-mode -1)
+          )
+      )
     '((name . "selected-region-active-mode-after"))
   )
 )
+
+
+
+
+(defvar my-god-and-selected-minor-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "C-n") #'my-mc/mark-next-like-this)
+    map)
+  "my-special-buffer-keys-minor-mode keymap.")
+
+(define-minor-mode my-god-and-selected-minor-mode
+  "A minor mode when god and selected both active"
+  :init-value t
+  :lighter " my-god-and-selected")
+
