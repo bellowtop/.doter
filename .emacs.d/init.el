@@ -2119,8 +2119,6 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "x") #'my-delete-char)
     (define-key god-local-mode-map (kbd "d") #'kill-whole-line)
 
-    (define-key god-local-mode-map (kbd "\s d") #'kill-whole-line)
-
     (define-key god-local-mode-map (kbd "z o") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "z m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "z z") #'recenter-top-bottom)
@@ -2143,6 +2141,11 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
     (define-key god-local-mode-map (kbd "C-~") #'upcase-char)
 
+    (define-key god-local-mode-map (kbd "\s d") #'my-mc/mark-next-like-this)
+    (define-key god-local-mode-map (kbd "\s d") #'my-mc/mark-previous-like-this)
+
+    (define-key god-local-mode-map (kbd "C-n") #'my-mc/mark-next-like-this)
+    (define-key god-local-mode-map (kbd "C-N") #'my-mc/mark-previous-like-this)
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
     (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)
 

@@ -11,6 +11,7 @@ map f <Plug>(easymotion-bd-w)
 
 
 
+map <D-d> <Plug>NextOccurrence
 map <C-n> <Plug>NextOccurrence
 
 
