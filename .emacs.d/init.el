@@ -2355,17 +2355,9 @@ opening parenthesis one level up."
     :after
     (lambda (&rest args)
       (if (eq (car args) 1)
-        (progn
-            (message "rection active")
-            (my-disable-eglot-highlight)
-          )
-        (progn
-            (message "no rection active")
-            (my-enable-eglot-highlight)
-          )
-      )
+        (my-disable-eglot-highlight)
+        (my-enable-eglot-highlight)
+        )
     '((name . "selected-region-active-mode-after"))
   )
 )
-
-
