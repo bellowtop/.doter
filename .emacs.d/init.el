@@ -265,6 +265,8 @@
 (advice-add 'xref-after-jump-hook           :after 'my-recenter)
 
 
+;; quit xref buffer after enter
+;; (define-key xref--xref-buffer-mode-map (kbd "<RET>") #'(lambda() (interactive) (xref-goto-xref t) ))
 
 
 
@@ -690,6 +692,8 @@ respectively."
 (add-hook 'org-mode-hook #'valign-mode)
 (add-hook 'markdown-mode-hook #'valign-mode)
 
+(add-hook 'markdown-mode-hook #'prog-mode)
+
 
 
 ;; (require 'smooth-scrolling)
@@ -766,6 +770,8 @@ respectively."
 ;; must be set as global
 (global-set-key (kbd "M-k") #'my-delete-to-beginning )
 (global-set-key (kbd "C-k") #'my-delete-to-end )
+
+
 
 
 
@@ -2040,12 +2046,16 @@ opening parenthesis one level up."
 
 
 
+
 (defvar my-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-x") #'helm-M-x)
     (define-key map (kbd "C-h SPC") #'helm-all-mark-rings)
 
     (define-key map (kbd "C-M-.") #'xref-find-definitions-other-window )
+
+    (define-key map (kbd "s-d") #'my-mc/mark-next-like-this)
+
 
     ;; (define-key map (kbd "C-M-f") #'projectile-find-file)
     ;; (define-key map (kbd "C-M-b") #'switch-to-buffer)
@@ -2141,11 +2151,8 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
     (define-key god-local-mode-map (kbd "C-~") #'upcase-char)
 
-    (define-key god-local-mode-map (kbd "\s d") #'my-mc/mark-next-like-this)
-    (define-key god-local-mode-map (kbd "\s d") #'my-mc/mark-previous-like-this)
-
     (define-key god-local-mode-map (kbd "C-n") #'my-mc/mark-next-like-this)
-    (define-key god-local-mode-map (kbd "C-N") #'my-mc/mark-previous-like-this)
+
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
     (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)
 
@@ -2330,12 +2337,6 @@ opening parenthesis one level up."
               ("C-c i" . clang-format-region)
               ("C-c f" . clang-format-buffer)
 
-              ("\s d" . my-mc/mark-next-like-this)
-              ("\s D" . my-mc/mark-previous-like-this)
-              ;; ("M-d" . my-mc/mark-next-like-this)
-              ;; ("M-D" . my-mc/mark-previous-like-this)
-              ;; ("C-c C-n" . my-mc/mark-next-like-this)
-              ;; ("C-c C-p" . my-mc/mark-previous-like-this)
 
               ;; ("g g" . (lambda () (interactive) (beginning-of-buffer) (keyboard-quit) ))
               ;; ("G" .   (lambda () (interactive) (end-of-buffer) (keyboard-quit) ))
