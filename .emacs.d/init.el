@@ -77,6 +77,7 @@
 (require 'autothemer)
 
 (load-theme 'bogster t)
+;; (load-theme 'atom-one-dark t)
 
 
 ;;;;;; catch ESC in terminal(-nw) ;;;;;;;;;;;;
@@ -163,8 +164,8 @@
 
 (setq-default line-spacing 0)
 
-(set-face-attribute 'default nil :font "DejaVuSansMono Nerd Font-18")
-(add-to-list 'default-frame-alist '(font . "DejaVuSansMono Nerd Font-18"))
+(set-face-attribute 'default nil :font "Source Code Pro for Powerline-15")
+(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-15"))
 ;; (set-cursor-color "red")
 
 ;; (set-face-attribute 'region nil :background "#666")
@@ -202,7 +203,21 @@
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0)))
- '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
+ '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+
+   '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
+   '(term-color-red ((t (:foreground "#ff5555" :background "#ff5555"))))
+   '(term-color-green ((t (:foreground "#50fa7b" :background "#50fa7b"))))
+   '(term-color-yellow ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
+   '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
+   '(term-color-magenta ((t (:foreground "#ff79c6" :background "#ff79c6"))))
+   '(term-color-cyan ((t (:foreground "#8be9fd" :background "#8be9fd"))))
+   '(term-color-white ((t (:foreground "#f8f8f2" :background "#656555"))))
+
+   '(term-default-fg-color ((t (:inherit term-color-white))))
+   '(term-default-bg-color ((t (:inherit term-color-black))))
+
+ )
 
 
 
@@ -788,11 +803,11 @@ respectively."
 ; (tool-bar-mode -1)
 
 (when (display-graphic-p)
-    ;; awesome-tray is from emacswiki sub-directory
-    (setq awesome-tray-mode-line-active-color '"#00ff00")
+    ;;; ;; awesome-tray is from emacswiki sub-directory
+    ;;; (setq awesome-tray-mode-line-active-color '"#00ff00")
 
-    (require 'awesome-tray)
-    (awesome-tray-mode 1)
+    ;;; (require 'awesome-tray)
+    ;;; (awesome-tray-mode 1)
 
     (scroll-bar-mode -1)
     ;; (tab-bar-mode -1)
@@ -805,9 +820,9 @@ respectively."
 )
 
 (unless (display-graphic-p)
-    (setq doom-modeline-height 1)
-    (setq doom-modeline-icon nil)
-    (setq doom-modeline-bar-width -1)
+    ;; (setq doom-modeline-height 1)
+    ;; (setq doom-modeline-icon nil)
+    ;; (setq doom-modeline-bar-width -1)
     (setq doom-modeline-buffer-file-name-style 'relative-from-project)
     (require 'doom-modeline)
     (doom-modeline-mode 1)
@@ -1050,7 +1065,7 @@ If buffer-or-name is nil return current buffer's mode."
                         "*NeoTree*"))
 
 ;; legendary-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
-(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf"))
+(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf" "*terminal*" "*eshell*"))
 
 (setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "dired-mode" "cfrs-input-mode" ))
 
