@@ -691,6 +691,7 @@ respectively."
 
 (require 'helm-projectile)
 (helm-projectile-on)
+(setq helm-projectile-truncate-lines t)
 
 
 
