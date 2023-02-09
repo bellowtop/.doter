@@ -107,6 +107,11 @@
 (setq-default cursor-type 'bar)
 
 
+;; compile log with colors
+(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+
+
+
 
 
 
@@ -848,6 +853,20 @@ respectively."
 (setq projectile-known-projects-file (expand-file-name "~/.emacs.d/.local/projectile-bookmarks.eld"))
 
 
+(defun my/return-t (orig-fun &rest args)
+  t)
+(defun my/disable-yornp (orig-fun &rest args)
+  (advice-add 'yes-or-no-p :around #'my/return-t)
+  (advice-add 'y-or-n-p :around #'my/return-t)
+  (let ((res (apply orig-fun args)))
+    (advice-remove 'yes-or-no-p #'my/return-t)
+    (advice-remove 'y-or-n-p #'my/return-t)
+    res))
+
+(advice-add 'projectile-compile-project :around #'my/disable-yornp)
+(advice-add 'projectile-run-project :around #'my/disable-yornp)
+
+
 
 (use-package flymake-diagnostic-at-point
   :after flymake
@@ -1435,8 +1454,9 @@ If buffer-or-name is nil return current buffer's mode."
         ;; only terminal need this
         ;; (unless (display-graphic-p)
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#313f4e")
-                (set-face-attribute 'mode-line-active nil :foreground "yellow" :background "#364D2D")
-                (set-face-attribute 'mode-line-inactive nil :foreground "yellow" :background "#364D2D")
+                ;; (set-face-attribute 'mode-line-active nil :foreground "yellow" :background "#364D2D")
+                ;; (set-face-attribute 'mode-line-inactive nil :foreground "yellow" :background "#364D2D")
+                (set-face-attribute 'window-divider nil :foreground "gray")
                 (set-face-foreground 'vertical-border "#627d9d")
         ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
@@ -1446,8 +1466,9 @@ If buffer-or-name is nil return current buffer's mode."
         ;; only terminal need this
         ;; (unless (display-graphic-p)
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#161c23")
-                (set-face-attribute 'mode-line-active nil :foreground 'unspecified :background "#161c23")
-                (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified :background "#161c23")
+                ;; (set-face-attribute 'mode-line-active nil :foreground 'unspecified :background "#161c23")
+                ;; (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified :background "#161c23")
+                (set-face-attribute 'window-divider nil :foreground "green")
                 (set-face-foreground 'vertical-border "#00ff00")
         ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
