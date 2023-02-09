@@ -272,6 +272,7 @@
 
 (defun my-recenter (&optional ARG PRED)
   (recenter)
+  (xref-pulse-momentarily)
   ;; from crosshairs.el
   ;; (flash-crosshairs)
 )
@@ -284,7 +285,9 @@
 
 
 ;; quit xref buffer after enter
-;; (define-key xref--xref-buffer-mode-map (kbd "<RET>") #'(lambda() (interactive) (xref-goto-xref t) ))
+(with-eval-after-load 'xref
+  (define-key xref--xref-buffer-mode-map(kbd "o") #'(lambda() (interactive) (xref-goto-xref t)))
+)
 
 
 
@@ -832,17 +835,6 @@ respectively."
     (doom-modeline-mode 1)
 )
 
-;;  (unless (display-graphic-p)
-;;    ; (set-face-attribute 'default nil :background "nil")
-;;    ;; (set-face-attribute 'line-number nil :background "nil")
-;;    ;; (set-face-attribute 'line-number-current-line nil :background "nil")
-;;  )
-
-;; (when (display-graphic-p)
-;;   (set-face-attribute 'default nil :font "Dejavu Sans Mono for Powerline-14")
-;;   (set-cursor-color "red")
-;; )
-
 
 
 
@@ -993,8 +985,6 @@ respectively."
 
 
 (require 'avy)
-;; (set-face-attribute 'avy-lead-face nil :foreground "#ffffff" :background "#ff0000")
-;; (set-face-attribute 'avy-lead-face-0 nil :foreground "#ffffff" :background "#ff0000")
 (setq avy-keys (list ?a ?c ?d ?e ?f ?h ?i ?j ?k ?l ?m ?n ?o ?s ?v ?w ?\;))
 (setq avy-background 't)
 
@@ -1374,30 +1364,8 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
-;; (defun my-quit-mc-mode-if-need ()
-;;     (interactive)
-;;     (if (bound-and-true-p multiple-cursors-mode)
-;;       (progn (mc/keyboard-quit) (mc/keyboard-quit))  ;; have to double quit, i don't know why
-;;     )
-;;   )
 
 
-
-;; (defun my-quit ()
-;;     (interactive)
-;;     (my-god-mode)
-;;     (if isearch-mode (isearch-abort))
-;;     (ignore-errors (helm-keyboard-quit))
-;;     (ignore-errors (minibuffer-keyboard-quit))
-;;     (ignore-errors (keyboard-quit))
-;; )
-
-
-
-;; (global-set-key (kbd "C-q")      '(lambda () (interactive)
-;;                                     (my-quit-mc-mode-if-need)
-;;                                     (my-quit))
-;; )
 
 
 (setq hl-line-inhibit-highlighting-for-modes '(dired-mode deadgrep-mode deadgrep-edit-mode treemacs-mode))
@@ -1412,38 +1380,6 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
-(defun my-god-mode-update-mode-line ()
-  (if (bound-and-true-p god-local-mode)
-      (progn
-                (set-face-attribute 'mode-line nil :background "#38424B")
-                (auto-dim-other-buffers-mode -1)
-      )
-      (progn
-                (set-face-attribute 'mode-line nil :background "#38424B")
-                (auto-dim-other-buffers-mode -1)
-      )
-      )
-  )
-
-
-
-  ;;;  (cond
-  ;;;   (god-local-mode
-  ;;;
-  ;;;    ;; (set-face-attribute 'mode-line-inactive nil
-  ;;;    ;;                     :background "#565063"
-  ;;;    ;;                     :foreground "white"
-  ;;;    ;;                     :box '(:line-width 8 :color "#565063")
-  ;;;    ;;                     :overline nil
-  ;;;    ;;                     :underline nil))
-  ;;;   ;; below, the default color is borrowed from monokai theme
-  ;;;   (t
-  ;;;    ;; (set-face-attribute 'mode-line-inactive nil :foreground "#8B8878" :background "#1B1E1C"))
-  ;;;    ))
-  ;;;   )
-
-
-
 
 
 
@@ -1451,28 +1387,22 @@ If buffer-or-name is nil return current buffer's mode."
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
     (if (bound-and-true-p god-local-mode)
       (progn
-        ;; only terminal need this
-        ;; (unless (display-graphic-p)
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#313f4e")
+                ;; (set-face-attribute 'mode-line nil :background "#38424B")
                 ;; (set-face-attribute 'mode-line-active nil :foreground "yellow" :background "#364D2D")
                 ;; (set-face-attribute 'mode-line-inactive nil :foreground "yellow" :background "#364D2D")
                 (set-face-attribute 'window-divider nil :foreground "gray")
                 (set-face-foreground 'vertical-border "#627d9d")
-        ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
-        ;; (setq cursor-type 'box)
       )
       (progn
-        ;; only terminal need this
-        ;; (unless (display-graphic-p)
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#161c23")
+                ;;(set-face-attribute 'mode-line nil :background "#38424B")
                 ;; (set-face-attribute 'mode-line-active nil :foreground 'unspecified :background "#161c23")
                 ;; (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified :background "#161c23")
                 (set-face-attribute 'window-divider nil :foreground "green")
                 (set-face-foreground 'vertical-border "#00ff00")
-        ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
-        ;; (setq cursor-type 'bar)
       )
     )
     )
@@ -1482,9 +1412,6 @@ If buffer-or-name is nil return current buffer's mode."
 
 (add-hook 'god-mode-enabled-hook  'my-god-mode-update-cursor-type)
 (add-hook 'god-mode-disabled-hook  'my-god-mode-update-cursor-type)
-
-(add-hook 'god-mode-enabled-hook  'my-god-mode-update-mode-line)
-(add-hook 'god-mode-disabled-hook  'my-god-mode-update-mode-line)
 
 
 
