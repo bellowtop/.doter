@@ -198,8 +198,6 @@
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
- '(helm-selection ((t (:background "#364D2D"))))
- '(helm-source-header ((t (:foreground "#00ff00" :weight normal))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
@@ -588,22 +586,22 @@
 
 
 
-(use-package smartparens
-  :ensure t
-  :defer t
-  :pin melpa-stable
-  :init (smartparens-global-mode t)
-  :config
-  (sp-local-pair 'prog-mode "{" nil :post-handlers '((indent-between-pair "RET")))
-  (sp-local-pair 'prog-mode "[" nil :post-handlers '((indent-between-pair "RET")))
-  (sp-local-pair 'prog-mode "(" nil :post-handlers '((indent-between-pair "RET")))
-  (sp-local-pair 'prog-mode ")" nil :post-handlers '((indent-between-pair "RET")))
-  ;; :bind
-  ;; (
-  ;;   ("C-c p d" . sp-splice-sexp)
-  ;;   ("C-c p s" . sp-rewrap-sexp)
-  ;;  )
-)
+;; (use-package smartparens
+;;   :ensure t
+;;   :defer t
+;;   :pin melpa-stable
+;;   :init (smartparens-global-mode t)
+;;   :config
+;;   (sp-local-pair 'prog-mode "{" nil :post-handlers '((indent-between-pair "RET")))
+;;   (sp-local-pair 'prog-mode "[" nil :post-handlers '((indent-between-pair "RET")))
+;;   (sp-local-pair 'prog-mode "(" nil :post-handlers '((indent-between-pair "RET")))
+;;   (sp-local-pair 'prog-mode ")" nil :post-handlers '((indent-between-pair "RET")))
+;;   ;; :bind
+;;   ;; (
+;;   ;;   ("C-c p d" . sp-splice-sexp)
+;;   ;;   ("C-c p s" . sp-rewrap-sexp)
+;;   ;;  )
+;; )
 
 
 ;;
