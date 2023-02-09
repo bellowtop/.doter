@@ -39,6 +39,8 @@
 'one-dark-pro
 
 
+
+
 ;; BASIC FACES
 `(default ((t (:background ,color0 :foreground ,color1 ))))
 `(hl-line ((t (:background ,color2 ))))
@@ -61,6 +63,10 @@
 `(font-lock-string-face ((t (:foreground ,color16 ))))
 `(font-lock-type-face ((t (:foreground ,color17 ))))
 `(font-lock-variable-name-face ((t (:foreground ,color18 ))))
+
+
+`(helm-selection ((t (:foreground "white" :background "purple"))))
+`(helm-source-header ((t (:foreground "black" :background "green"))))
 
 
 ;; linum-mode

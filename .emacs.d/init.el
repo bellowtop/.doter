@@ -75,9 +75,7 @@
 
 
 (require 'autothemer)
-
-(load-theme 'bogster t)
-;; (load-theme 'atom-one-dark t)
+;; (load-theme 'bogster t)
 
 
 ;;;;;; catch ESC in terminal(-nw) ;;;;;;;;;;;;
@@ -156,27 +154,13 @@
 ;;   ;; (load-theme 'doom-oceanic-next t)
 ;;   )
 
-;;      ;; (load-theme 'spacemacs-dark t)
-;;      ;;(load-theme 'dracula t)
-;;      ;; (load-theme 'spacemacs-dark t)
-;;      ;; (load-theme 'dracula t)
-;;      ;; (load-theme 'kaolin-ocean t)
+;; (load-theme 'spacemacs-dark t)
+;; (load-theme 'dracula t)
+;; (load-theme 'spacemacs-dark t)
+;; (load-theme 'dracula t)
+;; (load-theme 'kaolin-ocean t)
 ;; (load-theme 'cyberpunk t)
-
 ;; (load-theme 'atom-one-dark t)
-
-
-
-(setq-default line-spacing 0)
-
-(set-face-attribute 'default nil :font "Source Code Pro for Powerline-16")
-(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-16"))
-;; (set-cursor-color "red")
-
-;; (set-face-attribute 'region nil :background "#666")
-
-
-
 ;; (load-theme 'doom-molokai t)
 ;; (load-theme 'doom-palenight t)
 ;; (load-theme 'doom-material t)
@@ -186,6 +170,21 @@
 ;; (load-theme 'kaolin-temple t)
 ;; (load-theme 'kaolin-ocean t)
 ;; (load-theme 'doom-material t)
+;; (load-theme 'atom-one-dark t)
+(load-theme 'one-dark-pro t)
+
+
+(setq-default line-spacing 0)
+
+(set-face-attribute 'default nil :font "Source Code Pro for Powerline-16")
+(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-16"))
+(set-cursor-color "red")
+
+;; (set-face-attribute 'region nil :background "#666")
+
+
+
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -577,31 +576,22 @@
 
 
 
+(require 'smartparens-config)
+
 (defun indent-between-pair (&rest _ignored)
   (newline)
   (indent-according-to-mode)
   (forward-line -1)
   (indent-according-to-mode))
 
+(with-eval-after-load 'smartparens
+  (sp-local-pair 'prog-mode "{" nil :post-handlers '((indent-between-pair "RET")))
+  (sp-local-pair 'prog-mode "[" nil :post-handlers '((indent-between-pair "RET")))
+  (sp-local-pair 'prog-mode "(" nil :post-handlers '((indent-between-pair "RET")))
+)
 
 
 
-;; (use-package smartparens
-;;   :ensure t
-;;   :defer t
-;;   :pin melpa-stable
-;;   :init (smartparens-global-mode t)
-;;   :config
-;;   (sp-local-pair 'prog-mode "{" nil :post-handlers '((indent-between-pair "RET")))
-;;   (sp-local-pair 'prog-mode "[" nil :post-handlers '((indent-between-pair "RET")))
-;;   (sp-local-pair 'prog-mode "(" nil :post-handlers '((indent-between-pair "RET")))
-;;   (sp-local-pair 'prog-mode ")" nil :post-handlers '((indent-between-pair "RET")))
-;;   ;; :bind
-;;   ;; (
-;;   ;;   ("C-c p d" . sp-splice-sexp)
-;;   ;;   ("C-c p s" . sp-rewrap-sexp)
-;;   ;;  )
-;; )
 
 
 ;;
@@ -1394,7 +1384,7 @@ If buffer-or-name is nil return current buffer's mode."
         (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
       )
       (progn
-                (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#161c23")
+                (set-face-attribute 'hl-line nil :foreground 'unspecified :background (face-background 'default))
                 ;;(set-face-attribute 'mode-line nil :background "#38424B")
                 ;; (set-face-attribute 'mode-line-active nil :foreground 'unspecified :background "#161c23")
                 ;; (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified :background "#161c23")
@@ -1499,7 +1489,7 @@ If buffer-or-name is nil return current buffer's mode."
 (defun treemacs-mode-handler()
   (set (make-local-variable 'face-remapping-alist)
     '(
-        (default :background "black")
+        (default :background  "#252832")
     )
 ))
 
