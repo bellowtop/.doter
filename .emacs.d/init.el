@@ -164,8 +164,8 @@
 
 (setq-default line-spacing 0)
 
-(set-face-attribute 'default nil :font "Source Code Pro for Powerline-15")
-(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-15"))
+(set-face-attribute 'default nil :font "Source Code Pro for Powerline-16")
+(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-16"))
 ;; (set-cursor-color "red")
 
 ;; (set-face-attribute 'region nil :background "#666")
@@ -1436,6 +1436,8 @@ If buffer-or-name is nil return current buffer's mode."
         ;; only terminal need this
         ;; (unless (display-graphic-p)
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#364D2D")
+                (set-face-attribute 'mode-line-active nil :foreground 'unspecified :background "#364D2D")
+                (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified :background "#364D2D")
                 (set-face-foreground 'vertical-border "#627d9d")
         ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
@@ -1445,6 +1447,8 @@ If buffer-or-name is nil return current buffer's mode."
         ;; only terminal need this
         ;; (unless (display-graphic-p)
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background 'unspecified)
+                (set-face-attribute 'mode-line-active nil :foreground 'unspecified :background 'unspecified)
+                (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified :background 'unspecified)
                 (set-face-foreground 'vertical-border "#00ff00")
         ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
