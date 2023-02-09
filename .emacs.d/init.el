@@ -194,7 +194,7 @@
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  '(show-paren-match ((t (:foreground "#000000" :background "#00ff00"))))
- '(helm-selection ((t (:background "#232d38"))))
+ '(helm-selection ((t (:background "#364D2D"))))
  '(helm-source-header ((t (:foreground "#00ff00" :weight normal))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
@@ -1429,15 +1429,17 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+
+
 (defun my-god-mode-update-cursor-type ()
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
     (if (bound-and-true-p god-local-mode)
       (progn
         ;; only terminal need this
         ;; (unless (display-graphic-p)
-                (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#364D2D")
-                (set-face-attribute 'mode-line-active nil :foreground 'unspecified :background "#364D2D")
-                (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified :background "#364D2D")
+                (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#313f4e")
+                (set-face-attribute 'mode-line-active nil :foreground "yellow" :background "#364D2D")
+                (set-face-attribute 'mode-line-inactive nil :foreground "yellow" :background "#364D2D")
                 (set-face-foreground 'vertical-border "#627d9d")
         ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
@@ -1446,9 +1448,9 @@ If buffer-or-name is nil return current buffer's mode."
       (progn
         ;; only terminal need this
         ;; (unless (display-graphic-p)
-                (set-face-attribute 'hl-line nil :foreground 'unspecified :background 'unspecified)
-                (set-face-attribute 'mode-line-active nil :foreground 'unspecified :background 'unspecified)
-                (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified :background 'unspecified)
+                (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#161c23")
+                (set-face-attribute 'mode-line-active nil :foreground 'unspecified :background "#161c23")
+                (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified :background "#161c23")
                 (set-face-foreground 'vertical-border "#00ff00")
         ;; )
         (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
