@@ -193,7 +193,6 @@
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
- '(show-paren-match ((t (:foreground "#000000" :background "#00ff00"))))
  '(helm-selection ((t (:background "#364D2D"))))
  '(helm-source-header ((t (:foreground "#00ff00" :weight normal))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
@@ -203,22 +202,20 @@
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
+ '(show-paren-match ((t (:foreground "#000000" :background "#00ff00"))))
+ '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
+ '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
+ '(term-color-cyan ((t (:foreground "#8be9fd" :background "#8be9fd"))))
+ '(term-color-green ((t (:foreground "#50fa7b" :background "#50fa7b"))))
+ '(term-color-magenta ((t (:foreground "#ff79c6" :background "#ff79c6"))))
+ '(term-color-red ((t (:foreground "#ff5555" :background "#ff5555"))))
+ '(term-color-white ((t (:foreground "#f8f8f2" :background "#656555"))))
+ '(term-color-yellow ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
+ '(term-default-bg-color ((t (:inherit term-color-black))))
+ '(term-default-fg-color ((t (:inherit term-color-white))))
  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0)))
- '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
-
-   '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
-   '(term-color-red ((t (:foreground "#ff5555" :background "#ff5555"))))
-   '(term-color-green ((t (:foreground "#50fa7b" :background "#50fa7b"))))
-   '(term-color-yellow ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
-   '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
-   '(term-color-magenta ((t (:foreground "#ff79c6" :background "#ff79c6"))))
-   '(term-color-cyan ((t (:foreground "#8be9fd" :background "#8be9fd"))))
-   '(term-color-white ((t (:foreground "#f8f8f2" :background "#656555"))))
-
-   '(term-default-fg-color ((t (:inherit term-color-white))))
-   '(term-default-bg-color ((t (:inherit term-color-black))))
-
- )
+ '(window-divider ((t (:foreground "green"))))
+ '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
 
 
 
@@ -341,7 +338,7 @@
   (define-key company-active-map (kbd "<tab>") #'company-select-next-if-tooltip-visible-or-complete-selection)
   (define-key company-active-map (kbd "<backtab>") #'company-select-previous-or-abort)
   (define-key company-active-map (kbd "RET") #'company-complete-selection))
-;; Use (kbd "TAB") (or use (kbd "<tab>"), if you want to distinguish C-i from the <tab> key) 
+;; Use (kbd "TAB") (or use (kbd "<tab>"), if you want to distinguish C-i from the <tab> key)
 
 
 
