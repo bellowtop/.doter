@@ -78,8 +78,8 @@
   (font-lock-type-face                  (:foreground bogster-lred))
   (font-lock-builtin-face               (:foreground bogster-lgreen))
 
-  ;; (helm-selection                       (:background "#364D2D"))
-  ;; (helm-source-header                   (:foreground "#00ff00"))
+  (helm-selection                       (:background "#364D2D"))
+  (helm-source-header                   (:foreground "#00ff00"))
 
  )
 
