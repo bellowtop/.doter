@@ -1,2 +1,0 @@
-;;; Generated package description from rtags.el  -*- no-byte-compile: t -*-
-(define-package "rtags" "20211101.2149" "A front-end for rtags" '((emacs "24.3")) :commit "c628efc9b485470a48aec2692d79f7c140bc5b92" :authors '(("Jan Erik Hanssen" . "jhanssen@gmail.com") ("Anders Bakken" . "agbakken@gmail.com")) :maintainer '("Jan Erik Hanssen" . "jhanssen@gmail.com") :url "https://github.com/Andersbakken/rtags")
