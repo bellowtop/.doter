@@ -193,6 +193,7 @@
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+ '(show-paren-match ((t (:foreground "#000000" :background "#00ff00"))))
  '(helm-selection ((t (:background "#232d38"))))
  '(helm-source-header ((t (:foreground "#00ff00" :weight normal))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
@@ -1403,7 +1404,7 @@ If buffer-or-name is nil return current buffer's mode."
       )
       (progn
                 (set-face-attribute 'mode-line nil :background "#38424B")
-                (auto-dim-other-buffers-mode 1)
+                (auto-dim-other-buffers-mode -1)
       )
       )
   )
@@ -1545,6 +1546,17 @@ If buffer-or-name is nil return current buffer's mode."
         ("C-c t" . treemacs-toggle-node)
    )
 )
+
+(defun treemacs-mode-handler()
+  (set (make-local-variable 'face-remapping-alist)
+    '(
+        (default :background "black")
+    )
+))
+
+(add-hook 'treemacs-mode-hook 'treemacs-mode-handler)
+
+
 
 
 (defun my-helm-ag-thing-at-point ()
