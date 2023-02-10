@@ -45,7 +45,7 @@
 `(default ((t (:background ,color0 :foreground ,color1 ))))
 `(hl-line ((t (:background ,color2 ))))
 `(cursor ((t (:foreground ,color3 ))))
-`(region ((t (:background ,color4 ))))
+`(region ((t (:background ,color4 :inverse-video t ))))
 `(secondary-selection ((t (:background ,color5 ))))
 `(fringe ((t (:background ,color0 ))))
 `(mode-line-inactive ((t (:background ,color6 :foreground ,color7 ))))
