@@ -7,7 +7,7 @@
 
 
 (let (
-(color0 "#282c34")
+(color0 "#303339")
 (color1 "#abb2bf")
 (color2 "#3c4048")
 (color3 "#528bff")
