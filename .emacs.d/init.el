@@ -222,6 +222,7 @@
 
 
 
+(set-face-attribute 'region nil :inverse-video 't)
 
 
 ;; (set-face-attribute 'mode-line :underline "#00ff00")
