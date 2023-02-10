@@ -1540,18 +1540,32 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+
+
 (defun my-mc/mark-next-like-this (arg)
   (interactive "p")
   (if (region-active-p)
-               (message "search the marked region")
-               (er/mark-symbol)
-               )
+      (message "search the marked region")
+    (er/mark-symbol))
   (mc/mark-next-like-this-word arg)
-  ;; copy from multiple-cursors-20211112.2223/mc-cycle-cursors.el
-  (mc/cycle (mc/furthest-cursor-after-point)
-            (mc/first-fake-cursor-after (point-min))
-               "We're already at the last cursor.")
+  ;; copy from .emacs.d/elpa/multiple-cursors-20230113.835/mc-mark-more.el
+  (let ((end (if mark-active (max (mark) (point)) (point)))
+        furthest)
+    (mc/for-each-fake-cursor
+     (when (> (mc/cursor-end cursor) end)
+       (setq end (mc/cursor-end cursor))
+       (setq furthest cursor)))
+    ;; if end point is not visible in window, then cycle to it.
+    (or (pos-visible-in-window-p
+     end (selected-window))
+    (mc/cycle furthest
+          (mc/first-fake-cursor-after (point-min))
+          "We're already at the last cursor.")
+    )
+    )
   )
+
+
 
 (defun my-mc/mark-previous-like-this (arg)
   (interactive "p")
