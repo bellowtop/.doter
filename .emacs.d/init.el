@@ -2322,17 +2322,17 @@ opening parenthesis one level up."
   (interactive)
   (if (bound-and-true-p selected-region-active-mode)
       (progn
-    (message "is active mode")
+    ;;(message "is active mode")
     (if (bound-and-true-p my-god-mode-is-active-flag)
         (progn
-          (message "is god-local-mode")
+          ;; (message "is god-local-mode")
           (define-key selected-keymap (kbd "v") #'keyboard-quit)
           (define-key selected-keymap (kbd "d") #'kill-region)
           (define-key selected-keymap (kbd "x") #'kill-region)
           (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
           (define-key selected-keymap (kbd "i w") #'er/mark-symbol))
       (progn
-        (message "is not god-local-mode")
+        ;; (message "is not god-local-mode")
         (define-key selected-keymap (kbd "v") nil)
         (define-key selected-keymap (kbd "d") nil)
         (define-key selected-keymap (kbd "x") nil)
