@@ -170,8 +170,8 @@
 ;; (load-theme 'kaolin-temple t)
 ;; (load-theme 'kaolin-ocean t)
 ;; (load-theme 'doom-material t)
-;; (load-theme 'atom-one-dark t)
-(load-theme 'one-dark-pro t)
+(load-theme 'atom-one-dark t)
+;; (load-theme 'one-dark-pro t)
 
 
 (setq-default line-spacing 0)
@@ -217,6 +217,7 @@
  '(term-default-fg-color ((t (:inherit term-color-white))))
  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0)))
  '(window-divider ((t (:foreground "green"))))
+ '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
 
 
@@ -1380,7 +1381,7 @@ If buffer-or-name is nil return current buffer's mode."
                 ;; (set-face-attribute 'mode-line-active nil :foreground "yellow" :background "#364D2D")
                 ;; (set-face-attribute 'mode-line-inactive nil :foreground "yellow" :background "#364D2D")
                 (set-face-attribute 'window-divider nil :foreground "gray")
-                (set-face-foreground 'vertical-border "#627d9d")
+                (set-face-foreground 'vertical-border (face-background 'default))
                 (setq cursor-type 'box)
       )
       (progn
