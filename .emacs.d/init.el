@@ -288,10 +288,6 @@
 
 
 
-;; override jump hook
-;; (setq xref-after-jump-hook '(hs-show-all recenter xref-pulse-momentarily))
-
-
 
 
 
@@ -307,7 +303,6 @@
 
 
 (require 'eldoc-box)
-
 
 (require 'init-funcs)
 
@@ -382,8 +377,8 @@
  '(safe-local-variable-values
    '((projectile-project-root . "~/deploy")
      (eval progn
-	   (pp-buffer)
-	   (indent-buffer))))
+       (pp-buffer)
+       (indent-buffer))))
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 
@@ -399,6 +394,9 @@
 (global-whitespace-mode -1)
 (setq whitespace-style '(face trailing tabs tab-mark))
 (setq whitespace-line-column 85)
+
+(add-hook 'before-save-hook #'delete-trailing-whitespace)
+
 
 
 (use-package iedit
@@ -417,13 +415,10 @@
                    (buffer-substring-no-properties (point-min) (point-max))))
          (current-buffer)))
 
-
 (defun markdown-html (buffer)
     (princ (with-current-buffer buffer
       (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
     (current-buffer)))
-
-
 
 (use-package impatient-mode
   :config
@@ -443,9 +438,11 @@
   (ace-window-display-mode 1)
   )
 
-;; alternatively, use Shift-<left> Shift-<right> to move cursor to window
+;; alternatively, use Meta-<left> Meta-<right> to move cursor to window
 ;; for iTerms2 user, disable alt-> alt-< to send alt-f alt-b in `profile->keys`
  (windmove-default-keybindings 'meta)
+
+
 
 
 ;; (use-package centaur-tabs
@@ -499,7 +496,6 @@
 )
 
 
-
 (use-package ansible
   :defer t
 )
@@ -516,24 +512,21 @@
 
 ;; delete all other buffers, only keep current one.
 (defun my-only-current-buffer ()
-    "Kill all other buffers."
+    "Kill all non-star other buffers."
     (interactive)
     (mapc 'kill-buffer
           (delq (current-buffer) (remove-if-not 'buffer-file-name (buffer-list)))))     ;; this keep * buffers alive
-          ;; (delq (current-buffer) (buffer-list))))                                          ;; this destroy them also
 
 ;; delete all other buffers, only keep current one.
 (defun my-only-current-buffer-include-specials ()
     "Kill all other buffers."
     (interactive)
     (mapc 'kill-buffer
-          ;; (delq (current-buffer) (remove-if-not 'buffer-file-name (buffer-list)))))     ;; this keep * buffers alive
-          (delq (current-buffer) (buffer-list))))                                          ;; this destroy them also
+          (delq (current-buffer) (buffer-list))))                                       ;; this destroy * buffers too
 
 
 
 
-(add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 
 
@@ -1129,26 +1122,32 @@ If buffer-or-name is nil return current buffer's mode."
             (progn
                 ;; (message "%s not a special buffer" (buffer-name))
                 (god-local-mode 1)                  ;; start local mode
+                (setq my-god-mode-is-active-flag t)
                 (my-special-buffer-keys-minor-mode 0)
              )
     nil)
+
 )
 
 (defun my-quit-god-mode()
   (interactive)
   (god-local-mode -1)
+  ;; my-god-mode is meant to have value, but it's not set, maybe god-mode bug?
+  ;; anyway, we use our own flags here
+  (setq my-god-mode-is-active-flag nil)
   )
-
-
-
-
-
 
 (defun my-toggle-god-mode()
   (interactive)
-    (if (bound-and-true-p god-local-mode)
+  (if (bound-and-true-p god-local-mode)
+      (progn
+        (message "is local-mode, quit it")
         (my-quit-god-mode)
-        (my-god-mode)
+    )
+    (progn
+      (message "is not local-mode, start it")
+      (my-god-mode)
+      )
     )
   )
 
@@ -1376,21 +1375,23 @@ If buffer-or-name is nil return current buffer's mode."
     (if (bound-and-true-p god-local-mode)
       (progn
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#313f4e")
+                (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
                 ;; (set-face-attribute 'mode-line nil :background "#38424B")
                 ;; (set-face-attribute 'mode-line-active nil :foreground "yellow" :background "#364D2D")
                 ;; (set-face-attribute 'mode-line-inactive nil :foreground "yellow" :background "#364D2D")
                 (set-face-attribute 'window-divider nil :foreground "gray")
                 (set-face-foreground 'vertical-border "#627d9d")
-        (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
+                (setq cursor-type 'box)
       )
       (progn
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background (face-background 'default))
+                (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
                 ;;(set-face-attribute 'mode-line nil :background "#38424B")
                 ;; (set-face-attribute 'mode-line-active nil :foreground 'unspecified :background "#161c23")
                 ;; (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified :background "#161c23")
                 (set-face-attribute 'window-divider nil :foreground "green")
                 (set-face-foreground 'vertical-border "#00ff00")
-        (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
+                (setq cursor-type 'bar)
       )
     )
     )
@@ -2097,6 +2098,8 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "x") #'my-delete-char)
     (define-key god-local-mode-map (kbd "d") #'kill-whole-line)
 
+    (define-key god-local-mode-map (kbd "<RET>") #'next-line)
+
     (define-key god-local-mode-map (kbd "z o") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "z m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "z z") #'recenter-top-bottom)
@@ -2299,17 +2302,8 @@ opening parenthesis one level up."
   :ensure t
   :commands selected-minor-mode
   :bind (:map selected-keymap
-              ("v" . keyboard-quit)  ;; deactive region
-              ("d" . kill-region)
-              ("x" . kill-region)
               ("C-c i" . clang-format-region)
               ("C-c f" . clang-format-buffer)
-
-
-              ;; ("g g" . (lambda () (interactive) (beginning-of-buffer) (keyboard-quit) ))
-              ;; ("G" .   (lambda () (interactive) (end-of-buffer) (keyboard-quit) ))
-
-
               ("("  . my-wrap-region-with-parens)
               ("["  . my-wrap-region-with-brackets)
               ("{"  . my-wrap-region-with-braces)
@@ -2322,14 +2316,37 @@ opening parenthesis one level up."
 )
 (selected-global-mode 1)
 
-;; this function is called with 1 when region is activated, -1 when region is deactivated
-(advice-add 'selected-region-active-mode
-    :after
-    (lambda (&rest args)
-      (if (eq (car args) 1)
-        (my-disable-eglot-highlight)
-        (my-enable-eglot-highlight)
-        )
-    '((name . "selected-region-active-mode-after"))
+
+
+(defun my-process()
+  (interactive)
+  (if (bound-and-true-p selected-region-active-mode)
+      (progn
+    (message "is active mode")
+    (if (bound-and-true-p my-god-mode-is-active-flag)
+        (progn
+          (message "is god-local-mode")
+          (define-key selected-keymap (kbd "v") #'keyboard-quit)
+          (define-key selected-keymap (kbd "d") #'kill-region)
+          (define-key selected-keymap (kbd "x") #'kill-region)
+          (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
+          (define-key selected-keymap (kbd "i w") #'er/mark-symbol))
+      (progn
+        (message "is not god-local-mode")
+        (define-key selected-keymap (kbd "v") nil)
+        (define-key selected-keymap (kbd "d") nil)
+        (define-key selected-keymap (kbd "x") nil)
+        (define-key selected-keymap (kbd "i p") nil)
+        (define-key selected-keymap (kbd "i w") nil))
+      (my-disable-eglot-highlight)
+      ))
+    (progn
+      (message "is deactive mode")
+      (my-enable-eglot-highlight))
+    )
   )
-)
+
+
+(setq selected-region-active-mode-hook #'my-process)
+
+
