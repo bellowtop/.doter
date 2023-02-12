@@ -1385,16 +1385,21 @@ If buffer-or-name is nil return current buffer's mode."
       (progn
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#313f4e")
                 (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
+                (set-face-attribute 'mode-line nil :overline "gray36" :box nil) ;; draw a line above mode-line
+                ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
                 ;; (set-face-attribute 'mode-line nil :background "#38424B")
                 ;; (set-face-attribute 'mode-line-active nil :foreground "yellow" :background "#364D2D")
                 ;; (set-face-attribute 'mode-line-inactive nil :foreground "yellow" :background "#364D2D")
-                (set-face-attribute 'window-divider nil :foreground "gray")
+                (set-face-attribute 'window-divider nil :foreground "gray36")
                 (set-face-foreground 'vertical-border (face-background 'default))
                 (setq cursor-type 'bar)
+
       )
       (progn
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background (face-background 'default))
                 (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
+                (set-face-attribute 'mode-line nil :overline "green" :box nil) ;; draw a line above mode-line
+                ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
                 ;;(set-face-attribute 'mode-line nil :background "#38424B")
                 ;; (set-face-attribute 'mode-line-active nil :foreground 'unspecified :background "#161c23")
                 ;; (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified :background "#161c23")
@@ -2122,7 +2127,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "x") #'my-delete-char)
     (define-key god-local-mode-map (kbd "d") #'kill-whole-line)
 
-    (define-key god-local-mode-map (kbd "<RET>") #'next-line)
+    ;; (define-key god-local-mode-map (kbd "<RET>") #'next-line)
 
     (define-key god-local-mode-map (kbd "z o") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "z m") #'my-hs-toggle-all)
