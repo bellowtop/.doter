@@ -73,6 +73,13 @@
 (setq warning-minimum-level :emergency)
 
 
+(defun suspend-and-run ()
+    (interactive)
+    (suspend-emacs "echo test && sleep 5 && fg"))
+
+(global-set-key (kbd "<f5>") 'suspend-and-run)
+
+
 
 (require 'autothemer)
 ;; (load-theme 'bogster t)
@@ -1383,7 +1390,7 @@ If buffer-or-name is nil return current buffer's mode."
                 ;; (set-face-attribute 'mode-line-inactive nil :foreground "yellow" :background "#364D2D")
                 (set-face-attribute 'window-divider nil :foreground "gray")
                 (set-face-foreground 'vertical-border (face-background 'default))
-                (setq cursor-type 'box)
+                (setq cursor-type 'bar)
       )
       (progn
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background (face-background 'default))
@@ -1489,14 +1496,15 @@ If buffer-or-name is nil return current buffer's mode."
    )
 )
 
-(defun treemacs-mode-handler()
+(defun darker-background-for-sidebar()
   (set (make-local-variable 'face-remapping-alist)
     '(
         (default :background  "#252832")
     )
 ))
 
-(add-hook 'treemacs-mode-hook 'treemacs-mode-handler)
+(add-hook 'treemacs-mode-hook 'darker-background-for-sidebar)
+(add-hook 'neotree-mode-hook 'darker-background-for-sidebar)
 
 
 
