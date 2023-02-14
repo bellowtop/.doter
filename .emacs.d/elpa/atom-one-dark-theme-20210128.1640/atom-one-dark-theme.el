@@ -36,7 +36,7 @@
   (let* ((256color  (eq (display-color-cells (selected-frame)) 256))
          (colors `(("atom-one-dark-accent"   . "#528BFF")
                    ("atom-one-dark-fg"       . (if ,256color "color-248" "#ABB2BF"))
-                   ("atom-one-dark-bg"       . (if ,256color "color-235" "#282C34"))
+                   ("atom-one-dark-bg"       . (if ,256color "color-235" "#252832")) ;; modified by sekirocc.
                    ("atom-one-dark-bg-1"     . (if ,256color "color-234" "#121417"))
                    ("atom-one-dark-bg-hl"    . (if ,256color "color-236" "#2C323C"))
                    ("atom-one-dark-gutter"   . (if ,256color "color-239" "#4B5363"))
