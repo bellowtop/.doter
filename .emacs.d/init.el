@@ -1504,7 +1504,7 @@ If buffer-or-name is nil return current buffer's mode."
 (defun darker-background-for-sidebar()
   (set (make-local-variable 'face-remapping-alist)
     '(
-        (default :background  "#191C20")
+        (default :background  "#252832")
     )
 ))
 
