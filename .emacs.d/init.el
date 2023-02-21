@@ -181,10 +181,10 @@
 ;; (load-theme 'one-dark-pro t)
 
 
-(setq-default line-spacing 0)
+(setq-default line-spacing 0.3)
 
-(set-face-attribute 'default nil :font "Source Code Pro for Powerline-16")
-(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-16"))
+(set-face-attribute 'default nil :font "Source Code Pro for Powerline-15")
+(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-15"))
 (set-cursor-color "red")
 
 ;; (set-face-attribute 'region nil :background "#666")
@@ -1379,37 +1379,41 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+
+
 (defun my-god-mode-update-cursor-type ()
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
     (if (bound-and-true-p god-local-mode)
       (progn
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#313f4e")
                 (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
-                (set-face-attribute 'mode-line nil :overline "gray36" :box nil) ;; draw a line above mode-line
+                (set-face-attribute 'mode-line nil          :overline "#252832"   :box nil) ;; draw a line above mode-line
+                (set-face-attribute 'mode-line-active nil   :background "#252832" :box nil)
+                (set-face-attribute 'mode-line-inactive nil :background "#252832" :box nil)
+                (set-face-attribute 'window-divider nil     :foreground "#252832")
                 ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
                 ;; (set-face-attribute 'mode-line nil :background "#38424B")
                 ;; (set-face-attribute 'mode-line-active nil :foreground "yellow" :background "#364D2D")
                 ;; (set-face-attribute 'mode-line-inactive nil :foreground "yellow" :background "#364D2D")
-                (set-face-attribute 'window-divider nil :foreground "gray36")
                 (set-face-foreground 'vertical-border (face-background 'default))
-                (setq cursor-type 'bar)
-
+                (setq cursor-type 'box)
       )
       (progn
-                (set-face-attribute 'hl-line nil :foreground 'unspecified :background (face-background 'default))
+                (set-face-attribute 'hl-line nil :background (face-background 'default))
                 (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
-                (set-face-attribute 'mode-line nil :overline "green" :box nil) ;; draw a line above mode-line
+                (set-face-attribute 'mode-line nil          :overline "#00ff00"   :box nil) ;; draw a line above mode-line
+                (set-face-attribute 'mode-line-active nil   :background "#252832" :box nil)
+                (set-face-attribute 'mode-line-inactive nil :background "#252832" :box nil)
+                (set-face-attribute 'window-divider nil     :foreground "#00ff00")
                 ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
                 ;;(set-face-attribute 'mode-line nil :background "#38424B")
                 ;; (set-face-attribute 'mode-line-active nil :foreground 'unspecified :background "#161c23")
                 ;; (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified :background "#161c23")
-                (set-face-attribute 'window-divider nil :foreground "green")
                 (set-face-foreground 'vertical-border "#00ff00")
                 (setq cursor-type 'bar)
       )
     )
-    )
-
+)
 
 
 
@@ -1504,7 +1508,7 @@ If buffer-or-name is nil return current buffer's mode."
 (defun darker-background-for-sidebar()
   (set (make-local-variable 'face-remapping-alist)
     '(
-        (default :background  "#252832")
+        (default :background  "#1E2127")
     )
 ))
 
