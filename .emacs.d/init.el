@@ -208,6 +208,8 @@
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
+ '(ivy-posframe-border ((t (:background "green"))))
+ '(ivy-posframe ((t (:background "black"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
@@ -685,15 +687,23 @@ respectively."
 	;; allow input not in order
         '((t   . ivy--regex-ignore-order))))
 
-(require 'ivy-posframe)
-;; display at `ivy-posframe-style'
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+
 (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-center)))
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-bottom-left)))
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-bottom-left)))
-;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
+(defun ivy-format-function-default (cands)
+  "Transform CANDS into a string for minibuffer."
+  (concat "---------------------------------------------------\n"
+          (ivy--format-function-generic
+           (lambda (str)
+             (concat " > " (ivy--add-face str 'ivy-current-match) ""))
+           (lambda (str)
+             (concat "   " str ""))
+           cands
+           "\n")
+          "\n----------------------------------------------------\n\n"
+          ))
+(require 'ivy-posframe)
 (ivy-posframe-mode 1)
+
 
 
 
@@ -2242,7 +2252,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
     (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)
 
-    (define-key god-local-mode-map (kbd "SPC SPC") #'helm-all-mark-rings)
+    ;; (define-key god-local-mode-map (kbd "SPC SPC") #'helm-all-mark-rings)
     (define-key god-local-mode-map (kbd "SPC b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "SPC B") #'ibuffer)
     (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
