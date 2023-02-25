@@ -208,6 +208,7 @@
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
+ '(ivy-current-match ((t (:foreground "white" :background "purple"))))
  '(ivy-posframe-border ((t (:background "green"))))
  '(ivy-posframe ((t (:background "black"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
@@ -767,6 +768,11 @@ respectively."
 (defun my-find-files()
   (interactive)
   (counsel-find-file)
+  )
+
+(defun my-mark-ring()
+  (interactive)
+  (counsel-mark-ring)
   )
 
 
@@ -2252,7 +2258,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
     (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)
 
-    ;; (define-key god-local-mode-map (kbd "SPC SPC") #'helm-all-mark-rings)
+    (define-key god-local-mode-map (kbd "SPC SPC") #'my-mark-ring)
     (define-key god-local-mode-map (kbd "SPC b") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "SPC B") #'ibuffer)
     (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
@@ -2448,7 +2454,7 @@ opening parenthesis one level up."
   (interactive)
   (if (bound-and-true-p selected-region-active-mode)
       (progn
-        ;;(message "is active mode")
+        ;; (message "is active mode")
         (my-disable-eglot-highlight)
         (if (bound-and-true-p my-god-mode-is-active-flag)
             (progn
@@ -2457,20 +2463,21 @@ opening parenthesis one level up."
               (define-key selected-keymap (kbd "d") #'kill-region)
               (define-key selected-keymap (kbd "x") #'kill-region)
               ;; (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
-              ;; (define-key selected-keymap (kbd "i w") #'er/mark-symbol))
+              ;; (define-key selected-keymap (kbd "i w") #'er/mark-symbol)
+	      )
           (progn
             ;; (message "is not god-local-mode")
             (define-key selected-keymap (kbd "v") nil)
             (define-key selected-keymap (kbd "d") nil)
             (define-key selected-keymap (kbd "x") nil)
             ;; (define-key selected-keymap (kbd "i p") nil)
-            ;; (define-key selected-keymap (kbd "i w") nil))
+            ;; (define-key selected-keymap (kbd "i w") nil)
+	    )
           ))
     (progn
-      (message "is deactive mode")
+      ;; (message "is deactive mode")
       (my-enable-eglot-highlight))
     )
   )
-
 
 (setq selected-region-active-mode-hook #'my-process)
