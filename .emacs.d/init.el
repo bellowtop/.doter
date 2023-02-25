@@ -183,8 +183,8 @@
 
 (defun set-bigger-spacing ()
   (setq-local default-text-properties '(line-spacing 0.25 line-height 1.25)))
-(add-hook 'text-mode-hook 'set-bigger-spacing)
-(add-hook 'prog-mode-hook 'set-bigger-spacing)
+;; (add-hook 'text-mode-hook 'set-bigger-spacing)
+;;(add-hook 'prog-mode-hook 'set-bigger-spacing)
 
 (set-face-attribute 'default nil :font "Source Code Pro for Powerline-15")
 (add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-15"))
@@ -382,7 +382,7 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling projectile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling projectile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
@@ -663,47 +663,125 @@ respectively."
 
 
 
-(require 'helm)
-(require 'helm-command)
-(helm-mode 1)
-(define-key helm-map (kbd "C-u")       #'my-delete-to-beginning)
-(define-key helm-M-x-map (kbd "C-u")   #'my-delete-to-beginning)
-(define-key helm-map (kbd "TAB")       #'helm-next-line)
-(define-key helm-map (kbd "<backtab>") #'helm-previous-line)
 
+(use-package ivy
+  :ensure t
+  :diminish (ivy-mode . "")
+  :bind
+  (:map ivy-mode-map
+	("C-'" . ivy-avy))
+  :config
+  (ivy-mode 1)
+  ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+  (setq ivy-use-virtual-buffers t)
+  ;; number of result lines to display
+  (setq ivy-height 10)
+  ;; does not count candidates
+  (setq ivy-count-format "")
+  ;; no regexp by default
+  (setq ivy-initial-inputs-alist nil)
+  ;; configure regexp engine.
+  (setq ivy-re-builders-alist
+	;; allow input not in order
+        '((t   . ivy--regex-ignore-order))))
 
-;; (setq helm-move-to-line-cycle-in-source t)
-(setq helm-buffer-max-length 40)
-;; (setq helm-display-buffer-default-height 0.4)
-;; (setq helm-default-display-buffer-functions '(display-buffer-in-side-window))
-(setq helm-display-function 'helm-display-buffer-in-own-frame
-        helm-display-buffer-reuse-frame t
-        helm-use-undecorated-frame-option t)
-
-(setq helm-boring-buffer-regexp-list (list
-                      (rx "*helm")
-                      (rx "*Message")
-                      (rx "*Help")
-                      (rx "*Echo Area")
-                      (rx "*Minibuf")
-                      (rx "*lsp")
-                      (rx "*jdtls")
-                      (rx " *")
-                      ))
-
-
-(require 'helm-projectile)
-(helm-projectile-on)
-(setq helm-projectile-truncate-lines t)
-
-
+(require 'ivy-posframe)
+;; display at `ivy-posframe-style'
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-center)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-bottom-left)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-bottom-left)))
+;; (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
+(ivy-posframe-mode 1)
 
 
 
-;; (use-package ivy
-;;   :ensure t
-;;   :diminish ivy-mode
-;;   :hook (after-init . ivy-mode))
+
+
+
+;; (require 'helm)
+;; (require 'helm-command)
+;; (helm-mode 1)
+;; (define-key helm-map (kbd "C-u")       #'my-delete-to-beginning)
+;; (define-key helm-M-x-map (kbd "C-u")   #'my-delete-to-beginning)
+;; (define-key helm-map (kbd "TAB")       #'helm-next-line)
+;; (define-key helm-map (kbd "<backtab>") #'helm-previous-line)
+
+
+;; ;; (setq helm-move-to-line-cycle-in-source t)
+;; (setq helm-buffer-max-length 40)
+;; ;; (setq helm-display-buffer-default-height 0.4)
+;; ;; (setq helm-default-display-buffer-functions '(display-buffer-in-side-window))
+;; (setq helm-display-function 'helm-display-buffer-in-own-frame
+;;         helm-display-buffer-reuse-frame t
+;;         helm-use-undecorated-frame-option t)
+;;
+;; (setq helm-boring-buffer-regexp-list (list
+;;                       (rx "*helm")
+;;                       (rx "*Message")
+;;                       (rx "*Help")
+;;                       (rx "*Echo Area")
+;;                       (rx "*Minibuf")
+;;                       (rx "*lsp")
+;;                       (rx "*jdtls")
+;;                       (rx " *")
+;;                       ))
+;;
+;;
+;; (require 'helm-projectile)
+;; (helm-projectile-on)
+;; (setq helm-projectile-truncate-lines t)
+
+
+
+;;
+;; adapter for helm or ivy
+;;
+
+(defun my-M-x()
+  (interactive)
+  (counsel-M-x)
+  )
+
+(defun my-occur()
+  (interactive)
+  (ivy-occur)
+  )
+
+(defun my-rg-at-point()
+  (interactive)
+  (counsel-rg)
+  )
+
+(defun my-find-files()
+  (interactive)
+  (counsel-find-file)
+  )
+
+
+(setq projectile-completion-system 'ivy)
+(defun my-projectile-find-file()
+  (interactive)
+  ;; (helm-projectile-find-file)
+  (projectile-find-file)
+  )
+
+
+
+
+
+
+
+(advice-add
+ 'my-M-x
+ :before
+ (lambda (&rest r) (my-god-mode))
+ '((name . "my-god-mode-before-m-x")) ; convenient name for identifying or removing this advice later
+ )
+
+
+
 
 
 
@@ -780,8 +858,12 @@ respectively."
 )
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
-(define-key helm-map (kbd "<escape>") #'helm-keyboard-quit)
-(define-key minibuffer-local-map (kbd "<escape>") #'minibuffer-keyboard-quit)
+;; (define-key helm-map (kbd "<escape>") #'helm-keyboard-quit)
+;; (define-key minibuffer-local-map (kbd "<escape>") #'minibuffer-keyboard-quit)
+;; for ivy
+(define-key ivy-minibuffer-map (kbd "<escape>") #'keyboard-escape-quit)
+
+
 
 
 
@@ -1527,17 +1609,17 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
-(defun my-helm-ag-thing-at-point ()
-  "Search the symbol at point with `helm-ag'."
-  (interactive)
-  (
-   let (
-        (helm-ag-insert-at-point 'symbol)
-        (helm-ag-command-option " -Q ")
-   )
-   (helm-do-ag-project-root)
-  )
-)
+;; (defun my-helm-ag-thing-at-point ()
+;;   "Search the symbol at point with `helm-ag'."
+;;   (interactive)
+;;   (
+;;    let (
+;;         (helm-ag-insert-at-point 'symbol)
+;;         (helm-ag-command-option " -Q ")
+;;    )
+;;    (helm-do-ag-project-root)
+;;   )
+;; )
 
 
 
@@ -2038,8 +2120,8 @@ opening parenthesis one level up."
     (define-key dired-mode-map (kbd "SPC K") #'my-only-current-buffer)
     (define-key dired-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
 
-    (define-key dired-mode-map (kbd "SPC f") #'helm-projectile)  ;;  projectile-find-file
-    (define-key dired-mode-map (kbd "SPC p") #'helm-find-files)
+    (define-key dired-mode-map (kbd "SPC f") #'my-projectile-find-file)
+    (define-key dired-mode-map (kbd "SPC p") #'my-find-files)
     (define-key dired-mode-map (kbd "SPC m") #'deadgrep)
     (define-key dired-mode-map (kbd "SPC L") #'display-line-numbers-mode)
     (define-key dired-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
@@ -2048,20 +2130,11 @@ opening parenthesis one level up."
 
 
 
-(advice-add
- 'helm-M-x
- :before
- (lambda (&rest r) (my-god-mode))
- '((name . "my-god-mode-before-m-x")) ; convenient name for identifying or removing this advice later
- )
-
-
-
 
 (defvar my-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "M-x") #'helm-M-x)
-    (define-key map (kbd "C-h SPC") #'helm-all-mark-rings)
+    (define-key map (kbd "M-x") #'my-M-x)
+    ;; (define-key map (kbd "C-h SPC") #'helm-all-mark-rings)
 
     (define-key map (kbd "C-M-.") #'xref-find-definitions-other-window )
 
@@ -2073,7 +2146,7 @@ opening parenthesis one level up."
     ;; (define-key map (kbd "C-x C-b") #'switch-to-buffer)
 
     (define-key map (kbd "C-x C-b") #'ibuffer)
-    (define-key map (kbd "C-x C-f") #'helm-find-files)
+    (define-key map (kbd "C-x C-f") #'my-find-files)
     (define-key map (kbd "C-x C-k") #'kill-this-buffer)
 
     (define-key map (kbd "C-c C-e") #'eval-region)
@@ -2088,10 +2161,10 @@ opening parenthesis one level up."
     (define-key map (kbd "C-c v") 'set-rectangular-region-anchor)
     (define-key map (kbd "C-c C-v") 'set-rectangular-region-anchor)
 
-    (define-key map (kbd "C-c o") 'helm-occur)
-    (define-key map (kbd "C-c s") 'my-helm-ag-thing-at-point)
-    (define-key map (kbd "C-c C-o") 'helm-occur)
-    (define-key map (kbd "C-c C-s") 'my-helm-ag-thing-at-point)
+    (define-key map (kbd "C-c o") 'my-occur)
+    (define-key map (kbd "C-c s") 'my-rg-at-point)
+    (define-key map (kbd "C-c C-o") 'my-occur)
+    (define-key map (kbd "C-c C-s") 'my-rg-at-point)
 
     ;; (define-key map (kbd "M-i") #'er/mark-symbol)
     (define-key map (kbd "M-;") 'avy-goto-word-0)
@@ -2159,7 +2232,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
     (define-key god-local-mode-map (kbd "n") #'my-isearch-forward)
     (define-key god-local-mode-map (kbd "N") #'my-isearch-backward)
-    (define-key god-local-mode-map (kbd ":") #'helm-M-x)
+    (define-key god-local-mode-map (kbd ":") #'my-M-x)
 
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
     (define-key god-local-mode-map (kbd "C-~") #'upcase-char)
@@ -2180,8 +2253,8 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "SPC ,") #'eldoc-box-eglot-help-at-point)
     (define-key god-local-mode-map (kbd "SPC R") #'my-revert-buffer-no-confirm)
 
-    (define-key god-local-mode-map (kbd "SPC f") #'helm-projectile)  ;;  projectile-find-file
-    (define-key god-local-mode-map (kbd "SPC p") #'helm-find-files)
+    (define-key god-local-mode-map (kbd "SPC f") #'my-projectile-find-file)
+    (define-key god-local-mode-map (kbd "SPC p") #'my-find-files)
     (define-key god-local-mode-map (kbd "SPC m") #'deadgrep)
     (define-key god-local-mode-map (kbd "SPC L") #'display-line-numbers-mode)
     (define-key god-local-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
@@ -2291,7 +2364,7 @@ opening parenthesis one level up."
 
     (define-key map (kbd "M-;") #'avy-goto-word-0)
     (define-key map (kbd "M-o") #'other-window)
-    (define-key map (kbd "M-x") #'helm-M-x)
+    (define-key map (kbd "M-x") #'my-M-x)
 
     (define-key map (kbd "C-w l") #'windmove-right)
     (define-key map (kbd "C-w h") #'windmove-left)
@@ -2373,15 +2446,15 @@ opening parenthesis one level up."
               (define-key selected-keymap (kbd "v") #'keyboard-quit)
               (define-key selected-keymap (kbd "d") #'kill-region)
               (define-key selected-keymap (kbd "x") #'kill-region)
-              (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
-              (define-key selected-keymap (kbd "i w") #'er/mark-symbol))
+              ;; (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
+              ;; (define-key selected-keymap (kbd "i w") #'er/mark-symbol))
           (progn
             ;; (message "is not god-local-mode")
             (define-key selected-keymap (kbd "v") nil)
             (define-key selected-keymap (kbd "d") nil)
             (define-key selected-keymap (kbd "x") nil)
-            (define-key selected-keymap (kbd "i p") nil)
-            (define-key selected-keymap (kbd "i w") nil))
+            ;; (define-key selected-keymap (kbd "i p") nil)
+            ;; (define-key selected-keymap (kbd "i w") nil))
           ))
     (progn
       (message "is deactive mode")
