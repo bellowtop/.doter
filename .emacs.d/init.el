@@ -68,6 +68,8 @@
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/lisp"))
 
 
+
+
 (global-unset-key [(control z)])
 
 (setq warning-minimum-level :emergency)
@@ -186,8 +188,8 @@
 ;; (add-hook 'text-mode-hook 'set-bigger-spacing)
 ;;(add-hook 'prog-mode-hook 'set-bigger-spacing)
 
-(set-face-attribute 'default nil :font "Source Code Pro for Powerline-15")
-(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-15"))
+(set-face-attribute 'default nil :font "Source Code Pro for Powerline-16")
+(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-16"))
 (set-cursor-color "red")
 
 ;; (set-face-attribute 'region nil :background "#666")
@@ -209,6 +211,8 @@
  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(ivy-current-match ((t (:foreground "white" :background "purple"))))
+ '(ivy-minibuffer-match-face-2 ((t (:foreground "yellow"))))
+ '(ivy-minibuffer-match-face-3 ((t (:foreground "yellow"))))
  '(ivy-posframe-border ((t (:background "green"))))
  '(ivy-posframe ((t (:background "black"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
@@ -667,6 +671,7 @@ respectively."
 
 
 
+
 (use-package ivy
   :ensure t
   :diminish (ivy-mode . "")
@@ -689,6 +694,10 @@ respectively."
         '((t   . ivy--regex-ignore-order))))
 
 
+
+(require 'ivy-posframe)
+(ivy-posframe-mode 1)
+
 (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-center)))
 (defun ivy-format-function-default (cands)
   "Transform CANDS into a string for minibuffer."
@@ -702,9 +711,13 @@ respectively."
            "\n")
           "\n----------------------------------------------------\n\n"
           ))
-(require 'ivy-posframe)
-(ivy-posframe-mode 1)
 
+(defun my-ivy-posframe-get-size ()
+    "Set the ivy-posframe size according to the current frame."
+    (let ((height (or ivy-posframe-height (or (+ ivy-height 2) 20)))
+          (width (min (or ivy-posframe-width 200) (round (* .50 (frame-width))))))
+      (list :height height :width width :min-height height :min-width width)))
+(setq ivy-posframe-size-function 'my-ivy-posframe-get-size)
 
 
 
@@ -757,7 +770,7 @@ respectively."
 
 (defun my-occur()
   (interactive)
-  (ivy-occur)
+  (counsel-grep)
   )
 
 (defun my-rg-at-point()
@@ -794,6 +807,13 @@ respectively."
  :before
  (lambda (&rest r) (my-god-mode))
  '((name . "my-god-mode-before-m-x")) ; convenient name for identifying or removing this advice later
+ )
+
+(advice-add
+ 'my-mark-ring
+ :after
+ (lambda (&rest r) (recenter))
+ '((name . "recenter-after-mark-ring")) ; convenient name for identifying or removing this advice later
  )
 
 
@@ -875,8 +895,7 @@ respectively."
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
 ;; (define-key helm-map (kbd "<escape>") #'helm-keyboard-quit)
-;; (define-key minibuffer-local-map (kbd "<escape>") #'minibuffer-keyboard-quit)
-;; for ivy
+(define-key minibuffer-local-map (kbd "<escape>") #'minibuffer-keyboard-quit)
 (define-key ivy-minibuffer-map (kbd "<escape>") #'keyboard-escape-quit)
 
 
@@ -886,8 +905,8 @@ respectively."
 
 
 ;; must be set as global
-(global-set-key (kbd "M-k") #'my-delete-to-beginning )
-(global-set-key (kbd "C-k") #'my-delete-to-end )
+(global-set-key (kbd "C-S-k") #'my-delete-to-beginning)
+(global-set-key (kbd "C-k") #'my-delete-to-end)
 
 
 
@@ -938,6 +957,12 @@ respectively."
 (setq projectile-enable-caching t)
 (setq projectile-cache-file          (expand-file-name "~/.emacs.d/.local/projectile.cache"))
 (setq projectile-known-projects-file (expand-file-name "~/.emacs.d/.local/projectile-bookmarks.eld"))
+
+
+
+(setq smex-save-file                 (expand-file-name "~/.emacs.d/.local/smex-items.cache"))
+
+
 
 
 (defun my/return-t (orig-fun &rest args)
@@ -1500,8 +1525,8 @@ If buffer-or-name is nil return current buffer's mode."
                 (set-face-attribute 'window-divider nil     :foreground "#252832")
                 ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
                 ;; (set-face-attribute 'mode-line nil :background "#38424B")
-                ;; (set-face-attribute 'mode-line-active nil :foreground "yellow" :background "#364D2D")
-                ;; (set-face-attribute 'mode-line-inactive nil :foreground "yellow" :background "#364D2D")
+                (set-face-attribute 'mode-line-active nil :foreground "light green")
+                (set-face-attribute 'mode-line-inactive nil :foreground "gray")
                 (set-face-foreground 'vertical-border (face-background 'default))
                 (setq cursor-type 'box)
       )
@@ -1514,8 +1539,8 @@ If buffer-or-name is nil return current buffer's mode."
                 (set-face-attribute 'window-divider nil     :foreground "#00ff00")
                 ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
                 ;;(set-face-attribute 'mode-line nil :background "#38424B")
-                ;; (set-face-attribute 'mode-line-active nil :foreground 'unspecified :background "#161c23")
-                ;; (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified :background "#161c23")
+                (set-face-attribute 'mode-line-active nil :foreground 'unspecified)
+                (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified)
                 (set-face-foreground 'vertical-border "#00ff00")
                 (setq cursor-type 'bar)
       )
@@ -2124,8 +2149,8 @@ opening parenthesis one level up."
 
 
 (eval-after-load "dired" '(progn
-    (define-prefix-command 'my-god-mode-leader-key)
-    (define-key dired-mode-map (kbd "SPC") 'my-god-mode-leader-key)
+    (define-prefix-command 'my-god-mode-leader-key-1)
+    (define-key dired-mode-map (kbd "SPC") 'my-god-mode-leader-key-1)
 
     (define-key dired-mode-map (kbd "k") #'previous-line)
     (define-key dired-mode-map (kbd "j") #'next-line)
@@ -2150,8 +2175,6 @@ opening parenthesis one level up."
 (defvar my-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-x") #'my-M-x)
-    ;; (define-key map (kbd "C-h SPC") #'helm-all-mark-rings)
-
     (define-key map (kbd "C-M-.") #'xref-find-definitions-other-window )
 
     (define-key map (kbd "s-d") #'my-mc/mark-next-like-this)
@@ -2186,8 +2209,8 @@ opening parenthesis one level up."
     (define-key map (kbd "M-;") 'avy-goto-word-0)
     (define-key map (kbd "M-s") 'my-save-buffer)
     (define-key map (kbd "C-j") 'my-save-buffer)
-    (define-key map (kbd "M-n") 'gcm-scroll-down)
-    (define-key map (kbd "M-p") 'gcm-scroll-up)
+    (define-key map (kbd "M-j") 'gcm-scroll-down)
+    (define-key map (kbd "M-k") 'gcm-scroll-up)
     (define-key map (kbd "M-o") 'other-window)
     (define-key map (kbd "C-q") 'my-toggle-god-mode)
 
@@ -2423,7 +2446,7 @@ opening parenthesis one level up."
 ;; Diactive my all special keys for minibuffer
 (add-hook 'minibuffer-setup-hook #'(lambda () (my-keys-minor-mode 0)))
 (add-hook 'minibuffer-setup-hook #'(lambda () (my-special-buffer-keys-minor-mode 0)))
-(add-hook 'helm-minibuffer-set-up-hook #'(lambda () (my-special-buffer-keys-minor-mode 0)))
+;; (add-hook 'helm-minibuffer-set-up-hook #'(lambda () (my-special-buffer-keys-minor-mode 0)))
 
 
 
