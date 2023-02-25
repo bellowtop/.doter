@@ -181,7 +181,10 @@
 ;; (load-theme 'one-dark-pro t)
 
 
-(setq-default line-spacing 0.3)
+(defun set-bigger-spacing ()
+  (setq-local default-text-properties '(line-spacing 0.25 line-height 1.25)))
+(add-hook 'text-mode-hook 'set-bigger-spacing)
+(add-hook 'prog-mode-hook 'set-bigger-spacing)
 
 (set-face-attribute 'default nil :font "Source Code Pro for Powerline-15")
 (add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-15"))
@@ -204,6 +207,7 @@
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+ '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
@@ -224,7 +228,6 @@
  '(term-default-fg-color ((t (:inherit term-color-white))))
  '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0)))
  '(window-divider ((t (:foreground "green"))))
- '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
 
 
@@ -379,15 +382,15 @@
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(package-selected-packages
-   '(beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling projectile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling projectile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
  '(safe-local-variable-values
    '((projectile-project-root . "~/deploy")
      (eval progn
-       (pp-buffer)
-       (indent-buffer))))
+	   (pp-buffer)
+	   (indent-buffer))))
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 
@@ -671,8 +674,12 @@ respectively."
 
 ;; (setq helm-move-to-line-cycle-in-source t)
 (setq helm-buffer-max-length 40)
-(setq helm-display-buffer-default-height 0.4)
-(setq helm-default-display-buffer-functions '(display-buffer-in-side-window))
+;; (setq helm-display-buffer-default-height 0.4)
+;; (setq helm-default-display-buffer-functions '(display-buffer-in-side-window))
+(setq helm-display-function 'helm-display-buffer-in-own-frame
+        helm-display-buffer-reuse-frame t
+        helm-use-undecorated-frame-option t)
+
 (setq helm-boring-buffer-regexp-list (list
                       (rx "*helm")
                       (rx "*Message")
@@ -1251,6 +1258,8 @@ If buffer-or-name is nil return current buffer's mode."
 (define-key god-mode-isearch-map (kbd "TAB") #'god-mode-isearch-disable)
 ;; RET to god, then RET to exit
 ;; (define-key isearch-mode-map (kbd "RET") #'god-mode-isearch-activate)
+;; this variable make sure RET exit isearch-mode immediately
+
 (define-key isearch-mode-map (kbd "RET") #'isearch-exit)
 (define-key god-mode-isearch-map (kbd "RET") #'isearch-exit)
 
@@ -2274,6 +2283,7 @@ opening parenthesis one level up."
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd ";") #'scroll-up-command)
     (define-key map (kbd "'") #'scroll-down-command)
+    (define-key map (kbd "/") #'isearch-forward)
     (define-key map (kbd "k") #'previous-line)
     (define-key map (kbd "j") #'next-line)
     (define-key map (kbd "l") #'forward-char)
@@ -2381,5 +2391,3 @@ opening parenthesis one level up."
 
 
 (setq selected-region-active-mode-hook #'my-process)
-
-
