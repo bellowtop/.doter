@@ -397,8 +397,8 @@
  '(safe-local-variable-values
    '((projectile-project-root . "~/deploy")
      (eval progn
-	   (pp-buffer)
-	   (indent-buffer))))
+       (pp-buffer)
+       (indent-buffer))))
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 
@@ -678,7 +678,10 @@ respectively."
   :diminish (ivy-mode . "")
   :bind
   (:map ivy-mode-map
-	("C-'" . ivy-avy))
+    ("C-'" . ivy-avy)
+    ("TAB" . ivy-next-line)
+    ("<backtab>" . ivy-previous-line)
+  )
   :config
   (ivy-mode 1)
   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
@@ -691,7 +694,7 @@ respectively."
   (setq ivy-initial-inputs-alist nil)
   ;; configure regexp engine.
   (setq ivy-re-builders-alist
-	;; allow input not in order
+    ;; allow input not in order
         '((t   . ivy--regex-ignore-order))))
 
 
@@ -2488,7 +2491,7 @@ opening parenthesis one level up."
               (define-key selected-keymap (kbd "x") #'kill-region)
               ;; (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
               ;; (define-key selected-keymap (kbd "i w") #'er/mark-symbol)
-	      )
+          )
           (progn
             ;; (message "is not god-local-mode")
             (define-key selected-keymap (kbd "v") nil)
@@ -2496,7 +2499,7 @@ opening parenthesis one level up."
             (define-key selected-keymap (kbd "x") nil)
             ;; (define-key selected-keymap (kbd "i p") nil)
             ;; (define-key selected-keymap (kbd "i w") nil)
-	    )
+        )
           ))
     (progn
       ;; (message "is deactive mode")
