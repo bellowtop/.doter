@@ -203,7 +203,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(auto-dim-other-buffers-face ((t (:background "#232d38"))))
  '(avy-lead-face ((t (:foreground "#ff77cc" :background nil))))
  '(avy-lead-face-0 ((t (:foreground "#ff77cc" :background nil))))
  '(counsel-outline-default ((t (:inherit green))))
@@ -221,6 +220,13 @@
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
+ '(magit-diff-added ((t (:extend t :foreground "forest green"))))
+ '(magit-diff-added-highlight ((t (:extend t :background "black" :foreground "green"))))
+ '(magit-diff-file-heading-highlight ((t (:extend t :background "black" :weight bold))))
+ '(magit-diff-hunk-heading ((t (:extend t :background "#252832" :foreground "yellow4"))))
+ '(magit-diff-hunk-heading-highlight ((t (:extend t :background "black" :foreground "yellow"))))
+ '(magit-diff-removed ((t (:extend t :foreground "indian red"))))
+ '(magit-diff-removed-highlight ((t (:extend t :background "black" :foreground "red"))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(show-paren-match ((t (:foreground "#000000" :background "#00ff00"))))
@@ -398,8 +404,8 @@
  '(safe-local-variable-values
    '((projectile-project-root . "~/deploy")
      (eval progn
-       (pp-buffer)
-       (indent-buffer))))
+	   (pp-buffer)
+	   (indent-buffer))))
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 
@@ -1925,9 +1931,9 @@ _u_: undo      _r_: redo
 ;;    )
 ;;  (setq key-chord-two-keys-delay 1.0)
 ;;  (setq key-chord-one-key-delay 1.1)
-;;  
+;;
 ;;  (key-chord-mode 1)
-;;  
+;;
 ;;  (defun my-key-chord-define (keymap keys command)
 ;;    "Define in KEYMAP, a key-chord of the two keys in KEYS starting a COMMAND.
 ;;  KEYS can be a string or a vector of two elements. Currently only
