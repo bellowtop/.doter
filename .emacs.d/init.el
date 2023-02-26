@@ -1197,7 +1197,7 @@ If buffer-or-name is nil return current buffer's mode."
                         "*NeoTree*"))
 
 ;; legendary-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
-(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf" "*terminal*" "*eshell*"))
+(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf" "*terminal*" "*eshell*" "magit"))
 
 (setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "dired-mode" "cfrs-input-mode" ))
 
@@ -1388,15 +1388,23 @@ If buffer-or-name is nil return current buffer's mode."
 ;; this variable make sure RET exit isearch-mode immediately
 
 (define-key isearch-mode-map (kbd "RET") #'isearch-exit)
-(define-key god-mode-isearch-map (kbd "RET") #'isearch-exit)
 
 (define-key isearch-mode-map (kbd "C-s") 'isearch-repeat-forward+)
 (define-key isearch-mode-map (kbd "C-r") 'isearch-repeat-backward+)
-(define-key god-mode-isearch-map (kbd "s") 'isearch-repeat-forward+)
-(define-key god-mode-isearch-map (kbd "r") 'isearch-repeat-backward+)
 ;; like vim
+;; reset all other keys. then add our specific keys.
+(set-char-table-range (nth 1 god-mode-isearch-map) t #'ignore)
 (define-key god-mode-isearch-map (kbd "n") 'isearch-repeat-forward+)
 (define-key god-mode-isearch-map (kbd "N") 'isearch-repeat-backward+)
+(define-key god-mode-isearch-map (kbd "p") 'yank)
+(define-key god-mode-isearch-map (kbd "u") 'undo)
+(define-key god-mode-isearch-map (kbd "j") #'(lambda() (interactive)(isearch-exit)(next-line)))
+(define-key god-mode-isearch-map (kbd "k") #'(lambda() (interactive)(isearch-exit)(previous-line)))
+(define-key god-mode-isearch-map (kbd "h") #'(lambda() (interactive)(isearch-exit)(my-forward-char-no-cross-line)))
+(define-key god-mode-isearch-map (kbd "l") #'(lambda() (interactive)(isearch-exit)(my-backward-char-no-cross-line)))
+(define-key god-mode-isearch-map (kbd "s") 'isearch-repeat-forward+)
+(define-key god-mode-isearch-map (kbd "r") 'isearch-repeat-backward+)
+(define-key god-mode-isearch-map (kbd "RET") #'isearch-exit)
 
 
 (defun my-search-selection ()
@@ -1517,6 +1525,7 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+
 (defun my-god-mode-update-cursor-type ()
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
     (if (bound-and-true-p god-local-mode)
@@ -1529,8 +1538,8 @@ If buffer-or-name is nil return current buffer's mode."
                 (set-face-attribute 'window-divider nil     :foreground "#252832")
                 ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
                 ;; (set-face-attribute 'mode-line nil :background "#38424B")
-                (set-face-attribute 'mode-line-active nil :foreground "light green")
-                (set-face-attribute 'mode-line-inactive nil :foreground "gray")
+                (set-face-attribute 'mode-line-active nil :foreground "green" :background "DarkMagenta")
+                (set-face-attribute 'mode-line-inactive nil :foreground "cyan")
                 (set-face-foreground 'vertical-border (face-background 'default))
                 (setq cursor-type 'box)
       )
@@ -1550,6 +1559,7 @@ If buffer-or-name is nil return current buffer's mode."
       )
     )
 )
+
 
 
 
@@ -2216,7 +2226,7 @@ opening parenthesis one level up."
     (define-key map (kbd "M-j") 'gcm-scroll-down)
     (define-key map (kbd "M-k") 'gcm-scroll-up)
     (define-key map (kbd "M-o") 'other-window)
-    (define-key map (kbd "C-q") 'my-toggle-god-mode)
+    (define-key map (kbd "M-q") 'my-toggle-god-mode)
 
     (define-key map (kbd "M-u") 'upcase-dwim)
     (define-key map (kbd "M-l") 'downcase-dwim)
@@ -2228,7 +2238,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "SPC") 'my-god-mode-leader-key)
     (define-key god-local-mode-map (kbd ",")   'my-god-mode-dummmy-key)
     (define-key god-local-mode-map (kbd "z")   'my-god-mode-viewer-key)
-    (define-key god-local-mode-map (kbd "q")   'my-god-mode-window-key)
+    ;; (define-key god-local-mode-map (kbd "q")   'my-god-mode-window-key)
 
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
@@ -2280,7 +2290,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
     (define-key god-local-mode-map (kbd "C-~") #'upcase-char)
 
-    (define-key god-local-mode-map (kbd "C-n") #'my-mc/mark-next-like-this)
+    ;; (define-key god-local-mode-map (kbd "C-n") #'my-mc/mark-next-like-this)
 
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
     (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)
@@ -2470,7 +2480,7 @@ opening parenthesis one level up."
               ("\"" . my-wrap-region-with-double-quotes)
               ("_"  . my-wrap-region-with-underscores)
               ("`"  . my-wrap-region-with-back-quotes)
-
+              ("M-n"  . my-mc/mark-next-like-this)
         )
 )
 (selected-global-mode 1)
