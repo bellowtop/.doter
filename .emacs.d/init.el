@@ -111,7 +111,6 @@
 (setq visible-bell t)
 (setq ring-bell-function #'ignore)
 
-(setq-default cursor-type 'bar)
 
 
 ;; compile log with colors
@@ -191,6 +190,7 @@
 (set-face-attribute 'default nil :font "Source Code Pro for Powerline-16")
 (add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-16"))
 (set-cursor-color "red")
+(setq-default cursor-type 'bar)
 
 ;; (set-face-attribute 'region nil :background "#666")
 
@@ -364,7 +364,8 @@
 
 
 
-(require 'transpose-frame)
+(use-package transpose-frame
+    :defer t)
 
 
 (use-package yasnippet
@@ -657,15 +658,16 @@ respectively."
 
 
 
+(use-package emacs-surround
+  :defer t
+  :config
+    (add-to-list 'emacs-surround-alist '("}" . ("{ " . " }")))
+    (add-to-list 'emacs-surround-alist '(")" . ("( " . " )")))
+    (add-to-list 'emacs-surround-alist '("]" . ("[ " . " ]")))
+)
 
 
-
-
-(require 'emacs-surround)
 ;; (global-set-key (kbd "C-c p") 'emacs-surround)
-(add-to-list 'emacs-surround-alist '("}" . ("{ " . " }")))
-(add-to-list 'emacs-surround-alist '(")" . ("( " . " )")))
-(add-to-list 'emacs-surround-alist '("]" . ("[ " . " ]")))
 
 
 
@@ -1512,11 +1514,12 @@ If buffer-or-name is nil return current buffer's mode."
 (global-hl-line-mode 1)
 
 ;;; from emacswiki
-(require 'crosshairs)
+;; (require 'crosshairs)
 
 
 
-(beacon-mode 1)
+;; (beacon-mode 1)
+
 
 
 
@@ -1532,31 +1535,35 @@ If buffer-or-name is nil return current buffer's mode."
       (progn
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#313f4e")
                 (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
-                (set-face-attribute 'mode-line nil          :overline "#252832"   :box nil) ;; draw a line above mode-line
-                (set-face-attribute 'mode-line-active nil   :background "#252832" :box nil)
-                (set-face-attribute 'mode-line-inactive nil :background "#252832" :box nil)
-                (set-face-attribute 'window-divider nil     :foreground "#252832")
+                (when (display-graphic-p)
+                    (set-face-attribute 'window-divider nil     :foreground "#252832")
+                    (set-face-attribute 'mode-line nil          :overline "#252832"   :box nil) ;; draw a line above mode-line
+                    (set-face-attribute 'mode-line-active nil   :foreground "green" :background "DarkMagenta" :box nil)
+                    (set-face-attribute 'mode-line-inactive nil :foreground "cyan" :background "black")
+                    (setq cursor-type 'box)
+                )
                 ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
                 ;; (set-face-attribute 'mode-line nil :background "#38424B")
-                (set-face-attribute 'mode-line-active nil :foreground "green" :background "DarkMagenta")
-                (set-face-attribute 'mode-line-inactive nil :foreground "cyan")
                 (set-face-foreground 'vertical-border (face-background 'default))
-                (setq cursor-type 'box)
       )
       (progn
                 (set-face-attribute 'hl-line nil :background (face-background 'default))
                 (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
-                (set-face-attribute 'mode-line nil          :overline "#00ff00"   :box nil) ;; draw a line above mode-line
-                (set-face-attribute 'mode-line-active nil   :background "#252832" :box nil)
-                (set-face-attribute 'mode-line-inactive nil :background "#252832" :box nil)
-                (set-face-attribute 'window-divider nil     :foreground "#00ff00")
+                (when (display-graphic-p)
+                    (set-face-attribute 'window-divider nil     :foreground "green")
+                    (set-face-attribute 'mode-line nil          :overline "green"   :box nil) ;; draw a line above mode-line
+                    (set-face-attribute 'mode-line-active nil   :foreground "green" :background "DarkMagenta" :box nil)
+                    (set-face-attribute 'mode-line-inactive nil :foreground "cyan" :background "black")
+                    (setq cursor-type 'bar)
+                )
                 ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
                 ;;(set-face-attribute 'mode-line nil :background "#38424B")
-                (set-face-attribute 'mode-line-active nil :foreground 'unspecified)
-                (set-face-attribute 'mode-line-inactive nil :foreground 'unspecified)
                 (set-face-foreground 'vertical-border "#00ff00")
-                (setq cursor-type 'bar)
       )
+    )
+    (unless (display-graphic-p)
+        (set-face-attribute 'mode-line-active nil :foreground "green" :background "DarkMagenta")
+        (set-face-attribute 'mode-line-inactive nil :foreground "cyan" :background "black")
     )
 )
 
@@ -1910,33 +1917,33 @@ _u_: undo      _r_: redo
 
 
 
-(use-package key-chord
-  :ensure t
-  :config
-  )
-(setq key-chord-two-keys-delay 1.0)
-(setq key-chord-one-key-delay 1.1)
-
-(key-chord-mode 1)
-
-(defun my-key-chord-define (keymap keys command)
-  "Define in KEYMAP, a key-chord of the two keys in KEYS starting a COMMAND.
-KEYS can be a string or a vector of two elements. Currently only
-elements that corresponds to ascii codes in the range 32 to 126
-can be used.
-COMMAND can be an interactive function, a string, or nil.
-If COMMAND is nil, the key-chord is removed."
-  (if (/= 2 (length keys))
-      (error "Key-chord keys must have two elements"))
-  ;; Exotic chars in a string are >255 but define-key wants 128..255
-  ;; for those.
-  (let ((key1 (logand 255 (aref keys 0)))
-        (key2 (logand 255 (aref keys 1))))
-    (if (eq key1 key2)
-        (define-key keymap (vector 'key-chord key1 key2) command)
-      (define-key keymap (vector 'key-chord key1 key2) command)
-      ;; (define-key keymap (vector 'key-chord key2 key1) command)   ;; sekiroc:: donot reverse bind!
-      )))
+;;  (use-package key-chord
+;;    :ensure t
+;;    :config
+;;    )
+;;  (setq key-chord-two-keys-delay 1.0)
+;;  (setq key-chord-one-key-delay 1.1)
+;;  
+;;  (key-chord-mode 1)
+;;  
+;;  (defun my-key-chord-define (keymap keys command)
+;;    "Define in KEYMAP, a key-chord of the two keys in KEYS starting a COMMAND.
+;;  KEYS can be a string or a vector of two elements. Currently only
+;;  elements that corresponds to ascii codes in the range 32 to 126
+;;  can be used.
+;;  COMMAND can be an interactive function, a string, or nil.
+;;  If COMMAND is nil, the key-chord is removed."
+;;    (if (/= 2 (length keys))
+;;        (error "Key-chord keys must have two elements"))
+;;    ;; Exotic chars in a string are >255 but define-key wants 128..255
+;;    ;; for those.
+;;    (let ((key1 (logand 255 (aref keys 0)))
+;;          (key2 (logand 255 (aref keys 1))))
+;;      (if (eq key1 key2)
+;;          (define-key keymap (vector 'key-chord key1 key2) command)
+;;        (define-key keymap (vector 'key-chord key1 key2) command)
+;;        ;; (define-key keymap (vector 'key-chord key2 key1) command)   ;; sekiroc:: donot reverse bind!
+;;        )))
 
 
 
