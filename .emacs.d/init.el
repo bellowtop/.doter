@@ -1529,6 +1529,8 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+
+
 (defun my-god-mode-update-cursor-type ()
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
     (if (bound-and-true-p god-local-mode)
@@ -1537,9 +1539,9 @@ If buffer-or-name is nil return current buffer's mode."
                 (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
                 (when (display-graphic-p)
                     (set-face-attribute 'window-divider nil     :foreground "#252832")
-                    (set-face-attribute 'mode-line nil          :overline "#252832"   :box nil) ;; draw a line above mode-line
-                    (set-face-attribute 'mode-line-active nil   :foreground "green" :background "DarkMagenta" :box nil)
-                    (set-face-attribute 'mode-line-inactive nil :foreground "cyan" :background "black")
+                    (set-face-attribute 'mode-line nil          :overline "purple"   :box nil) ;; draw a line above mode-line
+                    (set-face-attribute 'mode-line-active nil   :overline "purple"  :box nil)
+                    (set-face-attribute 'mode-line-inactive nil :overline "purple"  :box nil)
                     (setq cursor-type 'box)
                 )
                 ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
@@ -1552,8 +1554,8 @@ If buffer-or-name is nil return current buffer's mode."
                 (when (display-graphic-p)
                     (set-face-attribute 'window-divider nil     :foreground "green")
                     (set-face-attribute 'mode-line nil          :overline "green"   :box nil) ;; draw a line above mode-line
-                    (set-face-attribute 'mode-line-active nil   :foreground "green" :background "DarkMagenta" :box nil)
-                    (set-face-attribute 'mode-line-inactive nil :foreground "cyan" :background "black")
+                    (set-face-attribute 'mode-line-active nil   :overline "green"   :box nil)
+                    (set-face-attribute 'mode-line-inactive nil :overline "green"   :box nil)
                     (setq cursor-type 'bar)
                 )
                 ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
@@ -2487,7 +2489,7 @@ opening parenthesis one level up."
               ("\"" . my-wrap-region-with-double-quotes)
               ("_"  . my-wrap-region-with-underscores)
               ("`"  . my-wrap-region-with-back-quotes)
-              ("M-n"  . my-mc/mark-next-like-this)
+              ("M-d"  . my-mc/mark-next-like-this)
         )
 )
 (selected-global-mode 1)
