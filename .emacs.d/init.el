@@ -111,6 +111,8 @@
 (setq visible-bell t)
 (setq ring-bell-function #'ignore)
 
+(set-default 'truncate-lines t)
+
 
 
 ;; compile log with colors
@@ -943,8 +945,9 @@ respectively."
     ;;; (awesome-tray-mode 1)
 
     (scroll-bar-mode -1)
+    (fringe-mode -1)
     ;; (tab-bar-mode -1)
-    (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+    ;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
     (add-to-list 'default-frame-alist '(ns-appearance . dark))  ;; dark themes use "dark"
 
     (global-set-key [escape] 'my-escape-key)
@@ -1182,7 +1185,6 @@ If buffer-or-name is nil return current buffer's mode."
 
 ;; special-buffers are not affected by god-mode bindings, but affected by my-special-buffer-keys-minor-mode-map
 (setq special-buffers (list
-                        "*Backtrace*"
                         "*Pos-Frame-Read*"
                         "*Treemacs"
                         "*Messages*"
@@ -1205,7 +1207,7 @@ If buffer-or-name is nil return current buffer's mode."
                         "*NeoTree*"))
 
 ;; legendary-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
-(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf" "*terminal*" "*eshell*" "magit"))
+(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf" "*terminal*" "*eshell*" "magit" "*Backtrace*"))
 
 (setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "dired-mode" "cfrs-input-mode" ))
 
@@ -1548,7 +1550,7 @@ If buffer-or-name is nil return current buffer's mode."
                     (set-face-attribute 'mode-line nil          :overline "purple"   :box nil) ;; draw a line above mode-line
                     (set-face-attribute 'mode-line-active nil   :overline "purple"  :box nil)
                     (set-face-attribute 'mode-line-inactive nil :overline "purple"  :box nil)
-                    (setq cursor-type 'box)
+                    (setq cursor-type 'bar)
                 )
                 ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
                 ;; (set-face-attribute 'mode-line nil :background "#38424B")
@@ -1648,6 +1650,12 @@ If buffer-or-name is nil return current buffer's mode."
   (neotree-find)
 )
 
+
+(defun my-add-padding-for-neotree()
+    (set-window-margins
+      (get-buffer-window " *NeoTree*" 'visible) 1)
+)
+(advice-add 'neotree-show :after 'my-add-padding-for-neotree)
 
 
 
@@ -2427,8 +2435,8 @@ opening parenthesis one level up."
     (define-key map (kbd "/") #'isearch-forward)
     (define-key map (kbd "k") #'previous-line)
     (define-key map (kbd "j") #'next-line)
-    (define-key map (kbd "l") #'forward-char)
-    (define-key map (kbd "h") #'backward-char)
+    (define-key map (kbd "l") #'my-forward-char-no-cross-line)
+    (define-key map (kbd "h") #'my-backward-char-no-cross-line)
 
     (define-key map (kbd "M-;") #'avy-goto-word-0)
     (define-key map (kbd "M-o") #'other-window)
