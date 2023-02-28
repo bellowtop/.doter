@@ -1,8 +1,16 @@
 set ideajoin
 
+set incsearch
+set hlsearch
+
+set showmode
 let mapleader=" "
 set easymotion
 set multiple-cursors
+set clipboard+=unnamed
+set surround
+set NERDTree
+
 
 
 
@@ -11,7 +19,7 @@ map f <Plug>(easymotion-bd-w)
 
 
 
-map <D-d> <Plug>NextOccurrence
+map <M-d> <Plug>NextOccurrence
 map <C-n> <Plug>NextOccurrence
 
 
@@ -22,13 +30,29 @@ map L $
 map ; <C-d>
 map ' <C-u>
 
-map <M-n> <C-e>
-map <M-p> <C-y>
+map <M-j> <C-e>
+map <M-k> <C-y>
 
 map <C-l> zz
 
 map m %
 
 
+nnoremap <leader>n :NERDTree <CR>
+nnoremap <leader>f :action GotoClass <CR>
+nnoremap <leader>m :action FindInPath <CR>
+# nnoremap <leader>m :action SearchEverywhere <CR>
+
+nnoremap gi :action GotoImplementation <CR>
+nnoremap gd :action GotoDeclaration <CR>
+
+
+
+vnoremap / :action Find<CR>
+nnoremap / :action Find<CR>
+
+
+
 map <leader>vv :e ~/.ideavimrc<CR>
 map <leader>vr :source ~/.ideavimrc<CR>
+
