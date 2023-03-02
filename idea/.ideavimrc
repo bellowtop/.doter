@@ -15,6 +15,11 @@ set NERDTree
 sethandler <C-j> a:vim
 sethandler <C-/> a:vim
 
+# sethandler <D-l> a:vim
+# sethandler <D-h> a:vim
+
+# map <D-l> :action NextTab <CR>
+# map <D-h> :action PreviousTab <CR>
 
 
 
@@ -25,7 +30,7 @@ map f <Plug>(easymotion-bd-w)
 
 
 map <M-d> <Plug>NextOccurrence
-map <C-n> <Plug>NextOccurrence
+# map <C-n> <Plug>NextOccurrence
 
 
 map H ^
@@ -39,7 +44,7 @@ map ' <C-u>
 map m %
 
 
-nnoremap <leader>n :NERDTree <CR>
+nnoremap <leader>n :NERDTreeToggle <CR>
 nnoremap @ :NERDTreeFind <CR>
 
 nnoremap <leader>f :action GotoClass <CR>
@@ -48,9 +53,12 @@ nnoremap <leader>m :action FindInPath <CR>
 
 nmap <leader>h :action PreviousTab<CR>
 nmap <leader>l :action NextTab<CR>
+nmap <leader>r :action Run<CR>
 
 nnoremap gi :action GotoImplementation <CR>
 nnoremap gd :action GotoDeclaration <CR>
+nnoremap gr :action ShowUsages <CR>
+
 
 nnoremap u :action $Undo <CR>
 
