@@ -224,6 +224,7 @@
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#00ff00" :weight normal))))
  '(magit-diff-added ((t (:extend t :foreground "forest green"))))
  '(magit-diff-added-highlight ((t (:extend t :background "black" :foreground "green"))))
+ '(magit-diff-file-heading ((t (:extend t :weight normal))))
  '(magit-diff-file-heading-highlight ((t (:extend t :background "black" :weight bold))))
  '(magit-diff-hunk-heading ((t (:extend t :background "#252832" :foreground "yellow4"))))
  '(magit-diff-hunk-heading-highlight ((t (:extend t :background "black" :foreground "yellow"))))
@@ -2125,6 +2126,14 @@ the cursor by ARG lines."
 )
 
 
+(defun my-pause-god-send-q-key-resume-god()
+    (interactive)
+    (my-quit-god-mode)
+    (execute-kbd-macro (kbd "q"))
+    (my-god-mode)
+)
+
+
 
 
 (defun my-goto-match-paren (arg)
@@ -2257,7 +2266,7 @@ opening parenthesis one level up."
     (define-prefix-command 'my-god-mode-leader-key)
     (define-prefix-command 'my-god-mode-dummmy-key)
     (define-prefix-command 'my-god-mode-viewer-key)
-    (define-prefix-command 'my-god-mode-window-key)
+    ;; (define-prefix-command 'my-god-mode-window-key)
     (define-key god-local-mode-map (kbd "SPC") 'my-god-mode-leader-key)
     (define-key god-local-mode-map (kbd ",")   'my-god-mode-dummmy-key)
     (define-key god-local-mode-map (kbd "z")   'my-god-mode-viewer-key)
@@ -2269,6 +2278,7 @@ opening parenthesis one level up."
     (define-key god-local-mode-map (kbd "b") #'backward-word)
     (define-key god-local-mode-map (kbd "k") #'previous-line)
     (define-key god-local-mode-map (kbd "j") #'next-line)
+    (define-key god-local-mode-map (kbd "q") #'my-pause-god-send-q-key-resume-god)
     (define-key god-local-mode-map (kbd "l") #'my-forward-char-no-cross-line)
     (define-key god-local-mode-map (kbd "h") #'my-backward-char-no-cross-line)
     (define-key god-local-mode-map (kbd "v") #'set-mark-command)
