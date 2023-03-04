@@ -10,6 +10,7 @@ set multiple-cursors
 set clipboard+=unnamed
 set surround
 set NERDTree
+set visualbell
 
 
 sethandler <C-j> a:vim
@@ -54,6 +55,7 @@ nnoremap <leader>m :action FindInPath <CR>
 nmap <leader>h :action PreviousTab<CR>
 nmap <leader>l :action NextTab<CR>
 nmap <leader>r :action Run<CR>
+nmap <leader>w :action SaveAll <CR>
 
 nnoremap gi :action GotoImplementation <CR>
 nnoremap gd :action GotoDeclaration <CR>
@@ -98,4 +100,3 @@ nnoremap / :action Find<CR>
 
 map <leader>vv :e ~/.ideavimrc<CR>
 map <leader>vr :source ~/.ideavimrc<CR>
-
