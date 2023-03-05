@@ -56,6 +56,8 @@ nmap <leader>h :action PreviousTab<CR>
 nmap <leader>l :action NextTab<CR>
 nmap <leader>r :action Run<CR>
 nmap <leader>w :action SaveAll <CR>
+nmap <leader>k :action CloseEditor <CR>
+nmap <leader>b :ls<CR>:b<Space>
 
 nnoremap gi :action GotoImplementation <CR>
 nnoremap gd :action GotoDeclaration <CR>
