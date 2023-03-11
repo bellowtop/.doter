@@ -12,6 +12,8 @@ anaconda-mode/
 /url/cache
 
 
+/helix/runtime
+
 /iterm2/AppSupport
 
 /.emacs.d/.local/*

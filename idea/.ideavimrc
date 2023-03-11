@@ -7,10 +7,18 @@ set showmode
 let mapleader=" "
 set easymotion
 set multiple-cursors
-set clipboard+=unnamed
 set surround
 set NERDTree
 set visualbell
+
+# set clipboard+=unnamed
+nnoremap <C-S-c> :action EditorCopy<CR>
+nnoremap <C-S-v> :action EditorPaste<CR>
+inoremap <C-S-c> :action EditorCopy<CR>
+inoremap <C-S-v> :action EditorPaste<CR>
+vnoremap <C-S-c> :action EditorCopy<CR>
+vnoremap <C-S-v> :action EditorPaste<CR>
+
 
 
 sethandler <C-j> a:vim
@@ -56,6 +64,12 @@ nmap <leader>h :action PreviousTab<CR>
 nmap <leader>l :action NextTab<CR>
 nmap <leader>r :action Run<CR>
 nmap <leader>w :action SaveAll <CR>
+nmap <leader>k :action CloseEditor <CR>
+nmap <leader>K :action CloseAllEditorsButActive<CR>
+nmap <Leader>b :ls<CR>:b<Space>
+
+
+
 
 nnoremap gi :action GotoImplementation <CR>
 nnoremap gd :action GotoDeclaration <CR>
@@ -66,6 +80,8 @@ nnoremap u :action $Undo <CR>
 
 map <C-o> :action Back<CR>
 map <C-i> :action Forward<CR>
+
+
 
 inoremap <C-y> :action EditorPaste <CR>
 inoremap <C-a> :action EditorLineStart <CR>
@@ -93,8 +109,8 @@ vnoremap <C-l> :action EditorScrollToCenter <CR>
 
 
 
-vnoremap / :action Find<CR>
-nnoremap / :action Find<CR>
+# vnoremap / :action Find<CR>
+# nnoremap / :action Find<CR>
 
 
 
