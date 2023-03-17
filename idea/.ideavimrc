@@ -23,6 +23,8 @@ vnoremap <C-S-v> :action EditorPaste<CR>
 
 sethandler <C-j> a:vim
 sethandler <C-/> a:vim
+sethandler <M-d> a:vim
+
 
 # sethandler <D-l> a:vim
 # sethandler <D-h> a:vim
@@ -39,7 +41,7 @@ map f <Plug>(easymotion-bd-w)
 
 
 map <M-d> <Plug>NextOccurrence
-# map <C-n> <Plug>NextOccurrence
+map <C-n> <Plug>NextOccurrence
 
 
 map H ^

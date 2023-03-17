@@ -1468,11 +1468,15 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun my-disable-eglot-highlight()
   (interactive)
-        (set-face-attribute 'eglot-highlight-symbol-face nil :foreground 'unspecified :background 'unspecified)
+        (ignore-errors
+            (set-face-attribute 'eglot-highlight-symbol-face nil :foreground 'unspecified :background 'unspecified)
+        )
   )
 (defun my-enable-eglot-highlight()
   (interactive)
-        (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#000000" :background "#7fdc59")
+        (ignore-errors
+            (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#000000" :background "#7fdc59")
+        )
   )
 
 (defun my-disable-code-intelligence()
@@ -1549,7 +1553,7 @@ If buffer-or-name is nil return current buffer's mode."
                 (when (display-graphic-p)
                     (set-face-attribute 'window-divider nil     :foreground "#252832")
                     (set-face-attribute 'mode-line nil          :overline "purple"   :box nil) ;; draw a line above mode-line
-                    (set-face-attribute 'mode-line-active nil   :overline "purple"  :box nil)
+                    ;; (set-face-attribute 'mode-line-active nil   :overline "purple"  :box nil)
                     (set-face-attribute 'mode-line-inactive nil :overline "purple"  :box nil)
                     (setq cursor-type 'bar)
                 )
@@ -1563,7 +1567,7 @@ If buffer-or-name is nil return current buffer's mode."
                 (when (display-graphic-p)
                     (set-face-attribute 'window-divider nil     :foreground "green")
                     (set-face-attribute 'mode-line nil          :overline "green"   :box nil) ;; draw a line above mode-line
-                    (set-face-attribute 'mode-line-active nil   :overline "green"   :box nil)
+                    ;; (set-face-attribute 'mode-line-active nil   :overline "green"   :box nil)
                     (set-face-attribute 'mode-line-inactive nil :overline "green"   :box nil)
                     (setq cursor-type 'bar)
                 )
@@ -1573,7 +1577,7 @@ If buffer-or-name is nil return current buffer's mode."
       )
     )
     (unless (display-graphic-p)
-        (set-face-attribute 'mode-line-active nil :foreground "green" :background "DarkMagenta")
+        (set-face-attribute 'mode-line          nil :foreground "green" :background "DarkMagenta")
         (set-face-attribute 'mode-line-inactive nil :foreground "cyan" :background "black")
     )
 )
@@ -2513,7 +2517,7 @@ opening parenthesis one level up."
               ("\"" . my-wrap-region-with-double-quotes)
               ("_"  . my-wrap-region-with-underscores)
               ("`"  . my-wrap-region-with-back-quotes)
-              ("M-d"  . my-mc/mark-next-like-this)
+              ("C-n"  . my-mc/mark-next-like-this)
         )
 )
 (selected-global-mode 1)
