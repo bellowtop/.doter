@@ -68,7 +68,7 @@ nmap <leader>r :action Run<CR>
 nmap <leader>w :action SaveAll <CR>
 nmap <leader>k :action CloseEditor <CR>
 nmap <leader>K :action CloseAllEditorsButActive<CR>
-nmap <Leader>b :ls<CR>:b<Space>
+nmap <leader>b :action Build<CR>
 
 
 
