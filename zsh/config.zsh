@@ -23,8 +23,6 @@ kk() {
 
 
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 export PATH="/opt/homebrew/bin:$PATH"
 
 export GOPATH="$HOME/work/workspaces/go"
