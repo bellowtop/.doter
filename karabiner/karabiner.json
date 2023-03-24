@@ -848,7 +848,7 @@
                     },
                     "to": [
                         {
-                            "key_code": "f1"
+                            "apple_vendor_keyboard_key_code": "brightness_down"
                         }
                     ]
                 },
@@ -858,7 +858,7 @@
                     },
                     "to": [
                         {
-                            "key_code": "f1"
+                            "apple_vendor_keyboard_key_code": "brightness_up"
                         }
                     ]
                 },
@@ -868,7 +868,7 @@
                     },
                     "to": [
                         {
-                            "key_code": "f3"
+                            "apple_vendor_keyboard_key_code": "mission_control"
                         }
                     ]
                 },
@@ -898,7 +898,7 @@
                     },
                     "to": [
                         {
-                            "key_code": "f6"
+                            "consumer_key_code": "mute"
                         }
                     ]
                 },
