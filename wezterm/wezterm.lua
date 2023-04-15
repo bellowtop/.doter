@@ -1,6 +1,7 @@
 -- WezTerm configuration
 ---------------------------------------------------------------
 
+local wezterm = require "wezterm"
 local mytable = require "lib/mystdlib".mytable
 
 -- Misc
@@ -71,8 +72,17 @@ local config = mytable.merge_all(
   cfg_misc,
   cfg_colors,
   cfg_fonts,
-  cfg_key_bindings,
   -- cfg_mouse_bindings,
+  cfg_key_bindings,
+  {
+        mouse_bindings = {
+            {
+                mods="NONE",
+                event={Down={streak=1, button="Right" }},
+                action=wezterm.action.SendString '\x13\x5b\x4d',
+            },
+        },
+  },
   {} -- so the last table can have an ending comma for git diffs :)
 )
 
