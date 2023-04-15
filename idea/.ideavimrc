@@ -10,6 +10,7 @@ set multiple-cursors
 set surround
 set NERDTree
 set visualbell
+set nooldundo
 
 # set clipboard+=unnamed
 nnoremap <C-S-c> :action EditorCopy<CR>
@@ -22,6 +23,8 @@ vnoremap <C-S-v> :action EditorPaste<CR>
 
 
 sethandler <C-j> a:vim
+sethandler <C-k> a:vim
+sethandler <A-k> a:vim
 sethandler <C-/> a:vim
 sethandler <M-d> a:vim
 
@@ -85,11 +88,14 @@ map <C-i> :action Forward<CR>
 
 
 
-inoremap <C-y> :action EditorPaste <CR>
+inoremap <C-y> <C-r>"
+inoremap <C-d> <C-o>x
 inoremap <C-a> :action EditorLineStart <CR>
 inoremap <C-e> :action EditorLineEnd <CR>
 inoremap <C-f> :action EditorRight <CR>
 inoremap <C-b> :action EditorLeft <CR>
+inoremap <C-k> :action EditorDeleteToLineEnd <CR>
+inoremap <M-k> :action EditorDeleteToLineStart <CR>
 inoremap <M-d> :action EditorDeleteToWordEnd <CR>
 inoremap <C-/> :action $Undo <CR>
 
