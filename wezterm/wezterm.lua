@@ -76,11 +76,27 @@ local config = mytable.merge_all(
   cfg_key_bindings,
   {
         mouse_bindings = {
+            -- Right click send C-s [
             {
                 mods="NONE",
                 event={Down={streak=1, button="Right" }},
-                action=wezterm.action.SendString '\x13\x5b\x4d',
+                action=wezterm.action.SendString '\x13\x5b',   -- goto selection mode, and cursor goto top-line:  C-s [
             },
+
+            -- Scrolling up while holding CTRL send K
+            {
+              event = { Down = { streak = 1, button = { WheelUp = 1 } } },
+              mods = 'CTRL',
+              action=wezterm.action.SendString '\x4b',   -- in selection mode, scroll-line:  K
+            },
+
+            -- Scrolling down while holding CTRL send J
+            {
+              event = { Down = { streak = 1, button = { WheelDown = 1 } } },
+              mods = 'CTRL',
+              action=wezterm.action.SendString '\x4a',   -- in selection mode, scroll-line:  J
+            },
+
         },
   },
   {} -- so the last table can have an ending comma for git diffs :)
