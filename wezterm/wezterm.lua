@@ -83,6 +83,17 @@ local config = mytable.merge_all(
                 action=wezterm.action.SendString '\x13\x5b',   -- goto selection mode, and cursor goto top-line:  C-s [
             },
 
+            {
+                mods="NONE",
+                event={Down={streak=2, button="Right" }},
+                action=wezterm.action.SendString '\x1b',   -- double Right send Escape
+            },
+            {
+                mods="CTRL",
+                event={Down={streak=2, button="Right" }},
+                action=wezterm.action.SendString '\x1b',   -- Ctrl - double Right send Escape
+            },
+
             -- Scrolling up while holding CTRL send K
             {
               event = { Down = { streak = 1, button = { WheelUp = 1 } } },
