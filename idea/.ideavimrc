@@ -72,6 +72,7 @@ nmap <leader>w :action SaveAll <CR>
 nmap <leader>k :action CloseEditor <CR>
 nmap <leader>K :action CloseAllEditorsButActive<CR>
 nmap <leader>b :action Build<CR>
+nmap <C-c>f    :action ReformatCode<CR>
 
 
 
