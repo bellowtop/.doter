@@ -78,7 +78,7 @@ local config = mytable.merge_all(
         mouse_bindings = {
             -- Right click send C-s [
             {
-                mods="NONE",
+                mods="CTRL",
                 event={Down={streak=1, button="Right" }},
                 action=wezterm.action.SendString '\x13\x5b',   -- goto selection mode, and cursor goto top-line:  C-s [
             },
