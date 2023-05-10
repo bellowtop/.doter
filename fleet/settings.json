@@ -1,0 +1,11 @@
+{
+    "theme": "one-dark-pro",
+    "vimEmulationEnabled": false,
+    "editor.caretShape": "Vertical",
+    "editor.fontFamily": "Source Code Pro for Powerline",
+    "editor.fontSize": 14.0,
+    "editor.lineSpacing": 1.6,
+    "showShortcuts": false,
+    "keymap": "macos",
+    "editor.distractionFreeMode": false
+}

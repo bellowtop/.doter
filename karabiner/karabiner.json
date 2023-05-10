@@ -253,11 +253,11 @@
                         },
                         {
                             "from": {
-                                "key_code": "right_command"
+                                "key_code": "right_option"
                             },
                             "to": [
                                 {
-                                    "key_code": "right_option"
+                                    "key_code": "left_option"
                                 }
                             ]
                         }
@@ -839,6 +839,20 @@
                         }
                     ],
                     "treat_as_built_in_keyboard": false
+                },
+                {
+                    "disable_built_in_keyboard_if_exists": false,
+                    "fn_function_keys": [],
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "is_pointing_device": true,
+                        "product_id": 591,
+                        "vendor_id": 1452
+                    },
+                    "ignore": true,
+                    "manipulate_caps_lock_led": true,
+                    "simple_modifications": [],
+                    "treat_as_built_in_keyboard": false
                 }
             ],
             "fn_function_keys": [
@@ -848,7 +862,7 @@
                     },
                     "to": [
                         {
-                            "apple_vendor_keyboard_key_code": "brightness_down"
+                            "key_code": "f1"
                         }
                     ]
                 },
@@ -898,7 +912,7 @@
                     },
                     "to": [
                         {
-                            "consumer_key_code": "mute"
+                            "key_code": "f6"
                         }
                     ]
                 },
