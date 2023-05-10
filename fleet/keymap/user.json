@@ -1,0 +1,8 @@
+{
+  "keymap": [
+    {
+      "key": "alt-v",
+      "trigger": "page-up"
+    }
+  ]
+}
