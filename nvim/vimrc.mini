@@ -1,0 +1,50 @@
+syntax on
+colorscheme default
+
+filetype plugin indent on
+set showmatch
+set ts=4
+set sts=4
+set sw=4
+set autoindent
+set smartindent
+set smarttab
+set expandtab
+set number
+set belloff=all
+
+map H ^
+map L $
+map ; <C-d>
+map ' <C-u>
+map <C-l> zz
+map m %
+
+autocmd VimEnter * nnoremap <C-j> <ESC>:w<CR>
+autocmd VimEnter * inoremap <C-j> <ESC>:w<CR>
+
+autocmd VimEnter * inoremap " ""<left>
+autocmd VimEnter * inoremap ' ''<left>
+autocmd VimEnter * inoremap ( ()<left>
+autocmd VimEnter * inoremap [ []<left>
+autocmd VimEnter * inoremap { {}<left>
+autocmd VimEnter * inoremap {<CR> {<CR>}<ESC>O
+autocmd VimEnter * inoremap {;<CR> {<CR>};<ESC>O
+
+autocmd VimEnter * inoremap <C-y> <C-o>P
+autocmd VimEnter * inoremap <C-n> <C-o>j
+autocmd VimEnter * inoremap <C-d> <C-o>x
+autocmd VimEnter * inoremap <C-p> <C-o>k
+autocmd VimEnter * inoremap <C-e> <C-o>$
+autocmd VimEnter * inoremap <C-a> <C-o>^
+autocmd VimEnter * inoremap <C-b> <Left>
+autocmd VimEnter * inoremap <C-f> <Right>
+autocmd VimEnter * inoremap <C-k> <C-o>D
+autocmd VimEnter * inoremap <M-k> <C-o>d0
+autocmd VimEnter * inoremap <C-t> <C-o>O
+
+set hlsearch
+hi Search ctermfg=black ctermbg=yellow
+
+au FileType python setlocal formatprg=autopep8\ -
+
