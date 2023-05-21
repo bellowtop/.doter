@@ -184,6 +184,7 @@
     (define-key god-local-mode-map (kbd ", g r") #'xref-find-references)
     (define-key god-local-mode-map (kbd ", g R") #'eglot-rename)
     (define-key god-local-mode-map (kbd ", g i") #'eglot-find-implementation)
+    (define-key god-local-mode-map (kbd "M-<RET>") #'eglot-code-actions)
 
     ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)
     ;; (define-key god-local-mode-map (kbd "C-, C-l") #'switch-to-next-buffer)
