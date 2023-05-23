@@ -12,9 +12,9 @@
 
 
 (require 'package)
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
+;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (package-initialize)
 
 
@@ -230,7 +230,7 @@
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
- '(eglot-highlight-symbol-face ((t (:foreground "#ececec" :background "#155402"))))
+ '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59"))))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
@@ -348,6 +348,15 @@
 
 (setq eglot-java-junit-platform-console-standalone-jar (expand-file-name "~/.emacs.d/.local/eclipse.jdt.ls/test-runner/junit-platform-console-standalone.jar"))
 
+
+
+
+(setq display-buffer-alist
+      `(("*eldoc*"
+         (display-buffer-in-side-window)
+         (side . bottom)
+         (window-height . 0.16)
+         (slot . 0))))
 
 
 
@@ -503,8 +512,14 @@
  '(create-lockfiles nil)
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
+ '(package-archives
+   '(("gnu" . "https://elpa.gnu.org/packages/")
+     ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+     ("melpa" . "https://melpa.org/packages/")
+     ("melpa-stable" . "https://stable.melpa.org/packages/")
+     ("org" . "http://orgmode.org/elpa/")))
  '(package-selected-packages
-   '(ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -1270,6 +1285,14 @@ respectively."
 
 
 
+;; semantic-refactor, use in c++ mode
+(require 'srefactor)
+(semantic-mode 1) ;; -> this is optional for Lisp
+
+(define-key c-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
+(define-key c++-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
+
+
 
 (defun buffer-mode (&optional buffer-or-name)
   "Returns the major mode associated with a buffer.
@@ -1304,7 +1327,7 @@ If buffer-or-name is nil return current buffer's mode."
                         "*NeoTree*"))
 
 ;; legendary-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
-(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf" "*terminal*" "*eshell*" "magit" "*Backtrace*"))
+(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf" "*terminal*" "*eshell*" "magit" "*Backtrace*" "menu"))
 
 (setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "dired-mode" "cfrs-input-mode" ))
 
@@ -1568,7 +1591,7 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-enable-eglot-highlight()
   (interactive)
         (ignore-errors
-            (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#ECECEC" :background "#155402")
+            (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#000000" :background "#7fdc59")
         )
   )
 
@@ -2196,6 +2219,10 @@ the cursor by ARG lines."
 
 
 
+(defun my-quit-other-window ()
+  (interactive)
+  (other-window 1)
+  (quit-window))
 
 (defun my-delete-other-windows ()
   (interactive)
