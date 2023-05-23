@@ -230,7 +230,7 @@
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
- '(eglot-highlight-symbol-face ((t (:underline (:color "#7fdc59" :style line :position line)))))
+ '(eglot-highlight-symbol-face ((t (:foreground "#ececec" :background "#155402"))))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
@@ -1568,7 +1568,7 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-enable-eglot-highlight()
   (interactive)
         (ignore-errors
-            (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#000000" :background "#7fdc59")
+            (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#ECECEC" :background "#155402")
         )
   )
 
@@ -1645,14 +1645,14 @@ If buffer-or-name is nil return current buffer's mode."
                 (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
                 (when (display-graphic-p)
                     (set-face-attribute 'window-divider nil     :foreground "gray")
-                    (set-face-attribute 'mode-line nil          :overline "purple"   :box nil) ;; draw a line above mode-line
-                    ;; (set-face-attribute 'mode-line-active nil   :overline "purple"  :box nil)
-                    (set-face-attribute 'mode-line-inactive nil :overline "purple"  :box nil)
+                    (set-face-attribute 'mode-line nil          :overline "#374250"   :box nil) ;; draw a line above mode-line
+                    ;; (set-face-attribute 'mode-line-active nil   :overline "#374250"  :box nil)
+                    (set-face-attribute 'mode-line-inactive nil :overline "#374250"  :box nil)
                     (setq cursor-type 'bar)
                 )
                 ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
                 ;; (set-face-attribute 'mode-line nil :background "#38424B")
-                (set-face-foreground 'vertical-border "gray")
+                (set-face-foreground 'vertical-border "#374250")
       )
       (progn
                 (set-face-attribute 'hl-line nil :background (face-background 'default))
