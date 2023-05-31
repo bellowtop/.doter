@@ -230,7 +230,7 @@
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
- '(eglot-highlight-symbol-face ((t (:foreground "#000000" :background "#7fdc59"))))
+ '(eglot-highlight-symbol-face ((t (:foreground "#ECECEC" :background "#155402"))))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
@@ -716,6 +716,9 @@
 
 
 (require 'smartparens-config)
+(smartparens-global-mode 1)
+(smartparens-mode 1)
+
 
 (defun indent-between-pair (&rest _ignored)
   (newline)
@@ -804,7 +807,7 @@ respectively."
   :ensure t
   :diminish (ivy-mode . "")
   :bind
-  (:map ivy-mode-map
+  (:map ivy-minibuffer-map
     ("C-'" . ivy-avy)
     ("TAB" . ivy-next-line)
     ("<backtab>" . ivy-previous-line)
@@ -1327,7 +1330,7 @@ If buffer-or-name is nil return current buffer's mode."
                         "*NeoTree*"))
 
 ;; legendary-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
-(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf" "*terminal*" "*eshell*" "magit" "*Backtrace*" "menu"))
+(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf" "*terminal*" "*eshell*" "magit" "*Backtrace*" "menu" "*ielm*"))
 
 (setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "dired-mode" "cfrs-input-mode" ))
 
@@ -1591,7 +1594,7 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-enable-eglot-highlight()
   (interactive)
         (ignore-errors
-            (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#000000" :background "#7fdc59")
+            (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#ECECEC" :background "#155402")
         )
   )
 
