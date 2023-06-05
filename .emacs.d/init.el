@@ -519,7 +519,7 @@
      ("melpa-stable" . "https://stable.melpa.org/packages/")
      ("org" . "http://orgmode.org/elpa/")))
  '(package-selected-packages
-   '(srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(emacs-surround srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -787,7 +787,7 @@ respectively."
 
 
 (use-package emacs-surround
-  :defer t
+  :ensure t
   :config
     (add-to-list 'emacs-surround-alist '("}" . ("{ " . " }")))
     (add-to-list 'emacs-surround-alist '(")" . ("( " . " )")))
@@ -1661,7 +1661,8 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
-
+;; This buffer is for text that is not saved, and for Lisp evaluation.
+;; To create a file, visit it with <open> and enter text in its buffer.
 
 (defun my-god-mode-update-cursor-type ()
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
@@ -1676,9 +1677,15 @@ If buffer-or-name is nil return current buffer's mode."
                     (set-face-attribute 'mode-line-inactive nil :overline "#374250"  :box nil)
                     (setq cursor-type 'bar)
                 )
+                (unless (display-graphic-p)
+                    (set-face-attribute 'mode-line          nil :foreground "black" :background "#00AFFF")
+                    (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
+                )
+
                 ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
                 ;; (set-face-attribute 'mode-line nil :background "#38424B")
                 (set-face-foreground 'vertical-border "#374250")
+
       )
       (progn
                 (set-face-attribute 'hl-line nil :background (face-background 'default))
@@ -1690,16 +1697,21 @@ If buffer-or-name is nil return current buffer's mode."
                     (set-face-attribute 'mode-line-inactive nil :overline "green"   :box nil)
                     (setq cursor-type 'bar)
                 )
+                (unless (display-graphic-p)
+                    (set-face-attribute 'mode-line          nil :foreground "black" :background "cyan")
+                    (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
+                )
+
                 ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
                 ;;(set-face-attribute 'mode-line nil :background "#38424B")
                 (set-face-foreground 'vertical-border "#00ff00")
+
       )
     )
-    (unless (display-graphic-p)
-        (set-face-attribute 'mode-line          nil :foreground "green" :background "DarkMagenta")
-        (set-face-attribute 'mode-line-inactive nil :foreground "cyan" :background "black")
-    )
 )
+
+
+
 
 
 
