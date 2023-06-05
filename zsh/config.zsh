@@ -17,6 +17,10 @@ kl() {
     echo -ne "\e[2 q"
 }
 
+ki() {
+    echo -ne "\e[6 q"
+}
+
 kk() {
     tmux send-keys -R \; clear-history
 }
