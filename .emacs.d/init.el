@@ -12,9 +12,14 @@
 
 
 (require 'package)
+;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
+;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+
+(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+
 (package-initialize)
 
 
@@ -528,8 +533,9 @@
  ;;   '(("gnu" . "https://elpa.gnu.org/packages/")
  ;;     ("nongnu" . "https://elpa.nongnu.org/nongnu/")
  ;;     ("melpa" . "https://melpa.org/packages/")
- ;;     ("melpa-stable" . "https://stable.melpa.org/packages/")
- ;;     ("org" . "http://orgmode.org/elpa/")))
+ ;;     ;; ("melpa-stable" . "https://stable.melpa.org/packages/")
+ ;;     ;; ("org" . "http://orgmode.org/elpa/")
+ ;;     ))
  '(package-selected-packages
    '(emacs-surround srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
@@ -1816,6 +1822,8 @@ If buffer-or-name is nil return current buffer's mode."
   :config
   (treemacs-resize-icons 18)
   (treemacs-follow-mode -1)
+  (treemacs-hide-gitignored-files-mode 1)
+  (treemacs-show-hidden-files nil)
    :bind (
         ("C-c n" . treemacs)
         ("C-c t" . treemacs-toggle-node)
