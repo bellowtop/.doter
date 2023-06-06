@@ -241,7 +241,7 @@
  '(doom-modeline-buffer-minor-mode ((t nil)))
  '(doom-modeline-buffer-modified ((t (:inherit nil))))
  '(doom-modeline-buffer-path ((t nil)))
- '(doom-modeline-god ((t (:background "yellow" :foreground "red" :weight bold))))
+ '(doom-modeline-god ((t (:weight bold))))
  '(doom-modeline-info ((t (:inherit nil))))
  '(doom-modeline-project-dir ((t (:inherit nil))))
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
@@ -530,13 +530,6 @@
  '(create-lockfiles nil)
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
- ;; '(package-archives
- ;;   '(("gnu" . "https://elpa.gnu.org/packages/")
- ;;     ("nongnu" . "https://elpa.nongnu.org/nongnu/")
- ;;     ("melpa" . "https://melpa.org/packages/")
- ;;     ;; ("melpa-stable" . "https://stable.melpa.org/packages/")
- ;;     ;; ("org" . "http://orgmode.org/elpa/")
- ;;     ))
  '(package-selected-packages
    '(srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
