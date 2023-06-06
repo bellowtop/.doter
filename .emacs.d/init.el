@@ -1719,6 +1719,58 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+;;;
+;;;  ;; darker current background when toggle god-mode. too blinky
+;;;
+;;;  (defun my-god-mode-update-cursor-type ()
+;;;    ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
+;;;    (if (bound-and-true-p god-local-mode)
+;;;        (progn
+;;;     (set-face-attribute 'default nil                  :background "#252832")
+;;;     (set-face-attribute 'line-number nil              :foreground "#4B5363"    :background "#252832")
+;;;          (set-face-attribute 'hl-line nil                  :foreground 'unspecified :background "#313f4e")
+;;;          (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59"    :background "#232d38")
+;;;          (when (display-graphic-p)
+;;;            (set-face-attribute 'window-divider nil         :foreground "gray")
+;;;            (set-face-attribute 'mode-line nil              :overline "#374250"   :box nil) ;; draw a line above mode-line
+;;;            ;; (set-face-attribute 'mode-line-active nil    :overline "#374250"   :box nil)
+;;;            (set-face-attribute 'mode-line-inactive nil     :overline "#374250"   :box nil)
+;;;            (setq cursor-type 'bar)
+;;;            )
+;;;          (unless (display-graphic-p)
+;;;            (set-face-attribute 'mode-line          nil :foreground "black"   :background "#00AFFF")
+;;;            (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
+;;;            )
+;;;          ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
+;;;          ;; (set-face-attribute 'mode-line nil :background "#38424B")
+;;;          (set-face-foreground 'vertical-border "#374250")
+;;;     )
+;;;      (progn
+;;;        (set-face-attribute 'default nil                    :background "#1E2127")
+;;;        (set-face-attribute 'hl-line nil                    :foreground 'unspecified  :background "#313f4e")
+;;;        (set-face-attribute 'line-number nil                :foreground "#4B5363"     :background "#1E2127")
+;;;        (set-face-attribute 'line-number-current-line nil   :foreground "black"       :background "#7fdc59")
+;;;        (when (display-graphic-p)
+;;;          (set-face-attribute 'window-divider nil           :foreground "green")
+;;;          (set-face-attribute 'mode-line nil                :overline "green"   :box nil) ;; draw a line above mode-line
+;;;          ;; (set-face-attribute 'mode-line-active nil      :overline "green"   :box nil)
+;;;          (set-face-attribute 'mode-line-inactive nil       :overline "green"   :box nil)
+;;;          (setq cursor-type 'bar)
+;;;          )
+;;;        (unless (display-graphic-p)
+;;;          (set-face-attribute 'mode-line          nil       :foreground "black"   :background "cyan")
+;;;          (set-face-attribute 'mode-line-inactive nil       :foreground "#00AFFF" :background "black")
+;;;          )
+;;;        ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
+;;;        ;;(set-face-attribute 'mode-line nil :background "#38424B")
+;;;        (set-face-foreground 'vertical-border "#00ff00")
+;;;        )
+;;;      )
+;;;    )
+
+
+
+
 
 
 
