@@ -215,8 +215,8 @@
 (add-hook 'text-mode-hook 'my-set-bigger-spacing)
 (add-hook 'prog-mode-hook 'my-set-bigger-spacing)
 
-(set-face-attribute 'default nil :font "Source Code Pro for Powerline-15")
-(add-to-list 'default-frame-alist '(font . "Source Code Pro for Powerline-15"))
+(set-face-attribute 'default nil :font "IntelOne Mono-15")
+(add-to-list 'default-frame-alist '(font . "IntelOne Mono-15"))
 (set-cursor-color "red")
 (setq-default cursor-type 'bar)
 
@@ -723,6 +723,7 @@
     (setq tab-width 4)                  ;; Default is 2
     (setq c-basic-offset 4)                  ;; Default is 2
     (setq c-indent-level 4)                  ;; Default is 2
+    (setq c-default-style "bsd")
     (setq indent-tabs-mode nil)              ;; use spaces only if nil
 )
 
