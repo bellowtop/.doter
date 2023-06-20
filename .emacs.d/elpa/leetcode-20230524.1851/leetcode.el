@@ -87,6 +87,23 @@
     (leetcode--install-my-cookie)
     nil))
 
+
+(defun leetcode--print-to-file (filename data)
+  (with-temp-file filename
+    (message "write to file: %s" filename)
+    (prin1 data (current-buffer))))
+
+(defun leetcode--read-from-file (filename)
+  (with-temp-buffer
+    (if (file-exists-p filename)
+        (progn
+          (message "read from file: %s" filename)
+          (insert-file-contents filename)
+          (read (current-buffer)))
+      (message "file %s not exists, return nil" filename)
+      nil)))
+
+
 (defgroup leetcode nil
   "A Leetcode client."
   :prefix 'leetcode-
@@ -110,7 +127,12 @@ mysql, mssql, oraclesql."
   :group 'leetcode
   :type 'string)
 
-(defcustom leetcode-directory "~/leetcode"
+(defcustom leetcode-directory "~/.emacs.d/.local/.leetcode-solutions"
+  "Directory to save solutions."
+  :group 'leetcode
+  :type 'string)
+
+(defcustom problems-cache-directory "~/.emacs.d/.local/.leetcode-problems-cache"
   "Directory to save solutions."
   :group 'leetcode
   :type 'string)
@@ -396,6 +418,7 @@ It also cleans LeetCode cookies in `url-cookie-file'."
 
 (aio-defun leetcode--api-fetch-all-tags ()
   "Fetch all problems' tags."
+  (message "start leetcode--api-fetch-all-tags...")
   (let* ((url-request-method "GET")
          (url-request-extra-headers
           `(,leetcode--User-Agent
@@ -411,6 +434,7 @@ It also cleans LeetCode cookies in `url-cookie-file'."
   (if leetcode--loading-mode
       (message "LeetCode has been refreshing...")
     (leetcode--loading-mode t)
+    (message "start leetcode--api-fetch-user-and-problems...")
     (let ((url-request-method "GET")
           (url-request-extra-headers
            `(,leetcode--User-Agent
@@ -745,9 +769,20 @@ row."
 (aio-defun leetcode-refresh-fetch ()
   "Refresh problems and update `tabulated-list-entries'."
   (interactive)
-  (if-let ((users-and-problems (aio-await (leetcode--api-fetch-user-and-problems)))
-           (all-tags (aio-await (leetcode--api-fetch-all-tags))))
-      (progn
+  (message "leetcode-refresh-fetch")
+  (unless (file-directory-p problems-cache-directory)
+      (make-directory problems-cache-directory))
+  (let* ((problems-cache-file-name (concat (file-name-as-directory problems-cache-directory) "users-and-problems.json"))
+         (tags-cache-file-name (concat (file-name-as-directory problems-cache-directory) "all-tags.json"))
+         (cached-users-and-problems (leetcode--read-from-file problems-cache-file-name))
+         (cached-all-tags (leetcode--read-from-file tags-cache-file-name))
+         (users-and-problems (or cached-users-and-problems (aio-await (leetcode--api-fetch-user-and-problems))))
+         (all-tags (or cached-all-tags (aio-await (leetcode--api-fetch-all-tags)))))
+    (progn
+        (unless (file-exists-p problems-cache-file-name)
+          (leetcode--print-to-file problems-cache-file-name users-and-problems))
+        (unless (file-exists-p tags-cache-file-name)
+          (leetcode--print-to-file tags-cache-file-name all-tags))
         (leetcode--set-user-and-problems users-and-problems)
         (leetcode--set-tags all-tags))
     (leetcode--warn "LeetCode parse user and problems failed"))
@@ -759,8 +794,8 @@ row."
   "Show leetcode problems buffer."
   (if (get-buffer leetcode--buffer-name)
       (switch-to-buffer leetcode--buffer-name)
-    (unless (leetcode--login-p)
-      (aio-await (leetcode--login)))
+    ;; (unless (leetcode--login-p)
+    ;;   (aio-await (leetcode--login)))
     (aio-await (leetcode-refresh-fetch))
     (switch-to-buffer leetcode--buffer-name))
   (leetcode--maybe-focus))
@@ -1084,9 +1119,16 @@ detail. This action will show the detail in other window and jump
 to it."
   (interactive (list (read-number "Show problem by problem id: "
                                   (leetcode--get-current-problem-id))))
+  (unless (file-directory-p problems-cache-directory)
+      (make-directory problems-cache-directory))
   (let* ((problem-info (leetcode--get-problem-by-id problem-id))
          (title (leetcode-problem-title problem-info))
-         (problem (aio-await (leetcode--api-fetch-problem title))))
+         (problem-cache-file-name (concat (file-name-as-directory problems-cache-directory)
+                                          (format "problem-%d-%s.json" problem-id (leetcode--slugify-title title))))
+         (cached-problem (leetcode--read-from-file problem-cache-file-name))
+         (problem (or cached-problem (aio-await (leetcode--api-fetch-problem title)))))
+    (unless (file-exists-p problem-cache-file-name)
+      (leetcode--print-to-file problem-cache-file-name problem))
     (leetcode--show-problem problem problem-info)))
 
 (defun leetcode-show-problem-by-slug (slug-title)
