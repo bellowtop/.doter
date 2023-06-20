@@ -248,7 +248,7 @@
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
  '(eglot-highlight-symbol-face ((t (:foreground "#ECECEC" :background "#155402"))))
  '(eglot-mode-line ((t nil)))
- '(flymake-error ((t (:underline (:color "#E06C75" :style wave :position wave) :foreground "brightred" :background "#1E2127"))))
+ '(flymake-error ((t (:underline (:color "#E06C75" :style wave :position wave) :foreground "brightred" :background "brightyellow"))))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
