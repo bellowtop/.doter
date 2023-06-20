@@ -271,7 +271,7 @@
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(mode-line-buffer-id ((t (:weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
- '(show-paren-match ((t (:foreground "#7fdc59" :underline nil))))
+ '(show-paren-match ((t (:foreground "green" :underline nil))))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
  '(term-color-cyan ((t (:foreground "#8be9fd" :background "#8be9fd"))))
