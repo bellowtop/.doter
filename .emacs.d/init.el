@@ -720,7 +720,11 @@
 
 
 
+(defun my-elisp-mode-hook ()
+  (setq indent-tabs-mode nil)
+)
 
+(add-hook 'emacs-lisp-mode-hook 'my-elisp-mode-hook)
 
 
 (defun my-tab-4-indent ()
