@@ -127,12 +127,12 @@ mysql, mssql, oraclesql."
   :group 'leetcode
   :type 'string)
 
-(defcustom leetcode-directory "~/.emacs.d/.local/.leetcode-solutions"
+(defcustom leetcode-directory "~/.emacs.d/.local/leetcode.el.cache/leetcode-solutions"
   "Directory to save solutions."
   :group 'leetcode
   :type 'string)
 
-(defcustom problems-cache-directory "~/.emacs.d/.local/.leetcode-problems-cache"
+(defcustom problems-cache-directory "~/.emacs.d/.local/leetcode.el.cache/leetcode-problems"
   "Directory to save solutions."
   :group 'leetcode
   :type 'string)
