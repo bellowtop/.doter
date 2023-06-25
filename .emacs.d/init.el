@@ -535,6 +535,8 @@
  '(create-lockfiles nil)
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
+ '(leetcode-prefer-language "cpp")
+ '(leetcode-save-solutions t)
  '(package-selected-packages
    '(elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
@@ -1855,6 +1857,8 @@ If buffer-or-name is nil return current buffer's mode."
   (neotree-find)
 )
 
+
+(setq-default left-margin-width 1 right-margin-width 1)
 
 (defun my-add-padding-for-neotree()
     (set-window-margins
