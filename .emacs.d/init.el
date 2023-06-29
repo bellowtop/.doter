@@ -269,6 +269,7 @@
  '(magit-diff-removed ((t (:extend t :foreground "indian red"))))
  '(magit-diff-removed-highlight ((t (:extend t :background "black" :foreground "red"))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
+ '(mode-line ((t (:background "SpringGreen4" :foreground "gray" :box nil :overline "#374250"))))
  '(mode-line-buffer-id ((t (:weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(show-paren-match ((t (:foreground "green" :underline nil))))
@@ -1675,14 +1676,6 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
-
-
-
-
-
-;; This buffer is for text that is not saved, and for Lisp evaluation.
-;; To create a file, visit it with <open> and enter text in its buffer.
-
 (defun my-god-mode-update-cursor-type ()
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
     (if (bound-and-true-p god-local-mode)
@@ -1691,7 +1684,7 @@ If buffer-or-name is nil return current buffer's mode."
                 (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
                 (when (display-graphic-p)
                     (set-face-attribute 'window-divider nil     :foreground "gray")
-                    (set-face-attribute 'mode-line nil          :overline "#374250"   :box nil) ;; draw a line above mode-line
+                    (set-face-attribute 'mode-line nil          :background "SpringGreen4" :foreground "white" :overline "#374250"   :box nil) ;; draw a line above mode-line
                     ;; (set-face-attribute 'mode-line-active nil   :overline "#374250"  :box nil)
                     (set-face-attribute 'mode-line-inactive nil :overline "#374250"  :box nil)
                     (setq cursor-type 'bar)
@@ -1710,10 +1703,10 @@ If buffer-or-name is nil return current buffer's mode."
                 (set-face-attribute 'hl-line nil :background (face-background 'default))
                 (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
                 (when (display-graphic-p)
-                    (set-face-attribute 'window-divider nil     :foreground "green")
-                    (set-face-attribute 'mode-line nil          :overline "green"   :box nil) ;; draw a line above mode-line
+                    (set-face-attribute 'window-divider nil     :foreground "#7fdc59")
+                    (set-face-attribute 'mode-line nil          :background "#7fdc59" :foreground "black" :overline "green"   :box nil) ;; draw a line above mode-line
                     ;; (set-face-attribute 'mode-line-active nil   :overline "green"   :box nil)
-                    (set-face-attribute 'mode-line-inactive nil :overline "green"   :box nil)
+                    (set-face-attribute 'mode-line-inactive nil :overline "#374250"  :box nil)
                     (setq cursor-type 'bar)
                 )
                 (unless (display-graphic-p)
