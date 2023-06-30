@@ -741,6 +741,7 @@
 
 
 (require 'smartparens-config)
+(require 'sp-sublimetext-like)
 (smartparens-global-mode 1)
 (smartparens-mode 1)
 
