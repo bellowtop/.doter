@@ -202,13 +202,6 @@
     ;; (define-key god-local-mode-map (kbd "\\") #'recenter-top-bottom)
 
 
-
-    (add-hook 'java-mode-hook 'my-tab-4-indent)
-    (add-hook 'c-mode-hook 'my-tab-4-indent)
-    (add-hook 'c++-mode-hook 'my-tab-4-indent)
-    (add-hook 'nxml-mode-hook 'my-tab-4-indent)
-
-
     ;; projectile
     (define-key projectile-mode-map (kbd "C-c f") 'projectile-command-map)
     map)
