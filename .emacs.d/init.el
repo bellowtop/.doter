@@ -715,7 +715,13 @@
 )
 
 (defun my-c-mode-hook ()
-  (add-hook 'before-save-hook 'my-clang-format-buffer-if-need)
+    (setq tab-width 4)                  ;; Default is 2
+    (setq c-basic-offset 4)                  ;; Default is 2
+    (setq c-indent-level 4)                  ;; Default is 2
+    (setq c-default-style "bsd")
+    (setq indent-tabs-mode nil)              ;; nil: use spaces only
+    (c-set-offset 'substatement-open 0)      ;; open bracket align with if/for/while...
+    (add-hook 'before-save-hook 'my-clang-format-buffer-if-need)
 )
 
 (add-hook 'c-mode-hook 'my-c-mode-hook)
@@ -728,15 +734,6 @@
 )
 
 (add-hook 'emacs-lisp-mode-hook 'my-elisp-mode-hook)
-
-
-(defun my-tab-4-indent ()
-    (setq tab-width 4)                  ;; Default is 2
-    (setq c-basic-offset 4)                  ;; Default is 2
-    (setq c-indent-level 4)                  ;; Default is 2
-    (setq c-default-style "bsd")
-    (setq indent-tabs-mode nil)              ;; use spaces only if nil
-)
 
 
 
