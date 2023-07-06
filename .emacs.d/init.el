@@ -91,6 +91,10 @@
 
 
 
+(setq inferior-lisp-program (executable-find "sbcl"))
+
+
+
 
 (require 'my-mode)
 
@@ -1346,7 +1350,7 @@ If buffer-or-name is nil return current buffer's mode."
                         "*NeoTree*"))
 
 ;; legendary-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
-(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf" "*terminal*" "*eshell*" "magit" "*Backtrace*" "menu" "*ielm*"))
+(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf" "*terminal*" "*eshell*" "magit" "*Backtrace*" "menu" "*ielm*" "*slime-repl"))
 
 (setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "dired-mode" "cfrs-input-mode" ))
 
