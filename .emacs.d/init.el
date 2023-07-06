@@ -455,7 +455,7 @@
      ((:application tramp)
       tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)
      ((:application eshell)
-      eshell-connection-default-profile)) t)
+      eshell-connection-default-profile)))
  '(connection-local-profile-alist
    '((tramp-container-connection-local-default-flatpak-profile
       (tramp-remote-path "/app/bin" tramp-default-remote-path "/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin" "/local/bin" "/local/freeware/bin" "/local/gnu/bin" "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin" "/opt/bin" "/opt/sbin" "/opt/local/bin"))
@@ -532,7 +532,7 @@
       (path-separator . ":")
       (null-device . "/dev/null"))
      (eshell-connection-default-profile
-      (eshell-path-env-list))) t)
+      (eshell-path-env-list))))
  '(create-lockfiles nil)
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
