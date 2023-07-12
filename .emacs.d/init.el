@@ -733,6 +733,12 @@
 (add-hook 'c++-mode-hook 'my-c-mode-hook)
 
 
+(defun my-cmake-mode-hook ()
+    (setq cmake-tab-width 4)
+)
+
+(add-hook 'cmake-mode-hook 'my-cmake-mode-hook)
+
 
 (defun my-elisp-mode-hook ()
   (setq indent-tabs-mode nil)
