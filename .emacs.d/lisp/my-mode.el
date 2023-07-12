@@ -229,6 +229,7 @@
     (define-key map (kbd "l") #'my-forward-char-no-cross-line)
     (define-key map (kbd "h") #'my-backward-char-no-cross-line)
 
+    (define-key map (kbd "f") #'avy-goto-word-0)
     (define-key map (kbd "M-;") #'avy-goto-word-0)
     (define-key map (kbd "M-o") #'other-window)
     (define-key map (kbd "M-x") #'my-M-x)

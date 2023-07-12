@@ -113,7 +113,7 @@
 
 
 (require 'autothemer)
-;; (load-theme 'bogster t)
+(load-theme 'bogster t)
 
 
 ;;;;;; catch ESC in terminal(-nw) ;;;;;;;;;;;;
@@ -210,7 +210,7 @@
 ;; (load-theme 'kaolin-temple t)
 ;; (load-theme 'kaolin-ocean t)
 ;; (load-theme 'doom-material t)
-(load-theme 'atom-one-dark t)
+;; (load-theme 'atom-one-dark t)
 ;; (load-theme 'one-dark-pro t)
 
 
@@ -549,6 +549,7 @@
  '(projectile-globally-ignored-directories
    '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
+ '(treemacs-space-between-root-nodes nil)
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 
@@ -1681,7 +1682,7 @@ If buffer-or-name is nil return current buffer's mode."
                 (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#313f4e")
                 (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
                 (when (display-graphic-p)
-                    (set-face-attribute 'window-divider nil     :foreground "gray")
+                    (set-face-attribute 'window-divider nil     :foreground "#7AA2F7")
                     (set-face-attribute 'mode-line nil          :background "#3B4261" :foreground "#7AA2F7" :overline "#374250"   :box nil) ;; draw a line above mode-line
                     ;; (set-face-attribute 'mode-line-active nil   :overline "#374250"  :box nil)
                     (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
