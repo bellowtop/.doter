@@ -96,6 +96,32 @@
 
 
 
+;;
+;; remove wave and add PROPER underline
+;;
+;; https://www.reddit.com/r/emacs/comments/gn7br8/configure_wavy_underline/
+;;
+;; no waves, use underlines which look better
+(defun theme-tweaks-flatten-underline+ (face)
+  "Change underline style of FACE from wave to straight line."
+  (let ((underline (face-attribute face :underline)))
+    (when (eq (plist-get underline :style) 'wave)
+      (plist-put underline :style 'line)
+      (set-face-attribute face nil :underline underline))))
+;; initial flattening
+(mapatoms (lambda (atom)
+            (when (facep atom)
+              (theme-tweaks-flatten-underline+ atom))))
+;; flatten on each face definition in the future
+(define-advice custom-declare-face (:around (fun &rest args) flatten-face)
+  (let ((face (apply fun args)))
+    (theme-tweaks-flatten-underline+ face)
+    face))
+
+
+
+
+
 (require 'my-mode)
 
 
@@ -252,7 +278,7 @@
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
  '(eglot-highlight-symbol-face ((t (:foreground "#ECECEC" :background "#155402"))))
  '(eglot-mode-line ((t nil)))
- '(flymake-error ((t (:underline (:color "#E06C75" :style wave :position wave) :foreground "brightred" :background "brightyellow"))))
+ '(flymake-error ((t (:underline (:color "red" :style line :position line) :foreground "red" :background "yellow"))))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
@@ -1357,7 +1383,17 @@ If buffer-or-name is nil return current buffer's mode."
                         "*NeoTree*"))
 
 ;; legendary-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
-(setq legendary-buffers (list "*this-buffer-is-left-alone-without-god-mode-at-all" "*Minibuf" "*terminal*" "*eshell*" "magit" "*Backtrace*" "menu" "*ielm*" "*slime-repl"))
+(setq legendary-buffers (list
+                          "*this-buffer-is-left-alone-without-god-mode-at-all"
+                          "*Minibuf"
+                          "*terminal*"
+                          "*eshell*"
+                          "magit"
+                          "*Backtrace*"
+                          "menu"
+                          "*ielm*"
+                          "*slime-repl"
+                          "*Customize Face"))
 
 (setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "dired-mode" "cfrs-input-mode" ))
 
