@@ -955,7 +955,16 @@ respectively."
   ;; configure regexp engine.
   (setq ivy-re-builders-alist
     ;; allow input not in order
-        '((t   . ivy--regex-ignore-order))))
+        '((t   . ivy--regex-ignore-order)))
+  ;; donot show these buffers in counsel-switch-buffer
+  (add-to-list 'ivy-ignore-buffers "\\*Messages\\*")
+  (add-to-list 'ivy-ignore-buffers "\\*Help\\*")
+  (add-to-list 'ivy-ignore-buffers "\\*Compile-Log\\*")
+  (add-to-list 'ivy-ignore-buffers "\\*EGLOT")
+  (add-to-list 'ivy-ignore-buffers "\\*rdm\\*" )
+  (add-to-list 'ivy-ignore-buffers "\\*Backtrace\\*" )
+  (add-to-list 'ivy-ignore-buffers "\\*Ibuffer\\*" )
+  )
 
 
 

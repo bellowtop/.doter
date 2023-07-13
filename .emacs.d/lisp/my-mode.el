@@ -17,8 +17,6 @@
     (define-key map (kbd "C-h h") #'my-quit-other-window)
     (define-key map (kbd "C-h C-h") #'my-quit-other-window)
 
-    (define-key map (kbd "M-`") #'ace-window)
-
     (define-key map (kbd "C-x C-b") #'ibuffer)
     (define-key map (kbd "C-x C-f") #'my-find-files)
     (define-key map (kbd "C-x C-k") #'kill-this-buffer)
@@ -118,7 +116,7 @@
     (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)
 
     (define-key god-local-mode-map (kbd "SPC SPC") #'my-mark-ring)
-    (define-key god-local-mode-map (kbd "SPC b") #'switch-to-buffer)
+    (define-key god-local-mode-map (kbd "SPC b") #'counsel-switch-buffer)
     (define-key god-local-mode-map (kbd "SPC B") #'ibuffer)
     (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
     (define-key god-local-mode-map (kbd "SPC K") #'my-only-current-buffer)
