@@ -122,6 +122,43 @@
 
 
 
+(defun which-active-modes ()
+  "Give a message of which minor modes are enabled in the current buffer."
+  (interactive)
+  (let ((active-modes))
+    (mapc (lambda (mode) (condition-case nil
+                             (if (and (symbolp mode) (symbol-value mode))
+                                 (add-to-list 'active-modes mode))
+                           (error nil) ))
+          minor-mode-list)
+    (message "Active modes are %s" active-modes)))
+
+(require 'diminish)
+(defun purge-minor-modes ()
+    (diminish 'ivy-mode)
+    (diminish 'ivy-posframe-mode)
+    (diminish 'which-key-mode)
+    (diminish 'selected-minor-mode)
+    (diminish 'selected-global-mode)
+    (diminish 'my-keys-minor-mode)
+    (diminish 'projectile-mode)
+    (diminish 'global-hl-line-mode)
+    (diminish 'highlight-parentheses-mode)
+    (diminish 'undo-tree-mode)
+    (diminish 'company-mode)
+    (diminish 'global-company-mode)
+    (diminish 'line-number-mode)
+    (diminish 'global-eldoc-mode)
+    (diminish 'eldoc-mode)
+    (diminish 'yas-minor-mode)
+    (diminish 'smartparens-mode)
+    (diminish 'smartparens-global-mode)
+    (diminish 'show-paren-mode)
+    (diminish 'electric-indent-mode))
+(add-hook 'after-change-major-mode-hook 'purge-minor-modes)
+
+
+
 (require 'my-mode)
 
 
@@ -206,6 +243,33 @@
 
 
 (toggle-truncate-lines t)
+
+
+;;;; auto-compression-mode
+;;;; auto-encryption-mode
+;;;; auto-composition-mode
+;;;; transient-mark-mode
+;;;; window-divider-mode
+;;;; blink-cursor-mode
+;;;; font-lock-mode
+;;;; global-font-lock-mode
+;;;; file-name-shadow-mode
+;;;; mouse-wheel-mode
+;;;; tooltip-mode
+;;;; god-local-mode
+;;;; override-global-mode
+;;;; async-bytecomp-package-mode
+;;;; windmove-mode
+;;;; delete-selection-mode
+;;;; xclip-mode
+;;;; semantic-mode
+;;;; global-semantic-idle-scheduler-mode
+;;;; recentf-mode
+;;;; global-semanticdb-minor-mode
+;;;; global-hl-line-mode
+;;;; display-line-numbers-mode
+;;;; shell-dirtrack-mode
+
 
 
 
@@ -313,7 +377,16 @@
  '(term-color-yellow ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
  '(term-default-bg-color ((t (:inherit term-color-black))))
  '(term-default-fg-color ((t (:inherit term-color-white))))
- '(treemacs-root-face ((t :inherit font-lock-constant-face :underline t :bold t :height 1.0)))
+ '(treemacs-directory-face ((t (:inherit font-lock-function-name-face :family "Segoe UI"))))
+ '(treemacs-git-added-face ((t (:inherit font-lock-comment-face :family "Segoe UI"))))
+ '(treemacs-git-commit-diff-face ((t (:inherit font-lock-comment-face :family "Segoe UI"))))
+ '(treemacs-git-conflict-face ((t (:inherit font-lock-comment-face :family "Segoe UI"))))
+ '(treemacs-git-ignored-face ((t (:inherit font-lock-comment-face :family "Segoe UI"))))
+ '(treemacs-git-modified-face ((t (:inherit font-lock-comment-face :family "Segoe UI"))))
+ '(treemacs-git-renamed-face ((t (:inherit font-lock-comment-face :family "Segoe UI"))))
+ '(treemacs-git-unmodified-face ((t (:inherit font-lock-comment-face :family "Segoe UI"))))
+ '(treemacs-git-untracked-face ((t (:inherit font-lock-comment-face :family "Segoe UI"))))
+ '(treemacs-root-face ((t (:inherit font-lock-constant-face :underline t :weight bold :height 1.0 :family "Segoe UI"))))
  '(window-divider ((t (:foreground "green"))))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
 
@@ -569,7 +642,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
