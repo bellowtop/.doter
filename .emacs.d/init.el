@@ -702,11 +702,13 @@
 
 
 (use-package ace-window
-  :defer t
+  :ensure t     ;; must ensure, treemacs depend on it
   :delight
   :config
   (ace-window-display-mode 1)
   )
+(setq aw-keys '(?h ?j ?k ?l ?a ?s ?d ?f ?g))
+(global-set-key (kbd "M-`") #'ace-window)
 
 ;; alternatively, use Meta-<left> Meta-<right> to move cursor to window
 ;; for iTerms2 user, disable alt-> alt-< to send alt-f alt-b in `profile->keys`
@@ -1167,6 +1169,8 @@ respectively."
 ;; must be set as global
 (global-set-key (kbd "C-S-k") #'my-delete-to-beginning)
 (global-set-key (kbd "C-k") #'my-delete-to-end)
+
+
 
 
 
@@ -1798,7 +1802,7 @@ If buffer-or-name is nil return current buffer's mode."
                 (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
                 (when (display-graphic-p)
                     (set-face-attribute 'window-divider nil     :foreground "#7AA2F7")
-                    (set-face-attribute 'mode-line nil          :background "#3B4261" :foreground "#7AA2F7" :overline "#374250"   :box nil) ;; draw a line above mode-line
+                    (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
                     ;; (set-face-attribute 'mode-line-active nil   :overline "#374250"  :box nil)
                     (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
                 )
@@ -1991,6 +1995,12 @@ If buffer-or-name is nil return current buffer's mode."
         ("C-c t" . treemacs-toggle-node)
    )
 )
+
+(defun display-treemacs-widow-in-ace-window-selection()
+    (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))
+(add-hook 'treemacs-mode-hook 'display-treemacs-widow-in-ace-window-selection)
+
+
 
 (defun darker-background-for-sidebar()
   (set (make-local-variable 'face-remapping-alist)
