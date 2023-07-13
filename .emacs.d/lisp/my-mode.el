@@ -17,6 +17,8 @@
     (define-key map (kbd "C-h h") #'my-quit-other-window)
     (define-key map (kbd "C-h C-h") #'my-quit-other-window)
 
+    (define-key map (kbd "M-`") #'ace-window)
+
     (define-key map (kbd "C-x C-b") #'ibuffer)
     (define-key map (kbd "C-x C-f") #'my-find-files)
     (define-key map (kbd "C-x C-k") #'kill-this-buffer)
