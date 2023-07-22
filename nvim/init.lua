@@ -416,6 +416,7 @@ vim.api.nvim_set_keymap("n", "<leader>n", ":NvimTreeToggle<CR>",    { noremap = 
 vim.api.nvim_set_keymap("n", "<leader>r", ":NvimTreeRefresh<CR>",   { noremap = true } )
 vim.api.nvim_set_keymap("n", "<leader>N", ":NvimTreeFindFile<CR>",  { noremap = true } )
 vim.api.nvim_set_keymap("n", "<leader>@", ":NvimTreeFindFile<CR>",  { noremap = true } )
+vim.api.nvim_set_keymap("n", "@", ":NvimTreeFindFile<CR>",  { noremap = true } )
 
 
 
@@ -891,6 +892,8 @@ vim.api.nvim_set_keymap("n", "H", "^",      { noremap = true })
 vim.api.nvim_set_keymap("n", "L", "$",      { noremap = true })
 vim.api.nvim_set_keymap("v", "H", "^",      { noremap = true })
 vim.api.nvim_set_keymap("v", "L", "g_",     { noremap = true })
+vim.api.nvim_set_keymap("o", "H", "^",      { noremap = true })
+vim.api.nvim_set_keymap("o", "L", "g_",     { noremap = true })
 
 vim.api.nvim_set_keymap("n", "m", "%", { noremap = true })
 vim.api.nvim_set_keymap("v", "m", "%", { noremap = true })

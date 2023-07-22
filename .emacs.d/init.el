@@ -1212,6 +1212,22 @@ respectively."
     (global-set-key [escape] 'my-escape-key)
     (define-key input-decode-map [?\C-\[] (kbd "<C-[>"))
     (global-set-key (kbd "<C-[>") 'my-escape-key)
+
+    (setq frame-title-format
+          '(:eval (format-mode-line
+                   (propertized-buffer-identification
+                    (or
+                     (when-let* ((buffer-file-truename buffer-file-truename)
+                                 (prj (cdr-safe (project-current)))
+                                 (prj-parent (file-name-directory (directory-file-name (expand-file-name prj)))))
+                       (concat
+                        (file-relative-name
+                         (file-name-directory buffer-file-truename) prj-parent)
+                        (file-name-nondirectory buffer-file-truename))
+                       )
+                     "%b"))))
+)
+
 )
 
 (unless (display-graphic-p)
@@ -1222,6 +1238,10 @@ respectively."
     (require 'doom-modeline)
     (doom-modeline-mode 1)
 )
+
+
+
+
 
 
 
@@ -1749,8 +1769,7 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun my-disable-code-intelligence()
   (interactive)
-    (if my-code-intelligence
-      (progn
+    (when my-code-intelligence
         (my-disable-eglot-highlight)
         (smartparens-global-mode -1)
         (smartparens-mode -1)
@@ -1760,14 +1779,12 @@ If buffer-or-name is nil return current buffer's mode."
 
         (setq my-code-intelligence nil)
         (message "code-intelligence is disabled.")
-      )
     )
 )
 
 (defun my-enable-code-intelligence()
   (interactive)
-    (if (not my-code-intelligence)
-      (progn
+    (unless my-code-intelligence
         (my-enable-eglot-highlight)
         (smartparens-global-mode 1)
         (smartparens-mode 1)
@@ -1777,7 +1794,6 @@ If buffer-or-name is nil return current buffer's mode."
 
         (setq my-code-intelligence 't)
         (message "code-intelligence is enabled.")
-      )
     )
 )
 
@@ -1956,10 +1972,9 @@ If buffer-or-name is nil return current buffer's mode."
           (file-name (buffer-file-name)))
       (neotree-toggle)
       (if project-dir
-          (if (neo-global--window-exists-p)
-              (progn
+          (when (neo-global--window-exists-p)
                 (neotree-dir project-dir)
-                (neotree-find file-name)))
+                (neotree-find file-name))
         (message "Could not find git project root."))))
 
 (defun my-neotree-toggle()
@@ -2603,7 +2618,7 @@ opening parenthesis one level up."
         ;; (message "is active mode")
         (my-disable-eglot-highlight)
         (if (bound-and-true-p my-god-mode-is-active-flag)
-            (progn
+          (progn
               ;; (message "is god-local-mode")
               (define-key selected-keymap (kbd "v") #'keyboard-quit)
               (define-key selected-keymap (kbd "d") #'kill-region)
