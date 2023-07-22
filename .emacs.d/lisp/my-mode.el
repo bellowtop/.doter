@@ -139,7 +139,15 @@
     (define-key god-local-mode-map (kbd "SPC n") #'my-neotree-toggle)
     (define-key god-local-mode-map (kbd "SPC N") #'my-neotree-find)
 
-    (define-key god-local-mode-map (kbd "@") #'(lambda() (interactive) (treemacs-find-file) (treemacs-select-window) (setq cursor-type 'bar)))
+
+    (define-key god-local-mode-map (kbd "@") #'(lambda() (interactive)
+                                                 (with-selected-window (get-buffer-window (current-buffer))
+                                                     (treemacs-add-and-display-current-project)
+                                                 )
+                                                 (treemacs-find-file)
+                                                 (treemacs-select-window)
+                                                 (setq cursor-type 'bar)))
+
     (define-key god-local-mode-map (kbd "SPC @") #'treemacs-add-and-display-current-project)
 
     ;;  (define-key god-local-mode-map (kbd "q l") #'windmove-right)
