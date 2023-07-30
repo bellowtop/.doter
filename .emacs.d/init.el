@@ -175,8 +175,47 @@
 
 
 
-(require 'autothemer)
-(load-theme 'bogster t)
+(use-package vscode-dark-plus-theme
+  :ensure t
+  :config
+  (load-theme 'vscode-dark-plus t))
+
+
+;; (require 'autothemer)
+;; (load-theme 'bogster t)
+
+
+
+;; (use-package doom-themes
+;;   :ensure t
+;;   :config
+;;   (setq doom-themes-enable-bold nil    ; if nil, bold is universally disabled
+;;         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
+;;   ;; (doom-themes-neotree-config)
+;;   ;; (load-theme 'doom-xcode t)
+;;   (load-theme 'doom-dracula t)
+;;   ;; (load-theme 'doom-oceanic-next t)
+;;   )
+
+;; (load-theme 'spacemacs-dark t)
+;; (load-theme 'dracula t)
+;; (load-theme 'spacemacs-dark t)
+;; (load-theme 'dracula t)
+;; (load-theme 'kaolin-ocean t)
+;; (load-theme 'cyberpunk t)
+;; (load-theme 'atom-one-dark t)
+;; (load-theme 'doom-molokai t)
+;; (load-theme 'doom-palenight t)
+;; (load-theme 'doom-material t)
+;; (load-theme 'doom-dracula t)
+;; (load-theme 'kaolin-aurora t)
+;; (load-theme 'challenger-deep t)
+;; (load-theme 'kaolin-temple t)
+;; (load-theme 'kaolin-ocean t)
+;; (load-theme 'doom-material t)
+;; (load-theme 'atom-one-dark t)
+;; (load-theme 'one-dark-pro t)
+
 
 
 ;;;;;; catch ESC in terminal(-nw) ;;;;;;;;;;;;
@@ -273,36 +312,6 @@
 
 
 
-;; (use-package doom-themes
-;;   :ensure t
-;;   :config
-;;   (setq doom-themes-enable-bold nil    ; if nil, bold is universally disabled
-;;         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
-;;   ;; (doom-themes-neotree-config)
-;;   ;; (load-theme 'doom-xcode t)
-;;   (load-theme 'doom-dracula t)
-;;   ;; (load-theme 'doom-oceanic-next t)
-;;   )
-
-;; (load-theme 'spacemacs-dark t)
-;; (load-theme 'dracula t)
-;; (load-theme 'spacemacs-dark t)
-;; (load-theme 'dracula t)
-;; (load-theme 'kaolin-ocean t)
-;; (load-theme 'cyberpunk t)
-;; (load-theme 'atom-one-dark t)
-;; (load-theme 'doom-molokai t)
-;; (load-theme 'doom-palenight t)
-;; (load-theme 'doom-material t)
-;; (load-theme 'doom-dracula t)
-;; (load-theme 'kaolin-aurora t)
-;; (load-theme 'challenger-deep t)
-;; (load-theme 'kaolin-temple t)
-;; (load-theme 'kaolin-ocean t)
-;; (load-theme 'doom-material t)
-;; (load-theme 'atom-one-dark t)
-;; (load-theme 'one-dark-pro t)
-
 
 (defun my-set-bigger-spacing ()
   (setq-local default-text-properties '(line-spacing 0.1 line-height 1.1)))
@@ -340,7 +349,7 @@
  '(doom-modeline-project-dir ((t (:inherit nil))))
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
- '(eglot-highlight-symbol-face ((t (:foreground "#ECECEC" :background "#155402"))))
+ '(eglot-highlight-symbol-face ((t (:background "green4" :foreground "black"))))
  '(eglot-mode-line ((t nil)))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
@@ -642,7 +651,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers flymake-diagnostic-at-point atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
