@@ -959,6 +959,7 @@ respectively."
   :config
   (ivy-mode 1)
   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+  (setq counsel-switch-buffer-preview-virtual-buffers nil)
   (setq ivy-use-virtual-buffers t)
   ;; number of result lines to display
   (setq ivy-height 10)
@@ -1172,7 +1173,7 @@ respectively."
 (defun my-escape-key ()
     (interactive)
     (my-god-mode)
-    (if isearch-mode (isearch-abort))
+    (when isearch-mode (isearch-abort) (isearch-abort))
     (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
     (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
     (keyboard-quit)
@@ -1701,6 +1702,7 @@ If buffer-or-name is nil return current buffer's mode."
 ;; this variable make sure RET exit isearch-mode immediately
 
 (define-key isearch-mode-map (kbd "RET") #'isearch-exit)
+(define-key isearch-mode-map (kbd "C-l") #'recenter-top-bottom)
 
 (define-key isearch-mode-map (kbd "C-s") 'isearch-repeat-forward+)
 (define-key isearch-mode-map (kbd "C-r") 'isearch-repeat-backward+)
@@ -1714,7 +1716,8 @@ If buffer-or-name is nil return current buffer's mode."
 (define-key god-mode-isearch-map (kbd "j") #'(lambda() (interactive)(isearch-exit)(next-line)))
 (define-key god-mode-isearch-map (kbd "k") #'(lambda() (interactive)(isearch-exit)(previous-line)))
 (define-key god-mode-isearch-map (kbd "h") #'(lambda() (interactive)(isearch-exit)(my-forward-char-no-cross-line)))
-(define-key god-mode-isearch-map (kbd "l") #'(lambda() (interactive)(isearch-exit)(my-backward-char-no-cross-line)))
+;; (define-key god-mode-isearch-map (kbd "l") #'(lambda() (interactive)(isearch-exit)(my-backward-char-no-cross-line)))
+(define-key god-mode-isearch-map (kbd "l") 'recenter-top-bottom)
 (define-key god-mode-isearch-map (kbd "s") 'isearch-repeat-forward+)
 (define-key god-mode-isearch-map (kbd "r") 'isearch-repeat-backward+)
 (define-key god-mode-isearch-map (kbd "RET") #'isearch-exit)
@@ -1792,7 +1795,7 @@ If buffer-or-name is nil return current buffer's mode."
         (undo-tree-mode -1)
 
         (setq my-code-intelligence nil)
-        (message "code-intelligence is disabled.")
+        ;; (message "code-intelligence is disabled.")
     )
 )
 
@@ -1807,7 +1810,7 @@ If buffer-or-name is nil return current buffer's mode."
         (undo-tree-mode 1)
 
         (setq my-code-intelligence 't)
-        (message "code-intelligence is enabled.")
+        ;; (message "code-intelligence is enabled.")
     )
 )
 
@@ -2007,7 +2010,7 @@ If buffer-or-name is nil return current buffer's mode."
 )
 
 
-(setq-default left-margin-width 1 right-margin-width 1)
+(setq-default left-margin-width 0 right-margin-width 0)
 
 (defun my-add-padding-for-neotree()
     (set-window-margins
@@ -2016,6 +2019,17 @@ If buffer-or-name is nil return current buffer's mode."
 (advice-add 'neotree-show :after 'my-add-padding-for-neotree)
 
 
+;; (defun my-add-padding-for-treemacs()
+;;   (interactive)
+;;   (let ((saved (selected-window)))
+;;     (treemacs-select-window)
+;;     (set-window-margins (selected-window) 2 2)
+;;     (select-window saved)))
+(defun my-add-padding-for-treemacs()
+  (interactive)
+  (set-window-margins (treemacs-get-local-window) 1 1)
+  )
+(add-hook 'treemacs-mode-hook 'my-add-padding-for-treemacs)
 
 (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
 (setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
@@ -2026,7 +2040,7 @@ If buffer-or-name is nil return current buffer's mode."
   :init
   :config
   (treemacs-resize-icons 18)
-  (treemacs-follow-mode -1)
+  (treemacs-follow-mode 1)
   (treemacs-hide-gitignored-files-mode 1)
    :bind (
         ("C-c n" . treemacs)
