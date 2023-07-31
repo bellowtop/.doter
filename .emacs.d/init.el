@@ -358,13 +358,13 @@
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
- '(isearch ((t (:background "#32593D" :foreground "yellow" :underline t))))
+ '(isearch ((t (:background "orange1" :foreground "black"))))
  '(ivy-current-match ((t (:foreground "white" :background "purple"))))
  '(ivy-minibuffer-match-face-2 ((t (:foreground "yellow" :background nil))))
  '(ivy-minibuffer-match-face-3 ((t (:foreground "yellow" :background nil))))
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
- '(lazy-highlight ((t (:background "#32593D" :foreground "yellow" :underline t))))
+ '(lazy-highlight ((t (:background "orange1" :foreground "black"))))
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -1723,35 +1723,26 @@ If buffer-or-name is nil return current buffer's mode."
 (define-key god-mode-isearch-map (kbd "RET") #'isearch-exit)
 
 
+
+
+
 (defun my-search-selection ()
-      "search for selected text"
-      (interactive
-        (progn
-            (if (region-active-p)
-               (message "search the marked region")
-               (progn
-                 (er/mark-symbol)
-                 (setq my-search-selection-is-word-search 1)                                         ;; set flag
-               )
-            )
-            (let (
-                  (selection (buffer-substring-no-properties (mark) (point)))
-                  (case-fold-search (if (boundp 'my-search-selection-is-word-search) nil 'default))  ;; test flag
-                 )
+  "search for selected text"
+  (interactive)
+   (if (region-active-p)
+       (let ((selection (buffer-substring-no-properties (mark) (point)))
+             (case-fold-search 'default))
+         (message "search the marked region")
+         (deactivate-mark)
+         (isearch-mode t nil nil nil)
+         ;; activate god-mode-isearch
+         (god-mode-isearch-activate)
+         (isearch-yank-string selection))
+     (progn
+       (isearch-forward-symbol-at-point)
+       (god-mode-isearch-activate))
+     ))
 
-              (deactivate-mark)
-              (isearch-mode t nil nil nil)
-
-              (if (boundp 'my-search-selection-is-word-search) (isearch-toggle-word))                ;; test flag
-              (makunbound 'my-search-selection-is-word-search)                                       ;; clear flag anyway
-
-              ;; activate god-mode-isearch
-              (god-mode-isearch-activate)
-              (isearch-yank-string selection)
-            )
-        )
-      )
-)
 
 (defun my-isearch-forward ()
       (interactive)
