@@ -360,7 +360,7 @@
  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
  '(isearch ((t (:background "orange1" :foreground "black"))))
  '(ivy-current-match ((t (:foreground "white" :background "purple"))))
- '(ivy-minibuffer-match-face-2 ((t (:foreground "yellow" :background nil))))
+ '(ivy-minibuffer-match-face-2 ((t (:inherit ivy-minibuffer-match-face-1 :foreground "DeepPink4"))))
  '(ivy-minibuffer-match-face-3 ((t (:foreground "yellow" :background nil))))
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
@@ -788,7 +788,7 @@
 
 
 ;; line number fixed width
-(setq display-line-numbers-width-start t)
+(setq display-line-numbers-width-start 100)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (add-hook 'markdown-mode-hook 'display-line-numbers-mode)
 (add-hook 'nxml-mode-hook 'display-line-numbers-mode)
