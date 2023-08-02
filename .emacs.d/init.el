@@ -378,7 +378,7 @@
  '(magit-diff-removed-highlight ((t (:extend t :background "black" :foreground "red"))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(mode-line ((t (:background "SpringGreen4" :foreground "gray" :box nil :overline "#374250"))))
- '(mode-line-buffer-id ((t nil)))
+ '(mode-line-buffer-id ((t (:distant-foreground "#262831" :foreground "#7AA2F7" :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(show-paren-match ((t (:foreground "green" :underline nil))))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
@@ -1514,7 +1514,7 @@ If buffer-or-name is nil return current buffer's mode."
                           "menu"
                           "*ielm*"
                           "*slime-repl"
-                          "*Customize Face"))
+                          "*Customize"))
 
 (setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "dired-mode" "cfrs-input-mode" ))
 
@@ -1718,6 +1718,8 @@ If buffer-or-name is nil return current buffer's mode."
 (define-key god-mode-isearch-map (kbd "h") #'(lambda() (interactive)(isearch-exit)(my-forward-char-no-cross-line)))
 ;; (define-key god-mode-isearch-map (kbd "l") #'(lambda() (interactive)(isearch-exit)(my-backward-char-no-cross-line)))
 (define-key god-mode-isearch-map (kbd "l") 'recenter-top-bottom)
+(define-key god-mode-isearch-map (kbd "'") 'scroll-down-command)
+(define-key god-mode-isearch-map (kbd ";") 'scroll-up-command)
 (define-key god-mode-isearch-map (kbd "s") 'isearch-repeat-forward+)
 (define-key god-mode-isearch-map (kbd "r") 'isearch-repeat-backward+)
 (define-key god-mode-isearch-map (kbd "RET") #'isearch-exit)
