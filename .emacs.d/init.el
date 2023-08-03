@@ -258,6 +258,7 @@
 
 (require 'expand-region)
 (global-set-key (kbd "M-i") 'er/expand-region)
+(global-set-key (kbd "M-I") 'er/mark-inside-pairs)
 
 ;;;;
 ;;;; already handled by selected-region-active-mode
