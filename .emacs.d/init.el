@@ -2025,6 +2025,10 @@ If buffer-or-name is nil return current buffer's mode."
   )
 (add-hook 'treemacs-mode-hook 'my-add-padding-for-treemacs)
 
+
+(with-eval-after-load 'treemacs
+    (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
+
 (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
 (setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
 (setq treemacs-show-hidden-files nil)
@@ -2041,6 +2045,8 @@ If buffer-or-name is nil return current buffer's mode."
         ("C-c t" . treemacs-toggle-node)
    )
 )
+
+
 
 (defun display-treemacs-widow-in-ace-window-selection()
     (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))

@@ -980,7 +980,7 @@ vim.cmd([[
 
 function! MyHighlights() abort
     " for term
-    hi Search                       cterm=none              ctermfg=232         ctermbg=214
+    hi Search                       cterm=reverse           ctermfg=214         ctermbg=232
     hi SpellCap                                             ctermfg=black       ctermbg=green
     hi LspReferenceText                                     ctermfg=black       ctermbg=green
     " hi LspDiagnosticsError                                  ctermfg=cyan
@@ -997,7 +997,7 @@ function! MyHighlights() abort
 
 
     " for gui
-    hi Search                       gui=NONE                guifg=black         guibg=goldenrod2
+    hi Search                       gui=reverse                guifg=goldenrod2         guibg=black
     hi SpellCap                                             guifg=black         guibg=springgreen
     hi LspReferenceText                                     guifg=black         guibg=limegreen
     " hi CocHighlightText                                     guifg=black         guibg=limegreen
@@ -1012,6 +1012,7 @@ function! MyHighlights() abort
     " hi Normal                                                                   guibg=#1c1c1c
 
     " hi CursorLine                                                               guibg=black
+
 
 endfunction
 
