@@ -90,6 +90,28 @@
 (projectile-mode 1)
 
 
+;; download from https://github.com/emacs-tree-sitter/tree-sitter-langs
+(setq treesit-extra-load-path '((expand-file-name "~/.emacs.d/.local/tree-sitter-grammars.aarch64-apple-darwin.v0.12.22")))
+;; or put ~/.emacs.d/tree-sitter
+
+;; (use-package treesit
+;;     :custom
+;;     (treesit-language-source-alist '(
+;;         (cpp . "https://github.com/tree-sitter/tree-sitter-cpp")  ;; grab .so
+;;     ))
+;;     (treesit-font-lock-level 4) ;; skittles highlighting
+;; )
+;; 
+;; (setq major-mode-remap-alist
+;;     '((yaml-mode . yaml-ts-mode)
+;;       (sh-mode . sh-ts-mode)
+;;       (js-mode . js-ts-mode)
+;;       (css-mode . css-ts-mode)
+;;       (c-mode . c-ts-mode)
+;;       (c++-mode . c++-ts-mode)
+;;       (c-or-c++-mode . c-or-c++-ts-mode)
+;;       (python-mode . python-ts-mode)))
+
 
 (setq inferior-lisp-program (executable-find "sbcl"))
 
@@ -160,7 +182,7 @@
 
 
 
-(require 'my-mode)
+(require 'my-key-bindings)
 
 
 (global-unset-key [(control z)])
@@ -500,7 +522,7 @@
 
 (require 'eldoc-box)
 
-(require 'init-funcs)
+(require 'custom-util-funcs)
 
 (require 'init-eglot)
 
@@ -513,7 +535,6 @@
 (require 'init-lang-cpp)
 
 (require 'init-lang-zig)
-
 
 (defun my-joindirs (root &rest dirs)
   "Joins a series of directories together, like Python's os.path.join,
@@ -564,7 +585,9 @@
  '(auto-save-list-file-prefix (expand-file-name "~/.emacs.d/.local/auto-save-list/"))
  '(backup-directory-alist '((".*" . "~/.emacs.d/.local/backups/")))
  '(connection-local-criteria-alist
-   '(((:application tramp :protocol "flatpak")
+   '(((:application tramp :machine "MacBook-Pro-2.local")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :protocol "flatpak")
       tramp-container-connection-local-default-flatpak-profile)
      ((:application tramp :machine "localhost")
       tramp-connection-local-darwin-ps-profile)

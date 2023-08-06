@@ -1,4 +1,4 @@
-;; init-funcs.el --- Custom Functions	-*- lexical-binding: t -*-
+;; custom-util-funcs.el --- Custom Functions	-*- lexical-binding: t -*-
 
 ;; Author: Zsxh Chen <bnbvbchen@gmail.com>
 ;; URL: https://github.com/zsxh/emacs.d
@@ -401,6 +401,6 @@ behavior added."
     (point)))
 
 
-(provide 'init-funcs)
+(provide 'custom-util-funcs)
 
-;;; init-funcs.el ends here
+;;; custom-util-funcs.el ends here
