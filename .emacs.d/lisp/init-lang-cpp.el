@@ -39,44 +39,47 @@
 
 
 
-(defun my-rtags-find-symbol-at-point()
-  (interactive)
-  (rtags-find-symbol-at-point)
-  (recenter)
-)
-
-
-(use-package rtags
-  :ensure t
-  :hook
-  (c++-mode . rtags-start-process-unless-running)
-  (c-mode . rtags-start-process-unless-running)
-  :config
-  (setq rtags-completions-enabled t)
-  (setq rtags-use-helm t)
-  (setq rtags-display-result-backend 'helm)
-  :bind (
-       ("C-c e" . my-rtags-find-symbol-at-point)
-       ("C-c n" . rtags-location-stack-forward)
-       ("C-c b" . rtags-location-stack-back)
-       ("C-c u" . rtags-imenu)
-       ("C-c r E" . rtags-find-symbol)
-       ("C-c r O" . rtags-find-references)
-       ("C-c r o" . rtags-find-references-at-point)
-       ("C-c r s" . rtags-find-file)
-       ("C-c r v" . rtags-find-virtuals-at-point)
-       ("C-c r F" . rtags-fixit)
-       ("C-c r P" . rtags-preprocess-file)
-       ("C-c r R" . rtags-rename-symbol)
-       ("C-c r x" . rtags-show-rtags-buffer)
-       ("C-c r T" . rtags-print-symbol-info)
-       ("C-c r t" . rtags-symbol-type)
-       ("C-c r I" . rtags-include-file)
-       ("C-c r i" . rtags-get-include-file-for-symbol)))
+;; (defun my-rtags-find-symbol-at-point()
+;;   (interactive)
+;;   (rtags-find-symbol-at-point)
+;;   (recenter)
+;; )
+;; 
+;; 
+;; (use-package rtags
+;;   :ensure t
+;;   :hook
+;;   (c++-mode . rtags-start-process-unless-running)
+;;   (c-mode . rtags-start-process-unless-running)
+;;   :config
+;;   (setq rtags-completions-enabled t)
+;;   (setq rtags-use-helm t)
+;;   (setq rtags-display-result-backend 'helm)
+;;   :bind (
+;;        ("C-c e" . my-rtags-find-symbol-at-point)
+;;        ("C-c n" . rtags-location-stack-forward)
+;;        ("C-c b" . rtags-location-stack-back)
+;;        ("C-c u" . rtags-imenu)
+;;        ("C-c r E" . rtags-find-symbol)
+;;        ("C-c r O" . rtags-find-references)
+;;        ("C-c r o" . rtags-find-references-at-point)
+;;        ("C-c r s" . rtags-find-file)
+;;        ("C-c r v" . rtags-find-virtuals-at-point)
+;;        ("C-c r F" . rtags-fixit)
+;;        ("C-c r P" . rtags-preprocess-file)
+;;        ("C-c r R" . rtags-rename-symbol)
+;;        ("C-c r x" . rtags-show-rtags-buffer)
+;;        ("C-c r T" . rtags-print-symbol-info)
+;;        ("C-c r t" . rtags-symbol-type)
+;;        ("C-c r I" . rtags-include-file)
+;;        ("C-c r i" . rtags-get-include-file-for-symbol)))
 
 
 (add-hook 'c++-mode-hook 'eglot-ensure)
 (add-hook 'c-mode-hook 'eglot-ensure)
+
+(add-hook 'c++-ts-mode-hook 'eglot-ensure)
+(add-hook 'c-ts-mode-hook 'eglot-ensure)
 
 
 (require 'cff)
