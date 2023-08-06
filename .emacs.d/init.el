@@ -92,26 +92,24 @@
 
 ;; download from https://github.com/emacs-tree-sitter/tree-sitter-langs
 ;; rename .dylib to libtree-sitter*: fd -t f dylib --exclude 'libtree*' --exec mv {} libtree-sitter-{/} \;
-(setq treesit-extra-load-path '((expand-file-name "~/.emacs.d/.local/tree-sitter-grammars.aarch64-apple-darwin.v0.12.22")))
-;; or put ~/.emacs.d/tree-sitter
+;;
+;; you can also put them to ~/.emacs.d/tree-sitter, so without setting the treesit-extra-load-path
+(use-package treesit
+  :demand t
+  :custom
+  (treesit-font-lock-level 4) ;; skittles highlighting
+  :init
+  (push '(css-mode . css-ts-mode) major-mode-remap-alist)
+  (push '(sh-mode . bash-ts-mode) major-mode-remap-alist)
+  (push '(python-mode . python-ts-mode) major-mode-remap-alist)
+  (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
+  (push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
+  (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
+  (push '(c-mode . c-ts-mode) major-mode-remap-alist)
+  (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
+  (setq treesit-extra-load-path `( ,(expand-file-name "~/.emacs.d/.local/tree-sitter-grammars.aarch64-apple-darwin.v0.12.22") )))
 
-;; (use-package treesit
-;;     :custom
-;;     (treesit-language-source-alist '(
-;;         (cpp . "https://github.com/tree-sitter/tree-sitter-cpp")  ;; grab .so
-;;     ))
-;;     (treesit-font-lock-level 4) ;; skittles highlighting
-;; )
-;; 
-;; (setq major-mode-remap-alist
-;;     '((yaml-mode . yaml-ts-mode)
-;;       (sh-mode . sh-ts-mode)
-;;       (js-mode . js-ts-mode)
-;;       (css-mode . css-ts-mode)
-;;       (c-mode . c-ts-mode)
-;;       (c++-mode . c++-ts-mode)
-;;       (c-or-c++-mode . c-or-c++-ts-mode)
-;;       (python-mode . python-ts-mode)))
+
 
 
 (setq inferior-lisp-program (executable-find "sbcl"))
@@ -845,44 +843,15 @@
 ;; (global-auto-revert-mode t)
 
 
-(defun my-go-mode-hook ()
-  (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook 'gofmt-before-save)
-)
-(add-hook 'go-mode-hook 'my-go-mode-hook)
-
-
-(defun my-clang-format-buffer-if-need ()
-  (if (derived-mode-p 'c++-mode)
-        (clang-format-buffer)
-        (ignore)
-    )
-)
-
-(defun my-c-mode-hook ()
-    (setq tab-width 4)                  ;; Default is 2
-    (setq c-basic-offset 4)                  ;; Default is 2
-    (setq c-indent-level 4)                  ;; Default is 2
-    (setq c-default-style "bsd")
-    (setq indent-tabs-mode nil)              ;; nil: use spaces only
-    (c-set-offset 'substatement-open 0)      ;; open bracket align with if/for/while...
-    (add-hook 'before-save-hook 'my-clang-format-buffer-if-need)
-)
-
-(add-hook 'c-mode-hook 'my-c-mode-hook)
-(add-hook 'c++-mode-hook 'my-c-mode-hook)
-
 
 (defun my-cmake-mode-hook ()
-    (setq cmake-tab-width 4)
-)
+    (setq cmake-tab-width 4))
 
 (add-hook 'cmake-mode-hook 'my-cmake-mode-hook)
 
 
 (defun my-elisp-mode-hook ()
-  (setq indent-tabs-mode nil)
-)
+  (setq indent-tabs-mode nil))
 
 (add-hook 'emacs-lisp-mode-hook 'my-elisp-mode-hook)
 
@@ -1289,7 +1258,7 @@ respectively."
 
 
 
-(setq smex-save-file                 (expand-file-name "~/.emacs.d/.local/smex-items.cache"))
+(setq smex-save-file (expand-file-name "~/.emacs.d/.local/smex-items.cache"))
 
 
 
@@ -2537,30 +2506,29 @@ the cursor by ARG lines."
 (defun my-pause-god-send-q-key-resume-god()
   (interactive)
   (delete-other-windows)
-  (keyboard-quit)
-)
+  (keyboard-quit))
 
 
 
 
 (defun my-goto-match-paren (arg)
   "Go to the matching parenthesis if on parenthesis. Else go to the
-opening parenthesis one level up."
+  opening parenthesis one level up."
   (interactive "p")
   (cond ((looking-at "\\s\(") (forward-list 1))
         (t
-         (backward-char 1)
-         (cond ((looking-at "\\s\)")
-                (forward-char 1) (backward-list 1))
-               (t
-                (while (not (looking-at "\\s("))
-                  (backward-char 1)
-                  (cond ((looking-at "\\s\)")
-                         (message "->> )")
-                         (forward-char 1)
-                         (backward-list 1)
-                         (backward-char 1)))
-                  ))))))
+          (backward-char 1)
+          (cond ((looking-at "\\s\)")
+                 (forward-char 1) (backward-list 1))
+                (t
+                  (while (not (looking-at "\\s("))
+                         (backward-char 1)
+                         (cond ((looking-at "\\s\)")
+                                (message "->> )")
+                                (forward-char 1)
+                                (backward-list 1)
+                                (backward-char 1)))
+                         ))))))
 
 
 
@@ -2575,57 +2543,54 @@ opening parenthesis one level up."
 
 
 (defun my-ibuffer-hook ()
-      ;; add another sorting method for ibuffer (allow the grouping of
-      ;; filenames and dired buffers
-    (define-ibuffer-sorter filename-or-dired
-      "Sort the buffers by their pathname."
-      (:description "filenames plus dired")
-      (string-lessp
-       (with-current-buffer (car a)
-         (or buffer-file-name
-             (if (eq major-mode 'dired-mode)
-                 (expand-file-name dired-directory))
-             ;; so that all non pathnames are at the end
-             "~"))
-       (with-current-buffer (car b)
-         (or buffer-file-name
-             (if (eq major-mode 'dired-mode)
-                 (expand-file-name dired-directory))
-             ;; so that all non pathnames are at the end
-             "~"))))
-    (define-key ibuffer-mode-map (kbd "s p") 'ibuffer-do-sort-by-filename-or-dired)
+  ;; add another sorting method for ibuffer (allow the grouping of
+  ;; filenames and dired buffers
+  (define-ibuffer-sorter filename-or-dired
+                         "Sort the buffers by their pathname."
+                         (:description "filenames plus dired")
+                         (string-lessp
+                           (with-current-buffer (car a)
+                                                (or buffer-file-name
+                                                    (if (eq major-mode 'dired-mode)
+                                                      (expand-file-name dired-directory))
+                                                    ;; so that all non pathnames are at the end
+                                                    "~"))
+                           (with-current-buffer (car b)
+                                                (or buffer-file-name
+                                                    (if (eq major-mode 'dired-mode)
+                                                      (expand-file-name dired-directory))
+                                                    ;; so that all non pathnames are at the end
+                                                    "~"))))
+  (define-key ibuffer-mode-map (kbd "s p") 'ibuffer-do-sort-by-filename-or-dired)
 
-    ;; sort now please!
-    (ibuffer-do-sort-by-filename-or-dired)
-)
+  ;; sort now please!
+  (ibuffer-do-sort-by-filename-or-dired))
+
 (add-hook 'ibuffer-mode-hook 'my-ibuffer-hook)
 
 
 (eval-after-load "dired" '(progn
-    (define-prefix-command 'my-god-mode-leader-key-1)
-    (define-key dired-mode-map (kbd "SPC") 'my-god-mode-leader-key-1)
-
-    (define-key dired-mode-map (kbd "k") #'previous-line)
-    (define-key dired-mode-map (kbd "j") #'next-line)
-
-    (define-key dired-mode-map (kbd "SPC b") #'switch-to-buffer)
-    (define-key dired-mode-map (kbd "SPC B") #'ibuffer)
-    (define-key dired-mode-map (kbd "SPC k") #'kill-this-buffer)
-    (define-key dired-mode-map (kbd "SPC K") #'my-only-current-buffer)
-    (define-key dired-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
-
-    (define-key dired-mode-map (kbd "SPC f") #'my-projectile-find-file)
-    (define-key dired-mode-map (kbd "SPC p") #'my-find-files)
-    (define-key dired-mode-map (kbd "SPC m") #'deadgrep)
-    (define-key dired-mode-map (kbd "SPC L") #'display-line-numbers-mode)
-    (define-key dired-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
-  ))
+                            (define-prefix-command 'my-god-mode-leader-key-1)
+                            (define-key dired-mode-map (kbd "SPC") 'my-god-mode-leader-key-1)
+                            (define-key dired-mode-map (kbd "k") #'previous-line)
+                            (define-key dired-mode-map (kbd "j") #'next-line)
+                            (define-key dired-mode-map (kbd "SPC b") #'switch-to-buffer)
+                            (define-key dired-mode-map (kbd "SPC B") #'ibuffer)
+                            (define-key dired-mode-map (kbd "SPC k") #'kill-this-buffer)
+                            (define-key dired-mode-map (kbd "SPC K") #'my-only-current-buffer)
+                            (define-key dired-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
+                            (define-key dired-mode-map (kbd "SPC f") #'my-projectile-find-file)
+                            (define-key dired-mode-map (kbd "SPC p") #'my-find-files)
+                            (define-key dired-mode-map (kbd "SPC m") #'deadgrep)
+                            (define-key dired-mode-map (kbd "SPC L") #'display-line-numbers-mode)
+                            (define-key dired-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
+                            ))
 
 
 
 
-(add-hook 'view-mode-hook         'View-exit)
-(add-hook 'view-mode-hook         'my-special-buffer-keys-minor-mode)
+(add-hook 'view-mode-hook 'View-exit)
+(add-hook 'view-mode-hook 'my-special-buffer-keys-minor-mode)
 
 
 
@@ -2641,56 +2606,52 @@ opening parenthesis one level up."
 
 
 (use-package selected
-  :ensure t
-  :commands selected-minor-mode
-  :bind (:map selected-keymap
-              ("C-c i" . clang-format-region)
-              ("C-c f" . clang-format-buffer)
-              ("("  . my-wrap-region-with-parens)
-              ("["  . my-wrap-region-with-brackets)
-              ("{"  . my-wrap-region-with-braces)
-              ("'"  . my-wrap-region-with-single-quotes)
-              ("\"" . my-wrap-region-with-double-quotes)
-              ("_"  . my-wrap-region-with-underscores)
-              ("`"  . my-wrap-region-with-back-quotes)
-        )
-)
+             :ensure t
+             :commands selected-minor-mode
+             :bind (:map selected-keymap
+                         ("C-c i" . clang-format-region)
+                         ("C-c f" . clang-format-buffer)
+                         ("("  . my-wrap-region-with-parens)
+                         ("["  . my-wrap-region-with-brackets)
+                         ("{"  . my-wrap-region-with-braces)
+                         ("'"  . my-wrap-region-with-single-quotes)
+                         ("\"" . my-wrap-region-with-double-quotes)
+                         ("_"  . my-wrap-region-with-underscores)
+                         ("`"  . my-wrap-region-with-back-quotes)
+                         )
+             )
 (selected-global-mode 1)
 
 
 
-(defun my-process()
+(defun my-toggle-selected-keybinding()
   (interactive)
   (if (bound-and-true-p selected-region-active-mode)
-      (progn
-        ;; (message "is active mode")
-        (my-disable-eglot-highlight)
-        (if (bound-and-true-p my-god-mode-is-active-flag)
-          (progn
-              ;; (message "is god-local-mode")
-              (define-key selected-keymap (kbd "v") #'keyboard-quit)
-              (define-key selected-keymap (kbd "d") #'kill-region)
-              (define-key selected-keymap (kbd "x") #'kill-region)
-              (define-key selected-keymap (kbd "C-n") #'my-mc/mark-next-like-this)
-              (define-key selected-keymap (kbd "C-p") #'my-mc/mark-previous-like-this)
-              ;; (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
-              ;; (define-key selected-keymap (kbd "i w") #'er/mark-symbol)
-          )
-          (progn
-            ;; (message "is not god-local-mode")
-            (define-key selected-keymap (kbd "v") nil)
-            (define-key selected-keymap (kbd "d") nil)
-            (define-key selected-keymap (kbd "x") nil)
-            (define-key selected-keymap (kbd "C-n") nil)
-            (define-key selected-keymap (kbd "C-p") nil)
-            ;; (define-key selected-keymap (kbd "i p") nil)
-            ;; (define-key selected-keymap (kbd "i w") nil)
-        )
-          ))
+    (progn
+      ;; (message "is active mode")
+      (my-disable-eglot-highlight)
+      (if (bound-and-true-p my-god-mode-is-active-flag)
+        (progn
+          ;; (message "is god-local-mode")
+          ;; (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
+          ;; (define-key selected-keymap (kbd "i w") #'er/mark-symbol)
+          (define-key selected-keymap (kbd "v") #'keyboard-quit)
+          (define-key selected-keymap (kbd "d") #'kill-region)
+          (define-key selected-keymap (kbd "x") #'kill-region)
+          (define-key selected-keymap (kbd "C-n") #'my-mc/mark-next-like-this)
+          (define-key selected-keymap (kbd "C-p") #'my-mc/mark-previous-like-this))
+        (progn
+          ;; (message "is not god-local-mode")
+          ;; (define-key selected-keymap (kbd "i p") nil)
+          ;; (define-key selected-keymap (kbd "i w") nil)
+          (define-key selected-keymap (kbd "v") nil)
+          (define-key selected-keymap (kbd "d") nil)
+          (define-key selected-keymap (kbd "x") nil)
+          (define-key selected-keymap (kbd "C-n") nil)
+          (define-key selected-keymap (kbd "C-p") nil))))
     (progn
       ;; (message "is deactive mode")
-      (my-enable-eglot-highlight))
-    )
-  )
+      (my-enable-eglot-highlight))))
 
-(setq selected-region-active-mode-hook #'my-process)
+(setq selected-region-active-mode-hook #'my-toggle-selected-keybinding)
+

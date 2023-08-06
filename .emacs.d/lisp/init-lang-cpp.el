@@ -37,6 +37,31 @@
 ;;; or just clang-format, from emacswiki
 (require 'clang-format)
 
+;; for find-other-file
+(require 'cff)
+
+(defun my-c-mode-hook ()
+    (setq tab-width 4)                  ;; Default is 2
+    (setq c-basic-offset 4)                  ;; Default is 2
+    (setq c-indent-level 4)                  ;; Default is 2
+    (setq c-default-style "bsd")
+    (setq indent-tabs-mode nil)              ;; nil: use spaces only
+    (c-set-offset 'substatement-open 0)      ;; open bracket align with if/for/while...
+    (eglot-ensure)
+    (define-key c-mode-base-map (kbd "M-O") #'cff-find-other-file)
+    (add-hook 'before-save-hook #'clang-format-buffer nil 'local)  ;; add-hook for buffer local, nice!
+    )
+
+(add-hook 'c-ts-mode-hook #'my-c-mode-hook)
+(add-hook 'c-mode-hook #'my-c-mode-hook)
+(add-hook 'c++-mode-hook #'my-c-mode-hook)
+(add-hook 'c++-ts-mode-hook #'my-c-mode-hook)
+
+;; (defun my-clang-format-buffer-if-need ()
+;;   (when (or (derived-mode-p 'c++-mode) (derived-mode-p 'c++-ts-mode))
+;;         (clang-format-buffer)))
+
+
 
 
 ;; (defun my-rtags-find-symbol-at-point()
@@ -74,23 +99,6 @@
 ;;        ("C-c r I" . rtags-include-file)
 ;;        ("C-c r i" . rtags-get-include-file-for-symbol)))
 
-
-(add-hook 'c++-mode-hook 'eglot-ensure)
-(add-hook 'c-mode-hook 'eglot-ensure)
-
-(add-hook 'c++-ts-mode-hook 'eglot-ensure)
-(add-hook 'c-ts-mode-hook 'eglot-ensure)
-
-
-(require 'cff)
-;; defines shortcut for find source/header file for the current
-;; file
-(add-hook 'c++-mode-hook
-          #'(lambda ()
-             (define-key c-mode-base-map (kbd "M-O") 'cff-find-other-file)))
-(add-hook 'c-mode-hook
-          #'(lambda ()
-             (define-key c-mode-base-map (kbd "M-O") 'cff-find-other-file)))
 
 
 (provide 'init-lang-cpp)
