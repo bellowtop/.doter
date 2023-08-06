@@ -122,6 +122,8 @@ vim.opt.completeopt:append("preview")
 vim.opt.shortmess:append("c")
 vim.opt.belloff:append("ctrlg")
 
+vim.opt.lispwords:append("use-package")
+
 
 vim.opt.expandtab = true
 
