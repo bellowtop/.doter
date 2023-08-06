@@ -91,6 +91,7 @@
 
 
 ;; download from https://github.com/emacs-tree-sitter/tree-sitter-langs
+;; rename .dylib to libtree-sitter*: fd -t f dylib --exclude 'libtree*' --exec mv {} libtree-sitter-{/} \;
 (setq treesit-extra-load-path '((expand-file-name "~/.emacs.d/.local/tree-sitter-grammars.aarch64-apple-darwin.v0.12.22")))
 ;; or put ~/.emacs.d/tree-sitter
 
