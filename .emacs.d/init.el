@@ -373,7 +373,7 @@
  '(doom-modeline-project-dir ((t (:inherit nil))))
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
- '(eglot-highlight-symbol-face ((t (:background "green4" :foreground "black"))))
+ '(eglot-highlight-symbol-face ((t (:foreground "#ECECEC" :background "#155402"))))
  '(eglot-mode-line ((t nil)))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
  '(flymake-error-echo ((t nil)))
