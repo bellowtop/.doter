@@ -384,8 +384,8 @@
  '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
  '(isearch ((t (:background "orange1" :foreground "black"))))
  '(ivy-current-match ((t (:foreground "white" :background "purple"))))
- '(ivy-minibuffer-match-face-2 ((t (:inherit ivy-minibuffer-match-face-1 :foreground "DeepPink4"))))
- '(ivy-minibuffer-match-face-3 ((t (:foreground "yellow" :background nil))))
+ ;; '(ivy-minibuffer-match-face-2 ((t (:inherit ivy-minibuffer-match-face-1 :foreground "DeepPink4"))))
+ ;; '(ivy-minibuffer-match-face-3 ((t (:foreground "yellow" :background "black"))))
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
  '(lazy-highlight ((t (:background "orange1" :foreground "black"))))
@@ -1854,6 +1854,7 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+
 (defun my-god-mode-update-cursor-type ()
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
     (if (bound-and-true-p god-local-mode)
@@ -1865,6 +1866,7 @@ If buffer-or-name is nil return current buffer's mode."
                     (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
                     ;; (set-face-attribute 'mode-line-active nil   :overline "#374250"  :box nil)
                     (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
+                    (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#262831" :foreground "#7AA2F7")
                 )
                 (unless (display-graphic-p)
                     (set-face-attribute 'mode-line          nil :foreground "black" :background "#00AFFF")
@@ -1884,6 +1886,7 @@ If buffer-or-name is nil return current buffer's mode."
                     (set-face-attribute 'mode-line nil          :background "#7fdc59" :foreground "black" :overline "green"   :box nil) ;; draw a line above mode-line
                     ;; (set-face-attribute 'mode-line-active nil   :overline "green"   :box nil)
                     (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
+                    (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#7AA2F7" :foreground "black")
                 )
                 (unless (display-graphic-p)
                     (set-face-attribute 'mode-line          nil :foreground "black" :background "cyan")
