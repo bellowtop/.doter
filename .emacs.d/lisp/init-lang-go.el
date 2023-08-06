@@ -13,10 +13,23 @@
 
 ;; Install gopls
 ;; https://github.com/golang/tools/blob/master/gopls/doc/user.md#installation
+
+
+
+;; (defun my-go-mode-hook ()
+;;   (setq gofmt-command "goimports")
+;;   (add-hook 'before-save-hook 'gofmt-before-save))
+;; 
+;; (add-hook 'go-mode-hook 'my-go-mode-hook)
+
+
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
-  :hook (go-mode . eglot-ensure)
+  :hook
+  (go-mode . eglot-ensure)
+  (go-mode . (add-hook 'before-save-hook 'gofmt-before-save))
   :config
+  (setq gofmt-command "goimports")
   (+eglot/set-leader-keys go-mode-map)
   ;; Env vars
   (with-eval-after-load 'exec-path-from-shell
