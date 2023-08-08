@@ -1118,12 +1118,16 @@ respectively."
 ;; (global-set-key [remap scroll-down-command] 'golden-ratio-scroll-screen-down)
 ;; (global-set-key [remap scroll-up-command] 'golden-ratio-scroll-screen-up)
 
- (setq scroll-margin 3
-       scroll-conservatively 101
-       scroll-up-aggressively 0.01
-       scroll-down-aggressively 0.01
-       ;; scroll-preserve-screen-position 'always
-       auto-window-vscroll nil)
+
+
+(pixel-scroll-precision-mode 1)
+
+(setq scroll-margin 3
+      scroll-conservatively 101
+      scroll-up-aggressively 0.01
+      scroll-down-aggressively 0.01
+      ;; scroll-preserve-screen-position 'always
+      auto-window-vscroll nil)
 
 (defun scroll-half-page-down ()
   "scroll down half the page"
