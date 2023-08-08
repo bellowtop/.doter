@@ -1707,6 +1707,7 @@ If buffer-or-name is nil return current buffer's mode."
 (define-key god-mode-isearch-map (kbd "N") 'isearch-repeat-backward+)
 (define-key god-mode-isearch-map (kbd "p") 'yank)
 (define-key god-mode-isearch-map (kbd "u") 'undo)
+(define-key god-mode-isearch-map (kbd "d") 'kill-whole-line)
 (define-key god-mode-isearch-map (kbd "j") #'(lambda() (interactive)(isearch-exit)(next-line)))
 (define-key god-mode-isearch-map (kbd "k") #'(lambda() (interactive)(isearch-exit)(previous-line)))
 (define-key god-mode-isearch-map (kbd "h") #'(lambda() (interactive)(isearch-exit)(my-forward-char-no-cross-line)))
