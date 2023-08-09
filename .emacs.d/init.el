@@ -378,12 +378,10 @@
  '(flymake-error-echo ((t nil)))
  '(flymake-warning-echo ((t nil)))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
+ '(highlight ((t (:background "yellow" :foreground "black" :underline nil))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
- '(iedit-occurrence ((t (:background "yellow" :foreground "black" :inverse-video nil))))
  '(isearch ((t (:background "orange1" :foreground "black"))))
  '(ivy-current-match ((t (:foreground "white" :background "purple"))))
- ;; '(ivy-minibuffer-match-face-2 ((t (:inherit ivy-minibuffer-match-face-1 :foreground "DeepPink4"))))
- ;; '(ivy-minibuffer-match-face-3 ((t (:foreground "yellow" :background "black"))))
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
  '(lazy-highlight ((t (:background "orange1" :foreground "black"))))
@@ -973,7 +971,7 @@ respectively."
 (require 'ivy-posframe)
 (ivy-posframe-mode 1)
 
-(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-center)))
+(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
 (defun ivy-format-function-default (cands)
   "Transform CANDS into a string for minibuffer."
   (concat "---------------------------------------------------\n"
@@ -987,11 +985,12 @@ respectively."
           "\n----------------------------------------------------\n\n"
           ))
 
+
 (defun my-ivy-posframe-get-size ()
-    "Set the ivy-posframe size according to the current frame."
-    (let ((height (or ivy-posframe-height (or (+ ivy-height 2) 20)))
-          (width (min (or ivy-posframe-width 200) (round (* .50 (frame-width))))))
-      (list :height height :width width :min-height height :min-width width)))
+  "Set the ivy-posframe size according to the current frame."
+  (let ((height (or ivy-posframe-height (or (+ ivy-height 2) 20)))
+        (width  (or ivy-posframe-width (round (* .80 (frame-width))))))
+    (list :height height :min-height height :min-width width)))
 (setq ivy-posframe-size-function 'my-ivy-posframe-get-size)
 (setq ivy-posframe-parameters '((:internal-border-width . 1) (:internal-border-color . "white")))
 
@@ -2599,4 +2598,3 @@ the cursor by ARG lines."
       (my-enable-eglot-highlight))))
 
 (setq selected-region-active-mode-hook #'my-toggle-selected-keybinding)
-
