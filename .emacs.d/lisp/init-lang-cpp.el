@@ -40,21 +40,41 @@
 ;; for find-other-file
 (require 'cff)
 
-(defun my-c-mode-hook ()
-    (setq tab-width 4)                  ;; Default is 2
-    (setq c-basic-offset 4)                  ;; Default is 2
-    (setq c-indent-level 4)                  ;; Default is 2
-    (setq c-default-style "bsd")
-    (setq indent-tabs-mode nil)              ;; nil: use spaces only
-    (c-set-offset 'substatement-open 0)      ;; open bracket align with if/for/while...
-    (eglot-ensure)
-    (define-key c-mode-base-map (kbd "M-O") #'cff-find-other-file)
-    (add-hook 'before-save-hook #'clang-format-buffer nil 'local)  ;; add-hook for buffer local, nice!
-    )
 
-(add-hook 'c-ts-mode-hook #'my-c-mode-hook)
+(c-add-style "mycppcodingstyle"
+             '((c-comment-only-line-offset . 0)
+               (c-hanging-braces-alist . ((substatement-open before after)))
+               (c-offsets-alist . ((topmost-intro        . 0)
+                                   (topmost-intro-cont   . 0)
+                                   ; (substatement         . 3)
+                                   (substatement-open    . 0)
+                                   ; (statement-case-open  . 3)
+                                   ; (statement-cont       . 3)
+                                   ; (access-label         . -3)
+                                   ; (inclass              . 3)
+                                   ; (inline-open          . 3)
+                                   (innamespace          . 0)
+                                   ))))
+
+
+
+(defun my-c-mode-hook ()
+  (setq tab-width 4)                  ;; Default is 2
+  (setq c-basic-offset 4)                  ;; Default is 2
+  (setq c-indent-level 4)                  ;; Default is 2
+  (setq c-default-style "bsd")
+  (setq indent-tabs-mode nil)              ;; nil: use spaces only
+  (eglot-ensure)
+  (define-key c-mode-base-map (kbd "M-O") #'cff-find-other-file)
+  (add-hook 'before-save-hook #'clang-format-buffer nil 'local)  ;; add-hook for buffer local, nice!
+  ;; (c-ts-mode-set-style "mycppcodingstyle")
+  (c-set-style "mycppcodingstyle")
+  )
+
 (add-hook 'c-mode-hook #'my-c-mode-hook)
 (add-hook 'c++-mode-hook #'my-c-mode-hook)
+
+(add-hook 'c-ts-mode-hook #'my-c-mode-hook)
 (add-hook 'c++-ts-mode-hook #'my-c-mode-hook)
 
 ;; (defun my-clang-format-buffer-if-need ()

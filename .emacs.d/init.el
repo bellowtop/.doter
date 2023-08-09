@@ -105,8 +105,8 @@
   (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
   (push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
   (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
-  (push '(c-mode . c-ts-mode) major-mode-remap-alist)
-  (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
+  ;; (push '(c-mode . c-ts-mode) major-mode-remap-alist)             ;; donot use treesit for cc by now. indent is wrong.
+  ;; (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
   (setq treesit-extra-load-path `( ,(expand-file-name "~/.emacs.d/.local/tree-sitter-grammars.aarch64-apple-darwin.v0.12.22") )))
 
 
