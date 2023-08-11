@@ -143,6 +143,7 @@
     (define-key god-local-mode-map (kbd "SPC f") #'my-projectile-find-file)
     (define-key god-local-mode-map (kbd "SPC p") #'my-find-files)
     (define-key god-local-mode-map (kbd "SPC m") #'deadgrep)
+    (define-key god-local-mode-map (kbd "SPC o") #'cff-find-other-file)    ;; switch between c header/source file
     (define-key god-local-mode-map (kbd "SPC L") #'display-line-numbers-mode)
     (define-key god-local-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
 
@@ -191,7 +192,6 @@
 
     (define-key god-local-mode-map (kbd ", w") #'my-save-buffer)
     (define-key god-local-mode-map (kbd ", b") #'flip-buffer-to-window)
-    (define-key god-local-mode-map (kbd ", o") #'cff-find-other-file)    ;; switch between c header/source file
 
     (define-key god-local-mode-map (kbd ", s") #'emacs-surround)
 
