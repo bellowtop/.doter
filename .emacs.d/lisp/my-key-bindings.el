@@ -1,3 +1,18 @@
+(eval-after-load "dired"
+  '(progn
+     (define-prefix-command 'my-god-mode-leader-key-1)
+     (define-key dired-mode-map (kbd "SPC") 'my-god-mode-leader-key-1)
+     (define-key dired-mode-map (kbd "SPC b") #'switch-to-buffer)
+     (define-key dired-mode-map (kbd "SPC B") #'ibuffer)
+     (define-key dired-mode-map (kbd "SPC k") #'kill-this-buffer)
+     (define-key dired-mode-map (kbd "SPC K") #'my-only-current-buffer)
+     (define-key dired-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
+     (define-key dired-mode-map (kbd "SPC f") #'my-projectile-find-file)
+     (define-key dired-mode-map (kbd "SPC p") #'my-find-files)
+     (define-key dired-mode-map (kbd "SPC m") #'deadgrep)
+     (define-key dired-mode-map (kbd "SPC L") #'display-line-numbers-mode)
+     (define-key dired-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
+     ))
 
 
 
@@ -7,7 +22,6 @@
     (define-key map (kbd "C-M-.") #'xref-find-definitions-other-window )
 
     (define-key map (kbd "s-d") #'my-mc/mark-next-like-this)
-
 
     ;; (define-key map (kbd "C-M-f") #'projectile-find-file)
     ;; (define-key map (kbd "C-M-b") #'switch-to-buffer)
@@ -140,14 +154,7 @@
     (define-key god-local-mode-map (kbd "SPC N") #'my-neotree-find)
 
 
-    (define-key god-local-mode-map (kbd "@") #'(lambda() (interactive)
-                                                 (with-selected-window (get-buffer-window (current-buffer))
-                                                     (treemacs-add-and-display-current-project)
-                                                 )
-                                                 (treemacs-find-file)
-                                                 (treemacs-select-window)
-                                                 (setq cursor-type 'bar)))
-
+    (define-key god-local-mode-map (kbd "@") #'my-treemacs-add-and-display-current-project)
     (define-key god-local-mode-map (kbd "SPC @") #'treemacs-add-and-display-current-project)
 
     ;;  (define-key god-local-mode-map (kbd "q l") #'windmove-right)
