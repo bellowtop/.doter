@@ -561,11 +561,11 @@
 
 
 (use-package transpose-frame
-    :defer t)
+  :defer t)
 
 
 (use-package yasnippet
-    :defer t)
+  :defer t)
 (add-hook 'prog-mode-hook 'yas-minor-mode)
 
 
@@ -709,8 +709,7 @@
 (use-package iedit
   :defer t
   :bind
-  ("M-'" . iedit-mode)
-)
+  ("M-'" . iedit-mode))
 
 
 
@@ -718,22 +717,21 @@
 ;; render like github
 (defun markdown-html-github (buffer)
   (princ (with-current-buffer buffer
-           (format "<!DOCTYPE html><html><script src=\"https://cdnjs.cloudflare.com/ajax/libs/he/1.1.1/he.js\"></script><link rel=\"stylesheet\" href=\"https://assets-cdn.github.com/assets/github-e6bb18b320358b77abe040d2eb46b547.css\"><link rel=\"stylesheet\" href=\"https://assets-cdn.github.com/assets/frameworks-95aff0b550d3fe338b645a4deebdcb1b.css\"><title>Impatient Markdown</title><div id=\"markdown-content\" style=\"display:none\">%s</div><div class=\"markdown-body\" style=\"max-width:968px;margin:0 auto;\"></div><script>fetch('https://api.github.com/markdown', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ \"text\": document.getElementById('markdown-content').innerHTML, \"mode\": \"gfm\", \"context\": \"knit-pk/homepage-nuxtjs\"}) }).then(response => response.text()).then(response => {document.querySelector('.markdown-body').innerHTML = he.decode(response)}).then(() => { fetch(\"https://gist.githubusercontent.com/FieryCod/b6938b29531b6ec72de25c76fa978b2c/raw/\").then(response => response.text()).then(eval)});</script></html>"
-                   (buffer-substring-no-properties (point-min) (point-max))))
+                              (format "<!DOCTYPE html><html><script src=\"https://cdnjs.cloudflare.com/ajax/libs/he/1.1.1/he.js\"></script><link rel=\"stylesheet\" href=\"https://assets-cdn.github.com/assets/github-e6bb18b320358b77abe040d2eb46b547.css\"><link rel=\"stylesheet\" href=\"https://assets-cdn.github.com/assets/frameworks-95aff0b550d3fe338b645a4deebdcb1b.css\"><title>Impatient Markdown</title><div id=\"markdown-content\" style=\"display:none\">%s</div><div class=\"markdown-body\" style=\"max-width:968px;margin:0 auto;\"></div><script>fetch('https://api.github.com/markdown', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ \"text\": document.getElementById('markdown-content').innerHTML, \"mode\": \"gfm\", \"context\": \"knit-pk/homepage-nuxtjs\"}) }).then(response => response.text()).then(response => {document.querySelector('.markdown-body').innerHTML = he.decode(response)}).then(() => { fetch(\"https://gist.githubusercontent.com/FieryCod/b6938b29531b6ec72de25c76fa978b2c/raw/\").then(response => response.text()).then(eval)});</script></html>"
+                                      (buffer-substring-no-properties (point-min) (point-max))))
          (current-buffer)))
 
 (defun markdown-html (buffer)
-    (princ (with-current-buffer buffer
-      (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
-    (current-buffer)))
+  (princ (with-current-buffer buffer
+                              (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+         (current-buffer)))
 
 (use-package impatient-mode
   :config
   (add-hook 'markdown-mode-hook #'(lambda ()
                                     (impatient-mode 1)
                                     (imp-set-user-filter 'markdown-html-github)
-                                    ))
-  )
+                                    )))
 
 
 
@@ -742,8 +740,7 @@
   :ensure t     ;; must ensure, treemacs depend on it
   :delight
   :config
-  (ace-window-display-mode 1)
-  )
+  (ace-window-display-mode 1))
 (setq aw-keys '(?h ?j ?k ?l ?a ?s ?d ?f ?g))
 (global-set-key (kbd "M-`") #'ace-window)
 
@@ -785,29 +782,25 @@
 
 (use-package rust-mode
   :defer t
-  :init
-)
+  :init)
 
 (use-package scala-mode
   :defer t
   :interpreter
-  ("scala" . scala-mode)
-)
+  ("scala" . scala-mode))
 
 (use-package yaml-mode
-    :ensure t
-    :init
-    :config
-    (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
-    (add-to-list 'auto-mode-alist '("\\.yml\\.j2\\'" . yaml-mode))
-    (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
-    (add-to-list 'auto-mode-alist '("\\.yaml\\.j2\\'" . yaml-mode))
-)
+  :ensure t
+  :init
+  :config
+  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+  (add-to-list 'auto-mode-alist '("\\.yml\\.j2\\'" . yaml-mode))
+  (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
+  (add-to-list 'auto-mode-alist '("\\.yaml\\.j2\\'" . yaml-mode)))
 
 
 (use-package ansible
-  :defer t
-)
+  :defer t)
 
 
 ;; line number fixed width
@@ -845,7 +838,7 @@
 
 
 (defun my-cmake-mode-hook ()
-    (setq cmake-tab-width 4))
+  (setq cmake-tab-width 4))
 
 (add-hook 'cmake-mode-hook 'my-cmake-mode-hook)
 
@@ -872,8 +865,7 @@
 (with-eval-after-load 'smartparens
   (sp-local-pair 'prog-mode "{" nil :post-handlers '((indent-between-pair "RET")))
   (sp-local-pair 'prog-mode "[" nil :post-handlers '((indent-between-pair "RET")))
-  (sp-local-pair 'prog-mode "(" nil :post-handlers '((indent-between-pair "RET")))
-)
+  (sp-local-pair 'prog-mode "(" nil :post-handlers '((indent-between-pair "RET"))))
 
 
 
@@ -910,19 +902,20 @@ respectively."
                 ))))
 
 (def-region-pairs ((paren . "(")
-            (bracket . "[")
-            (brace . "{")
-            (single-quote . "'")
-            (double-quote . "\"")
-            (back-quote . "`")))
+                   (bracket . "[")
+                   (brace . "{")
+                   (single-quote . "'")
+                   (double-quote . "\"")
+                   (back-quote . "`")))
+
 (bind-keys :map smartparens-mode-map
-     ("C-c ("  . my-wrap-region-with-parens)
-     ("C-c ["  . my-wrap-region-with-brackets)
-     ("C-c {"  . my-wrap-region-with-braces)
-     ("C-c '"  . my-wrap-region-with-single-quotes)
-     ("C-c \"" . my-wrap-region-with-double-quotes)
-     ("C-c _"  . my-wrap-region-with-underscores)
-     ("C-c `"  . my-wrap-region-with-back-quotes))
+           ("C-c ("  . my-wrap-region-with-parens)
+           ("C-c ["  . my-wrap-region-with-brackets)
+           ("C-c {"  . my-wrap-region-with-braces)
+           ("C-c '"  . my-wrap-region-with-single-quotes)
+           ("C-c \"" . my-wrap-region-with-double-quotes)
+           ("C-c _"  . my-wrap-region-with-underscores)
+           ("C-c `"  . my-wrap-region-with-back-quotes))
 
 
 
@@ -946,10 +939,10 @@ respectively."
   :diminish (ivy-mode . "")
   :bind
   (:map ivy-minibuffer-map
-    ("C-'" . ivy-avy)
-    ("TAB" . ivy-next-line)
-    ("<backtab>" . ivy-previous-line)
-  )
+        ("C-'" . ivy-avy)
+        ("TAB" . ivy-next-line)
+        ("<backtab>" . ivy-previous-line)
+        )
   :config
   (ivy-mode 1)
   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
@@ -963,7 +956,7 @@ respectively."
   (setq ivy-initial-inputs-alist nil)
   ;; configure regexp engine.
   (setq ivy-re-builders-alist
-    ;; allow input not in order
+        ;; allow input not in order
         '((t   . ivy--regex-ignore-order)))
   ;; donot show these buffers in counsel-switch-buffer
   (add-to-list 'ivy-ignore-buffers "\\*Messages\\*")
@@ -1045,28 +1038,23 @@ respectively."
 
 (defun my-M-x()
   (interactive)
-  (counsel-M-x)
-  )
+  (counsel-M-x))
 
 (defun my-occur()
   (interactive)
-  (counsel-grep)
-  )
+  (counsel-grep))
 
 (defun my-rg-at-point()
   (interactive)
-  (counsel-rg)
-  )
+  (counsel-rg))
 
 (defun my-find-files()
   (interactive)
-  (counsel-find-file)
-  )
+  (counsel-find-file))
 
 (defun my-mark-ring()
   (interactive)
-  (counsel-mark-ring)
-  )
+  (counsel-mark-ring))
 
 
 (setq projectile-completion-system 'ivy)
@@ -1083,18 +1071,18 @@ respectively."
 
 
 (advice-add
- 'my-M-x
- :before
- (lambda (&rest r) (my-god-mode))
- '((name . "my-god-mode-before-m-x")) ; convenient name for identifying or removing this advice later
- )
+  'my-M-x
+  :before
+  (lambda (&rest r) (my-god-mode))
+  ; convenient name for identifying or removing this advice later
+  '((name . "my-god-mode-before-m-x")))
 
 (advice-add
- 'my-mark-ring
- :after
- (lambda (&rest r) (recenter))
- '((name . "recenter-after-mark-ring")) ; convenient name for identifying or removing this advice later
- )
+  'my-mark-ring
+  :after
+  (lambda (&rest r) (recenter))
+  ; convenient name for identifying or removing this advice later
+  '((name . "recenter-after-mark-ring")))
 
 
 
@@ -1169,13 +1157,12 @@ respectively."
 
 
 (defun my-escape-key ()
-    (interactive)
-    (my-god-mode)
-    (when isearch-mode (isearch-abort) (isearch-abort))
-    (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
-    (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
-    (keyboard-quit)
-)
+  (interactive)
+  (my-god-mode)
+  (when isearch-mode (isearch-abort) (isearch-abort))
+  (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
+  (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
+  (keyboard-quit))
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
 ;; (define-key helm-map (kbd "<escape>") #'helm-keyboard-quit)
@@ -1210,38 +1197,38 @@ respectively."
 ; (tool-bar-mode -1)
 
 (when (display-graphic-p)
-    ;;; ;; awesome-tray is from emacswiki sub-directory
-    ;;; (setq awesome-tray-mode-line-active-color '"#00ff00")
+  ;;; ;; awesome-tray is from emacswiki sub-directory
+  ;;; (setq awesome-tray-mode-line-active-color '"#00ff00")
 
-    ;;; (require 'awesome-tray)
-    ;;; (awesome-tray-mode 1)
+  ;;; (require 'awesome-tray)
+  ;;; (awesome-tray-mode 1)
 
-    (scroll-bar-mode -1)
-    (fringe-mode -1)
-    ;; (tab-bar-mode -1)
-    ;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
-    (add-to-list 'default-frame-alist '(ns-appearance . dark))  ;; dark themes use "dark"
+  (scroll-bar-mode -1)
+  (fringe-mode -1)
+  ;; (tab-bar-mode -1)
+  ;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark))  ;; dark themes use "dark"
 
-    (global-set-key [escape] 'my-escape-key)
-    (define-key input-decode-map [?\C-\[] (kbd "<C-[>"))
-    (global-set-key (kbd "<C-[>") 'my-escape-key)
+  (global-set-key [escape] 'my-escape-key)
+  (define-key input-decode-map [?\C-\[] (kbd "<C-[>"))
+  (global-set-key (kbd "<C-[>") 'my-escape-key)
 
-    (setq frame-title-format
-          '(:eval (format-mode-line
-                   (propertized-buffer-identification
+  (setq frame-title-format
+        '(:eval (format-mode-line
+                  (propertized-buffer-identification
                     (or
-                     (when-let* ((buffer-file-truename buffer-file-truename)
-                                 (prj (cdr-safe (project-current)))
-                                 (prj-parent (file-name-directory (directory-file-name (expand-file-name prj)))))
-                       (concat
-                        (file-relative-name
-                         (file-name-directory buffer-file-truename) prj-parent)
-                        (file-name-nondirectory buffer-file-truename))
-                       )
-                     "%b"))))
-)
+                      (when-let* ((buffer-file-truename buffer-file-truename)
+                                  (prj (cdr-safe (project-current)))
+                                  (prj-parent (file-name-directory (directory-file-name (expand-file-name prj)))))
+                                 (concat
+                                   (file-relative-name
+                                     (file-name-directory buffer-file-truename) prj-parent)
+                                   (file-name-nondirectory buffer-file-truename))
+                                 )
+                      "%b"))))
+        )
 
-)
+  )
 
 (unless (display-graphic-p)
     ;; (setq doom-modeline-height 1)
@@ -1251,12 +1238,6 @@ respectively."
     (require 'doom-modeline)
     (doom-modeline-mode 1)
 )
-
-
-
-
-
-
 
 
 
@@ -1293,11 +1274,11 @@ respectively."
 
 ;; scroll with cursor not move
 (defun gcm-scroll-down ()
-      (interactive)
-      (scroll-up 1))
+  (interactive)
+  (scroll-up 1))
 (defun gcm-scroll-up ()
-      (interactive)
-      (scroll-down 1))
+  (interactive)
+  (scroll-down 1))
 
 
 
@@ -1313,12 +1294,12 @@ respectively."
   "Collapse prettified json in region between BEG and END to a single line"
   (interactive "r")
   (if (use-region-p)
-      (save-excursion
-        (save-restriction
-          (narrow-to-region beg end)
-          (goto-char (point-min))
-          (while (re-search-forward "[[:space:]\n]+" nil t)
-            (replace-match " "))))
+    (save-excursion
+      (save-restriction
+        (narrow-to-region beg end)
+        (goto-char (point-min))
+        (while (re-search-forward "[[:space:]\n]+" nil t)
+               (replace-match " "))))
     (print "This function operates on a region")))
 
 
@@ -1341,42 +1322,33 @@ respectively."
   "If anything isn't hidden, run `hs-hide-all', else run `hs-show-all'."
   (interactive)
   (hs-minor-mode 1)
-  (let ((starting-ov-count (length (overlays-in (point-min) (point-max)))))
+  (let (
+        (starting-ov-count (length (overlays-in (point-min) (point-max))))
+        )
     (if (derived-mode-p 'c++-mode)
-        ; find namespace, go below one line, and then hide
-        (save-excursion
-            (goto-char (point-min))
-            (re-search-forward "namespace.*?{" nil t)
-            (next-line)
-            (hs-hide-level 1)
-          )
-        (hs-hide-all)
-      )
+      ; find namespace, go below one line, and then hide
+      (save-excursion
+        (goto-char (point-min))
+        (re-search-forward "namespace.*?{" nil t)
+        (next-line)
+        (hs-hide-level 1))
+      (hs-hide-all))
     (when (equal (length (overlays-in (point-min) (point-max))) starting-ov-count)
-        (hs-show-all)
-        (recenter)
-      )))
-
-
-
-
-
+      (hs-show-all)
+      (recenter))))
 
 (defun my-hs-toggle-hiding ()
   (interactive)
   (hs-minor-mode 1)
-   (if (hs-already-hidden-p)
-       (hs-show-block)
-     (hs-hide-block)))
-
-
-
+  (if (hs-already-hidden-p)
+    (hs-show-block)
+    (hs-hide-block)))
 
 (defun my-hide-all()
   (interactive)
   (hs-minor-mode 1)
-  (hs-hide-all)
-)
+  (hs-hide-all))
+
 ;; (add-hook 'prog-mode-hook 'my-hide-all)
 
 
@@ -1390,16 +1362,16 @@ respectively."
 (defadvice kill-region (before slick-cut activate compile)
   "When called interactively with no active region, kill a single line instead."
   (interactive
-   (if mark-active
-       (list (region-beginning) (region-end))
-     (list (line-beginning-position) (line-beginning-position 2)))))
+    (if mark-active
+      (list (region-beginning) (region-end))
+      (list (line-beginning-position) (line-beginning-position 2)))))
 (defadvice kill-ring-save (before slick-copy activate compile)
   "When called interactively with no active region, copy a single line instead."
   (interactive
-   (if mark-active
-       (list (region-beginning) (region-end))
-     (message "Copied line")
-     (list (line-beginning-position) (line-beginning-position 2)))))
+    (if mark-active
+      (list (region-beginning) (region-end))
+      (message "Copied line")
+      (list (line-beginning-position) (line-beginning-position 2)))))
 
 
 
@@ -1453,7 +1425,6 @@ respectively."
 
 
 (xclip-mode 1)
-
 
 
 (require 'mwim)
@@ -1514,21 +1485,18 @@ If buffer-or-name is nil return current buffer's mode."
                           "*slime-repl"
                           "*Customize"))
 
-(setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "dired-mode" "cfrs-input-mode" ))
+(setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "cfrs-input-mode" ))
 
 
 (defun my-god-this-is-special-buffer (bufname)
   (interactive)
-  (let
-    (
-     (this-buffer-name (string-trim bufname))
-    )
+  (let (
+        (this-buffer-name (string-trim bufname))
+        )
     (seq-filter
       (lambda (n) (string-prefix-p n this-buffer-name))
       special-buffers)
-   )
-
-)
+    ))
 
 (defun* my-god-this-is-legendary-buffer (bufname)
   (interactive)
@@ -1538,51 +1506,44 @@ If buffer-or-name is nil return current buffer's mode."
     (
      (this-buffer-name (string-trim bufname))
      (this-buffer-mode (symbol-name (buffer-mode bufname)))
-    )
+     )
     ;; (message "this-buffer-name %s" this-buffer-name)
     ;; (message "this-buffer-mode %s" this-buffer-mode)
     (or
-        (seq-filter
-          (lambda (n) (string-prefix-p n this-buffer-name))
-          legendary-buffers)
-        (seq-filter
-          (lambda (n) (string-prefix-p n this-buffer-mode))
-          legendary-modes)
+      (seq-filter
+        (lambda (n) (string-prefix-p n this-buffer-name))
+        legendary-buffers)
+      (seq-filter
+        (lambda (n) (string-prefix-p n this-buffer-mode))
+        legendary-modes)
+      )
     )
   )
-)
 
 (defun* my-god-mode ()
   (interactive)
 
-  (if (my-god-this-is-legendary-buffer (buffer-name))
-        (progn
-            ;; (message "%s is legendary buffer" (buffer-name))
-            (my-keys-minor-mode 0)
-            (my-special-buffer-keys-minor-mode 0)
-            (cl-return-from my-god-mode)
-        )
-        (progn
-            ;; (message "%s is not legendary buffer, continue" (buffer-name))
-         )
-    )
+  (when (my-god-this-is-legendary-buffer (buffer-name))
+    ;; (message "%s is legendary buffer" (buffer-name))
+    (my-keys-minor-mode 0)
+    (my-special-buffer-keys-minor-mode 0)
+    (cl-return-from my-god-mode))
 
   (if (my-god-this-is-special-buffer (buffer-name))
-            (progn
-                ;; (message "%s is special buffer" (buffer-name))
-                (ignore)
-                (my-keys-minor-mode 0)
-                (my-special-buffer-keys-minor-mode 1)
-            )
-            (progn
-                ;; (message "%s not a special buffer" (buffer-name))
-                (god-local-mode 1)                  ;; start local mode
-                (setq my-god-mode-is-active-flag t)
-                (my-special-buffer-keys-minor-mode 0)
-             )
+    (progn
+      ;; (message "%s is special buffer" (buffer-name))
+      (ignore)
+      (my-keys-minor-mode 0)
+      (my-special-buffer-keys-minor-mode 1)
+      )
+    (progn
+      ;; (message "%s not a special buffer" (buffer-name))
+      (god-local-mode 1)                  ;; start local mode
+      (setq my-god-mode-is-active-flag t)
+      (my-special-buffer-keys-minor-mode 0)
+      )
     nil)
-
-)
+  )
 
 (defun my-quit-god-mode()
   (interactive)
@@ -1595,24 +1556,16 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-toggle-god-mode()
   (interactive)
   (if (bound-and-true-p god-local-mode)
-      (progn
-        (message "is local-mode, quit it")
-        (my-quit-god-mode)
-    )
-    (progn
-      (message "is not local-mode, start it")
-      (my-god-mode)
-      )
-    )
-  )
+    (my-quit-god-mode)
+    (my-god-mode)))
 
 
 
 
 (defun my-god-mode-with-switch-any-buffer(prev curr)
-    (cl-assert (eq curr (current-buffer)))  ;; Always t
-    ;; (message "%S -> %S -> %S" prev curr (string-trim (buffer-name curr)))
-    (my-god-mode)
+  (cl-assert (eq curr (current-buffer)))  ;; Always t
+  ;; (message "%S -> %S -> %S" prev curr (string-trim (buffer-name curr)))
+  (my-god-mode)
   )
 (add-hook 'switch-buffer-functions #'my-god-mode-with-switch-any-buffer)
 
@@ -1681,7 +1634,7 @@ If buffer-or-name is nil return current buffer's mode."
   (unless isearch-success
     (isearch-repeat-forward))
   ;; (recenter)
-)
+  )
 (defun isearch-repeat-backward+ ()
   (interactive)
   (when (and isearch-forward isearch-other-end)
@@ -1690,7 +1643,7 @@ If buffer-or-name is nil return current buffer's mode."
   (unless isearch-success
     (isearch-repeat-backward))
   ;; (recenter)
-)
+  )
 
 (require 'god-mode-isearch)
 (define-key isearch-mode-map (kbd "TAB") #'god-mode-isearch-activate)
@@ -1730,81 +1683,74 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-search-selection ()
   "search for selected text"
   (interactive)
-   (if (region-active-p)
-       (let ((selection (buffer-substring-no-properties (mark) (point)))
-             (case-fold-search 'default))
-         (message "search the marked region")
-         (deactivate-mark)
-         (isearch-mode t nil nil nil)
-         ;; activate god-mode-isearch
-         (god-mode-isearch-activate)
-         (isearch-yank-string selection))
-     (progn
-       (isearch-forward-symbol-at-point)
-       (god-mode-isearch-activate))
-     ))
+  (if (region-active-p)
+    (let ((selection (buffer-substring-no-properties (mark) (point)))
+          (case-fold-search 'default))
+      (message "search the marked region")
+      (deactivate-mark)
+      (isearch-mode t nil nil nil)
+      ;; activate god-mode-isearch
+      (god-mode-isearch-activate)
+      (isearch-yank-string selection))
+    (progn
+      (isearch-forward-symbol-at-point)
+      (god-mode-isearch-activate))))
 
 
 (defun my-isearch-forward ()
-      (interactive)
-      (isearch-mode t nil nil nil)
-      (god-mode-isearch-activate)
-      (isearch-repeat-forward+)
-)
+  (interactive)
+  (isearch-mode t nil nil nil)
+  (god-mode-isearch-activate)
+  (isearch-repeat-forward+))
 
 
 (defun my-isearch-backward ()
-      (interactive)
-      (isearch-mode nil nil nil nil)
-      (god-mode-isearch-activate)
-      (isearch-repeat-backward+)
-)
+  (interactive)
+  (isearch-mode nil nil nil nil)
+  (god-mode-isearch-activate)
+  (isearch-repeat-backward+))
 
 
 (defvar my-code-intelligence 't "enable by default")
 
 (defun my-disable-eglot-highlight()
   (interactive)
-        (ignore-errors
-            (set-face-attribute 'eglot-highlight-symbol-face nil :foreground 'unspecified :background 'unspecified)
-        )
-  )
+  (ignore-errors
+    (set-face-attribute 'eglot-highlight-symbol-face nil :foreground 'unspecified :background 'unspecified)))
+
 (defun my-enable-eglot-highlight()
   (interactive)
-        (ignore-errors
-            (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#ECECEC" :background "#155402")
-        )
-  )
+  (ignore-errors
+    (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#ECECEC" :background "#155402")))
 
 (defun my-disable-code-intelligence()
   (interactive)
-    (when my-code-intelligence
-        (my-disable-eglot-highlight)
-        (smartparens-global-mode -1)
-        (smartparens-mode -1)
-        (electric-indent-mode -1)
-        ;; (global-undo-tree-mode -1)
-        (undo-tree-mode -1)
+  (when my-code-intelligence
+    (my-disable-eglot-highlight)
+    (smartparens-global-mode -1)
+    (smartparens-mode -1)
+    (electric-indent-mode -1)
+    ;; (global-undo-tree-mode -1)
+    (undo-tree-mode -1)
 
-        (setq my-code-intelligence nil)
-        ;; (message "code-intelligence is disabled.")
+    (setq my-code-intelligence nil)
+    ;; (message "code-intelligence is disabled.")
     )
-)
+  )
 
 (defun my-enable-code-intelligence()
   (interactive)
-    (unless my-code-intelligence
-        (my-enable-eglot-highlight)
-        (smartparens-global-mode 1)
-        (smartparens-mode 1)
-        (electric-indent-mode 1)
-        ;; (global-undo-tree-mode 1)
-        (undo-tree-mode 1)
-
-        (setq my-code-intelligence 't)
-        ;; (message "code-intelligence is enabled.")
+  (unless my-code-intelligence
+    (my-enable-eglot-highlight)
+    (smartparens-global-mode 1)
+    (smartparens-mode 1)
+    (electric-indent-mode 1)
+    ;; (global-undo-tree-mode 1)
+    (undo-tree-mode 1)
+    (setq my-code-intelligence 't)
+    ;; (message "code-intelligence is enabled.")
     )
-)
+  )
 
 (add-hook 'isearch-mode-hook #'my-disable-code-intelligence)
 (add-hook 'isearch-mode-end-hook #'my-enable-code-intelligence)
@@ -1831,49 +1777,49 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun my-god-mode-update-cursor-type ()
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
-    (if (bound-and-true-p god-local-mode)
-      (progn
-                (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#313f4e")
-                (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
-                (when (display-graphic-p)
-                    (set-face-attribute 'window-divider nil     :foreground "#7AA2F7")
-                    (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
-                    ;; (set-face-attribute 'mode-line-active nil   :overline "#374250"  :box nil)
-                    (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
-                    (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#262831" :foreground "#7AA2F7")
-                )
-                (unless (display-graphic-p)
-                    (set-face-attribute 'mode-line          nil :foreground "black" :background "#00AFFF")
-                    (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
-                )
-                ;; (setq cursor-type 'bar)
-                ;; (set-cursor-color "red")
-                ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
-                ;; (set-face-attribute 'mode-line nil :background "#38424B")
-                (set-face-foreground 'vertical-border "#374250")
+  (if (bound-and-true-p god-local-mode)
+    (progn
+      (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#313f4e")
+      (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59" :background "#232d38")
+      (when (display-graphic-p)
+        (set-face-attribute 'window-divider nil     :foreground "#7AA2F7")
+        (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
+        ;; (set-face-attribute 'mode-line-active nil   :overline "#374250"  :box nil)
+        (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
+        (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#262831" :foreground "#7AA2F7")
+        )
+      (unless (display-graphic-p)
+        (set-face-attribute 'mode-line          nil :foreground "black" :background "#00AFFF")
+        (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
+        )
+      ;; (setq cursor-type 'bar)
+      ;; (set-cursor-color "red")
+      ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
+      ;; (set-face-attribute 'mode-line nil :background "#38424B")
+      (set-face-foreground 'vertical-border "#374250")
       )
-      (progn
-                (set-face-attribute 'hl-line nil :background (face-background 'default))
-                (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
-                (when (display-graphic-p)
-                    (set-face-attribute 'window-divider nil     :foreground "#7fdc59")
-                    (set-face-attribute 'mode-line nil          :background "#7fdc59" :foreground "black" :overline "green"   :box nil) ;; draw a line above mode-line
-                    ;; (set-face-attribute 'mode-line-active nil   :overline "green"   :box nil)
-                    (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
-                    (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#7AA2F7" :foreground "black")
-                )
-                (unless (display-graphic-p)
-                    (set-face-attribute 'mode-line          nil :foreground "black" :background "cyan")
-                    (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
-                )
-                ;; (setq cursor-type 'bar)
-                ;; (set-cursor-color "red")
-                ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
-                ;;(set-face-attribute 'mode-line nil :background "#38424B")
-                (set-face-foreground 'vertical-border "#00ff00")
+    (progn
+      (set-face-attribute 'hl-line nil :background (face-background 'default))
+      (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
+      (when (display-graphic-p)
+        (set-face-attribute 'window-divider nil     :foreground "#7fdc59")
+        (set-face-attribute 'mode-line nil          :background "#7fdc59" :foreground "black" :overline "green"   :box nil) ;; draw a line above mode-line
+        ;; (set-face-attribute 'mode-line-active nil   :overline "green"   :box nil)
+        (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
+        (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#7AA2F7" :foreground "black")
+        )
+      (unless (display-graphic-p)
+        (set-face-attribute 'mode-line          nil :foreground "black" :background "cyan")
+        (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
+        )
+      ;; (setq cursor-type 'bar)
+      ;; (set-cursor-color "red")
+      ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
+      ;;(set-face-attribute 'mode-line nil :background "#38424B")
+      (set-face-foreground 'vertical-border "#00ff00")
       )
     )
-)
+  )
 
 
 
@@ -1946,10 +1892,10 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 (use-package all-the-icons
-    :config
-    (setq all-the-icons-scale-factor 1.0)
-    (setq all-the-icons-default-adjust 0.0)
-)
+  :config
+  (setq all-the-icons-scale-factor 1.0)
+  (setq all-the-icons-default-adjust 0.0)
+  )
 
 
 
@@ -1965,7 +1911,8 @@ If buffer-or-name is nil return current buffer's mode."
   ;; (setq neo-window-width (/ (display-pixel-width) 4))
   ;; (setq neo-window-width 45)
   ;; (setq neo-toggle-window-keep-p 't)
-)
+  )
+
 (with-eval-after-load 'neotree
   ;; (define-key neotree-mode-map (kbd "L") #'(lambda () (interactive) (setq neo-window-width (/ (display-pixel-width) 2)) (neotree-hide) (my-neotree-find)))
   ;; (define-key neotree-mode-map (kbd "H") #'(lambda () (interactive) (setq neo-window-width 35) (neotree-hide) (my-neotree-find)))
@@ -1974,7 +1921,7 @@ If buffer-or-name is nil return current buffer's mode."
   (define-key neotree-mode-map (kbd "f") #'(lambda () (interactive) (neotree-hidden-file-toggle)))
   (define-key neotree-mode-map (kbd "a") 'mwim-beginning-of-code-or-line)
   (define-key neotree-mode-map (kbd "e") 'mwim-end-of-code-or-line)
-)
+  )
 
 
 (defun neotree-project-dir ()
@@ -2038,12 +1985,12 @@ If buffer-or-name is nil return current buffer's mode."
   (treemacs-resize-icons 18)
   (treemacs-follow-mode 1)
   (treemacs-hide-gitignored-files-mode 1)
-   :bind (
-        ("C-c n" . treemacs)
-        ("C-c t" . treemacs-toggle-node)
-        ("<mouse-1>" . treemacs-single-click-expand-action)
-   )
-)
+  :bind (
+         ("C-c n" . treemacs)
+         ("C-c t" . treemacs-toggle-node)
+         ("<mouse-1>" . treemacs-single-click-expand-action)
+         )
+  )
 
 
 
@@ -2051,6 +1998,15 @@ If buffer-or-name is nil return current buffer's mode."
     (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))
 (add-hook 'treemacs-mode-hook 'display-treemacs-widow-in-ace-window-selection)
 
+
+(defun my-treemacs-add-and-display-current-project()
+  (interactive)
+  (with-selected-window
+    (get-buffer-window (current-buffer))
+    (treemacs-add-and-display-current-project))
+  (treemacs-find-file)
+  (treemacs-select-window)
+  (setq cursor-type 'bar))
 
 
 (defun darker-background-for-sidebar()
@@ -2101,8 +2057,8 @@ If buffer-or-name is nil return current buffer's mode."
   :bind (
          ("C-x C-n" . mc/mark-next-like-this)
          ("C-c C-SPC" . mc/edit-lines)
+         )
   )
-)
 
 
 
@@ -2111,23 +2067,23 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-mc/mark-next-like-this (arg)
   (interactive "p")
   (if (region-active-p)
-      (message "search the marked region")
+    (message "search the marked region")
     (er/mark-symbol))
   (mc/mark-next-like-this-word arg)
   ;; copy from .emacs.d/elpa/multiple-cursors-20230113.835/mc-mark-more.el
   (let ((end (if mark-active (max (mark) (point)) (point)))
         furthest)
     (mc/for-each-fake-cursor
-     (when (> (mc/cursor-end cursor) end)
-       (setq end (mc/cursor-end cursor))
-       (setq furthest cursor)))
+      (when (> (mc/cursor-end cursor) end)
+        (setq end (mc/cursor-end cursor))
+        (setq furthest cursor)))
     ;; if end point is not visible in window, then cycle to it.
     (or (pos-visible-in-window-p
-     end (selected-window))
-    (mc/cycle furthest
-          (mc/first-fake-cursor-after (point-min))
-          "We're already at the last cursor.")
-    )
+          end (selected-window))
+        (mc/cycle furthest
+                  (mc/first-fake-cursor-after (point-min))
+                  "We're already at the last cursor.")
+        )
     )
   )
 
@@ -2160,21 +2116,20 @@ If buffer-or-name is nil return current buffer's mode."
   )
 
 (with-eval-after-load 'multiple-cursors-core
-    (define-key mc/keymap (kbd "TAB") 'mc/cycle-forward)
-    (define-key mc/keymap (kbd "<backtab>") 'mc/cycle-backward)
-    (define-key mc/keymap (kbd "RET") 'newline) ;; give RET back to the newline function, use C-c C-c to exit
-    (define-key mc/keymap (kbd "C-c C-c") 'multiple-cursors-mode) ;; exit
+  (define-key mc/keymap (kbd "TAB") 'mc/cycle-forward)
+  (define-key mc/keymap (kbd "<backtab>") 'mc/cycle-backward)
+  (define-key mc/keymap (kbd "RET") 'newline) ;; give RET back to the newline function, use C-c C-c to exit
+  (define-key mc/keymap (kbd "C-c C-c") 'multiple-cursors-mode) ;; exit
+  (define-key mc/keymap (kbd "C-x C-n") 'my-mc/mark-next-like-this)
+  (define-key mc/keymap (kbd "C-x C-p") 'my-mc/mark-previous-like-this)
+  (define-key mc/keymap (kbd "C-x C-a") 'mc/mark-all-like-this)
+  (define-key mc/keymap (kbd "C-x C-s") 'my-mc/skip-to-next-like-this)
+  (define-key mc/keymap (kbd "C-x C-r") 'mc/skip-to-previous-like-this)
+  (define-key mc/keymap (kbd "C-x C-x") 'mc/unmark-next-like-this)
+  (define-key mc/keymap (kbd "C-x C-d") 'mc/unmark-previous-like-this)
 
-    (define-key mc/keymap (kbd "C-x C-n") 'my-mc/mark-next-like-this)
-    (define-key mc/keymap (kbd "C-x C-p") 'my-mc/mark-previous-like-this)
-    (define-key mc/keymap (kbd "C-x C-a") 'mc/mark-all-like-this)
-    (define-key mc/keymap (kbd "C-x C-s") 'my-mc/skip-to-next-like-this)
-    (define-key mc/keymap (kbd "C-x C-r") 'mc/skip-to-previous-like-this)
-    (define-key mc/keymap (kbd "C-x C-x") 'mc/unmark-next-like-this)
-    (define-key mc/keymap (kbd "C-x C-d") 'mc/unmark-previous-like-this)
-
-    (add-hook 'multiple-cursors-mode-enabled-hook #'my-disable-code-intelligence)
-    (add-hook 'multiple-cursors-mode-disabled-hook #'my-enable-code-intelligence)
+  (add-hook 'multiple-cursors-mode-enabled-hook #'my-disable-code-intelligence)
+  (add-hook 'multiple-cursors-mode-disabled-hook #'my-enable-code-intelligence)
   )
 
 
@@ -2188,15 +2143,17 @@ If buffer-or-name is nil return current buffer's mode."
 ;; Suppress the message saying that the undo history file was
 ;; saved (because this happens every single time you save a file).
 (defun radian--undo-tree-suppress-undo-history-saved-message
-    (undo-tree-save-history &rest args)
+  (undo-tree-save-history &rest args)
   (let ((inhibit-message t))
     (apply undo-tree-save-history args)))
+
 ;; Suppress the message saying that the undo history could not be
 ;; loaded because the file changed outside of Emacs.
 (defun radian--undo-tree-suppress-buffer-modified-message
-    (undo-tree-load-history &rest args)
+  (undo-tree-load-history &rest args)
   (let ((inhibit-message t))
     (apply undo-tree-load-history args)))
+
 (advice-add #'undo-tree-load-history :around
             #'radian--undo-tree-suppress-buffer-modified-message)
 
@@ -2280,27 +2237,27 @@ _u_: undo      _r_: redo
 (use-package deadgrep
   :ensure t
   :config
-    (setq-default deadgrep--context (cons 3 3))
+  (setq-default deadgrep--context (cons 3 3))
   :bind(
-    ("C-c g" . deadgrep)
-    (:map deadgrep-mode-map
-          ("RET"  . deadgrep-visit-result)
-          ("o"    . deadgrep-visit-result-other-window)
-          ("v"    . (lambda () (interactive) (deadgrep-visit-result-other-window) (other-window 1)))
-          ("S"    . deadgrep-search-term)
-          ("D"    . deadgrep-directory)
-          ("g"    . deadgrep-restart)
-          ("n"    . deadgrep-forward-match)
-          ("p"    . deadgrep-backward-match)
-          ("N"    . deadgrep-forward-filename)
-          ("P"    . deadgrep-backward-filename)
-          ("C-x C-q" . deadgrep-edit-mode)
-    :map deadgrep-edit-mode-map
-         ("C-c C-c" . my-deadgrep-edit-exit)
-    )
-  )
+        ("C-c g" . deadgrep)
+        (:map deadgrep-mode-map
+              ("RET"  . deadgrep-visit-result)
+              ("o"    . deadgrep-visit-result-other-window)
+              ("v"    . (lambda () (interactive) (deadgrep-visit-result-other-window) (other-window 1)))
+              ("S"    . deadgrep-search-term)
+              ("D"    . deadgrep-directory)
+              ("g"    . deadgrep-restart)
+              ("n"    . deadgrep-forward-match)
+              ("p"    . deadgrep-backward-match)
+              ("N"    . deadgrep-forward-filename)
+              ("P"    . deadgrep-backward-filename)
+              ("C-x C-q" . deadgrep-edit-mode)
+              :map deadgrep-edit-mode-map
+              ("C-c C-c" . my-deadgrep-edit-exit)
+              )
+        )
   :hook (deadgrep-edit-mode . my-deadgrep-edit-enter)
-)
+  )
 
 
 
@@ -2572,24 +2529,6 @@ the cursor by ARG lines."
   (ibuffer-do-sort-by-filename-or-dired))
 
 (add-hook 'ibuffer-mode-hook 'my-ibuffer-hook)
-
-
-(eval-after-load "dired" '(progn
-                            (define-prefix-command 'my-god-mode-leader-key-1)
-                            (define-key dired-mode-map (kbd "SPC") 'my-god-mode-leader-key-1)
-                            (define-key dired-mode-map (kbd "k") #'previous-line)
-                            (define-key dired-mode-map (kbd "j") #'next-line)
-                            (define-key dired-mode-map (kbd "SPC b") #'switch-to-buffer)
-                            (define-key dired-mode-map (kbd "SPC B") #'ibuffer)
-                            (define-key dired-mode-map (kbd "SPC k") #'kill-this-buffer)
-                            (define-key dired-mode-map (kbd "SPC K") #'my-only-current-buffer)
-                            (define-key dired-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
-                            (define-key dired-mode-map (kbd "SPC f") #'my-projectile-find-file)
-                            (define-key dired-mode-map (kbd "SPC p") #'my-find-files)
-                            (define-key dired-mode-map (kbd "SPC m") #'deadgrep)
-                            (define-key dired-mode-map (kbd "SPC L") #'display-line-numbers-mode)
-                            (define-key dired-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
-                            ))
 
 
 

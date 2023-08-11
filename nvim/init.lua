@@ -123,6 +123,12 @@ vim.opt.shortmess:append("c")
 vim.opt.belloff:append("ctrlg")
 
 vim.opt.lispwords:append("use-package")
+vim.opt.lispwords:append("defun*")
+vim.opt.lispwords:append("eval-after-load")
+vim.opt.lispwords:append("with-eval-after-load")
+vim.opt.lispwords:append("defadvice")
+
+
 
 
 vim.opt.expandtab = true
