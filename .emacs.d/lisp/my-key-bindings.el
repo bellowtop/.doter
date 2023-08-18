@@ -124,6 +124,10 @@
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
     (define-key god-local-mode-map (kbd "C-~") #'upcase-char)
 
+    (define-key god-local-mode-map (kbd "C-o") 'nice-jumper/backward)
+    (define-key god-local-mode-map (kbd "C-i") 'nice-jumper/forward)
+
+
     ;; (define-key god-local-mode-map (kbd "C-n") #'my-mc/mark-next-like-this)
 
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
