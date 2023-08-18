@@ -473,6 +473,12 @@
 ;; )
 
 
+
+
+
+
+
+
 (defun my-recenter (&optional ARG PRED)
   (recenter)
   (xref-pulse-momentarily)
@@ -2543,6 +2549,22 @@ the cursor by ARG lines."
 (add-hook 'minibuffer-setup-hook #'(lambda () (my-special-buffer-keys-minor-mode 0)))
 ;; (add-hook 'helm-minibuffer-set-up-hook #'(lambda () (my-special-buffer-keys-minor-mode 0)))
 
+
+;; remap TAB -> control-i
+;; (define-key input-decode-map [?\C-i] [control-i])
+
+
+;; load from ./lisp
+(require 'nice-jumper)
+(global-nice-jumper-mode t)
+(when (display-graphic-p)
+  ;; cmd+[ cmd+]
+  (global-set-key (kbd "s-[") 'nice-jumper/backward)
+  (global-set-key (kbd "s-]") 'nice-jumper/forward))
+;; for terminal
+;; C-o C-M-o
+(global-set-key (kbd "C-o") 'nice-jumper/backward)
+(global-set-key (kbd "C-M-o") 'nice-jumper/forward)
 
 
 
