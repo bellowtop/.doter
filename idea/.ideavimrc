@@ -10,6 +10,7 @@ set multiple-cursors
 set surround
 set NERDTree
 set visualbell
+set noerrorbells
 set nooldundo
 
 # set clipboard+=unnamed
@@ -100,7 +101,10 @@ inoremap <C-b> :action EditorLeft <CR>
 inoremap <C-k> :action EditorDeleteToLineEnd <CR>
 inoremap <M-k> :action EditorDeleteToLineStart <CR>
 inoremap <M-d> :action EditorDeleteToWordEnd <CR>
-inoremap <C-/> :action $Undo <CR>
+inoremap <C-/> <C-o>u
+
+" vnoremap <M-c> :action CopyAsPlainText <CR>
+" vnoremap <M-v> :action PasteAsPlainText <CR>
 
 inoremap <M-f> :action EditorNextWord <CR>
 inoremap <M-b> :action EditorPreviousWord <CR>

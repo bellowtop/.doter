@@ -34,3 +34,6 @@ export PATH="$GOPATH/bin:$PATH"
 
 export PATH="$HOME/Library/Application Support/JetBrains/Toolbox/scripts:$PATH"
 
+export PATH="$HOME/zig/zls/bin:$PATH"
+export PATH="$HOME/zig/zig-macos-aarch64:$PATH"
+

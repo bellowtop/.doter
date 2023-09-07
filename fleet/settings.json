@@ -11,5 +11,7 @@
     "editor.alwaysShowHorizontalScrollbar": true,
     "createScratchOnNewFile": true,
     "editor.semanticHighlighting": true,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "animationEnabled": false,
+    "lsp.clangd.hidden.tweaks": false
 }
