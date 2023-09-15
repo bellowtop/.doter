@@ -14,7 +14,7 @@ cfg.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
 
 
 cfg.font = wezterm.font_with_fallback{
-    { family = "IntelOne Mono", weight = "Regular" },
+    { family = "Cascadia Mono PL", weight = "Regular" },
     { family = "DejavuSansMono Nerd Font" },
 }
 
