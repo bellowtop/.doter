@@ -94,6 +94,7 @@ mv ~/.ideavimrc         ~/.dot_backup
 mv ~/.xvimrc            ~/.dot_backup
 mv ~/.config/nvim       ~/.dot_backup
 mv ~/.config/tmux       ~/.dot_backup
+mv ~/.config/helix      ~/.dot_backup
 mv ~/.config/wezterm    ~/.dot_backup
 mv ~/.config/alacritty  ~/.dot_backup
 mv ~/.config/karabiner  ~/.dot_backup
