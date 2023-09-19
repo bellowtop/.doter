@@ -89,11 +89,11 @@ you may need to backup your old configs first.
 mkdir -p ~/.dot_backup
 cd ~
 
-mv ~/.tmux.conf         ~/.dot_backup
 mv ~/.emacs.d           ~/.dot_backup
 mv ~/.ideavimrc         ~/.dot_backup
 mv ~/.xvimrc            ~/.dot_backup
 mv ~/.config/nvim       ~/.dot_backup
+mv ~/.config/tmux       ~/.dot_backup
 mv ~/.config/wezterm    ~/.dot_backup
 mv ~/.config/alacritty  ~/.dot_backup
 mv ~/.config/karabiner  ~/.dot_backup
