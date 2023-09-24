@@ -366,15 +366,9 @@ require("telescope").load_extension "file_browser"
 --
 require('bqf').setup({
     func_map = {
-        closeall = '<C-g>',
+        open = 'o',
+        openc = '<CR>',
     },
-    filter = {
-        fzf = {
-            action_for = {
-                ['ctrl-g'] = 'closeall',
-            },
-        }
-    }
 })
 
 
@@ -481,6 +475,52 @@ local function get_forced_lsp_capabilities()
 end
 
 
+local function LspRename()
+    local curr_name = vim.fn.expand("<cword>")
+    local value = vim.fn.input("LSP Rename: ", curr_name)
+    local lsp_params = vim.lsp.util.make_position_params()
+
+    if not value or #value == 0 or curr_name == value then return end
+
+    -- request lsp rename
+    lsp_params.newName = value
+    vim.lsp.buf_request(0, "textDocument/rename", lsp_params, function(_, res, ctx, _)
+      if not res then return end
+
+      -- apply renames
+      local client = vim.lsp.get_client_by_id(ctx.client_id)
+      vim.lsp.util.apply_workspace_edit(res, client.offset_encoding)
+
+      -- print renames
+      local changed_files_count = 0
+      local changed_instances_count = 0
+      
+      if (res.documentChanges) then
+        for _, changed_file in pairs(res.documentChanges) do
+          changed_files_count = changed_files_count + 1
+          changed_instances_count = changed_instances_count + #changed_file.edits
+        end
+      elseif (res.changes) then
+        for _, changed_file in pairs(res.changes) do
+          changed_instances_count = changed_instances_count + #changed_file
+          changed_files_count = changed_files_count + 1
+        end
+      end
+      
+      -- compose the right print message
+      print(string.format("renamed %s instance%s in %s file%s. %s", 
+        changed_instances_count,
+        changed_instances_count == 1 and '' or 's',
+        changed_files_count,
+        changed_files_count == 1 and '' or 's',
+        changed_files_count > 1 and "To save them run ':wa'" or ''
+      ))
+    end)
+end
+
+
+
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
@@ -494,6 +534,8 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 local my_lsp_on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
   -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.keymap.set('n', 'gF', vim.lsp.buf.format, bufopts)
+  vim.keymap.set('n', 'gR', LspRename, bufopts)
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -508,9 +550,14 @@ local my_lsp_on_attach = function(client, bufnr)
   vim.keymap.set('n', '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, bufopts)
   vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  -- vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+
+  vim.keymap.set('n', 'ga',     vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', '<M-CR>', vim.lsp.buf.code_action, bufopts)
+
+
+  vim.keymap.set('n', 'gr', function() vim.lsp.buf.references({ includeDeclaration = false }) end, bufopts)
+  vim.keymap.set('n', 'gF', vim.lsp.buf.format, bufopts)
+  vim.keymap.set('n', 'gF', vim.lsp.buf.format, bufopts)
 
 
   -----   -- Set autocommands conditional on server_capabilities
@@ -976,6 +1023,7 @@ vim.api.nvim_set_keymap("v", "P", '"_dP', { noremap = true })
 
 -- switch to last buffer
 vim.api.nvim_set_keymap("n", ",b", '<C-6>', { noremap = true })
+vim.api.nvim_set_keymap("n", ",o", ':ClangdSwitchSourceHeader<CR>', { noremap = true })
 
 vim.api.nvim_set_keymap("n", "<C-g>", "<ESC><ESC><ESC>", { noremap = true })
 vim.api.nvim_set_keymap("i", "<C-g>", "<ESC><ESC><ESC>", { noremap = true })
