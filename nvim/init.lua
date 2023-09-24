@@ -24,6 +24,13 @@ require('packer').startup(function(use)
   use 'neovim/nvim-lspconfig'
   use 'kevinhwang91/nvim-bqf'
 
+  use {'junegunn/fzf', run = function()
+        vim.fn['fzf#install']()
+    end
+  }
+
+  use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+
   -- lspconfig for clangd
   use 'p00f/clangd_extensions.nvim'
 
@@ -273,6 +280,8 @@ vim.g.lightline = {
          filename = 'LightlineTruncatedFileName'
        },
        }
+
+
 
 
 
@@ -634,7 +643,7 @@ cmp.setup.cmdline(':', {
 
 
 
-local servers = { "gopls",  "rust_analyzer", "zls" }
+local servers = { "gopls",  "rust_analyzer", "zls", "clangd" }
 for _, lsp in ipairs(servers) do
   if vim.fn.executable(lsp) == 1 then
       require('lspconfig')[lsp].setup { on_attach = my_lsp_on_attach, capabilities = get_forced_lsp_capabilities() }
@@ -657,7 +666,7 @@ require("clangd_extensions").setup{
            "--pch-storage=memory",
         },
         initialization_options = {
-           fallback_flags = { "-std=c++17" },
+           fallback_flags = { "-std=c++20" },
         },
         on_attach = my_lsp_on_attach,
         capabilities = get_forced_lsp_capabilities(),
@@ -872,12 +881,35 @@ vim.api.nvim_set_keymap("n", "<C-q>", "a",     { noremap = true } )
 
 
 
+vim.cmd([[
+command -bang -nargs=? QFix call QFixToggle(<bang>0)
+function! QFixToggle(forced)
+  if exists("g:qfix_win") && a:forced == 0
+    cclose
+    unlet g:qfix_win
+  else
+    copen 10
+    let g:qfix_win = bufnr("$")
+  endif
+endfunction
+
+" used to track the quickfix window
+augroup QFixToggle
+ autocmd!
+ autocmd BufWinEnter quickfix let g:qfix_win = bufnr("$")
+ autocmd BufWinLeave * if exists("g:qfix_win") && expand("<abuf>") == g:qfix_win | unlet! g:qfix_win | endif
+augroup END
+]])
+
+vim.api.nvim_set_keymap("n", "<C-h><C-h>", ":QFix<CR>", { noremap = true })
+
 
 vim.api.nvim_set_keymap("n", "<Leader>h", ":bprev<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>l", ":bnext<CR>", { noremap = true })
 
 vim.api.nvim_set_keymap("n", "<Leader>k", ":Bclose<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<Leader>K", ":BufOnly<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>K", ":BufOnly<CR> :bfirst<CR>", { noremap = true })
+
 
 vim.api.nvim_set_keymap("n", "<Leader>x", "<C-w>c", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>w", "<C-w>", { noremap = true })
@@ -912,7 +944,6 @@ vim.api.nvim_set_keymap("n", "<C-l>", "zz", { noremap = true })
 -- occur
 -- fixme
 -- vim.api.nvim_set_keymap("n", "g/", ":vimgrep /<C-R>//j %<CR>\|:cw<CR>", { noremap = true })
-
 
 
 vim.api.nvim_set_keymap("n", "<C-j>",     ":w<CR>", { noremap = true })
