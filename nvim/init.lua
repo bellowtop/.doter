@@ -290,16 +290,14 @@ vim.g.lightline = {
 -- easymotion
 --
 --
-vim.g.is_doing_easymotion = 0
+
+vim.api.nvim_set_keymap("n", "f", "<Plug>(easymotion-bd-w)", { noremap=true, silent=true })
+-- wait 5s before start diagnostic after easymotion finish
 vim.cmd([[
-function! DoingEasyMotion()
-  let g:is_doing_easymotion = 1
-  let cancelled = EasyMotion#WB(0,2)
-  let g:is_doing_easymotion = 0
-endfunction
+    autocmd User EasyMotionPromptBegin silent! :lua vim.diagnostic.disable()
+    autocmd User EasyMotionPromptEnd   silent! :call timer_start(5000, { tid -> execute(':lua vim.diagnostic.enable()')})
 ]])
 
-vim.api.nvim_set_keymap("n", "f", ":call DoingEasyMotion()<CR>", { noremap = true } )
 
 --
 -- vim-rooter
@@ -571,6 +569,28 @@ local my_lsp_on_attach = function(client, bufnr)
   -----     ]], false)
   -----   end
 
+  vim.api.nvim_create_autocmd("CursorHold", {
+      buffer = bufnr,
+      callback = function()
+        local opts = {
+          focusable = false,
+          close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+          border = 'rounded',
+          source = 'always',
+          prefix = ' ',
+          scope = 'cursor',
+        }
+        vim.diagnostic.open_float(nil, opts)
+      end
+  })
+
+  vim.lsp.handlers["textDocument/publishDiagnostics"] =
+    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+        underline = true,
+        signs = true,
+        update_in_insert = false,
+        virtual_text = false
+  })
 
   require("cmp_nvim_lsp").default_capabilities(get_forced_lsp_capabilities())
 end
@@ -578,15 +598,6 @@ end
 
 
 
-
-local orig_handler = vim.lsp.handlers["textDocument/publishDiagnostics"]
-vim.lsp.handlers["textDocument/publishDiagnostics"] = function(...)
-  local status, value = pcall(vim.api.nvim_get_var, "is_doing_easymotion")
-  if status == true and value == 1 then
-    return
-  end
-  orig_handler(...)
-end
 
 
 
