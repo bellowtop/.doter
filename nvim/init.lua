@@ -785,7 +785,7 @@ vim.cmd([[
 -- ctrlsf
 --
 
-vim.api.nvim_set_keymap("n", "<Leader>m",         "<Plug>CtrlSFCwordPath<CR>",  { noremap = true } )
+vim.api.nvim_set_keymap("n", "<Leader>m",         "<Plug>CtrlSFCwordPath",  { noremap = true } )
 vim.api.nvim_set_keymap("v", "<Leader>m",         "<Plug>CtrlSFVwordExec<CR>",  { noremap = true } )
 vim.api.nvim_set_keymap("n", "<Leader>O",         ":CtrlSFOpen<CR> ",           { noremap = true } )
 vim.api.nvim_set_keymap("n", "<Leader>o",         ":CtrlSF ",                   { noremap = true } )
