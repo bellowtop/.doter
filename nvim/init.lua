@@ -207,7 +207,7 @@ vim.opt.wildmode = "full"
 
 
 
-vim.opt.clipboard:prepend("unnamed,unnamedplus")
+-- vim.opt.clipboard:prepend("unnamed,unnamedplus")
 vim.opt.backspace = "indent,eol,start"
 
 -- fixme
