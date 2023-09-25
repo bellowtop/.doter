@@ -421,12 +421,20 @@ require'nvim-tree'.setup {
     }
 
 
+function find_and_focus_file()
+  require('nvim-tree.api').tree.find_file({
+    focus = true,
+    open = true,
+  })
+end
+
 vim.api.nvim_set_keymap("n", "<leader>n", ":NvimTreeToggle<CR>",    { noremap = true } )
 vim.api.nvim_set_keymap("n", "<leader>r", ":NvimTreeRefresh<CR>",   { noremap = true } )
 vim.api.nvim_set_keymap("n", "<leader>N", ":NvimTreeFindFile<CR>",  { noremap = true } )
-vim.api.nvim_set_keymap("n", "<leader>@", ":NvimTreeFindFile<CR>",  { noremap = true } )
-vim.api.nvim_set_keymap("n", "@", ":NvimTreeFindFile<CR>",  { noremap = true } )
 
+-- vim.api.nvim_set_keymap("n", "<leader>@", ":NvimTreeFindFile<CR>",  { noremap = true } )
+-- vim.api.nvim_set_keymap("n", "@", "<cmd>lua find_and_focus_file()<cr>",    { noremap = true } )
+vim.keymap.set('n', '@', find_and_focus_file, { noremap = true })
 
 
 
@@ -1250,6 +1258,25 @@ vim.api.nvim_set_keymap("o", "il", ":normal vil<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<M-n>", "<C-e>",    { noremap = true } )
 vim.api.nvim_set_keymap("n", "<M-p>", "<C-y>",    { noremap = true } )
 
+
+
+
+local function file_exists(name)
+   local f = io.open(name,"r")
+   if f ~= nil then
+       io.close(f)
+       return true
+   else
+       return false
+   end
+end
+
+local local_override = os.getenv("HOME") .. "/.vimrc_local.lua"
+
+if file_exists(local_override) then
+    print("import ~/.vimrc_local.lua")
+    dofile(local_override)
+end
 
 
 
