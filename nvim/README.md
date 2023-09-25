@@ -41,6 +41,18 @@ brew install font-dejavu-sans-mono-nerd-font
 
 ```
 
+## local override
+
+put customization to ~/.vimrc_local.lua
+
+```
+cat ~/.vimrc_local.lua
+
+vim.opt.clipboard:prepend("unnamed,unnamedplus")
+```
+
+
+
 # plugins will be installed in ~/.nvim
 
 ## Golang
