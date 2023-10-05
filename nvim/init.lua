@@ -18,8 +18,8 @@ require('packer').startup(function(use)
 
 
 
-  use 'kyazdani42/nvim-web-devicons'
-  use 'kyazdani42/nvim-tree.lua'
+  use 'nvim-tree/nvim-web-devicons'
+  use 'nvim-tree/nvim-tree.lua'
 
   use 'neovim/nvim-lspconfig'
   use 'kevinhwang91/nvim-bqf'
@@ -34,6 +34,14 @@ require('packer').startup(function(use)
   -- lspconfig for clangd
   use 'p00f/clangd_extensions.nvim'
 
+
+  use {
+    requires = { "nvim-treesitter/nvim-treesitter" },
+    "Badhi/nvim-treesitter-cpp-tools",
+  }
+
+  -- for diagnostic
+  use "folke/trouble.nvim"
 
   use 'nvim-lua/plenary.nvim'
 
@@ -743,6 +751,29 @@ require("clangd_extensions").setup{
 
 
 
+require 'nt-cpp-tools'.setup({
+    preview = {
+        quit = 'q', -- optional keymapping for quit preview
+        accept = '<tab>' -- optional keymapping for accept preview
+    },
+    header_extension = 'h', -- optional
+    source_extension = 'cpp', -- optional
+    custom_define_class_function_commands = { -- optional
+        TSCppImplWrite = {
+            output_handle = require'nt-cpp-tools.output_handlers'.get_add_to_cpp()
+        }
+        --[[
+        <your impl function custom command name> = {
+            output_handle = function (str, context) 
+                -- string contains the class implementation
+                -- do whatever you want to do with it
+            end
+        }
+        ]]
+    }
+})
+
+
 
 
 
@@ -796,7 +827,6 @@ vim.cmd([[
 vim.api.nvim_set_keymap("n", "<Leader>m",         "<Plug>CtrlSFCwordPath",  { noremap = true } )
 vim.api.nvim_set_keymap("v", "<Leader>m",         "<Plug>CtrlSFVwordExec<CR>",  { noremap = true } )
 vim.api.nvim_set_keymap("n", "<Leader>O",         ":CtrlSFOpen<CR> ",           { noremap = true } )
-vim.api.nvim_set_keymap("n", "<Leader>o",         ":CtrlSF ",                   { noremap = true } )
 
 vim.g.ctrlsf_backend = 'rg'
 vim.g.ctrlsf_auto_focus = { at = "start" }
@@ -927,6 +957,8 @@ vim.api.nvim_set_keymap("i", "<C-f>", "<Right>", { noremap = true } )
 vim.api.nvim_set_keymap("i", "<C-k>", "<C-o>D", { noremap = true } )
 vim.api.nvim_set_keymap("i", "<M-k>", "<C-o>d0", { noremap = true } )
 vim.api.nvim_set_keymap("i", "<C-t>", "<C-o>O", { noremap = true } )
+vim.api.nvim_set_keymap("i", "<M-BS>", "<C-o>db", { noremap = true } )
+vim.api.nvim_set_keymap("i", "<M-d>", "<C-o>de", { noremap = true } )
 
 
 vim.api.nvim_set_keymap("i", "<C-q>", "<Esc>", { noremap = true } )
@@ -1042,7 +1074,7 @@ vim.api.nvim_set_keymap("v", "P", '"_dP', { noremap = true })
 
 -- switch to last buffer
 vim.api.nvim_set_keymap("n", ",b", '<C-6>', { noremap = true })
-vim.api.nvim_set_keymap("n", ",o", ':ClangdSwitchSourceHeader<CR>', { noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>o", ':ClangdSwitchSourceHeader<CR>', { noremap = true })
 
 vim.api.nvim_set_keymap("n", "<C-g>", "<ESC><ESC><ESC>", { noremap = true })
 vim.api.nvim_set_keymap("i", "<C-g>", "<ESC><ESC><ESC>", { noremap = true })
