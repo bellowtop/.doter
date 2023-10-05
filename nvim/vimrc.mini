@@ -20,6 +20,12 @@ map ' <C-u>
 map <C-l> zz
 map m %
 
+inoremap <M-d> <C-o>de
+inoremap <M-BS> <C-o>db
+inoremap <C-k> <C-o>d$
+inoremap <M-k> <C-o>d0
+
+
 autocmd VimEnter * nnoremap <C-j> <ESC>:w<CR>
 autocmd VimEnter * inoremap <C-j> <ESC>:w<CR>
 
