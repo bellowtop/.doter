@@ -1,6 +1,8 @@
 syntax on
 colorscheme default
 
+let mapleader = " "
+
 filetype plugin indent on
 set showmatch
 set ts=4
@@ -19,6 +21,10 @@ map ; <C-d>
 map ' <C-u>
 map <C-l> zz
 map m %
+
+
+nnoremap <Leader>h :bprev<CR>
+nnoremap <Leader>l :bnext<CR>
 
 inoremap <M-d> <C-o>de
 inoremap <M-BS> <C-o>db
