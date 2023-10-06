@@ -574,16 +574,16 @@ local my_lsp_on_attach = function(client, bufnr)
   vim.keymap.set('n', 'gF', vim.lsp.buf.format, bufopts)
 
 
-  -----   -- Set autocommands conditional on server_capabilities
-  -----   if client.resolved_capabilities.document_highlight then
-  -----     vim.api.nvim_exec([[
-  -----       augroup lsp_document_highlight
-  -----         autocmd! * <buffer>
-  -----         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-  -----         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-  -----       augroup END
-  -----     ]], false)
-  -----   end
+  -- -- Set autocommands conditional on server_capabilities
+  -- if client.resolved_capabilities.document_highlight then
+    vim.api.nvim_exec([[
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]], false)
+  -- end
 
   vim.api.nvim_create_autocmd("CursorHold", {
       buffer = bufnr,
@@ -1120,9 +1120,12 @@ function! MyHighlights() abort
     " for term
     hi Search                       cterm=reverse           ctermfg=214         ctermbg=232
     hi SpellCap                                             ctermfg=black       ctermbg=green
-    hi LspReferenceText                                     ctermfg=black       ctermbg=green
+
+    hi link LspReferenceText Special
+    " hi LspReferenceText                                     ctermfg=black       ctermbg=green
     " hi LspDiagnosticsError                                  ctermfg=cyan
     " hi LspDiagnosticsVirtualTextError                       ctermfg=red
+
     hi SignColumn                                           ctermfg=white       ctermbg=black
     " hi Whitespace                                           ctermfg=DarkGray
     hi VertSplit                                            ctermfg=green       ctermbg=black
@@ -1137,10 +1140,13 @@ function! MyHighlights() abort
     " for gui
     hi Search                       gui=reverse                guifg=goldenrod2         guibg=black
     hi SpellCap                                             guifg=black         guibg=springgreen
-    hi LspReferenceText                                     guifg=black         guibg=limegreen
+
+    hi link LspReferenceText Special
+    " hi LspReferenceText                                     guifg=black         guibg=limegreen
     " hi CocHighlightText                                     guifg=black         guibg=limegreen
     " hi LspDiagnosticsError                                  guifg=cyan
     " hi LspDiagnosticsVirtualTextError                       guifg=red
+
     hi SignColumn                                           guifg=white
     " hi Whitespace                                           guifg=DarkSlateGray
     hi VertSplit                                            guifg=springgreen   guibg=NONE
@@ -1206,6 +1212,8 @@ function! ToggleMouse()
     endif
 endfunc
 nnoremap <F4> :call ToggleMouse() <Enter>
+
+nnoremap <F6> :LspRestart<CR>
 
 nnoremap <F8> *
 
