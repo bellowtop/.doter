@@ -107,7 +107,7 @@
   (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
   ;; (push '(c-mode . c-ts-mode) major-mode-remap-alist)             ;; donot use treesit for cc by now. indent is wrong.
   ;; (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
-  (setq treesit-extra-load-path `( ,(expand-file-name "~/.emacs.d/.local/tree-sitter-grammars.aarch64-apple-darwin.v0.12.22") )))
+  (setq treesit-extra-load-path `( ,(expand-file-name "~/.emacs.d/.local/tree-sitter-grammars") )))
 
 
 
@@ -341,8 +341,8 @@
 (add-hook 'text-mode-hook 'my-set-bigger-spacing)
 (add-hook 'prog-mode-hook 'my-set-bigger-spacing)
 
-(set-face-attribute 'default nil :font "Cascadia Mono PL-15")
-(add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-15"))
+(set-face-attribute 'default nil :font "Cascadia Mono PL-12")
+(add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-12"))
 (set-cursor-color "red")
 (setq-default cursor-type 'bar)
 
@@ -1195,6 +1195,18 @@ respectively."
 (smerge-mode -1)
 ;; (scroll-bar-mode -1)
 (tab-bar-mode -1)
+
+
+
+(setq default-frame-alist '(
+  (undecorated . t);会导致所有边框全部消失无法拖动调整窗口大小 需要加上后面两句
+  (drag-internal-border . 1)
+  (internal-border-width . 5)
+  (vertical-scroll-bars);隐藏滚动条
+  (left-fringe);显示左fringe
+  (right-fringe . 0);关闭右fringe
+))
+
 
 
 ; (smerge-mode -1)
