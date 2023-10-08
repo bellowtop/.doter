@@ -341,8 +341,33 @@
 (add-hook 'text-mode-hook 'my-set-bigger-spacing)
 (add-hook 'prog-mode-hook 'my-set-bigger-spacing)
 
+
+;; Check if system is Darwin/Mac OS X
+(defun my-system-type-is-darwin ()
+  "Return true if system is darwin-based (Mac OS X)"
+  (string-equal system-type "darwin")
+  )
+
+;; Check if system is Microsoft Windows
+(defun my-system-type-is-windows ()
+  "Return true if system is Windows-based (at least up to Win7)"
+  (string-equal system-type "windows-nt")
+  )
+
+;; Check if system is GNU/Linux
+(defun my-system-type-is-gnu ()
+  "Return true if system is GNU/Linux-based"
+  (string-equal system-type "gnu/linux")
+  )
+
+
 (set-face-attribute 'default nil :font "Cascadia Mono PL-12")
 (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-12"))
+
+(when (my-system-type-is-darwin)
+    (set-face-attribute 'default nil :font "Cascadia Mono PL-16")
+    (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-16")))
+
 (set-cursor-color "red")
 (setq-default cursor-type 'bar)
 
