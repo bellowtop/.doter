@@ -365,8 +365,8 @@
 (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-12"))
 
 (when (my-system-type-is-darwin)
-    (set-face-attribute 'default nil :font "Cascadia Mono PL-16")
-    (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-16")))
+    (set-face-attribute 'default nil :font "Cascadia Mono PL-15")
+    (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-15")))
 
 (set-cursor-color "red")
 (setq-default cursor-type 'bar)
@@ -1400,6 +1400,12 @@ respectively."
   (message (buffer-file-name)))
 
 
+(defun my-copied-content-is-end-of-newline ()
+  (interactive)
+  (string-suffix-p "\n" (current-kill 0 'DONT-MOVE))
+)
+
+
 
 (defadvice kill-region (before slick-cut activate compile)
   "When called interactively with no active region, kill a single line instead."
@@ -1415,7 +1421,13 @@ respectively."
       (message "Copied line")
       (list (line-beginning-position) (line-beginning-position 2)))))
 
-
+(defun my-yank-but-check-newline()
+  (interactive)
+  (when (my-copied-content-is-end-of-newline)
+    (beginning-of-line)
+  )
+  (yank)
+)
 
 
 
@@ -1712,6 +1724,7 @@ If buffer-or-name is nil return current buffer's mode."
 (define-key god-mode-isearch-map (kbd "h") #'(lambda() (interactive)(isearch-exit)(my-forward-char-no-cross-line)))
 ;; (define-key god-mode-isearch-map (kbd "l") #'(lambda() (interactive)(isearch-exit)(my-backward-char-no-cross-line)))
 (define-key god-mode-isearch-map (kbd "l") 'recenter-top-bottom)
+(define-key god-mode-isearch-map (kbd "C-l") 'recenter-top-bottom)
 (define-key god-mode-isearch-map (kbd ";") 'scroll-up-command)
 (define-key god-mode-isearch-map (kbd "'") 'scroll-down-command)
 (define-key god-mode-isearch-map (kbd "s") 'isearch-repeat-forward+)
@@ -2027,6 +2040,7 @@ If buffer-or-name is nil return current buffer's mode."
   (treemacs-resize-icons 18)
   (treemacs-follow-mode 1)
   (treemacs-hide-gitignored-files-mode 1)
+  (treemacs-show-hidden-files t)
   :bind (
          ("C-c n" . treemacs)
          ("C-c t" . treemacs-toggle-node)

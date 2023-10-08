@@ -86,8 +86,8 @@
     (define-key god-local-mode-map (kbd "V") #'my-select-current-line-and-forward-line)
     (define-key god-local-mode-map (kbd "J") #'my-join-lines)
     (define-key god-local-mode-map (kbd "y") #'kill-ring-save)
-    (define-key god-local-mode-map (kbd "p") #'yank)
-    (define-key god-local-mode-map (kbd "P") #'yank) ;; same as yank
+    (define-key god-local-mode-map (kbd "p") #'my-yank-but-check-newline)
+    (define-key god-local-mode-map (kbd "P") #'my-yank-but-check-newline) ;; same as yank
     (define-key god-local-mode-map (kbd "u") #'undo-tree-undo)
     (define-key god-local-mode-map (kbd "C-r") #'undo-tree-redo)
     (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
