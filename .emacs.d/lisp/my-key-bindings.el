@@ -253,6 +253,18 @@
     (define-key map (kbd "M-o") #'other-window)
     (define-key map (kbd "M-x") #'my-M-x)
 
+    map)
+  "my-special-buffer-keys-minor-mode keymap.")
+(define-minor-mode my-special-buffer-keys-minor-mode
+  "A minor mode add some bindings for special-buffers."
+  :init-value t
+  :lighter " my-special-buffer-keys")
+
+
+
+(defvar my-ctrl-w-window-keys-minor-mode-map
+  (let ((map (make-sparse-keymap)))
+
     (define-key map (kbd "C-w l") #'windmove-right)
     (define-key map (kbd "C-w h") #'windmove-left)
     (define-key map (kbd "C-w k") #'windmove-up)
@@ -277,11 +289,13 @@
     (define-key map (kbd "C-w ,") #'flip-buffer-to-window)
 
     map)
-  "my-special-buffer-keys-minor-mode keymap.")
-(define-minor-mode my-special-buffer-keys-minor-mode
-  "A minor mode add some bindings for special-buffers."
+  "my-ctrl-w-window-keys-minor-mode keymap.")
+(define-minor-mode my-ctrl-w-window-keys-minor-mode
+  "A minor mode add some bindings for ctrl-w operate windows."
   :init-value t
-  :lighter " my-special-buffer-keys")
+  :lighter " my-ctrl-w-window-keys")
+
+
 
 
 

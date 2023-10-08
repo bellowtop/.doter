@@ -1574,8 +1574,10 @@ If buffer-or-name is nil return current buffer's mode."
     )
   )
 
+
 (defun* my-god-mode ()
   (interactive)
+  (my-ctrl-w-window-keys-minor-mode 1)
 
   (when (my-god-this-is-legendary-buffer (buffer-name))
     ;; (message "%s is legendary buffer" (buffer-name))
@@ -1601,6 +1603,8 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun my-quit-god-mode()
   (interactive)
+  (my-ctrl-w-window-keys-minor-mode 0)
+
   (god-local-mode -1)
   ;; my-god-mode is meant to have value, but it's not set, maybe god-mode bug?
   ;; anyway, we use our own flags here
@@ -2032,6 +2036,7 @@ If buffer-or-name is nil return current buffer's mode."
 (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
 (setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
 (setq treemacs-show-hidden-files nil)
+(setq treemacs-show-cursor t)
 
 (use-package treemacs
   :ensure t
