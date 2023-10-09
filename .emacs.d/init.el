@@ -2123,11 +2123,11 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+(setq mc/list-file (expand-file-name "~/.emacs.d/.local/.mc-lists.el"))
+(setq mc/match-cursor-style nil)
 (use-package multiple-cursors
   :ensure t
   :config
-  (setq mc/list-file (expand-file-name "~/.emacs.d/.local/.mc-lists.el"))
-  (setq mc/match-cursor-style nil)
   :bind
   (
     ("C-x C-n"      . mc/mark-next-like-this)
