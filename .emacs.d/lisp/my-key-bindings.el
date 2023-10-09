@@ -1,3 +1,160 @@
+;;;
+;;; util functions
+;;; 
+
+(defun my-delete-char (arg)
+  (interactive "p")
+  (if (use-region-p)
+    (let ((beg (region-beginning))
+          (end (copy-marker (region-end))))
+      (delete-region beg end)
+      )
+    (delete-forward-char 1)
+    )
+  )
+
+
+(defun my-replace-char ()
+  "delete current char, goto insert mode"
+  (interactive)
+  (delete-forward-char 1)
+  ;; (call-interactively (key-binding (kbd "q")))
+  (my-quit-god-mode)
+  )
+
+
+(defun my-save-buffer ()
+  "delete current word, goto insert mode"
+  (interactive)
+  (save-buffer)
+  (my-god-mode)
+  ;; (my-quit-mc-mode-if-need)
+  )
+
+
+(defun my-select-current-line-and-forward-line (arg)
+  "Select the current line and move the cursor by ARG lines IF
+  no region is selected.
+  If a region is already selected when calling this command, only move
+  the cursor by ARG lines."
+  (interactive "p")
+  (when (not (use-region-p))
+    (forward-line 0)
+    (set-mark-command nil))
+  (forward-line arg))
+
+
+(defun my-join-lines (arg)
+  "Apply join-line over region."
+  (interactive "p")
+  (forward-line 0)  ;; goto line begin
+  (if (use-region-p)
+    (let ((beg (region-beginning))
+          (end (copy-marker (region-end))))
+      (goto-char beg)
+      (while (< (point) end)
+             (join-line 1))
+      )
+    (progn
+      (set-mark-command nil)
+      (end-of-line)
+      (join-line -1)
+      )
+    ))
+
+
+(defun my-is-beginning-of-line ()
+  (interactive)
+  (= (point)
+     (line-beginning-position)
+     ))
+
+
+(defun my-is-end-of-line ()
+  (interactive)
+  (= (point)
+     (line-end-position)
+     ))
+
+
+(defun my-enlarge-half-height ()
+  "Expand current window to use half of the other window's lines."
+  (interactive)
+  (enlarge-window (/ (window-body-height) 4)))
+
+(defun my-enlarge-half-width ()
+  "Expand current window to use half of the other window's lines."
+  (interactive)
+  (enlarge-window-horizontally (/ (window-body-width) 4)))
+
+(defun my-shrink-half-height ()
+  "Expand current window to use half of the other window's lines."
+  (interactive)
+  (shrink-window (/ (window-body-height) 4)))
+
+(defun my-shrink-half-width ()
+  "Expand current window to use half of the other window's lines."
+  (interactive)
+  (shrink-window-horizontally (/ (window-body-width) 4)))
+
+
+(defun my-delete-other-windows ()
+  (interactive)
+  (delete-other-windows)
+  (recenter-top-bottom)
+  )
+
+
+(defun my-forward-char-no-cross-line()
+  (interactive)
+  (unless (my-is-end-of-line)
+    (forward-char)
+    )
+  )
+
+(defun my-backward-char-no-cross-line()
+  (interactive)
+  (unless (my-is-beginning-of-line)
+    (backward-char)
+    )
+  )
+
+
+(defun my-quit-other-window()
+  (interactive)
+  (delete-other-windows)
+  (keyboard-quit))
+
+
+
+
+(defun my-goto-match-paren (arg)
+  "Go to the matching parenthesis if on parenthesis. Else go to the
+  opening parenthesis one level up."
+  (interactive "p")
+  (cond ((looking-at "\\s\(") (forward-list 1))
+        (t
+          (backward-char 1)
+          (cond ((looking-at "\\s\)")
+                 (forward-char 1) (backward-list 1))
+                (t
+                  (while (not (looking-at "\\s("))
+                         (backward-char 1)
+                         (cond ((looking-at "\\s\)")
+                                (message "->> )")
+                                (forward-char 1)
+                                (backward-list 1)
+                                (backward-char 1)))
+                         ))))))
+
+
+
+
+
+
+
+
+
 (eval-after-load "dired"
   '(progn
      (define-prefix-command 'my-god-mode-leader-key-1)
@@ -79,7 +236,7 @@
     (define-key god-local-mode-map (kbd "b") #'backward-word)
     (define-key god-local-mode-map (kbd "k") #'previous-line)
     (define-key god-local-mode-map (kbd "j") #'next-line)
-    (define-key god-local-mode-map (kbd "q") #'my-pause-god-send-q-key-resume-god)
+    (define-key god-local-mode-map (kbd "q") #'my-quit-other-window)
     (define-key god-local-mode-map (kbd "l") #'my-forward-char-no-cross-line)
     (define-key god-local-mode-map (kbd "h") #'my-backward-char-no-cross-line)
     (define-key god-local-mode-map (kbd "v") #'set-mark-command)
