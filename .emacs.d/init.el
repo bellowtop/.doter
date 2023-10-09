@@ -2132,8 +2132,16 @@ If buffer-or-name is nil return current buffer's mode."
   (
     ("C-x C-n"      . mc/mark-next-like-this)
     ("C-c C-SPC"    . mc/edit-lines)
+  )
+  :init
+  (add-hook 'multiple-cursors-mode-enabled-hook #'my-disable-code-intelligence)
+  (add-hook 'multiple-cursors-mode-disabled-hook #'my-enable-code-intelligence)
+)
 
-    (:map mc/keymap
+(use-package multiple-cursors-core
+  :bind
+  (
+    :map mc/keymap
         ("TAB"          . 'mc/cycle-forward)
         ("<backtab>"    . 'mc/cycle-backward)
         ("RET"          . 'newline)                 ;; give RET back to the newline function, use C-c C-c to exit
@@ -2145,11 +2153,7 @@ If buffer-or-name is nil return current buffer's mode."
         ("C-x C-r"      . 'mc/skip-to-previous-like-this)
         ("C-x C-x"      . 'mc/unmark-next-like-this)
         ("C-x C-d"      . 'mc/unmark-previous-like-this)
-    )
-  )
-  :init
-  (add-hook 'multiple-cursors-mode-enabled-hook #'my-disable-code-intelligence)
-  (add-hook 'multiple-cursors-mode-disabled-hook #'my-enable-code-intelligence)
+   )
 )
 
 
@@ -2217,8 +2221,7 @@ If buffer-or-name is nil return current buffer's mode."
     (setq undo-tree-auto-save-history nil)
     :init
     (add-hook 'prog-mode-hook #'undo-tree-mode)
-    (advice-add #'undo-tree-load-history :around
-            #'radian--undo-tree-suppress-buffer-modified-message)
+    (advice-add #'undo-tree-load-history :around #'radian--undo-tree-suppress-buffer-modified-message)
 )
 
 ;; (global-undo-tree-mode)
@@ -2295,7 +2298,7 @@ _u_: undo      _r_: redo
 (defun my-deadgrep-edit-enter()
   (interactive)
   (my-disable-code-intelligence)
-  (my-quit-god-mode)
+  (god-local-mode -1)
   (remove-hook 'before-save-hook #'delete-trailing-whitespace)
   (remove-hook 'switch-buffer-functions #'my-god-mode-with-switch-any-buffer)
   (my-special-buffer-keys-minor-mode 0)
@@ -2305,7 +2308,7 @@ _u_: undo      _r_: redo
 (defun my-deadgrep-edit-exit()
   (interactive)
   (my-enable-code-intelligence)
-  (my-god-mode)
+  (god-local-mode 1)
   (add-hook 'before-save-hook #'delete-trailing-whitespace)
   (add-hook 'switch-buffer-functions #'my-god-mode-with-switch-any-buffer)
   (my-special-buffer-keys-minor-mode 1)
@@ -2318,7 +2321,7 @@ _u_: undo      _r_: redo
   (setq-default deadgrep--context (cons 3 3))
   :bind(
         ("C-c g" . deadgrep)
-        (:map deadgrep-mode-map
+        :map deadgrep-mode-map
               ("RET"  . deadgrep-visit-result)
               ("o"    . deadgrep-visit-result-other-window)
               ("v"    . (lambda () (interactive) (deadgrep-visit-result-other-window) (other-window 1)))
@@ -2330,9 +2333,8 @@ _u_: undo      _r_: redo
               ("N"    . deadgrep-forward-filename)
               ("P"    . deadgrep-backward-filename)
               ("C-x C-q" . deadgrep-edit-mode)
-              :map deadgrep-edit-mode-map
+        :map deadgrep-edit-mode-map
               ("C-c C-c" . my-deadgrep-edit-exit)
-              )
         )
   :hook (deadgrep-edit-mode . my-deadgrep-edit-enter)
   :init
