@@ -13,6 +13,17 @@
     )
   )
 
+(defun my-kill-whole-line (arg)
+  (interactive "p")
+  (if (use-region-p)
+    (let ((beg (region-beginning))
+          (end (copy-marker (region-end))))
+      (delete-region beg end)
+      )
+    (kill-whole-line)
+    )
+  )
+
 
 (defun my-replace-char ()
   "delete current char, goto insert mode"
@@ -255,7 +266,7 @@
 
     (define-key god-local-mode-map (kbd "s") #'my-replace-char)
     (define-key god-local-mode-map (kbd "x") #'my-delete-char)
-    (define-key god-local-mode-map (kbd "d") #'kill-whole-line)
+    (define-key god-local-mode-map (kbd "d") #'my-kill-whole-line)
 
     ;; (define-key god-local-mode-map (kbd "<RET>") #'next-line)
 
