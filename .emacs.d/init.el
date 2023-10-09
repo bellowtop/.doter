@@ -68,6 +68,13 @@
 
 
 
+;; create the autosave dir if necessary, since emacs won't.
+(make-directory "~/.emacs.d/.local/auto-save-list/" t)
+(make-directory "~/.emacs.d/.local/autosaves/" t)
+(make-directory "~/.emacs.d/.local/backups" t)
+
+
+
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/emacswiki.org"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
@@ -320,31 +327,6 @@
 (toggle-truncate-lines t)
 
 
-;;;; auto-compression-mode
-;;;; auto-encryption-mode
-;;;; auto-composition-mode
-;;;; transient-mark-mode
-;;;; window-divider-mode
-;;;; blink-cursor-mode
-;;;; font-lock-mode
-;;;; global-font-lock-mode
-;;;; file-name-shadow-mode
-;;;; mouse-wheel-mode
-;;;; tooltip-mode
-;;;; god-local-mode
-;;;; override-global-mode
-;;;; async-bytecomp-package-mode
-;;;; windmove-mode
-;;;; delete-selection-mode
-;;;; xclip-mode
-;;;; semantic-mode
-;;;; global-semantic-idle-scheduler-mode
-;;;; recentf-mode
-;;;; global-semanticdb-minor-mode
-;;;; global-hl-line-mode
-;;;; display-line-numbers-mode
-;;;; shell-dirtrack-mode
-
 
 
 
@@ -490,25 +472,6 @@
                         (make-glyph-code ?│))
 
 
-
-;; (global-set-key [remap lsp-ui-peek-find-definitions] 'my-lsp-ui-peek-find-definitions )
-;; (global-set-key [remap xref-pop-marker-stack] 'my-xref-pop-marker-stack )
-;; (global-set-key [remap xref-go-back] 'my-xref-go-back)
-;; (defun my-lsp-ui-peek-find-definitions()
-;;   (interactive)
-;;   (lsp-ui-peek-find-definitions)
-;;   (recenter)
-;; )
-;; (defun my-xref-pop-marker-stack()
-;;   (interactive)
-;;   (xref-pop-marker-stack)
-;;   (recenter)
-;; )
-;; (defun my-xref-go-back()
-;;   (interactive)
-;;   (xref-go-back)
-;;   (recenter)
-;; )
 
 
 
@@ -742,7 +705,7 @@
 (use-package iedit
   :defer t
   :bind(
-  ("M-'" . iedit-mode)
+    ("M-'" . iedit-mode)
   )
 )
 
@@ -775,9 +738,12 @@
   :ensure t     ;; must ensure, treemacs depend on it
   :delight
   :config
-  (ace-window-display-mode 1))
-(setq aw-keys '(?h ?j ?k ?l ?a ?s ?d ?f ?g))
-(global-set-key (kbd "M-`") #'ace-window)
+    (ace-window-display-mode 1)
+    (setq aw-keys '(?h ?j ?k ?l ?a ?s ?d ?f ?g))
+  :bind(
+    ("M-`" . #'ace-window)
+   )
+)
 
 ;; alternatively, use Meta-<left> Meta-<right> to move cursor to window
 ;; for iTerms2 user, disable alt-> alt-< to send alt-f alt-b in `profile->keys`
@@ -863,12 +829,6 @@
 
 
 
-
-
-
-
-
-;; (global-auto-revert-mode t)
 
 
 
@@ -1035,45 +995,6 @@ respectively."
 
 
 
-;; (require 'helm)
-;; (require 'helm-command)
-;; (helm-mode 1)
-;; (define-key helm-map (kbd "C-u")       #'my-delete-to-beginning)
-;; (define-key helm-M-x-map (kbd "C-u")   #'my-delete-to-beginning)
-;; (define-key helm-map (kbd "TAB")       #'helm-next-line)
-;; (define-key helm-map (kbd "<backtab>") #'helm-previous-line)
-
-
-;; ;; (setq helm-move-to-line-cycle-in-source t)
-;; (setq helm-buffer-max-length 40)
-;; ;; (setq helm-display-buffer-default-height 0.4)
-;; ;; (setq helm-default-display-buffer-functions '(display-buffer-in-side-window))
-;; (setq helm-display-function 'helm-display-buffer-in-own-frame
-;;         helm-display-buffer-reuse-frame t
-;;         helm-use-undecorated-frame-option t)
-;;
-;; (setq helm-boring-buffer-regexp-list (list
-;;                       (rx "*helm")
-;;                       (rx "*Message")
-;;                       (rx "*Help")
-;;                       (rx "*Echo Area")
-;;                       (rx "*Minibuf")
-;;                       (rx "*lsp")
-;;                       (rx "*jdtls")
-;;                       (rx " *")
-;;                       ))
-;;
-;;
-;; (require 'helm-projectile)
-;; (helm-projectile-on)
-;; (setq helm-projectile-truncate-lines t)
-
-
-
-;;
-;; adapter for helm or ivy
-;;
-
 (defun my-M-x()
   (interactive)
   (counsel-M-x))
@@ -1136,17 +1057,12 @@ respectively."
 
 
 
-;; (require 'smooth-scrolling)
-;; (smooth-scrolling-mode 1)
-
-
-;; (require 'golden-ratio-scroll-screen)
-;; (global-set-key [remap scroll-down-command] 'golden-ratio-scroll-screen-down)
-;; (global-set-key [remap scroll-up-command] 'golden-ratio-scroll-screen-up)
 
 
 
 (pixel-scroll-precision-mode 1)
+
+
 
 (setq scroll-margin 3
       scroll-conservatively 101
@@ -1184,12 +1100,6 @@ respectively."
 
 (add-to-list 'default-frame-alist
              '(vertical-scroll-bars . nil))
-
-
-
-
-;; (setq sml/theme 'dark)
-;; (sml/setup)
 
 
 
@@ -1470,15 +1380,6 @@ respectively."
 
 
 (setq recenter-redisplay nil)
-
-
-
-;; Put autosave files (ie #foo#) and backup files (ie foo~) in ~/.emacs.d/.
-
-;; create the autosave dir if necessary, since emacs won't.
-(make-directory "~/.emacs.d/.local/auto-save-list/" t)
-(make-directory "~/.emacs.d/.local/autosaves/" t)
-(make-directory "~/.emacs.d/.local/backups" t)
 
 
 
@@ -1832,12 +1733,8 @@ If buffer-or-name is nil return current buffer's mode."
 (setq hl-line-inhibit-highlighting-for-modes '(dired-mode deadgrep-mode deadgrep-edit-mode treemacs-mode))
 (global-hl-line-mode 1)
 
-;;; from emacswiki
-;; (require 'crosshairs)
 
 
-
-;; (beacon-mode 1)
 
 
 
@@ -1975,7 +1872,7 @@ If buffer-or-name is nil return current buffer's mode."
   )
 
 (use-package neotree
-  :defer t
+  :ensure t
   :init
   (setq neo-theme 'arrow)
   ;; (setq neo-auto-indent-point 't)
@@ -1983,7 +1880,7 @@ If buffer-or-name is nil return current buffer's mode."
   (setq neo-confirm-create-directory 'off-p)
   (setq neo-smart-open 't)
   (setq neo-window-fixed-size nil)
-  :hook (neotree-mode . #'darker-background-for-sidebar)
+  (add-hook 'neotree-mode-hook #'darker-background-for-sidebar)
   ;; (setq neo-window-width (/ (display-pixel-width) 4))
   ;; (setq neo-window-width 45)
   ;; (setq neo-toggle-window-keep-p 't)
@@ -2036,12 +1933,11 @@ If buffer-or-name is nil return current buffer's mode."
 (advice-add 'neotree-show :after 'my-add-padding-for-neotree)
 
 
-;; (defun my-add-padding-for-treemacs()
-;;   (interactive)
-;;   (let ((saved (selected-window)))
-;;     (treemacs-select-window)
-;;     (set-window-margins (selected-window) 2 2)
-;;     (select-window saved)))
+
+
+
+
+
 (defun my-add-padding-for-treemacs()
   (interactive)
   (set-window-margins (treemacs-get-local-window) 1 1)
@@ -2089,19 +1985,6 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
-
-
-;; (defun my-helm-ag-thing-at-point ()
-;;   "Search the symbol at point with `helm-ag'."
-;;   (interactive)
-;;   (
-;;    let (
-;;         (helm-ag-insert-at-point 'symbol)
-;;         (helm-ag-command-option " -Q ")
-;;    )
-;;    (helm-do-ag-project-root)
-;;   )
-;; )
 
 
 
@@ -2268,28 +2151,6 @@ _u_: undo      _r_: redo
 
 
 
-;; (defun my-deadgrep-visit-result ()
-;;   (interactive)
-;;   (deadgrep-visit-result)
-;;   (recenter)
-;;   )
-
-;; (defun my-deadgrep-visit-file-other-window ()
-;;   (interactive)
-;;   (deadgrep-visit-result-other-window)
-;;   (recenter)
-;;   )
-
-;; (defun my-deadgrep-view-file ()
-;;   "View result under cursor in other window."
-;;   (interactive)
-;;   (deadgrep-visit-result-other-window)
-;;
-;;   (recenter)
-;;   (other-window 1)
-;;   )
-
-
 (defun my-deadgrep-edit-enter()
   (interactive)
   (my-disable-code-intelligence)
@@ -2350,182 +2211,6 @@ _u_: undo      _r_: redo
 
 
 
-
-
-(defun my-last-in-word ()
-  "Move to the next 'last character' of a word."
-  (interactive)
-  (forward-char)
-  (re-search-forward "\\w\\b" nil t)
-  (goto-char (match-beginning 0)))
-
-
-
-(defun my-delete-char (arg)
-  (interactive "p")
-   (if (use-region-p)
-     (let ((beg (region-beginning))
-           (end (copy-marker (region-end))))
-          (delete-region beg end)
-     )
-     (delete-forward-char 1)
-   )
-)
-
-
-(defun my-replace-char ()
-  "delete current char, goto insert mode"
-  (interactive)
-  (delete-forward-char 1)
-  ;; (call-interactively (key-binding (kbd "q")))
-  (my-quit-god-mode)
-  )
-
-
-
-
-(defun my-save-buffer ()
-  "delete current word, goto insert mode"
-  (interactive)
-  (save-buffer)
-  (my-god-mode)
-  ;; (my-quit-mc-mode-if-need)
-  )
-
-
-(defun my-select-current-line-and-forward-line (arg)
-  "Select the current line and move the cursor by ARG lines IF
-no region is selected.
-If a region is already selected when calling this command, only move
-the cursor by ARG lines."
-  (interactive "p")
-  (when (not (use-region-p))
-    (forward-line 0)
-    (set-mark-command nil))
-  (forward-line arg))
-
-
-
-
-(defun my-join-lines (arg)
-  "Apply join-line over region."
-  (interactive "p")
-  (forward-line 0)  ;; goto line begin
-  (if (use-region-p)
-          (let ((beg (region-beginning))
-                        (end (copy-marker (region-end))))
-                (goto-char beg)
-                (while (< (point) end)
-                  (join-line 1))
-                )
-    (progn
-      (set-mark-command nil)
-      (end-of-line)
-      (join-line -1)
-    )
-))
-
-
-(defun my-is-beginning-of-line ()
-  (interactive)
-  (= (point)
-    (line-beginning-position)
-  ))
-
-
-(defun my-is-end-of-line ()
-  (interactive)
-  (= (point)
-    (line-end-position)
-    ))
-
-
-
-(defun my-enlarge-half-height ()
-  "Expand current window to use half of the other window's lines."
-  (interactive)
-  (enlarge-window (/ (window-body-height) 4)))
-
-(defun my-enlarge-half-width ()
-  "Expand current window to use half of the other window's lines."
-  (interactive)
-  (enlarge-window-horizontally (/ (window-body-width) 4)))
-
-(defun my-shrink-half-height ()
-  "Expand current window to use half of the other window's lines."
-  (interactive)
-  (shrink-window (/ (window-body-height) 4)))
-
-(defun my-shrink-half-width ()
-  "Expand current window to use half of the other window's lines."
-  (interactive)
-  (shrink-window-horizontally (/ (window-body-width) 4)))
-
-
-
-(defun my-quit-other-window ()
-  (interactive)
-  (other-window 1)
-  (quit-window))
-
-(defun my-delete-other-windows ()
-  (interactive)
-  (delete-other-windows)
-  (recenter-top-bottom)
-  )
-
-
-
-
-
-
-(defun my-forward-char-no-cross-line()
-  (interactive)
-  (unless (my-is-end-of-line)
-    (forward-char)
-  )
-)
-
-(defun my-backward-char-no-cross-line()
-  (interactive)
-  (unless (my-is-beginning-of-line)
-    (backward-char)
-  )
-)
-
-
-(defun my-pause-god-send-q-key-resume-god()
-  (interactive)
-  (delete-other-windows)
-  (keyboard-quit))
-
-
-
-
-(defun my-goto-match-paren (arg)
-  "Go to the matching parenthesis if on parenthesis. Else go to the
-  opening parenthesis one level up."
-  (interactive "p")
-  (cond ((looking-at "\\s\(") (forward-list 1))
-        (t
-          (backward-char 1)
-          (cond ((looking-at "\\s\)")
-                 (forward-char 1) (backward-list 1))
-                (t
-                  (while (not (looking-at "\\s("))
-                         (backward-char 1)
-                         (cond ((looking-at "\\s\)")
-                                (message "->> )")
-                                (forward-char 1)
-                                (backward-list 1)
-                                (backward-char 1)))
-                         ))))))
-
-
-
-
-
-
 (use-package highlight-parentheses
   :ensure t
   :init
@@ -2577,6 +2262,8 @@ the cursor by ARG lines."
 ;; (define-key input-decode-map [?\C-i] [control-i])
 
 
+
+
 ;; load from ./lisp
 (require 'nice-jumper)
 (global-nice-jumper-mode t)
@@ -2617,6 +2304,7 @@ the cursor by ARG lines."
 
 
 (defun my-toggle-selected-keybinding()
+  "add special keybindings for visual selected mode"
   (interactive)
   (if (bound-and-true-p selected-region-active-mode)
     (progn
