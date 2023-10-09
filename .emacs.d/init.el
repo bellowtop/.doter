@@ -74,6 +74,15 @@
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/lisp"))
 
 
+(defun darker-background-for-sidebar()
+  (set (make-local-variable 'face-remapping-alist)
+    '(
+        (default :background  "#1E2127")
+    )
+))
+
+
+
 (require 'god-mode)
 (setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
@@ -737,8 +746,10 @@
 
 (use-package iedit
   :defer t
-  :bind
-  ("M-'" . iedit-mode))
+  :bind(
+  ("M-'" . iedit-mode)
+  )
+)
 
 
 
@@ -967,11 +978,13 @@ respectively."
   :ensure t
   :diminish (ivy-mode . "")
   :bind
-  (:map ivy-minibuffer-map
+  (
+    (:map ivy-minibuffer-map
         ("C-'" . ivy-avy)
         ("TAB" . ivy-next-line)
         ("<backtab>" . ivy-previous-line)
-        )
+    )
+  )
   :config
   (ivy-mode 1)
   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
@@ -1958,6 +1971,14 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+(defun my-neotree-window-narrow()
+    (interactive) (setq neo-window-width 25) (neotree-hide) (my-neotree-find)
+  )
+
+(defun my-neotree-window-enlarge()
+    (interactive) (setq neo-window-width (/ (display-pixel-width) 4)) (neotree-hide) (my-neotree-find)
+  )
+
 (use-package neotree
   :defer t
   :init
@@ -1967,20 +1988,20 @@ If buffer-or-name is nil return current buffer's mode."
   (setq neo-confirm-create-directory 'off-p)
   (setq neo-smart-open 't)
   (setq neo-window-fixed-size nil)
+  :hook (neotree-mode . #'darker-background-for-sidebar)
   ;; (setq neo-window-width (/ (display-pixel-width) 4))
   ;; (setq neo-window-width 45)
   ;; (setq neo-toggle-window-keep-p 't)
+  :bind
+  (
+    :map neotree-mode-map
+    ("L" . 'my-neotree-window-narrow)
+    ("H" . 'my-neotree-window-enlarge)
+    ("f" . 'neotree-hidden-file-toggle)
+    ("a" . 'mwim-beginning-of-code-or-line)
+    ("e" . 'mwim-end-of-code-or-line)
   )
-
-(with-eval-after-load 'neotree
-  ;; (define-key neotree-mode-map (kbd "L") #'(lambda () (interactive) (setq neo-window-width (/ (display-pixel-width) 2)) (neotree-hide) (my-neotree-find)))
-  ;; (define-key neotree-mode-map (kbd "H") #'(lambda () (interactive) (setq neo-window-width 35) (neotree-hide) (my-neotree-find)))
-  (define-key neotree-mode-map (kbd "L") #'(lambda () (interactive) (setq neo-window-width 25) (neotree-hide) (my-neotree-find)))
-  (define-key neotree-mode-map (kbd "H") #'(lambda () (interactive) (setq neo-window-width (/ (display-pixel-width) 4)) (neotree-hide) (my-neotree-find)))
-  (define-key neotree-mode-map (kbd "f") #'(lambda () (interactive) (neotree-hidden-file-toggle)))
-  (define-key neotree-mode-map (kbd "a") 'mwim-beginning-of-code-or-line)
-  (define-key neotree-mode-map (kbd "e") 'mwim-end-of-code-or-line)
-  )
+)
 
 
 (defun neotree-project-dir ()
@@ -2030,34 +2051,34 @@ If buffer-or-name is nil return current buffer's mode."
   (interactive)
   (set-window-margins (treemacs-get-local-window) 1 1)
   )
-(add-hook 'treemacs-mode-hook 'my-add-padding-for-treemacs)
 
 
-(setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
-(setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
-(setq treemacs-show-hidden-files nil)
-(setq treemacs-show-cursor t)
 
 (use-package treemacs
   :ensure t
   :init
+    (add-hook 'treemacs-mode-hook #'darker-background-for-sidebar)
+    (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
+    (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
   :config
-  (treemacs-resize-icons 18)
-  (treemacs-follow-mode 1)
-  (treemacs-hide-gitignored-files-mode 1)
-  (treemacs-show-hidden-files t)
+    (setq treemacs-resize-icons 18)
+    (setq treemacs-follow-mode 1)
+    (setq treemacs-hide-gitignored-files-mode 1)
+    (setq treemacs-show-hidden-files t)
+    (setq treemacs-show-cursor t)
+    (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
+    (setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
   :bind (
          ("C-c n" . treemacs)
          ("C-c t" . treemacs-toggle-node)
          ("<mouse-1>" . treemacs-single-click-expand-action)
-         )
+    )
   )
 
 
 
 (defun display-treemacs-widow-in-ace-window-selection()
     (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))
-(add-hook 'treemacs-mode-hook 'display-treemacs-widow-in-ace-window-selection)
 
 
 (defun my-treemacs-add-and-display-current-project()
@@ -2067,18 +2088,10 @@ If buffer-or-name is nil return current buffer's mode."
     (treemacs-add-and-display-current-project))
   (treemacs-find-file)
   (treemacs-select-window)
-  (setq cursor-type 'bar))
+  (setq cursor-type 'bar)
+)
 
 
-(defun darker-background-for-sidebar()
-  (set (make-local-variable 'face-remapping-alist)
-    '(
-        (default :background  "#1E2127")
-    )
-))
-
-(add-hook 'treemacs-mode-hook 'darker-background-for-sidebar)
-(add-hook 'neotree-mode-hook 'darker-background-for-sidebar)
 
 
 
@@ -2109,17 +2122,35 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
-(setq mc/list-file (expand-file-name "~/.emacs.d/.local/.mc-lists.el"))
 
-(setq mc/match-cursor-style nil)
 (use-package multiple-cursors
   :ensure t
   :config
-  :bind (
-         ("C-x C-n" . mc/mark-next-like-this)
-         ("C-c C-SPC" . mc/edit-lines)
-         )
+  (setq mc/list-file (expand-file-name "~/.emacs.d/.local/.mc-lists.el"))
+  (setq mc/match-cursor-style nil)
+  :bind
+  (
+    ("C-x C-n"      . mc/mark-next-like-this)
+    ("C-c C-SPC"    . mc/edit-lines)
+
+    (:map mc/keymap
+        ("TAB"          . 'mc/cycle-forward)
+        ("<backtab>"    . 'mc/cycle-backward)
+        ("RET"          . 'newline)                 ;; give RET back to the newline function, use C-c C-c to exit
+        ("C-c C-c"      . 'multiple-cursors-mode)   ;; exit
+        ("C-x C-n"      . 'my-mc/mark-next-like-this)
+        ("C-x C-p"      . 'my-mc/mark-previous-like-this)
+        ("C-x C-a"      . 'mc/mark-all-like-this)
+        ("C-x C-s"      . 'my-mc/skip-to-next-like-this)
+        ("C-x C-r"      . 'mc/skip-to-previous-like-this)
+        ("C-x C-x"      . 'mc/unmark-next-like-this)
+        ("C-x C-d"      . 'mc/unmark-previous-like-this)
+    )
   )
+  :init
+  (add-hook 'multiple-cursors-mode-enabled-hook #'my-disable-code-intelligence)
+  (add-hook 'multiple-cursors-mode-disabled-hook #'my-enable-code-intelligence)
+)
 
 
 
@@ -2176,29 +2207,20 @@ If buffer-or-name is nil return current buffer's mode."
                "We're already at the last cursor.")
   )
 
-(with-eval-after-load 'multiple-cursors-core
-  (define-key mc/keymap (kbd "TAB") 'mc/cycle-forward)
-  (define-key mc/keymap (kbd "<backtab>") 'mc/cycle-backward)
-  (define-key mc/keymap (kbd "RET") 'newline) ;; give RET back to the newline function, use C-c C-c to exit
-  (define-key mc/keymap (kbd "C-c C-c") 'multiple-cursors-mode) ;; exit
-  (define-key mc/keymap (kbd "C-x C-n") 'my-mc/mark-next-like-this)
-  (define-key mc/keymap (kbd "C-x C-p") 'my-mc/mark-previous-like-this)
-  (define-key mc/keymap (kbd "C-x C-a") 'mc/mark-all-like-this)
-  (define-key mc/keymap (kbd "C-x C-s") 'my-mc/skip-to-next-like-this)
-  (define-key mc/keymap (kbd "C-x C-r") 'mc/skip-to-previous-like-this)
-  (define-key mc/keymap (kbd "C-x C-x") 'mc/unmark-next-like-this)
-  (define-key mc/keymap (kbd "C-x C-d") 'mc/unmark-previous-like-this)
-
-  (add-hook 'multiple-cursors-mode-enabled-hook #'my-disable-code-intelligence)
-  (add-hook 'multiple-cursors-mode-disabled-hook #'my-enable-code-intelligence)
-  )
 
 
 
 
-(require 'undo-tree)
-(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.local/.undo-tree-files")))
-(setq undo-tree-auto-save-history nil)
+(use-package undo-tree
+    :config
+    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.local/.undo-tree-files")))
+    (setq undo-tree-auto-save-history nil)
+    :init
+    (add-hook 'prog-mode-hook #'undo-tree-mode)
+    (advice-add #'undo-tree-load-history :around
+            #'radian--undo-tree-suppress-buffer-modified-message)
+)
+
 ;; (global-undo-tree-mode)
 
 ;; Suppress the message saying that the undo history file was
@@ -2215,10 +2237,7 @@ If buffer-or-name is nil return current buffer's mode."
   (let ((inhibit-message t))
     (apply undo-tree-load-history args)))
 
-(advice-add #'undo-tree-load-history :around
-            #'radian--undo-tree-suppress-buffer-modified-message)
 
-(add-hook 'prog-mode-hook #'undo-tree-mode)
 
 
 
@@ -2249,8 +2268,6 @@ _u_: undo      _r_: redo
 
 
 
-(advice-add 'deadgrep-visit-result                        :after 'my-recenter)
-(advice-add 'deadgrep-visit-result-other-window           :after 'my-recenter)
 
 
 ;; (defun my-deadgrep-visit-result ()
@@ -2318,6 +2335,9 @@ _u_: undo      _r_: redo
               )
         )
   :hook (deadgrep-edit-mode . my-deadgrep-edit-enter)
+  :init
+    (advice-add 'deadgrep-visit-result                        :after 'my-recenter)
+    (advice-add 'deadgrep-visit-result-other-window           :after 'my-recenter)
   )
 
 
@@ -2327,53 +2347,6 @@ _u_: undo      _r_: redo
 
 
 (require 'highlight)
-
-
-
-;;  (use-package key-chord
-;;    :ensure t
-;;    :config
-;;    )
-;;  (setq key-chord-two-keys-delay 1.0)
-;;  (setq key-chord-one-key-delay 1.1)
-;;
-;;  (key-chord-mode 1)
-;;
-;;  (defun my-key-chord-define (keymap keys command)
-;;    "Define in KEYMAP, a key-chord of the two keys in KEYS starting a COMMAND.
-;;  KEYS can be a string or a vector of two elements. Currently only
-;;  elements that corresponds to ascii codes in the range 32 to 126
-;;  can be used.
-;;  COMMAND can be an interactive function, a string, or nil.
-;;  If COMMAND is nil, the key-chord is removed."
-;;    (if (/= 2 (length keys))
-;;        (error "Key-chord keys must have two elements"))
-;;    ;; Exotic chars in a string are >255 but define-key wants 128..255
-;;    ;; for those.
-;;    (let ((key1 (logand 255 (aref keys 0)))
-;;          (key2 (logand 255 (aref keys 1))))
-;;      (if (eq key1 key2)
-;;          (define-key keymap (vector 'key-chord key1 key2) command)
-;;        (define-key keymap (vector 'key-chord key1 key2) command)
-;;        ;; (define-key keymap (vector 'key-chord key2 key1) command)   ;; sekiroc:: donot reverse bind!
-;;        )))
-
-
-
-
-
-
- ;; '(iedit-occurrence ((t (:background "black" :foreground "yellow"))))
-
-
-;; (with-eval-after-load 'subr-x
-;;         (setq-default mode-line-buffer-identification
-;;                 '(:eval (format-mode-line (propertized-buffer-identification (or (when-let* ((buffer-file-truename buffer-file-truename)
-;;                 (prj (cdr-safe (project-current)))
-;;                 (prj-parent (file-name-directory (directory-file-name (expand-file-name prj)))))
-;;                         (concat (file-relative-name (file-name-directory buffer-file-truename) prj-parent) (file-name-nondirectory buffer-file-truename)))
-;; "%b"))))))
-
 
 
 
@@ -2388,8 +2361,6 @@ _u_: undo      _r_: redo
   (forward-char)
   (re-search-forward "\\w\\b" nil t)
   (goto-char (match-beginning 0)))
-
-
 
 
 
@@ -2559,9 +2530,10 @@ the cursor by ARG lines."
 
 
 (use-package highlight-parentheses
-  :ensure t)
-(add-hook 'prog-mode-hook #'highlight-parentheses-mode)
-
+  :ensure t
+  :init
+    (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
+  )
 
 
 
@@ -2590,8 +2562,6 @@ the cursor by ARG lines."
   (ibuffer-do-sort-by-filename-or-dired))
 
 (add-hook 'ibuffer-mode-hook 'my-ibuffer-hook)
-
-
 
 
 (add-hook 'view-mode-hook 'View-exit)
@@ -2630,7 +2600,8 @@ the cursor by ARG lines."
   :ensure t
   :commands selected-minor-mode
   :bind
-  (:map selected-keymap
+  (
+    (:map selected-keymap
         ("C-c i" . clang-format-region)
         ("C-c f" . clang-format-buffer)
         ("("  . my-wrap-region-with-parens)
@@ -2640,9 +2611,11 @@ the cursor by ARG lines."
         ("\"" . my-wrap-region-with-double-quotes)
         ("_"  . my-wrap-region-with-underscores)
         ("`"  . my-wrap-region-with-back-quotes)
-        )
+    )
   )
-(selected-global-mode 1)
+  :config
+  (selected-global-mode 1)
+  )
 
 
 
