@@ -198,11 +198,11 @@
 (setq warning-minimum-level :emergency)
 
 
-(defun suspend-and-run ()
-    (interactive)
-    (suspend-emacs "echo test && sleep 5 && fg"))
-
-(global-set-key (kbd "<f5>") 'suspend-and-run)
+;; (defun suspend-and-run ()
+;;     (interactive)
+;;     (suspend-emacs "echo test && sleep 5 && fg"))
+;; 
+;; (global-set-key (kbd "<f5>") 'suspend-and-run)
 
 
 
@@ -285,10 +285,14 @@
 
 
 
+(use-package expand-region
+    :bind
+    (
+        ("M-i" . 'er/expand-region)
+        ("M-I" . 'er/mark-inside-pairs)
+    )
+  )
 
-(require 'expand-region)
-(global-set-key (kbd "M-i") 'er/expand-region)
-(global-set-key (kbd "M-I") 'er/mark-inside-pairs)
 
 ;;;;
 ;;;; already handled by selected-region-active-mode
@@ -538,16 +542,6 @@
 
 
 
-
-(setq dap-java-test-runner (expand-file-name "~/.emacs.d/.local/eclipse.jdt.ls/test-runner/junit-platform-console-standalone.jar"))
-(setq dap-breakpoints-file (expand-file-name "~/.emacs.d/.local/.dap-breakpoints"))
-
-
-(setq eglot-java-junit-platform-console-standalone-jar (expand-file-name "~/.emacs.d/.local/eclipse.jdt.ls/test-runner/junit-platform-console-standalone.jar"))
-
-
-
-
 (setq display-buffer-alist
       `(("*eldoc*"
          (display-buffer-in-side-window)
@@ -563,15 +557,16 @@
 
 (require 'init-eglot)
 
-(require 'init-lang-java)
-
-(require 'download-lombok)
+;; (require 'init-lang-java)
+;; (require 'download-lombok)
 
 (require 'init-lang-go)
 
 (require 'init-lang-cpp)
 
 (require 'init-lang-zig)
+
+
 
 (defun my-joindirs (root &rest dirs)
   "Joins a series of directories together, like Python's os.path.join,

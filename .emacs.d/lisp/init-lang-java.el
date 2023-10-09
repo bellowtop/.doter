@@ -15,6 +15,16 @@
 ;; NOTE: https://github.com/pmd/pmd-emacs PMD Emacs
 ;; NOTE: https://pmd.github.io/latest/index.html PMD
 
+
+
+(setq dap-java-test-runner (expand-file-name "~/.emacs.d/.local/eclipse.jdt.ls/test-runner/junit-platform-console-standalone.jar"))
+(setq dap-breakpoints-file (expand-file-name "~/.emacs.d/.local/.dap-breakpoints"))
+
+
+(setq eglot-java-junit-platform-console-standalone-jar 
+      (expand-file-name "~/.emacs.d/.local/eclipse.jdt.ls/test-runner/junit-platform-console-standalone.jar"))
+
+
 ;; Download http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.junit.platform&a=junit-platform-console-standalone&v=LATEST
 (defvar +java/junit-platform-console-standalone-jar
   (expand-file-name "~/.emacs.d/.local/eclipse.jdt.ls/test-runner/junit-platform-console-standalone.jar"))
