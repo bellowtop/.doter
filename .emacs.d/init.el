@@ -1741,6 +1741,29 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+(use-package lispy
+  :init
+  (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+  :config
+  (setcdr lispy-goto-mode-map nil)
+  (setcdr lispy-other-mode-map nil)
+  (setcdr lispy-mode-map nil)
+  (setcdr lispy-mode-map-oleh nil)
+  (setcdr lispy-mode-map-base nil)
+  (setcdr lispy-mode-map-lispy nil)
+  (setcdr lispy-mode-map-evilcp nil)
+  (setcdr lispy-mode-map-special nil)
+  (setcdr lispy-mode-map-paredit nil)
+  (setcdr lispy-mode-map-parinfer nil)
+  (setcdr lispy-mode-map-c-digits nil)
+  :bind (
+         (define-key lispy-mode-map (kbd "M") 'special-lispy-alt-multiline)
+         )
+  )
+
+
+
+
 
 
 

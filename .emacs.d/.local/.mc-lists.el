@@ -55,6 +55,8 @@
         kill-sexp
         kmacro-end-or-call-macro
         ledger-magic-tab
+        lispy-delete-backward
+        lispy-move-end-of-line
         mark-paragraph
         markdown-enter-key
         markdown-exdent-or-delete
@@ -158,6 +160,7 @@
         iedit-switch-to-mc-mode
         ivy-backward-delete-char
         ivy-wgrep-change-to-wgrep-mode
+        lispy-parens
         magit-section-backward
         magit-section-forward
         markdown-cycle
