@@ -123,6 +123,7 @@
   (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
   (push '(c-mode . c-ts-mode) major-mode-remap-alist)             ;; donot use treesit for cc by now. indent is wrong.
   (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
+  (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode))  ;; tell h file to c++-ts-mode
   (setq treesit-extra-load-path `( ,(expand-file-name "~/.emacs.d/.local/tree-sitter-grammars") )))
 
 
