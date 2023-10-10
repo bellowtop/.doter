@@ -1,6 +1,6 @@
 ;;;
 ;;; util functions
-;;; 
+;;;
 
 (defun my-delete-char (arg)
   (interactive "p")
@@ -21,6 +21,14 @@
       (delete-region beg end)
       )
     (kill-whole-line)
+    )
+  )
+
+(defun my-next-line-or-mc/mark-next-like-this(arg)
+  (interactive "p")
+  (if (use-region-p)
+      (my-mc/mark-next-like-this)
+    (next-line)
     )
   )
 
@@ -295,8 +303,7 @@
     (define-key god-local-mode-map (kbd "C-o") 'nice-jumper/backward)
     (define-key god-local-mode-map (kbd "C-i") 'nice-jumper/forward)
 
-
-    ;; (define-key god-local-mode-map (kbd "C-n") #'my-mc/mark-next-like-this)
+    (define-key god-local-mode-map (kbd "C-n") #'my-next-line-or-mc/mark-next-like-this)
 
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
     (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)
