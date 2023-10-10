@@ -64,9 +64,11 @@
   (setq c-indent-level 4)                  ;; Default is 2
   (setq c-default-style "bsd")
   (setq indent-tabs-mode nil)              ;; nil: use spaces only
+
   (eglot-ensure)
   (define-key c-mode-base-map (kbd "M-O") #'cff-find-other-file)
   (add-hook 'before-save-hook #'clang-format-buffer nil 'local)  ;; add-hook for buffer local, nice!
+
   ;; (c-ts-mode-set-style "mycppcodingstyle")
   (c-set-style "mycppcodingstyle")
   )
@@ -74,8 +76,42 @@
 (add-hook 'c-mode-hook #'my-c-mode-hook)
 (add-hook 'c++-mode-hook #'my-c-mode-hook)
 
-(add-hook 'c-ts-mode-hook #'my-c-mode-hook)
-(add-hook 'c++-ts-mode-hook #'my-c-mode-hook)
+
+
+
+
+
+(defun my-ts-mode-indent-style()
+  "Override the built-in BSD indentation style with some additional rules"
+  `(;; Here are your custom rules
+    ((node-is ")") parent-bol 0)
+    ((match nil "argument_list" nil 1 1) parent-bol c-ts-mode-indent-offset)
+    ((parent-is "argument_list") prev-sibling 0)
+    ((match nil "parameter_list" nil 1 1) parent-bol c-ts-mode-indent-offset)
+    ((parent-is "parameter_list") prev-sibling 0)
+
+    ;; Append here the indent style you want as base
+   ,@(alist-get 'bsd (c-ts-mode--indent-styles 'cpp))))
+
+(defun my-c-ts-mode-hook()
+
+  (eglot-ensure)
+  (define-key c-ts-base-mode-map (kbd "M-O") #'cff-find-other-file)
+  (add-hook 'before-save-hook #'clang-format-buffer nil 'local)  ;; add-hook for buffer local, nice!
+
+ (setq c-ts-mode-indent-offset 4)
+ (setq c-ts-mode-indent-style #'my-ts-mode-indent-style)
+  )
+
+
+(add-hook 'c-ts-mode-hook #'my-c-ts-mode-hook)
+(add-hook 'c++-ts-mode-hook #'my-c-ts-mode-hook)
+
+
+
+
+
+
 
 ;; (defun my-clang-format-buffer-if-need ()
 ;;   (when (or (derived-mode-p 'c++-mode) (derived-mode-p 'c++-ts-mode))
@@ -89,8 +125,8 @@
 ;;   (rtags-find-symbol-at-point)
 ;;   (recenter)
 ;; )
-;; 
-;; 
+;;
+;;
 ;; (use-package rtags
 ;;   :ensure t
 ;;   :hook
