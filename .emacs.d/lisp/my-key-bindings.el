@@ -27,8 +27,16 @@
 (defun my-next-line-or-mc/mark-next-like-this(arg)
   (interactive "p")
   (if (use-region-p)
-      (my-mc/mark-next-like-this)
+      (my-mc/mark-next-like-this arg)
     (next-line)
+    )
+  )
+
+(defun my-prev-line-or-mc/mark-next-like-this(arg)
+  (interactive "p")
+  (if (use-region-p)
+      (my-mc/mark-previous-like-this arg)
+    (previous-line)
     )
   )
 
@@ -304,6 +312,7 @@
     (define-key god-local-mode-map (kbd "C-i") 'nice-jumper/forward)
 
     (define-key god-local-mode-map (kbd "C-n") #'my-next-line-or-mc/mark-next-like-this)
+    (define-key god-local-mode-map (kbd "C-p") #'my-prev-line-or-mc/mark-next-like-this)
 
     (define-key god-local-mode-map (kbd "C-x C-n") #'my-mc/mark-next-like-this)
     (define-key god-local-mode-map (kbd "C-x C-p") #'my-mc/mark-previous-like-this)

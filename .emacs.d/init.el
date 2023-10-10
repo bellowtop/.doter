@@ -2313,34 +2313,34 @@ _u_: undo      _r_: redo
 
 
 
-(defun my-toggle-selected-keybinding()
-  "add special keybindings for visual selected mode"
-  (interactive)
-  (if (bound-and-true-p selected-region-active-mode)
-    (progn
-      ;; (message "is active mode")
-      (my-disable-eglot-highlight)
-      (if (bound-and-true-p my-god-mode-is-active-flag)
-        (progn
-          ;; (message "is god-local-mode")
-          ;; (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
-          ;; (define-key selected-keymap (kbd "i w") #'er/mark-symbol)
-          (define-key selected-keymap (kbd "v") #'keyboard-quit)
-          (define-key selected-keymap (kbd "d") #'kill-region)
-          (define-key selected-keymap (kbd "x") #'kill-region)
-          (define-key selected-keymap (kbd "C-n") #'my-mc/mark-next-like-this)
-          (define-key selected-keymap (kbd "C-p") #'my-mc/mark-previous-like-this))
-        (progn
-          ;; (message "is not god-local-mode")
-          ;; (define-key selected-keymap (kbd "i p") nil)
-          ;; (define-key selected-keymap (kbd "i w") nil)
-          (define-key selected-keymap (kbd "v") nil)
-          (define-key selected-keymap (kbd "d") nil)
-          (define-key selected-keymap (kbd "x") nil)
-          (define-key selected-keymap (kbd "C-n") nil)
-          (define-key selected-keymap (kbd "C-p") nil))))
-    (progn
-      ;; (message "is deactive mode")
-      (my-enable-eglot-highlight))))
-
-(setq selected-region-active-mode-hook #'my-toggle-selected-keybinding)
+;;;;  (defun my-toggle-selected-keybinding()
+;;;;    "add special keybindings for visual selected mode"
+;;;;    (interactive)
+;;;;    (if (bound-and-true-p selected-region-active-mode)
+;;;;      (progn
+;;;;        ;; (message "is active mode")
+;;;;        (my-disable-eglot-highlight)
+;;;;        (if (bound-and-true-p my-god-mode-is-active-flag)
+;;;;          (progn
+;;;;            ;; (message "is god-local-mode")
+;;;;            ;; (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
+;;;;            ;; (define-key selected-keymap (kbd "i w") #'er/mark-symbol)
+;;;;            (define-key selected-keymap (kbd "v") #'keyboard-quit)
+;;;;            (define-key selected-keymap (kbd "d") #'kill-region)
+;;;;            (define-key selected-keymap (kbd "x") #'kill-region)
+;;;;            (define-key selected-keymap (kbd "C-n") #'my-mc/mark-next-like-this)
+;;;;            (define-key selected-keymap (kbd "C-p") #'my-mc/mark-previous-like-this))
+;;;;          (progn
+;;;;            ;; (message "is not god-local-mode")
+;;;;            ;; (define-key selected-keymap (kbd "i p") nil)
+;;;;            ;; (define-key selected-keymap (kbd "i w") nil)
+;;;;            (define-key selected-keymap (kbd "v") nil)
+;;;;            (define-key selected-keymap (kbd "d") nil)
+;;;;            (define-key selected-keymap (kbd "x") nil)
+;;;;            (define-key selected-keymap (kbd "C-n") nil)
+;;;;            (define-key selected-keymap (kbd "C-p") nil))))
+;;;;      (progn
+;;;;        ;; (message "is deactive mode")
+;;;;        (my-enable-eglot-highlight))))
+;;;;
+;;;;  (setq selected-region-active-mode-hook #'my-toggle-selected-keybinding)
