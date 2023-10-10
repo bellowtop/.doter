@@ -1758,8 +1758,8 @@ If buffer-or-name is nil return current buffer's mode."
   (setcdr lispy-mode-map-c-digits nil)
   :bind (
          (define-key lispy-mode-map (kbd "M") 'special-lispy-alt-multiline)
-         )
-  )
+         (define-key lispy-mode-map (kbd "s-j") 'lispy-down)
+         (define-key lispy-mode-map (kbd "s-k") 'lispy-up)))
 
 
 
