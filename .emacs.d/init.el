@@ -812,6 +812,7 @@
 (add-hook 'nxml-mode-hook 'display-line-numbers-mode)
 (add-hook 'yaml-mode-hook 'display-line-numbers-mode)
 (add-hook 'yaml-mode-hook #'(lambda () (ansible 1)))
+(add-hook 'conf-mode-hook 'display-line-numbers-mode)
 
 
 ;; delete all other buffers, only keep current one.
