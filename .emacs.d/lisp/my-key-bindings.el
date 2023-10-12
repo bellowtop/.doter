@@ -2,27 +2,36 @@
 ;;; util functions
 ;;;
 
-(defun my-delete-char (arg)
+(defun my-delete-char-or-kill-region (arg)
   (interactive "p")
   (if (use-region-p)
     (let ((beg (region-beginning))
           (end (copy-marker (region-end))))
       (delete-region beg end)
       )
-    (delete-forward-char 1)
+    (delete-forward-char (or arg 1))
     )
   )
 
-(defun my-kill-whole-line (arg)
+(defun my-kill-whole-line-or-kill-region (arg)
   (interactive "p")
   (if (use-region-p)
     (let ((beg (region-beginning))
           (end (copy-marker (region-end))))
-      (delete-region beg end)
+      (kill-region beg end)
       )
-    (kill-whole-line)
+    (kill-whole-line (or arg 1))
     )
   )
+
+(defun my-set-mark-command-or-deactivate-mark(arg)
+  (interactive "p")
+  (if (use-region-p)
+    (deactivate-mark t)
+    (push-mark nil nil t)
+    )
+  )
+
 
 (defun my-next-line-or-mc/mark-next-like-this(arg)
   (interactive "p")
@@ -266,7 +275,7 @@
     (define-key god-local-mode-map (kbd "q") #'my-quit-other-window)
     (define-key god-local-mode-map (kbd "l") #'my-forward-char-no-cross-line)
     (define-key god-local-mode-map (kbd "h") #'my-backward-char-no-cross-line)
-    (define-key god-local-mode-map (kbd "v") #'set-mark-command)
+    (define-key god-local-mode-map (kbd "v") #'my-set-mark-command-or-deactivate-mark)
     (define-key god-local-mode-map (kbd "V") #'my-select-current-line-and-forward-line)
     (define-key god-local-mode-map (kbd "J") #'my-join-lines)
     (define-key god-local-mode-map (kbd "y") #'kill-ring-save)
@@ -281,8 +290,8 @@
     (define-key god-local-mode-map (kbd "m") #'my-goto-match-paren)
 
     (define-key god-local-mode-map (kbd "s") #'my-replace-char)
-    (define-key god-local-mode-map (kbd "x") #'my-delete-char)
-    (define-key god-local-mode-map (kbd "d") #'my-kill-whole-line)
+    (define-key god-local-mode-map (kbd "x") #'my-delete-char-or-kill-region)
+    (define-key god-local-mode-map (kbd "d") #'my-kill-whole-line-or-kill-region)
 
     ;; (define-key god-local-mode-map (kbd "<RET>") #'next-line)
 
