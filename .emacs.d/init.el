@@ -2137,6 +2137,9 @@ If buffer-or-name is nil return current buffer's mode."
     (setq undo-tree-auto-save-history nil)
     :init
     (add-hook 'prog-mode-hook #'undo-tree-mode)
+    (add-hook 'cmake-mode-hook #'undo-tree-mode)
+    (add-hook 'conf-mode-hook #'undo-tree-mode)
+    (add-hook 'markdown-mode-hook #'undo-tree-mode)   ;; these modes are not prog mode...
     (advice-add #'undo-tree-load-history :around #'radian--undo-tree-suppress-buffer-modified-message)
 )
 
