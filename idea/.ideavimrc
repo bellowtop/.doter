@@ -83,6 +83,8 @@ nmap <C-c>f    :action ReformatCode<CR>
 nnoremap gi :action GotoImplementation <CR>
 nnoremap gd :action GotoDeclaration <CR>
 nnoremap gr :action ShowUsages <CR>
+nnoremap gh :action QuickJavaDoc<CR>
+nnoremap ge :action ShowErrorDescription<CR>
 
 
 nnoremap u :action $Undo <CR>
