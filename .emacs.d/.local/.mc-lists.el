@@ -66,6 +66,7 @@
         mwim-end-of-code-or-line
         my-backward-char-no-cross-line
         my-delete-char
+        my-delete-char-or-kill-region
         my-delete-to-beginning
         my-delete-to-end
         my-forward-char-no-cross-line
@@ -75,6 +76,8 @@
         my-quit-god-mode
         my-replace-char
         my-select-current-line-and-forward-line
+        my-set-mark-command-or-deactivate-mark
+        my-yank-but-check-newline
         nxml-electric-slash
         org-beginning-of-line
         org-ctrl-c-ctrl-c

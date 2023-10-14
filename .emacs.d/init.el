@@ -361,11 +361,12 @@
 (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-12"))
 
 (when (my-system-type-is-darwin)
-    (set-face-attribute 'default nil :font "Cascadia Mono PL-15")
-    (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-15")))
+    (set-face-attribute 'default nil :font "Cascadia Mono PL-16")
+    (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-16")))
 
 (set-cursor-color "red")
-(setq-default cursor-type 'bar)
+(setq-default cursor-type 'box)
+(setq-default cursor-in-non-selected-windows nil)
 
 ;; (set-face-attribute 'region nil :background "#666")
 
@@ -1778,6 +1779,9 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 (defun my-god-mode-update-cursor-type ()
+  (when (display-graphic-p)
+    (setq cursor-type (if (or (bound-and-true-p god-local-mode) buffer-read-only) 'box 'bar))
+    )
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
   (if (bound-and-true-p god-local-mode)
     (progn
@@ -2017,7 +2021,9 @@ If buffer-or-name is nil return current buffer's mode."
     (treemacs-add-and-display-current-project))
   (treemacs-find-file)
   (treemacs-select-window)
-  (setq cursor-type 'bar)
+  (when (display-graphic-p)
+    (setq cursor-type 'box)
+    )
 )
 
 
