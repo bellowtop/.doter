@@ -268,7 +268,7 @@
 
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
-    (define-key god-local-mode-map (kbd "w") #'forward-word)
+    (define-key god-local-mode-map (kbd "w") #'forward-to-word)
     (define-key god-local-mode-map (kbd "b") #'backward-word)
     (define-key god-local-mode-map (kbd "k") #'previous-line)
     (define-key god-local-mode-map (kbd "j") #'next-line)
