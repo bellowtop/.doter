@@ -2001,6 +2001,8 @@ If buffer-or-name is nil return current buffer's mode."
     (setq treemacs-show-cursor t)
     (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
     (setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
+    (setq-local face-remapping-alist '((hl-line (:background "white" :foreground "black"))))
+
   :bind (
          ("C-c n" . treemacs)
          ("C-c t" . treemacs-toggle-node)
