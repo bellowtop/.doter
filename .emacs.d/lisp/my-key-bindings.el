@@ -240,8 +240,6 @@
     (define-key map (kbd "C-c v") 'set-rectangular-region-anchor)
     (define-key map (kbd "C-c C-v") 'set-rectangular-region-anchor)
 
-    (define-key map (kbd "C-c o") 'my-occur)
-    (define-key map (kbd "C-c s") 'my-rg-at-point)
     (define-key map (kbd "C-c C-o") 'my-occur)
     (define-key map (kbd "C-c C-s") 'my-rg-at-point)
 
@@ -350,6 +348,7 @@
     (define-key god-local-mode-map (kbd "SPC t") #'treemacs)
     (define-key god-local-mode-map (kbd "SPC n") #'my-neotree-toggle)
     (define-key god-local-mode-map (kbd "SPC N") #'my-neotree-find)
+    (define-key god-local-mode-map (kbd "SPC s") #'my-occur)
 
 
     (define-key god-local-mode-map (kbd "@") #'my-treemacs-add-and-display-current-project)
