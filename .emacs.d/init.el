@@ -2234,6 +2234,7 @@ _u_: undo      _r_: redo
               ("D"    . deadgrep-directory)
               ("g"    . deadgrep-restart)
               ("n"    . deadgrep-forward-match)
+              ("r"    . deadgrep-backward-match)
               ("p"    . deadgrep-backward-match)
               ("N"    . deadgrep-forward-filename)
               ("P"    . deadgrep-backward-filename)
