@@ -257,10 +257,12 @@
 
     (define-prefix-command 'my-god-mode-leader-key)
     (define-prefix-command 'my-god-mode-dummmy-key)
+    (define-prefix-command 'my-god-mode-eglot-key)
     (define-prefix-command 'my-god-mode-viewer-key)
     ;; (define-prefix-command 'my-god-mode-window-key)
     (define-key god-local-mode-map (kbd "SPC") 'my-god-mode-leader-key)
     (define-key god-local-mode-map (kbd ",")   'my-god-mode-dummmy-key)
+    (define-key god-local-mode-map (kbd "g")   'my-god-mode-eglot-key)
     (define-key god-local-mode-map (kbd "z")   'my-god-mode-viewer-key)
     ;; (define-key god-local-mode-map (kbd "q")   'my-god-mode-window-key)
 
@@ -284,7 +286,6 @@
     (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
     (define-key god-local-mode-map (kbd "O") #'my-god-above-newline-and-insert-mode)
     (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode)
-    (define-key god-local-mode-map (kbd "r") #'keyboard-quit-context+)
     (define-key god-local-mode-map (kbd "m") #'my-goto-match-paren)
 
     (define-key god-local-mode-map (kbd "s") #'my-replace-char)
@@ -393,13 +394,13 @@
 
     (define-key god-local-mode-map (kbd ", r r") #'httpd-start)
     (define-key god-local-mode-map (kbd ", r k") #'httpd-stop)
-
     (define-key god-local-mode-map (kbd ", ,") #'my-delete-other-windows)
-    (define-key god-local-mode-map (kbd ", g d") #'xref-find-definitions)
-    (define-key god-local-mode-map (kbd ", g r") #'xref-find-references)
-    (define-key god-local-mode-map (kbd ", g R") #'eglot-rename)
-    (define-key god-local-mode-map (kbd ", g i") #'eglot-find-implementation)
-    (define-key god-local-mode-map (kbd "M-<RET>") #'eglot-code-actions)
+
+    (define-key god-local-mode-map (kbd "g d") #'xref-find-definitions)
+    (define-key god-local-mode-map (kbd "g r") #'xref-find-references)
+    (define-key god-local-mode-map (kbd "g R") #'eglot-rename)
+    (define-key god-local-mode-map (kbd "g i") #'eglot-find-implementation)
+    (define-key god-local-mode-map (kbd "g a") #'eglot-code-actions)
 
     ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)
     ;; (define-key god-local-mode-map (kbd "C-, C-l") #'switch-to-next-buffer)
