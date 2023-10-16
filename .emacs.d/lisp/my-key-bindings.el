@@ -5,49 +5,39 @@
 (defun my-delete-char-or-kill-region (arg)
   (interactive "p")
   (if (use-region-p)
-    (let ((beg (region-beginning))
-          (end (copy-marker (region-end))))
-      (kill-region beg end)
-      )
-    (delete-forward-char (or arg 1))
-    )
-  )
+      (let ((beg (region-beginning))
+            (end (copy-marker (region-end))))
+        (kill-region beg end))
+    (delete-forward-char
+     (or arg 1))))
 
 (defun my-kill-whole-line-or-kill-region (arg)
   (interactive "p")
   (if (use-region-p)
-    (let ((beg (region-beginning))
-          (end (copy-marker (region-end))))
-      (kill-region beg end)
-      )
-    (kill-whole-line (or arg 1))
-    )
-  )
+      (let ((beg (region-beginning))
+            (end (copy-marker (region-end))))
+        (kill-region beg end))
+    (kill-whole-line (or arg 1))))
 
-(defun my-set-mark-command-or-deactivate-mark(arg)
+(defun my-set-mark-command-or-deactivate-mark (arg)
   (interactive "p")
   (if (use-region-p)
-    (deactivate-mark t)
-    (push-mark nil nil t)
-    )
-  )
+      (deactivate-mark t)
+    (push-mark nil nil t)))
 
 
-(defun my-next-line-or-mc/mark-next-like-this(arg)
+(defun my-next-line-or-mc/mark-next-like-this (arg)
   (interactive "p")
   (if (use-region-p)
       (my-mc/mark-next-like-this arg)
-    (next-line)
-    )
-  )
+    (next-line)))
 
-(defun my-prev-line-or-mc/mark-next-like-this(arg)
+(defun my-prev-line-or-mc/mark-next-like-this (arg)
   (interactive "p")
   (if (use-region-p)
-      (my-mc/mark-previous-like-this arg)
-    (previous-line)
-    )
-  )
+      (my-mc/mark-previous-like-this
+       arg)
+    (previous-line)))
 
 
 (defun my-replace-char ()
@@ -55,8 +45,7 @@
   (interactive)
   (delete-forward-char 1)
   ;; (call-interactively (key-binding (kbd "q")))
-  (my-quit-god-mode)
-  )
+  (my-quit-god-mode))
 
 
 (defun my-save-buffer ()
@@ -83,77 +72,89 @@
 (defun my-join-lines (arg)
   "Apply join-line over region."
   (interactive "p")
-  (forward-line 0)  ;; goto line begin
+  (forward-line 0)
+  ;; goto line begin
   (if (use-region-p)
-    (let ((beg (region-beginning))
-          (end (copy-marker (region-end))))
-      (goto-char beg)
-      (while (< (point) end)
-             (join-line 1))
-      )
+      (let ((beg (region-beginning))
+            (end (copy-marker (region-end))))
+        (goto-char beg)
+        (while (< (point) end)
+          (join-line 1)))
     (progn
       (set-mark-command nil)
       (end-of-line)
-      (join-line -1)
-      )
-    ))
+      (join-line -1))))
 
 
 (defun my-is-beginning-of-line ()
   (interactive)
   (= (point)
-     (line-beginning-position)
-     ))
+     (line-beginning-position)))
 
 
 (defun my-is-end-of-line ()
   (interactive)
-  (= (point)
-     (line-end-position)
-     ))
+  (= (point) (line-end-position)))
 
 
 (defun my-enlarge-half-height ()
   "Expand current window to use half of the other window's lines."
   (interactive)
-  (enlarge-window (/ (window-body-height) 4)))
+  (enlarge-window
+   (/ (window-body-height) 4)))
 
 (defun my-enlarge-half-width ()
   "Expand current window to use half of the other window's lines."
   (interactive)
-  (enlarge-window-horizontally (/ (window-body-width) 4)))
+  (enlarge-window-horizontally
+   (/ (window-body-width) 4)))
 
 (defun my-shrink-half-height ()
   "Expand current window to use half of the other window's lines."
   (interactive)
-  (shrink-window (/ (window-body-height) 4)))
+  (shrink-window
+   (/ (window-body-height) 4)))
 
 (defun my-shrink-half-width ()
   "Expand current window to use half of the other window's lines."
   (interactive)
-  (shrink-window-horizontally (/ (window-body-width) 4)))
+  (shrink-window-horizontally
+   (/ (window-body-width) 4)))
 
 
 (defun my-delete-other-windows ()
   (interactive)
   (delete-other-windows)
-  (recenter-top-bottom)
-  )
+  (recenter-top-bottom))
 
 
-(defun my-forward-char-no-cross-line()
+(defun my-forward-char-no-cross-line ()
   (interactive)
   (unless (my-is-end-of-line)
-    (forward-char)
-    )
-  )
+    (forward-char)))
 
-(defun my-backward-char-no-cross-line()
+(defun my-forward-to-word ()
+  (interactive)
+  (let* ((pos-before (point))
+         (pos-after (save-excursion
+                      (forward-to-word 1)
+                      (point)))
+         (sub-string (buffer-substring
+                      pos-before
+                      pos-after)))
+    (if (cond ((seq-contains-p sub-string ?\))
+               t)
+              ((seq-contains-p sub-string ?\])
+               t)
+              ((seq-contains-p sub-string ?\})
+               t))
+        (forward-word)
+      (forward-to-word 1))))
+
+(defun my-backward-char-no-cross-line ()
   (interactive)
   (unless (my-is-beginning-of-line)
-    (backward-char)
-    )
-  )
+    (backward-char)))
 
 
 (defun my-quit-other-window()
@@ -268,7 +269,7 @@
 
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
-    (define-key god-local-mode-map (kbd "w") #'forward-to-word)
+    (define-key god-local-mode-map (kbd "w") #'my-forward-to-word)
     (define-key god-local-mode-map (kbd "b") #'backward-word)
     (define-key god-local-mode-map (kbd "k") #'previous-line)
     (define-key god-local-mode-map (kbd "j") #'next-line)

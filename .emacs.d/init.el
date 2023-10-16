@@ -33,29 +33,33 @@
 (setq mac-command-modifier 'super)
 
 
-(use-package exec-path-from-shell
-    :config
-    (exec-path-from-shell-initialize)
-)
+(use-package
+  exec-path-from-shell
+  :config (exec-path-from-shell-initialize))
 
 
-(use-package benchmark-init
+(use-package
+  benchmark-init
   :ensure t
-  :config
-  ;; To disable collection of benchmark data after init is done.
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+  :config ;; To disable collection of benchmark data after init is done.
+  (add-hook
+   'after-init-hook
+   'benchmark-init/deactivate))
 
 
 (require 'cl)
 
 
 ;; Minimize garbage collection during startup
-(setq gc-cons-threshold most-positive-fixnum)
+(setq gc-cons-threshold
+      most-positive-fixnum)
 
 ;; Lower threshold back to 8 MiB (default is 800kB)
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq gc-cons-threshold (expt 2 23))))
+(add-hook
+ 'emacs-startup-hook
+ (lambda ()
+   (setq gc-cons-threshold
+         (expt 2 23))))
 
 
 ;; (setq  x-meta-keysym 'super
@@ -81,12 +85,11 @@
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/lisp"))
 
 
-(defun darker-background-for-sidebar()
-  (set (make-local-variable 'face-remapping-alist)
-    '(
-        (default :background  "#1E2127")
-    )
-))
+(defun darker-background-for-sidebar ()
+  (set
+   (make-local-variable
+    'face-remapping-alist)
+   '((default :background "#1E2127"))))
 
 
 
@@ -168,12 +171,19 @@
   "Give a message of which minor modes are enabled in the current buffer."
   (interactive)
   (let ((active-modes))
-    (mapc (lambda (mode) (condition-case nil
-                             (if (and (symbolp mode) (symbol-value mode))
-                                 (add-to-list 'active-modes mode))
-                           (error nil) ))
-          minor-mode-list)
-    (message "Active modes are %s" active-modes)))
+    (mapc
+     (lambda (mode)
+       (condition-case nil
+           (if (and (symbolp mode)
+                    (symbol-value mode))
+               (add-to-list
+                'active-modes
+                mode))
+         (error nil)))
+     minor-mode-list)
+    (message
+     "Active modes are %s"
+     active-modes)))
 
 (require 'diminish)
 (defun purge-minor-modes ()
@@ -297,13 +307,10 @@
 
 
 
-(use-package expand-region
-    :bind
-    (
-        ("M-i" . 'er/expand-region)
-        ("M-I" . 'er/mark-inside-pairs)
-    )
-  )
+(use-package
+  expand-region
+  :bind (("M-i" . 'er/expand-region)
+         ("M-I" . 'er/mark-inside-pairs)))
 
 
 ;;;;
@@ -345,20 +352,23 @@
 ;; Check if system is Darwin/Mac OS X
 (defun my-system-type-is-darwin ()
   "Return true if system is darwin-based (Mac OS X)"
-  (string-equal system-type "darwin")
-  )
+  (string-equal
+   system-type
+   "darwin"))
 
 ;; Check if system is Microsoft Windows
 (defun my-system-type-is-windows ()
   "Return true if system is Windows-based (at least up to Win7)"
-  (string-equal system-type "windows-nt")
-  )
+  (string-equal
+   system-type
+   "windows-nt"))
 
 ;; Check if system is GNU/Linux
 (defun my-system-type-is-gnu ()
   "Return true if system is GNU/Linux-based"
-  (string-equal system-type "gnu/linux")
-  )
+  (string-equal
+   system-type
+   "gnu/linux"))
 
 
 (set-face-attribute 'default nil :font "Cascadia Mono PL-12")
@@ -708,12 +718,10 @@
 
 
 
-(use-package iedit
+(use-package
+  iedit
   :defer t
-  :bind(
-    ("M-'" . iedit-mode)
-  )
-)
+  :bind (("M-'" . iedit-mode)))
 
 
 
@@ -730,26 +738,26 @@
                               (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
          (current-buffer)))
 
-(use-package impatient-mode
-  :config
-  (add-hook 'markdown-mode-hook #'(lambda ()
-                                    (impatient-mode 1)
-                                    (imp-set-user-filter 'markdown-html-github)
-                                    )))
+(use-package
+  impatient-mode
+  :config (add-hook
+           'markdown-mode-hook
+           #'(lambda ()
+               (impatient-mode 1)
+               (imp-set-user-filter
+                'markdown-html-github))))
 
 
 
 
-(use-package ace-window
-  :ensure t     ;; must ensure, treemacs depend on it
-  :delight
-  :config
-    (ace-window-display-mode 1)
-    (setq aw-keys '(?h ?j ?k ?l ?a ?s ?d ?f ?g))
-  :bind(
-    ("M-`" . #'ace-window)
-   )
-)
+(use-package
+  ace-window
+  :ensure t
+  ;; must ensure, treemacs depend on it
+  :delight :config (ace-window-display-mode 1)
+  (setq aw-keys
+        '(?h ?j ?k ?l ?a ?s ?d ?f ?g))
+  :bind (("M-`" . #'ace-window)))
 
 ;; alternatively, use Meta-<left> Meta-<right> to move cursor to window
 ;; for iTerms2 user, disable alt-> alt-< to send alt-f alt-b in `profile->keys`
@@ -778,23 +786,24 @@
 ;; )
 
 
-(use-package py-autopep8
+(use-package
+  py-autopep8
   :defer t
-  :init
-)
+  :init)
 (add-hook 'python-mode-hook 'py-autopep8-mode)
 
 
 
 
-(use-package rust-mode
+(use-package
+  rust-mode
   :defer t
   :init)
 
-(use-package scala-mode
+(use-package
+  scala-mode
   :defer t
-  :interpreter
-  ("scala" . scala-mode))
+  :interpreter ("scala" . scala-mode))
 
 (use-package yaml-mode
   :ensure t
@@ -806,8 +815,7 @@
   (add-to-list 'auto-mode-alist '("\\.yaml\\.j2\\'" . yaml-mode)))
 
 
-(use-package ansible
-  :defer t)
+(use-package ansible :defer t)
 
 
 ;; line number fixed width
@@ -1003,7 +1011,8 @@ respectively."
 
 
 
-(use-package flymake-posframe
+(use-package
+  flymake-posframe
   :load-path "~/.emacs.d/lisp/flymake-posframe.el"
   :hook (flymake-mode . flymake-posframe-mode))
 
@@ -1031,11 +1040,10 @@ respectively."
 
 
 (setq projectile-completion-system 'ivy)
-(defun my-projectile-find-file()
+(defun my-projectile-find-file ()
   (interactive)
   ;; (helm-projectile-find-file)
-  (projectile-find-file)
-  )
+  (projectile-find-file))
 
 
 
@@ -1205,13 +1213,13 @@ respectively."
   )
 
 (unless (display-graphic-p)
-    ;; (setq doom-modeline-height 1)
-    ;; (setq doom-modeline-icon nil)
-    ;; (setq doom-modeline-bar-width -1)
-    (setq doom-modeline-buffer-file-name-style 'relative-from-project)
-    (require 'doom-modeline)
-    (doom-modeline-mode 1)
-)
+  ;; (setq doom-modeline-height 1)
+  ;; (setq doom-modeline-icon nil)
+  ;; (setq doom-modeline-bar-width -1)
+  (setq doom-modeline-buffer-file-name-style
+        'relative-from-project)
+  (require 'doom-modeline)
+  (doom-modeline-mode 1))
 
 
 
@@ -1263,7 +1271,8 @@ respectively."
 (defun flip-buffer-to-window ()
   "Flips to the last-visited buffer in this window."
   (interactive)
-  (switch-to-buffer (other-buffer (current-buffer))))
+  (switch-to-buffer
+   (other-buffer (current-buffer))))
 
 
 
@@ -1288,7 +1297,9 @@ respectively."
       (beginning-of-line)
       ;; get rid of tabs at beginning of line
       (when (looking-at "^\\s-+")
-        (untabify (match-beginning 0) (match-end 0)))
+        (untabify
+         (match-beginning 0)
+         (match-end 0)))
       (when (looking-at "^    ")
         (replace-match "")))))
 
@@ -1337,8 +1348,9 @@ respectively."
 
 (defun my-copied-content-is-end-of-newline ()
   (interactive)
-  (string-suffix-p "\n" (current-kill 0 'DONT-MOVE))
-)
+  (string-suffix-p
+   "\n"
+   (current-kill 0 'DONT-MOVE)))
 
 
 
@@ -1427,8 +1439,11 @@ respectively."
 (defun buffer-mode (&optional buffer-or-name)
   "Returns the major mode associated with a buffer.
 If buffer-or-name is nil return current buffer's mode."
-  (with-current-buffer (if buffer-or-name (get-buffer buffer-or-name) (current-buffer))
-     major-mode))
+  (with-current-buffer
+      (if buffer-or-name
+          (get-buffer buffer-or-name)
+        (current-buffer))
+    major-mode))
 
 
 
@@ -1474,35 +1489,35 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun my-god-this-is-special-buffer (bufname)
   (interactive)
-  (let (
-        (this-buffer-name (string-trim bufname))
-        )
+  (let ((this-buffer-name (string-trim bufname)))
     (seq-filter
-      (lambda (n) (string-prefix-p n this-buffer-name))
-      special-buffers)
-    ))
+     (lambda (n)
+       (string-prefix-p
+        n
+        this-buffer-name))
+     special-buffers)))
 
 (defun* my-god-this-is-legendary-buffer (bufname)
   (interactive)
   ;; (message "buffer-mode type is %s" (type-of (buffer-mode bufname))) ==> symbol
-  ;;;; use symbol-name convert symbol to string; And for the reverse, (intern "some-string") to get symbol
-  (let
-    (
-     (this-buffer-name (string-trim bufname))
-     (this-buffer-mode (symbol-name (buffer-mode bufname)))
-     )
+;;;; use symbol-name convert symbol to string; And for the reverse, (intern "some-string") to get symbol
+  (let ((this-buffer-name (string-trim bufname))
+        (this-buffer-mode (symbol-name
+                           (buffer-mode bufname))))
     ;; (message "this-buffer-name %s" this-buffer-name)
     ;; (message "this-buffer-mode %s" this-buffer-mode)
-    (or
-      (seq-filter
-        (lambda (n) (string-prefix-p n this-buffer-name))
-        legendary-buffers)
-      (seq-filter
-        (lambda (n) (string-prefix-p n this-buffer-mode))
-        legendary-modes)
-      )
-    )
-  )
+    (or (seq-filter
+         (lambda (n)
+           (string-prefix-p
+            n
+            this-buffer-name))
+         legendary-buffers)
+        (seq-filter
+         (lambda (n)
+           (string-prefix-p
+            n
+            this-buffer-mode))
+         legendary-modes))))
 
 
 (defun* my-god-mode ()
@@ -1560,37 +1575,32 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
-(defun my-god-below-newline-and-insert-mode()
+(defun my-god-below-newline-and-insert-mode ()
   (interactive)
   (end-of-line)
   (newline-and-indent)
-  (my-quit-god-mode)
-  )
+  (my-quit-god-mode))
 
-(defun my-god-above-newline-and-insert-mode()
+(defun my-god-above-newline-and-insert-mode ()
   (interactive)
   (previous-line)
   (my-god-below-newline-and-insert-mode)
-  (my-quit-god-mode)
-  )
+  (my-quit-god-mode))
 
-(defun my-god-mwin-end-and-insert-mode()
+(defun my-god-mwin-end-and-insert-mode ()
   (interactive)
   (mwim-end-of-code-or-line)
-  (my-quit-god-mode)
-  )
+  (my-quit-god-mode))
 
-(defun my-god-mwin-beginning-and-insert-mode()
+(defun my-god-mwin-beginning-and-insert-mode ()
   (interactive)
   (mwim-beginning-of-code-or-line)
-  (my-quit-god-mode)
-  )
+  (my-quit-god-mode))
 
-(defun my-god-char-forward-and-insert-mode()
+(defun my-god-char-forward-and-insert-mode ()
   (interactive)
   (forward-char)
-  (my-quit-god-mode)
-  )
+  (my-quit-god-mode))
 
 (defun my-move-to-end-of-word ()
   "Move to the next 'last character' of a word."
@@ -1599,19 +1609,21 @@ If buffer-or-name is nil return current buffer's mode."
   (re-search-forward "\\w\\b" nil t)
   (goto-char (match-beginning 0)))
 
-(defun my-delete-to-beginning(args)
+(defun my-delete-to-beginning (args)
   (interactive "p")
   (set-mark-command nil)
   (mwim-beginning-of-code-or-line)
-  (delete-region (region-beginning) (region-end))
-  )
+  (delete-region
+   (region-beginning)
+   (region-end)))
 
-(defun my-delete-to-end(args)
+(defun my-delete-to-end (args)
   (interactive "p")
   (set-mark-command nil)
   (mwim-end-of-line)
-  (delete-region (region-beginning) (region-end))
-  )
+  (delete-region
+   (region-beginning)
+   (region-end)))
 
 ;; donot warnning, just wrap search
 (defun isearch-repeat-forward+ ()
@@ -1623,6 +1635,7 @@ If buffer-or-name is nil return current buffer's mode."
     (isearch-repeat-forward))
   ;; (recenter)
   )
+
 (defun isearch-repeat-backward+ ()
   (interactive)
   (when (and isearch-forward isearch-other-end)
@@ -1673,14 +1686,17 @@ If buffer-or-name is nil return current buffer's mode."
   "search for selected text"
   (interactive)
   (if (region-active-p)
-    (let ((selection (buffer-substring-no-properties (mark) (point)))
-          (case-fold-search 'default))
-      (message "search the marked region")
-      (deactivate-mark)
-      (isearch-mode t nil nil nil)
-      ;; activate god-mode-isearch
-      (god-mode-isearch-activate)
-      (isearch-yank-string selection))
+      (let ((selection (buffer-substring-no-properties
+                        (mark)
+                        (point)))
+            (case-fold-search 'default))
+        (message
+         "search the marked region")
+        (deactivate-mark)
+        (isearch-mode t nil nil nil)
+        ;; activate god-mode-isearch
+        (god-mode-isearch-activate)
+        (isearch-yank-string selection))
     (progn
       (isearch-forward-symbol-at-point)
       (god-mode-isearch-activate))))
@@ -1712,7 +1728,7 @@ If buffer-or-name is nil return current buffer's mode."
   (ignore-errors
     (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#7FDC59")))
 
-(defun my-disable-code-intelligence()
+(defun my-disable-code-intelligence ()
   (interactive)
   (when my-code-intelligence
     (my-disable-eglot-highlight)
@@ -1721,13 +1737,11 @@ If buffer-or-name is nil return current buffer's mode."
     (electric-indent-mode -1)
     ;; (global-undo-tree-mode -1)
     (undo-tree-mode -1)
-
     (setq my-code-intelligence nil)
     ;; (message "code-intelligence is disabled.")
-    )
-  )
+    ))
 
-(defun my-enable-code-intelligence()
+(defun my-enable-code-intelligence ()
   (interactive)
   (unless my-code-intelligence
     (my-enable-eglot-highlight)
@@ -1738,8 +1752,7 @@ If buffer-or-name is nil return current buffer's mode."
     (undo-tree-mode 1)
     (setq my-code-intelligence 't)
     ;; (message "code-intelligence is enabled.")
-    )
-  )
+    ))
 
 (add-hook 'isearch-mode-hook #'my-disable-code-intelligence)
 (add-hook 'isearch-mode-end-hook #'my-enable-code-intelligence)
@@ -1762,6 +1775,7 @@ If buffer-or-name is nil return current buffer's mode."
   (setcdr lispy-mode-map-parinfer nil)
   (setcdr lispy-mode-map-c-digits nil)
          (define-key lispy-mode-map (kbd "M") 'special-lispy-alt-multiline)
+         (define-key lispy-mode-map (kbd "s-m") 'special-lispy-alt-multiline)
          (define-key lispy-mode-map (kbd "s-j") 'lispy-down)
          (define-key lispy-mode-map (kbd "s-k") 'lispy-up)
   )
@@ -1909,18 +1923,23 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
-(defun my-neotree-window-narrow()
-    (interactive) (setq neo-window-width 25) (neotree-hide) (my-neotree-find)
-  )
+(defun my-neotree-window-narrow ()
+  (interactive)
+  (setq neo-window-width 25)
+  (neotree-hide)
+  (my-neotree-find))
 
-(defun my-neotree-window-enlarge()
-    (interactive) (setq neo-window-width (/ (display-pixel-width) 4)) (neotree-hide) (my-neotree-find)
-  )
+(defun my-neotree-window-enlarge ()
+  (interactive)
+  (setq neo-window-width
+        (/ (display-pixel-width) 4))
+  (neotree-hide)
+  (my-neotree-find))
 
-(use-package neotree
+(use-package
+  neotree
   :ensure t
-  :init
-  (setq neo-theme 'arrow)
+  :init (setq neo-theme 'arrow)
   ;; (setq neo-auto-indent-point 't)
   (setq neo-confirm-create-file 'off-p)
   (setq neo-confirm-create-directory 'off-p)
@@ -1930,16 +1949,12 @@ If buffer-or-name is nil return current buffer's mode."
   ;; (setq neo-window-width (/ (display-pixel-width) 4))
   ;; (setq neo-window-width 45)
   ;; (setq neo-toggle-window-keep-p 't)
-  :bind
-  (
-    :map neotree-mode-map
-    ("L" . 'my-neotree-window-narrow)
-    ("H" . 'my-neotree-window-enlarge)
-    ("f" . 'neotree-hidden-file-toggle)
-    ("a" . 'mwim-beginning-of-code-or-line)
-    ("e" . 'mwim-end-of-code-or-line)
-  )
-)
+  :bind (:map neotree-mode-map
+              ("L" . 'my-neotree-window-narrow)
+              ("H" . 'my-neotree-window-enlarge)
+              ("f" . 'neotree-hidden-file-toggle)
+              ("a" . 'mwim-beginning-of-code-or-line)
+              ("e" . 'mwim-end-of-code-or-line)))
 
 
 (defun neotree-project-dir ()
@@ -1954,20 +1969,20 @@ If buffer-or-name is nil return current buffer's mode."
                 (neotree-find file-name))
         (message "Could not find git project root."))))
 
-(defun my-neotree-toggle()
+(defun my-neotree-toggle ()
   (interactive)
-  (if (and (fboundp 'neo-global--window-exists-p) (neo-global--window-exists-p))
-    (neotree-project-dir)
-    (neotree-show)
-  )
-)
+  (if (and (fboundp 'neo-global--window-exists-p)
+           (neo-global--window-exists-p))
+      (neotree-project-dir)
+    (neotree-show)))
 
-(defun my-neotree-find()
+(defun my-neotree-find ()
   (interactive)
-  (unless (fboundp 'neo-global--window-exists-p) (neotree-show))
-  (unless (neo-global--window-exists-p) (neotree-show))
-  (neotree-find)
-)
+  (unless (fboundp 'neo-global--window-exists-p)
+    (neotree-show))
+  (unless (neo-global--window-exists-p)
+    (neotree-show))
+  (neotree-find))
 
 
 (setq-default left-margin-width 0 right-margin-width 0)
@@ -1986,13 +2001,11 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun my-add-padding-for-treemacs()
   (interactive)
-  (set-window-margins (treemacs-get-local-window) 1 1)
-  )
+  (set-window-margins (treemacs-get-local-window) 1 1))
 
 (defun my-add-hl-line-for-treemacs()
   (interactive)
-  (setq-local face-remapping-alist '((hl-line (:background "white" :foreground "black"))))
-  )
+  (setq-local face-remapping-alist '((hl-line (:background "white" :foreground "black")))))
 
 
 (use-package treemacs
@@ -2023,17 +2036,16 @@ If buffer-or-name is nil return current buffer's mode."
     (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))
 
 
-(defun my-treemacs-add-and-display-current-project()
+(defun my-treemacs-add-and-display-current-project ()
   (interactive)
   (with-selected-window
-    (get-buffer-window (current-buffer))
+      (get-buffer-window
+       (current-buffer))
     (treemacs-add-and-display-current-project))
   (treemacs-find-file)
   (treemacs-select-window)
   (when (display-graphic-p)
-    (setq cursor-type 'box)
-    )
-)
+    (setq cursor-type 'box)))
 
 
 
@@ -2044,11 +2056,11 @@ If buffer-or-name is nil return current buffer's mode."
 
 ;; Source: https://www.emacswiki.org/emacs/misc-cmds.el
 (defun my-revert-buffer-no-confirm ()
-    "Revert buffer without confirmation."
-    (interactive)
-    (revert-buffer :ignore-auto :noconfirm)
-    (my-god-mode)
-    )
+  "Revert buffer without confirmation."
+  (interactive)
+  (revert-buffer
+   :ignore-auto :noconfirm)
+  (my-god-mode))
 
 
 
@@ -2058,34 +2070,28 @@ If buffer-or-name is nil return current buffer's mode."
 (setq mc/match-cursor-style nil)
 (use-package multiple-cursors
   :ensure t
-  :config
-  :bind
-  (
-    ("C-x C-n"      . mc/mark-next-like-this)
-    ("C-c C-SPC"    . mc/edit-lines)
-  )
+  :config :bind (("C-x C-n" . mc/mark-next-like-this)
+                 ("C-c C-SPC" . mc/edit-lines))
   :init
   (add-hook 'multiple-cursors-mode-enabled-hook #'my-disable-code-intelligence)
-  (add-hook 'multiple-cursors-mode-disabled-hook #'my-enable-code-intelligence)
-)
+  (add-hook 'multiple-cursors-mode-disabled-hook #'my-enable-code-intelligence))
 
-(use-package multiple-cursors-core
-  :bind
-  (
-    :map mc/keymap
-        ("TAB"          . 'mc/cycle-forward)
-        ("<backtab>"    . 'mc/cycle-backward)
-        ("RET"          . 'newline)                 ;; give RET back to the newline function, use C-c C-c to exit
-        ("C-c C-c"      . 'multiple-cursors-mode)   ;; exit
-        ("C-x C-n"      . 'my-mc/mark-next-like-this)
-        ("C-x C-p"      . 'my-mc/mark-previous-like-this)
-        ("C-x C-a"      . 'mc/mark-all-like-this)
-        ("C-x C-s"      . 'my-mc/skip-to-next-like-this)
-        ("C-x C-r"      . 'mc/skip-to-previous-like-this)
-        ("C-x C-x"      . 'mc/unmark-next-like-this)
-        ("C-x C-d"      . 'mc/unmark-previous-like-this)
-   )
-)
+(use-package
+  multiple-cursors-core
+  :bind (:map mc/keymap
+              ("TAB" . 'mc/cycle-forward)
+              ("<backtab>" . 'mc/cycle-backward)
+              ("RET" . 'newline)
+              ;; give RET back to the newline function, use C-c C-c to exit
+              ("C-c C-c" . 'multiple-cursors-mode)
+              ;; exit
+              ("C-x C-n" . 'my-mc/mark-next-like-this)
+              ("C-x C-p" . 'my-mc/mark-previous-like-this)
+              ("C-x C-a" . 'mc/mark-all-like-this)
+              ("C-x C-s" . 'my-mc/skip-to-next-like-this)
+              ("C-x C-r" . 'mc/skip-to-previous-like-this)
+              ("C-x C-x" . 'mc/unmark-next-like-this)
+              ("C-x C-d" . 'mc/unmark-previous-like-this)))
 
 
 
@@ -2094,53 +2100,62 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-mc/mark-next-like-this (arg)
   (interactive "p")
   (if (region-active-p)
-    (message "search the marked region")
+      (message
+       "search the marked region")
     (er/mark-symbol))
-  (mc/mark-next-like-this-word arg)
+  (mc/mark-next-like-this-word
+   arg)
   ;; copy from .emacs.d/elpa/multiple-cursors-20230113.835/mc-mark-more.el
-  (let ((end (if mark-active (max (mark) (point)) (point)))
+  (let ((end (if mark-active
+                 (max (mark) (point))
+               (point)))
         furthest)
     (mc/for-each-fake-cursor
-      (when (> (mc/cursor-end cursor) end)
-        (setq end (mc/cursor-end cursor))
-        (setq furthest cursor)))
+     (when (> (mc/cursor-end cursor) end)
+       (setq end
+             (mc/cursor-end cursor))
+       (setq furthest cursor)))
     ;; if end point is not visible in window, then cycle to it.
     (or (pos-visible-in-window-p
-          end (selected-window))
-        (mc/cycle furthest
-                  (mc/first-fake-cursor-after (point-min))
-                  "We're already at the last cursor.")
-        )
-    )
-  )
+         end
+         (selected-window))
+        (mc/cycle
+         furthest
+         (mc/first-fake-cursor-after
+          (point-min))
+         "We're already at the last cursor."))))
 
 
 
 (defun my-mc/mark-previous-like-this (arg)
   (interactive "p")
   (if (region-active-p)
-               (message "search the marked region")
-               (er/mark-symbol)
-               )
+      (message
+       "search the marked region")
+    (er/mark-symbol))
   (mc/mark-previous-like-this-word arg)
   ;; copy from multiple-cursors-20211112.2223/mc-cycle-cursors.el
-  (mc/cycle (mc/furthest-cursor-before-point)
-            (mc/last-fake-cursor-before (point-max))
-              "We're already at the last cursor")
-  )
+  (mc/cycle
+   (mc/furthest-cursor-before-point)
+   (mc/last-fake-cursor-before
+    (point-max))
+   "We're already at the last cursor"))
 
 (defun my-mc/skip-to-next-like-this (arg)
   (interactive "p")
   ;; copy from multiple-cursors-20211112.2223/mc-cycle-cursors.el
-  (mc/cycle (mc/furthest-cursor-before-point)
-            (mc/last-fake-cursor-before (point-max))
-              "We're already at the last cursor")
+  (mc/cycle
+   (mc/furthest-cursor-before-point)
+   (mc/last-fake-cursor-before
+    (point-max))
+   "We're already at the last cursor")
   (mc/skip-to-next-like-this)
   ;; copy from multiple-cursors-20211112.2223/mc-cycle-cursors.el
-  (mc/cycle (mc/furthest-cursor-after-point)
-            (mc/first-fake-cursor-after (point-min))
-               "We're already at the last cursor.")
-  )
+  (mc/cycle
+   (mc/furthest-cursor-after-point)
+   (mc/first-fake-cursor-after
+    (point-min))
+   "We're already at the last cursor."))
 
 
 
@@ -2185,8 +2200,7 @@ If buffer-or-name is nil return current buffer's mode."
 _u_: undo      _r_: redo
 "
   ("u" undo-tree-undo)
-  ("r" undo-tree-redo)
-)
+  ("r" undo-tree-redo))
 
 
 ;;;  ;; Have to use require, not use-package
@@ -2227,33 +2241,35 @@ _u_: undo      _r_: redo
   (deadgrep-mode)
   )
 
-(use-package deadgrep
+(use-package
+  deadgrep
   :ensure t
-  :config
-  (setq-default deadgrep--context (cons 3 3))
-  :bind(
-        ("C-c g" . deadgrep)
-        :map deadgrep-mode-map
-              ("RET"  . deadgrep-visit-result)
-              ("o"    . deadgrep-visit-result-other-window)
-              ("v"    . (lambda () (interactive) (deadgrep-visit-result-other-window) (other-window 1)))
-              ("S"    . deadgrep-search-term)
-              ("D"    . deadgrep-directory)
-              ("g"    . deadgrep-restart)
-              ("n"    . deadgrep-forward-match)
-              ("r"    . deadgrep-backward-match)
-              ("p"    . deadgrep-backward-match)
-              ("N"    . deadgrep-forward-filename)
-              ("P"    . deadgrep-backward-filename)
-              ("C-x C-q" . deadgrep-edit-mode)
-        :map deadgrep-edit-mode-map
-              ("C-c C-c" . my-deadgrep-edit-exit)
-        )
+  :config (setq-default
+           deadgrep--context
+           (cons 3 3))
+  :bind (("C-c g" . deadgrep)
+         :map deadgrep-mode-map
+         ("RET" . deadgrep-visit-result)
+         ("o" . deadgrep-visit-result-other-window)
+         ("v" . (lambda ()
+                  (interactive)
+                  (deadgrep-visit-result-other-window)
+                  (other-window 1)))
+         ("S" . deadgrep-search-term)
+         ("D" . deadgrep-directory)
+         ("g" . deadgrep-restart)
+         ("n" . deadgrep-forward-match)
+         ("r" . deadgrep-backward-match)
+         ("p" . deadgrep-backward-match)
+         ("N" . deadgrep-forward-filename)
+         ("P" . deadgrep-backward-filename)
+         ("C-x C-q" . deadgrep-edit-mode)
+         :map deadgrep-edit-mode-map
+         ("C-c C-c" . my-deadgrep-edit-exit))
   :hook (deadgrep-edit-mode . my-deadgrep-edit-enter)
   :init
-    (advice-add 'deadgrep-visit-result                        :after 'my-recenter)
-    (advice-add 'deadgrep-visit-result-other-window           :after 'my-recenter)
-  )
+  (advice-add 'deadgrep-visit-result :after 'my-recenter)
+  (advice-add 'deadgrep-visit-result-other-window :after 'my-recenter))
 
 
 
@@ -2268,35 +2284,41 @@ _u_: undo      _r_: redo
 
 
 
-(use-package highlight-parentheses
+(use-package
+  highlight-parentheses
   :ensure t
-  :init
-    (add-hook 'prog-mode-hook #'highlight-parentheses-mode)
-  )
+  :init (add-hook
+         'prog-mode-hook
+         #'highlight-parentheses-mode))
 
 
 
 (defun my-ibuffer-hook ()
   ;; add another sorting method for ibuffer (allow the grouping of
   ;; filenames and dired buffers
-  (define-ibuffer-sorter filename-or-dired
+  (define-ibuffer-sorter
+      filename-or-dired
     "Sort the buffers by their pathname."
     (:description "filenames plus dired")
     (string-lessp
-      (with-current-buffer (car a)
-                           (or buffer-file-name
-                               (if (eq major-mode 'dired-mode)
-                                 (expand-file-name dired-directory))
-                               ;; so that all non pathnames are at the end
-                               "~"))
-      (with-current-buffer (car b)
-                           (or buffer-file-name
-                               (if (eq major-mode 'dired-mode)
-                                 (expand-file-name dired-directory))
-                               ;; so that all non pathnames are at the end
-                               "~"))))
-  (define-key ibuffer-mode-map (kbd "s p") 'ibuffer-do-sort-by-filename-or-dired)
-
+     (with-current-buffer
+         (car a)
+       (or buffer-file-name
+           (if (eq major-mode 'dired-mode)
+               (expand-file-name
+                dired-directory))
+           ;; so that all non pathnames are at the end
+           "~"))
+     (with-current-buffer
+         (car b)
+       (or buffer-file-name
+           (if (eq major-mode 'dired-mode)
+               (expand-file-name
+                dired-directory))
+           ;; so that all non pathnames are at the end
+           "~"))))
+  (define-key ibuffer-mode-map (kbd "s p")
+              'ibuffer-do-sort-by-filename-or-dired)
   ;; sort now please!
   (ibuffer-do-sort-by-filename-or-dired))
 
@@ -2337,26 +2359,21 @@ _u_: undo      _r_: redo
 
 
 
-(use-package selected
+(use-package
+  selected
   :ensure t
   :commands selected-minor-mode
-  :bind
-  (
-    (:map selected-keymap
-        ("C-c i" . clang-format-region)
-        ("C-c f" . clang-format-buffer)
-        ("("  . my-wrap-region-with-parens)
-        ("["  . my-wrap-region-with-brackets)
-        ("{"  . my-wrap-region-with-braces)
-        ("'"  . my-wrap-region-with-single-quotes)
-        ("\"" . my-wrap-region-with-double-quotes)
-        ("_"  . my-wrap-region-with-underscores)
-        ("`"  . my-wrap-region-with-back-quotes)
-    )
-  )
-  :config
-  (selected-global-mode 1)
-  )
+  :bind ((:map selected-keymap
+               ("C-c i" . clang-format-region)
+               ("C-c f" . clang-format-buffer)
+               ("(" . my-wrap-region-with-parens)
+               ("[" . my-wrap-region-with-brackets)
+               ("{" . my-wrap-region-with-braces)
+               ("'" . my-wrap-region-with-single-quotes)
+               ("\"" . my-wrap-region-with-double-quotes)
+               ("_" . my-wrap-region-with-underscores)
+               ("`" . my-wrap-region-with-back-quotes)))
+  :config (selected-global-mode 1))
 
 
 
