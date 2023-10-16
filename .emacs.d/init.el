@@ -93,6 +93,10 @@
 (require 'god-mode)
 (setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
+(setq god-mode-alist
+      '((nil . "C-")
+        ("r" . "M-")
+        ("R" . "C-M-")))
 
 
 (setq-default
@@ -361,8 +365,8 @@
 (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-12"))
 
 (when (my-system-type-is-darwin)
-    (set-face-attribute 'default nil :font "Cascadia Mono PL-16")
-    (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-16")))
+    (set-face-attribute 'default nil :font "Cascadia Mono PL-15")
+    (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-15")))
 
 (set-cursor-color "red")
 (setq-default cursor-type 'box)
@@ -1992,7 +1996,6 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 (use-package treemacs
-  :ensure t
   :init
     (add-hook 'treemacs-mode-hook #'darker-background-for-sidebar)
     (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
@@ -2009,6 +2012,7 @@ If buffer-or-name is nil return current buffer's mode."
   :bind (
          ("C-c n" . treemacs)
          ("C-c t" . treemacs-toggle-node)
+         ("C-c h" . my-add-hl-line-for-treemacs)    ;; add-hook no work????
          ("<mouse-1>" . treemacs-single-click-expand-action)
     )
   )
