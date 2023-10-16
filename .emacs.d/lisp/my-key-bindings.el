@@ -142,13 +142,16 @@
          (sub-string (buffer-substring
                       pos-before
                       pos-after)))
-    (if (cond ((seq-contains-p sub-string ?\))
-               t)
-              ((seq-contains-p sub-string ?\])
-               t)
-              ((seq-contains-p sub-string ?\})
-               t))
-        (forward-word)
+    ;; NOTE: the ] must be first char in the regex candicates. see https://www.gnu.org/software/emacs/manual/html_node/emacs/Regexps.html
+    (if-let ((distance (string-match-p "[])}([{]" sub-string)))
+        (progn
+          ;; if next char is special then find next regular char, because forward 0 distance is meaningless
+          (when (= distance 0)
+            (setq distance (string-match-p "[^])}([{]" sub-string)))
+          ;; if all chars are special chars, then just do forward-to-word.
+          (if distance
+              (forward-char distance)
+            (forward-to-word 1)))
       (forward-to-word 1))))
 
 (defun my-backward-char-no-cross-line ()
