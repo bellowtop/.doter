@@ -7,7 +7,7 @@
   (if (use-region-p)
     (let ((beg (region-beginning))
           (end (copy-marker (region-end))))
-      (delete-region beg end)
+      (kill-region beg end)
       )
     (delete-forward-char (or arg 1))
     )

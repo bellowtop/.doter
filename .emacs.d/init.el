@@ -394,7 +394,7 @@
  '(doom-modeline-project-dir ((t (:inherit nil))))
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
- '(eglot-highlight-symbol-face ((t (:foreground "#ECECEC" :background "#155402"))))
+ '(eglot-highlight-symbol-face ((t (:foreground "#7FDC59"))))
  '(eglot-mode-line ((t nil)))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
  '(flymake-error-echo ((t nil)))
@@ -1701,12 +1701,12 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-disable-eglot-highlight()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'eglot-highlight-symbol-face nil :foreground 'unspecified :background 'unspecified)))
+    (set-face-attribute 'eglot-highlight-symbol-face nil :foreground 'unspecified)))
 
 (defun my-enable-eglot-highlight()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#ECECEC" :background "#155402")))
+    (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#7FDC59")))
 
 (defun my-disable-code-intelligence()
   (interactive)
@@ -1985,6 +1985,10 @@ If buffer-or-name is nil return current buffer's mode."
   (set-window-margins (treemacs-get-local-window) 1 1)
   )
 
+(defun my-add-hl-line-for-treemacs()
+  (interactive)
+  (setq-local face-remapping-alist '((hl-line (:background "white" :foreground "black"))))
+  )
 
 
 (use-package treemacs
@@ -1992,17 +1996,16 @@ If buffer-or-name is nil return current buffer's mode."
   :init
     (add-hook 'treemacs-mode-hook #'darker-background-for-sidebar)
     (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
+    (add-hook 'treemacs-mode-hook #'my-add-hl-line-for-treemacs)
     (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
   :config
     (setq treemacs-resize-icons 18)
-    (setq treemacs-follow-mode 1)
+    (setq treemacs-follow-mode nil)
     (setq treemacs-hide-gitignored-files-mode 1)
     (setq treemacs-show-hidden-files t)
     (setq treemacs-show-cursor t)
     (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
     (setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
-    (setq-local face-remapping-alist '((hl-line (:background "white" :foreground "black"))))
-
   :bind (
          ("C-c n" . treemacs)
          ("C-c t" . treemacs-toggle-node)
