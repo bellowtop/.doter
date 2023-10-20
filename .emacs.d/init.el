@@ -85,11 +85,11 @@
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/lisp"))
 
 
+
 (defun darker-background-for-sidebar ()
-  (set
-   (make-local-variable
-    'face-remapping-alist)
-   '((default :background "#1E2127"))))
+  (face-remap-add-relative 'default '(:background "#1E2127") )
+  (set-face-attribute 'fringe nil :background "#1E2127")
+  )
 
 
 
@@ -1945,7 +1945,7 @@ If buffer-or-name is nil return current buffer's mode."
   (setq neo-confirm-create-directory 'off-p)
   (setq neo-smart-open 't)
   (setq neo-window-fixed-size nil)
-  (add-hook 'neotree-mode-hook #'darker-background-for-sidebar)
+  ;; (add-hook 'neotree-mode-hook #'darker-background-for-sidebar)
   ;; (setq neo-window-width (/ (display-pixel-width) 4))
   ;; (setq neo-window-width 45)
   ;; (setq neo-toggle-window-keep-p 't)
@@ -2000,12 +2000,13 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 (defun my-add-padding-for-treemacs()
-  (interactive)
   (set-window-margins (treemacs-get-local-window) 1 1))
 
 (defun my-add-hl-line-for-treemacs()
-  (interactive)
   (setq-local face-remapping-alist '((hl-line (:background "white" :foreground "black")))))
+
+(defun display-treemacs-widow-in-ace-window-selection()
+    (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))
 
 
 (use-package treemacs
@@ -2031,9 +2032,6 @@ If buffer-or-name is nil return current buffer's mode."
   )
 
 
-
-(defun display-treemacs-widow-in-ace-window-selection()
-    (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))
 
 
 (defun my-treemacs-add-and-display-current-project ()
