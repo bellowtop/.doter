@@ -301,8 +301,6 @@
     (define-key god-local-mode-map (kbd "z o") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "z m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "z z") #'recenter-top-bottom)
-    (define-key god-local-mode-map (kbd "z .") #'end-of-buffer)
-    (define-key god-local-mode-map (kbd "z ,") #'beginning-of-buffer)
 
     (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)
     (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)
@@ -405,6 +403,8 @@
     (define-key god-local-mode-map (kbd "g R") #'eglot-rename)
     (define-key god-local-mode-map (kbd "g i") #'eglot-find-implementation)
     (define-key god-local-mode-map (kbd "g a") #'eglot-code-actions)
+    (define-key god-local-mode-map (kbd "g g") #'beginning-of-buffer)
+    (define-key god-local-mode-map (kbd "g G") #'end-of-buffer)
 
     ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)
     ;; (define-key god-local-mode-map (kbd "C-, C-l") #'switch-to-next-buffer)
