@@ -548,6 +548,7 @@
 
 (require 'init-lang-cpp)
 (add-hook 'c++-ts-mode-hook #'my-c-ts-mode-hook)
+(add-hook 'c-ts-mode-hook #'my-c-ts-mode-hook)
 
 
 (require 'init-lang-zig)
