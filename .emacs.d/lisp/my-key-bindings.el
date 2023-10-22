@@ -232,7 +232,7 @@
     (define-key map (kbd "C-x C-f") #'my-find-files)
     (define-key map (kbd "C-x C-k") #'kill-this-buffer)
 
-    (define-key map (kbd "C-c C-e") #'eval-region)
+    (define-key lisp-mode-map (kbd "C-c C-e") #'eval-region)
 
     (define-key map (kbd "C-a") 'mwim-beginning-of-code-or-line)
     (define-key map (kbd "C-e") 'mwim-end-of-code-or-line)
