@@ -70,6 +70,7 @@
         my-delete-to-beginning
         my-delete-to-end
         my-forward-char-no-cross-line
+        my-forward-to-word
         my-god-char-forward-and-insert-mode
         my-goto-match-paren
         my-join-lines

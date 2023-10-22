@@ -48,6 +48,7 @@
 
 
 (require 'cl)
+(require 's)
 
 
 ;; Minimize garbage collection during startup
@@ -90,6 +91,10 @@
   (face-remap-add-relative 'default '(:background "#1E2127") )
   (set-face-attribute 'fringe nil :background "#1E2127")
   )
+
+
+;; don't need it!!!
+(electric-indent-mode -1)
 
 
 
@@ -542,6 +547,8 @@
 (require 'init-lang-go)
 
 (require 'init-lang-cpp)
+(add-hook 'c++-ts-mode-hook #'my-c-ts-mode-hook)
+
 
 (require 'init-lang-zig)
 
@@ -1149,6 +1156,8 @@ respectively."
 (global-set-key (kbd "C-S-k") #'my-delete-to-beginning)
 (global-set-key (kbd "C-k") #'my-delete-to-end)
 
+(global-set-key (kbd "<RET>") #'newline-and-indent)
+
 
 
 
@@ -1734,7 +1743,7 @@ If buffer-or-name is nil return current buffer's mode."
     (my-disable-eglot-highlight)
     (smartparens-global-mode -1)
     (smartparens-mode -1)
-    (electric-indent-mode -1)
+    ;; (electric-indent-mode -1)
     ;; (global-undo-tree-mode -1)
     (undo-tree-mode -1)
     (setq my-code-intelligence nil)
@@ -1747,7 +1756,7 @@ If buffer-or-name is nil return current buffer's mode."
     (my-enable-eglot-highlight)
     (smartparens-global-mode 1)
     (smartparens-mode 1)
-    (electric-indent-mode 1)
+    ;; (electric-indent-mode 1)
     ;; (global-undo-tree-mode 1)
     (undo-tree-mode 1)
     (setq my-code-intelligence 't)
