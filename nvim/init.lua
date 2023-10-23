@@ -479,63 +479,6 @@ vim.api.nvim_set_keymap("n", "<Leader>v",         ":Vista!!",  { noremap = true 
 
 
 
---
--- nvim-lspconfig
---
---
-
-local function get_forced_lsp_capabilities()
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = { "documentation", "detail", "additionalTextEdits" },
-  }
-  return capabilities
-end
-
-
-local function LspRename()
-    local curr_name = vim.fn.expand("<cword>")
-    local value = vim.fn.input("LSP Rename: ", curr_name)
-    local lsp_params = vim.lsp.util.make_position_params()
-
-    if not value or #value == 0 or curr_name == value then return end
-
-    -- request lsp rename
-    lsp_params.newName = value
-    vim.lsp.buf_request(0, "textDocument/rename", lsp_params, function(_, res, ctx, _)
-      if not res then return end
-
-      -- apply renames
-      local client = vim.lsp.get_client_by_id(ctx.client_id)
-      vim.lsp.util.apply_workspace_edit(res, client.offset_encoding)
-
-      -- print renames
-      local changed_files_count = 0
-      local changed_instances_count = 0
-      
-      if (res.documentChanges) then
-        for _, changed_file in pairs(res.documentChanges) do
-          changed_files_count = changed_files_count + 1
-          changed_instances_count = changed_instances_count + #changed_file.edits
-        end
-      elseif (res.changes) then
-        for _, changed_file in pairs(res.changes) do
-          changed_instances_count = changed_instances_count + #changed_file
-          changed_files_count = changed_files_count + 1
-        end
-      end
-      
-      -- compose the right print message
-      print(string.format("renamed %s instance%s in %s file%s. %s", 
-        changed_instances_count,
-        changed_instances_count == 1 and '' or 's',
-        changed_files_count,
-        changed_files_count == 1 and '' or 's',
-        changed_files_count > 1 and "To save them run ':wa'" or ''
-      ))
-    end)
-end
 
 
 
@@ -557,26 +500,75 @@ require'nvim-treesitter.configs'.setup {
 
 
 
+--
+-- lsp
+--
+--
+-- ref https://github.com/jdhao/nvim-config/blob/master/lua/config/lsp.lua
 
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local my_lsp_on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+local fn = vim.fn
+local api = vim.api
+local keymap = vim.keymap
+local lsp = vim.lsp
+local diagnostic = vim.diagnostic
+
+
+
+local function LspRename()
+    local curr_name = vim.fn.expand("<cword>")
+    local value = vim.fn.input("LSP Rename: ", curr_name)
+    local lsp_params = vim.lsp.util.make_position_params()
+
+    if not value or #value == 0 or curr_name == value then return end
+
+    -- request lsp rename
+    lsp_params.newName = value
+    vim.lsp.buf_request(0, "textDocument/rename", lsp_params, function(_, res, ctx, _)
+      if not res then return end
+
+      -- apply renames
+      local client = vim.lsp.get_client_by_id(ctx.client_id)
+      vim.lsp.util.apply_workspace_edit(res, client.offset_encoding)
+
+      -- print renames
+      local changed_files_count = 0
+      local changed_instances_count = 0
+
+      if (res.documentChanges) then
+        for _, changed_file in pairs(res.documentChanges) do
+          changed_files_count = changed_files_count + 1
+          changed_instances_count = changed_instances_count + #changed_file.edits
+        end
+      elseif (res.changes) then
+        for _, changed_file in pairs(res.changes) do
+          changed_instances_count = changed_instances_count + #changed_file
+          changed_files_count = changed_files_count + 1
+        end
+      end
+
+      -- compose the right print message
+      print(string.format("renamed %s instance%s in %s file%s. %s", 
+        changed_instances_count,
+        changed_instances_count == 1 and '' or 's',
+        changed_files_count,
+        changed_files_count == 1 and '' or 's',
+        changed_files_count > 1 and "To save them run ':wa'" or ''
+      ))
+    end)
+end
+
+
+
+
+
+local custom_attach = function(client, bufnr)
+  local bufopts = { silent=true, buffer=bufnr }
+
   vim.keymap.set('n', 'gF', vim.lsp.buf.format, bufopts)
   vim.keymap.set('n', 'gR', LspRename, bufopts)
 
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -591,48 +583,188 @@ local my_lsp_on_attach = function(client, bufnr)
   vim.keymap.set('n', 'ga',     vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', '<M-CR>', vim.lsp.buf.code_action, bufopts)
 
+  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, bufopts)
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, bufopts)
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
+  vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, bufopts)
 
   vim.keymap.set('n', 'gr', function() vim.lsp.buf.references({ includeDeclaration = false }) end, bufopts)
-  vim.keymap.set('n', 'gF', vim.lsp.buf.format, bufopts)
-  vim.keymap.set('n', 'gF', vim.lsp.buf.format, bufopts)
 
 
-  -- -- Set autocommands conditional on server_capabilities
-  -- if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]], false)
-  -- end
 
-  vim.api.nvim_create_autocmd("CursorHold", {
+  -- Set some key bindings conditional on server capabilities
+  if client.server_capabilities.documentFormattingProvider then
+    vim.keymap.set("n", "gF", vim.lsp.buf.format)
+  end
+
+
+  api.nvim_create_autocmd("CursorHold", {
+    buffer = bufnr,
+    callback = function()
+      local float_opts = {
+        focusable = false,
+        close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+        border = "rounded",
+        source = "always", -- show source in diagnostic popup window
+        prefix = " ",
+        scope = "cursor",
+      }
+      diagnostic.open_float(nil, float_opts)
+    end,
+  })
+
+
+  -- The blow command will highlight the current variable and its usages in the buffer.
+  if client.server_capabilities.documentHighlightProvider then
+    vim.cmd([[
+      hi! link LspReferenceRead Visual
+      hi! link LspReferenceText Visual
+      hi! link LspReferenceWrite Visual
+    ]])
+
+    local gid = api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+    api.nvim_create_autocmd("CursorHold" , {
+      group = gid,
       buffer = bufnr,
-      callback = function()
-        local opts = {
-          focusable = false,
-          close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
-          border = 'rounded',
-          source = 'always',
-          prefix = ' ',
-          scope = 'cursor',
-        }
-        vim.diagnostic.open_float(nil, opts)
+      callback = function ()
+        lsp.buf.document_highlight()
       end
-  })
+    })
 
-  vim.lsp.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        underline = true,
-        signs = true,
-        update_in_insert = false,
-        virtual_text = false
-  })
+    api.nvim_create_autocmd("CursorMoved" , {
+      group = gid,
+      buffer = bufnr,
+      callback = function ()
+        lsp.buf.clear_references()
+      end
+    })
+  end
 
-  require("cmp_nvim_lsp").default_capabilities(get_forced_lsp_capabilities())
+  if vim.g.logging_level == "debug" then
+    local msg = string.format("Language server %s started!", client.name)
+    vim.notify(msg, vim.log.levels.DEBUG, { title = "Nvim-config" })
+  end
 end
+
+
+
+
+
+
+-- Change diagnostic signs.
+fn.sign_define("DiagnosticSignError", { text = '🆇', texthl = "DiagnosticSignError" })
+fn.sign_define("DiagnosticSignWarn", { text = '⚠️', texthl = "DiagnosticSignWarn" })
+fn.sign_define("DiagnosticSignInfo", { text = 'ℹ️', texthl = "DiagnosticSignInfo" })
+fn.sign_define("DiagnosticSignHint", { text = '', texthl = "DiagnosticSignHint" })
+
+-- global config for diagnostic
+diagnostic.config {
+  underline = true,
+  virtual_text = false,
+  signs = true,
+  severity_sort = true,
+}
+
+
+-- Change border of documentation hover window, See https://github.com/neovim/neovim/pull/13998.
+lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
+  border = "rounded",
+})
+
+
+
+
+
+
+
+--  local function get_forced_lsp_capabilities()
+--    local capabilities = vim.lsp.protocol.make_client_capabilities()
+--    capabilities.textDocument.completion.completionItem.snippetSupport = true
+--    capabilities.textDocument.completion.completionItem.resolveSupport = {
+--      properties = { "documentation", "detail", "additionalTextEdits" },
+--    }
+--    return capabilities
+--  end
+-- require("cmp_nvim_lsp").default_capabilities(get_forced_lsp_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local lspconfig = require('lspconfig')
+
+
+-- local servers = { "gopls",  "rust_analyzer", "zls", "clangd" }
+-- for _, lsp in ipairs(servers) do
+--   if vim.fn.executable(lsp) == 1 then
+--       require('lspconfig')[lsp].setup { on_attach = custom_attach, capabilities = get_forced_lsp_capabilities() }
+--   end
+-- end
+
+
+if vim.fn.executable("clangd") then
+  lspconfig.clangd.setup {
+    on_attach = custom_attach,
+    capabilities = capabilities,
+    filetypes = { "c", "cpp", "cc" },
+    flags = {
+      debounce_text_changes = 500,
+    },
+  }
+end
+
+
+
+
+require("clangd_extensions").setup({
+    server = {
+        cmd = {
+            "clangd",
+            "-j=4",
+            "--background-index",
+            "--clang-tidy",
+            "--fallback-style=llvm",
+            "--all-scopes-completion",
+            "--completion-style=detailed",
+            "--header-insertion=iwyu",
+            "--header-insertion-decorators",
+            "--pch-storage=memory",
+        },
+        initialization_options = {
+            fallback_flags = { "-std=c++20" },
+        },
+        on_attach = custom_attach,
+        capabilities = capabilities,
+    },
+})
+
+
+
+vim.cmd([[
+autocmd FileType c,cpp ClangFormatAutoEnable
+]])
+
+
+
+
+
+require 'nt-cpp-tools'.setup({
+    preview = {
+        quit = 'q', -- optional keymapping for quit preview
+        accept = '<tab>' -- optional keymapping for accept preview
+    },
+    header_extension = 'h', -- optional
+    source_extension = 'cpp', -- optional
+    custom_define_class_function_commands = { -- optional
+        TSCppImplWrite = {
+            output_handle = require'nt-cpp-tools.output_handlers'.get_add_to_cpp()
+        }
+    }
+})
+
+
+
+
+
+
+
+
 
 
 
@@ -735,80 +867,6 @@ cmp.setup.cmdline(':', {
     { name = 'cmdline' }
   })
 })
-
-
-
-
-
-
-
-
-
-
-local servers = { "gopls",  "rust_analyzer", "zls", "clangd" }
-for _, lsp in ipairs(servers) do
-  if vim.fn.executable(lsp) == 1 then
-      require('lspconfig')[lsp].setup { on_attach = my_lsp_on_attach, capabilities = get_forced_lsp_capabilities() }
-  end
-end
-
-
-require("clangd_extensions").setup{
-    server = {
-          cmd = {
-           "clangd",
-           "-j=4",
-           "--background-index",
-           "--clang-tidy",
-           "--fallback-style=llvm",
-           "--all-scopes-completion",
-           "--completion-style=detailed",
-           "--header-insertion=iwyu",
-           "--header-insertion-decorators",
-           "--pch-storage=memory",
-        },
-        initialization_options = {
-           fallback_flags = { "-std=c++20" },
-        },
-        on_attach = my_lsp_on_attach,
-        capabilities = get_forced_lsp_capabilities(),
-    }
-}
-require("clangd_extensions.inlay_hints").setup_autocmd()
-require("clangd_extensions.inlay_hints").set_inlay_hints()
-
-
-
-vim.cmd([[
-autocmd FileType c,cpp ClangFormatAutoEnable
-]])
-
-
-
-
-
-require 'nt-cpp-tools'.setup({
-    preview = {
-        quit = 'q', -- optional keymapping for quit preview
-        accept = '<tab>' -- optional keymapping for accept preview
-    },
-    header_extension = 'h', -- optional
-    source_extension = 'cpp', -- optional
-    custom_define_class_function_commands = { -- optional
-        TSCppImplWrite = {
-            output_handle = require'nt-cpp-tools.output_handlers'.get_add_to_cpp()
-        }
-        --[[
-        <your impl function custom command name> = {
-            output_handle = function (str, context) 
-                -- string contains the class implementation
-                -- do whatever you want to do with it
-            end
-        }
-        ]]
-    }
-})
-
 
 
 
@@ -1049,8 +1107,6 @@ vim.api.nvim_set_keymap("n", "<Leader>x", "<C-w>c", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>w", "<C-w>", { noremap = true })
 
 vim.api.nvim_set_keymap("n", "<Leader>L", ":set invnumber<CR>", { noremap = true })
--- fixme
--- vim.api.nvim_set_keymap("n", "<Leader>T", ":%s/\s\+$//<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>U", ":g/^$/d<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>R", ":retab<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>.", ":@:<CR>", { noremap = true })
@@ -1158,9 +1214,9 @@ function! MyHighlights() abort
     hi SpellCap                                             ctermfg=black       ctermbg=green
 
     " hi link LspReferenceText Special
-    hi LspReferenceText                                     ctermfg=black       ctermbg=green
-    hi LspDiagnosticsError                                  ctermfg=cyan
-    hi LspDiagnosticsVirtualTextError                       ctermfg=red
+    " hi LspReferenceText                                     ctermfg=black       ctermbg=green
+    " hi LspDiagnosticsError                                  ctermfg=cyan
+    " hi LspDiagnosticsVirtualTextError                       ctermfg=red
 
     hi SignColumn                                           ctermfg=white       ctermbg=black
     " hi Whitespace                                           ctermfg=DarkGray
@@ -1178,10 +1234,10 @@ function! MyHighlights() abort
     hi SpellCap                                             guifg=black         guibg=springgreen
 
     " hi link LspReferenceText Special
-    hi LspReferenceText                                     guifg=#ececec       guibg=#155402
-    hi CocHighlightText                                     guifg=black         guibg=limegreen
-    hi LspDiagnosticsError                                  guifg=cyan
-    hi LspDiagnosticsVirtualTextError                       guifg=red
+    " hi LspReferenceText                                     guifg=#ececec       guibg=#155402
+    " hi CocHighlightText                                     guifg=black         guibg=limegreen
+    " hi LspDiagnosticsError                                  guifg=cyan
+    " hi LspDiagnosticsVirtualTextError                       guifg=red
 
     hi SignColumn                                           guifg=white
     " hi Whitespace                                           guifg=DarkSlateGray
@@ -1308,6 +1364,16 @@ autocmd BufEnter * call AutoRestoreWinView()
 
 
 
+--
+-- remove trailing spaces on save
+--
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*" },
+  command = [[%s/\s\+$//e]],
+})
+-- fixme
+-- vim.api.nvim_set_keymap("n", "<Leader>T", ":%s/\s\+$//<CR>", { noremap = true })
+
 
 -- fixme
 --- vim.api.nvim_create_user_command(
@@ -1327,7 +1393,6 @@ vim.api.nvim_set_keymap("v", "il", ":<C-U>normal ^vg_<CR>", { noremap = true })
 
 vim.api.nvim_set_keymap("o", "al", ":normal val<CR>", { noremap = true })
 vim.api.nvim_set_keymap("o", "il", ":normal vil<CR>", { noremap = true })
-
 
 
 
