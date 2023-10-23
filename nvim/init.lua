@@ -30,9 +30,13 @@ require('packer').startup(function(use)
   }
 
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+  use {'nvim-treesitter/playground'}
+
 
   -- lspconfig for clangd
   use 'p00f/clangd_extensions.nvim'
+
+  use 'rhysd/vim-clang-format'
 
 
   use {
@@ -536,6 +540,24 @@ end
 
 
 
+--
+-- treesitter
+--
+--
+
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "query" },
+    highlight = {
+        enable = true
+    }
+}
+
+
+
+
+
+
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
@@ -634,8 +656,13 @@ local cmp = require'cmp'
 
 
 local has_words_before = function()
+  unpack = unpack or table.unpack
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
 cmp.setup({
@@ -652,25 +679,25 @@ cmp.setup({
       select = true,
     },
 
-    ['<Tab>'] = function(fallback)
-      if not cmp.select_next_item() then
-        if vim.bo.buftype ~= 'prompt' and has_words_before() then
-          cmp.complete()
-        else
-          fallback()
-        end
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif vim.fn["vsnip#available"](1) == 1 then
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
       end
-    end,
+    end, { "i", "s" }),
 
-    ['<S-Tab>'] = function(fallback)
-      if not cmp.select_prev_item() then
-        if vim.bo.buftype ~= 'prompt' and has_words_before() then
-          cmp.complete()
-        else
-          fallback()
-        end
+    ["<S-Tab>"] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+        feedkey("<Plug>(vsnip-jump-prev)", "")
       end
-    end,
+    end, { "i", "s" }),
 
     ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
@@ -747,6 +774,14 @@ require("clangd_extensions").setup{
         capabilities = get_forced_lsp_capabilities(),
     }
 }
+require("clangd_extensions.inlay_hints").setup_autocmd()
+require("clangd_extensions.inlay_hints").set_inlay_hints()
+
+
+
+vim.cmd([[
+autocmd FileType c,cpp ClangFormatAutoEnable
+]])
 
 
 
@@ -1122,10 +1157,10 @@ function! MyHighlights() abort
     hi Search                       cterm=reverse           ctermfg=214         ctermbg=232
     hi SpellCap                                             ctermfg=black       ctermbg=green
 
-    hi link LspReferenceText Special
-    " hi LspReferenceText                                     ctermfg=black       ctermbg=green
-    " hi LspDiagnosticsError                                  ctermfg=cyan
-    " hi LspDiagnosticsVirtualTextError                       ctermfg=red
+    " hi link LspReferenceText Special
+    hi LspReferenceText                                     ctermfg=black       ctermbg=green
+    hi LspDiagnosticsError                                  ctermfg=cyan
+    hi LspDiagnosticsVirtualTextError                       ctermfg=red
 
     hi SignColumn                                           ctermfg=white       ctermbg=black
     " hi Whitespace                                           ctermfg=DarkGray
@@ -1142,11 +1177,11 @@ function! MyHighlights() abort
     hi Search                       gui=reverse                guifg=goldenrod2         guibg=black
     hi SpellCap                                             guifg=black         guibg=springgreen
 
-    hi link LspReferenceText Special
-    " hi LspReferenceText                                     guifg=black         guibg=limegreen
-    " hi CocHighlightText                                     guifg=black         guibg=limegreen
-    " hi LspDiagnosticsError                                  guifg=cyan
-    " hi LspDiagnosticsVirtualTextError                       guifg=red
+    " hi link LspReferenceText Special
+    hi LspReferenceText                                     guifg=#ececec       guibg=#155402
+    hi CocHighlightText                                     guifg=black         guibg=limegreen
+    hi LspDiagnosticsError                                  guifg=cyan
+    hi LspDiagnosticsVirtualTextError                       guifg=red
 
     hi SignColumn                                           guifg=white
     " hi Whitespace                                           guifg=DarkSlateGray
