@@ -404,6 +404,7 @@
     (define-key god-local-mode-map (kbd "g i") #'eglot-find-implementation)
     (define-key god-local-mode-map (kbd "g a") #'eglot-code-actions)
     (define-key god-local-mode-map (kbd "g g") #'beginning-of-buffer)
+    (define-key god-local-mode-map (kbd "G") #'end-of-buffer)
     (define-key god-local-mode-map (kbd "g G") #'end-of-buffer)
 
     ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)
