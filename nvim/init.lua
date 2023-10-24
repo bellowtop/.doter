@@ -622,22 +622,34 @@ local custom_attach = function(client, bufnr)
       hi! link LspReferenceWrite Visual
     ]])
 
-    local gid = api.nvim_create_augroup("lsp_document_highlight", { clear = true })
-    api.nvim_create_autocmd("CursorHold" , {
-      group = gid,
-      buffer = bufnr,
-      callback = function ()
-        lsp.buf.document_highlight()
-      end
-    })
 
-    api.nvim_create_autocmd("CursorMoved" , {
-      group = gid,
-      buffer = bufnr,
-      callback = function ()
-        lsp.buf.clear_references()
-      end
-    })
+    -- local gid = api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+    -- api.nvim_create_autocmd("CursorHold" , {
+    --   group = gid,
+    --   buffer = bufnr,
+    --   callback = function ()
+    --     lsp.buf.document_highlight()
+    --   end
+    -- })
+
+    -- api.nvim_create_autocmd("CursorMoved" , {
+    --   group = gid,
+    --   buffer = bufnr,
+    --   callback = function ()
+    --     lsp.buf.clear_references()
+    --   end
+    -- })
+
+    -- have to use following... the above lua api has problems...
+    vim.cmd([[
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]])
+
+
   end
 
   if vim.g.logging_level == "debug" then
