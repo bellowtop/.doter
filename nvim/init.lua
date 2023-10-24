@@ -319,7 +319,7 @@ vim.cmd([[
 
 --- replace for this
 ---  " augroup vimrc_rooter
----  "     autocmd VimEnter * 
+---  "     autocmd VimEnter *
 ---  " augroup END
 ---
 -- local rooter_augroup = vim.api.nvim_create_augroup('vimrc_rooter', {clear = true})
@@ -549,7 +549,7 @@ local function LspRename()
       end
 
       -- compose the right print message
-      print(string.format("renamed %s instance%s in %s file%s. %s", 
+      print(string.format("renamed %s instance%s in %s file%s. %s",
         changed_instances_count,
         changed_instances_count == 1 and '' or 's',
         changed_files_count,
@@ -840,6 +840,7 @@ cmp.setup({
     { name = 'vsnip' }, -- For vsnip users.
   }, {
     { name = 'buffer' },
+    { name = 'path' },
   })
 })
 
