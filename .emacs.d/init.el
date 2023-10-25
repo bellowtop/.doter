@@ -382,7 +382,7 @@
 (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-12"))
 
 (when (my-system-type-is-darwin)
-    (set-face-attribute 'default nil :font "Cascadia Mono PL-16")
+    (set-face-attribute 'default nil :font "Cascadia Mono PL-16" :weight 'semi-light)
     (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-16")))
 
 (set-cursor-color "red")
@@ -440,9 +440,8 @@
  '(magit-diff-removed ((t (:extend t :foreground "indian red"))))
  '(magit-diff-removed-highlight ((t (:extend t :background "black" :foreground "red"))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
- '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil))))
- '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil))))
- ;; '(mode-line-buffer-id ((t (:distant-foreground "#262831" :foreground "#7AA2F7" :weight normal))))
+ '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
+ '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(show-paren-match ((t (:foreground "green" :underline nil))))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
