@@ -192,6 +192,8 @@
 
 (require 'diminish)
 (defun purge-minor-modes ()
+    (diminish 'flymake-mode)
+    (diminish 'my-ctrl-w-window-keys-minor-mode)
     (diminish 'ivy-mode)
     (diminish 'ivy-posframe-mode)
     (diminish 'which-key-mode)
@@ -380,8 +382,8 @@
 (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-12"))
 
 (when (my-system-type-is-darwin)
-    (set-face-attribute 'default nil :font "Cascadia Mono PL-15")
-    (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-15")))
+    (set-face-attribute 'default nil :font "Cascadia Mono PL-16")
+    (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-16")))
 
 (set-cursor-color "red")
 (setq-default cursor-type 'box)
@@ -438,8 +440,9 @@
  '(magit-diff-removed ((t (:extend t :foreground "indian red"))))
  '(magit-diff-removed-highlight ((t (:extend t :background "black" :foreground "red"))))
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
- '(mode-line ((t (:background "SpringGreen4" :foreground "gray" :box nil :overline "#374250"))))
- '(mode-line-buffer-id ((t (:distant-foreground "#262831" :foreground "#7AA2F7" :weight normal))))
+ '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil))))
+ '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil))))
+ ;; '(mode-line-buffer-id ((t (:distant-foreground "#262831" :foreground "#7AA2F7" :weight normal))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(show-paren-match ((t (:foreground "green" :underline nil))))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
@@ -469,9 +472,6 @@
 
 (set-face-attribute 'region nil :inverse-video 't)
 
-
-;; (set-face-attribute 'mode-line :underline "#00ff00")
-;; (set-face-attribute 'mode-line-inactive nil :underline "#209920")
 
 ;; Display dividers between windows
 (setq window-divider-default-places t
@@ -1219,7 +1219,6 @@ respectively."
                                  )
                       "%b"))))
         )
-
   )
 
 (unless (display-graphic-p)
@@ -1804,6 +1803,25 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+(defun my-buffer-identification (fmt)
+  (list (propertize
+         fmt
+         'face (if (let ((window (selected-window)))
+                     (or (eq window (old-selected-window))
+                         (and (minibuffer-window-active-p (minibuffer-window))
+                              (with-selected-window (minibuffer-window)
+                                (eq window (minibuffer-selected-window))))))
+                   (if (bound-and-true-p god-local-mode)
+                       'error
+                       '(:foreground "#7fdc59")
+                     )
+                 'mode-line-buffer-id)
+         'mouse-face 'mode-line-highlight
+         'local-map mode-line-buffer-identification-keymap)))
+
+(setq-default mode-line-buffer-identification
+              '(:eval (my-buffer-identification "%12b")))
+
 
 
 (defun my-god-mode-update-cursor-type ()
@@ -1817,15 +1835,14 @@ If buffer-or-name is nil return current buffer's mode."
       (set-face-attribute 'line-number-current-line nil :foreground "#5fffd7" :background "#3a3a3a")
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil     :foreground "#7AA2F7")
-        (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
-        ;; (set-face-attribute 'mode-line-active nil   :overline "#374250"  :box nil)
-        (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
-        (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#262831" :foreground "#7AA2F7")
+        ;; (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
+        ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
+        ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#262831" :foreground "#7AA2F7")
         )
-      (unless (display-graphic-p)
-        (set-face-attribute 'mode-line          nil :foreground "black" :background "#00AFFF")
-        (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
-        )
+      ;; (unless (display-graphic-p)
+      ;;   (set-face-attribute 'mode-line          nil :foreground "black" :background "#00AFFF")
+      ;;   (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
+      ;;   )
       ;; (setq cursor-type 'bar)
       ;; (set-cursor-color "red")
       ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
@@ -1837,15 +1854,14 @@ If buffer-or-name is nil return current buffer's mode."
       (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil     :foreground "#7fdc59")
-        (set-face-attribute 'mode-line nil          :background "#7fdc59" :foreground "black" :overline "green"   :box nil) ;; draw a line above mode-line
-        ;; (set-face-attribute 'mode-line-active nil   :overline "green"   :box nil)
-        (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
-        (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#7AA2F7" :foreground "black")
+        ;; (set-face-attribute 'mode-line nil          :background "#7fdc59" :foreground "black" :overline "green"   :box nil) ;; draw a line above mode-line
+        ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
+        ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#7AA2F7" :foreground "black")
         )
-      (unless (display-graphic-p)
-        (set-face-attribute 'mode-line          nil :foreground "black" :background "cyan")
-        (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
-        )
+      ;; (unless (display-graphic-p)
+      ;;   (set-face-attribute 'mode-line          nil :foreground "black" :background "cyan")
+      ;;   (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
+      ;;   )
       ;; (setq cursor-type 'bar)
       ;; (set-cursor-color "red")
       ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
@@ -1854,59 +1870,6 @@ If buffer-or-name is nil return current buffer's mode."
       )
     )
   )
-
-
-
-
-
-;;;
-;;;  ;; darker current background when toggle god-mode. too blinky
-;;;
-;;;  (defun my-god-mode-update-cursor-type ()
-;;;    ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
-;;;    (if (bound-and-true-p god-local-mode)
-;;;        (progn
-;;;     (set-face-attribute 'default nil                  :background "#252832")
-;;;     (set-face-attribute 'line-number nil              :foreground "#4B5363"    :background "#252832")
-;;;          (set-face-attribute 'hl-line nil                  :foreground 'unspecified :background "#313f4e")
-;;;          (set-face-attribute 'line-number-current-line nil :foreground "#7fdc59"    :background "#232d38")
-;;;          (when (display-graphic-p)
-;;;            (set-face-attribute 'window-divider nil         :foreground "gray")
-;;;            (set-face-attribute 'mode-line nil              :overline "#374250"   :box nil) ;; draw a line above mode-line
-;;;            ;; (set-face-attribute 'mode-line-active nil    :overline "#374250"   :box nil)
-;;;            (set-face-attribute 'mode-line-inactive nil     :overline "#374250"   :box nil)
-;;;            (setq cursor-type 'bar)
-;;;            )
-;;;          (unless (display-graphic-p)
-;;;            (set-face-attribute 'mode-line          nil :foreground "black"   :background "#00AFFF")
-;;;            (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
-;;;            )
-;;;          ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
-;;;          ;; (set-face-attribute 'mode-line nil :background "#38424B")
-;;;          (set-face-foreground 'vertical-border "#374250")
-;;;     )
-;;;      (progn
-;;;        (set-face-attribute 'default nil                    :background "#1E2127")
-;;;        (set-face-attribute 'hl-line nil                    :foreground 'unspecified  :background "#313f4e")
-;;;        (set-face-attribute 'line-number nil                :foreground "#4B5363"     :background "#1E2127")
-;;;        (set-face-attribute 'line-number-current-line nil   :foreground "black"       :background "#7fdc59")
-;;;        (when (display-graphic-p)
-;;;          (set-face-attribute 'window-divider nil           :foreground "green")
-;;;          (set-face-attribute 'mode-line nil                :overline "green"   :box nil) ;; draw a line above mode-line
-;;;          ;; (set-face-attribute 'mode-line-active nil      :overline "green"   :box nil)
-;;;          (set-face-attribute 'mode-line-inactive nil       :overline "green"   :box nil)
-;;;          (setq cursor-type 'bar)
-;;;          )
-;;;        (unless (display-graphic-p)
-;;;          (set-face-attribute 'mode-line          nil       :foreground "black"   :background "cyan")
-;;;          (set-face-attribute 'mode-line-inactive nil       :foreground "#00AFFF" :background "black")
-;;;          )
-;;;        ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
-;;;        ;;(set-face-attribute 'mode-line nil :background "#38424B")
-;;;        (set-face-foreground 'vertical-border "#00ff00")
-;;;        )
-;;;      )
-;;;    )
 
 
 
@@ -2013,7 +1976,7 @@ If buffer-or-name is nil return current buffer's mode."
   (set-window-margins (treemacs-get-local-window) 1 1))
 
 (defun my-add-hl-line-for-treemacs()
-  (setq-local face-remapping-alist '((hl-line (:background "white" :foreground "black")))))
+  (setq-local face-remapping-alist '((hl-line (:inherit region)))))
 
 (defun display-treemacs-widow-in-ace-window-selection()
     (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))
