@@ -382,7 +382,7 @@
 (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-12"))
 
 (when (my-system-type-is-darwin)
-    (set-face-attribute 'default nil :font "Cascadia Mono PL-16" :weight 'semi-light)
+    (set-face-attribute 'default nil :font "Cascadia Mono PL-16" :weight 'light)
     (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-16")))
 
 (set-cursor-color "red")
