@@ -1831,8 +1831,8 @@ If buffer-or-name is nil return current buffer's mode."
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
   (if (bound-and-true-p god-local-mode)
     (progn
-      (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#262626")
-      (set-face-attribute 'line-number-current-line nil :foreground "#5fffd7" :background "#3a3a3a")
+      ;; (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#262626")
+      ;; (set-face-attribute 'line-number-current-line nil :foreground "#5fffd7" :background "#3a3a3a")
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil     :foreground "#7AA2F7")
         ;; (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
@@ -1850,8 +1850,8 @@ If buffer-or-name is nil return current buffer's mode."
       (set-face-foreground 'vertical-border "#374250")
       )
     (progn
-      (set-face-attribute 'hl-line nil :background (face-background 'default))
-      (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
+      ;; (set-face-attribute 'hl-line nil :background (face-background 'default))
+      ;; (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil     :foreground "#7fdc59")
         ;; (set-face-attribute 'mode-line nil          :background "#7fdc59" :foreground "black" :overline "green"   :box nil) ;; draw a line above mode-line
