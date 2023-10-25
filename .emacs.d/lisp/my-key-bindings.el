@@ -143,11 +143,11 @@
                       pos-before
                       pos-after)))
     ;; NOTE: the ] must be first char in the regex candicates. see https://www.gnu.org/software/emacs/manual/html_node/emacs/Regexps.html
-    (if-let ((distance (string-match-p "[])}([{&=]" sub-string)))
+    (if-let ((distance (string-match-p "[])}([{&=\*]" sub-string)))
         (progn
           ;; if next char is special then find next regular char, because forward 0 distance is meaningless
           (when (= distance 0)
-            (setq distance (string-match-p "[^])}([{&=\s]" sub-string)))
+            (setq distance (string-match-p "[^])}([{&=\*\s]" sub-string)))
           ;; if all chars are special chars, then just do forward-to-word.
           (if distance
               (forward-char distance)
