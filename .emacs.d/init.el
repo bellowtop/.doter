@@ -423,7 +423,7 @@
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(highlight ((t (:background "yellow" :foreground "black" :underline nil))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
- '(isearch ((t (:background "orange1" :foreground "black"))))
+ ;; '(isearch ((t (:background "orange1" :foreground "black"))))
  '(ivy-current-match ((t (:foreground "white" :background "purple"))))
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
