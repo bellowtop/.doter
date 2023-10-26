@@ -382,7 +382,7 @@
 (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-12"))
 
 (when (my-system-type-is-darwin)
-    (set-face-attribute 'default nil :font "Cascadia Mono PL-16" :weight 'light)
+    (set-face-attribute 'default nil :font "Cascadia Mono PL-16" :weight 'semi-light)
     (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-16")))
 
 (set-cursor-color "red")
@@ -1983,7 +1983,7 @@ If buffer-or-name is nil return current buffer's mode."
 
 (use-package treemacs
   :init
-    (add-hook 'treemacs-mode-hook #'darker-background-for-sidebar)
+    ;; (add-hook 'treemacs-mode-hook #'darker-background-for-sidebar)
     (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
     (add-hook 'treemacs-mode-hook #'my-add-hl-line-for-treemacs)
     (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
