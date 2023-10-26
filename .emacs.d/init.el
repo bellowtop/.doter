@@ -1734,7 +1734,7 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-enable-eglot-highlight()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'eglot-highlight-symbol-face nil :foreground "#7FDC59")))
+    (set-face-attribute 'eglot-highlight-symbol-face nil :inherit region)))
 
 (defun my-disable-code-intelligence ()
   (interactive)
