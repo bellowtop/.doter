@@ -118,6 +118,7 @@
         sp-split-sexp
         sp-up-sexp
         sp-wrap-round
+        special-lispy-alt-multiline
         sql-delete-backward-char
         sql-magic-go
         upcase-char
