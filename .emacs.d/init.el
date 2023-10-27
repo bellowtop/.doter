@@ -378,12 +378,12 @@
    "gnu/linux"))
 
 
-(set-face-attribute 'default nil :font "Cascadia Mono PL-12")
-(add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-12"))
+(set-face-attribute 'default nil :font "IBM Plex Mono-15")
+(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15"))
 
 (when (my-system-type-is-darwin)
-    (set-face-attribute 'default nil :font "Cascadia Mono PL-16" :weight 'semi-light)
-    (add-to-list 'default-frame-alist '(font . "Cascadia Mono PL-16")))
+    (set-face-attribute 'default nil :font "IBM Plex Mono" :weight 'light)
+    (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15")))
 
 (set-cursor-color "red")
 (setq-default cursor-type 'box)
