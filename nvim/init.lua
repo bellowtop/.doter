@@ -343,7 +343,7 @@ vim.cmd([[
 vim.api.nvim_set_keymap("n", "<leader>f", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true } )
 vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua require('telescope.builtin').live_grep({layout_strategy='vertical'})<cr>",  { noremap = true } )
 vim.api.nvim_set_keymap("n", "<leader>b", "<cmd>lua require('telescope.builtin').buffers()<cr>",    { noremap = true } )
--- vim.api.nvim_set_keymap("n", "<leader>s",   "<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>",    { noremap = true } )
+vim.api.nvim_set_keymap("n", "<leader>s",   "<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>",    { noremap = true } )
 vim.api.nvim_set_keymap("n", "<leader>p", ":Telescope file_browser<cr>",    { noremap = true } )
 
 -- vim.api.nvim_set_keymap("n", "<C-g>",     "<ESC><ESC><ESC>",                                        { noremap = true } )
@@ -351,8 +351,11 @@ vim.api.nvim_set_keymap("n", "<leader>p", ":Telescope file_browser<cr>",    { no
 local actions = require "telescope.actions"
 local telescope_config = require "telescope.config"
 
+local ts_state = require('telescope.state')
+local ts_action_set = require "telescope.actions.set"
 require('telescope').setup{
   defaults = {
+    scroll_strategy = "limit",
     mappings = {
       i = {
         ["<C-g>"] = actions.close,
@@ -362,6 +365,19 @@ require('telescope').setup{
       n = {
         ["<C-g>"] = actions.close,
         ["<C-c>"] = actions.close,
+        [";"] = function(prompt_bufnr)
+          local results_win = ts_state.get_status(prompt_bufnr).results_win
+          local height = vim.api.nvim_win_get_height(results_win)
+          ts_action_set.shift_selection(prompt_bufnr, math.floor(height/2))
+        end,
+        ["'"] = function(prompt_bufnr)
+          local results_win = ts_state.get_status(prompt_bufnr).results_win
+          local height = vim.api.nvim_win_get_height(results_win)
+          ts_action_set.shift_selection(prompt_bufnr, -math.floor(height/2))
+        end,
+
+        -- ["'"] = actions.results_scrolling_up,
+        -- [";"] = actions.results_scrolling_down,
         -- ["<C-[>"] = actions.close,
       },
     }
@@ -903,7 +919,7 @@ require('cscope_maps').setup({
   -- maps related defaults
   disable_maps = false, -- "true" disables default keymaps
   skip_input_prompt = false, -- "true" doesn't ask for input
-  prefix = "<leader>s", -- prefix to trigger maps
+  prefix = "<leader>,", -- prefix to trigger maps
 
   -- cscope related defaults
   cscope = {
