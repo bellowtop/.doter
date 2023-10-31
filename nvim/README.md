@@ -79,21 +79,20 @@ pacman -Sy cscope ctags
 #
 #
 # snap install universal-ctags --classic
-# brew tap universal-ctags/universal-ctags
-# brew install --with-jansson --HEAD universal-ctags/universal-ctags/universal-ctags
+# brew install ctags
+# brew install cscope
 ```
 
 use this script to generate cscope files
 
 ```bash
 #!/bin/sh
-find . -path "./.ccls-cache" -prune -o -path "./.git" -prune \
+find . -path "./.ccls-cache" -prune -o -path "./.git" -prune -o -path "./build" -prune -o -path "./cmake-build-debug" -prune \
     -o -name "*.h" -o -name "*.hh" -o -name "*.hpp" \
-    -o -name "*.c" -o -name "*.cc"  | \
-    egrep -v '.ccls-cache|.git' | sort > .cscope.files
-    
+    -o -name "*.c" -o -name "*.cc" -o -name "*.cpp"  | \
+    egrep -v '.ccls-cache|.git|build|cmake-build-debug' | sort > .cscope.files
 cscope -bkq -i .cscope.files -f .cscope.out
-ctags --c++-kinds=+p --fields=+iaS --exclude=".ccls-cache/*" -R -f .tags
+ctags --c++-kinds=+p --fields=+iaS --exclude=".ccls-cache/*" --exclude="build" --exclude="cmake-build-debug" -R -f .tags
 ```
 
 it will generate the following files:
@@ -107,7 +106,7 @@ it will generate the following files:
 ```
 you may need to ignore them in .gitignore
 
-in our vimrc, use `CTRL-\ g` to jump to definitions.
+in our vimrc, use `<leader>s s` to jump to symbol
 
 Happy hacking ~
 
