@@ -2,7 +2,7 @@
 
 
 (autothemer-deftheme
- bogster "A theme to set the mood for Halloween"
+ bogster "A theme ported from https://github.com/vv9k/bogster"
 
  ((((class color) (min-colors #xFFFFFF))) ;; We're only concerned with graphical Emacs
 
