@@ -314,6 +314,8 @@
     (define-key god-local-mode-map (kbd "n") #'my-isearch-forward)
     (define-key god-local-mode-map (kbd "N") #'my-isearch-backward)
     (define-key god-local-mode-map (kbd ":") #'goto-line)
+    (define-key god-local-mode-map (kbd "RET") #'next-line)
+    (define-key god-local-mode-map (kbd "DEL") #'backward-char)
 
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
     (define-key god-local-mode-map (kbd "C-~") #'upcase-char)
