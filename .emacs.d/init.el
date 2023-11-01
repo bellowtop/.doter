@@ -1824,14 +1824,17 @@ If buffer-or-name is nil return current buffer's mode."
               '(:eval (my-buffer-identification "%12b")))
 
 
+(require 'term-cursor)
+(global-term-cursor-mode 1)
+
 (setq blink-cursor-blinks 0)
 
 (defun my-god-mode-update-cursor-type ()
-  (when (display-graphic-p)
+  ;; (when (display-graphic-p)
     (setq cursor-type (if (or (bound-and-true-p god-local-mode) buffer-read-only) 'box 'bar))
     (set-cursor-color (if (or (bound-and-true-p god-local-mode) buffer-read-only) "red" "red"))
-    (blink-cursor-mode (if (or (bound-and-true-p god-local-mode) buffer-read-only) -1 t))
-    )
+    (blink-cursor-mode (if (or (bound-and-true-p god-local-mode) buffer-read-only) -1 -1))
+  ;; )
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
   (if (bound-and-true-p god-local-mode)
     (progn
@@ -1851,7 +1854,8 @@ If buffer-or-name is nil return current buffer's mode."
       ;; (set-cursor-color "red")
       ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
       ;; (set-face-attribute 'mode-line nil :background "#38424B")
-      (set-face-foreground 'vertical-border "#374250")
+      (set-face-foreground 'vertical-border "#7fdc59")
+      ;; (set-face-foreground 'vertical-border "#374250")
       )
     (progn
       ;; (set-face-attribute 'hl-line nil :background (face-background 'default))
@@ -1870,7 +1874,8 @@ If buffer-or-name is nil return current buffer's mode."
       ;; (set-cursor-color "red")
       ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
       ;;(set-face-attribute 'mode-line nil :background "#38424B")
-      (set-face-foreground 'vertical-border "#00ff00")
+      (set-face-foreground 'vertical-border "#7fdc59")
+      ;; (set-face-foreground 'vertical-border "#374250")
       )
     )
   )
@@ -2000,12 +2005,12 @@ If buffer-or-name is nil return current buffer's mode."
     (setq treemacs-show-cursor t)
     (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
     (setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
-  :bind (
-         ("C-c n" . treemacs)
-         ("C-c t" . treemacs-toggle-node)
-         ("C-c h" . my-add-hl-line-for-treemacs)    ;; add-hook no work????
-         ("<mouse-1>" . treemacs-single-click-expand-action)
-    )
+  :bind
+    (:map treemacs-mode-map
+          ("C-c t" . treemacs-toggle-node)
+          ("C-c h" . my-add-hl-line-for-treemacs)
+          ;; add-hook no work????
+          ("<mouse-1>" . treemacs-single-click-expand-action))
   )
 
 
