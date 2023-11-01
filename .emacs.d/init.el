@@ -422,8 +422,8 @@
  '(flymake-warning-echo ((t nil)))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(highlight ((t (:background "yellow" :foreground "black" :underline nil))))
+ '(hl-line ((t (:extend t :background "dark slate gray"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
- ;; '(isearch ((t (:background "orange1" :foreground "black"))))
  '(ivy-current-match ((t (:foreground "white" :background "purple"))))
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
@@ -443,7 +443,7 @@
  '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
  '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
- '(show-paren-match ((t (:foreground "green" :underline nil))))
+ '(show-paren-match ((t (:foreground "yellow"))))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
  '(term-color-cyan ((t (:foreground "#8be9fd" :background "#8be9fd"))))
@@ -517,6 +517,8 @@
 ;; quit xref buffer after enter
 (with-eval-after-load 'xref
   (define-key xref--xref-buffer-mode-map(kbd "o") #'(lambda() (interactive) (xref-goto-xref t)))
+  ;; directly open it when there is only one candidate.
+  (setq xref-show-xrefs-function #'xref-show-definitions-buffer)
 )
 
 
@@ -1822,10 +1824,13 @@ If buffer-or-name is nil return current buffer's mode."
               '(:eval (my-buffer-identification "%12b")))
 
 
+(setq blink-cursor-blinks 0)
 
 (defun my-god-mode-update-cursor-type ()
   (when (display-graphic-p)
     (setq cursor-type (if (or (bound-and-true-p god-local-mode) buffer-read-only) 'box 'bar))
+    (set-cursor-color (if (or (bound-and-true-p god-local-mode) buffer-read-only) "red" "red"))
+    (blink-cursor-mode (if (or (bound-and-true-p god-local-mode) buffer-read-only) -1 t))
     )
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
   (if (bound-and-true-p god-local-mode)
