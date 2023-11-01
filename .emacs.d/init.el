@@ -241,8 +241,8 @@
 ;;   (load-theme 'vscode-dark-plus t))
 
 
-(require 'autothemer)
-(load-theme 'bogster t)
+;; (require 'autothemer)
+;; (load-theme 'bogster t)
 
 
 
@@ -266,7 +266,7 @@
 ;; (load-theme 'atom-one-dark t)
 ;; (load-theme 'doom-molokai t)
 ;; (load-theme 'doom-palenight t)
-;; (load-theme 'doom-material t)
+(load-theme 'doom-material-dark t)
 ;; (load-theme 'doom-dracula t)
 ;; (load-theme 'kaolin-aurora t)
 ;; (load-theme 'challenger-deep t)
@@ -275,6 +275,9 @@
 ;; (load-theme 'doom-material t)
 ;; (load-theme 'atom-one-dark t)
 ;; (load-theme 'one-dark-pro t)
+
+;; (require 'color-theme-sanityinc-tomorrow)
+;; (load-theme 'sanityinc-tomorrow-blue t)
 
 
 
@@ -386,7 +389,7 @@
     (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15")))
 
 (set-cursor-color "red")
-(setq-default cursor-type 'box)
+(setq-default cursor-type 'bar)
 (setq-default cursor-in-non-selected-windows nil)
 
 ;; (set-face-attribute 'region nil :background "#666")
@@ -415,7 +418,7 @@
  '(doom-modeline-project-dir ((t (:inherit nil))))
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
- '(eglot-highlight-symbol-face ((t (:inherit region))))
+ '(eglot-highlight-symbol-face ((t (:inverse-video t))))
  '(eglot-mode-line ((t nil)))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
  '(flymake-error-echo ((t nil)))
@@ -454,15 +457,15 @@
  '(term-color-yellow ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
  '(term-default-bg-color ((t (:inherit term-color-black))))
  '(term-default-fg-color ((t (:inherit term-color-white))))
- '(treemacs-directory-face ((t (:inherit font-lock-function-name-face :weight light :family "Segoe UI"))))
- '(treemacs-git-added-face ((t (:inherit font-lock-comment-face :weight light :family "Segoe UI"))))
- '(treemacs-git-commit-diff-face ((t (:inherit font-lock-comment-face :weight light :family "Segoe UI"))))
- '(treemacs-git-conflict-face ((t (:inherit font-lock-comment-face :weight light :family "Segoe UI"))))
- '(treemacs-git-ignored-face ((t (:inherit font-lock-comment-face :weight light :family "Segoe UI"))))
- '(treemacs-git-modified-face ((t (:inherit font-lock-comment-face :weight light :family "Segoe UI"))))
- '(treemacs-git-renamed-face ((t (:inherit font-lock-comment-face :weight light :family "Segoe UI"))))
- '(treemacs-git-unmodified-face ((t (:inherit font-lock-comment-face :weight light :family "Segoe UI"))))
- '(treemacs-git-untracked-face ((t (:inherit font-lock-comment-face :weight light :family "Segoe UI"))))
+ '(treemacs-directory-face ((t (:inherit font-lock-string-face :weight light :foreground nil :background nil :family "Segoe UI"))))
+ '(treemacs-git-added-face ((t (:weight light :family "Segoe UI"))))
+ '(treemacs-git-commit-diff-face ((t (:weight light :family "Segoe UI"))))
+ '(treemacs-git-conflict-face ((t (:weight light :family "Segoe UI"))))
+ '(treemacs-git-ignored-face ((t (:weight light :family "Segoe UI"))))
+ '(treemacs-git-modified-face ((t (:weight light :family "Segoe UI"))))
+ '(treemacs-git-renamed-face ((t (:weight light :family "Segoe UI"))))
+ '(treemacs-git-unmodified-face ((t (:weight light :family "Segoe UI"))))
+ '(treemacs-git-untracked-face ((t (:weight light :family "Segoe UI"))))
  '(treemacs-root-face ((t (:inherit font-lock-constant-face :height 1.0 :weight light :family "Segoe UI"))))
  '(window-divider ((t (:foreground "green"))))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
@@ -700,7 +703,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -1874,8 +1877,8 @@ If buffer-or-name is nil return current buffer's mode."
       ;; (set-cursor-color "red")
       ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
       ;;(set-face-attribute 'mode-line nil :background "#38424B")
+      ;; (set-face-foreground 'vertical-border "#7fdc59")
       (set-face-foreground 'vertical-border "#7fdc59")
-      ;; (set-face-foreground 'vertical-border "#374250")
       )
     )
   )
