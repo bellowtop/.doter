@@ -242,7 +242,7 @@
 
 
 ;; (require 'autothemer)
-;; (load-theme 'bogster t)
+(load-theme 'bogster t)
 
 
 
@@ -266,7 +266,7 @@
 ;; (load-theme 'atom-one-dark t)
 ;; (load-theme 'doom-molokai t)
 ;; (load-theme 'doom-palenight t)
-(load-theme 'doom-material-dark t)
+;; (load-theme 'doom-material-dark t)
 ;; (load-theme 'doom-dracula t)
 ;; (load-theme 'kaolin-aurora t)
 ;; (load-theme 'challenger-deep t)
@@ -425,7 +425,7 @@
  '(flymake-warning-echo ((t nil)))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(highlight ((t (:background "yellow" :foreground "black" :underline nil))))
- '(hl-line ((t (:extend t :background "dark slate gray"))))
+ '(hl-line ((t (:extend t :background "#313f4e"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(ivy-current-match ((t (:foreground "white" :background "purple"))))
  '(ivy-posframe ((t (:background "black"))))
@@ -2008,6 +2008,7 @@ If buffer-or-name is nil return current buffer's mode."
     (setq treemacs-show-cursor t)
     (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
     (setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
+    (setq treemacs-expand-after-init nil)
   :bind
     (:map treemacs-mode-map
           ("C-c t" . treemacs-toggle-node)
