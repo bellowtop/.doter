@@ -1463,6 +1463,9 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 ;; special-buffers are not affected by god-mode bindings, but affected by my-special-buffer-keys-minor-mode-map
+(setq special-buffer-modes (list
+                            "dired-mode"
+                            ))
 (setq special-buffers (list
                         "*Pos-Frame-Read*"
                         "*Treemacs"
@@ -1503,13 +1506,21 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun my-god-this-is-special-buffer (bufname)
   (interactive)
-  (let ((this-buffer-name (string-trim bufname)))
-    (seq-filter
-     (lambda (n)
-       (string-prefix-p
-        n
-        this-buffer-name))
-     special-buffers)))
+  (let ((this-buffer-name (string-trim bufname))
+        (this-buffer-mode (symbol-name
+                           (buffer-mode bufname))))
+    (or (seq-filter
+         (lambda (n)
+           (string-prefix-p
+            n
+            this-buffer-name))
+         special-buffers)
+        (seq-filter
+         (lambda (n)
+           (string-prefix-p
+            n
+            this-buffer-mode))
+         special-buffer-modes))))
 
 (defun* my-god-this-is-legendary-buffer (bufname)
   (interactive)
@@ -1546,19 +1557,22 @@ If buffer-or-name is nil return current buffer's mode."
 
   (if (my-god-this-is-special-buffer (buffer-name))
     (progn
-      ;; (message "%s is special buffer" (buffer-name))
+      (message "%s is special buffer" (buffer-name))
       (ignore)
+      (god-local-mode 0)                  ;; start local mode
       (my-keys-minor-mode 0)
       (my-special-buffer-keys-minor-mode 1)
       )
     (progn
-      ;; (message "%s not a special buffer" (buffer-name))
+      (message "%s not a special buffer" (buffer-name))
       (god-local-mode 1)                  ;; start local mode
       (setq my-god-mode-is-active-flag t)
       (my-special-buffer-keys-minor-mode 0)
       )
     nil)
   )
+
+(add-hook 'find-file-hook 'my-god-mode)
 
 (defun my-quit-god-mode()
   (interactive)
@@ -1835,9 +1849,12 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun my-god-mode-update-cursor-type ()
   ;; (when (display-graphic-p)
-    (setq cursor-type (if (or (bound-and-true-p god-local-mode) buffer-read-only) 'box 'bar))
-    (set-cursor-color (if (or (bound-and-true-p god-local-mode) buffer-read-only) "red" "red"))
-    (blink-cursor-mode (if (or (bound-and-true-p god-local-mode) buffer-read-only) -1 -1))
+    ;; (setq cursor-type (if (or (bound-and-true-p god-local-mode) buffer-read-only) 'box 'bar))
+    ;; (set-cursor-color (if (or (bound-and-true-p god-local-mode) buffer-read-only) "red" "red"))
+    ;; (blink-cursor-mode (if (or (bound-and-true-p god-local-mode) buffer-read-only) -1 -1))
+    (setq cursor-type (if (bound-and-true-p god-local-mode) 'box 'bar))
+    (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
+    (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
   ;; )
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
   (if (bound-and-true-p god-local-mode)
