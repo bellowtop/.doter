@@ -544,6 +544,7 @@
 (require 'custom-util-funcs)
 
 (require 'init-eglot)
+(add-hook 'eglot-managed-mode-hook (lambda () (eglot-inlay-hints-mode -1)))
 
 ;; (require 'init-lang-java)
 ;; (require 'download-lombok)
