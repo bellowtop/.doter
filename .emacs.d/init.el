@@ -1611,8 +1611,9 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun my-god-above-newline-and-insert-mode ()
   (interactive)
+  (beginning-of-line)
+  (newline)
   (previous-line)
-  (my-god-below-newline-and-insert-mode)
   (my-quit-god-mode))
 
 (defun my-god-mwin-end-and-insert-mode ()
