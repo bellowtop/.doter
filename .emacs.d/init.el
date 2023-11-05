@@ -1734,12 +1734,12 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-disable-eglot-highlight()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'eglot-highlight-symbol-face nil :inherit nil)))
+    (set-face-attribute 'eglot-highlight-symbol-face nil :inverse-video 'unspecified)))
 
 (defun my-enable-eglot-highlight()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'region)))
+    (set-face-attribute 'eglot-highlight-symbol-face nil :inverse-video t)))
 
 (defun my-disable-code-intelligence ()
   (interactive)
