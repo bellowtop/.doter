@@ -16,10 +16,11 @@
 
 
 
-;; (defun my-go-mode-hook ()
-;;   (setq gofmt-command "goimports")
-;;   (add-hook 'before-save-hook 'gofmt-before-save))
-;; 
+(defun my-go-mode-hook ()
+  (eglot-ensure)
+  (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook 'gofmt))
+
 ;; (add-hook 'go-mode-hook 'my-go-mode-hook)
 
 (message "in init-lang-to.el file")
@@ -27,10 +28,9 @@
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
   :hook
-  (go-mode . eglot-ensure)
+  (add-hook 'go-mode-hook #'my-go-mode-hook)
+  (add-hook 'go-ts-mode-hook #'my-go-mode-hook)
   :config
-  (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook 'gofmt-before-save)
   (+eglot/set-leader-keys go-mode-map)
   (with-eval-after-load 'exec-path-from-shell
     (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY"))))
