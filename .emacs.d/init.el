@@ -1557,14 +1557,14 @@ If buffer-or-name is nil return current buffer's mode."
 
   (if (my-god-this-is-special-buffer (buffer-name))
     (progn
-      (message "%s is special buffer" (buffer-name))
+      ;; (message "%s is special buffer" (buffer-name))
       (ignore)
       (god-local-mode 0)                  ;; start local mode
       (my-keys-minor-mode 0)
       (my-special-buffer-keys-minor-mode 1)
       )
     (progn
-      (message "%s not a special buffer" (buffer-name))
+      ;; (message "%s not a special buffer" (buffer-name))
       (god-local-mode 1)                  ;; start local mode
       (setq my-god-mode-is-active-flag t)
       (my-special-buffer-keys-minor-mode 0)
@@ -1839,8 +1839,33 @@ If buffer-or-name is nil return current buffer's mode."
          'mouse-face 'mode-line-highlight
          'local-map mode-line-buffer-identification-keymap)))
 
+;; (setq-default mode-line-buffer-identification
+;;               '(:eval (my-buffer-identification "%12b")))
+
+
+(defvar buffer-filename-with-git-directory nil
+  "Parent directory of the current directory.
+This variable is nil if the current buffer isn't visiting a file.")
+(make-variable-buffer-local 'buffer-filename-with-git-directory)
+(put 'buffer-filename-with-git-directory 'permanent-local t)
+(defun set-buffer-filename-with-git-directory ()
+  (when buffer-file-name
+    (setq buffer-filename-with-git-directory
+          (or
+           (when-let* ((buffer-file-truename buffer-file-truename)
+                                  (prj (cdr-safe (project-current)))
+                                  (prj-parent (file-name-directory (directory-file-name (expand-file-name prj)))))
+                                 (concat
+                                   (file-relative-name
+                                     (file-name-directory buffer-file-truename) prj-parent)
+                                   (file-name-nondirectory buffer-file-truename))
+                                 )
+           buffer-file-name))))
+
+(add-hook 'find-file-hook 'set-buffer-filename-with-git-directory)
+
 (setq-default mode-line-buffer-identification
-              '(:eval (my-buffer-identification "%12b")))
+              `(:eval (my-buffer-identification buffer-filename-with-git-directory)))
 
 
 (require 'term-cursor)
