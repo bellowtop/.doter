@@ -133,7 +133,8 @@
   (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
   (push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
   (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
-  (push '(c-mode . c-ts-mode) major-mode-remap-alist)             ;; donot use treesit for cc by now. indent is wrong.
+  (push '(go-mode . go-ts-mode) major-mode-remap-alist)
+  (push '(c-mode . c-ts-mode) major-mode-remap-alist)
   (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode))  ;; tell h file to c++-ts-mode
   (setq treesit-extra-load-path `( ,(expand-file-name "~/.emacs.d/.local/tree-sitter-grammars") )))
@@ -714,7 +715,7 @@
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
-   '("^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
+   '("^/opt/homebrew$" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
  '(treemacs-space-between-root-nodes nil)
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
