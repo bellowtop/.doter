@@ -246,16 +246,22 @@
 
 
 
-;; (use-package doom-themes
-;;   :ensure t
-;;   :config
+(use-package doom-themes
+   :ensure t
+   :config
 ;;   (setq doom-themes-enable-bold nil    ; if nil, bold is universally disabled
 ;;         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
-;;   ;; (doom-themes-neotree-config)
+   (doom-themes-neotree-config)
+   (doom-themes-treemacs-config)
+   (setq doom-themes-treemacs-theme "doom-colors")
+   (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
+   (add-hook 'treemacs-mode-hook #'my-add-hl-line-for-treemacs)
+   (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
+
 ;;   ;; (load-theme 'doom-xcode t)
 ;;   (load-theme 'doom-dracula t)
 ;;   ;; (load-theme 'doom-oceanic-next t)
-;;   )
+   )
 
 ;; (load-theme 'spacemacs-dark t)
 ;; (load-theme 'dracula t)
@@ -2040,10 +2046,6 @@ This variable is nil if the current buffer isn't visiting a file.")
 
 (use-package treemacs
   :init
-    ;; (add-hook 'treemacs-mode-hook #'darker-background-for-sidebar)
-    (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
-    (add-hook 'treemacs-mode-hook #'my-add-hl-line-for-treemacs)
-    (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
   :config
     (setq treemacs-resize-icons 18)
     (setq treemacs-follow-mode nil)
