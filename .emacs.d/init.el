@@ -557,6 +557,9 @@
 ;; (require 'download-lombok)
 
 (require 'init-lang-go)
+(add-hook 'go-mode-hook #'my-go-mode-hook)
+(add-hook 'go-ts-mode-hook #'my-go-mode-hook)
+
 
 (require 'init-lang-cpp)
 (add-hook 'c++-ts-mode-hook #'my-c-ts-mode-hook)
@@ -2421,7 +2424,7 @@ _u_: undo      _r_: redo
           ;; (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
           ;; (define-key selected-keymap (kbd "i w") #'er/mark-symbol)
           ;; (define-key selected-keymap (kbd "v") #'keyboard-quit)
-          ;; (define-key selected-keymap (kbd "d") #'kill-region)
+          (define-key selected-keymap (kbd "d") #'kill-region)
           ;; (define-key selected-keymap (kbd "x") #'kill-region)
           ;; (define-key selected-keymap (kbd "C-n") #'my-mc/mark-next-like-this)
           ;; (define-key selected-keymap (kbd "C-p") #'my-mc/mark-previous-like-this)
