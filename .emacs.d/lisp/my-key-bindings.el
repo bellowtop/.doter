@@ -319,8 +319,9 @@
     (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)
     (define-key god-local-mode-map (kbd "$") #'mwim-end-of-code-or-line)
     (define-key god-local-mode-map (kbd "0") #'mwim-beginning-of-code-or-line)
-    (define-key god-local-mode-map (kbd "A") #'beginning-of-defun)
-    (define-key god-local-mode-map (kbd "E") #'end-of-defun)
+    (define-key god-local-mode-map (kbd "A") #'my-god-mwin-end-and-insert-mode)
+    (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
+    (define-key god-local-mode-map (kbd "E") #'eval-region)
 
     (define-key god-local-mode-map (kbd "*") #'my-search-selection)
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
