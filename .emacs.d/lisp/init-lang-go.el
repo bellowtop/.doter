@@ -24,7 +24,8 @@
 (defun my-go-mode-hook ()
   (eglot-ensure)
   (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook 'my-gofmt-before-save))
+  (add-hook 'before-save-hook 'my-gofmt-before-save nil t)
+)
 
 ;; (add-hook 'go-mode-hook 'my-go-mode-hook)
 

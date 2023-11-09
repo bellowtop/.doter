@@ -511,18 +511,28 @@
       (setq overlays (cdr overlays)))
     found))
 
+(defun highlight-current-line ()
+  (interactive)
+  (let ((overlay-highlight (make-overlay
+                              (line-beginning-position)
+                              (+ 1 (line-end-position)))))
+        ;; (overlay-put overlay-highlight 'face '(:inverse-video t))
+        (overlay-put overlay-highlight 'face '(:inherit hl-line))
+        (overlay-put overlay-highlight 'line-highlight-overlay-marker t))
+  )
+
+(defun dehighlight-current-line ()
+  (interactive)
+  (remove-overlays (line-beginning-position) (+ 1 (line-end-position)))
+  )
+
 (defun highlight-or-dehighlight-line ()
   (interactive)
   (if (find-overlays-specifying
        'line-highlight-overlay-marker
        (line-beginning-position))
-      (remove-overlays (line-beginning-position) (+ 1 (line-end-position)))
-    (let ((overlay-highlight (make-overlay
-                              (line-beginning-position)
-                              (+ 1 (line-end-position)))))
-        ;; (overlay-put overlay-highlight 'face '(:inverse-video t))
-        (overlay-put overlay-highlight 'face '(:inherit hl-line))
-        (overlay-put overlay-highlight 'line-highlight-overlay-marker t))))
+      (dehighlight-current-line)
+    (highlight-current-line)))
 
 (defun remove-all-highlight ()
   (interactive)
@@ -537,8 +547,9 @@
 (defun my-highlight-line-momentarily (&optional ARG PRED)
   (interactive)
   (recenter)
+  (xref-pulse-momentarily)
   (remove-all-highlight)
-  (highlight-or-dehighlight-line)
+  (highlight-current-line)
   (run-with-timer 0.5 nil 'remove-all-highlight)
 )
 
@@ -561,7 +572,8 @@
 (with-eval-after-load 'xref
   (define-key xref--xref-buffer-mode-map(kbd "o") #'(lambda() (interactive) (xref-goto-xref t)))
   ;; directly open it when there is only one candidate.
-  (setq xref-show-xrefs-function #'xref-show-definitions-buffer)
+  ;; (setq xref-show-xrefs-function #'xref-show-definitions-buffer)
+  (setq xref-show-xrefs-function #'xref-show-definitions-buffer-at-bottom)
 )
 
 (with-eval-after-load 'pulse
@@ -1194,6 +1206,7 @@ respectively."
   (when isearch-mode (isearch-abort) (isearch-abort))
   (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
   (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
+  (remove-all-highlight)
   (keyboard-quit))
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
