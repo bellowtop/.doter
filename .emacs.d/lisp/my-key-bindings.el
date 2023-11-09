@@ -298,7 +298,12 @@
     (define-key god-local-mode-map (kbd "s") #'my-replace-char)
     (define-key god-local-mode-map (kbd "x") #'my-delete-char-or-kill-region)
 
+    (define-key god-local-mode-map (kbd "<f8>") #'highlight-or-dehighlight-line)
+    (define-key god-local-mode-map (kbd "<f9>") #'remove-all-highlight)
+
     (define-key god-local-mode-map (kbd "d d") #'my-kill-whole-line-or-kill-region)
+    (define-key god-local-mode-map (kbd "d j") #'(lambda () (interactive) (kill-whole-line 2))) ;; TODO point position after kill?
+    (define-key god-local-mode-map (kbd "d k") #'(lambda () (interactive) (kill-whole-line -2)))
     (define-key god-local-mode-map (kbd "d w") #'kill-word)
     (define-key god-local-mode-map (kbd "d b") #'backward-kill-word)
     (define-key god-local-mode-map (kbd "d H") #'my-delete-to-beginning)
@@ -323,6 +328,7 @@
     (define-key god-local-mode-map (kbd "N") #'my-isearch-backward)
     (define-key god-local-mode-map (kbd ":") #'goto-line)
     (define-key god-local-mode-map (kbd "RET") #'next-line)
+    (define-key god-local-mode-map (kbd "TAB") #'indent-for-tab-command)
     ;; (define-key god-local-mode-map (kbd "DEL") #'backward-char)
 
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
