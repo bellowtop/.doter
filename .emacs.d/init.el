@@ -392,8 +392,8 @@
 (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15"))
 
 (when (my-system-type-is-darwin)
-    (set-face-attribute 'default nil :font "IBM Plex Mono" :weight 'light)
-    (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15")))
+  (set-face-attribute 'default nil :font "IBM Plex Mono" :weight 'light)
+  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15")))
 
 (set-cursor-color "red")
 (setq-default cursor-type 'bar)
@@ -1398,8 +1398,11 @@ respectively."
           (delete-region beg end)
           (yank))
     (when (my-copied-content-is-end-of-newline)
+      (end-of-line)
+      (newline)
       (beginning-of-line))
-    (yank arg)))
+    (yank arg)
+    (backward-delete-char 1)))
 
 
 
@@ -1445,6 +1448,9 @@ respectively."
 
 
 (require 'mwim)
+
+(require 'yank-indent)
+(global-yank-indent-mode t)
 
 
 
@@ -1872,7 +1878,7 @@ This variable is nil if the current buffer isn't visiting a file.")
 (add-hook 'find-file-hook 'set-buffer-filename-with-git-directory)
 
 (setq-default mode-line-buffer-identification
-              `(:eval (my-buffer-identification buffer-filename-with-git-directory)))
+              `(:eval (my-buffer-identification (or buffer-filename-with-git-directory ""))))
 
 
 (require 'term-cursor)
