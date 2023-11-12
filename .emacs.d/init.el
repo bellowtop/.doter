@@ -425,6 +425,7 @@
  '(doom-modeline-project-dir ((t (:inherit nil))))
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
+ '(region ((t (:inverse-video t))))
  '(eglot-highlight-symbol-face ((t (:inverse-video t))))
  '(eglot-mode-line ((t nil)))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
@@ -464,22 +465,14 @@
  '(term-color-yellow ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
  '(term-default-bg-color ((t (:inherit term-color-black))))
  '(term-default-fg-color ((t (:inherit term-color-white))))
- '(treemacs-directory-face ((t (:inherit font-lock-string-face :weight light :foreground nil :background nil :family "Segoe UI"))))
- '(treemacs-git-added-face ((t (:weight light :family "Segoe UI"))))
- '(treemacs-git-commit-diff-face ((t (:weight light :family "Segoe UI"))))
- '(treemacs-git-conflict-face ((t (:weight light :family "Segoe UI"))))
- '(treemacs-git-ignored-face ((t (:weight light :family "Segoe UI"))))
- '(treemacs-git-modified-face ((t (:weight light :family "Segoe UI"))))
- '(treemacs-git-renamed-face ((t (:weight light :family "Segoe UI"))))
- '(treemacs-git-unmodified-face ((t (:weight light :family "Segoe UI"))))
- '(treemacs-git-untracked-face ((t (:weight light :family "Segoe UI"))))
- '(treemacs-root-face ((t (:inherit font-lock-constant-face :height 1.0 :weight light :family "Segoe UI"))))
+ '(treemacs-directory-face ((t (:inherit font-lock-string-face))))
+ '(treemacs-root-face ((t (:inherit font-lock-constant-face))))
  '(window-divider ((t (:foreground "green"))))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
 
 
 
-(set-face-attribute 'region nil :inverse-video 't)
+;; (set-face-attribute 'region nil :inverse-video 't)
 
 
 ;; Display dividers between windows
@@ -508,28 +501,86 @@
 
 
 
+(defun find-overlays-specifying (prop pos)
+  (let ((overlays (overlays-at pos))
+        found)
+    (while overlays
+      (let ((overlay (car overlays)))
+        (if (overlay-get overlay prop)
+            (setq found (cons overlay found))))
+      (setq overlays (cdr overlays)))
+    found))
 
+(defun highlight-current-line ()
+  (interactive)
+  (let ((overlay-highlight (make-overlay
+                              (line-beginning-position)
+                              (+ 1 (line-end-position)))))
+        ;; (overlay-put overlay-highlight 'face '(:inverse-video t))
+        (overlay-put overlay-highlight 'face '(:inherit hl-line))
+        (overlay-put overlay-highlight 'line-highlight-overlay-marker t))
+  )
+
+(defun dehighlight-current-line ()
+  (interactive)
+  (remove-overlays (line-beginning-position) (+ 1 (line-end-position)))
+  )
+
+(defun highlight-or-dehighlight-line ()
+  (interactive)
+  (if (find-overlays-specifying
+       'line-highlight-overlay-marker
+       (line-beginning-position))
+      (dehighlight-current-line)
+    (highlight-current-line)))
+
+(defun remove-all-highlight ()
+  (interactive)
+  (remove-overlays (point-min) (point-max))
+  )
+
+(global-set-key [f8] 'highlight-or-dehighlight-line)
+(global-set-key [f9] 'remove-all-highlight)
+
+
+
+(defun my-highlight-line-momentarily (&optional ARG PRED)
+  (interactive)
+  (recenter)
+  (xref-pulse-momentarily)
+  (remove-all-highlight)
+  (highlight-current-line)
+  (run-with-timer 0.5 nil 'remove-all-highlight)
+)
 
 (defun my-recenter (&optional ARG PRED)
   (recenter)
   (xref-pulse-momentarily)
-  ;; from crosshairs.el
-  ;; (flash-crosshairs)
 )
 
-(advice-add 'xref-go-back                   :after 'my-recenter)
-(advice-add 'xref-pop-marker-stack          :after 'my-recenter)
-(advice-add 'lsp-ui-peek-find-definitions   :after 'my-recenter)
-(advice-add 'pop-global-mark                :after 'my-recenter)
-(advice-add 'xref-after-jump-hook           :after 'my-recenter)
+(advice-add 'xref-go-back                   :after 'my-highlight-line-momentarily)
+(advice-add 'xref-pop-marker-stack          :after 'my-highlight-line-momentarily)
+(advice-add 'lsp-ui-peek-find-definitions   :after 'my-highlight-line-momentarily)
+(advice-add 'pop-global-mark                :after 'my-highlight-line-momentarily)
+
+(setq xref-after-jump-hook           'my-highlight-line-momentarily)
+
+(advice-add 'keyboard-quit                 :after 'remove-all-highlight)
 
 
 ;; quit xref buffer after enter
 (with-eval-after-load 'xref
   (define-key xref--xref-buffer-mode-map(kbd "o") #'(lambda() (interactive) (xref-goto-xref t)))
   ;; directly open it when there is only one candidate.
-  (setq xref-show-xrefs-function #'xref-show-definitions-buffer)
+  ;; (setq xref-show-xrefs-function #'xref-show-definitions-buffer)
+  (setq xref-show-xrefs-function #'xref-show-definitions-buffer-at-bottom)
 )
+
+(with-eval-after-load 'pulse
+  (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background 'unspecified :inverse-video t)
+  ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "green" :background "black")
+  ;; (setq pulse-delay 0.03)
+  )
 
 
 
@@ -557,6 +608,9 @@
 ;; (require 'download-lombok)
 
 (require 'init-lang-go)
+(add-hook 'go-mode-hook #'my-go-mode-hook)
+(add-hook 'go-ts-mode-hook #'my-go-mode-hook)
+
 
 (require 'init-lang-cpp)
 (add-hook 'c++-ts-mode-hook #'my-c-ts-mode-hook)
@@ -1152,6 +1206,7 @@ respectively."
   (when isearch-mode (isearch-abort) (isearch-abort))
   (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
   (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
+  (remove-all-highlight)
   (keyboard-quit))
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
@@ -2054,7 +2109,7 @@ This variable is nil if the current buffer isn't visiting a file.")
 (use-package treemacs
   :init
   :config
-    (setq treemacs-resize-icons 18)
+    ;; (setq treemacs-resize-icons 18)
     (setq treemacs-follow-mode nil)
     (setq treemacs-hide-gitignored-files-mode 1)
     (setq treemacs-show-hidden-files t)
@@ -2062,6 +2117,19 @@ This variable is nil if the current buffer isn't visiting a file.")
     (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
     (setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
     (setq treemacs-expand-after-init nil)
+    (dolist (face '(treemacs-root-face
+                    treemacs-git-unmodified-face
+                    treemacs-git-modified-face
+                    treemacs-git-renamed-face
+                    treemacs-git-ignored-face
+                    treemacs-git-untracked-face
+                    treemacs-git-added-face
+                    treemacs-git-conflict-face
+                    treemacs-directory-face
+                    treemacs-directory-collapsed-face
+                    treemacs-file-face
+                    treemacs-tags-face))
+      (set-face-attribute face nil :family "IBM Plex Mono"))
   :bind
     (:map treemacs-mode-map
           ("C-c t" . treemacs-toggle-node)
@@ -2383,6 +2451,7 @@ _u_: undo      _r_: redo
 ;; load from ./lisp
 (require 'nice-jumper)
 (global-nice-jumper-mode t)
+(add-hook 'nice-jumper-post-jump-hook 'my-recenter)
 (when (display-graphic-p)
   ;; cmd+[ cmd+]
   (global-set-key (kbd "s-[") 'nice-jumper/backward)
@@ -2427,7 +2496,7 @@ _u_: undo      _r_: redo
           ;; (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
           ;; (define-key selected-keymap (kbd "i w") #'er/mark-symbol)
           ;; (define-key selected-keymap (kbd "v") #'keyboard-quit)
-          ;; (define-key selected-keymap (kbd "d") #'kill-region)
+          (define-key selected-keymap (kbd "d") #'kill-region)
           ;; (define-key selected-keymap (kbd "x") #'kill-region)
           ;; (define-key selected-keymap (kbd "C-n") #'my-mc/mark-next-like-this)
           ;; (define-key selected-keymap (kbd "C-p") #'my-mc/mark-previous-like-this)
