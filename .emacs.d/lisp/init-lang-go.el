@@ -15,11 +15,17 @@
 ;; https://github.com/golang/tools/blob/master/gopls/doc/user.md#installation
 
 
+(defun my-gofmt-before-save ()
+  (interactive)
+  (when (or (eq major-mode 'go-mode)
+            (eq major-mode 'go-ts-mode))
+    (gofmt)))
 
 (defun my-go-mode-hook ()
   (eglot-ensure)
   (setq gofmt-command "goimports")
-  (add-hook 'before-save-hook 'gofmt))
+  (add-hook 'before-save-hook 'my-gofmt-before-save nil t)
+)
 
 ;; (add-hook 'go-mode-hook 'my-go-mode-hook)
 
@@ -27,9 +33,6 @@
 
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
-  :hook
-  (add-hook 'go-mode-hook #'my-go-mode-hook)
-  (add-hook 'go-ts-mode-hook #'my-go-mode-hook)
   :config
   (+eglot/set-leader-keys go-mode-map)
   (with-eval-after-load 'exec-path-from-shell

@@ -263,11 +263,14 @@
     (define-prefix-command 'my-god-mode-dummmy-key)
     (define-prefix-command 'my-god-mode-eglot-key)
     (define-prefix-command 'my-god-mode-viewer-key)
+    (define-prefix-command 'my-god-mode-delete-key)
+
     ;; (define-prefix-command 'my-god-mode-window-key)
     (define-key god-local-mode-map (kbd "SPC") 'my-god-mode-leader-key)
     (define-key god-local-mode-map (kbd ",")   'my-god-mode-dummmy-key)
     (define-key god-local-mode-map (kbd "g")   'my-god-mode-eglot-key)
     (define-key god-local-mode-map (kbd "z")   'my-god-mode-viewer-key)
+    (define-key god-local-mode-map (kbd "d")   'my-god-mode-delete-key)
     ;; (define-key god-local-mode-map (kbd "q")   'my-god-mode-window-key)
 
     ;; God mode key mappings
@@ -294,7 +297,17 @@
 
     (define-key god-local-mode-map (kbd "s") #'my-replace-char)
     (define-key god-local-mode-map (kbd "x") #'my-delete-char-or-kill-region)
-    (define-key god-local-mode-map (kbd "d") #'my-kill-whole-line-or-kill-region)
+
+    (define-key god-local-mode-map (kbd "<f8>") #'highlight-or-dehighlight-line)
+    (define-key god-local-mode-map (kbd "<f9>") #'remove-all-highlight)
+
+    (define-key god-local-mode-map (kbd "d d") #'my-kill-whole-line-or-kill-region)
+    (define-key god-local-mode-map (kbd "d j") #'(lambda () (interactive) (kill-whole-line 2))) ;; TODO point position after kill?
+    (define-key god-local-mode-map (kbd "d k") #'(lambda () (interactive) (kill-whole-line -2)))
+    (define-key god-local-mode-map (kbd "d w") #'kill-word)
+    (define-key god-local-mode-map (kbd "d b") #'backward-kill-word)
+    (define-key god-local-mode-map (kbd "d H") #'my-delete-to-beginning)
+    (define-key god-local-mode-map (kbd "d L") #'my-delete-to-end)
 
     ;; (define-key god-local-mode-map (kbd "<RET>") #'next-line)
 
@@ -306,8 +319,9 @@
     (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)
     (define-key god-local-mode-map (kbd "$") #'mwim-end-of-code-or-line)
     (define-key god-local-mode-map (kbd "0") #'mwim-beginning-of-code-or-line)
-    (define-key god-local-mode-map (kbd "A") #'beginning-of-defun)
-    (define-key god-local-mode-map (kbd "E") #'end-of-defun)
+    (define-key god-local-mode-map (kbd "A") #'my-god-mwin-end-and-insert-mode)
+    (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
+    (define-key god-local-mode-map (kbd "E") #'eval-region)
 
     (define-key god-local-mode-map (kbd "*") #'my-search-selection)
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
@@ -315,7 +329,8 @@
     (define-key god-local-mode-map (kbd "N") #'my-isearch-backward)
     (define-key god-local-mode-map (kbd ":") #'goto-line)
     (define-key god-local-mode-map (kbd "RET") #'next-line)
-    (define-key god-local-mode-map (kbd "DEL") #'backward-char)
+    (define-key god-local-mode-map (kbd "TAB") #'indent-for-tab-command)
+    ;; (define-key god-local-mode-map (kbd "DEL") #'backward-char)
 
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
     (define-key god-local-mode-map (kbd "C-~") #'upcase-char)
