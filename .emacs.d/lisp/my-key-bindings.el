@@ -313,7 +313,7 @@
 
     (define-key god-local-mode-map (kbd "z o") #'my-hs-toggle-hiding)
     (define-key god-local-mode-map (kbd "z m") #'my-hs-toggle-all)
-    (define-key god-local-mode-map (kbd "z z") #'recenter-top-bottom)
+    (define-key god-local-mode-map (kbd "z z") #'recenter)
 
     (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)
     (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)

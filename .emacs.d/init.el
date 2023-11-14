@@ -254,6 +254,7 @@
 ;;         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
    (doom-themes-neotree-config)
    (doom-themes-treemacs-config)
+   (setq doom-themes-neotree-file-icons t)
    (setq doom-themes-treemacs-theme "doom-colors")
    (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
    (add-hook 'treemacs-mode-hook #'my-add-hl-line-for-treemacs)
@@ -415,6 +416,10 @@
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+ '(diff-added ((t (:extend t :foreground "green" :background "black"))))
+ '(diff-indicator-added ((t (:extend t :foreground "green" :background "black"))))
+ '(diff-indicator-removed ((t (:extend t :foreground "red" :background "black"))))
+ '(diff-removed ((t (:extend t :foreground "red" :background "black"))))
  '(doom-modeline-buffer-file ((t (:inherit nil))))
  '(doom-modeline-buffer-major-mode ((t (:inherit nil))))
  '(doom-modeline-buffer-minor-mode ((t nil)))
@@ -425,7 +430,6 @@
  '(doom-modeline-project-dir ((t (:inherit nil))))
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
- '(region ((t (:inverse-video t))))
  '(eglot-highlight-symbol-face ((t (:inverse-video t))))
  '(eglot-mode-line ((t nil)))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
@@ -454,6 +458,7 @@
  '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
  '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
+ '(region ((t (:inverse-video t))))
  '(show-paren-match ((t (:foreground "yellow"))))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
@@ -620,6 +625,11 @@
 (require 'init-lang-zig)
 
 
+(use-package swift-mode
+  :defer t
+  )
+
+
 
 (defun my-joindirs (root &rest dirs)
   "Joins a series of directories together, like Python's os.path.join,
@@ -765,7 +775,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -2029,7 +2039,7 @@ This variable is nil if the current buffer isn't visiting a file.")
 (defun my-neotree-window-enlarge ()
   (interactive)
   (setq neo-window-width
-        (/ (display-pixel-width) 4))
+        (/ (frame-width) 4))
   (neotree-hide)
   (my-neotree-find))
 
@@ -2042,14 +2052,16 @@ This variable is nil if the current buffer isn't visiting a file.")
   (setq neo-confirm-create-directory 'off-p)
   (setq neo-smart-open 't)
   (setq neo-window-fixed-size nil)
+  (setq neo-show-hidden-files t)
   ;; (add-hook 'neotree-mode-hook #'darker-background-for-sidebar)
   ;; (setq neo-window-width (/ (display-pixel-width) 4))
   ;; (setq neo-window-width 45)
   ;; (setq neo-toggle-window-keep-p 't)
   :bind (:map neotree-mode-map
-              ("L" . 'my-neotree-window-narrow)
-              ("H" . 'my-neotree-window-enlarge)
+              ("L" . 'my-neotree-window-enlarge)
+              ("H" . 'my-neotree-window-narrow)
               ("f" . 'neotree-hidden-file-toggle)
+              ("c n" . 'neotree-create-node)
               ("a" . 'mwim-beginning-of-code-or-line)
               ("e" . 'mwim-end-of-code-or-line)))
 
@@ -2092,7 +2104,7 @@ This variable is nil if the current buffer isn't visiting a file.")
 
 
 
-
+(setq-default left-margin-width 1 right-margin-width 1)
 
 
 
