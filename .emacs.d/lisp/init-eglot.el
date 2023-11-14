@@ -16,8 +16,18 @@
 (use-package eglot
   :commands (eglot eglot-ensure)
   :config
+  ;;;;
+  ;;;; override eglot.el for `includeDeclaration: nil`, copied from /opt/homebrew/Cellar/emacs-plus@29/29.1/share/emacs/29.1/lisp/progmodes/eglot.el
+  ;;;;
+  (cl-defmethod xref-backend-references ((_backend (eql eglot)) _identifier)
+    (or
+     eglot--lsp-xref-refs
+     (eglot--lsp-xrefs-for-method
+      :textDocument/references :extra-params `(:context (:includeDeclaration nil)))))
+  ;;;;
+  ;;;;
   (setq eglot-autoshutdown t
-        eglot-send-changes-idle-time 0.2
+        ;; eglot-send-changes-idle-time 0.5
         ;; eglot-ignored-server-capabilities '(:documentHighlightProvider
         ;;                                     :foldingRangeProvider)
         eglot-ignored-server-capabilities '(:foldingRangeProvider)

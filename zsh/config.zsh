@@ -4,6 +4,7 @@
 
 alias vim="nvim"
 alias em="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
+alias ee="/Applications/Emacs.app/Contents/MacOS/Emacs"
 alias emc="emacsclient"
 
 
