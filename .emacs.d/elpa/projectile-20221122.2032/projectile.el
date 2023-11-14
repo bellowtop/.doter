@@ -1346,6 +1346,8 @@ If PROJECT is not specified acts on the current project."
 Files are returned as relative paths to DIRECTORY."
   (unless (projectile--directory-p directory)
     (error "Directory %S does not exist" directory))
+  (unless (projectile-ignored-directory-p directory)
+    (error "Directory %S is already ignored" directory))
   ;; check for a cache hit first if caching is enabled
   (let ((files-list (and projectile-enable-caching
                          (gethash directory projectile-projects-cache))))
@@ -2051,6 +2053,8 @@ project-root for every file."
 (defun projectile-project-files (project-root)
   "Return a list of files for the PROJECT-ROOT."
   (let (files)
+    (unless (projectile-ignored-directory-p project-root)
+      (error "Directory %S is already ignored" project-root))
     ;; If the cache is too stale, don't use it.
     (when projectile-files-cache-expire
       (let ((cache-time
