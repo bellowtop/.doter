@@ -133,7 +133,7 @@
   (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
   (push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
   (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
-  (push '(go-mode . go-ts-mode) major-mode-remap-alist)
+  ;; (push '(go-mode . go-ts-mode) major-mode-remap-alist) ;; go-mode does not support treesitter yet.
   (push '(c-mode . c-ts-mode) major-mode-remap-alist)
   (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode))  ;; tell h file to c++-ts-mode
@@ -570,7 +570,7 @@
 
 (setq xref-after-jump-hook           'my-highlight-line-momentarily)
 
-(advice-add 'keyboard-quit                 :after 'remove-all-highlight)
+;; (advice-add 'keyboard-quit                 :after 'remove-all-highlight)
 
 
 ;; quit xref buffer after enter
@@ -661,8 +661,11 @@
 
 
 (use-package yasnippet
-  :defer t)
-(add-hook 'prog-mode-hook 'yas-minor-mode)
+  :config
+    (add-hook 'prog-mode-hook 'yas-minor-mode)
+    (add-hook 'yas-before-expand-snippet-hook 'my-disable-eglot-highlight)
+    (add-hook 'yas-after-exit-snippet-hook    'my-enable-eglot-highlight)
+  )
 
 
 ;; all themes safe
@@ -779,7 +782,7 @@
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
-   '("^/opt/homebrew$" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
+   '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
  '(treemacs-space-between-root-nodes nil)
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
@@ -959,7 +962,9 @@
 (with-eval-after-load 'smartparens
   (sp-local-pair 'prog-mode "{" nil :post-handlers '((indent-between-pair "RET")))
   (sp-local-pair 'prog-mode "[" nil :post-handlers '((indent-between-pair "RET")))
-  (sp-local-pair 'prog-mode "(" nil :post-handlers '((indent-between-pair "RET"))))
+  (sp-local-pair 'prog-mode "(" nil :post-handlers '((indent-between-pair "RET")))
+  (setq sp-highlight-pair-overlay nil)
+  )
 
 
 
@@ -1573,6 +1578,7 @@ If buffer-or-name is nil return current buffer's mode."
                           "*terminal*"
                           "*eshell*"
                           "magit"
+                          "git-rebase-todo"
                           "*Backtrace*"
                           "menu"
                           "*ielm*"
