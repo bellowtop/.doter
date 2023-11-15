@@ -279,7 +279,7 @@
     (define-key god-local-mode-map (kbd "b") #'backward-word)
     (define-key god-local-mode-map (kbd "k") #'previous-line)
     (define-key god-local-mode-map (kbd "j") #'next-line)
-    (define-key god-local-mode-map (kbd "q") #'my-quit-other-window)
+    (define-key god-local-mode-map (kbd "Q") #'my-quit-other-window)
     (define-key god-local-mode-map (kbd "l") #'my-forward-char-no-cross-line)
     (define-key god-local-mode-map (kbd "h") #'my-backward-char-no-cross-line)
     (define-key god-local-mode-map (kbd "v") #'my-set-mark-command-or-deactivate-mark)
@@ -330,7 +330,7 @@
     (define-key god-local-mode-map (kbd ":") #'goto-line)
     (define-key god-local-mode-map (kbd "RET") #'next-line)
     (define-key god-local-mode-map (kbd "TAB") #'indent-for-tab-command)
-    ;; (define-key god-local-mode-map (kbd "DEL") #'backward-char)
+    (define-key god-local-mode-map (kbd "DEL") #'backward-char)
 
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
     (define-key god-local-mode-map (kbd "C-~") #'upcase-char)
