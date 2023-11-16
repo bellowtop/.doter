@@ -521,8 +521,9 @@
   (let ((overlay-highlight (make-overlay
                               (line-beginning-position)
                               (+ 1 (line-end-position)))))
-        ;; (overlay-put overlay-highlight 'face '(:inverse-video t))
-        (overlay-put overlay-highlight 'face '(:inherit hl-line))
+        (overlay-put overlay-highlight 'face '(:inverse-video t))
+        ;; (overlay-put overlay-highlight 'face '(:inherit hl-line))
+        ;; (overlay-put overlay-highlight 'face '(:background "#1b5aa1"))
         (overlay-put overlay-highlight 'line-highlight-overlay-marker t))
   )
 
@@ -548,14 +549,17 @@
 (global-set-key [f9] 'remove-all-highlight)
 
 
-
+(setq unhighlight-timer nil)
 (defun my-highlight-line-momentarily (&optional ARG PRED)
   (interactive)
   (recenter)
-  (xref-pulse-momentarily)
+  ;; (xref-pulse-momentarily)
   (remove-all-highlight)
+  (my-disable-eglot-highlight)
   (highlight-current-line)
-  (run-with-timer 0.5 nil 'remove-all-highlight)
+  (when (bound-and-true-p unhighlight-timer)
+      (cancel-timer unhighlight-timer))
+  (setq unhighlight-timer (run-with-timer 1 nil #'(lambda() (remove-all-highlight) (my-enable-eglot-highlight))))
 )
 
 (defun my-recenter (&optional ARG PRED)
@@ -569,6 +573,7 @@
 (advice-add 'pop-global-mark                :after 'my-highlight-line-momentarily)
 
 (setq xref-after-jump-hook           'my-highlight-line-momentarily)
+;; (setq xref-after-jump-hook           'xref-pulse-momentarily)
 
 ;; (advice-add 'keyboard-quit                 :after 'remove-all-highlight)
 
@@ -582,6 +587,7 @@
 )
 
 (with-eval-after-load 'pulse
+  ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background "#1f4670")
   (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background 'unspecified :inverse-video t)
   ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "green" :background "black")
   ;; (setq pulse-delay 0.03)
@@ -1221,7 +1227,6 @@ respectively."
   (when isearch-mode (isearch-abort) (isearch-abort))
   (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
   (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
-  (remove-all-highlight)
   (keyboard-quit))
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
@@ -1460,7 +1465,21 @@ respectively."
      (message "Copied line")
      (list (line-beginning-position) (line-beginning-position 2)))))
 
-(defun my-yank-but-check-newline(arg)
+(defun my-yank-but-check-newline-bellow(arg)
+  (interactive "p")
+  (if (use-region-p)
+      (let ((beg (region-beginning))
+            (end (copy-marker (region-end))))
+        (delete-region beg end)
+        (yank))
+    (when (my-copied-content-is-end-of-newline)
+      (end-of-line)
+      (newline)
+      (beginning-of-line))
+    (yank arg)
+    (backward-delete-char 1)))
+
+(defun my-yank-but-check-newline-above(arg)
   (interactive "p")
   (if (use-region-p)
       (let ((beg (region-beginning))
@@ -1468,9 +1487,9 @@ respectively."
           (delete-region beg end)
           (yank))
     (when (my-copied-content-is-end-of-newline)
-      (end-of-line)
+      (beginning-of-line)
       (newline)
-      (beginning-of-line))
+      (previous-line))
     (yank arg)
     (backward-delete-char 1)))
 
@@ -2040,14 +2059,14 @@ This variable is nil if the current buffer isn't visiting a file.")
   (interactive)
   (setq neo-window-width 25)
   (neotree-hide)
-  (my-neotree-find))
+  (neotree-show))
 
 (defun my-neotree-window-enlarge ()
   (interactive)
   (setq neo-window-width
         (/ (frame-width) 4))
   (neotree-hide)
-  (my-neotree-find))
+  (neotree-show))
 
 (use-package
   neotree
@@ -2447,6 +2466,9 @@ _u_: undo      _r_: redo
 
 (add-hook 'ibuffer-mode-hook 'my-ibuffer-hook)
 
+(with-eval-after-load 'dired
+  (setq dired-dwim-target t)
+  )
 
 (add-hook 'view-mode-hook 'View-exit)
 (add-hook 'view-mode-hook 'my-special-buffer-keys-minor-mode)
