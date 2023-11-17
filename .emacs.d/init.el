@@ -593,8 +593,14 @@
   ;; (setq pulse-delay 0.03)
   )
 
+(define-key global-map (kbd "<s-mouse-1>")
+            #'(lambda ()
+                (interactive)
+                (mouse-set-point last-input-event)
+                (xref-find-definitions-at-mouse last-input-event)))
 
 
+(define-key global-map (kbd "<s-mouse-3>") 'xref-go-back)
 
 
 
@@ -2085,6 +2091,7 @@ This variable is nil if the current buffer isn't visiting a file.")
   :bind (:map neotree-mode-map
               ("L" . 'my-neotree-window-enlarge)
               ("H" . 'my-neotree-window-narrow)
+              ("u" . 'neotree-select-up-node)
               ("f" . 'neotree-hidden-file-toggle)
               ("c n" . 'neotree-create-node)
               ("a" . 'mwim-beginning-of-code-or-line)
