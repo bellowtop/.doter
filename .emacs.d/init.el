@@ -2064,15 +2064,19 @@ This variable is nil if the current buffer isn't visiting a file.")
 (defun my-neotree-window-narrow ()
   (interactive)
   (setq neo-window-width 25)
-  (neotree-hide)
-  (neotree-show))
+  (neo-window--zoom 'minimize)  ;; private method here.
+  ;; (neotree-hide)
+  ;; (neotree-show)
+  )
 
 (defun my-neotree-window-enlarge ()
   (interactive)
   (setq neo-window-width
         (/ (frame-width) 4))
-  (neotree-hide)
-  (neotree-show))
+  (neo-window--zoom 'minimize)  ;; private method here.
+  ;; (neotree-hide)
+  ;; (neotree-show)
+  )
 
 (use-package
   neotree
