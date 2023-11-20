@@ -143,16 +143,23 @@
                       pos-before
                       pos-after)))
     ;; NOTE: the ] must be first char in the regex candicates. see https://www.gnu.org/software/emacs/manual/html_node/emacs/Regexps.html
-    (if-let ((distance (string-match-p "[])}([{&=\*\:]" sub-string)))
+    (if-let ((distance (string-match-p "[])}([{&=\*\:\"\,\.]" sub-string)))
         (progn
           ;; if next char is special then find next regular char, because forward 0 distance is meaningless
           (when (= distance 0)
-            (setq distance (string-match-p "[^])}([{&=\*\:\s]" sub-string)))
+            (setq distance (string-match-p "[^])}([{&=\*\:\"\,\.\s]" sub-string)))
           ;; if all chars are special chars, then just do forward-to-word.
           (if distance
               (forward-char distance)
             (forward-to-word 1)))
       (forward-to-word 1))))
+
+(defun my-kill-word()
+  (interactive)
+  (push-mark nil nil t)
+  (my-forward-to-word)
+  (backward-delete-char-untabify 1)
+  )
 
 (defun my-backward-char-no-cross-line ()
   (interactive)
@@ -304,7 +311,7 @@
     (define-key god-local-mode-map (kbd "d d") #'my-kill-whole-line-or-kill-region)
     (define-key god-local-mode-map (kbd "d j") #'(lambda () (interactive) (kill-whole-line 2))) ;; TODO point position after kill?
     (define-key god-local-mode-map (kbd "d k") #'(lambda () (interactive) (kill-whole-line -2)))
-    (define-key god-local-mode-map (kbd "d w") #'kill-word)
+    (define-key god-local-mode-map (kbd "d w") #'my-kill-word)
     (define-key god-local-mode-map (kbd "d b") #'backward-kill-word)
     (define-key god-local-mode-map (kbd "d H") #'my-delete-to-beginning)
     (define-key god-local-mode-map (kbd "d L") #'my-delete-to-end)
