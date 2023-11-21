@@ -1,0 +1,25 @@
+// Documentation at https://www.sublimetext.com/docs/themes.html
+{
+	"variables":
+	{
+	},
+	"rules":
+	[
+		{
+    	  "name": "MyHighlight",
+    	  "scope": "markup.highlight.text.lsp",
+    	  "background": "color(var(blue2) alpha(0.5))"
+    	},
+    	{
+    	  "name": "MyHighlight",
+    	  "scope": "markup.highlight.read.lsp",
+    	  "background": "color(var(blue2) alpha(0.5))"
+    	},
+    	{
+    	  "name": "MyHighlight",
+    	  "scope": "markup.highlight.write.lsp",
+    	  "background": "color(var(blue2) alpha(0.5))"
+    	}
+		
+	]
+}
