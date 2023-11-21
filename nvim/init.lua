@@ -748,6 +748,17 @@ if vim.fn.executable("clangd") then
   }
 end
 
+if vim.fn.executable("gopls") then
+  lspconfig.gopls.setup {
+    on_attach = custom_attach,
+    capabilities = capabilities,
+    filetypes = { "go" },
+    flags = {
+      debounce_text_changes = 500,
+    },
+  }
+end
+
 
 
 

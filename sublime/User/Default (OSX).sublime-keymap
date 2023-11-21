@@ -1,0 +1,6 @@
+[
+	{ "keys": ["alt+v"], "command": "scroll_lines", "args": {"amount": 30.0} },
+	{ "keys": ["ctrl+l"], "command": "show_at_center" },
+	{ "keys": ["super+l"], "command": "next_view" },
+	{ "keys": ["super+h"], "command": "prev_view" },
+]

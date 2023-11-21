@@ -1,0 +1,48 @@
+" Type :help nv for help.
+
+let mapleader=<space>
+
+
+nnoremap H ^
+nnoremap L $
+vnoremap H ^
+vnoremap L $
+onoremap H ^
+onoremap L $
+
+nnoremap ; <C-d>
+nnoremap ' <C-u>
+nnoremap <C-l> zz
+nnoremap m %
+
+vnoremap ; <C-d>
+vnoremap ' <C-u>
+vnoremap <C-l> zz
+vnoremap m %
+
+inoremap <C-v> :ScrollLines ammount=-30
+"" is already set by sublime keybinds
+"inoremap <M-v> :ScrollLines ammount=30
+
+nnoremap <C-i> :JumpForward<CR>
+nnoremap <C-o> :JumpBack<CR>
+nnoremap <C-l> :ShowAtCenter
+
+
+nnoremap FileType go,cpp,c gd :LspSymbolDefinition<CR>
+nnoremap FileType go,cpp,c gr :LspSymbolReferences<CR>
+nnoremap FileType go,cpp,c gi :LspSymbolImplementation<CR>
+nnoremap FileType go,cpp,c gR :LspSymbolRename<CR>
+
+
+nnoremap <leader>f :ShowOverlay overlay=goto show_files=true<CR>
+nnoremap @ :RevealInSideBar<CR>
+
+nnoremap <leader>w :Save<CR>
+nnoremap <leader>k :CloseFile<CR>
+nnoremap <leader>K :CloseOtherTabs<CR>
+nnoremap <leader>h :PrevView<CR>
+nnoremap <leader>l :NextView<CR>
+vnoremap <leader>h <ESC>:PrevView<CR>
+vnoremap <leader>l <ESC>:NextView<CR>
+
