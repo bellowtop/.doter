@@ -3,6 +3,8 @@
 {
 	"font_face": "IBM Plex Mono",
 	"font_size": 15,
+	"line_padding_top": 1,
+	"line_padding_bottom": 1,
 	"show_full_path": true,
 	"theme": "Default Dark.sublime-theme",
 	"indent_guide_options": ["draw_normal", "draw_active"],
@@ -21,5 +23,8 @@
 
 	"vintageous_use_super_keys": false,
 	"vintageous_use_ctrl_keys": true,
+	"vintageous_handle_keys": {
+          "i_<C-n>": false,
+    },
 	"color_scheme": "Packages/Visual Studio Dark/Visual Studio Dark.tmTheme",
 }

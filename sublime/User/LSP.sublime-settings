@@ -22,4 +22,5 @@
   "lsp_format_on_save": true,
   "document_highlight_style": "background",
   "show_references_in_quick_panel": true,
+  "link_highlight_style": "none",
 }
