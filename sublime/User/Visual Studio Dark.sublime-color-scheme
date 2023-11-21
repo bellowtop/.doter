@@ -11,6 +11,10 @@
 		"guide": "#93a1a1bb",
 		"active_guide": "#00FFFF",
 		"stack_guide": "#FF00FF",
+		"brackets_options": "underline glow foreground",
+		"brackets_foreground": "#00FF00",
+		"bracket_contents_options": "glow foreground",
+		"bracket_contents_foreground": "#00FF00",
 	},
 	"rules":
 	[

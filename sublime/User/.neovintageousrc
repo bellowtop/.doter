@@ -37,12 +37,17 @@ nnoremap FileType go,cpp,c gR :LspSymbolRename<CR>
 
 nnoremap <leader>f :ShowOverlay overlay=goto show_files=true<CR>
 nnoremap @ :RevealInSideBar<CR>
+nnoremap f :AceJumpWord<CR>
 
 nnoremap <leader>w :Save<CR>
 nnoremap <leader>k :CloseFile<CR>
 nnoremap <leader>K :CloseOtherTabs<CR>
 nnoremap <leader>h :PrevView<CR>
 nnoremap <leader>l :NextView<CR>
-vnoremap <leader>h <ESC>:PrevView<CR>
-vnoremap <leader>l <ESC>:NextView<CR>
+
+vnoremap <leader>w :Save<CR>
+vnoremap <leader>k :CloseFile<CR>
+vnoremap <leader>K :CloseOtherTabs<CR>
+vnoremap <leader>h :PrevView<CR>
+vnoremap <leader>l :NextView<CR>
 
