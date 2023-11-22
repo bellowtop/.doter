@@ -26,5 +26,5 @@
 	"vintageous_handle_keys": {
           "i_<C-n>": false,
     },
-	"color_scheme": "Packages/Visual Studio Dark/Visual Studio Dark.tmTheme",
+	"color_scheme": "Packages/User/bogster-color-theme.tmTheme",
 }
