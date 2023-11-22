@@ -1,0 +1,38 @@
+// Documentation at https://www.sublimetext.com/docs/color_schemes.html
+{
+	"variables":
+	{
+		"blue2": "#00FF00",
+	},
+	"globals":
+	{
+		"caret": "#FF0000",
+		"block_caret": "#FF0000",
+		"guide": "#93a1a1bb",
+		"active_guide": "#00FFFF",
+		"stack_guide": "#FF00FF",
+		"brackets_options": "underline glow foreground",
+		"brackets_foreground": "#00FF00",
+		"bracket_contents_options": "glow foreground",
+		"bracket_contents_foreground": "#00FF00",
+	},
+	"rules":
+	[
+		{
+    	  "name": "MyHighlight",
+    	  "scope": "markup.highlight.text.lsp",
+    	  "background": "color(var(blue2) alpha(0.2))"
+    	},
+    	{
+    	  "name": "MyHighlight",
+    	  "scope": "markup.highlight.read.lsp",
+    	  "background": "color(var(blue2) alpha(0.2))"
+    	},
+    	{
+    	  "name": "MyHighlight",
+    	  "scope": "markup.highlight.write.lsp",
+    	  "background": "color(var(blue2) alpha(0.2))"
+    	}
+		
+	]
+}
