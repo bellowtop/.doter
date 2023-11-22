@@ -1,6 +1,6 @@
 {
     "theme": "Monokai Pro - JetBrains Fleet",
-    "vimEmulationEnabled": false,
+    "vimEmulationEnabled": true,
     "editor.caretShape": "Vertical",
     "editor.fontFamily": "Source Code Pro for Powerline",
     "editor.fontSize": 15.0,
