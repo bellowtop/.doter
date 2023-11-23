@@ -1,0 +1,4 @@
+// Terminal OS Specific Settings - User
+{
+	"terminal": "iTerm2-v3.sh"
+}
