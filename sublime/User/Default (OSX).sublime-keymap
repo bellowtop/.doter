@@ -3,4 +3,5 @@
 	{ "keys": ["ctrl+l"], "command": "show_at_center" },
 	{ "keys": ["super+l"], "command": "next_view" },
 	{ "keys": ["super+h"], "command": "prev_view" },
+	{ "keys": ["alt+`"], "command": "toggle_terminus_panel" },
 ]
