@@ -15,16 +15,19 @@
 		"Vintageous",
 	],
 
+	"vintageous_enable_sneak": true,
+
 	// "vintageous_enable_sneak": true,
 	"neovintageous_build_version": 13200,
     "vintageous_use_sys_clipboard": true,
     "vintageous_default_mode": "normal",
     // "vintageous_use_super_keys": true,
+    "vintageous_reset_mode_when_switching_tabs": false,
+
 
 	"vintageous_use_super_keys": false,
 	"vintageous_use_ctrl_keys": true,
 	"vintageous_handle_keys": {
-          "i_<C-n>": false,
     },
 	"color_scheme": "Packages/User/bogster-color-theme.tmTheme",
 }
