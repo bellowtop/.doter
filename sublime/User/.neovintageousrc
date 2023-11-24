@@ -24,6 +24,9 @@ inoremap <C-v> :ScrollLines ammount=-30
 "" is already set by sublime keybinds
 "inoremap <M-v> :ScrollLines ammount=30
 
+inoremap <C-n> :Move by=lines forward=true<CR>
+inoremap <C-p> :Move by=lines forward=false<CR>
+
 nnoremap <C-i> :JumpForward<CR>
 nnoremap <C-o> :JumpBack<CR>
 nnoremap <C-l> :ShowAtCenter
@@ -36,6 +39,7 @@ nnoremap FileType go,cpp,c gR :LspSymbolRename<CR>
 
 
 nnoremap <leader>f :ShowOverlay overlay=goto show_files=true<CR>
+nnoremap <leader>s :ShowOverlay overlay=goto text=@<CR>
 nnoremap @ :RevealInSideBar<CR>
 nnoremap f :AceJumpWord<CR>
 
