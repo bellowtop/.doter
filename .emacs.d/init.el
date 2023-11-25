@@ -2497,7 +2497,6 @@ _u_: undo      _r_: redo
   :init
   (advice-add 'deadgrep-visit-result :after 'my-highlight-line-momentarily)
   (advice-add 'deadgrep-visit-result :after 'my-delete-other-windows)
-  (advice-add 'deadgrep-visit-result :after 'nice-jumper--set-jump)
   (advice-add 'deadgrep-visit-result-other-window :after 'my-highlight-line-momentarily))
 
 
@@ -2588,6 +2587,8 @@ _u_: undo      _r_: redo
 (global-set-key (kbd "C-o") 'nice-jumper/backward)
 (global-set-key (kbd "C-M-o") 'nice-jumper/forward)
 
+;; (defadvice deadgrep (before nice-jumper activate)
+;;   (nice-jumper--set-jump))
 
 
 
