@@ -866,6 +866,37 @@
 
 
 
+
+
+
+
+(defun my-centaur-select-tab (n)
+  (interactive)
+  (let* (
+         (tabs-view (centaur-tabs-view (centaur-tabs-current-tabset t)))
+         (tabs-count (length tabs-view))
+         (n (if (> tabs-count n) n tabs-count))
+         (n (- n 1))
+         (tab (nth n tabs-view))
+        )
+    (centaur-tabs-buffer-select-tab tab)
+    ;; (message "n %d, tabs-view:%s, tab: %s" n tabs-view tab)
+    ))
+
+(defmacro def-centaur-select-tab-funs (numbers)
+  `(progn
+     ,@(cl-loop for number in numbers
+        collect
+        `(defun ,(read (format "my-centaur-select-tab-%s" number))
+              ()
+            (interactive)
+            (my-centaur-select-tab ,number))
+        )))
+
+(def-centaur-select-tab-funs (1 2 3 4 5 6 7 8 9))
+
+
+
 (use-package centaur-tabs
   :demand
   :init
@@ -877,18 +908,35 @@
         centaur-tabs-gray-out-icons 'buffer
         centaur-tabs-set-icons t
         centaur-tabs-set-modified-marker t
-        centaur-tabs-modified-marker "*"
+        centaur-tabs-modified-marker (concat " " (make-string 1 #x22C6) " ")
         centaur-tabs-set-bar 'under
         centaur-tabs-bar-height 28
         centaur-tabs-height 28
         x-underline-at-descent-line t
+        centaur-tabs-show-jump-identifier 'always
+        centaur-tabs-close-button (concat " " centaur-tabs-close-button " ")
         )
   (centaur-tabs-headline-match)
   (centaur-tabs-mode t)
+  (push "*deadgrep" centaur-tabs-excluded-prefixes)
+  (push "*Messages" centaur-tabs-excluded-prefixes)
+  (push "*EGLOT" centaur-tabs-excluded-prefixes)
   ;; (centaur-tabs-buffer-groups-function #'centaur-tabs-projectile-buffer-groups)
+  (defun centaur-tabs-buffer-groups ()
+    ;; only one group
+    (list "GROUP"))
   :bind
   ("s-h" . centaur-tabs-backward)
   ("s-l" . centaur-tabs-forward)
+  ("s-1" . my-centaur-select-tab-1)
+  ("s-2" . my-centaur-select-tab-2)
+  ("s-3" . my-centaur-select-tab-3)
+  ("s-4" . my-centaur-select-tab-4)
+  ("s-5" . my-centaur-select-tab-5)
+  ("s-6" . my-centaur-select-tab-6)
+  ("s-7" . my-centaur-select-tab-7)
+  ("s-8" . my-centaur-select-tab-8)
+  ("s-9" . my-centaur-select-tab-9)
 )
 
 
@@ -2448,6 +2496,8 @@ _u_: undo      _r_: redo
   :hook (deadgrep-edit-mode . my-deadgrep-edit-enter)
   :init
   (advice-add 'deadgrep-visit-result :after 'my-highlight-line-momentarily)
+  (advice-add 'deadgrep-visit-result :after 'my-delete-other-windows)
+  (advice-add 'deadgrep-visit-result :after 'nice-jumper--set-jump)
   (advice-add 'deadgrep-visit-result-other-window :after 'my-highlight-line-momentarily))
 
 
