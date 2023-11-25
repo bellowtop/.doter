@@ -866,25 +866,30 @@
 
 
 
-
-;; (use-package centaur-tabs
-;;   :ensure t
-;;   :defer t
-;;   :demand
-;;   :config
-;;   (centaur-tabs-mode t)
-;;   :custom
-;;   (centaur-tabs-gray-out-icons 'buffer)
-;;   (centaur-tabs-style "rounded")
-;;   (centaur-tabs-height 36)
-;;   (centaur-tabs-set-icons t)
-;;   (centaur-tabs-set-modified-marker t)
-;;   (centaur-tabs-modified-marker "?")
-;;   (centaur-tabs-buffer-groups-function #'centaur-tabs-projectile-buffer-groups)
-;;   :bind
-;;   ("M-h" . centaur-tabs-backward)
-;;   ("M-l" . centaur-tabs-forward)
-;; )
+(use-package centaur-tabs
+  :demand
+  :init
+  (setq centaur-tabs-enable-key-bindings t)
+  :config
+  ;; (centaur-tabs-style "rounded")
+  ;; (centaur-tabs-height 36)
+  (setq
+        centaur-tabs-gray-out-icons 'buffer
+        centaur-tabs-set-icons t
+        centaur-tabs-set-modified-marker t
+        centaur-tabs-modified-marker "*"
+        centaur-tabs-set-bar 'under
+        centaur-tabs-bar-height 28
+        centaur-tabs-height 28
+        x-underline-at-descent-line t
+        )
+  (centaur-tabs-headline-match)
+  (centaur-tabs-mode t)
+  ;; (centaur-tabs-buffer-groups-function #'centaur-tabs-projectile-buffer-groups)
+  :bind
+  ("s-h" . centaur-tabs-backward)
+  ("s-l" . centaur-tabs-forward)
+)
 
 
 (use-package
@@ -1269,9 +1274,9 @@ respectively."
 
 
 (setq default-frame-alist '(
-  (undecorated . t);会导致所有边框全部消失无法拖动调整窗口大小 需要加上后面两句
-  (drag-internal-border . 1)
-  (internal-border-width . 5)
+  (undecorated . t)  ;;;;会导致所有边框全部消失无法拖动调整窗口大小 需要加上后面两句
+  ;; (drag-internal-border . 1)
+  ;; (internal-border-width . 5)
   (vertical-scroll-bars);隐藏滚动条
   (left-fringe);显示左fringe
   (right-fringe . 0);关闭右fringe
@@ -1481,7 +1486,7 @@ respectively."
         (delete-region beg end)
         (yank))
     (if (my-copied-content-is-end-of-newline)
-        (pragn
+        (progn
          (end-of-line)
          (newline)
          (beginning-of-line)
@@ -1497,7 +1502,7 @@ respectively."
         (delete-region beg end)
         (yank))
     (if (my-copied-content-is-end-of-newline)
-        (pragn
+        (progn
          (beginning-of-line)
          (newline)
          (previous-line)
@@ -1932,7 +1937,7 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 (setq hl-line-inhibit-highlighting-for-modes '(dired-mode deadgrep-mode deadgrep-edit-mode treemacs-mode))
-(global-hl-line-mode 1)
+(global-hl-line-mode -1)
 
 
 
@@ -2154,7 +2159,20 @@ This variable is nil if the current buffer isn't visiting a file.")
   (set-window-margins (treemacs-get-local-window) 1 1))
 
 (defun my-add-hl-line-for-treemacs()
-  (setq-local face-remapping-alist '((hl-line (:inherit region)))))
+  (setq-local face-remapping-alist '((hl-line (:inherit hl-line)))))
+
+(defun my-decrease-treemacs-width()
+  (interactive)
+  ;; call inner api
+  (treemacs--set-width 25)
+  )
+
+(defun my-increase-treemacs-width()
+  (interactive)
+  ;; call inner api
+  (treemacs--set-width (/ (frame-width) 3))
+  )
+
 
 (defun display-treemacs-widow-in-ace-window-selection()
     (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))
@@ -2188,6 +2206,8 @@ This variable is nil if the current buffer isn't visiting a file.")
     (:map treemacs-mode-map
           ("C-c t" . treemacs-toggle-node)
           ("C-c h" . my-add-hl-line-for-treemacs)
+          ("H" . my-decrease-treemacs-width)
+          ("L" . my-increase-treemacs-width)
           ;; add-hook no work????
           ("<mouse-1>" . treemacs-single-click-expand-action))
   )
@@ -2427,8 +2447,8 @@ _u_: undo      _r_: redo
          ("C-c C-c" . my-deadgrep-edit-exit))
   :hook (deadgrep-edit-mode . my-deadgrep-edit-enter)
   :init
-  (advice-add 'deadgrep-visit-result :after 'my-recenter)
-  (advice-add 'deadgrep-visit-result-other-window :after 'my-recenter))
+  (advice-add 'deadgrep-visit-result :after 'my-highlight-line-momentarily)
+  (advice-add 'deadgrep-visit-result-other-window :after 'my-highlight-line-momentarily))
 
 
 

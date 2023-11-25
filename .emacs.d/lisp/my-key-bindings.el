@@ -263,8 +263,8 @@
     (define-key map (kbd "M-o") 'other-window)
     (define-key map (kbd "M-q") 'my-toggle-god-mode)
 
-    (define-key map (kbd "M-u") 'upcase-dwim)
-    (define-key map (kbd "M-l") 'downcase-dwim)
+    ;; (define-key map (kbd "M-u") 'upcase-dwim)
+    ;; (define-key map (kbd "M-l") 'downcase-dwim)
 
     (define-prefix-command 'my-god-mode-leader-key)
     (define-prefix-command 'my-god-mode-dummmy-key)
@@ -369,8 +369,8 @@
     (define-key god-local-mode-map (kbd "SPC L") #'display-line-numbers-mode)
     (define-key god-local-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
 
-    (define-key god-local-mode-map (kbd "SPC l") #'previous-buffer)
-    (define-key god-local-mode-map (kbd "SPC h") #'next-buffer)
+    (define-key god-local-mode-map (kbd "SPC l") #'centaur-tabs-forward)
+    (define-key god-local-mode-map (kbd "SPC h") #'centaur-tabs-backward)
 
     (define-key god-local-mode-map (kbd "SPC t") #'treemacs)
     (define-key god-local-mode-map (kbd "SPC n") #'my-neotree-toggle)

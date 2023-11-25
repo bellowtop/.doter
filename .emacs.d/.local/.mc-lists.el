@@ -80,6 +80,7 @@
         my-set-mark-command-or-deactivate-mark
         my-yank-but-check-newline
         my-yank-but-check-newline-above
+        my-yank-but-check-newline-bellow
         nxml-electric-slash
         org-beginning-of-line
         org-ctrl-c-ctrl-c
