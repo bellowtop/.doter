@@ -3,6 +3,7 @@
 {
 	"font_face": "IBM Plex Mono",
 	"font_size": 15,
+	"ui_scale": 0.0,
 	"line_padding_top": 1,
 	"line_padding_bottom": 1,
 	"show_full_path": true,
@@ -14,8 +15,6 @@
 		"Vintage",
 		"Vintageous",
 	],
-
-	"vintageous_enable_sneak": true,
 
 	// "vintageous_enable_sneak": true,
 	"neovintageous_build_version": 13200,
