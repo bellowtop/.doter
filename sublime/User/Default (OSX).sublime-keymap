@@ -4,11 +4,18 @@
 	{ "keys": ["super+l"], "command": "next_view" },
 	{ "keys": ["super+h"], "command": "prev_view" },
 	{ "keys": ["alt+`"], "command": "toggle_terminus_panel" },
+
 	// { "keys": ["ctrl+e"], "command": "move_to", "args": {"to": "eol"} },
-	// { "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol"} },
+	{ "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol"} },
 
 	{ "keys": ["alt+j"], "command": "scroll_lines", "args": {"amount": -1.0} },
 	{ "keys": ["alt+k"], "command": "scroll_lines", "args": {"amount": 1.0} },
+	{ "keys": ["alt+f"], "command": "move", "args": {"by": "subwords", "forward": true} },
+	{ "keys": ["alt+b"], "command": "move", "args": {"by": "subwords", "forward": false} },
+	{ "keys": ["alt+d"], "command": "delete_word", "args": { "forward": true, "sub_words": false } },
+	{ "keys": ["alt+backspace"], "command": "delete_word", "args": { "forward": false, "sub_words": false } },
+	{ "keys": ["ctrl+/"], "command": "undo" },
+	{ "keys": ["ctrl+/"], "command": "undo" },
 
 	{ "keys": ["ctrl+j"], "command": "save", "args": { "async": true } },
 ]
