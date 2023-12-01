@@ -43,6 +43,7 @@ nnoremap FileType go,cpp,c gr :LspSymbolReferences<CR>
 nnoremap FileType go,cpp,c gi :LspSymbolImplementation<CR>
 nnoremap FileType go,cpp,c gR :LspSymbolRename<CR>
 nnoremap FileType go,cpp,c ga :LspCodeActions<CR>
+nnoremap FileType go,cpp,c gF :LspFormat<CR>
 nnoremap FileType go,cpp,c gf :LspFormat<CR>
 
 
