@@ -6,7 +6,11 @@ let mapleader=<space>
 nnoremap H ^
 nnoremap L $
 vnoremap H ^
-vnoremap L $
+
+""" g_ : none blank char
+" vnoremap L $
+vnoremap L g_
+
 onoremap H ^
 onoremap L $
 
@@ -27,6 +31,8 @@ inoremap <C-v> :ScrollLines ammount=-30
 inoremap <C-n> :Move by=lines forward=true<CR>
 inoremap <C-p> :Move by=lines forward=false<CR>
 
+inoremap <C-y> :Paste<CR>
+
 nnoremap <C-i> :JumpForward<CR>
 nnoremap <C-o> :JumpBack<CR>
 nnoremap <C-l> :ShowAtCenter
@@ -36,6 +42,8 @@ nnoremap FileType go,cpp,c gd :LspSymbolDefinition<CR>
 nnoremap FileType go,cpp,c gr :LspSymbolReferences<CR>
 nnoremap FileType go,cpp,c gi :LspSymbolImplementation<CR>
 nnoremap FileType go,cpp,c gR :LspSymbolRename<CR>
+nnoremap FileType go,cpp,c ga :LspCodeActions<CR>
+nnoremap FileType go,cpp,c gf :LspFormat<CR>
 
 
 nnoremap <leader>f :ShowOverlay overlay=goto show_files=true<CR>
