@@ -11,9 +11,7 @@
 	"indent_guide_options": ["draw_normal", "draw_active"],
 	"ignored_packages":
 	[
-		"Six",
 		"Vintage",
-		"Vintageous",
 	],
 
 	// "vintageous_enable_sneak": true,
@@ -29,4 +27,5 @@
 	"vintageous_handle_keys": {
     },
 	"color_scheme": "Packages/User/bogster-color-theme.tmTheme",
+	"index_files": true,
 }

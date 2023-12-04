@@ -6,17 +6,8 @@
 	"installed_packages":
 	[
 		"AceJump",
-		"CloseOtherWindows",
-		"CMakeBuilder",
 		"CTags",
-		"DocBlockr",
-		"Formatter",
 		"GitGutter",
-		"LSP",
-		"LSP-gopls",
-		"NeoVintageous",
-		"Package Control",
-		"Pretty JSON",
 		"SideBarEnhancements",
 		"Swift",
 		"Terminal",
