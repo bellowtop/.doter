@@ -7,19 +7,22 @@
 	[
 		{
     	  "name": "MyHighlight",
+          "class": "button_control",
     	  "scope": "markup.highlight.text.lsp",
     	  "background": "color(var(blue2) alpha(0.5))"
     	},
     	{
     	  "name": "MyHighlight",
+          "class": "button_control",
     	  "scope": "markup.highlight.read.lsp",
     	  "background": "color(var(blue2) alpha(0.5))"
     	},
     	{
     	  "name": "MyHighlight",
+          "class": "button_control",
     	  "scope": "markup.highlight.write.lsp",
     	  "background": "color(var(blue2) alpha(0.5))"
     	}
-		
+
 	]
 }
