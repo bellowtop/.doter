@@ -38,6 +38,32 @@
   :config (exec-path-from-shell-initialize))
 
 
+;; eshell with colors
+;; SEE https://emacs.stackexchange.com/questions/51027/missing-color-support-for-exa-in-eshell
+(setq comint-terminfo-terminal "dumb-emacs-ansi")
+
+(let* ((terminfo-file (format "~/.terminfo/%s.ti" comint-terminfo-terminal))
+       (default-directory (file-name-directory terminfo-file)))
+  (unless (file-exists-p terminfo-file)
+    (make-directory default-directory t)
+    (with-temp-buffer
+      (insert "dumb-emacs-ansi|Emacs dumb terminal with ANSI color codes,
+    am,
+    colors#8, it#8, ncv#13, pairs#64,
+    bold=\\E[1m, cud1=^J, ht=^I, ind=^J, op=\\E[39;49m,
+    ritm=\\E[23m, rmul=\\E[24m, setab=\\E[4%p1%dm,
+    setaf=\\E[3%p1%dm, sgr0=\\E[m, sitm=\\E[3m, smul=\\E[4m,")
+      (write-file terminfo-file)))
+  (unless (file-exists-p (concat default-directory "d/" comint-terminfo-terminal))
+    (start-process "*tic process*" "*Messages*" "tic" (expand-file-name terminfo-file))))
+
+(add-hook 'eshell-mode-hook '(lambda ()
+                               (setenv "TERM" comint-terminfo-terminal)
+                               (setenv "PAGER" "cat")))
+
+
+
+
 (use-package
   benchmark-init
   :ensure t
@@ -243,7 +269,12 @@
 
 
 ;; (require 'autothemer)
-(load-theme 'bogster t)
+;; (load-theme 'bogster t)
+;; (load-theme 'deeper-blue t)
+(require 'atom-one-dark-theme)
+(setf atom-one-dark-colors-alist (assoc-delete-all "atom-one-dark-bg" atom-one-dark-colors-alist))
+(add-to-list 'atom-one-dark-colors-alist '("atom-one-dark-bg" if nil "color-235" "#161C23"))
+(load-theme 'atom-one-dark t)
 
 
 
@@ -437,7 +468,7 @@
  '(flymake-warning-echo ((t nil)))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(highlight ((t (:background "yellow" :foreground "black" :underline nil))))
- '(hl-line ((t (:extend t :background "#313f4e"))))
+ '(hl-line ((t (:extend t :background "#232D38"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(ivy-current-match ((t (:foreground "white" :background "purple"))))
  '(ivy-posframe ((t (:background "black"))))
@@ -656,6 +687,7 @@
 
 ;; company-mode
 (add-hook 'after-init-hook 'global-company-mode)
+(add-hook 'before-save-hook 'company-cancel)
 
 ;; http://company-mode.github.io/manual/Getting-Started.html#Initial-Setup
 (with-eval-after-load 'company
@@ -920,6 +952,11 @@
   (centaur-tabs-mode t)
   (push "*deadgrep" centaur-tabs-excluded-prefixes)
   (push "*Messages" centaur-tabs-excluded-prefixes)
+  (push "*Warnings" centaur-tabs-excluded-prefixes)
+  (push "*Gofmt" centaur-tabs-excluded-prefixes)
+  (push "*Semantic" centaur-tabs-excluded-prefixes)
+  (push "*xref" centaur-tabs-excluded-prefixes)
+  (push "*Async-native-compile-log" centaur-tabs-excluded-prefixes)
   (push "*EGLOT" centaur-tabs-excluded-prefixes)
   ;; (centaur-tabs-buffer-groups-function #'centaur-tabs-projectile-buffer-groups)
   (defun centaur-tabs-buffer-groups ()
@@ -928,6 +965,8 @@
   :bind
   ("s-h" . centaur-tabs-backward)
   ("s-l" . centaur-tabs-forward)
+  ("s-t" . centaur-tabs--create-new-tab)
+  ("s-w" . centaur-tabs--kill-this-buffer-dont-ask)
   ("s-1" . my-centaur-select-tab-1)
   ("s-2" . my-centaur-select-tab-2)
   ("s-3" . my-centaur-select-tab-3)
@@ -987,7 +1026,8 @@
     "Kill all non-star other buffers."
     (interactive)
     (mapc 'kill-buffer
-          (delq (current-buffer) (remove-if-not 'buffer-file-name (buffer-list)))))     ;; this keep * buffers alive
+          (delq (current-buffer) (remove-if-not 'buffer-file-name (buffer-list))))      ;; this keep * buffers alive
+    (centaur-tabs-display-update))
 
 ;; delete all other buffers, only keep current one.
 (defun my-only-current-buffer-include-specials ()
@@ -1985,7 +2025,7 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 (setq hl-line-inhibit-highlighting-for-modes '(dired-mode deadgrep-mode deadgrep-edit-mode treemacs-mode))
-(global-hl-line-mode -1)
+(global-hl-line-mode 1)
 
 
 
@@ -2249,7 +2289,7 @@ This variable is nil if the current buffer isn't visiting a file.")
                     treemacs-directory-collapsed-face
                     treemacs-file-face
                     treemacs-tags-face))
-      (set-face-attribute face nil :family "IBM Plex Mono"))
+      (set-face-attribute face nil :family "Segoe UI"))
   :bind
     (:map treemacs-mode-map
           ("C-c t" . treemacs-toggle-node)
@@ -2617,7 +2657,10 @@ _u_: undo      _r_: redo
   (interactive)
   (if (bound-and-true-p selected-region-active-mode)
     (progn
-      (my-disable-eglot-highlight)
+      (when (bound-and-true-p selected-active-timer)
+        (cancel-timer selected-active-timer))
+      (setq selected-active-timer
+            (run-with-timer 0.1 nil #'(lambda() (if (region-active-p) (my-disable-eglot-highlight)))))
       (if (bound-and-true-p my-god-mode-is-active-flag)
         (progn
           ;; (message "god mode, & selected-region-active mode")
