@@ -504,6 +504,7 @@
  '(treemacs-directory-face ((t (:inherit font-lock-string-face))))
  '(treemacs-root-face ((t (:inherit font-lock-constant-face))))
  '(window-divider ((t (:foreground "green"))))
+ '(xref-match ((t (:inherit region))))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
 
 
@@ -955,6 +956,7 @@
   (push "*Warnings" centaur-tabs-excluded-prefixes)
   (push "*Gofmt" centaur-tabs-excluded-prefixes)
   (push "*Semantic" centaur-tabs-excluded-prefixes)
+  (push "*Customize" centaur-tabs-excluded-prefixes)
   (push "*xref" centaur-tabs-excluded-prefixes)
   (push "*Async-native-compile-log" centaur-tabs-excluded-prefixes)
   (push "*EGLOT" centaur-tabs-excluded-prefixes)
