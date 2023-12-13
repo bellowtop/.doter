@@ -1606,6 +1606,7 @@ respectively."
 (require 'avy)
 (setq avy-keys (list ?a ?c ?d ?e ?f ?h ?i ?j ?k ?l ?m ?n ?o ?s ?v ?w ?\;))
 (setq avy-background 't)
+(add-to-list 'avy-ignored-modes 'treemacs-mode)
 
 
 (advice-add 'avy-goto-word-0
