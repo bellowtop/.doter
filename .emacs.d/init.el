@@ -138,7 +138,7 @@
    projectile-known-projects-file (expand-file-name "~/.emacs.d/.local/projectile-bookmarks.eld")
    projectile-enable-caching t
    projectile-indexing-method 'native
-   projectile-track-known-projects-automatically nil
+   projectile-track-known-projects-automatically t
 )
 (require 'projectile)
 (projectile-mode 1)
@@ -420,12 +420,12 @@
    "gnu/linux"))
 
 
-(set-face-attribute 'default nil :font "IBM Plex Mono-15")
-(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15"))
+(set-face-attribute 'default nil :font "IBM Plex Mono-15.0")
+(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0"))
 
 (when (my-system-type-is-darwin)
-  (set-face-attribute 'default nil :font "IBM Plex Mono" :weight 'light)
-  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15")))
+  (set-face-attribute 'default nil :font "IBM Plex Mono-15.0" :weight 'light)
+  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0")))
 
 (set-cursor-color "red")
 (setq-default cursor-type 'bar)
@@ -444,6 +444,7 @@
  ;; If there is more than one, they won't work right.
  '(avy-lead-face ((t (:foreground "#ff77cc" :background nil))))
  '(avy-lead-face-0 ((t (:foreground "#ff77cc" :background nil))))
+ '(centaur-tabs-selected ((t (:background "#161C23" :foreground "#ABB2BF" :overline nil :underline "#528BFF" :weight normal))))
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -503,6 +504,7 @@
  '(term-default-fg-color ((t (:inherit term-color-white))))
  '(treemacs-directory-face ((t (:inherit font-lock-string-face))))
  '(treemacs-root-face ((t (:inherit font-lock-constant-face))))
+ '(whitespace-tab ((t (:inherit default :foreground "gray33"))))
  '(window-divider ((t (:foreground "green"))))
  '(xref-match ((t (:inherit region))))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
@@ -825,7 +827,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -844,9 +846,13 @@
 
 
 
-(global-whitespace-mode -1)
+(global-whitespace-mode 1)
 (setq whitespace-style '(face trailing tabs tab-mark))
 (setq whitespace-line-column 85)
+(setq whitespace-display-mappings
+      '(
+        (tab-mark   ?\t   [?\x25B8 ?\t] [?\\ ?\t])	; tab
+        ))
 
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
@@ -951,9 +957,12 @@
         )
   (centaur-tabs-headline-match)
   (centaur-tabs-mode t)
+  (push "*scratch" centaur-tabs-excluded-prefixes)
+  (push "*grep" centaur-tabs-excluded-prefixes)
   (push "*deadgrep" centaur-tabs-excluded-prefixes)
   (push "*Messages" centaur-tabs-excluded-prefixes)
   (push "*Warnings" centaur-tabs-excluded-prefixes)
+  (push "*Backstrace" centaur-tabs-excluded-prefixes)
   (push "*Gofmt" centaur-tabs-excluded-prefixes)
   (push "*Semantic" centaur-tabs-excluded-prefixes)
   (push "*Customize" centaur-tabs-excluded-prefixes)
