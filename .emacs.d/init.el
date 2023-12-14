@@ -471,6 +471,7 @@
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
  '(eglot-highlight-symbol-face ((t (:underline "deep sky blue"))))
  '(eglot-mode-line ((t nil)))
+ '(flymake-diagnostic-at-point-posframe-background-face ((t (:background "dark magenta"))))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
  '(flymake-error-echo ((t nil)))
  '(flymake-warning-echo ((t nil)))
@@ -834,7 +835,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(flymake-diagnostic-at-point centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -974,6 +975,7 @@
   (push "*Backstrace" centaur-tabs-excluded-prefixes)
   (push "*Gofmt" centaur-tabs-excluded-prefixes)
   (push "*Semantic" centaur-tabs-excluded-prefixes)
+  (push "*Flymake" centaur-tabs-excluded-prefixes)
   (push "*Customize" centaur-tabs-excluded-prefixes)
   (push "*xref" centaur-tabs-excluded-prefixes)
   (push "*Async-native-compile-log" centaur-tabs-excluded-prefixes)
@@ -1234,8 +1236,11 @@ respectively."
 
 
 (use-package flymake-diagnostic-at-point
+  :load-path "~/.emacs.d/lisp/flymake-diagnostic-at-point.el"
   :after flymake
   :config
+  (setq flymake-diagnostic-at-point-error-prefix " > ")
+  (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-posframe)
   (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
 
 
