@@ -375,7 +375,8 @@
     (define-key god-local-mode-map (kbd "SPC t") #'treemacs)
     (define-key god-local-mode-map (kbd "SPC n") #'my-neotree-toggle)
     (define-key god-local-mode-map (kbd "SPC N") #'my-neotree-find)
-    (define-key god-local-mode-map (kbd "SPC s") #'my-occur)
+    (define-key god-local-mode-map (kbd "SPC s") #'counsel-imenu)
+    (define-key god-local-mode-map (kbd "SPC S") #'my-occur)
 
 
     (define-key god-local-mode-map (kbd "@") #'my-treemacs-add-and-display-current-project)
