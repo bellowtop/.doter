@@ -133,12 +133,19 @@
         ("R" . "C-M-")))
 
 
+(setq ignored-projectile-projects (list "/opt/homebrew/" "Xcode.app"))
+(defun ignored-projectile-project (project-root)
+  (seq-filter
+   (lambda (candidate) (string-search candidate project-root))
+   ignored-projectile-projects))
+
 (setq-default
    projectile-cache-file (expand-file-name "~/.emacs.d/.local/projectile.cache")
    projectile-known-projects-file (expand-file-name "~/.emacs.d/.local/projectile-bookmarks.eld")
    projectile-enable-caching t
    projectile-indexing-method 'native
    projectile-track-known-projects-automatically t
+   projectile-ignored-project-function 'ignored-projectile-project
 )
 (require 'projectile)
 (projectile-mode 1)
@@ -393,7 +400,7 @@
 
 
 (defun my-set-bigger-spacing ()
-  (setq-local default-text-properties '(line-spacing 0.1 line-height 1.1)))
+  (setq-local default-text-properties '(line-spacing 0.2 line-height 1.2)))
 (add-hook 'text-mode-hook 'my-set-bigger-spacing)
 (add-hook 'prog-mode-hook 'my-set-bigger-spacing)
 
@@ -462,7 +469,7 @@
  '(doom-modeline-project-dir ((t (:inherit nil))))
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
- '(eglot-highlight-symbol-face ((t (:inverse-video t))))
+ '(eglot-highlight-symbol-face ((t (:inverse-video nil :box nil :overline nil :underline "deep sky blue" :weight bold))))
  '(eglot-mode-line ((t nil)))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
  '(flymake-error-echo ((t nil)))
@@ -853,6 +860,8 @@
       '(
         (tab-mark   ?\t   [?\x25B8 ?\t] [?\\ ?\t])	; tab
         ))
+(setq-default tab-width 4)
+
 
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
@@ -1339,6 +1348,7 @@ respectively."
   (when isearch-mode (isearch-abort) (isearch-abort))
   (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
   (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
+  (delete-trailing-whitespace)
   (keyboard-quit))
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
@@ -1970,12 +1980,12 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-disable-eglot-highlight()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'eglot-highlight-symbol-face nil :inverse-video 'unspecified)))
+    (set-face-attribute 'eglot-highlight-symbol-face nil :underline nil :weight 'normal)))
 
 (defun my-enable-eglot-highlight()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'eglot-highlight-symbol-face nil :inverse-video t)))
+    (set-face-attribute 'eglot-highlight-symbol-face nil :underline "deep sky blue" :weight 'bold)))
 
 (defun my-disable-code-intelligence ()
   (interactive)
