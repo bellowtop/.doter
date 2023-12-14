@@ -469,7 +469,7 @@
  '(doom-modeline-project-dir ((t (:inherit nil))))
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
- '(eglot-highlight-symbol-face ((t (:inverse-video nil :box nil :overline nil :underline "deep sky blue" :weight bold))))
+ '(eglot-highlight-symbol-face ((t (:underline "deep sky blue"))))
  '(eglot-mode-line ((t nil)))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
  '(flymake-error-echo ((t nil)))
@@ -570,7 +570,7 @@
 
 (defun dehighlight-current-line ()
   (interactive)
-  (remove-overlays (line-beginning-position) (+ 1 (line-end-position)))
+  (remove-overlays (line-beginning-position) (+ 1 (line-end-position)) 'line-highlight-overlay-marker t)
   )
 
 (defun highlight-or-dehighlight-line ()
@@ -583,7 +583,7 @@
 
 (defun remove-all-highlight ()
   (interactive)
-  (remove-overlays (point-min) (point-max))
+  (remove-overlays (point-min) (point-max) 'line-highlight-overlay-marker t)
   )
 
 (global-set-key [f8] 'highlight-or-dehighlight-line)
@@ -593,7 +593,7 @@
 (setq unhighlight-timer nil)
 (defun my-highlight-line-momentarily (&optional ARG PRED)
   (interactive)
-  (recenter)
+  ;; (recenter)
   ;; (xref-pulse-momentarily)
   (remove-all-highlight)
   (my-disable-eglot-highlight)
@@ -1349,6 +1349,8 @@ respectively."
   (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
   (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
   (delete-trailing-whitespace)
+  (ignore-errors (company-cancel))
+  (ignore-errors (remove-all-highlight))
   (keyboard-quit))
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
@@ -1980,12 +1982,12 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-disable-eglot-highlight()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'eglot-highlight-symbol-face nil :underline nil :weight 'normal)))
+    (set-face-attribute 'eglot-highlight-symbol-face nil :underline nil)))
 
 (defun my-enable-eglot-highlight()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'eglot-highlight-symbol-face nil :underline "deep sky blue" :weight 'bold)))
+    (set-face-attribute 'eglot-highlight-symbol-face nil :underline "deep sky blue")))
 
 (defun my-disable-code-intelligence ()
   (interactive)
@@ -2639,7 +2641,8 @@ _u_: undo      _r_: redo
 ;; load from ./lisp
 (require 'nice-jumper)
 (global-nice-jumper-mode t)
-(add-hook 'nice-jumper-post-jump-hook 'my-recenter)
+;; (add-hook 'nice-jumper-post-jump-hook 'my-recenter)
+(add-hook 'nice-jumper-post-jump-hook 'my-highlight-line-momentarily)
 (when (display-graphic-p)
   ;; cmd+[ cmd+]
   (global-set-key (kbd "s-[") 'nice-jumper/backward)
