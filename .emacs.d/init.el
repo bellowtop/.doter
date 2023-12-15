@@ -450,6 +450,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(centaur-tabs-selected ((t (:background "#161C23" :foreground "#ABB2BF" :overline nil :underline "#528BFF" :weight light))))
+ '(centaur-tabs-selected-modified ((t (:background "#161C23" :foreground "#61AFEF" :overline nil :underline "#528BFF" :weight light))))
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
