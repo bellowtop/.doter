@@ -449,9 +449,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(avy-lead-face ((t (:foreground "#ff77cc" :background nil))))
- '(avy-lead-face-0 ((t (:foreground "#ff77cc" :background nil))))
- '(centaur-tabs-selected ((t (:background "#161C23" :foreground "#ABB2BF" :overline nil :underline "#528BFF" :weight normal))))
+ '(centaur-tabs-selected ((t (:background "#161C23" :foreground "#ABB2BF" :overline nil :underline "#528BFF" :weight light))))
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -479,7 +477,6 @@
  '(highlight ((t (:background "yellow" :foreground "black" :underline nil))))
  '(hl-line ((t (:extend t :background "#232D38"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
- '(ivy-current-match ((t (:foreground "white" :background "purple"))))
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
  '(lazy-highlight ((t (:background "orange1" :foreground "black"))))
@@ -2325,6 +2322,8 @@ This variable is nil if the current buffer isn't visiting a file.")
                     treemacs-file-face
                     treemacs-tags-face))
       (set-face-attribute face nil :family "Segoe UI"))
+    (global-set-key (kbd "C-c C-p") treemacs-project-map)
+    (global-set-key (kbd "C-c C-w") treemacs-workspace-map)
   :bind
     (:map treemacs-mode-map
           ("C-c t" . treemacs-toggle-node)
