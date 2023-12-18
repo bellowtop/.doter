@@ -239,6 +239,7 @@
     (diminish 'highlight-parentheses-mode)
     (diminish 'undo-tree-mode)
     (diminish 'company-mode)
+    (diminish 'company-posframe-mode)
     (diminish 'global-company-mode)
     (diminish 'line-number-mode)
     (diminish 'global-eldoc-mode)
@@ -278,10 +279,13 @@
 ;; (require 'autothemer)
 ;; (load-theme 'bogster t)
 ;; (load-theme 'deeper-blue t)
-(require 'atom-one-dark-theme)
-(setf atom-one-dark-colors-alist (assoc-delete-all "atom-one-dark-bg" atom-one-dark-colors-alist))
-(add-to-list 'atom-one-dark-colors-alist '("atom-one-dark-bg" if nil "color-235" "#161C23"))
-(load-theme 'atom-one-dark t)
+
+(load-theme 'doom-challenger-deep t)
+
+;; (require 'atom-one-dark-theme)
+;; (setf atom-one-dark-colors-alist (assoc-delete-all "atom-one-dark-bg" atom-one-dark-colors-alist))
+;; (add-to-list 'atom-one-dark-colors-alist '("atom-one-dark-bg" if nil "color-235" "#161C23"))
+;; (load-theme 'atom-one-dark t)
 
 
 
@@ -475,12 +479,12 @@
  '(flymake-error-echo ((t nil)))
  '(flymake-warning-echo ((t nil)))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
+ '(highlight ((t (:background "orange1" :foreground "black"))))
  '(hl-line ((t (:extend t :background "#232D38"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
  '(lazy-highlight ((t (:background "orange1" :foreground "black"))))
- '(highlight ((t (:background "orange1" :foreground "black"))))
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -497,7 +501,7 @@
  '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(region ((t (:inverse-video t))))
- '(show-paren-match ((t (:foreground "yellow"))))
+ '(show-paren-match ((t (:foreground "yellow" :background nil))))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
  '(term-color-cyan ((t (:foreground "#8be9fd" :background "#8be9fd"))))
@@ -509,7 +513,6 @@
  '(term-default-bg-color ((t (:inherit term-color-black))))
  '(term-default-fg-color ((t (:inherit term-color-white))))
  '(treemacs-directory-face ((t (:inherit font-lock-string-face))))
- '(treemacs-root-face ((t (:inherit font-lock-constant-face))))
  '(whitespace-tab ((t (:inherit default :foreground "gray33"))))
  '(window-divider ((t (:foreground "green"))))
  '(xref-match ((t (:inherit region))))
@@ -599,7 +602,7 @@
   (highlight-current-line)
   (when (bound-and-true-p unhighlight-timer)
       (cancel-timer unhighlight-timer))
-  (setq unhighlight-timer (run-with-timer 1 nil #'(lambda() (remove-all-highlight) (my-enable-eglot-highlight))))
+  (setq unhighlight-timer (run-with-timer 0.3 nil #'(lambda() (remove-all-highlight) (my-enable-eglot-highlight))))
 )
 
 (defun my-recenter (&optional ARG PRED)
@@ -698,11 +701,16 @@
 (add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'before-save-hook 'company-cancel)
 
+;; company-posframe-mode
+(require 'company-posframe)
+(company-posframe-mode 1)
+
 ;; http://company-mode.github.io/manual/Getting-Started.html#Initial-Setup
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "<tab>") #'company-select-next-if-tooltip-visible-or-complete-selection)
   (define-key company-active-map (kbd "<backtab>") #'company-select-previous-or-abort)
-  (define-key company-active-map (kbd "RET") #'company-complete-selection))
+  (define-key company-active-map (kbd "RET") #'company-complete-selection)
+  )
 ;; Use (kbd "TAB") (or use (kbd "<tab>"), if you want to distinguish C-i from the <tab> key)
 
 
@@ -955,13 +963,14 @@
         centaur-tabs-gray-out-icons 'buffer
         centaur-tabs-set-icons t
         centaur-tabs-set-modified-marker t
-        centaur-tabs-modified-marker (concat " " (make-string 1 #x22C6) " ")
+        centaur-tabs-modified-marker (concat " " centaur-tabs-modified-marker " ")
         centaur-tabs-set-bar 'under
         centaur-tabs-bar-height 28
         centaur-tabs-height 28
         x-underline-at-descent-line t
         centaur-tabs-show-jump-identifier 'always
         centaur-tabs-close-button (concat " " centaur-tabs-close-button " ")
+        centaur-tabs-show-jump-identifier nil
         )
   (centaur-tabs-headline-match)
   (centaur-tabs-mode t)
@@ -996,6 +1005,26 @@
   ("s-7" . my-centaur-select-tab-7)
   ("s-8" . my-centaur-select-tab-8)
   ("s-9" . my-centaur-select-tab-9)
+)
+
+(with-eval-after-load 'centaur-tabs
+    (dolist (face '(centaur-tabs-default
+                  centaur-tabs-unselected
+                  centaur-tabs-selected
+                  centaur-tabs-unselected-modified
+                  centaur-tabs-selected-modified
+                  centaur-tabs-close-unselected
+                  centaur-tabs-close-selected
+                  centaur-tabs-name-mouse-face
+                  centaur-tabs-close-mouse-face
+                  centaur-tabs-modified-marker-selected
+                  centaur-tabs-modified-marker-unselected
+                  centaur-tabs-active-bar-face
+                  centaur-tabs-jump-identifier-selected
+                  centaur-tabs-jump-identifier-unselected
+                  centaur-tabs-dim-buffer-face))
+        (set-face-attribute face nil :family "Segoe UI")
+    )
 )
 
 
@@ -2310,19 +2339,6 @@ This variable is nil if the current buffer isn't visiting a file.")
     (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
     (setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
     (setq treemacs-expand-after-init nil)
-    (dolist (face '(treemacs-root-face
-                    treemacs-git-unmodified-face
-                    treemacs-git-modified-face
-                    treemacs-git-renamed-face
-                    treemacs-git-ignored-face
-                    treemacs-git-untracked-face
-                    treemacs-git-added-face
-                    treemacs-git-conflict-face
-                    treemacs-directory-face
-                    treemacs-directory-collapsed-face
-                    treemacs-file-face
-                    treemacs-tags-face))
-      (set-face-attribute face nil :family "Segoe UI"))
     (global-set-key (kbd "C-c C-p") treemacs-project-map)
     (global-set-key (kbd "C-c C-w") treemacs-workspace-map)
   :bind
@@ -2335,6 +2351,21 @@ This variable is nil if the current buffer isn't visiting a file.")
           ("<mouse-1>" . treemacs-single-click-expand-action))
   )
 
+(with-eval-after-load 'treemacs
+   (dolist (face '(treemacs-root-face
+                    treemacs-git-unmodified-face
+                    treemacs-git-modified-face
+                    treemacs-git-renamed-face
+                    treemacs-git-ignored-face
+                    treemacs-git-untracked-face
+                    treemacs-git-added-face
+                    treemacs-git-conflict-face
+                    treemacs-directory-face
+                    treemacs-directory-collapsed-face
+                    treemacs-file-face
+                    treemacs-tags-face))
+      (set-face-attribute face nil :family "Segoe UI" :weight 'normal :height 1.0))
+)
 
 
 
