@@ -299,7 +299,7 @@
     (define-key god-local-mode-map (kbd "C-r") #'undo-tree-redo)
     (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
     (define-key god-local-mode-map (kbd "O") #'my-god-above-newline-and-insert-mode)
-    (define-key god-local-mode-map (kbd "a") #'my-god-char-forward-and-insert-mode)
+    (define-key god-local-mode-map (kbd "a") #'mwim-beginning-of-code-or-line)
     (define-key god-local-mode-map (kbd "e") #'mwim-end-of-code-or-line)
     (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode)
     (define-key god-local-mode-map (kbd "m") #'my-goto-match-paren)
