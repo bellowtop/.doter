@@ -434,6 +434,7 @@
 (set-face-attribute 'default nil :font "IBM Plex Mono-15.0")
 (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0"))
 
+
 (when (my-system-type-is-darwin)
   (set-face-attribute 'default nil :font "IBM Plex Mono-15.0" :weight 'light)
   (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0")))
@@ -482,9 +483,10 @@
  '(highlight ((t (:background "orange1" :foreground "black"))))
  '(hl-line ((t (:extend t :background "#232D38"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
+ '(isearch ((t (:background "orange1" :weight normal))))
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
- '(lazy-highlight ((t (:background "orange1" :foreground "black"))))
+ '(lazy-highlight ((t (:background "light green" :foreground "black" :weight normal))))
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
