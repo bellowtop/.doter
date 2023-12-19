@@ -965,13 +965,13 @@
         centaur-tabs-gray-out-icons 'buffer
         centaur-tabs-set-icons t
         centaur-tabs-set-modified-marker t
-        centaur-tabs-modified-marker (concat " " centaur-tabs-modified-marker " ")
+        centaur-tabs-modified-marker (concat " " (make-string 1 #x00D7) " ")
         centaur-tabs-set-bar 'under
         centaur-tabs-bar-height 28
         centaur-tabs-height 28
         x-underline-at-descent-line t
         centaur-tabs-show-jump-identifier 'always
-        centaur-tabs-close-button (concat " " centaur-tabs-close-button " ")
+        centaur-tabs-close-button (concat " " (make-string 1 #x00D7) " ")
         centaur-tabs-show-jump-identifier nil
         )
   (centaur-tabs-headline-match)
@@ -1706,6 +1706,8 @@ respectively."
 
 
 (require 'mwim)
+(global-set-key [remap move-end-of-line] #'mwim-end-of-code-or-line)
+(global-set-key [remap move-beginning-of-line] #'mwim-beginning-of-code-or-line)
 
 (require 'yank-indent)
 (global-yank-indent-mode t)
@@ -1925,6 +1927,13 @@ If buffer-or-name is nil return current buffer's mode."
   (delete-region
    (region-beginning)
    (region-end)))
+
+(defun increment-number-at-point ()
+  (interactive)
+  (skip-chars-backward "0-9")
+  (or (looking-at "[0-9]+")
+      (error "No number at point"))
+  (replace-match (number-to-string (1+ (string-to-number (match-string 0))))))
 
 ;; donot warnning, just wrap search
 (defun isearch-repeat-forward+ ()

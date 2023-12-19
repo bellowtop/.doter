@@ -241,8 +241,8 @@
 
     (define-key lisp-mode-map (kbd "C-c C-e") #'eval-region)
 
-    (define-key map (kbd "C-a") 'mwim-beginning-of-code-or-line)
-    (define-key map (kbd "C-e") 'mwim-end-of-code-or-line)
+    ;; (define-key map (kbd "C-a") 'mwim-beginning-of-code-or-line)
+    ;; (define-key map (kbd "C-e") 'mwim-end-of-code-or-line)
     (define-key map (kbd "<home>") 'mwim-beginning-of-line-or-code)
     (define-key map (kbd "<end>") 'mwim-end-of-line-or-code)
 
@@ -299,6 +299,8 @@
     (define-key god-local-mode-map (kbd "C-r") #'undo-tree-redo)
     (define-key god-local-mode-map (kbd "o") #'my-god-below-newline-and-insert-mode)
     (define-key god-local-mode-map (kbd "O") #'my-god-above-newline-and-insert-mode)
+    (define-key god-local-mode-map (kbd "a") #'my-god-char-forward-and-insert-mode)
+    (define-key god-local-mode-map (kbd "e") #'forward-word)
     (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode)
     (define-key god-local-mode-map (kbd "m") #'my-goto-match-paren)
 
@@ -431,6 +433,9 @@
     (define-key god-local-mode-map (kbd "g g") #'beginning-of-buffer)
     (define-key god-local-mode-map (kbd "G") #'end-of-buffer)
     (define-key god-local-mode-map (kbd "g G") #'end-of-buffer)
+    (define-key god-local-mode-map (kbd "C-e") #'scroll-up-line)
+    (define-key god-local-mode-map (kbd "C-y") #'scroll-down-line)
+    (define-key god-local-mode-map (kbd "C-a") #'increment-number-at-point)
 
     ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)
     ;; (define-key god-local-mode-map (kbd "C-, C-l") #'switch-to-next-buffer)
