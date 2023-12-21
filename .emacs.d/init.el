@@ -280,7 +280,12 @@
 ;; (load-theme 'bogster t)
 ;; (load-theme 'deeper-blue t)
 
-(load-theme 'doom-challenger-deep t)
+(if (display-graphic-p)
+    (load-theme 'doom-challenger-deep t)
+
+  (require 'autothemer)
+  (load-theme 'bogster t)
+  )
 
 ;; (require 'atom-one-dark-theme)
 ;; (setf atom-one-dark-colors-alist (assoc-delete-all "atom-one-dark-bg" atom-one-dark-colors-alist))
@@ -295,12 +300,9 @@
 ;;   (setq doom-themes-enable-bold nil    ; if nil, bold is universally disabled
 ;;         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
    (doom-themes-neotree-config)
-   (doom-themes-treemacs-config)
-   (setq doom-themes-neotree-file-icons t)
-   (setq doom-themes-treemacs-theme "doom-colors")
-   (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
-   (add-hook 'treemacs-mode-hook #'my-add-hl-line-for-treemacs)
-   (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
+   ;; (doom-themes-treemacs-config)
+   ;; (setq doom-themes-neotree-file-icons t)
+   ;; (setq doom-themes-treemacs-theme "doom-colors")
 
 ;;   ;; (load-theme 'doom-xcode t)
 ;;   (load-theme 'doom-dracula t)
@@ -487,6 +489,8 @@
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
  '(lazy-highlight ((t (:background "light green" :foreground "black" :weight normal))))
+ '(line-number ((t (:inherit default :foreground "#565575" :slant normal :weight normal))))
+ '(line-number-current-line ((t (:inherit (hl-line default) :foreground "#CBE3E7" :slant normal :weight normal))))
  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -843,13 +847,12 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(treemacs-nerd-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
    '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
- '(treemacs-space-between-root-nodes nil)
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 
@@ -970,7 +973,6 @@
         centaur-tabs-bar-height 28
         centaur-tabs-height 28
         x-underline-at-descent-line t
-        centaur-tabs-show-jump-identifier 'always
         centaur-tabs-close-button (concat " " (make-string 1 #x00D7) " ")
         centaur-tabs-show-jump-identifier nil
         )
@@ -1027,6 +1029,13 @@
                   centaur-tabs-dim-buffer-face))
         (set-face-attribute face nil :family "Segoe UI")
     )
+
+    (unless (display-graphic-p)
+      (setq centaur-tabs-set-icons nil)
+      (setq centaur-tabs-modified-marker "")
+      (setq centaur-tabs-close-button "")
+      )
+
 )
 
 
@@ -1270,6 +1279,8 @@ respectively."
   :config
   (setq flymake-diagnostic-at-point-error-prefix " > ")
   (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-posframe)
+  (unlesss (display-graphic-p)
+    (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-minibuffer))
   (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
 
 
@@ -2342,9 +2353,9 @@ This variable is nil if the current buffer isn't visiting a file.")
 (use-package treemacs
   :init
   :config
-    ;; (setq treemacs-resize-icons 18)
     (setq treemacs-follow-mode nil)
     (setq treemacs-hide-gitignored-files-mode 1)
+    (setq treemacs-space-between-root-nodes nil)
     (setq treemacs-show-hidden-files t)
     (setq treemacs-show-cursor t)
     (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
@@ -2352,6 +2363,10 @@ This variable is nil if the current buffer isn't visiting a file.")
     (setq treemacs-expand-after-init nil)
     (global-set-key (kbd "C-c C-p") treemacs-project-map)
     (global-set-key (kbd "C-c C-w") treemacs-workspace-map)
+    ;; (treemacs-resize-icons 26)
+    (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
+    (add-hook 'treemacs-mode-hook #'my-add-hl-line-for-treemacs)
+    (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
   :bind
     (:map treemacs-mode-map
           ("C-c t" . treemacs-toggle-node)
@@ -2376,6 +2391,8 @@ This variable is nil if the current buffer isn't visiting a file.")
                     treemacs-file-face
                     treemacs-tags-face))
       (set-face-attribute face nil :family "Segoe UI" :weight 'normal :height 1.0))
+   (require 'treemacs-nerd-icons)
+   (treemacs-load-theme "nerd-icons")
 )
 
 
