@@ -1279,7 +1279,7 @@ respectively."
   :config
   (setq flymake-diagnostic-at-point-error-prefix " > ")
   (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-posframe)
-  (unlesss (display-graphic-p)
+  (unless (display-graphic-p)
     (setq flymake-diagnostic-at-point-display-diagnostic-function 'flymake-diagnostic-at-point-display-minibuffer))
   (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
 
