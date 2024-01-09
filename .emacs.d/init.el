@@ -1436,7 +1436,7 @@ respectively."
 
 
 (setq default-frame-alist '(
-  (undecorated . t)  ;;;;会导致所有边框全部消失无法拖动调整窗口大小 需要加上后面两句
+  ;; (undecorated . t)  ;;;;会导致所有边框全部消失无法拖动调整窗口大小 需要加上后面两句
   ;; (drag-internal-border . 1)
   ;; (internal-border-width . 5)
   (vertical-scroll-bars);隐藏滚动条
@@ -1457,6 +1457,9 @@ respectively."
   ;;; (require 'awesome-tray)
   ;;; (awesome-tray-mode 1)
 
+  (when (my-system-type-is-darwin)
+    (menu-bar-mode 1))
+
   (scroll-bar-mode -1)
   (fringe-mode -1)
   ;; (tab-bar-mode -1)
@@ -1467,20 +1470,27 @@ respectively."
   (define-key input-decode-map [?\C-\[] (kbd "<C-[>"))
   (global-set-key (kbd "<C-[>") 'my-escape-key)
 
+  ;; show relative filepath
+  ;; (setq frame-title-format
+  ;;       '(:eval (format-mode-line
+  ;;                 (propertized-buffer-identification
+  ;;                   (or
+  ;;                     (when-let* ((buffer-file-truename buffer-file-truename)
+  ;;                                 (prj (cdr-safe (project-current)))
+  ;;                                 (prj-parent (file-name-directory (directory-file-name (expand-file-name prj)))))
+  ;;                                (concat
+  ;;                                  (file-relative-name
+  ;;                                    (file-name-directory buffer-file-truename) prj-parent)
+  ;;                                  (file-name-nondirectory buffer-file-truename))
+  ;;                                )
+  ;;                     "%b"))))
+  ;;       )
+
+
+  ;; show absolute filepath
   (setq frame-title-format
-        '(:eval (format-mode-line
-                  (propertized-buffer-identification
-                    (or
-                      (when-let* ((buffer-file-truename buffer-file-truename)
-                                  (prj (cdr-safe (project-current)))
-                                  (prj-parent (file-name-directory (directory-file-name (expand-file-name prj)))))
-                                 (concat
-                                   (file-relative-name
-                                     (file-name-directory buffer-file-truename) prj-parent)
-                                   (file-name-nondirectory buffer-file-truename))
-                                 )
-                      "%b"))))
-        )
+        `((buffer-file-name "%f" "%b")))
+
   )
 
 (unless (display-graphic-p)

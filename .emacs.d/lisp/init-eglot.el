@@ -16,6 +16,9 @@
 (use-package eglot
   :commands (eglot eglot-ensure)
   :config
+
+  (advice-add 'eglot-rename                :after 'next-history-element)
+
   ;;;;
   ;;;; override eglot.el for `includeDeclaration: nil`, copied from /opt/homebrew/Cellar/emacs-plus@29/29.1/share/emacs/29.1/lisp/progmodes/eglot.el
   ;;;;
