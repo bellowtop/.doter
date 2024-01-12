@@ -166,7 +166,7 @@
   (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
   (push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
   (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
-  ;; (push '(go-mode . go-ts-mode) major-mode-remap-alist) ;; go-mode does not support treesitter yet.
+  (push '(go-mode . go-ts-mode) major-mode-remap-alist) ;; go-mode does not support treesitter yet.
   (push '(c-mode . c-ts-mode) major-mode-remap-alist)
   (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode))  ;; tell h file to c++-ts-mode
@@ -281,9 +281,9 @@
 ;; (load-theme 'deeper-blue t)
 
 (if (display-graphic-p)
-    (load-theme 'doom-challenger-deep t)
+  ;; (load-theme 'doom-challenger-deep t)
 
-  (require 'autothemer)
+  ;; (require 'autothemer)
   (load-theme 'bogster t)
   )
 
@@ -518,7 +518,7 @@
  '(term-color-yellow ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
  '(term-default-bg-color ((t (:inherit term-color-black))))
  '(term-default-fg-color ((t (:inherit term-color-white))))
- '(treemacs-directory-face ((t (:inherit font-lock-string-face))))
+ ;; '(treemacs-directory-face ((t (:inherit font-lock-string-face))))
  '(whitespace-tab ((t (:inherit default :foreground "gray33"))))
  '(window-divider ((t (:foreground "green"))))
  '(xref-match ((t (:inherit region))))
@@ -676,6 +676,8 @@
 (require 'init-lang-go)
 (add-hook 'go-mode-hook #'my-go-mode-hook)
 (add-hook 'go-ts-mode-hook #'my-go-mode-hook)
+
+(add-hook 'go-ts-mode-hook #'(lambda () (setq go-ts-mode-indent-offset 4)))
 
 
 (require 'init-lang-cpp)
@@ -847,7 +849,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(treemacs-nerd-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(treemacs-all-the-icons treemacs-nerd-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -1027,7 +1029,7 @@
                   centaur-tabs-jump-identifier-selected
                   centaur-tabs-jump-identifier-unselected
                   centaur-tabs-dim-buffer-face))
-        (set-face-attribute face nil :family "Segoe UI")
+        (set-face-attribute face nil :family "Segoe UI" :height 140)
     )
 
     (unless (display-graphic-p)
@@ -1399,7 +1401,7 @@ respectively."
   (when isearch-mode (isearch-abort) (isearch-abort))
   (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
   (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
-  (delete-trailing-whitespace)
+  ;; (delete-trailing-whitespace)
   (ignore-errors (company-cancel))
   (ignore-errors (remove-all-highlight))
   (keyboard-quit))
@@ -2401,8 +2403,10 @@ This variable is nil if the current buffer isn't visiting a file.")
                     treemacs-file-face
                     treemacs-tags-face))
       (set-face-attribute face nil :family "Segoe UI" :weight 'normal :height 1.0))
-   (require 'treemacs-nerd-icons)
-   (treemacs-load-theme "nerd-icons")
+   ;; (require 'treemacs-nerd-icons)
+   ;; (treemacs-load-theme "nerd-icons")
+   (require 'treemacs-all-the-icons)
+   (treemacs-load-theme "all-the-icons")
 )
 
 
