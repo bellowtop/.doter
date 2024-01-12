@@ -29,7 +29,7 @@
 
 ;; (add-hook 'go-mode-hook 'my-go-mode-hook)
 
-(message "in init-lang-to.el file")
+(message "in init-lang-go.el file")
 
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
