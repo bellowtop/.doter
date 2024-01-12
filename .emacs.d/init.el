@@ -113,9 +113,9 @@
 
 
 
+
 (defun darker-background-for-sidebar ()
   (face-remap-add-relative 'default '(:background "#1E2127") )
-  (set-face-attribute 'fringe nil :background "#1E2127")
   )
 
 
@@ -278,14 +278,18 @@
 
 ;; (require 'autothemer)
 ;; (load-theme 'bogster t)
+
+(require 'vs-dark-theme)
+(load-theme 'vs-dark t)
+
 ;; (load-theme 'deeper-blue t)
 
-(if (display-graphic-p)
-  ;; (load-theme 'doom-challenger-deep t)
-
-  ;; (require 'autothemer)
-  (load-theme 'bogster t)
-  )
+;; (if (display-graphic-p)
+;;   ;; (load-theme 'doom-challenger-deep t)
+;;
+;;   ;; (require 'autothemer)
+;;   ;; (load-theme 'bogster t)
+;;   )
 
 ;; (require 'atom-one-dark-theme)
 ;; (setf atom-one-dark-colors-alist (assoc-delete-all "atom-one-dark-bg" atom-one-dark-colors-alist))
@@ -330,6 +334,23 @@
 
 ;; (require 'color-theme-sanityinc-tomorrow)
 ;; (load-theme 'sanityinc-tomorrow-blue t)
+
+
+
+
+;;
+;; after load theme, clear the fringe color
+;;
+
+(defun my-clear-fringe-color ()
+  (set-face-attribute 'fringe nil
+                      :background (face-background 'default)
+                      :foreground (face-foreground 'default)
+                      ))
+(my-clear-fringe-color)
+
+
+
 
 
 
@@ -507,7 +528,7 @@
  '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(region ((t (:inverse-video t))))
- '(show-paren-match ((t (:foreground "yellow" :background nil))))
+ '(show-paren-match ((t (:foreground "yellow" :box nil))))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
  '(term-color-cyan ((t (:foreground "#8be9fd" :background "#8be9fd"))))
@@ -518,7 +539,6 @@
  '(term-color-yellow ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
  '(term-default-bg-color ((t (:inherit term-color-black))))
  '(term-default-fg-color ((t (:inherit term-color-white))))
- ;; '(treemacs-directory-face ((t (:inherit font-lock-string-face))))
  '(whitespace-tab ((t (:inherit default :foreground "gray33"))))
  '(window-divider ((t (:foreground "green"))))
  '(xref-match ((t (:inherit region))))
@@ -602,13 +622,13 @@
 (defun my-highlight-line-momentarily (&optional ARG PRED)
   (interactive)
   ;; (recenter)
-  ;; (xref-pulse-momentarily)
-  (remove-all-highlight)
-  (my-disable-eglot-highlight)
-  (highlight-current-line)
-  (when (bound-and-true-p unhighlight-timer)
-      (cancel-timer unhighlight-timer))
-  (setq unhighlight-timer (run-with-timer 0.3 nil #'(lambda() (remove-all-highlight) (my-enable-eglot-highlight))))
+  (xref-pulse-momentarily)
+  ;; (remove-all-highlight)
+  ;; (my-disable-eglot-highlight)
+  ;; (highlight-current-line)
+  ;; (when (bound-and-true-p unhighlight-timer)
+  ;;     (cancel-timer unhighlight-timer))
+  ;; (setq unhighlight-timer (run-with-timer 0.3 nil #'(lambda() (remove-all-highlight) (my-enable-eglot-highlight))))
 )
 
 (defun my-recenter (&optional ARG PRED)
@@ -691,6 +711,9 @@
 (use-package swift-mode
   :defer t
   )
+
+
+(require 'book-mode)
 
 
 
@@ -849,7 +872,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(treemacs-all-the-icons treemacs-nerd-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(nano-theme vs-dark-theme treemacs-all-the-icons treemacs-nerd-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -1208,7 +1231,7 @@ respectively."
   :bind
   (
     (:map ivy-minibuffer-map
-        ("C-'" . ivy-avy)
+        ;; ("C-'" . ivy-avy)
         ("TAB" . ivy-next-line)
         ("<backtab>" . ivy-previous-line)
     )
@@ -2325,7 +2348,6 @@ This variable is nil if the current buffer isn't visiting a file.")
   (neotree-find))
 
 
-(setq-default left-margin-width 0 right-margin-width 0)
 
 (defun my-add-padding-for-neotree()
     (set-window-margins
@@ -2403,10 +2425,14 @@ This variable is nil if the current buffer isn't visiting a file.")
                     treemacs-file-face
                     treemacs-tags-face))
       (set-face-attribute face nil :family "Segoe UI" :weight 'normal :height 1.0))
-   ;; (require 'treemacs-nerd-icons)
-   ;; (treemacs-load-theme "nerd-icons")
-   (require 'treemacs-all-the-icons)
-   (treemacs-load-theme "all-the-icons")
+   (when (display-graphic-p)
+        (require 'treemacs-all-the-icons)
+        (treemacs-load-theme "all-the-icons")
+     )
+   (unless (display-graphic-p)
+        (require 'treemacs-nerd-icons)
+        (treemacs-load-theme "nerd-icons")
+     )
 )
 
 
