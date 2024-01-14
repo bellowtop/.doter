@@ -478,7 +478,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(centaur-tabs-selected ((t (:background "#161C23" :foreground "#ABB2BF" :overline nil :underline "#528BFF" :weight light))))
- '(centaur-tabs-selected-modified ((t (:background "#161C23" :foreground "#61AFEF" :overline nil :underline "#528BFF" :weight light))))
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -713,7 +712,8 @@
   )
 
 
-(require 'book-mode)
+;; book-mode break isearch echo area!
+;; (require 'book-mode)
 
 
 
@@ -1054,6 +1054,14 @@
                   centaur-tabs-dim-buffer-face))
         (set-face-attribute face nil :family "Segoe UI" :height 140)
     )
+
+    ;; modified tab foreground
+    (set-face-foreground 'centaur-tabs-selected-modified "#61AFEF")
+    (set-face-foreground 'centaur-tabs-unselected-modified "#61AFEF")
+
+    ;; modified tab underline
+    (set-face-underline 'centaur-tabs-selected-modified "cyan" )
+    (set-face-underline 'centaur-tabs-modified-marker-selected "cyan" )
 
     (unless (display-graphic-p)
       (setq centaur-tabs-set-icons nil)
@@ -2357,7 +2365,7 @@ This variable is nil if the current buffer isn't visiting a file.")
 
 
 
-(setq-default left-margin-width 1 right-margin-width 1)
+(setq-default left-margin-width 0 right-margin-width 0)
 
 
 
@@ -2795,7 +2803,7 @@ _u_: undo      _r_: redo
       (when (bound-and-true-p selected-active-timer)
         (cancel-timer selected-active-timer))
       (setq selected-active-timer
-            (run-with-timer 0.1 nil #'(lambda() (if (region-active-p) (my-disable-eglot-highlight)))))
+            (run-with-timer 0.2 nil #'(lambda() (if (region-active-p) (my-disable-eglot-highlight)))))
       (if (bound-and-true-p my-god-mode-is-active-flag)
         (progn
           ;; (message "god mode, & selected-region-active mode")

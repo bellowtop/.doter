@@ -33,12 +33,12 @@
   "Book mode"
   :group 'convenience)
 
-(defcustom book-mode-left-margin 1
+(defcustom book-mode-left-margin 0
   "Left margin size, measured in characters"
   :type 'int
   :group 'book-mode)
 
-(defcustom book-mode-right-margin 1
+(defcustom book-mode-right-margin 0
   "Right margin size, measured in characters"
   :type 'int
   :group 'book-mode)
