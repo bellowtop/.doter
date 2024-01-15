@@ -62,6 +62,7 @@ keymap Q NULL
 keymap C-w NULL
 keymap C-d NULL
 keymap C-u NULL
+keymap C-l NULL
 keymap RIGHT NULL
 keymap l NULL
 keymap LEFT NULL
@@ -98,6 +99,7 @@ keymap i NULL
 keymap gC-g NULL
 keymap C-g NULL
 keymap ";" NULL
+keymap "'" NULL
 keymap M NULL
 keymap ESC-M NULL
 keymap F NULL
@@ -169,10 +171,13 @@ keymap C-y DOWN
 keymap gg BEGIN
 keymap G END
 keymap C-d NEXT_HALF_PAGE
+keymap ";" NEXT_HALF_PAGE
 keymap d NEXT_PAGE
 keymap C-u PREV_HALF_PAGE
+keymap "'" PREV_HALF_PAGE
 keymap u PREV_PAGE
 keymap zz CENTER_V
+keymap C-l CENTER_V
 ########## cursor ##########
 #keymap l MOVE_RIGHT
 keymap l NEXT_TAB
