@@ -10,6 +10,7 @@ git clone https://github.com/sekirocc/.doter.git
 cd .doter && git submodule update --init
 
 ln -s ~/.doter/.emacs.d         ~/.emacs.d
+ln -s ~/.doter/w3m              ~/.w3m
 ln -s ~/.doter/idea/.ideavimrc  ~/.ideavimrc
 ln -s ~/.doter/xcode/.xvimrc    ~/.xvimrc
 ln -s ~/.doter/nvim             ~/.config/nvim
@@ -90,6 +91,7 @@ mkdir -p ~/.dot_backup
 cd ~
 
 mv ~/.emacs.d           ~/.dot_backup
+mv ~/.w3m               ~/.dot_backup
 mv ~/.ideavimrc         ~/.dot_backup
 mv ~/.xvimrc            ~/.dot_backup
 mv ~/.config/nvim       ~/.dot_backup
