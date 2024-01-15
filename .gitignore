@@ -100,3 +100,4 @@ package-quickstart.el
 .lsp-session*
 
 .DS_Store
+w3m/history
