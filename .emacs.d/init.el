@@ -981,25 +981,23 @@
 (def-centaur-select-tab-funs (1 2 3 4 5 6 7 8 9))
 
 
+;; have to set here!
+(setq centaur-tabs-bar-height 28)
+(setq centaur-tabs-height 28)
 
 (use-package centaur-tabs
   :demand
   :init
   (setq centaur-tabs-enable-key-bindings t)
   :config
-  ;; (centaur-tabs-style "rounded")
-  ;; (centaur-tabs-height 36)
   (setq
-        centaur-tabs-gray-out-icons 'buffer
+        ;; centaur-tabs-gray-out-icons 'buffer
         centaur-tabs-set-icons t
-        centaur-tabs-icon-scale-factor 0.9
-        centaur-tabs-set-modified-marker t
-        centaur-tabs-modified-marker (concat " " (make-string 1 #x00D7) " ")
+        ;; centaur-tabs-icon-scale-factor 0.8
+        centaur-tabs-set-modified-marker nil
+        centaur-tabs-set-close-button nil
         centaur-tabs-set-bar 'under
-        ;; centaur-tabs-bar-height 34
-        centaur-tabs-height 30
         x-underline-at-descent-line t
-        centaur-tabs-close-button (concat " " (make-string 1 #x00D7) " ")
         centaur-tabs-show-jump-identifier nil
         )
   (centaur-tabs-headline-match)
@@ -1053,7 +1051,7 @@
                   centaur-tabs-jump-identifier-selected
                   centaur-tabs-jump-identifier-unselected
                   centaur-tabs-dim-buffer-face))
-        (set-face-attribute face nil :family "Segoe UI" :height 140)
+        (set-face-attribute face nil :weight 'normal)
     )
 
     ;; modified tab foreground
