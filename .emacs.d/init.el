@@ -992,11 +992,12 @@
   (setq
         centaur-tabs-gray-out-icons 'buffer
         centaur-tabs-set-icons t
+        centaur-tabs-icon-scale-factor 0.9
         centaur-tabs-set-modified-marker t
         centaur-tabs-modified-marker (concat " " (make-string 1 #x00D7) " ")
         centaur-tabs-set-bar 'under
-        centaur-tabs-bar-height 28
-        centaur-tabs-height 28
+        ;; centaur-tabs-bar-height 34
+        centaur-tabs-height 30
         x-underline-at-descent-line t
         centaur-tabs-close-button (concat " " (make-string 1 #x00D7) " ")
         centaur-tabs-show-jump-identifier nil
@@ -1374,6 +1375,8 @@ respectively."
 
 (add-hook 'org-mode-hook #'valign-mode)
 (add-hook 'markdown-mode-hook #'valign-mode)
+
+(column-number-mode 1)
 
 ;; (add-hook 'markdown-mode-hook #'prog-mode)
 
