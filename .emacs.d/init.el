@@ -26,9 +26,11 @@
 
 (add-to-list 'exec-path "/usr/local/bin/")
 (add-to-list 'exec-path "/usr/bin/")
+(add-to-list 'exec-path "/opt/homebrew/bin")
 
 (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
 (setenv "PATH" (concat "/usr/bin:" (getenv "PATH")))
+(setenv "PATH" (concat "/opt/homebrew/bin:" (getenv "PATH")))
 
 (setq mac-command-modifier 'super)
 
@@ -166,7 +168,7 @@
   (push '(javascript-mode . js-ts-mode) major-mode-remap-alist)
   (push '(js-json-mode . json-ts-mode) major-mode-remap-alist)
   (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
-  (push '(go-mode . go-ts-mode) major-mode-remap-alist) ;; go-mode does not support treesitter yet.
+  ;; (push '(go-mode . go-ts-mode) major-mode-remap-alist) ;; go-mode does not support treesitter yet.
   (push '(c-mode . c-ts-mode) major-mode-remap-alist)
   (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode))  ;; tell h file to c++-ts-mode
