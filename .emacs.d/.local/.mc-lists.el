@@ -71,6 +71,7 @@
         my-delete-to-end
         my-forward-char-no-cross-line
         my-forward-to-word
+        my-god-below-newline-and-insert-mode
         my-god-char-forward-and-insert-mode
         my-goto-match-paren
         my-join-lines

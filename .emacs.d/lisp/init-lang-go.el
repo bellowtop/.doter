@@ -22,6 +22,7 @@
     (gofmt)))
 
 (defun my-go-mode-hook ()
+  ;; load go-mode package (not use go-mode as major mode)
   (eglot-ensure)
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'my-gofmt-before-save nil t)
@@ -34,7 +35,6 @@
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
   :config
-  (+eglot/set-leader-keys go-mode-map)
   (with-eval-after-load 'exec-path-from-shell
     (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY"))))
 
