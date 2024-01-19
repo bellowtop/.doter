@@ -18,9 +18,6 @@ cfg.keys = {
 
   { mods = 'SUPER|SHIFT',       key = 't',  action = wezterm.action.SpawnTab 'CurrentPaneDomain', },
 
-  { mods = "SUPER|SHIFT",       key = "{",  action = wezterm.action.ActivateTabRelative(-1)    }, -- cmd+shift+[  prev tab
-  { mods = "SUPER|SHIFT",       key = "}",  action = wezterm.action.ActivateTabRelative(1)     }, -- cmd+shift+]  next tab
-
   { mods = "SUPER",             key = "k",  action = wezterm.action{ClearScrollback = "ScrollbackAndViewport"}},
   { mods = "SUPER",             key = "f",  action = wezterm.action{Search = {CaseInSensitiveString = ""}}},
 
@@ -32,6 +29,12 @@ cfg.keys = {
 
   { mods = "SUPER",             key = "h",  action = wezterm.action.SendString '\x13\x68'     }, -- cmd+h        next window,   send C-s h
   { mods = "SUPER",             key = "l",  action = wezterm.action.SendString '\x13\x6c'     }, -- cmd+l        next window,   send C-s l
+
+  { mods = "SUPER|SHIFT",       key = "{",  action = wezterm.action.SendString '\x13\x68'     }, -- cmd+h        next window,   send C-s h
+  { mods = "SUPER|SHIFT",       key = "}",  action = wezterm.action.SendString '\x13\x6c'     }, -- cmd+l        next window,   send C-s l
+
+  -- { mods = "SUPER|SHIFT",       key = "{",  action = wezterm.action.ActivateTabRelative(-1)    }, -- cmd+shift+[  prev tab
+  -- { mods = "SUPER|SHIFT",       key = "}",  action = wezterm.action.ActivateTabRelative(1)     }, -- cmd+shift+]  next tab
 
   { mods = "SUPER",             key = "t",  action = wezterm.action.SendString '\x13\x6e'     }, -- cmd+t  new window,          send C-s c
   { mods = "SUPER",             key = "w",  action = wezterm.action.SendString '\x13\x78'     }, -- cmd+d  kill pane,           send C-s X
