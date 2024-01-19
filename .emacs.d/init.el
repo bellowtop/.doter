@@ -479,7 +479,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(centaur-tabs-selected ((t (:background "#161C23" :foreground "#ABB2BF" :overline nil :underline "#528BFF" :weight light))))
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -1024,8 +1023,8 @@
   :bind
   ("s-h" . centaur-tabs-backward)
   ("s-l" . centaur-tabs-forward)
-  ("M-{" . centaur-tabs-backward)
-  ("M-}" . centaur-tabs-forward)
+  ("M-H" . centaur-tabs-backward)
+  ("M-L" . centaur-tabs-forward)
   ("s-t" . centaur-tabs--create-new-tab)
   ("s-w" . centaur-tabs--kill-this-buffer-dont-ask)
   ("s-1" . my-centaur-select-tab-1)
@@ -1061,6 +1060,16 @@
     ;; modified tab foreground
     (set-face-foreground 'centaur-tabs-selected-modified "#61AFEF")
     (set-face-foreground 'centaur-tabs-unselected-modified "#61AFEF")
+
+    (set-face-background 'centaur-tabs-selected-modified "#161C23")
+    (set-face-background 'centaur-tabs-selected          "#161C23")
+
+    ;; (set-face-attribute 'centaur-tabs-selected nil
+    ;;                     :background "#161C23"
+    ;;                     :foreground "#ABB2BF"
+    ;;                     :overline nil
+    ;;                     :underline "#528BFF"
+    ;;                     :weight light)
 
     ;; modified tab underline
     (set-face-underline 'centaur-tabs-selected-modified "cyan" )
