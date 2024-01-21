@@ -281,9 +281,10 @@
 ;; (require 'autothemer)
 ;; (load-theme 'bogster t)
 
-(require 'vs-dark-theme)
-(load-theme 'vs-dark t)
+;; (require 'vs-dark-theme)
+;; (load-theme 'vs-dark t)
 
+(load-theme 'modus-vivendi-tinted t)
 ;; (load-theme 'deeper-blue t)
 
 ;; (if (display-graphic-p)
@@ -456,13 +457,13 @@
    "gnu/linux"))
 
 
-(set-face-attribute 'default nil :font "IBM Plex Mono-15.0")
-(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0"))
+(set-face-attribute 'default nil :font "IBM Plex Mono-14.0")
+(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-14.0"))
 
 
 (when (my-system-type-is-darwin)
-  (set-face-attribute 'default nil :font "IBM Plex Mono-15.0" :weight 'light)
-  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0")))
+  (set-face-attribute 'default nil :font "IBM Plex Mono-14.0" :weight 'light)
+  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-14.0")))
 
 (set-cursor-color "red")
 (setq-default cursor-type 'bar)
@@ -873,7 +874,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(nano-theme vs-dark-theme treemacs-all-the-icons treemacs-nerd-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(modus-themes nano-theme vs-dark-theme treemacs-all-the-icons treemacs-nerd-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -993,10 +994,12 @@
   :config
   (setq
         ;; centaur-tabs-gray-out-icons 'buffer
-        centaur-tabs-set-icons t
+        centaur-tabs-set-icons nil
         ;; centaur-tabs-icon-scale-factor 0.8
         centaur-tabs-set-modified-marker nil
         centaur-tabs-set-close-button nil
+        centaur-tabs-left-edge-margin nil
+        centaur-tabs-right-edge-margin nil
         centaur-tabs-set-bar 'under
         x-underline-at-descent-line t
         centaur-tabs-show-jump-identifier nil
@@ -1054,7 +1057,7 @@
                   centaur-tabs-jump-identifier-selected
                   centaur-tabs-jump-identifier-unselected
                   centaur-tabs-dim-buffer-face))
-        (set-face-attribute face nil :weight 'normal)
+        (set-face-attribute face nil :weight 'normal :family "Segoe UI" :height 130)
     )
 
     ;; modified tab foreground
@@ -1400,7 +1403,7 @@ respectively."
 
 
 
-(pixel-scroll-precision-mode 1)
+(pixel-scroll-precision-mode -1)
 
 
 
