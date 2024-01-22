@@ -528,7 +528,7 @@
  '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
  '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
- '(region ((t (:inverse-video t))))
+ '(region ((t (:inverse-video t :foreground nil :background nil ))))
  '(show-paren-match ((t (:foreground "yellow" :box nil))))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
