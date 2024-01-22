@@ -1405,6 +1405,14 @@ respectively."
 
 (pixel-scroll-precision-mode -1)
 
+;; scroll with cursor not move
+(defun gcm-scroll-down ()
+  (interactive)
+  (scroll-up 1))
+(defun gcm-scroll-up ()
+  (interactive)
+  (scroll-down 1))
+
 
 
 (setq scroll-margin 3
@@ -1591,14 +1599,6 @@ respectively."
 
 
 
-
-;; scroll with cursor not move
-(defun gcm-scroll-down ()
-  (interactive)
-  (scroll-up 1))
-(defun gcm-scroll-up ()
-  (interactive)
-  (scroll-down 1))
 
 
 
