@@ -559,7 +559,7 @@
 (set-face-background 'vertical-border (face-background 'default))
 (set-face-foreground 'vertical-border "#00ff00")
 
-;; (set-face-background 'line-number (face-background 'default))
+(set-face-background 'line-number (face-background 'default))
 
 ;; (global-font-lock-mode -1)
 
@@ -1026,8 +1026,6 @@
   :bind
   ("s-h" . centaur-tabs-backward)
   ("s-l" . centaur-tabs-forward)
-  ("C-M-h" . centaur-tabs-backward)
-  ("C-M-l" . centaur-tabs-forward)
   ("s-t" . centaur-tabs--create-new-tab)
   ("s-w" . centaur-tabs--kill-this-buffer-dont-ask)
   ("s-1" . my-centaur-select-tab-1)

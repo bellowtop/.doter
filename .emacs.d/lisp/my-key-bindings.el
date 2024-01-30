@@ -225,6 +225,9 @@
     (define-key map (kbd "M-x") #'my-M-x)
     (define-key map (kbd "C-M-.") #'xref-find-definitions-other-window )
 
+    (define-key map (kbd "C-M-h")  #'centaur-tabs-backward)
+    (define-key map (kbd "C-M-l")  #'centaur-tabs-forward)
+
     (define-key map (kbd "s-d") #'my-mc/mark-next-like-this)
 
     ;; (define-key map (kbd "C-M-f") #'projectile-find-file)
