@@ -497,7 +497,7 @@
  '(doom-modeline-project-dir ((t (:inherit nil))))
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
- '(eglot-highlight-symbol-face ((t (:underline "deep sky blue"))))
+ '(eglot-highlight-symbol-face ((t (:inverse-video t))))
  '(eglot-mode-line ((t nil)))
  '(flymake-diagnostic-at-point-posframe-background-face ((t (:background "dark magenta"))))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
@@ -559,7 +559,6 @@
 (set-face-background 'vertical-border (face-background 'default))
 (set-face-foreground 'vertical-border "#00ff00")
 
-(set-face-background 'line-number (face-background 'default))
 
 ;; (global-font-lock-mode -1)
 
@@ -2104,12 +2103,17 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-disable-eglot-highlight()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'eglot-highlight-symbol-face nil :underline nil)))
+    (setq eglot-ignored-server-capabilities (add-to-list 'eglot-ignored-server-capabilities ':documentHighlightProvider ))
+    (set-face-attribute 'eglot-highlight-symbol-face nil :inverse-video 'unspecified)
+    ))
 
 (defun my-enable-eglot-highlight()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'eglot-highlight-symbol-face nil :underline "deep sky blue")))
+    (setq eglot-ignored-server-capabilities (delete ':documentHighlightProvider eglot-ignored-server-capabilities ))
+    (set-face-attribute 'eglot-highlight-symbol-face nil :inverse-video t)
+    ))
+
 
 (defun my-disable-code-intelligence ()
   (interactive)
@@ -2172,6 +2176,10 @@ If buffer-or-name is nil return current buffer's mode."
 
 (setq hl-line-inhibit-highlighting-for-modes '(dired-mode deadgrep-mode deadgrep-edit-mode treemacs-mode))
 (global-hl-line-mode 1)
+
+
+(set-face-background 'line-number (face-background 'default))
+(set-face-background 'line-number-current-line (face-background 'hl-line))
 
 
 
@@ -2822,7 +2830,9 @@ _u_: undo      _r_: redo
       (when (bound-and-true-p selected-active-timer)
         (cancel-timer selected-active-timer))
       (setq selected-active-timer
-            (run-with-timer 0.2 nil #'(lambda() (if (region-active-p) (my-disable-eglot-highlight)))))
+            (run-with-timer 0.2 nil #'(lambda() (when (region-active-p)
+                                                  (remove-all-highlight)
+                                                  (my-disable-eglot-highlight)))))
       (if (bound-and-true-p my-god-mode-is-active-flag)
         (progn
           ;; (message "god mode, & selected-region-active mode")
