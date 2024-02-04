@@ -73,10 +73,13 @@
   (font-lock-string-face                (:foreground bogster-lteal))
   (font-lock-constant-face              (:foreground bogster-lteal))
   (font-lock-function-name-face         (:foreground bogster-lblue))
+  (font-lock-function-call-face         (:foreground bogster-lred))
   (font-lock-variable-name-face         (:foreground bogster-fg1))
   (font-lock-keyword-face               (:foreground bogster-yellow))
   (font-lock-type-face                  (:foreground bogster-lred))
   (font-lock-builtin-face               (:foreground bogster-lgreen))
+  (font-lock-property-use-face          (:foreground bogster-blue))
+
 
   (helm-selection                       (:background "#364D2D"))
   (helm-source-header                   (:foreground "#00ff00"))
