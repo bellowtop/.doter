@@ -395,7 +395,7 @@
 (use-package
   expand-region
   :bind (("M-i" . 'er/expand-region)
-         ("M-I" . 'er/mark-inside-pairs)))
+         ))
 
 
 ;;;;
