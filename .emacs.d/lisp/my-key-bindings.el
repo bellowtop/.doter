@@ -228,6 +228,9 @@
     (define-key map (kbd "C-M-h")  #'centaur-tabs-backward)
     (define-key map (kbd "C-M-l")  #'centaur-tabs-forward)
 
+    (define-key map (kbd "C-s h")  #'centaur-tabs-backward)
+    (define-key map (kbd "C-s l")  #'centaur-tabs-forward)
+
     (define-key map (kbd "s-d") #'my-mc/mark-next-like-this)
 
     ;; (define-key map (kbd "C-M-f") #'projectile-find-file)
