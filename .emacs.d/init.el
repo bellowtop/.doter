@@ -678,6 +678,11 @@
 (define-key global-map (kbd "<s-mouse-3>") 'xref-go-back)
 
 
+;; enable mouse click in terminal
+(unless (display-graphic-p)
+    (xterm-mouse-mode 1)
+  )
+
 
 
 (setq display-buffer-alist
@@ -2126,6 +2131,19 @@ If buffer-or-name is nil return current buffer's mode."
     ))
 
 
+(defun my-disable-paren-highlight()
+  (interactive)
+  (ignore-errors
+    (set-face-attribute 'show-paren-match nil :background 'unspecified :foreground 'unspecified :box nil)
+    ))
+
+(defun my-enable-paren-highlight()
+  (interactive)
+  (ignore-errors
+    (set-face-attribute 'show-paren-match nil :background "yellow" :foreground "red" :box nil)
+    ))
+
+
 (defun my-disable-code-intelligence ()
   (interactive)
   (when my-code-intelligence
@@ -2847,6 +2865,7 @@ _u_: undo      _r_: redo
       (setq selected-active-timer
             (run-with-timer 0.2 nil #'(lambda() (when (region-active-p)
                                                   (remove-all-highlight)
+                                                  (my-disable-paren-highlight)
                                                   (my-disable-eglot-highlight)))))
       (if (bound-and-true-p my-god-mode-is-active-flag)
         (progn
@@ -2873,6 +2892,8 @@ _u_: undo      _r_: redo
         ))
     (progn
       ;; (message "not selected-region-active mode")
-      (my-enable-eglot-highlight))))
+      (my-enable-eglot-highlight)
+      (my-enable-paren-highlight)
+      )))
 ;;;;
 (setq selected-region-active-mode-hook #'my-toggle-selected-keybinding)
