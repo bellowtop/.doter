@@ -284,14 +284,13 @@
 ;; (require 'vs-dark-theme)
 ;; (load-theme 'vs-dark t)
 
-(load-theme 'modus-vivendi-tinted t)
-;; (load-theme 'deeper-blue t)
+;; (load-theme 'modus-vivendi-tinted t)
 
 ;; (if (display-graphic-p)
 ;;   ;; (load-theme 'doom-challenger-deep t)
 ;;
 ;;   ;; (require 'autothemer)
-;;   ;; (load-theme 'bogster t)
+(load-theme 'bogster t)
 ;;   )
 
 ;; (require 'atom-one-dark-theme)
@@ -480,6 +479,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(centaur-tabs-selected ((t (:background "#3B4261" :foreground "#7AA2F7"))))
+ '(centaur-tabs-selected-modified ((t (:background "#3B4261" :foreground "pink"))))
+ '(centaur-tabs-unselected ((t (:background "#1F2335" :foreground "grey50"))))
+ '(centaur-tabs-unselected-modified ((t (:background "#1F2335" :foreground "pink"))))
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -504,10 +507,12 @@
  '(flymake-error-echo ((t nil)))
  '(flymake-warning-echo ((t nil)))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
+ '(help-argument-name ((t (:inherit italic :underline nil))))
  '(highlight ((t (:background "orange1" :foreground "black"))))
  '(hl-line ((t (:extend t :background "#232D38"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(isearch ((t (:background "orange1" :weight normal))))
+ '(ivy-current-match ((t (:inherit region :background nil :foreground nil))))
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
  '(lazy-highlight ((t (:background "light green" :foreground "black" :weight normal))))
@@ -530,6 +535,7 @@
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(region ((t (:inverse-video t :foreground nil :background nil))))
  '(show-paren-match ((t (:background "yellow" :foreground "red" :box nil))))
+ '(tab-line ((t (:inherit variable-pitch :background "#1F2335" :foreground "black"))))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
  '(term-color-cyan ((t (:foreground "#8be9fd" :background "#8be9fd"))))
@@ -540,7 +546,7 @@
  '(term-color-yellow ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
  '(term-default-bg-color ((t (:inherit term-color-black))))
  '(term-default-fg-color ((t (:inherit term-color-white))))
- '(whitespace-tab ((t (:inherit default :foreground "#61647a"))))
+ '(whitespace-tab ((t (:inherit default :foreground "#627D9D"))))
  '(window-divider ((t (:foreground "green"))))
  '(xref-match ((t (:inherit region))))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
@@ -873,7 +879,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(modus-themes nano-theme vs-dark-theme treemacs-all-the-icons treemacs-nerd-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons treemacs-nerd-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -1057,12 +1063,12 @@
         (set-face-attribute face nil :weight 'normal :family "Segoe UI" :height 130)
     )
 
-    ;; modified tab foreground
-    (set-face-foreground 'centaur-tabs-selected-modified "#61AFEF")
-    (set-face-foreground 'centaur-tabs-unselected-modified "#61AFEF")
+    ;; ;; modified tab foreground
+    ;; (set-face-foreground 'centaur-tabs-selected-modified "#61AFEF")
+    ;; (set-face-foreground 'centaur-tabs-unselected-modified "#61AFEF")
 
-    (set-face-background 'centaur-tabs-selected-modified "#161C23")
-    (set-face-background 'centaur-tabs-selected          "#161C23")
+    ;; (set-face-background 'centaur-tabs-selected-modified "#161C23")
+    ;; (set-face-background 'centaur-tabs-selected          "#161C23")
 
     ;; (set-face-attribute 'centaur-tabs-selected nil
     ;;                     :background "#161C23"
@@ -1074,17 +1080,17 @@
     ;; modified tab underline
     (set-face-underline 'centaur-tabs-selected-modified "cyan" )
     (set-face-underline 'centaur-tabs-modified-marker-selected "cyan" )
-
     (unless (display-graphic-p)
-      (setq centaur-tabs-set-icons nil)
-      (setq centaur-tabs-modified-marker "")
-      (setq centaur-tabs-close-button "")
-
       ;; no underline for selected tab, in terminal mode.
       (set-face-underline 'centaur-tabs-selected-modified nil )
       (set-face-underline 'centaur-tabs-selected nil )
       )
 
+    (unless (display-graphic-p)
+      (setq centaur-tabs-set-icons nil)
+      (setq centaur-tabs-modified-marker "")
+      (setq centaur-tabs-close-button "")
+    )
 )
 
 
@@ -1128,6 +1134,11 @@
 (add-hook 'yaml-mode-hook 'display-line-numbers-mode)
 (add-hook 'yaml-mode-hook #'(lambda () (ansible 1)))
 (add-hook 'conf-mode-hook 'display-line-numbers-mode)
+
+
+
+(add-hook 'prog-mode-hook 'highlight-numbers-mode)
+
 
 
 ;; delete all other buffers, only keep current one.
@@ -2235,6 +2246,10 @@ This variable is nil if the current buffer isn't visiting a file.")
 
 (setq blink-cursor-blinks 0)
 
+;; (setq window-devider-color "#57a331")
+;; (setq window-divider-color "green")
+(setq window-divider-color "#06C668")
+
 (defun my-god-mode-update-cursor-type ()
   ;; (when (display-graphic-p)
     ;; (setq cursor-type (if (or (bound-and-true-p god-local-mode) buffer-read-only) 'box 'bar))
@@ -2250,7 +2265,7 @@ This variable is nil if the current buffer isn't visiting a file.")
       ;; (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#262626")
       ;; (set-face-attribute 'line-number-current-line nil :foreground "#5fffd7" :background "#3a3a3a")
       (when (display-graphic-p)
-        (set-face-attribute 'window-divider nil     :foreground "#3B3B3B")
+        (set-face-attribute 'window-divider nil     :foreground window-divider-color)
         ;; (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
         ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
         ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#262831" :foreground "#7AA2F7")
@@ -2263,14 +2278,14 @@ This variable is nil if the current buffer isn't visiting a file.")
       ;; (set-cursor-color "red")
       ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
       ;; (set-face-attribute 'mode-line nil :background "#38424B")
-      (set-face-foreground 'vertical-border "#3B3B3B")
+      (set-face-foreground 'vertical-border window-divider-color)
       ;; (set-face-foreground 'vertical-border "#374250")
       )
     (progn
       ;; (set-face-attribute 'hl-line nil :background (face-background 'default))
       ;; (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
       (when (display-graphic-p)
-        (set-face-attribute 'window-divider nil     :foreground "#3B3B3B")
+        (set-face-attribute 'window-divider nil     :foreground window-divider-color)
         ;; (set-face-attribute 'mode-line nil          :background "#7fdc59" :foreground "black" :overline "green"   :box nil) ;; draw a line above mode-line
         ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
         ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#7AA2F7" :foreground "black")
@@ -2284,7 +2299,7 @@ This variable is nil if the current buffer isn't visiting a file.")
       ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
       ;;(set-face-attribute 'mode-line nil :background "#38424B")
       ;; (set-face-foreground 'vertical-border "#7fdc59")
-      (set-face-foreground 'vertical-border "#3B3B3B")
+      (set-face-foreground 'vertical-border window-divider-color)
       )
     )
   )
