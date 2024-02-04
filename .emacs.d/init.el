@@ -547,6 +547,7 @@
  '(term-default-bg-color ((t (:inherit term-color-black))))
  '(term-default-fg-color ((t (:inherit term-color-white))))
  '(whitespace-tab ((t (:inherit default :foreground "#627D9D"))))
+ '(whitespace-trailing ((t (:background "black" :foreground "yellow" :weight bold))))
  '(window-divider ((t (:foreground "green"))))
  '(xref-match ((t (:inherit region))))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
@@ -1349,6 +1350,17 @@ respectively."
   (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
 
 
+;;
+;; deprecated, use flymake-posframe.
+;;
+;; (use-package flymake-diagnostic-at-point
+;;   :after flymake
+;;   :config
+;;   (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
+
+
+
+
 
 (defun my-M-x()
   (interactive)
@@ -1600,14 +1612,6 @@ respectively."
 (advice-add 'projectile-run-project :around #'my/disable-yornp)
 
 
-
-;;
-;; deprecated, use flymake-posframe.
-;;
-;; (use-package flymake-diagnostic-at-point
-;;   :after flymake
-;;   :config
-;;   (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
 
 
 
