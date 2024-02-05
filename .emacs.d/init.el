@@ -534,7 +534,7 @@
  '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(region ((t (:inverse-video t :foreground nil :background nil))))
- '(show-paren-match ((t (:background "yellow" :foreground "red" :box nil))))
+ '(show-paren-match ((t (:foreground "green"))))
  '(tab-line ((t (:inherit variable-pitch :background "#1F2335" :foreground "black"))))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
@@ -2135,17 +2135,21 @@ If buffer-or-name is nil return current buffer's mode."
     ))
 
 
-(defun my-disable-paren-highlight()
-  (interactive)
-  (ignore-errors
-    (set-face-attribute 'show-paren-match nil :background 'unspecified :foreground 'unspecified :box nil)
-    ))
-
 (defun my-enable-paren-highlight()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'show-paren-match nil :background "yellow" :foreground "red" :box nil)
+    (set-face-attribute 'show-paren-match nil :foreground "green" :weight 'normal)
     ))
+
+
+(defun my-disable-paren-highlight()
+  (interactive)
+  (ignore-errors
+    (set-face-attribute 'show-paren-match nil :foreground 'unspecified :weight 'bold)
+    ))
+
+
+
 
 
 (defun my-disable-code-intelligence ()
@@ -2758,12 +2762,12 @@ _u_: undo      _r_: redo
 
 
 
-(use-package
-  highlight-parentheses
-  :ensure t
-  :init (add-hook
-         'prog-mode-hook
-         #'highlight-parentheses-mode))
+;; (use-package
+;;   highlight-parentheses
+;;   :ensure t
+;;   :init (add-hook
+;;          'prog-mode-hook
+;;          #'highlight-parentheses-mode))
 
 
 
