@@ -500,7 +500,7 @@
  '(doom-modeline-project-dir ((t (:inherit nil))))
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
- '(eglot-highlight-symbol-face ((t (:inverse-video t))))
+ '(eglot-highlight-symbol-face ((t (:background "#59dcb7" :foreground "black" :weight 'normal))))
  '(eglot-mode-line ((t nil)))
  '(flymake-diagnostic-at-point-posframe-background-face ((t (:background "dark magenta"))))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
@@ -618,7 +618,9 @@
 
 (defun remove-all-highlight ()
   (interactive)
-  (remove-overlays (point-min) (point-max) 'line-highlight-overlay-marker t)
+  ;; (remove-overlays (point-min) (point-max) 'line-highlight-overlay-marker t)
+  ;; this truly removes all, not restricted by the name
+  (remove-overlays (point-min) (point-max))
   )
 
 (global-set-key [f8] 'highlight-or-dehighlight-line)
@@ -2120,19 +2122,22 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defvar my-code-intelligence 't "enable by default")
 
+
+
 (defun my-disable-eglot-highlight()
   (interactive)
   (ignore-errors
     (setq eglot-ignored-server-capabilities (add-to-list 'eglot-ignored-server-capabilities ':documentHighlightProvider ))
-    (set-face-attribute 'eglot-highlight-symbol-face nil :inverse-video 'unspecified)
+    (set-face-attribute 'eglot-highlight-symbol-face nil :background 'unspecified :foreground 'unspecified)
     ))
 
 (defun my-enable-eglot-highlight()
   (interactive)
   (ignore-errors
     (setq eglot-ignored-server-capabilities (delete ':documentHighlightProvider eglot-ignored-server-capabilities ))
-    (set-face-attribute 'eglot-highlight-symbol-face nil :inverse-video t)
+    (set-face-attribute 'eglot-highlight-symbol-face nil :background "#59dcb7" :foreground "black" :weight 'normal)
     ))
+
 
 
 (defun my-enable-paren-highlight()
