@@ -198,6 +198,14 @@
 
 
 
+(defun my-toggle-er/mark-inside-pairs (arg)
+  (interactive "p")
+  (if (use-region-p)
+    (keyboard-quit)
+    (er/mark-inside-pairs))
+)
+
+
 
 
 
@@ -227,6 +235,13 @@
 
     (define-key map (kbd "C-M-h")  #'centaur-tabs-backward)
     (define-key map (kbd "C-M-l")  #'centaur-tabs-forward)
+
+    (define-key map (kbd "C-s h")  #'centaur-tabs-backward)
+    (define-key map (kbd "C-s l")  #'centaur-tabs-forward)
+    (define-key map (kbd "C-s n")  #'centaur-tabs--create-new-tab)
+    (define-key map (kbd "C-s x")  #'centaur-tabs--kill-this-buffer-dont-ask)
+
+    (define-key map (kbd "M-n")  #'my-toggle-er/mark-inside-pairs)
 
     (define-key map (kbd "s-d") #'my-mc/mark-next-like-this)
 
