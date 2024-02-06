@@ -627,30 +627,69 @@
 (global-set-key [f9] 'remove-all-highlight)
 
 
-(setq unhighlight-timer nil)
-(defun my-highlight-line-momentarily (&optional ARG PRED)
+;; (setq unhighlight-timer nil)
+;; (defun my-highlight-line-momentarily (&optional ARG PRED)
+;;   (interactive)
+;;   ;; (recenter)
+;;   (xref-pulse-momentarily)
+;;   ;; (remove-all-highlight)
+;;   ;; (my-disable-eglot-highlight)
+;;   ;; (highlight-current-line)
+;;   ;; (when (bound-and-true-p unhighlight-timer)
+;;   ;;     (cancel-timer unhighlight-timer))
+;;   ;; (setq unhighlight-timer (run-with-timer 0.3 nil #'(lambda() (remove-all-highlight) (my-enable-eglot-highlight))))
+;; )
+
+
+
+(defun my-remove-all-highlight()
   (interactive)
-  ;; (recenter)
-  (xref-pulse-momentarily)
-  ;; (remove-all-highlight)
-  ;; (my-disable-eglot-highlight)
-  ;; (highlight-current-line)
-  ;; (when (bound-and-true-p unhighlight-timer)
-  ;;     (cancel-timer unhighlight-timer))
-  ;; (setq unhighlight-timer (run-with-timer 0.3 nil #'(lambda() (remove-all-highlight) (my-enable-eglot-highlight))))
-)
+  (remove-all-highlight)
+  (my-disable-paren-highlight)
+  (my-disable-eglot-highlight)
+  )
 
-(defun my-recenter (&optional ARG PRED)
-  (recenter)
-  (xref-pulse-momentarily)
-)
+(defun my-enable-all-highlight()
+  (interactive)
+  (my-enable-paren-highlight)
+  (my-enable-eglot-highlight)
+  )
 
-(advice-add 'xref-go-back                   :after 'my-highlight-line-momentarily)
-(advice-add 'xref-pop-marker-stack          :after 'my-highlight-line-momentarily)
-(advice-add 'lsp-ui-peek-find-definitions   :after 'my-highlight-line-momentarily)
-(advice-add 'pop-global-mark                :after 'my-highlight-line-momentarily)
 
-(setq xref-after-jump-hook           'my-highlight-line-momentarily)
+
+
+;; (defun my-recenter (&optional ARG PRED)
+;;   (recenter)
+;;   (xref-pulse-momentarily)
+;; )
+
+;; (advice-add 'xref-go-back                   :after 'my-highlight-line-momentarily)
+;; (advice-add 'xref-pop-marker-stack          :after 'my-highlight-line-momentarily)
+;; (advice-add 'lsp-ui-peek-find-definitions   :after 'my-highlight-line-momentarily)
+;; (advice-add 'pop-global-mark                :after 'my-highlight-line-momentarily)
+
+
+
+
+;; (advice-add 'xref-go-back                   :after 'my-enable-all-highlight)
+;; (advice-add 'xref-find-definitions          :after #'(lambda(args) (my-enable-all-highlight)))
+;; (advice-add 'xref-pop-marker-stack          :after 'my-enable-all-highlight)
+;; (advice-add 'lsp-ui-peek-find-definitions   :after 'my-enable-all-highlight)
+;; (advice-add 'pop-global-mark                :after 'my-enable-all-highlight)
+;;
+;;
+;; (advice-add 'xref-go-back                   :before 'my-remove-all-highlight)
+;; (advice-add 'xref-find-definitions          :before #'(lambda(args) (my-remove-all-highlight)))
+;; (advice-add 'xref-pop-marker-stack          :before 'my-remove-all-highlight)
+;; (advice-add 'lsp-ui-peek-find-definitions   :before 'my-remove-all-highlight)
+;; (advice-add 'pop-global-mark                :before 'my-remove-all-highlight)
+
+
+
+
+
+
+;; (setq xref-after-jump-hook           'my-highlight-line-momentarily)
 ;; (setq xref-after-jump-hook           'xref-pulse-momentarily)
 
 ;; (advice-add 'keyboard-quit                 :after 'remove-all-highlight)
@@ -664,12 +703,12 @@
   (setq xref-show-xrefs-function #'xref-show-definitions-buffer-at-bottom)
 )
 
-(with-eval-after-load 'pulse
-  ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background "#1f4670")
-  (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background 'unspecified :inverse-video t)
-  ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "green" :background "black")
-  ;; (setq pulse-delay 0.03)
-  )
+;; (with-eval-after-load 'pulse
+;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background "#1f4670")
+;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background 'unspecified :inverse-video t)
+;;   ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "green" :background "black")
+;;   ;; (setq pulse-delay 0.03)
+;;   )
 
 (define-key global-map (kbd "<s-mouse-1>")
             #'(lambda ()
@@ -2750,9 +2789,9 @@ _u_: undo      _r_: redo
          ("C-c C-c" . my-deadgrep-edit-exit))
   :hook (deadgrep-edit-mode . my-deadgrep-edit-enter)
   :init
-  (advice-add 'deadgrep-visit-result :after 'my-highlight-line-momentarily)
+  (advice-add 'deadgrep-visit-result :after 'xref-pulse-momentarily)
   (advice-add 'deadgrep-visit-result :after 'my-delete-other-windows)
-  (advice-add 'deadgrep-visit-result-other-window :after 'my-highlight-line-momentarily))
+  (advice-add 'deadgrep-visit-result-other-window :after 'xref-pulse-momentarily))
 
 
 
@@ -2833,7 +2872,7 @@ _u_: undo      _r_: redo
 (require 'nice-jumper)
 (global-nice-jumper-mode t)
 ;; (add-hook 'nice-jumper-post-jump-hook 'my-recenter)
-(add-hook 'nice-jumper-post-jump-hook 'my-highlight-line-momentarily)
+(add-hook 'nice-jumper-post-jump-hook 'xref-pulse-momentarily)
 (when (display-graphic-p)
   ;; cmd+[ cmd+]
   (global-set-key (kbd "s-[") 'nice-jumper/backward)
