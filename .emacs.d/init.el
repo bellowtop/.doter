@@ -534,7 +534,7 @@
  '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(region ((t (:inverse-video t :foreground nil :background nil))))
- '(show-paren-match ((t (:foreground "green"))))
+ '(show-paren-match ((t (:foreground "green" :weight bold))))
  '(tab-line ((t (:inherit variable-pitch :background "#1F2335" :foreground "black"))))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
@@ -2182,7 +2182,7 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-enable-paren-highlight()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'show-paren-match nil :foreground "green" :weight 'normal)
+    (set-face-attribute 'show-paren-match nil :foreground "green" :weight 'bold)
     ))
 
 
@@ -2507,7 +2507,6 @@ This variable is nil if the current buffer isn't visiting a file.")
 (use-package treemacs
   :init
   :config
-    (setq treemacs-follow-mode nil)
     (setq treemacs-hide-gitignored-files-mode 1)
     (setq treemacs-space-between-root-nodes nil)
     (setq treemacs-show-hidden-files t)
@@ -2521,6 +2520,7 @@ This variable is nil if the current buffer isn't visiting a file.")
     (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
     (add-hook 'treemacs-mode-hook #'my-add-hl-line-for-treemacs)
     (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
+    (treemacs-follow-mode -1)
   :bind
     (:map treemacs-mode-map
           ("C-c t" . treemacs-toggle-node)

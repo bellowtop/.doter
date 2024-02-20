@@ -500,6 +500,9 @@
     (define-key map (kbd "M-o") #'other-window)
     (define-key map (kbd "M-x") #'my-M-x)
 
+    (define-key map (kbd "C-M-h")  #'centaur-tabs-backward)
+    (define-key map (kbd "C-M-l")  #'centaur-tabs-forward)
+
     map)
   "my-special-buffer-keys-minor-mode keymap.")
 (define-minor-mode my-special-buffer-keys-minor-mode
