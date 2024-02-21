@@ -8,6 +8,7 @@ cfg.adjust_window_size_when_changing_font_size = false
 cfg.warn_about_missing_glyphs = false
 
 cfg.font_size = 12
+cfg.line_height = 1.1
 
 -- Makes FontAwesome's double-width glyphs display properly!
 cfg.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
@@ -15,8 +16,8 @@ cfg.allow_square_glyphs_to_overflow_width = "WhenFollowedBySpace"
 
 cfg.font = wezterm.font_with_fallback{
     { family = "IBM Plex Mono", weight = "Regular" },
-    { family = "Cascadia Mono PL", weight = "DemiLight" },
     { family = "DejavuSansMono Nerd Font" },
+    { family = "Cascadia Mono PL", weight = "DemiLight" },
 }
 
 -- Enable various OpenType features
