@@ -153,10 +153,14 @@
 (projectile-mode 1)
 
 
+;;;; Deprecated: treesit-auto handle these automatically
 ;; download from https://github.com/emacs-tree-sitter/tree-sitter-langs
 ;; rename .dylib to libtree-sitter*: fd -t f dylib --exclude 'libtree*' --exec mv {} libtree-sitter-{/} \;
 ;;
 ;; you can also put them to ~/.emacs.d/tree-sitter, so without setting the treesit-extra-load-path
+
+
+
 (use-package treesit
   :demand t
   :custom
@@ -172,8 +176,14 @@
   (push '(c-mode . c-ts-mode) major-mode-remap-alist)
   (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode))  ;; tell h file to c++-ts-mode
-  (setq treesit-extra-load-path `( ,(expand-file-name "~/.emacs.d/.local/tree-sitter-grammars") )))
+  ;; (setq treesit-extra-load-path `( ,(expand-file-name "~/.emacs.d/.local/tree-sitter-grammars") ))
+  )
 
+
+;; invoke M-x treesit-auto-install-all to install treesit libs to ~/.emacs.d/tree-sitter/
+(use-package treesit-auto
+  :config
+  (global-treesit-auto-mode))
 
 
 
@@ -479,10 +489,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(centaur-tabs-selected ((t (:background "#3B4261" :foreground "#7AA2F7"))))
- '(centaur-tabs-selected-modified ((t (:background "#3B4261" :foreground "pink"))))
- '(centaur-tabs-unselected ((t (:background "#1F2335" :foreground "grey50"))))
- '(centaur-tabs-unselected-modified ((t (:background "#1F2335" :foreground "pink"))))
+ '(centaur-tabs-selected ((t (:inherit mode-line))))
+ '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "pink"))))
+ '(centaur-tabs-unselected ((t (:background "#393E44" :foreground "#8F9396"))))
+ '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground "pink"))))
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -550,6 +560,7 @@
  '(tty-menu-selected-face ((t (:inherit eglot-highlight-symbol-face))))
  '(whitespace-tab ((t (:inherit default :foreground "#627D9D"))))
  '(whitespace-trailing ((t (:background "black" :foreground "yellow" :weight bold))))
+ '(widget-field ((t (:extend t :background "gray" :foreground "black"))))
  '(window-divider ((t (:foreground "green"))))
  '(xref-match ((t (:inherit region))))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
@@ -928,7 +939,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons treemacs-nerd-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons treemacs-nerd-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories

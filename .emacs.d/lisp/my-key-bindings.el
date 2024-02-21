@@ -208,6 +208,10 @@
 
 
 
+(advice-add 'kill-this-buffer :after #'(lambda() (switch-to-buffer (other-buffer))))
+
+
+
 
 
 (eval-after-load "dired"

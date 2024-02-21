@@ -30,6 +30,7 @@ anaconda-mode/
 /.emacs.d/eclipse.jdt.ls/
 /.emacs.d/projects
 /.emacs.d/share
+/.emacs.d/tree-sitter
 /.emacs.d/eglot-eclipse-jdt-cache
 /.emacs.d/.dap-breakpoints
 /.emacs.d/meghanada/
