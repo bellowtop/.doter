@@ -402,10 +402,21 @@
 
 
 
-(use-package
-  expand-region
-  :bind (("M-i" . 'er/expand-region)
-         ))
+(use-package expand-region
+  :bind
+  (
+   ("M-i" . 'er/expand-region)
+   )
+  )
+
+
+(advice-add 'er/expand-region
+            :before
+            (lambda (&rest r) (my-remove-all-highlight)))
+
+(advice-add 'er/mark-inside-pairs
+            :before
+            (lambda (&rest r) (my-remove-all-highlight)))
 
 
 ;;;;
@@ -2928,7 +2939,7 @@ _u_: undo      _r_: redo
       (when (bound-and-true-p selected-active-timer)
         (cancel-timer selected-active-timer))
       (setq selected-active-timer
-            (run-with-timer 0.2 nil #'(lambda() (when (region-active-p)
+            (run-with-timer 0.05 nil #'(lambda() (when (region-active-p)
                                                   (remove-all-highlight)
                                                   (my-disable-paren-highlight)
                                                   (my-disable-eglot-highlight)))))
