@@ -1554,6 +1554,7 @@ respectively."
   ;; (delete-trailing-whitespace)
   (ignore-errors (company-cancel))
   (ignore-errors (remove-all-highlight))
+  (ignore-errors (flymake-mode-on)) ;; but show errors
   (keyboard-quit))
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
@@ -2192,6 +2193,8 @@ If buffer-or-name is nil return current buffer's mode."
   (ignore-errors
     (setq eglot-ignored-server-capabilities (add-to-list 'eglot-ignored-server-capabilities ':documentHighlightProvider ))
     (set-face-attribute 'eglot-highlight-symbol-face nil :background 'unspecified :foreground 'unspecified)
+    (set-face-attribute 'flymake-error nil :underline 'unspecified :foreground 'unspecified :background 'unspecified)
+    (flymake-mode-off)
     ))
 
 (defun my-enable-eglot-highlight()
@@ -2199,6 +2202,8 @@ If buffer-or-name is nil return current buffer's mode."
   (ignore-errors
     (setq eglot-ignored-server-capabilities (delete ':documentHighlightProvider eglot-ignored-server-capabilities ))
     (set-face-attribute 'eglot-highlight-symbol-face nil :background "#59dcb7" :foreground "black" :weight 'normal)
+    (set-face-attribute 'flymake-error nil :underline t :foreground "DeepPink" :background (face-background 'default))
+    (flymake-mode-on)
     ))
 
 

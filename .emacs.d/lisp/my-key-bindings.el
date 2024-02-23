@@ -201,9 +201,62 @@
 (defun my-toggle-er/mark-inside-pairs (arg)
   (interactive "p")
   (if (use-region-p)
-    (keyboard-quit)
+      (progn
+        (jump-to-register 'a)
+        (keyboard-quit)
+        )
+    (point-to-register 'a)
     (er/mark-inside-pairs))
-)
+  )
+
+(defun my-toggle-er/mark-outside-pairs (arg)
+  (interactive "p")
+  (if (use-region-p)
+      (progn
+        (jump-to-register 'a)
+        (keyboard-quit))
+    (point-to-register 'a)
+    (er/mark-inside-pairs)
+    (er/mark-outside-pairs))
+  )
+
+
+(defun upcase-p(str) (string= str (upcase str)))
+(defun downcase-p(str) (string= str (downcase str)))
+
+
+(defun my-toggle-case-char ()
+  (interactive)
+  (if (region-active-p)
+      (let* ((i 0)
+             (start (region-beginning))
+             (end (region-end))
+             (return-string "")
+             (input (buffer-substring-no-properties start end)))
+        ; (message "input-string: %s" input)
+        (while (< i (- end start))
+          (let ((current-char (substring input i (+ i 1))))
+            ; (message "current-char: %s, is downcase? %s" current-char (downcase-p current-char))
+            (if (downcase-p current-char)
+                (setq return-string
+                      (concat return-string (upcase current-char)))
+              (setq return-string
+                    (concat return-string (downcase current-char)))))
+          (setq i (+ i 1)))
+        (delete-region (region-beginning) (region-end))
+        (insert return-string)
+        ;; select the region again
+        (goto-char start)
+        (set-mark-command nil)
+        (goto-char end)
+        (setq deactivate-mark nil))
+    (let* ((current-char (buffer-substring-no-properties (point) (+ 1 (point))))
+           (upcased (upcase-p current-char))
+           (f (if upcased 'downcase-region 'upcase-region)))
+      ; (message "input: %s" current-char)
+      (funcall f (point) (+ 1 (point)))
+      (forward-char))))
+
 
 
 
@@ -246,6 +299,7 @@
     (define-key map (kbd "C-s x")  #'centaur-tabs--kill-this-buffer-dont-ask)
 
     (define-key map (kbd "M-n")  #'my-toggle-er/mark-inside-pairs)
+    (define-key map (kbd "M-m")  #'my-toggle-er/mark-outside-pairs)
 
     (define-key map (kbd "s-d") #'my-mc/mark-next-like-this)
 
@@ -365,7 +419,7 @@
     (define-key god-local-mode-map (kbd "DEL") #'backward-char)
 
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
-    (define-key god-local-mode-map (kbd "C-~") #'upcase-char)
+    (define-key god-local-mode-map (kbd "C-~") #'my-toggle-case-char)
 
     (define-key god-local-mode-map (kbd "C-o") 'nice-jumper/backward)
     (define-key god-local-mode-map (kbd "C-i") 'nice-jumper/forward)
