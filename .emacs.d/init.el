@@ -985,7 +985,7 @@
 (use-package
   iedit
   :defer t
-  :bind (("M-'" . iedit-mode)))
+  :bind (("C-M-'" . iedit-mode)))
 
 
 

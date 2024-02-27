@@ -290,8 +290,8 @@
     (define-key map (kbd "M-x") #'my-M-x)
     (define-key map (kbd "C-M-.") #'xref-find-definitions-other-window )
 
-    (define-key map (kbd "C-M-h")  #'centaur-tabs-backward)
-    (define-key map (kbd "C-M-l")  #'centaur-tabs-forward)
+    (define-key map (kbd "M-;")  #'centaur-tabs-backward)
+    (define-key map (kbd "M-'")  #'centaur-tabs-forward)
 
     (define-key map (kbd "C-s h")  #'centaur-tabs-backward)
     (define-key map (kbd "C-s l")  #'centaur-tabs-forward)
@@ -332,7 +332,7 @@
     (define-key map (kbd "C-c C-s") 'my-rg-at-point)
 
     ;; (define-key map (kbd "M-i") #'er/mark-symbol)
-    (define-key map (kbd "M-;") 'avy-goto-word-0)
+    ;; (define-key map (kbd "C-M-;") 'avy-goto-word-0)
     (define-key map (kbd "M-s") 'my-save-buffer)
     (define-key map (kbd "C-j") 'my-save-buffer)
     (define-key map (kbd "M-j") 'gcm-scroll-down)
@@ -554,7 +554,8 @@
     (define-key map (kbd "h") #'my-backward-char-no-cross-line)
 
     (define-key map (kbd "f") #'avy-goto-word-0)
-    (define-key map (kbd "M-;") #'avy-goto-word-0)
+    (define-key map (kbd "M-;") #'centaur-tabs-backward)
+    (define-key map (kbd "M-'") #'centaur-tabs-forward)
     (define-key map (kbd "M-o") #'other-window)
     (define-key map (kbd "M-x") #'my-M-x)
 
