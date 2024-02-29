@@ -526,6 +526,7 @@
  '(flymake-diagnostic-at-point-posframe-background-face ((t (:background "dark magenta"))))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
  '(flymake-error-echo ((t nil)))
+ '(flymake-warning ((t (weight 'normal))))
  '(flymake-warning-echo ((t nil)))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(help-argument-name ((t (:inherit italic :underline nil))))

@@ -559,9 +559,6 @@
     (define-key map (kbd "M-o") #'other-window)
     (define-key map (kbd "M-x") #'my-M-x)
 
-    (define-key map (kbd "C-M-h")  #'centaur-tabs-backward)
-    (define-key map (kbd "C-M-l")  #'centaur-tabs-forward)
-
     map)
   "my-special-buffer-keys-minor-mode keymap.")
 (define-minor-mode my-special-buffer-keys-minor-mode
@@ -573,6 +570,9 @@
 
 (defvar my-ctrl-w-window-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
+
+    (define-key map (kbd "M-;")  #'centaur-tabs-backward)
+    (define-key map (kbd "M-'")  #'centaur-tabs-forward)
 
     (define-key map (kbd "C-w l") #'windmove-right)
     (define-key map (kbd "C-w h") #'windmove-left)
