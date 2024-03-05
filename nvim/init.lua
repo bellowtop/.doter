@@ -759,6 +759,17 @@ if vim.fn.executable("gopls") then
   }
 end
 
+if vim.fn.executable("qmlls") then
+  lspconfig.qmlls.setup {
+    on_attach = custom_attach,
+    capabilities = capabilities,
+    filetypes = { "qml" },
+    flags = {
+      debounce_text_changes = 500,
+    },
+  }
+end
+
 
 
 
@@ -1059,6 +1070,7 @@ autocmd QuickFixCmdPost * nested cwindow | redraw!
 autocmd BufNewFile,BufReadPost *.js set shiftwidth=4 softtabstop=4
 autocmd BufNewFile,BufRead *.js set filetype=javascript.jsx
 autocmd BufNewFile,BufRead *.ejs set filetype=html
+autocmd BufNewFile,BufRead *.qml set filetype=qml
 autocmd FileType scss set iskeyword+=-
 autocmd BufNewFile,BufReadPost *.scss set shiftwidth=4 softtabstop=4
 autocmd BufNewFile,BufReadPost *.sh set shiftwidth=4 softtabstop=4
