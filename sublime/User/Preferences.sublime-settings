@@ -27,5 +27,5 @@
 	"vintageous_handle_keys": {
     },
 	"color_scheme": "Packages/User/bogster-color-theme.tmTheme",
-	"index_files": true,
+	"index_files": false,
 }
