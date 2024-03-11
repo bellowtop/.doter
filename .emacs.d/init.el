@@ -500,6 +500,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(avy-lead-face ((t (:foreground "#E20000" :weight bold))))
+ '(avy-lead-face-0 ((t (:foreground "#FFB400" :weight bold))))
  '(centaur-tabs-selected ((t (:inherit mode-line :inverse-video t))))
  '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "pink"))))
  '(centaur-tabs-unselected ((t (:inherit mode-line))))
