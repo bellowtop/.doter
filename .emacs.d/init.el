@@ -502,7 +502,7 @@
  ;; If there is more than one, they won't work right.
  '(centaur-tabs-selected ((t (:inherit mode-line :inverse-video t))))
  '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "pink"))))
- '(centaur-tabs-unselected ((t (:inherit mode-line ))))
+ '(centaur-tabs-unselected ((t (:inherit mode-line))))
  '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground "pink"))))
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
@@ -1404,6 +1404,7 @@ respectively."
 ;;   :load-path "~/.emacs.d/lisp/flymake-posframe.el"
 ;;   :hook (flymake-mode . flymake-posframe-mode))
 
+(setq flymake-start-syntax-check-on-find-file nil)
 
 (use-package flymake-diagnostic-at-point
   :load-path "~/.emacs.d/lisp/flymake-diagnostic-at-point.el"
@@ -1555,7 +1556,7 @@ respectively."
   ;; (delete-trailing-whitespace)
   (ignore-errors (company-cancel))
   (ignore-errors (remove-all-highlight))
-  (ignore-errors (flymake-mode-on)) ;; but show errors
+  ;; (ignore-errors (flymake-mode-on)) ;; but show errors
   (keyboard-quit))
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
@@ -2195,7 +2196,7 @@ If buffer-or-name is nil return current buffer's mode."
     (setq eglot-ignored-server-capabilities (add-to-list 'eglot-ignored-server-capabilities ':documentHighlightProvider ))
     (set-face-attribute 'eglot-highlight-symbol-face nil :background 'unspecified :foreground 'unspecified)
     (set-face-attribute 'flymake-error nil :underline 'unspecified :foreground 'unspecified :background 'unspecified)
-    (flymake-mode-off)
+    ;; (flymake-mode-off)
     ))
 
 (defun my-enable-eglot-highlight()
@@ -2204,7 +2205,7 @@ If buffer-or-name is nil return current buffer's mode."
     (setq eglot-ignored-server-capabilities (delete ':documentHighlightProvider eglot-ignored-server-capabilities ))
     (set-face-attribute 'eglot-highlight-symbol-face nil :background "#59dcb7" :foreground "black" :weight 'normal)
     (set-face-attribute 'flymake-error nil :underline t :foreground "DeepPink" :background (face-background 'default))
-    (flymake-mode-on)
+    ;; (flymake-mode-on)
     ))
 
 
@@ -2355,7 +2356,7 @@ This variable is nil if the current buffer isn't visiting a file.")
     ;; (setq cursor-type (if (or (bound-and-true-p god-local-mode) buffer-read-only) 'box 'bar))
     ;; (set-cursor-color (if (or (bound-and-true-p god-local-mode) buffer-read-only) "red" "red"))
     ;; (blink-cursor-mode (if (or (bound-and-true-p god-local-mode) buffer-read-only) -1 -1))
-    (setq cursor-type (if (bound-and-true-p god-local-mode) 'box 'bar))
+    (setq cursor-type (if (bound-and-true-p god-local-mode) 'bar 'bar))
     (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
     (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
   ;; )
