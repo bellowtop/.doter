@@ -103,6 +103,8 @@ require('packer').startup(function(use)
 
   use 'ziglang/zig.vim'
 
+  use 'keith/swift.vim'
+
 
   if install_plugins then
     require('packer').sync()
@@ -764,6 +766,17 @@ if vim.fn.executable("qmlls") then
     on_attach = custom_attach,
     capabilities = capabilities,
     filetypes = { "qml" },
+    flags = {
+      debounce_text_changes = 500,
+    },
+  }
+end
+
+if vim.fn.executable("sourcekit-lsp") then
+  lspconfig.sourcekit.setup {
+    on_attach = custom_attach,
+    capabilities = capabilities,
+    filetypes = { "swift" },
     flags = {
       debounce_text_changes = 500,
     },
