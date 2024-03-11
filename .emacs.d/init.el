@@ -521,12 +521,12 @@
  '(doom-modeline-project-dir ((t (:inherit nil))))
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
- '(eglot-highlight-symbol-face ((t (:background "#59dcb7" :foreground "black" :weight 'normal))))
+ '(eglot-highlight-symbol-face ((t (:background "#59dcb7" :foreground "black" :weight normal))))
  '(eglot-mode-line ((t nil)))
  '(flymake-diagnostic-at-point-posframe-background-face ((t (:background "dark magenta"))))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
  '(flymake-error-echo ((t nil)))
- '(flymake-warning ((t (weight 'normal))))
+ '(flymake-warning ((t (weight normal))))
  '(flymake-warning-echo ((t nil)))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(help-argument-name ((t (:inherit italic :underline nil))))
@@ -784,6 +784,8 @@
 
 
 (require 'init-lang-zig)
+
+(require 'init-lang-swift)
 
 
 (use-package swift-mode
