@@ -175,6 +175,18 @@
 
 
 
+(defun my-imenu-list-smart-toggle-refresh()
+  (interactive)
+  (when (get-buffer-window imenu-list-buffer-name t)
+      (imenu-list-minor-mode -1)
+  )
+  (imenu-list-minor-mode 1)
+)
+
+
+
+
+
 (defun my-goto-match-paren (arg)
   "Go to the matching parenthesis if on parenthesis. Else go to the
   opening parenthesis one level up."
@@ -456,6 +468,8 @@
     (define-key god-local-mode-map (kbd "SPC N") #'my-neotree-find)
     (define-key god-local-mode-map (kbd "SPC s") #'counsel-imenu)
     (define-key god-local-mode-map (kbd "SPC S") #'my-occur)
+    (define-key god-local-mode-map (kbd "SPC i") #'imenu-list-smart-toggle)
+    (define-key god-local-mode-map (kbd "SPC I") #'my-imenu-list-smart-toggle-refresh)
 
 
     (define-key god-local-mode-map (kbd "@") #'my-treemacs-add-and-display-current-project)
