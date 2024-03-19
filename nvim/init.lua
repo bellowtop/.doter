@@ -646,9 +646,9 @@ local custom_attach = function(client, bufnr)
   -- The blow command will highlight the current variable and its usages in the buffer.
   if client.server_capabilities.documentHighlightProvider then
     vim.cmd([[
-      hi! link LspReferenceRead Visual
-      hi! link LspReferenceText Visual
-      hi! link LspReferenceWrite Visual
+      hi! LspReferenceRead guifg=black guibg=#59dcb7
+      hi! LspReferenceText guifg=black guibg=#59dcb7
+      hi! LspReferenceWrite guifg=black guibg=#59dcb7
     ]])
 
 

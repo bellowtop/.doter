@@ -445,6 +445,10 @@
 (toggle-truncate-lines t)
 
 
+;; imenu size sidebar width, 0.25 of screen
+;; NOTE: <SPC>-i to toggle imenu sidebar
+(setq imenu-list-size 0.25)
+(setq imenu-list-auto-update nil)
 
 
 
@@ -594,6 +598,15 @@
 (set-face-foreground 'vertical-border "#00ff00")
 
 
+;; fix terminal vertical-border char gap
+(defun my-change-window-divider ()
+  (let ((display-table (or buffer-display-table standard-display-table)))
+    (set-display-table-slot display-table 5 ?│)
+    (set-window-display-table (selected-window) display-table)))
+
+(add-hook 'window-configuration-change-hook 'my-change-window-divider)
+
+
 ;; (global-font-lock-mode -1)
 
 
@@ -728,6 +741,7 @@
   ;; directly open it when there is only one candidate.
   ;; (setq xref-show-xrefs-function #'xref-show-definitions-buffer)
   (setq xref-show-xrefs-function #'xref-show-definitions-buffer-at-bottom)
+  (add-to-list 'xref-after-return-hook 'recenter)
 )
 
 ;; (with-eval-after-load 'pulse
@@ -955,7 +969,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons treemacs-nerd-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons treemacs-nerd-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -1100,6 +1114,7 @@
   (push "*xref" centaur-tabs-excluded-prefixes)
   (push "*Async-native-compile-log" centaur-tabs-excluded-prefixes)
   (push "*EGLOT" centaur-tabs-excluded-prefixes)
+  (push "*Ilist*" centaur-tabs-excluded-prefixes)
   ;; (centaur-tabs-buffer-groups-function #'centaur-tabs-projectile-buffer-groups)
   (defun centaur-tabs-buffer-groups ()
     ;; only one group
@@ -1555,11 +1570,12 @@ respectively."
   (interactive)
   (my-god-mode)
   (when isearch-mode (isearch-abort) (isearch-abort))
-  (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
-  (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
-  ;; (delete-trailing-whitespace)
-  (ignore-errors (company-cancel))
-  (ignore-errors (remove-all-highlight))
+  (when (my-god-this-is-normal-editor-buffer (buffer-name))
+    (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
+    (when (bound-and-true-p iedit-mode) (iedit-done))  ;; exit iedit mode, if needed.
+    ;; (delete-trailing-whitespace)
+    (ignore-errors (company-cancel))
+    (ignore-errors (remove-all-highlight)))
   ;; (ignore-errors (flymake-mode-on)) ;; but show errors
   (keyboard-quit))
 
@@ -1923,6 +1939,7 @@ If buffer-or-name is nil return current buffer's mode."
                         "*Flymake diagnostics"
                         "*ansi-term*"
                         "*fzf*"
+                        "*Ilist*"
                         "*NeoTree*"))
 
 ;; legendary-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
@@ -1981,6 +1998,12 @@ If buffer-or-name is nil return current buffer's mode."
             n
             this-buffer-mode))
          legendary-modes))))
+
+
+(defun my-god-this-is-normal-editor-buffer (bufname)
+  (interactive)
+  (not (or (my-god-this-is-special-buffer bufname) (my-god-this-is-legendary-buffer bufname)))
+)
 
 
 (defun* my-god-mode ()
@@ -2947,13 +2970,17 @@ _u_: undo      _r_: redo
   (interactive)
   (if (bound-and-true-p selected-region-active-mode)
     (progn
-      (when (bound-and-true-p selected-active-timer)
-        (cancel-timer selected-active-timer))
-      (setq selected-active-timer
-            (run-with-timer 0.05 nil #'(lambda() (when (region-active-p)
-                                                  (remove-all-highlight)
-                                                  (my-disable-paren-highlight)
-                                                  (my-disable-eglot-highlight)))))
+
+      ;; only non-special buffer need this timer.
+      (when (my-god-this-is-normal-editor-buffer (buffer-name))
+          (when (bound-and-true-p selected-active-timer) (cancel-timer selected-active-timer))
+          (setq selected-active-timer
+                (run-with-timer 0.05 nil #'(lambda() (when (region-active-p)
+                                                      (remove-all-highlight)
+                                                      (my-disable-paren-highlight)
+                                                      (my-disable-eglot-highlight)))))
+          )
+
       (if (bound-and-true-p my-god-mode-is-active-flag)
         (progn
           ;; (message "god mode, & selected-region-active mode")
