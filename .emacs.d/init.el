@@ -1146,7 +1146,7 @@
   (push "*deadgrep" centaur-tabs-excluded-prefixes)
   (push "*Messages" centaur-tabs-excluded-prefixes)
   (push "*Warnings" centaur-tabs-excluded-prefixes)
-  (push "*Backstrace" centaur-tabs-excluded-prefixes)
+  (push "*Backtrace" centaur-tabs-excluded-prefixes)
   (push "*Gofmt" centaur-tabs-excluded-prefixes)
   (push "*Semantic" centaur-tabs-excluded-prefixes)
   (push "*Flymake" centaur-tabs-excluded-prefixes)
