@@ -300,13 +300,13 @@
 ;;   ;; (load-theme 'doom-challenger-deep t)
 ;;
 ;;   ;; (require 'autothemer)
-(load-theme 'bogster t)
+;; (load-theme 'bogster t)
 ;;   )
 
-;; (require 'atom-one-dark-theme)
-;; (setf atom-one-dark-colors-alist (assoc-delete-all "atom-one-dark-bg" atom-one-dark-colors-alist))
-;; (add-to-list 'atom-one-dark-colors-alist '("atom-one-dark-bg" if nil "color-235" "#161C23"))
-;; (load-theme 'atom-one-dark t)
+(require 'atom-one-dark-theme)
+(setf atom-one-dark-colors-alist (assoc-delete-all "atom-one-dark-bg" atom-one-dark-colors-alist))
+(add-to-list 'atom-one-dark-colors-alist '("atom-one-dark-bg" if nil "color-235" "#161C23"))
+(load-theme 'atom-one-dark t)
 
 
 
@@ -445,16 +445,56 @@
 (toggle-truncate-lines t)
 
 
-;; imenu size sidebar width, 0.25 of screen
+
+
+;; imenu size sidebar width, 0.20 of screen
 ;; NOTE: <SPC>-i to toggle imenu sidebar
-(setq imenu-list-size 0.25)
+(setq imenu-list-size 0.20)
 (setq imenu-list-auto-update nil)
+
+(defun my-enlarge-imenu-width()
+  (interactive)
+  (enlarge-window-horizontally (/ (frame-width) 3))
+  )
+
+(defun my-shrink-imenu-width()
+  (interactive)
+  (shrink-window-horizontally (/ (frame-width) 3))
+  )
+
+(defun my-fit-imenu-width()
+  (interactive)
+  (imenu-list-resize-window)
+  )
+
+(defun my-imenu-list-smart-toggle-refresh()
+  (interactive)
+  (when (and
+          (bound-and-true-p imenu-list-buffer-name)
+          (get-buffer-window imenu-list-buffer-name t))
+      (imenu-list-quit-window)
+  )
+  (imenu-list-minor-mode 1)
+  (select-window (get-buffer-window (imenu-list-get-buffer-create)))
+)
+
+(use-package imenu-list
+  :defer t
+  :bind (
+    (:map imenu-list-major-mode-map
+         ("H" . my-enlarge-imenu-width)
+         ("M" . my-fit-imenu-width)
+         ("L" . my-shrink-imenu-width)
+         ("m" . my-imenu-list-smart-toggle-refresh)
+    )
+  )
+)
 
 
 
 
 (defun my-set-bigger-spacing ()
-  (setq-local default-text-properties '(line-spacing 0.2 line-height 1.2)))
+  (setq-local default-text-properties '(line-spacing 0.1 line-height 1.1)))
 (add-hook 'text-mode-hook 'my-set-bigger-spacing)
 (add-hook 'prog-mode-hook 'my-set-bigger-spacing)
 
@@ -481,13 +521,13 @@
    "gnu/linux"))
 
 
-(set-face-attribute 'default nil :font "IBM Plex Mono-14.0")
-(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-14.0"))
+(set-face-attribute 'default nil :font "IBM Plex Mono-16.0")
+(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-16.0"))
 
 
 (when (my-system-type-is-darwin)
-  (set-face-attribute 'default nil :font "IBM Plex Mono-14.0" :weight 'light)
-  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-14.0")))
+  (set-face-attribute 'default nil :font "IBM Plex Mono-16.0") ;;; :weight 'light)
+  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-16.0")))
 
 (set-cursor-color "red")
 (setq-default cursor-type 'bar)
@@ -537,7 +577,7 @@
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(help-argument-name ((t (:inherit italic :underline nil))))
  '(highlight ((t (:background "orange1" :foreground "black"))))
- '(hl-line ((t (:extend t :background "#232D38"))))
+ '(hl-line ((t (:extend t :background "#33485e"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(isearch ((t (:background "orange1" :weight normal))))
  '(ivy-current-match ((t (:inherit region :background nil :foreground nil))))
@@ -1151,7 +1191,7 @@
                   centaur-tabs-jump-identifier-selected
                   centaur-tabs-jump-identifier-unselected
                   centaur-tabs-dim-buffer-face))
-        (set-face-attribute face nil :weight 'normal :family "Segoe UI" :height 130)
+        (set-face-attribute face nil :weight 'normal :family "Segoe UI" :height 150)
     )
 
     ;; ;; modified tab foreground
@@ -2556,6 +2596,7 @@ This variable is nil if the current buffer isn't visiting a file.")
   ;; call inner api
   (treemacs--set-width (/ (frame-width) 3))
   )
+
 
 
 (defun display-treemacs-widow-in-ace-window-selection()

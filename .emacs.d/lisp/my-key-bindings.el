@@ -175,14 +175,6 @@
 
 
 
-(defun my-imenu-list-smart-toggle-refresh()
-  (interactive)
-  (when (get-buffer-window imenu-list-buffer-name t)
-      (imenu-list-minor-mode -1)
-  )
-  (imenu-list-minor-mode 1)
-)
-
 
 
 
@@ -210,7 +202,7 @@
 
 
 
-(defun my-toggle-er/mark-inside-pairs (arg)
+(defun my-toggle-er/mark-inside-paren (arg)
   (interactive "p")
   (if (use-region-p)
       (progn
@@ -221,7 +213,7 @@
     (er/mark-inside-pairs))
   )
 
-(defun my-toggle-er/mark-outside-pairs (arg)
+(defun my-toggle-er/mark-outside-paren (arg)
   (interactive "p")
   (if (use-region-p)
       (progn
@@ -301,6 +293,7 @@
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-x") #'my-M-x)
     (define-key map (kbd "C-M-.") #'xref-find-definitions-other-window )
+    (define-key map (kbd "C-M-h") #'er/mark-defun)
 
     (define-key map (kbd "M-;")  #'centaur-tabs-backward)
     (define-key map (kbd "M-'")  #'centaur-tabs-forward)
@@ -310,8 +303,8 @@
     (define-key map (kbd "C-s n")  #'centaur-tabs--create-new-tab)
     (define-key map (kbd "C-s x")  #'centaur-tabs--kill-this-buffer-dont-ask)
 
-    (define-key map (kbd "M-n")  #'my-toggle-er/mark-inside-pairs)
-    (define-key map (kbd "M-m")  #'my-toggle-er/mark-outside-pairs)
+    (define-key map (kbd "M-n")  #'my-toggle-er/mark-inside-paren)
+    (define-key map (kbd "M-m")  #'my-toggle-er/mark-outside-paren)
 
     (define-key map (kbd "s-d") #'my-mc/mark-next-like-this)
 
@@ -515,6 +508,9 @@
     (define-key god-local-mode-map (kbd ", r r") #'httpd-start)
     (define-key god-local-mode-map (kbd ", r k") #'httpd-stop)
     (define-key god-local-mode-map (kbd ", ,") #'my-delete-other-windows)
+
+    (define-key god-local-mode-map (kbd ", i \"") #'er/mark-inside-pairs)
+    (define-key god-local-mode-map (kbd ", a \"") #'er/mark-outside-pairs)
 
     (define-key god-local-mode-map (kbd "g d") #'xref-find-definitions)
     (define-key god-local-mode-map (kbd "g r") #'xref-find-references)
