@@ -299,14 +299,14 @@
 ;; (if (display-graphic-p)
 ;;   ;; (load-theme 'doom-challenger-deep t)
 ;;
-;;   ;; (require 'autothemer)
-;; (load-theme 'bogster t)
-;;   )
 
-(require 'atom-one-dark-theme)
-(setf atom-one-dark-colors-alist (assoc-delete-all "atom-one-dark-bg" atom-one-dark-colors-alist))
-(add-to-list 'atom-one-dark-colors-alist '("atom-one-dark-bg" if nil "color-235" "#161C23"))
-(load-theme 'atom-one-dark t)
+(require 'autothemer)
+(load-theme 'bogster t)
+
+;; (require 'atom-one-dark-theme)
+;; (setf atom-one-dark-colors-alist (assoc-delete-all "atom-one-dark-bg" atom-one-dark-colors-alist))
+;; (add-to-list 'atom-one-dark-colors-alist '("atom-one-dark-bg" if nil "color-235" "#161C23"))
+;; (load-theme 'atom-one-dark t)
 
 
 
@@ -521,13 +521,22 @@
    "gnu/linux"))
 
 
-(set-face-attribute 'default nil :font "IBM Plex Mono-16.0")
-(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-16.0"))
+;;; (set-face-attribute 'default nil :font "IBM Plex Mono-16.0")
+;;; (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-16.0"))
+;;;
+;;; (when (my-system-type-is-darwin)
+;;;   (set-face-attribute 'default nil :font "IBM Plex Mono-16.0") ;;; :weight 'light)
+;;;   (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-16.0")))
 
+
+;;; https://github.com/supercomputra/SF-Mono-Font
+;;;
+(set-face-attribute 'default nil :font "SF Mono-16.0")
+(add-to-list 'default-frame-alist '(font . "SF Mono-16.0"))
 
 (when (my-system-type-is-darwin)
-  (set-face-attribute 'default nil :font "IBM Plex Mono-16.0") ;;; :weight 'light)
-  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-16.0")))
+  (set-face-attribute 'default nil :font "SF Mono-16.0" :weight 'light)
+  (add-to-list 'default-frame-alist '(font . "SF Mono-16.0")))
 
 (set-cursor-color "red")
 (setq-default cursor-type 'bar)
