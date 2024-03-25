@@ -167,12 +167,15 @@
     (backward-char)))
 
 
+
 (defun my-quit-other-window()
   (interactive)
   (delete-other-windows)
+  (ignore-errors
+    (when (my-imenu-list-check-window-is-open) (imenu-list-quit-window)))
+  ;; (ignore-errors
+  ;;   (when (eq (treemacs-current-visibility) 'visible) (delete-window (treemacs-get-local-window))))
   (keyboard-quit))
-
-
 
 
 
@@ -201,6 +204,17 @@
 
 
 
+
+(defun my-toggle-er/mark-defun (arg)
+  (interactive "p")
+  (if (use-region-p)
+      (progn
+        (jump-to-register 'a)
+        (keyboard-quit)
+        )
+    (point-to-register 'a)
+    (er/mark-defun))
+  )
 
 (defun my-toggle-er/mark-inside-paren (arg)
   (interactive "p")
@@ -293,7 +307,7 @@
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-x") #'my-M-x)
     (define-key map (kbd "C-M-.") #'xref-find-definitions-other-window )
-    (define-key map (kbd "C-M-h") #'er/mark-defun)
+    (define-key map (kbd "C-M-h") #'my-toggle-er/mark-defun)
 
     (define-key map (kbd "M-;")  #'centaur-tabs-backward)
     (define-key map (kbd "M-'")  #'centaur-tabs-forward)
@@ -509,8 +523,8 @@
     (define-key god-local-mode-map (kbd ", r k") #'httpd-stop)
     (define-key god-local-mode-map (kbd ", ,") #'my-delete-other-windows)
 
-    (define-key god-local-mode-map (kbd ", i \"") #'er/mark-inside-pairs)
-    (define-key god-local-mode-map (kbd ", a \"") #'er/mark-outside-pairs)
+    (define-key god-local-mode-map (kbd ", i \"") #'er/mark-inside-quotes)
+    (define-key god-local-mode-map (kbd ", a \"") #'er/mark-outside-quotes)
 
     (define-key god-local-mode-map (kbd "g d") #'xref-find-definitions)
     (define-key god-local-mode-map (kbd "g r") #'xref-find-references)
@@ -530,6 +544,11 @@
     ;; (my-key-chord-define god-local-mode-map ",,"  #'er/mark-symbol)
 
     ;; (define-key god-local-mode-map (kbd "C-m") #'next-line)
+
+    (define-key god-local-mode-map (kbd "C-d") #'scroll-up-command)
+    (define-key god-local-mode-map (kbd "C-u") #'scroll-down-command)
+    (define-key god-local-mode-map (kbd "C-f") #'scroll-full-page-up)
+    (define-key god-local-mode-map (kbd "C-b") #'scroll-full-page-down)
 
     (define-key god-local-mode-map (kbd ";") #'scroll-up-command)
     (define-key god-local-mode-map (kbd "'") #'scroll-down-command)
