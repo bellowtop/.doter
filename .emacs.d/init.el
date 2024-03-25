@@ -467,11 +467,17 @@
   (imenu-list-resize-window)
   )
 
+(defun my-imenu-list-check-window-is-open()
+  (interactive)
+  (and
+    (bound-and-true-p imenu-list-buffer-name)
+    (get-buffer-window imenu-list-buffer-name t)
+    t)
+  )
+
 (defun my-imenu-list-smart-toggle-refresh()
   (interactive)
-  (when (and
-          (bound-and-true-p imenu-list-buffer-name)
-          (get-buffer-window imenu-list-buffer-name t))
+  (when (my-imenu-list-check-window-is-open)
       (imenu-list-quit-window)
   )
   (imenu-list-minor-mode 1)
@@ -499,6 +505,9 @@
 (add-hook 'prog-mode-hook 'my-set-bigger-spacing)
 
 
+
+
+
 ;; Check if system is Darwin/Mac OS X
 (defun my-system-type-is-darwin ()
   "Return true if system is darwin-based (Mac OS X)"
@@ -521,22 +530,22 @@
    "gnu/linux"))
 
 
-;;; (set-face-attribute 'default nil :font "IBM Plex Mono-16.0")
-;;; (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-16.0"))
-;;;
-;;; (when (my-system-type-is-darwin)
-;;;   (set-face-attribute 'default nil :font "IBM Plex Mono-16.0") ;;; :weight 'light)
-;;;   (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-16.0")))
-
-
-;;; https://github.com/supercomputra/SF-Mono-Font
-;;;
-(set-face-attribute 'default nil :font "SF Mono-16.0")
-(add-to-list 'default-frame-alist '(font . "SF Mono-16.0"))
+(set-face-attribute 'default nil :font "IBM Plex Mono-16.0")
+(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-16.0"))
 
 (when (my-system-type-is-darwin)
-  (set-face-attribute 'default nil :font "SF Mono-16.0" :weight 'light)
-  (add-to-list 'default-frame-alist '(font . "SF Mono-16.0")))
+  (set-face-attribute 'default nil :font "IBM Plex Mono-16.0") ;;; :weight 'light)
+  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-16.0")))
+
+
+;; ;;; https://github.com/supercomputra/SF-Mono-Font
+;; ;;;
+;; (set-face-attribute 'default nil :font "SF Mono-16.0")
+;; (add-to-list 'default-frame-alist '(font . "SF Mono-16.0"))
+;;
+;; (when (my-system-type-is-darwin)
+;;   (set-face-attribute 'default nil :font "SF Mono-16.0" :weight 'light)
+;;   (add-to-list 'default-frame-alist '(font . "SF Mono-16.0")))
 
 (set-cursor-color "red")
 (setq-default cursor-type 'bar)
@@ -793,12 +802,12 @@
   (add-to-list 'xref-after-return-hook 'recenter)
 )
 
-;; (with-eval-after-load 'pulse
+(with-eval-after-load 'pulse
 ;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background "#1f4670")
 ;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background 'unspecified :inverse-video t)
 ;;   ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "green" :background "black")
-;;   ;; (setq pulse-delay 0.03)
-;;   )
+    (setq pulse-delay 0.01) ;; pulse fast!
+)
 
 (define-key global-map (kbd "<s-mouse-1>")
             #'(lambda ()
@@ -806,8 +815,57 @@
                 (mouse-set-point last-input-event)
                 (xref-find-definitions-at-mouse last-input-event)))
 
+(define-key global-map (kbd "<s-mouse-3>")
+            #'(lambda ()
+                (interactive)
+                (xref-go-back)
+                ))
 
-(define-key global-map (kbd "<s-mouse-3>") 'xref-go-back)
+
+
+
+
+;;; swipe to go backward and forward
+;;;
+(defun my-start-cold-down-wheel()
+  (my-unbind-swipe-actions)
+  (run-with-timer 1 nil #'(lambda()
+                              (my-bind-swipe-actions))))
+
+(defun my-swipe-backward-with-cold-down ()
+  (interactive)
+  (when (eq my-wheel-cold-down-reset-flag nil)
+    (nice-jumper/backward)
+    (recenter)
+    (my-start-cold-down-wheel)))
+
+(defun my-swipe-forward-with-cold-down ()
+  (interactive)
+  (when (eq my-wheel-cold-down-reset-flag nil)
+    (nice-jumper/forward)
+    (recenter)
+    (my-start-cold-down-wheel)))
+
+(defun my-unbind-swipe-actions ()
+  (global-unset-key [wheel-left])
+  (global-unset-key [wheel-right])
+  )
+
+(defun my-bind-swipe-actions ()
+  (define-key global-map (kbd "<wheel-left>") 'my-swipe-backward-with-cold-down)
+  (define-key global-map (kbd "<wheel-right>") 'my-swipe-forward-with-cold-down)
+  )
+
+(when (my-system-type-is-darwin)
+  (my-bind-swipe-actions)
+)
+
+
+;;; right click to open context-menu. disable mouse-3 to disable region behavior, which is annoying!
+;;;
+(global-unset-key [mouse-3])
+(add-hook 'prog-mode-hook 'context-menu-mode)
+
 
 
 ;; enable mouse click in terminal
@@ -1200,7 +1258,7 @@
                   centaur-tabs-jump-identifier-selected
                   centaur-tabs-jump-identifier-unselected
                   centaur-tabs-dim-buffer-face))
-        (set-face-attribute face nil :weight 'normal :family "Segoe UI" :height 150)
+        (set-face-attribute face nil :weight 'normal :family "IBM Plex Sans" :height 150)
     )
 
     ;; ;; modified tab foreground
@@ -1582,6 +1640,16 @@ respectively."
       ;; scroll-preserve-screen-position 'always
       auto-window-vscroll nil)
 
+(defun scroll-full-page-down ()
+  "scroll down the page"
+  (interactive)
+  (scroll-down (* (/ (window-body-height) 5) 4)))
+
+(defun scroll-full-page-up ()
+  "scroll up the page"
+  (interactive)
+  (scroll-up (* (/ (window-body-height) 5) 4)))
+
 (defun scroll-half-page-down ()
   "scroll down half the page"
   (interactive)
@@ -1894,7 +1962,7 @@ respectively."
 
 
 (require 'avy)
-(setq avy-keys (list ?a ?c ?d ?e ?f ?h ?i ?j ?k ?l ?m ?n ?o ?s ?v ?w ?\;))
+(setq avy-keys (list ?a ?s ?d ?f ?g ?w ?e ?v ?m ?n ?i ?o ?h ?j ?k ?l ?\;))
 (setq avy-background 't)
 (add-to-list 'avy-ignored-modes 'treemacs-mode)
 
@@ -2422,6 +2490,7 @@ This variable is nil if the current buffer isn't visiting a file.")
 (global-term-cursor-mode 1)
 
 (setq blink-cursor-blinks 0)
+(setq blink-cursor-interval 0.3)
 
 ;; (setq window-devider-color "#57a331")
 ;; (setq window-divider-color "green")
@@ -2434,7 +2503,7 @@ This variable is nil if the current buffer isn't visiting a file.")
     ;; (blink-cursor-mode (if (or (bound-and-true-p god-local-mode) buffer-read-only) -1 -1))
     (setq cursor-type (if (bound-and-true-p god-local-mode) 'bar 'bar))
     (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
-    (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
+    (blink-cursor-mode (if (bound-and-true-p god-local-mode) 1 -1))
   ;; )
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
   (if (bound-and-true-p god-local-mode)
@@ -2592,6 +2661,7 @@ This variable is nil if the current buffer isn't visiting a file.")
   (set-window-margins (treemacs-get-local-window) 1 1))
 
 (defun my-add-hl-line-for-treemacs()
+  (interactive)
   (setq-local face-remapping-alist '((hl-line (:inherit hl-line)))))
 
 (defun my-decrease-treemacs-width()
@@ -2631,7 +2701,6 @@ This variable is nil if the current buffer isn't visiting a file.")
     (treemacs-follow-mode -1)
   :bind
     (:map treemacs-mode-map
-          ("C-c t" . treemacs-toggle-node)
           ("C-c h" . my-add-hl-line-for-treemacs)
           ("H" . my-decrease-treemacs-width)
           ("L" . my-increase-treemacs-width)
@@ -2652,10 +2721,12 @@ This variable is nil if the current buffer isn't visiting a file.")
                     treemacs-directory-collapsed-face
                     treemacs-file-face
                     treemacs-tags-face))
-      (set-face-attribute face nil :family "Segoe UI" :weight 'normal :height 1.0))
+      (set-face-attribute face nil :family "IBM Plex Sans" :weight 'normal :height 1.0))
    (when (display-graphic-p)
-        (require 'treemacs-all-the-icons)
-        (treemacs-load-theme "all-the-icons")
+        ;; (require 'treemacs-all-the-icons)
+        ;; (treemacs-load-theme "all-the-icons")
+        (require 'treemacs-compatibility)
+        (treemacs-load-all-the-icons-with-workaround-font "Segoe UI")
      )
    (unless (display-graphic-p)
         (require 'treemacs-nerd-icons)
