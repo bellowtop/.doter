@@ -2721,7 +2721,7 @@ This variable is nil if the current buffer isn't visiting a file.")
                     treemacs-directory-collapsed-face
                     treemacs-file-face
                     treemacs-tags-face))
-      (set-face-attribute face nil :family "IBM Plex Sans" :weight 'normal :height 1.0))
+      (set-face-attribute face nil :family "IBM Plex Mono" :weight 'normal :height 150))
    (when (display-graphic-p)
         (require 'treemacs-nerd-icons)
         (treemacs-load-theme "nerd-icons")
