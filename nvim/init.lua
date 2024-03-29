@@ -176,7 +176,7 @@ vim.opt.number = true
 vim.opt.modeline = false
 
 vim.opt.history = 1000
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 2
 vim.opt.foldmethod = "syntax"
 vim.opt.tabstop = 4
 vim.opt.shiftwidth =4

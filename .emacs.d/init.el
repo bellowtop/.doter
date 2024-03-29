@@ -288,8 +288,8 @@
 ;;   (load-theme 'vscode-dark-plus t))
 
 
-;; (require 'autothemer)
-;; (load-theme 'bogster t)
+(require 'autothemer)
+(load-theme 'bogster t)
 
 ;; (require 'vs-dark-theme)
 ;; (load-theme 'vs-dark t)
@@ -299,9 +299,6 @@
 ;; (if (display-graphic-p)
 ;;   ;; (load-theme 'doom-challenger-deep t)
 ;;
-
-(require 'autothemer)
-(load-theme 'bogster t)
 
 ;; (require 'atom-one-dark-theme)
 ;; (setf atom-one-dark-colors-alist (assoc-delete-all "atom-one-dark-bg" atom-one-dark-colors-alist))
@@ -324,6 +321,8 @@
 ;;   (load-theme 'doom-dracula t)
 ;;   ;; (load-theme 'doom-oceanic-next t)
    )
+
+;; (load-theme 'kaolin-ocean t)
 
 ;; (load-theme 'spacemacs-dark t)
 ;; (load-theme 'dracula t)
@@ -360,6 +359,7 @@
                       :foreground (face-foreground 'default)
                       ))
 (my-clear-fringe-color)
+
 
 
 
@@ -500,7 +500,9 @@
 
 
 (defun my-set-bigger-spacing ()
-  (setq-local default-text-properties '(line-spacing 0.1 line-height 1.1)))
+  ;; (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15))
+  (setq-local default-text-properties '(line-spacing 0 line-height 1))
+  )
 (add-hook 'text-mode-hook 'my-set-bigger-spacing)
 (add-hook 'prog-mode-hook 'my-set-bigger-spacing)
 
@@ -562,8 +564,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(avy-lead-face ((t (:foreground "#E20000" :weight bold))))
- '(avy-lead-face-0 ((t (:foreground "#FFB400" :weight bold))))
  '(centaur-tabs-selected ((t (:inherit mode-line :inverse-video t))))
  '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "pink"))))
  '(centaur-tabs-unselected ((t (:inherit mode-line))))
@@ -597,7 +597,7 @@
  '(highlight ((t (:background "orange1" :foreground "black"))))
  '(hl-line ((t (:extend t :background "#33485e"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
- '(isearch ((t (:background "orange1" :weight normal))))
+ '(isearch ((t (:background "orange1" :foreground "black" :weight normal))))
  '(ivy-current-match ((t (:inherit region :background nil :foreground nil))))
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
@@ -634,7 +634,6 @@
  '(term-default-fg-color ((t (:inherit term-color-white))))
  '(tty-menu-enabled-face ((t (:inherit hl-line))))
  '(tty-menu-selected-face ((t (:inherit eglot-highlight-symbol-face))))
- '(whitespace-tab ((t (:inherit default :foreground "#627D9D"))))
  '(whitespace-trailing ((t (:background "black" :foreground "yellow" :weight bold))))
  '(widget-field ((t (:extend t :background "gray" :foreground "black"))))
  '(window-divider ((t (:foreground "green"))))
@@ -834,17 +833,15 @@
 
 (defun my-swipe-backward-with-cold-down ()
   (interactive)
-  (when (eq my-wheel-cold-down-reset-flag nil)
-    (nice-jumper/backward)
+    (xref-go-back)
     (recenter)
-    (my-start-cold-down-wheel)))
+    (my-start-cold-down-wheel))
 
 (defun my-swipe-forward-with-cold-down ()
   (interactive)
-  (when (eq my-wheel-cold-down-reset-flag nil)
-    (nice-jumper/forward)
+    (xref-go-forward)
     (recenter)
-    (my-start-cold-down-wheel)))
+    (my-start-cold-down-wheel))
 
 (defun my-unbind-swipe-actions ()
   (global-unset-key [wheel-left])
@@ -1108,6 +1105,13 @@
 
 
 
+(set-face-attribute 'whitespace-tab nil
+                      :background (face-background 'default)
+                      :foreground "#627D9D"
+                      )
+
+
+
 (use-package
   iedit
   :defer t
@@ -1222,6 +1226,7 @@
   (push "*Async-native-compile-log" centaur-tabs-excluded-prefixes)
   (push "*EGLOT" centaur-tabs-excluded-prefixes)
   (push "*Ilist*" centaur-tabs-excluded-prefixes)
+  (push "*Occur*" centaur-tabs-excluded-prefixes)
   ;; (centaur-tabs-buffer-groups-function #'centaur-tabs-projectile-buffer-groups)
   (defun centaur-tabs-buffer-groups ()
     ;; only one group
@@ -1633,7 +1638,7 @@ respectively."
 
 
 
-(setq scroll-margin 3
+(setq scroll-margin 2
       scroll-conservatively 101
       scroll-up-aggressively 0.01
       scroll-down-aggressively 0.01
@@ -1987,6 +1992,18 @@ respectively."
 )
 
 
+(set-face-attribute 'avy-lead-face nil
+                      :background (face-background 'default)
+                      :foreground "#E20000"
+                      )
+
+(set-face-attribute 'avy-lead-face-0 nil
+                      :background (face-background 'default)
+                      :foreground "#FFB400"
+                      )
+
+
+
 
 
 
@@ -2048,6 +2065,7 @@ If buffer-or-name is nil return current buffer's mode."
                         "*Packages"
                         "*lsp-log*"
                         "*Help*"
+                        "*Occur*"
                         "*info*"
                         "*Warnings*"
                         "helm-*"
@@ -2698,6 +2716,7 @@ This variable is nil if the current buffer isn't visiting a file.")
     (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
     (add-hook 'treemacs-mode-hook #'my-add-hl-line-for-treemacs)
     (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
+    (add-hook 'treemacs-mode-hook #'my-set-bigger-spacing)
     (treemacs-follow-mode -1)
   :bind
     (:map treemacs-mode-map
