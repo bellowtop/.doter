@@ -370,7 +370,7 @@ behavior added."
          (let ((debug-on-quit nil))
            (signal 'quit nil)))))
 
-(global-set-key [remap keyboard-quit] #'keyboard-quit-context+)
+;; (global-set-key [remap keyboard-quit] #'keyboard-quit-context+)
 
 ;; https://emacs-china.org/t/gif/11887
 (defun +funcs/video-compress-and-convert (video new)

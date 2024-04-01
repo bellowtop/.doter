@@ -587,6 +587,7 @@
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
  '(eglot-highlight-symbol-face ((t (:background "#59dcb7" :foreground "black" :weight normal))))
  '(eglot-mode-line ((t nil)))
+ '(eldoc-box-body ((t (:inherit default))))
  '(flymake-diagnostic-at-point-posframe-background-face ((t (:background "dark magenta"))))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
  '(flymake-error-echo ((t nil)))
@@ -594,7 +595,7 @@
  '(flymake-warning-echo ((t nil)))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(help-argument-name ((t (:inherit italic :underline nil))))
- '(highlight ((t (:background "orange1" :foreground "black"))))
+ '(highlight ((t (:background "#7ED9B9" :foreground "black" :weight normal))))
  '(hl-line ((t (:extend t :background "#33485e"))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(isearch ((t (:background "orange1" :foreground "black" :weight normal))))
@@ -820,6 +821,13 @@
                 (xref-go-back)
                 ))
 
+(define-key global-map (kbd "<C-mouse-3>")
+            #'(lambda ()
+                (interactive)
+                (mouse-set-point last-input-event)
+                (xref-find-references-at-mouse last-input-event)
+                ))
+(global-unset-key [C-down-mouse-3])
 
 
 
@@ -881,6 +889,7 @@
 
 
 (setq eldoc-idle-delay 0.2)
+(setq eldoc-box-clear-with-C-g t)
 (require 'eldoc-box)
 
 (require 'custom-util-funcs)
@@ -1073,7 +1082,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -1699,7 +1708,11 @@ respectively."
     (ignore-errors (company-cancel))
     (ignore-errors (remove-all-highlight)))
   ;; (ignore-errors (flymake-mode-on)) ;; but show errors
-  (keyboard-quit))
+  (keyboard-quit)
+  (keyboard-quit-context+) ;; from custom-util-funcs.el
+  )
+
+(global-set-key [remap keyboard-quit] #'my-escape-key)
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
 ;; (define-key helm-map (kbd "<escape>") #'helm-keyboard-quit)
@@ -2065,6 +2078,7 @@ If buffer-or-name is nil return current buffer's mode."
                         "*Packages"
                         "*lsp-log*"
                         "*Help*"
+                        "*Ivy"
                         "*Occur*"
                         "*info*"
                         "*Warnings*"
@@ -2091,7 +2105,7 @@ If buffer-or-name is nil return current buffer's mode."
                           "*slime-repl"
                           "*Customize"))
 
-(setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "cfrs-input-mode" ))
+(setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "cfrs-input-mode" "minibuffer-mode"))
 
 
 (defun my-god-this-is-special-buffer (bufname)
@@ -2100,17 +2114,9 @@ If buffer-or-name is nil return current buffer's mode."
         (this-buffer-mode (symbol-name
                            (buffer-mode bufname))))
     (or (seq-filter
-         (lambda (n)
-           (string-prefix-p
-            n
-            this-buffer-name))
-         special-buffers)
+         (lambda (n) (string-prefix-p n this-buffer-name)) special-buffers)
         (seq-filter
-         (lambda (n)
-           (string-prefix-p
-            n
-            this-buffer-mode))
-         special-buffer-modes))))
+         (lambda (n) (string-prefix-p n this-buffer-mode)) special-buffer-modes))))
 
 (defun* my-god-this-is-legendary-buffer (bufname)
   (interactive)
@@ -2122,17 +2128,9 @@ If buffer-or-name is nil return current buffer's mode."
     ;; (message "this-buffer-name %s" this-buffer-name)
     ;; (message "this-buffer-mode %s" this-buffer-mode)
     (or (seq-filter
-         (lambda (n)
-           (string-prefix-p
-            n
-            this-buffer-name))
-         legendary-buffers)
+         (lambda (n) (string-prefix-p n this-buffer-name)) legendary-buffers)
         (seq-filter
-         (lambda (n)
-           (string-prefix-p
-            n
-            this-buffer-mode))
-         legendary-modes))))
+         (lambda (n) (string-prefix-p n this-buffer-mode)) legendary-modes))))
 
 
 (defun my-god-this-is-normal-editor-buffer (bufname)
@@ -2164,6 +2162,8 @@ If buffer-or-name is nil return current buffer's mode."
       (god-local-mode 1)                  ;; start local mode
       (setq my-god-mode-is-active-flag t)
       (my-special-buffer-keys-minor-mode 0)
+      (visual-line-mode 1)
+      ;; (global-visual-line-mode 1) ;;
       )
     nil)
   )
@@ -2521,7 +2521,7 @@ This variable is nil if the current buffer isn't visiting a file.")
     ;; (blink-cursor-mode (if (or (bound-and-true-p god-local-mode) buffer-read-only) -1 -1))
     (setq cursor-type (if (bound-and-true-p god-local-mode) 'bar 'bar))
     (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
-    (blink-cursor-mode (if (bound-and-true-p god-local-mode) 1 -1))
+    (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 1))
   ;; )
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
   (if (bound-and-true-p god-local-mode)
@@ -2922,6 +2922,13 @@ _u_: undo      _r_: redo
 "
   ("u" undo-tree-undo)
   ("r" undo-tree-redo))
+
+(defhydra hydra-cw-o-window-menu (global-map "C-c C-w")
+  "
+_o_: other-window
+"
+  ("o" other-window)
+  )
 
 
 ;;;  ;; Have to use require, not use-package

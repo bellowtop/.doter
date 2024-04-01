@@ -284,6 +284,16 @@
 
 
 
+(defun my-toggle-eldoc-box-help-at-point ()
+  (interactive)
+  (if (and (bound-and-true-p eldoc-box--frame)
+           (frame-visible-p eldoc-box--frame))
+      (eldoc-box-quit-frame)
+    (eldoc-box-help-at-point)))
+
+
+
+
 
 (eval-after-load "dired"
   '(progn
@@ -367,14 +377,14 @@
     (define-prefix-command 'my-god-mode-eglot-key)
     (define-prefix-command 'my-god-mode-viewer-key)
     (define-prefix-command 'my-god-mode-delete-key)
+    (define-prefix-command 'my-god-mode-window-key)
 
-    ;; (define-prefix-command 'my-god-mode-window-key)
     (define-key god-local-mode-map (kbd "SPC") 'my-god-mode-leader-key)
     (define-key god-local-mode-map (kbd ",")   'my-god-mode-dummmy-key)
     (define-key god-local-mode-map (kbd "g")   'my-god-mode-eglot-key)
     (define-key god-local-mode-map (kbd "z")   'my-god-mode-viewer-key)
     (define-key god-local-mode-map (kbd "d")   'my-god-mode-delete-key)
-    ;; (define-key god-local-mode-map (kbd "q")   'my-god-mode-window-key)
+    (define-key god-local-mode-map (kbd "q")   'my-god-mode-window-key)
 
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
@@ -452,12 +462,13 @@
     (define-key god-local-mode-map (kbd "SPC SPC") #'my-mark-ring)
     (define-key god-local-mode-map (kbd "SPC b") #'counsel-switch-buffer)
     (define-key god-local-mode-map (kbd "SPC B") #'ibuffer)
+    ;; (define-key god-local-mode-map (kbd "SPC B") #'helm-buffers-list)
     (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
     (define-key god-local-mode-map (kbd "SPC K") #'my-only-current-buffer)
     (define-key god-local-mode-map (kbd "SPC P P") #'my-show-file-name)
     (define-key god-local-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
 
-    (define-key god-local-mode-map (kbd "SPC ,") #'eldoc-box-eglot-help-at-point)
+    (define-key god-local-mode-map (kbd "C-\\") #'my-toggle-eldoc-box-help-at-point)
     (define-key god-local-mode-map (kbd "SPC R") #'my-revert-buffer-no-confirm)
 
     (define-key god-local-mode-map (kbd "SPC f") #'my-projectile-find-file)
@@ -482,17 +493,18 @@
     (define-key god-local-mode-map (kbd "@") #'my-treemacs-add-and-display-current-project)
     (define-key god-local-mode-map (kbd "SPC @") #'treemacs-add-and-display-current-project)
 
-    ;;  (define-key god-local-mode-map (kbd "q l") #'windmove-right)
-    ;;  (define-key god-local-mode-map (kbd "q h") #'windmove-left)
-    ;;  (define-key god-local-mode-map (kbd "q k") #'windmove-up)
-    ;;  (define-key god-local-mode-map (kbd "q j") #'windmove-down)
-    ;;  (define-key god-local-mode-map (kbd "q v") #'split-window-right)
-    ;;  (define-key god-local-mode-map (kbd "q s") #'split-window-below)
-    ;;  (define-key god-local-mode-map (kbd "q t") #'transpose-frame)
-    ;;  (define-key god-local-mode-map (kbd "q x") #'delete-window)         ;; delete this window
-    ;;  (define-key god-local-mode-map (kbd "q d") #'delete-other-windows)  ;; delete other window
-    ;;  (define-key god-local-mode-map (kbd "q q") #'other-window)
+    ;; (define-key god-local-mode-map (kbd "q l") #'windmove-right)
+    ;; (define-key god-local-mode-map (kbd "q h") #'windmove-left)
+    ;; (define-key god-local-mode-map (kbd "q k") #'windmove-up)
+    ;; (define-key god-local-mode-map (kbd "q j") #'windmove-down)
+    ;; (define-key god-local-mode-map (kbd "q v") #'split-window-right)
+    ;; (define-key god-local-mode-map (kbd "q s") #'split-window-below)
+    ;; (define-key god-local-mode-map (kbd "q t") #'transpose-frame)
+    ;; (define-key god-local-mode-map (kbd "q TAB") #'other-window)
+    ;; (define-key god-local-mode-map (kbd "q x") #'delete-window)         ;; delete this window
+    (define-key god-local-mode-map (kbd "q q") #'my-quit-other-window)  ;; delete other window
 
+    (define-key god-local-mode-map (kbd "C-w o") #'hydra-cw-o-window-menu/other-window)
     (define-key god-local-mode-map (kbd "C-w l") #'windmove-right)
     (define-key god-local-mode-map (kbd "C-w h") #'windmove-left)
     (define-key god-local-mode-map (kbd "C-w k") #'windmove-up)
@@ -603,6 +615,7 @@
     (define-key map (kbd "M-;")  #'centaur-tabs-backward)
     (define-key map (kbd "M-'")  #'centaur-tabs-forward)
 
+    (define-key map (kbd "C-w o") #'hydra-cw-o-window-menu/other-window)
     (define-key map (kbd "C-w l") #'windmove-right)
     (define-key map (kbd "C-w h") #'windmove-left)
     (define-key map (kbd "C-w k") #'windmove-up)
