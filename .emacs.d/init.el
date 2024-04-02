@@ -288,10 +288,10 @@
 ;;   (load-theme 'vscode-dark-plus t))
 
 
-(require 'autothemer)
-(load-theme 'bogster t)
+;; (require 'autothemer)
+;; (load-theme 'bogster t)
 
-;; (load-theme 'spolsky t)
+(load-theme 'spolsky t)
 
 ;; (require 'vs-dark-theme)
 ;; (load-theme 'vs-dark t)
@@ -598,7 +598,7 @@
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(help-argument-name ((t (:inherit italic :underline nil))))
  '(highlight ((t (:background "#7ED9B9" :foreground "black" :weight normal))))
- '(hl-line ((t (:extend nil :background "#33485e" :underline nil))))
+ '(hl-line ((t (:extend t :background "#33485e" :underline nil))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(isearch ((t (:background "orange1" :foreground "black" :weight normal))))
  '(ivy-current-match ((t (:inherit region :background nil :foreground nil))))
@@ -758,6 +758,15 @@
 
 
 
+(defun my-recenter-scroll-to-top()
+  (interactive)
+  (recenter-top-bottom 1)
+  (setq recenter-last-op nil)
+  )
+
+
+
+
 ;; (defun my-recenter (&optional ARG PRED)
 ;;   (recenter)
 ;;   (xref-pulse-momentarily)
@@ -801,7 +810,10 @@
   ;; directly open it when there is only one candidate.
   ;; (setq xref-show-xrefs-function #'xref-show-definitions-buffer)
   (setq xref-show-xrefs-function #'xref-show-definitions-buffer-at-bottom)
-  (add-to-list 'xref-after-return-hook 'recenter)
+
+  ;; (add-to-list 'xref-after-return-hook 'my-recenter-scroll-to-top)
+  ;; (setq xref-after-jump-hook (delete 'recenter xref-after-jump-hook))
+  ;; (add-to-list 'xref-after-jump-hook 'my-recenter-scroll-to-top)
 )
 
 (with-eval-after-load 'pulse
@@ -2162,9 +2174,9 @@ If buffer-or-name is nil return current buffer's mode."
     (progn
       ;; (message "%s not a special buffer" (buffer-name))
       (god-local-mode 1)                  ;; start local mode
+      (visual-line-mode 1)
       (setq my-god-mode-is-active-flag t)
       (my-special-buffer-keys-minor-mode 0)
-      ;; (visual-line-mode 1)
       ;; (global-visual-line-mode 1) ;;
       )
     nil)
