@@ -59,9 +59,9 @@
    `(button ((t (:foreground, *keywords* :underline t))))
    `(default ((t (:background, *background* :foreground, *normal*))))
    `(header-line ((t (:background, *mode-line-bg* :foreground, *normal*)))) ;; info header
-   `(highlight ((t (:background, *current-line*))))
-   `(highlight-face ((t (:background, *current-line*))))
-   `(hl-line ((t (:background, *current-line* :underline t))))
+   ;; `(highlight ((t (:background, *current-line*))))
+   ;; `(highlight-face ((t (:background, *current-line*))))
+   ;; `(hl-line ((t (:background, *current-line* :underline t))))
    `(info-xref ((t (:foreground, *keywords* :underline t))))
    `(region ((t (:background, *visual-selection*))))
    `(underline ((nil (:underline t))))
@@ -96,9 +96,9 @@
    `(text-cursor ((t (:background, *cursor-underscore*))))
    `(vertical-border ((t (:background, *background*)))) ;; between splits
 
-   ;; show-paren
-   `(show-paren-mismatch ((t (:background, *warning* :foreground, *normal* :weight bold))))
-   `(show-paren-match ((t (:background, *keywords* :foreground, *normal* :weight bold))))
+   ;; ;; show-paren
+   ;; `(show-paren-mismatch ((t (:background, *warning* :foreground, *normal* :weight bold))))
+   ;; `(show-paren-match ((t (:background, *keywords* :foreground, *normal* :weight bold))))
 
    ;; search
    `(isearch ((t (:background, *regexp* :foreground, *visual-selection*))))
