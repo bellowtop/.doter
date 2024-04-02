@@ -288,8 +288,10 @@
 ;;   (load-theme 'vscode-dark-plus t))
 
 
-(require 'autothemer)
-(load-theme 'bogster t)
+;; (require 'autothemer)
+;; (load-theme 'bogster t)
+
+(load-theme 'spolsky t)
 
 ;; (require 'vs-dark-theme)
 ;; (load-theme 'vs-dark t)
@@ -596,7 +598,7 @@
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(help-argument-name ((t (:inherit italic :underline nil))))
  '(highlight ((t (:background "#7ED9B9" :foreground "black" :weight normal))))
- '(hl-line ((t (:extend t :background "#33485e"))))
+ '(hl-line ((t (:extend nil :background "#33485e" :underline nil))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  '(isearch ((t (:background "orange1" :foreground "black" :weight normal))))
  '(ivy-current-match ((t (:inherit region :background nil :foreground nil))))
