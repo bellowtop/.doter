@@ -288,10 +288,10 @@
 ;;   (load-theme 'vscode-dark-plus t))
 
 
-;; (require 'autothemer)
-;; (load-theme 'bogster t)
+(require 'autothemer)
+(load-theme 'bogster t)
 
-(load-theme 'spolsky t)
+;; (load-theme 'spolsky t)
 
 ;; (require 'vs-dark-theme)
 ;; (load-theme 'vs-dark t)
@@ -2164,7 +2164,7 @@ If buffer-or-name is nil return current buffer's mode."
       (god-local-mode 1)                  ;; start local mode
       (setq my-god-mode-is-active-flag t)
       (my-special-buffer-keys-minor-mode 0)
-      (visual-line-mode 1)
+      ;; (visual-line-mode 1)
       ;; (global-visual-line-mode 1) ;;
       )
     nil)
