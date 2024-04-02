@@ -502,8 +502,8 @@
 
 
 (defun my-set-bigger-spacing ()
-  ;; (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15))
-  (setq-local default-text-properties '(line-spacing 0 line-height 1))
+  (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15))
+  ;; (setq-local default-text-properties '(line-spacing 0 line-height 1))
   )
 (add-hook 'text-mode-hook 'my-set-bigger-spacing)
 (add-hook 'prog-mode-hook 'my-set-bigger-spacing)
@@ -534,12 +534,12 @@
    "gnu/linux"))
 
 
-(set-face-attribute 'default nil :font "IBM Plex Mono-16.0")
-(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-16.0"))
+(set-face-attribute 'default nil :font "IBM Plex Mono-15.0")
+(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0"))
 
 (when (my-system-type-is-darwin)
-  (set-face-attribute 'default nil :font "IBM Plex Mono-16.0") ;;; :weight 'light)
-  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-16.0")))
+  (set-face-attribute 'default nil :font "IBM Plex Mono-15.0") ;;; :weight 'light)
+  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0")))
 
 
 ;; ;;; https://github.com/supercomputra/SF-Mono-Font
@@ -2174,10 +2174,10 @@ If buffer-or-name is nil return current buffer's mode."
     (progn
       ;; (message "%s not a special buffer" (buffer-name))
       (god-local-mode 1)                  ;; start local mode
-      (visual-line-mode 1)
+      ;; (visual-line-mode 1)
+      ;; (global-visual-line-mode 1) ;;
       (setq my-god-mode-is-active-flag t)
       (my-special-buffer-keys-minor-mode 0)
-      ;; (global-visual-line-mode 1) ;;
       )
     nil)
   )
