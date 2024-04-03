@@ -360,6 +360,10 @@
     (define-key map (kbd "C-c C-o") 'my-occur)
     (define-key map (kbd "C-c C-s") 'my-rg-at-point)
 
+    (define-key map (kbd "C-s-,") 'xref-go-back)
+    (define-key map (kbd "C-s-.") 'xref-go-forward)
+    (define-key map (kbd "s-J") 'my-treemacs-add-and-display-current-project)
+
     ;; (define-key map (kbd "M-i") #'er/mark-symbol)
     ;; (define-key map (kbd "C-M-;") 'avy-goto-word-0)
     (define-key map (kbd "M-s") 'my-save-buffer)
