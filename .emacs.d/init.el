@@ -87,8 +87,8 @@
 (add-hook
  'emacs-startup-hook
  (lambda ()
-   (setq gc-cons-threshold
-         (expt 2 23))))
+   (setq gc-cons-threshold (* 8192 8192))
+   ))
 
 
 ;; (setq  x-meta-keysym 'super
@@ -846,38 +846,95 @@
 
 
 
-;;; swipe to go backward and forward
+
+
+(use-package ivy-xref
+  :ensure t
+  :init
+  ;; xref initialization is different in Emacs 27 - there are two different
+  ;; variables which can be set rather than just one
+  (when (>= emacs-major-version 27)
+    (setq xref-show-definitions-function #'ivy-xref-show-defs))
+  ;; Necessary in Emacs <27. In Emacs 27 it will affect all xref-based
+  ;; commands other than xref-find-definitions (e.g. project-find-regexp)
+  ;; as well
+  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+
+(defun ivy-xref-call-or-done ()
+  (interactive)
+  (let (orig-point orig-buffer
+                   new-point new-buffer)
+    (with-ivy-window
+      (setq orig-point  (point)
+            orig-buffer (current-buffer)))
+
+    (ivy-call)
+
+    (with-ivy-window
+      (setq new-point  (point)
+            new-buffer (current-buffer)))
+
+    (when (and (eq new-point  orig-point)
+               (eq new-buffer orig-buffer))
+      (ivy-done))))
+
+(defvar ivy-xref-map
+  (let ((map (make-sparse-keymap)))
+    (set-keymap-parent map ivy-minibuffer-map)
+    map)
+  "map for use with ivy-xref.")
+
+(general-def ivy-xref-map
+  "C-l" #'ivy-xref-call-or-done
+  "M-l" #'ivy-call-and-recenter)
+
+(advice-add 'ivy-xref-show-xrefs :around
+            (defun ivy-xref-use-xref-map (func &rest args)
+              (let ((ivy-minibuffer-map ivy-xref-map))
+                (apply func args))))
+
+
+
+
+
+
+
+
+
+
+
+;;;   ;;; swipe to go backward and forward
+;;;   ;;;
+;;;   (defun my-start-cold-down-wheel()
+;;;     (my-unbind-swipe-actions)
+;;;     (run-with-timer 1 nil #'(lambda()
+;;;                                 (my-bind-swipe-actions))))
 ;;;
-(defun my-start-cold-down-wheel()
-  (my-unbind-swipe-actions)
-  (run-with-timer 1 nil #'(lambda()
-                              (my-bind-swipe-actions))))
-
-(defun my-swipe-backward-with-cold-down ()
-  (interactive)
-    (xref-go-back)
-    (recenter)
-    (my-start-cold-down-wheel))
-
-(defun my-swipe-forward-with-cold-down ()
-  (interactive)
-    (xref-go-forward)
-    (recenter)
-    (my-start-cold-down-wheel))
-
-(defun my-unbind-swipe-actions ()
-  (global-unset-key [wheel-left])
-  (global-unset-key [wheel-right])
-  )
-
-(defun my-bind-swipe-actions ()
-  (define-key global-map (kbd "<wheel-left>") 'my-swipe-backward-with-cold-down)
-  (define-key global-map (kbd "<wheel-right>") 'my-swipe-forward-with-cold-down)
-  )
-
-(when (my-system-type-is-darwin)
-  (my-bind-swipe-actions)
-)
+;;;   (defun my-swipe-backward-with-cold-down ()
+;;;     (interactive)
+;;;       (xref-go-back)
+;;;       (recenter)
+;;;       (my-start-cold-down-wheel))
+;;;
+;;;   (defun my-swipe-forward-with-cold-down ()
+;;;     (interactive)
+;;;       (xref-go-forward)
+;;;       (recenter)
+;;;       (my-start-cold-down-wheel))
+;;;
+;;;   (defun my-unbind-swipe-actions ()
+;;;     (global-unset-key [wheel-left])
+;;;     (global-unset-key [wheel-right])
+;;;     )
+;;;
+;;;   (defun my-bind-swipe-actions ()
+;;;     (define-key global-map (kbd "<wheel-left>") 'my-swipe-backward-with-cold-down)
+;;;     (define-key global-map (kbd "<wheel-right>") 'my-swipe-forward-with-cold-down)
+;;;     )
+;;;
+;;;   (when (my-system-type-is-darwin)
+;;;     (my-bind-swipe-actions)
+;;;   )
 
 
 ;;; right click to open context-menu. disable mouse-3 to disable region behavior, which is annoying!
@@ -1096,7 +1153,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -1527,7 +1584,7 @@ respectively."
 (require 'ivy-posframe)
 (ivy-posframe-mode 1)
 
-(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
+(setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
 (defun ivy-format-function-default (cands)
   "Transform CANDS into a string for minibuffer."
   (concat "---------------------------------------------------\n"
