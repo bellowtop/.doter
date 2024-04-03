@@ -804,25 +804,6 @@
 ;; (advice-add 'keyboard-quit                 :after 'remove-all-highlight)
 
 
-;; quit xref buffer after enter
-(with-eval-after-load 'xref
-  (define-key xref--xref-buffer-mode-map(kbd "o") #'(lambda() (interactive) (xref-goto-xref t)))
-  ;; directly open it when there is only one candidate.
-  ;; (setq xref-show-xrefs-function #'xref-show-definitions-buffer)
-  (setq xref-show-xrefs-function #'xref-show-definitions-buffer-at-bottom)
-
-  ;; (add-to-list 'xref-after-return-hook 'my-recenter-scroll-to-top)
-  ;; (setq xref-after-jump-hook (delete 'recenter xref-after-jump-hook))
-  ;; (add-to-list 'xref-after-jump-hook 'my-recenter-scroll-to-top)
-)
-
-(with-eval-after-load 'pulse
-;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background "#1f4670")
-;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background 'unspecified :inverse-video t)
-;;   ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "green" :background "black")
-    (setq pulse-delay 0.01) ;; pulse fast!
-)
-
 (define-key global-map (kbd "<s-mouse-1>")
             #'(lambda ()
                 (interactive)
@@ -843,22 +824,6 @@
                 ))
 (global-unset-key [C-down-mouse-3])
 
-
-
-
-
-
-(use-package ivy-xref
-  :ensure t
-  :init
-  ;; xref initialization is different in Emacs 27 - there are two different
-  ;; variables which can be set rather than just one
-  (when (>= emacs-major-version 27)
-    (setq xref-show-definitions-function #'ivy-xref-show-defs))
-  ;; Necessary in Emacs <27. In Emacs 27 it will affect all xref-based
-  ;; commands other than xref-find-definitions (e.g. project-find-regexp)
-  ;; as well
-  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
 
 (defun ivy-xref-call-or-done ()
   (interactive)
@@ -893,6 +858,36 @@
               (let ((ivy-minibuffer-map ivy-xref-map))
                 (apply func args))))
 
+;; quit xref buffer after enter
+(with-eval-after-load 'xref
+  (define-key xref--xref-buffer-mode-map(kbd "o") #'(lambda() (interactive) (xref-goto-xref t)))
+  ;; directly open it when there is only one candidate.
+  ;; (setq xref-show-xrefs-function #'xref-show-definitions-buffer)
+  ;; (setq xref-show-xrefs-function #'xref-show-definitions-buffer-at-bottom)
+
+  ;; (add-to-list 'xref-after-return-hook 'my-recenter-scroll-to-top)
+  ;; (setq xref-after-jump-hook (delete 'recenter xref-after-jump-hook))
+  ;; (add-to-list 'xref-after-jump-hook 'my-recenter-scroll-to-top)
+
+    (use-package ivy-xref
+      :ensure t
+      :init
+      ;; xref initialization is different in Emacs 27 - there are two different
+      ;; variables which can be set rather than just one
+      (when (>= emacs-major-version 27)
+        (setq xref-show-definitions-function #'ivy-xref-show-defs))
+      ;; Necessary in Emacs <27. In Emacs 27 it will affect all xref-based
+      ;; commands other than xref-find-definitions (e.g. project-find-regexp)
+      ;; as well
+      (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+)
+
+(with-eval-after-load 'pulse
+;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background "#1f4670")
+;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background 'unspecified :inverse-video t)
+;;   ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "green" :background "black")
+    (setq pulse-delay 0.01) ;; pulse fast!
+)
 
 
 
