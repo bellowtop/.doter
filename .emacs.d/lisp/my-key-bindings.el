@@ -182,6 +182,35 @@
 
 
 
+(defun my/scroll-right() (interactive)
+       (save-selected-window
+         (select-window (window-at (cadr (mouse-position))
+                                   (cddr (mouse-position))
+                                   (car (mouse-position))))
+         (scroll-right 2)))
+(defun my/scroll-left() (interactive)
+       (save-selected-window
+         (select-window (window-at (cadr (mouse-position))
+                                   (cddr (mouse-position))
+                                   (car (mouse-position))))
+         (scroll-left 2)))
+
+(global-set-key (kbd "<left-margin> <triple-wheel-left>")  'my/scroll-left)
+(global-set-key (kbd "<left-margin> <triple-wheel-right>")  'my/scroll-right)
+(global-set-key (kbd "<right-margin> <triple-wheel-right>") 'my/scroll-left)
+(global-set-key (kbd "<right-margin> <triple-wheel-left>") 'my/scroll-right)
+
+(global-set-key (kbd "<wheel-left>") 'my/scroll-right)
+(global-set-key (kbd "<double-wheel-left>") 'my/scroll-right)
+(global-set-key (kbd "<triple-wheel-left>") 'my/scroll-right)
+(global-set-key (kbd "<wheel-right>") 'my/scroll-left)
+(global-set-key (kbd "<double-wheel-right>") 'my/scroll-left)
+(global-set-key (kbd "<triple-wheel-right>") 'my/scroll-left)
+
+
+
+
+
 (defun my-goto-match-paren (arg)
   "Go to the matching parenthesis if on parenthesis. Else go to the
   opening parenthesis one level up."
