@@ -825,6 +825,22 @@
 (global-unset-key [C-down-mouse-3])
 
 
+
+
+
+
+;; quit xref buffer after enter
+(with-eval-after-load 'xref
+  (define-key xref--xref-buffer-mode-map(kbd "o") #'(lambda() (interactive) (xref-goto-xref t)))
+  ;; directly open it when there is only one candidate.
+  ;; (setq xref-show-xrefs-function #'xref-show-definitions-buffer)
+  ;; (setq xref-show-xrefs-function #'xref-show-definitions-buffer-at-bottom)
+
+  ;; (add-to-list 'xref-after-return-hook 'my-recenter-scroll-to-top)
+  ;; (setq xref-after-jump-hook (delete 'recenter xref-after-jump-hook))
+  ;; (add-to-list 'xref-after-jump-hook 'my-recenter-scroll-to-top)
+)
+
 (defun ivy-xref-call-or-done ()
   (interactive)
   (let (orig-point orig-buffer
@@ -843,44 +859,20 @@
                (eq new-buffer orig-buffer))
       (ivy-done))))
 
-(defvar ivy-xref-map
-  (let ((map (make-sparse-keymap)))
-    (set-keymap-parent map ivy-minibuffer-map)
-    map)
-  "map for use with ivy-xref.")
-
-(general-def ivy-xref-map
-  "C-l" #'ivy-xref-call-or-done
-  "M-l" #'ivy-call-and-recenter)
-
-(advice-add 'ivy-xref-show-xrefs :around
-            (defun ivy-xref-use-xref-map (func &rest args)
-              (let ((ivy-minibuffer-map ivy-xref-map))
-                (apply func args))))
-
-;; quit xref buffer after enter
-(with-eval-after-load 'xref
-  (define-key xref--xref-buffer-mode-map(kbd "o") #'(lambda() (interactive) (xref-goto-xref t)))
-  ;; directly open it when there is only one candidate.
-  ;; (setq xref-show-xrefs-function #'xref-show-definitions-buffer)
-  ;; (setq xref-show-xrefs-function #'xref-show-definitions-buffer-at-bottom)
-
-  ;; (add-to-list 'xref-after-return-hook 'my-recenter-scroll-to-top)
-  ;; (setq xref-after-jump-hook (delete 'recenter xref-after-jump-hook))
-  ;; (add-to-list 'xref-after-jump-hook 'my-recenter-scroll-to-top)
-
-    (use-package ivy-xref
-      :ensure t
-      :init
-      ;; xref initialization is different in Emacs 27 - there are two different
-      ;; variables which can be set rather than just one
-      (when (>= emacs-major-version 27)
-        (setq xref-show-definitions-function #'ivy-xref-show-defs))
-      ;; Necessary in Emacs <27. In Emacs 27 it will affect all xref-based
-      ;; commands other than xref-find-definitions (e.g. project-find-regexp)
-      ;; as well
-      (setq xref-show-xrefs-function #'ivy-xref-show-xrefs))
+(use-package ivy-xref
+  :ensure t
+  :after (ivy xref)
+  :init
+  (setq xref-show-definitions-function #'ivy-xref-show-defs)
+  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)
+  :bind
+    (:map ivy-minibuffer-map
+     ("C-l" . ivy-xref-call-or-done)
+     ("M-l" . ivy-call-and-recenter)
+    )
 )
+
+
 
 (with-eval-after-load 'pulse
 ;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background "#1f4670")
@@ -1543,8 +1535,6 @@ respectively."
 
 
 
-
-
 (use-package ivy
   :ensure t
   :diminish (ivy-mode . "")
@@ -1554,6 +1544,7 @@ respectively."
         ;; ("C-'" . ivy-avy)
         ("TAB" . ivy-next-line)
         ("<backtab>" . ivy-previous-line)
+        ("<escape>"  . keyboard-escape-quit)
     )
   )
   :config
@@ -1583,8 +1574,8 @@ respectively."
 
 
 
-(require 'ivy-posframe)
-(ivy-posframe-mode 1)
+;; (require 'ivy-posframe)
+;; (ivy-posframe-mode 1)
 
 (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
 (defun ivy-format-function-default (cands)
@@ -1790,7 +1781,6 @@ respectively."
 (global-set-key (kbd "<escape>") #'my-escape-key)
 ;; (define-key helm-map (kbd "<escape>") #'helm-keyboard-quit)
 (define-key minibuffer-local-map (kbd "<escape>") #'minibuffer-keyboard-quit)
-(define-key ivy-minibuffer-map (kbd "<escape>") #'keyboard-escape-quit)
 
 
 
@@ -2599,7 +2589,7 @@ This variable is nil if the current buffer isn't visiting a file.")
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
   (if (bound-and-true-p god-local-mode)
     (progn
-      ;; (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#262626")
+      (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#33485e")
       ;; (set-face-attribute 'line-number-current-line nil :foreground "#5fffd7" :background "#3a3a3a")
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil     :foreground window-divider-color)
@@ -2619,7 +2609,7 @@ This variable is nil if the current buffer isn't visiting a file.")
       ;; (set-face-foreground 'vertical-border "#374250")
       )
     (progn
-      ;; (set-face-attribute 'hl-line nil :background (face-background 'default))
+      (set-face-attribute 'hl-line nil :background (face-background 'default))
       ;; (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil     :foreground window-divider-color)
