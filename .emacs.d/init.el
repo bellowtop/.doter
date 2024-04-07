@@ -1302,6 +1302,8 @@
   (push "*EGLOT" centaur-tabs-excluded-prefixes)
   (push "*Ilist*" centaur-tabs-excluded-prefixes)
   (push "*Occur*" centaur-tabs-excluded-prefixes)
+  (push "*Ibuffer*" centaur-tabs-excluded-prefixes)
+  (push "*Ivy" centaur-tabs-excluded-prefixes)
   ;; (centaur-tabs-buffer-groups-function #'centaur-tabs-projectile-buffer-groups)
   (defun centaur-tabs-buffer-groups ()
     ;; only one group
@@ -1425,14 +1427,19 @@
     (interactive)
     (mapc 'kill-buffer
           (delq (current-buffer) (remove-if-not 'buffer-file-name (buffer-list))))      ;; this keep * buffers alive
-    (centaur-tabs-display-update))
+    (if (bound-and-true-p centaur-tabs-mode)
+      (centaur-tabs-kill-other-buffers-in-current-group))
+    )
 
 ;; delete all other buffers, only keep current one.
 (defun my-only-current-buffer-include-specials ()
     "Kill all other buffers."
     (interactive)
     (mapc 'kill-buffer
-          (delq (current-buffer) (buffer-list))))                                       ;; this destroy * buffers too
+          (delq (current-buffer) (buffer-list)))                                       ;; this destroy * buffers too
+    (if (bound-and-true-p centaur-tabs-mode)
+      (centaur-tabs-kill-other-buffers-in-current-group))
+    )
 
 
 
