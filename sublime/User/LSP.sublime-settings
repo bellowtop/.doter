@@ -18,6 +18,13 @@
       ],
       "languageId": "cpp",
     },
+    "sourcekit-lsp": {
+      "enabled": true,
+      "command": [
+        "/usr/bin/sourcekit-lsp"
+      ],
+      "languageId": "swift",
+    }
   },
   "lsp_format_on_save": false,
   // "document_highlight_style": "background",
