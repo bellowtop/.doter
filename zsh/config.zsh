@@ -26,6 +26,8 @@ kk() {
     tmux send-keys -R \; clear-history
 }
 
+alias ss='swift sh'
+alias sf='swiftformat'
 
 
 export PATH="/opt/homebrew/bin:$PATH"

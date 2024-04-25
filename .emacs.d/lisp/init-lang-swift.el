@@ -1,8 +1,25 @@
-(with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs
-        '(swift-mode . ("xcrun" "sourcekit-lsp")))
+(use-package swift-mode
+  :defer t
+  :after eglot
+  :config
+  (add-to-list 'eglot-server-programs '(swift-mode . ("xcrun" "sourcekit-lsp")))
+  (add-hook 'swift-mode-hook 'eglot-ensure)
+  (add-hook 'before-save-hook 'format-all-buffer)
 )
 
-(add-hook 'swift-mode-hook 'eglot-ensure)
+
+
+(defun xcode-build()
+  (interactive)
+  (shell-command-to-string
+    "osascript -e 'tell application \"Xcode\"' -e 'set targetProject to active workspace document' -e 'build targetProject' -e 'end tell'"))
+(defun xcode-run()
+  (interactive)
+  (shell-command-to-string
+    "osascript -e 'tell application \"Xcode\"' -e 'set targetProject to active workspace document' -e 'stop targetProject' -e 'run targetProject' -e 'end tell'"))
+(defun xcode-test()
+  (interactive)
+  (shell-command-to-string
+    "osascript -e 'tell application \"Xcode\"' -e 'set targetProject to active workspace document' -e 'stop targetProject' -e 'test targetProject' -e 'end tell'"))
 
 (provide 'init-lang-swift)

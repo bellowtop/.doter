@@ -66,13 +66,11 @@
 
 
 
-(use-package
-  benchmark-init
+(use-package benchmark-init
   :ensure t
   :config ;; To disable collection of benchmark data after init is done.
-  (add-hook
-   'after-init-hook
-   'benchmark-init/deactivate))
+  (add-hook 'after-init-hook 'benchmark-init/deactivate)
+)
 
 
 (require 'cl)
@@ -885,6 +883,16 @@
 
 
 
+(use-package format-all
+  :commands format-all-mode
+  :hook (prog-mode . format-all-mode)
+  ;;   :config
+  ;;   (setq-default format-all-formatters
+  ;;                 '(("C"     (astyle "--mode=c"))
+  ;;                   ("Shell" (shfmt "-i" "4" "-ci"))))
+)
+
+
 
 
 
@@ -974,10 +982,6 @@
 
 (require 'init-lang-swift)
 
-
-(use-package swift-mode
-  :defer t
-  )
 
 
 ;; book-mode break isearch echo area!
@@ -1140,7 +1144,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -2848,6 +2852,9 @@ This variable is nil if the current buffer isn't visiting a file.")
   (revert-buffer
    :ignore-auto :noconfirm)
   (my-god-mode))
+
+
+(global-auto-revert-mode 1)
 
 
 

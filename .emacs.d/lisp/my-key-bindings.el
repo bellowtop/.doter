@@ -579,9 +579,9 @@
     (define-key god-local-mode-map (kbd "g g") #'beginning-of-buffer)
     (define-key god-local-mode-map (kbd "G") #'end-of-buffer)
     (define-key god-local-mode-map (kbd "g G") #'end-of-buffer)
-    (define-key god-local-mode-map (kbd "C-e") #'scroll-up-line)
-    (define-key god-local-mode-map (kbd "C-y") #'scroll-down-line)
-    (define-key god-local-mode-map (kbd "C-a") #'increment-number-at-point)
+    ;; (define-key god-local-mode-map (kbd "C-e") #'scroll-up-line)
+    ;; (define-key god-local-mode-map (kbd "C-y") #'scroll-down-line)
+    ;; (define-key god-local-mode-map (kbd "C-a") #'increment-number-at-point)
 
     ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)
     ;; (define-key god-local-mode-map (kbd "C-, C-l") #'switch-to-next-buffer)
@@ -590,8 +590,8 @@
 
     ;; (define-key god-local-mode-map (kbd "C-m") #'next-line)
 
-    (define-key god-local-mode-map (kbd "C-d") #'scroll-up-command)
-    (define-key god-local-mode-map (kbd "C-u") #'scroll-down-command)
+    ;; (define-key god-local-mode-map (kbd "C-d") #'scroll-up-command)
+    ;; (define-key god-local-mode-map (kbd "C-u") #'scroll-down-command)
     ;; (define-key god-local-mode-map (kbd "C-f") #'scroll-full-page-up)
     ;; (define-key god-local-mode-map (kbd "C-b") #'scroll-full-page-down)
 

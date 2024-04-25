@@ -1,0 +1,12 @@
+{
+	"tokenColors": "./bogster-color-theme.tmTheme",
+	"colors": {
+		"editorCursor.foreground": "#da9e07",
+		"editor.selectionBackground": "#313f4e",
+		"editor.lineHighlightBackground": "#232d38d0",
+		"editor.foreground": "#c6b8ad",
+		"editor.background": "#161c23",
+		"editorWhitespace.foreground": "#4f5b66"
+	},
+	"name": "Bogster Theme"
+}
