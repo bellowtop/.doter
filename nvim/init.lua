@@ -871,7 +871,35 @@ local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
+
+local cmp_select_next = function(fallback)
+    if cmp.visible() then
+      cmp.select_next_item()
+    -- elseif vim.fn["vsnip#available"](1) == 1 then
+    --   feedkey("<Plug>(vsnip-expand-or-jump)", "")
+    -- elseif has_words_before() then
+    --   cmp.complete()
+    else
+      fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+    end
+end
+
+local cmp_select_prev = function(fallback)
+    if cmp.visible() then
+      cmp.select_prev_item()
+    -- elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+    --   feedkey("<Plug>(vsnip-jump-prev)", "")
+    else
+      fallback()
+    end
+end
+
+
 cmp.setup({
+  completion = {
+    completeopt = 'menu,menuone,noinsert',
+  },
+
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
@@ -885,25 +913,12 @@ cmp.setup({
       select = true,
     },
 
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif vim.fn["vsnip#available"](1) == 1 then
-        feedkey("<Plug>(vsnip-expand-or-jump)", "")
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-      end
-    end, { "i", "s" }),
+    ["<Tab>"] =   cmp.mapping(cmp_select_next, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(cmp_select_prev, { "i", "s" }),
 
-    ["<S-Tab>"] = cmp.mapping(function()
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-        feedkey("<Plug>(vsnip-jump-prev)", "")
-      end
-    end, { "i", "s" }),
+    ["<C-n>"] =   cmp.mapping(cmp_select_next, { "i", "s" }),
+    ["<C-p>"] =   cmp.mapping(cmp_select_prev, { "i", "s" }),
+    ['<C-g>'] =   cmp.close,
 
     ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
@@ -1136,12 +1151,19 @@ vim.g.bclose_no_plugin_maps = 1
 
 
 
+local disable_diagnostic_temp_then_reactivate = function(c)
+    vim.diagnostic.disable()
+    vim.cmd.execute(c)
+    vim.diagnostic.enable()
+end
 
 
 
-vim.api.nvim_set_keymap("i", "<C-n>", "<C-o>j", { noremap = true } )
+-- vim.api.nvim_set_keymap("i", "<C-_>", "<C-o>u", { noremap = true } )
+-- vim.api.nvim_set_keymap("i", "<M-d>", "<C-o>dw", { noremap = true } )
+-- vim.api.nvim_set_keymap("i", "<C-n>", "<C-o>j", { noremap = true } )
+-- vim.api.nvim_set_keymap("i", "<C-p>", "<C-o>k", { noremap = true } )
 vim.api.nvim_set_keymap("i", "<C-d>", "<C-o>x", { noremap = true } )
-vim.api.nvim_set_keymap("i", "<C-p>", "<C-o>k", { noremap = true } )
 vim.api.nvim_set_keymap("i", "<C-e>", "<C-o>$", { noremap = true } )
 vim.api.nvim_set_keymap("i", "<C-a>", "<C-o>^", { noremap = true } )
 vim.api.nvim_set_keymap("i", "<C-b>", "<Left>", { noremap = true } )
@@ -1149,8 +1171,16 @@ vim.api.nvim_set_keymap("i", "<C-f>", "<Right>", { noremap = true } )
 vim.api.nvim_set_keymap("i", "<C-k>", "<C-o>D", { noremap = true } )
 vim.api.nvim_set_keymap("i", "<M-k>", "<C-o>d0", { noremap = true } )
 vim.api.nvim_set_keymap("i", "<C-t>", "<C-o>O", { noremap = true } )
-vim.api.nvim_set_keymap("i", "<M-BS>", "<C-o>db", { noremap = true } )
-vim.api.nvim_set_keymap("i", "<M-d>", "<C-o>de", { noremap = true } )
+vim.api.nvim_set_keymap("i", "<M-BS>", "<C-w>", { noremap = true } )
+
+-- vim.keymap.set("i", "<M-d>", function() vim.cmd.execute('"normal dwa"') end, { noremap = true })
+vim.keymap.set("i", "<M-d>", function() disable_diagnostic_temp_then_reactivate('"normal dwa"') end, { noremap = true })
+
+-- vim.keymap.set("i", "<C-_>", function() vim.cmd.execute('"normal ua"') end, { noremap = true })
+vim.keymap.set("i", "<C-_>", function() disable_diagnostic_temp_then_reactivate('"normal ua"') end, { noremap = true })
+vim.keymap.set("i", "<C-l>", function() disable_diagnostic_temp_then_reactivate('"normal zza"') end, { noremap = true })
+vim.keymap.set("i", "<C-n>", function() disable_diagnostic_temp_then_reactivate('"normal j"') end, { noremap = true })
+vim.keymap.set("i", "<C-p>", function() disable_diagnostic_temp_then_reactivate('"normal k"') end, { noremap = true })
 
 
 vim.api.nvim_set_keymap("i", "<C-q>", "<Esc>", { noremap = true } )

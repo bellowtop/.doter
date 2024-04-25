@@ -38,13 +38,13 @@ nnoremap <C-o> :JumpBack<CR>
 nnoremap <C-l> :ShowAtCenter
 
 
-nnoremap FileType go,h,cc,cpp,c gd :LspSymbolDefinition<CR>
-nnoremap FileType go,h,cc,cpp,c gr :LspSymbolReferences<CR>
-nnoremap FileType go,h,cc,cpp,c gi :LspSymbolImplementation<CR>
-nnoremap FileType go,h,cc,cpp,c gR :LspSymbolRename<CR>
-nnoremap FileType go,h,cc,cpp,c ga :LspCodeActions<CR>
-nnoremap FileType go,h,cc,cpp,c gF :LspFormat<CR>
-nnoremap FileType go,h,cc,cpp,c gf :LspFormat<CR>
+nnoremap FileType go,h,cc,cpp,c,swift gd :LspSymbolDefinition<CR>
+nnoremap FileType go,h,cc,cpp,c,swift gr :LspSymbolReferences<CR>
+nnoremap FileType go,h,cc,cpp,c,swift gi :LspSymbolImplementation<CR>
+nnoremap FileType go,h,cc,cpp,c,swift gR :LspSymbolRename<CR>
+nnoremap FileType go,h,cc,cpp,c,swift ga :LspCodeActions<CR>
+nnoremap FileType go,h,cc,cpp,c,swift gF :LspFormat<CR>
+nnoremap FileType go,h,cc,cpp,c,swift gf :LspFormat<CR>
 
 
 nnoremap <leader>f :ShowOverlay overlay=goto show_files=true<CR>
