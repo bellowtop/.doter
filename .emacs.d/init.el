@@ -289,7 +289,8 @@
 ;; (require 'autothemer)
 ;; (load-theme 'bogster t)
 
-(load-theme 'spolsky t)
+;; (load-theme 'spolsky t)
+(load-theme 'afternoon t)
 
 ;; (require 'vs-dark-theme)
 ;; (load-theme 'vs-dark t)
@@ -500,8 +501,9 @@
 
 
 (defun my-set-bigger-spacing ()
-  (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15))
-  ;; (setq-local default-text-properties '(line-spacing 0 line-height 1))
+  ;; (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15))
+  ;; (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15))
+  ;; (setq-local default-text-properties '(line-spacing 0 line-height t))
   )
 (add-hook 'text-mode-hook 'my-set-bigger-spacing)
 (add-hook 'prog-mode-hook 'my-set-bigger-spacing)
@@ -1167,7 +1169,8 @@
 (setq whitespace-line-column 85)
 (setq whitespace-display-mappings
       '(
-        (tab-mark   ?\t   [?\x25B8 ?\t] [?\\ ?\t])	; tab
+        (tab-mark     ?\t   [?\x203a ?\t] [?\\ ?\t])	; tab
+        (newline-mark ?\n   [?\xB6 ?\n] [?$ ?\n])
         ))
 (setq-default tab-width 4)
 
@@ -1300,7 +1303,7 @@
   (push "*Occur*" centaur-tabs-excluded-prefixes)
   (push "*Ibuffer*" centaur-tabs-excluded-prefixes)
   (push "*Ivy" centaur-tabs-excluded-prefixes)
-  ;; (centaur-tabs-buffer-groups-function #'centaur-tabs-projectile-buffer-groups)
+  ;; (centaur-tabs-projectile-buffer-groups)
   (defun centaur-tabs-buffer-groups ()
     ;; only one group
     (list "GROUP"))
@@ -2798,7 +2801,8 @@ This variable is nil if the current buffer isn't visiting a file.")
   )
 
 (with-eval-after-load 'treemacs
-   (dolist (face '(treemacs-root-face
+
+    (dolist (face '(treemacs-root-face
                     treemacs-git-unmodified-face
                     treemacs-git-modified-face
                     treemacs-git-renamed-face
@@ -2810,7 +2814,8 @@ This variable is nil if the current buffer isn't visiting a file.")
                     treemacs-directory-collapsed-face
                     treemacs-file-face
                     treemacs-tags-face))
-      (set-face-attribute face nil :family "IBM Plex Mono" :weight 'normal :height 150 :underline nil))
+      (set-face-attribute face nil :family "IBM Plex Mono" :weight 'normal :height 140 :foreground "#C4C4C4" :underline nil))
+
    (when (display-graphic-p)
         (require 'treemacs-nerd-icons)
         (treemacs-load-theme "nerd-icons")
@@ -2835,6 +2840,8 @@ This variable is nil if the current buffer isn't visiting a file.")
     (treemacs-add-and-display-current-project))
   (treemacs-find-file)
   (treemacs-select-window)
+  (mwim-beginning-of-code-or-line)
+  (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#33485e")
   (when (display-graphic-p)
     (setq cursor-type 'box)))
 
