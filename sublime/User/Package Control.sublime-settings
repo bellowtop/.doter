@@ -6,6 +6,7 @@
 	"installed_packages":
 	[
 		"AceJump",
+		"Chain of Command",
 		"CloseOtherWindows",
 		"CMakeBuilder",
 		"CTags",
@@ -18,6 +19,7 @@
 		"Pretty JSON",
 		"SideBarEnhancements",
 		"Swift",
+		"Swift Format",
 		"Terminal",
 		"Terminus",
 		"Visual Studio Dark",

@@ -15,7 +15,18 @@
 	{ "keys": ["alt+d"], "command": "delete_word", "args": { "forward": true, "sub_words": false } },
 	{ "keys": ["alt+backspace"], "command": "delete_word", "args": { "forward": false, "sub_words": false } },
 	{ "keys": ["ctrl+/"], "command": "undo" },
-	{ "keys": ["ctrl+/"], "command": "undo" },
 
-	{ "keys": ["ctrl+j"], "command": "save", "args": { "async": true } },
+
+	
+	// { "keys": ["ctrl+j"], "command": "save"},
+	{
+		"keys": ["ctrl+j"], 
+		"command": "chain", 
+		"args": {
+			"commands": [
+				["save"], ["nv_enter_normal_mode"]
+			]
+		}
+	},
+
 ]

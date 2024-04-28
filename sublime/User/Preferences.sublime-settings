@@ -24,8 +24,7 @@
 
 	"vintageous_use_super_keys": false,
 	"vintageous_use_ctrl_keys": true,
-	"vintageous_handle_keys": {
-    },
+	"vintageous_handle_keys": {},
 	"color_scheme": "Packages/User/bogster-color-theme.tmTheme",
 	"index_files": false,
 }
