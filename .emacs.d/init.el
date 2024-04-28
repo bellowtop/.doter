@@ -501,8 +501,7 @@
 
 
 (defun my-set-bigger-spacing ()
-  ;; (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15))
-  ;; (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15))
+  (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15))
   ;; (setq-local default-text-properties '(line-spacing 0 line-height t))
   )
 (add-hook 'text-mode-hook 'my-set-bigger-spacing)
