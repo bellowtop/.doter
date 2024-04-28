@@ -565,10 +565,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(centaur-tabs-selected ((t (:inherit mode-line :inverse-video t))))
- '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "pink"))))
- '(centaur-tabs-unselected ((t (:inherit mode-line))))
- '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground "pink"))))
+ ;; '(centaur-tabs-selected ((t (:inherit mode-line :inverse-video t))))
+ '(centaur-tabs-selected ((t (:inherit default :foreground "white" :weight normal))))
+ '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "yellow"))))
+ '(centaur-tabs-unselected ((t (:foreground "#969696" :background "#262830"))))
+ '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground "yellow"))))
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -1338,7 +1339,7 @@
                   centaur-tabs-jump-identifier-selected
                   centaur-tabs-jump-identifier-unselected
                   centaur-tabs-dim-buffer-face))
-        (set-face-attribute face nil :weight 'normal :family "IBM Plex Sans" :height 150)
+        (set-face-attribute face nil :weight 'normal :family "IBM Plex Sans" :height 140)
     )
 
     ;; ;; modified tab foreground
@@ -1355,14 +1356,15 @@
     ;;                     :underline "#528BFF"
     ;;                     :weight light)
 
+    (set-face-underline 'centaur-tabs-marker-selected "cyan" )
     ;; modified tab underline
     (set-face-underline 'centaur-tabs-selected-modified "cyan" )
     (set-face-underline 'centaur-tabs-modified-marker-selected "cyan" )
-    (unless (display-graphic-p)
-      ;; no underline for selected tab, in terminal mode.
-      (set-face-underline 'centaur-tabs-selected-modified nil )
-      (set-face-underline 'centaur-tabs-selected nil )
-      )
+    ;; (unless (display-graphic-p)
+    ;;   ;; no underline for selected tab, in terminal mode.
+    ;;   (set-face-underline 'centaur-tabs-selected-modified nil )
+    ;;   (set-face-underline 'centaur-tabs-selected nil )
+    ;;   )
 
     (unless (display-graphic-p)
       (setq centaur-tabs-set-icons nil)
