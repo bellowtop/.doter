@@ -2790,7 +2790,7 @@ This variable is nil if the current buffer isn't visiting a file.")
     (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
     (add-hook 'treemacs-mode-hook #'my-add-hl-line-for-treemacs)
     (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
-    (add-hook 'treemacs-mode-hook #'my-set-bigger-spacing)
+    ;; (add-hook 'treemacs-mode-hook #'my-set-bigger-spacing)
     (treemacs-follow-mode -1)
   :bind
     (:map treemacs-mode-map
