@@ -1610,7 +1610,7 @@ respectively."
 
   (setq ivy-posframe-size-function 'my-ivy-posframe-get-size)
   (setq ivy-posframe-parameters '((:internal-border-width . 1) (:internal-border-color . "white")))
-  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-top-center)))
+  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
 
   (ivy-posframe-mode 1)
 )
