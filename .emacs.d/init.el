@@ -501,7 +501,7 @@
 
 
 (defun my-set-bigger-spacing ()
-  (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15))
+  ;; (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15))
   ;; (setq-local default-text-properties '(line-spacing 0 line-height t))
   )
 (add-hook 'text-mode-hook 'my-set-bigger-spacing)
@@ -533,11 +533,11 @@
    "gnu/linux"))
 
 
-(set-face-attribute 'default nil :font "IBM Plex Mono-15.0")
+(set-face-attribute 'default nil :font "IBM Plex Mono 1.02-15.0")
 (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0"))
 
 (when (my-system-type-is-darwin)
-  (set-face-attribute 'default nil :font "IBM Plex Mono-15.0") ;;; :weight 'light)
+  (set-face-attribute 'default nil :font "IBM Plex Mono 1.02-15.0") ;;; :weight 'light)
   (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0")))
 
 
@@ -1170,7 +1170,7 @@
 (setq whitespace-display-mappings
       '(
         (tab-mark     ?\t   [?\x203a ?\t] [?\\ ?\t])	; tab
-        (newline-mark ?\n   [?\xB6 ?\n] [?$ ?\n])
+        (newline-mark ?\n   [?\x203a ?\n] [?\\ ?\n])
         ))
 (setq-default tab-width 4)
 
@@ -1278,8 +1278,8 @@
         ;; centaur-tabs-icon-scale-factor 0.8
         centaur-tabs-set-modified-marker nil
         centaur-tabs-set-close-button nil
-        centaur-tabs-left-edge-margin nil
-        centaur-tabs-right-edge-margin nil
+        centaur-tabs-left-edge-margin "  "
+        centaur-tabs-right-edge-margin "  "
         centaur-tabs-set-bar 'under
         x-underline-at-descent-line t
         centaur-tabs-show-jump-identifier nil
@@ -1356,7 +1356,7 @@
     ;;                     :underline "#528BFF"
     ;;                     :weight light)
 
-    (set-face-underline 'centaur-tabs-marker-selected "cyan" )
+    (set-face-underline 'centaur-tabs-selected "cyan" )
     ;; modified tab underline
     (set-face-underline 'centaur-tabs-selected-modified "cyan" )
     (set-face-underline 'centaur-tabs-modified-marker-selected "cyan" )
@@ -1394,8 +1394,10 @@
   :interpreter ("scala" . scala-mode))
 
 (use-package yaml-mode
-  :ensure t
-  :init
+  :defer t
+  :hook
+  (yaml-mode    . display-line-numbers-mode)
+  (yaml-ts-mode . display-line-numbers-mode)
   :config
   (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
   (add-to-list 'auto-mode-alist '("\\.yml\\.j2\\'" . yaml-mode))
@@ -2770,6 +2772,12 @@ This variable is nil if the current buffer isn't visiting a file.")
 
 
 
+
+
+
+
+
+
 (defun display-treemacs-widow-in-ace-window-selection()
     (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))
 
@@ -2792,6 +2800,14 @@ This variable is nil if the current buffer isn't visiting a file.")
     (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
     ;; (add-hook 'treemacs-mode-hook #'my-set-bigger-spacing)
     (treemacs-follow-mode -1)
+    ;;;; custom highlight for treemacs current line
+    (defface my-treemacs-custom-line-highlight '((t (
+                                                    ;;  :family "IBM Plex Sans"
+                                                     :background "#59dcb7" :foreground "black" :weight normal))) "")
+    (defun change-treemacs-hl-line-mode ()
+       (setq-local hl-line-face 'my-treemacs-custom-line-highlight)
+       (overlay-put hl-line-overlay 'face hl-line-face))
+    (add-hook 'treemacs-mode-hook #'change-treemacs-hl-line-mode)
   :bind
     (:map treemacs-mode-map
           ("C-c h" . my-add-hl-line-for-treemacs)
@@ -2802,33 +2818,36 @@ This variable is nil if the current buffer isn't visiting a file.")
   )
 
 (with-eval-after-load 'treemacs
+    (require 'treemacs-nerd-icons)
 
     (dolist (face '(treemacs-root-face
-                    treemacs-git-unmodified-face
-                    treemacs-git-modified-face
-                    treemacs-git-renamed-face
-                    treemacs-git-ignored-face
-                    treemacs-git-untracked-face
-                    treemacs-git-added-face
-                    treemacs-git-conflict-face
-                    treemacs-directory-face
-                    treemacs-directory-collapsed-face
-                    treemacs-file-face
-                    treemacs-tags-face))
-      (set-face-attribute face nil :family "IBM Plex Mono" :weight 'normal :height 140 :foreground "#C4C4C4" :underline nil))
+                        treemacs-git-unmodified-face
+                        treemacs-git-modified-face
+                        treemacs-git-renamed-face
+                        treemacs-git-ignored-face
+                        treemacs-git-untracked-face
+                        treemacs-git-added-face
+                        treemacs-git-conflict-face
+                        treemacs-directory-face
+                        treemacs-directory-collapsed-face
+                        treemacs-file-face
+                        ;; treemacs-nerd-icons-file-face
+                        ;; treemacs-nerd-icons-root-face
+                        treemacs-tags-face))
+          (set-face-attribute face nil :family "IBM Plex Sans" :weight 'normal :height 140 :foreground "#C4C4C4" :underline nil :inherit 'unspecified))
 
    (when (display-graphic-p)
-        (require 'treemacs-nerd-icons)
         (treemacs-load-theme "nerd-icons")
         ;; (require 'treemacs-all-the-icons)
         ;; (treemacs-load-theme "all-the-icons")
         ;; (require 'treemacs-compatibility)
         ;; (treemacs-load-all-the-icons-with-workaround-font "Segoe UI")
      )
+
    (unless (display-graphic-p)
-        (require 'treemacs-nerd-icons)
         (treemacs-load-theme "nerd-icons")
      )
+
 )
 
 
@@ -2841,10 +2860,8 @@ This variable is nil if the current buffer isn't visiting a file.")
     (treemacs-add-and-display-current-project))
   (treemacs-find-file)
   (treemacs-select-window)
-  (mwim-beginning-of-code-or-line)
-  (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#33485e")
   (when (display-graphic-p)
-    (setq cursor-type 'box)))
+    (setq-local cursor-type 'box)))
 
 
 
