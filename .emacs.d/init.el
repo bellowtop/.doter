@@ -533,11 +533,11 @@
    "gnu/linux"))
 
 
-(set-face-attribute 'default nil :font "IBM Plex Mono 1.02-15.0")
+(set-face-attribute 'default nil :font "IBM Plex Mono 1.2-15.0")
 (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0"))
 
 (when (my-system-type-is-darwin)
-  (set-face-attribute 'default nil :font "IBM Plex Mono 1.02-15.0") ;;; :weight 'light)
+  (set-face-attribute 'default nil :font "IBM Plex Mono 1.2-15.0") ;;; :weight 'light)
   (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0")))
 
 
