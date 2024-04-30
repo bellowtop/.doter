@@ -1735,7 +1735,7 @@ respectively."
 
 
 
-(pixel-scroll-precision-mode -1)
+(pixel-scroll-precision-mode 1)
 
 ;; scroll with cursor not move
 (defun gcm-scroll-down ()
