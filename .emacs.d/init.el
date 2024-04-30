@@ -651,7 +651,7 @@
 ;; Display dividers between windows
 (setq window-divider-default-places t
       window-divider-default-bottom-width 1
-      window-divider-default-right-width 1)
+      window-divider-default-right-width 6)
 (add-hook 'window-setup-hook #'window-divider-mode)
 
 (set-face-background 'vertical-border (face-background 'default))
@@ -1870,7 +1870,7 @@ respectively."
     (menu-bar-mode 1))
 
   (scroll-bar-mode -1)
-  (fringe-mode -1)
+  (set-fringe-mode 0)
   ;; (tab-bar-mode -1)
   ;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))  ;; dark themes use "dark"
@@ -2612,6 +2612,7 @@ This variable is nil if the current buffer isn't visiting a file.")
 ;; (setq window-devider-color "#57a331")
 ;; (setq window-divider-color "green")
 (setq window-divider-color "#06C668")
+(setq window-divider-right-color "#26282F")
 
 (defun my-god-mode-update-cursor-type ()
   ;; (when (display-graphic-p)
@@ -2628,7 +2629,9 @@ This variable is nil if the current buffer isn't visiting a file.")
       (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#33485e")
       ;; (set-face-attribute 'line-number-current-line nil :foreground "#5fffd7" :background "#3a3a3a")
       (when (display-graphic-p)
-        (set-face-attribute 'window-divider nil     :foreground window-divider-color)
+        (set-face-attribute 'window-divider nil                 :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider-first-pixel nil     :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider-last-pixel nil      :foreground window-divider-right-color)
         ;; (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
         ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
         ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#262831" :foreground "#7AA2F7")
@@ -2650,7 +2653,9 @@ This variable is nil if the current buffer isn't visiting a file.")
       )
       ;; (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
       (when (display-graphic-p)
-        (set-face-attribute 'window-divider nil     :foreground window-divider-color)
+        (set-face-attribute 'window-divider nil                 :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider-first-pixel nil     :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider-last-pixel nil      :foreground window-divider-right-color)
         ;; (set-face-attribute 'mode-line nil          :background "#7fdc59" :foreground "black" :overline "green"   :box nil) ;; draw a line above mode-line
         ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
         ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#7AA2F7" :foreground "black")
@@ -2776,24 +2781,6 @@ This variable is nil if the current buffer isn't visiting a file.")
 
 
 
-(defun my-add-padding-for-treemacs()
-  (set-window-margins (treemacs-get-local-window) 1 1))
-
-(defun my-add-hl-line-for-treemacs()
-  (interactive)
-  (setq-local face-remapping-alist '((hl-line (:inherit hl-line)))))
-
-(defun my-decrease-treemacs-width()
-  (interactive)
-  ;; call inner api
-  (treemacs--set-width 25)
-  )
-
-(defun my-increase-treemacs-width()
-  (interactive)
-  ;; call inner api
-  (treemacs--set-width (/ (frame-width) 3))
-  )
 
 
 
@@ -2803,8 +2790,7 @@ This variable is nil if the current buffer isn't visiting a file.")
 
 
 
-(defun display-treemacs-widow-in-ace-window-selection()
-    (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))
+
 
 
 (use-package treemacs
@@ -2817,25 +2803,48 @@ This variable is nil if the current buffer isn't visiting a file.")
     (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
     (setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
     (setq treemacs-expand-after-init nil)
+    (setq treemacs-width-is-initially-locked nil)
+
     (global-set-key (kbd "C-c C-p") treemacs-project-map)
     (global-set-key (kbd "C-c C-w") treemacs-workspace-map)
     ;; (treemacs-resize-icons 26)
-    (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
-    (add-hook 'treemacs-mode-hook #'my-add-hl-line-for-treemacs)
-    (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
-    ;; (add-hook 'treemacs-mode-hook #'my-set-bigger-spacing)
-    (treemacs-follow-mode -1)
+
+    (defun my-add-padding-for-treemacs()
+      (set-window-margins (treemacs-get-local-window) 1 1)
+      (set-fringe-mode 0)
+      )
+
+    (defun dim-treemacs-window-background()
+      (set (make-local-variable 'face-remapping-alist) '((default :background "#26282F"))))
+
+    (defun my-decrease-treemacs-width()
+      (interactive)
+      ;; call inner api
+      (treemacs--set-width 25))
+
+    (defun my-increase-treemacs-width()
+      (interactive)
+      ;; call inner api
+      (treemacs--set-width (/ (frame-width) 3)))
+
+    (defun display-treemacs-widow-in-ace-window-selection()
+        (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))
+
     ;;;; custom highlight for treemacs current line
-    (defface my-treemacs-custom-line-highlight '((t (
-                                                    ;;  :family "IBM Plex Sans"
-                                                     :background "#59dcb7" :foreground "black" :weight normal))) "")
+    (defface my-treemacs-custom-line-highlight '((t (:background "#59dcb7" :foreground "black" :weight normal))) "")
     (defun change-treemacs-hl-line-mode ()
        (setq-local hl-line-face 'my-treemacs-custom-line-highlight)
        (overlay-put hl-line-overlay 'face hl-line-face))
+
+    (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
+    (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
+    (add-hook 'treemacs-mode-hook #'dim-treemacs-window-background)
     (add-hook 'treemacs-mode-hook #'change-treemacs-hl-line-mode)
+    ;; (add-hook 'treemacs-mode-hook #'my-set-bigger-spacing)
+
+    (treemacs-follow-mode -1)
   :bind
     (:map treemacs-mode-map
-          ("C-c h" . my-add-hl-line-for-treemacs)
           ("H" . my-decrease-treemacs-width)
           ("L" . my-increase-treemacs-width)
           ;; add-hook no work????
