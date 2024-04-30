@@ -804,6 +804,29 @@
 ;; (advice-add 'keyboard-quit                 :after 'remove-all-highlight)
 
 
+;; load from ./lisp
+(require 'nice-jumper)
+(global-nice-jumper-mode t)
+;; (add-hook 'nice-jumper-post-jump-hook 'my-recenter)
+(add-hook 'nice-jumper-post-jump-hook 'xref-pulse-momentarily)
+(when (display-graphic-p)
+  ;; cmd+[ cmd+]
+  (global-set-key (kbd "s-[") 'nice-jumper/backward)
+  (global-set-key (kbd "s-]") 'nice-jumper/forward))
+;; for terminal
+;; C-o C-M-o
+(global-set-key (kbd "C-o") 'nice-jumper/backward)
+(global-set-key (kbd "C-M-o") 'nice-jumper/forward)
+
+;; (defadvice deadgrep (before nice-jumper activate)
+;;   (nice-jumper--set-jump))
+
+
+
+(defadvice xref-find-definitions-at-mouse (before nice-jumper activate)
+  (nice-jumper--set-jump))
+
+
 (define-key global-map (kbd "<s-mouse-1>")
             #'(lambda ()
                 (interactive)
@@ -2622,7 +2645,9 @@ This variable is nil if the current buffer isn't visiting a file.")
       ;; (set-face-foreground 'vertical-border "#374250")
       )
     (progn
-      (set-face-attribute 'hl-line nil :background (face-background 'default))
+      (when (my-god-this-is-normal-editor-buffer (buffer-name))
+        (set-face-attribute 'hl-line nil :background (face-background 'default))
+      )
       ;; (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil     :foreground window-divider-color)
@@ -3172,23 +3197,6 @@ _o_: other-window
 
 
 
-
-;; load from ./lisp
-(require 'nice-jumper)
-(global-nice-jumper-mode t)
-;; (add-hook 'nice-jumper-post-jump-hook 'my-recenter)
-(add-hook 'nice-jumper-post-jump-hook 'xref-pulse-momentarily)
-(when (display-graphic-p)
-  ;; cmd+[ cmd+]
-  (global-set-key (kbd "s-[") 'nice-jumper/backward)
-  (global-set-key (kbd "s-]") 'nice-jumper/forward))
-;; for terminal
-;; C-o C-M-o
-(global-set-key (kbd "C-o") 'nice-jumper/backward)
-(global-set-key (kbd "C-M-o") 'nice-jumper/forward)
-
-;; (defadvice deadgrep (before nice-jumper activate)
-;;   (nice-jumper--set-jump))
 
 
 
