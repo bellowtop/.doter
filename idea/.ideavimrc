@@ -62,7 +62,7 @@ map m %
 nnoremap <leader>n :NERDTreeToggle <CR>
 nnoremap @ :NERDTreeFind <CR>
 
-nnoremap <leader>f :action GotoClass <CR>
+nnoremap <leader>f :action GotoFile <CR>
 nnoremap <leader>F :action ReformatCode <CR>
 nnoremap <leader>m :action FindInPath <CR>
 # nnoremap <leader>m :action SearchEverywhere <CR>
