@@ -588,7 +588,6 @@
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
  '(eglot-highlight-symbol-face ((t (:background "#59dcb7" :foreground "black" :weight normal))))
- '(eglot-mode-line ((t nil)))
  '(eldoc-box-body ((t (:inherit default))))
  '(flymake-diagnostic-at-point-posframe-background-face ((t (:background "dark magenta"))))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
@@ -600,7 +599,7 @@
  '(highlight ((t (:background "#7ED9B9" :foreground "black" :weight normal))))
  '(hl-line ((t (:extend t :background "#33485e" :underline nil))))
  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
- '(isearch ((t (:background "orange1" :foreground "black" :weight normal))))
+ '(isearch ((t (:background "orange1" :foreground "black" :weight normal :inverse-video nil))))
  '(ivy-current-match ((t (:inherit region :background nil :foreground nil))))
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
@@ -700,27 +699,27 @@
         (overlay-put overlay-highlight 'face '(:inverse-video t))
         ;; (overlay-put overlay-highlight 'face '(:inherit hl-line))
         ;; (overlay-put overlay-highlight 'face '(:background "#1b5aa1"))
-        (overlay-put overlay-highlight 'line-highlight-overlay-marker t))
+        (overlay-put overlay-highlight 'my-marker-name-for-line-highlight-overlay t))
   )
 
 (defun dehighlight-current-line ()
   (interactive)
-  (remove-overlays (line-beginning-position) (+ 1 (line-end-position)) 'line-highlight-overlay-marker t)
+  (remove-overlays (line-beginning-position) (+ 1 (line-end-position)) 'my-marker-name-for-line-highlight-overlay t)
   )
 
 (defun highlight-or-dehighlight-line ()
   (interactive)
   (if (find-overlays-specifying
-       'line-highlight-overlay-marker
+       'my-marker-name-for-line-highlight-overlay
        (line-beginning-position))
       (dehighlight-current-line)
     (highlight-current-line)))
 
 (defun remove-all-highlight ()
   (interactive)
-  ;; (remove-overlays (point-min) (point-max) 'line-highlight-overlay-marker t)
+  (remove-overlays (point-min) (point-max) 'my-marker-name-for-line-highlight-overlay t)
   ;; this truly removes all, not restricted by the name
-  (remove-overlays (point-min) (point-max))
+  ;; (remove-overlays (point-min) (point-max))
   )
 
 (global-set-key [f8] 'highlight-or-dehighlight-line)
@@ -1030,14 +1029,17 @@
 (add-hook 'before-save-hook 'company-cancel)
 
 ;; company-posframe-mode
-(require 'company-posframe)
-(company-posframe-mode 1)
+;  (require 'company-posframe)
+;  (company-posframe-mode 1)
 
 ;; http://company-mode.github.io/manual/Getting-Started.html#Initial-Setup
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "<tab>") #'company-select-next-if-tooltip-visible-or-complete-selection)
   (define-key company-active-map (kbd "<backtab>") #'company-select-previous-or-abort)
   (define-key company-active-map (kbd "RET") #'company-complete-selection)
+
+  (global-set-key (kbd "s-r") #'company-yasnippet)
+
   )
 ;; Use (kbd "TAB") (or use (kbd "<tab>"), if you want to distinguish C-i from the <tab> key)
 
@@ -1469,6 +1471,24 @@
 
 
 
+(defun bf-pretty-print-xml-region (begin end)
+    "Pretty format XML markup in region. You need to have nxml-mode
+    http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
+    this.  The function inserts linebreaks to separate tags that have
+    nothing but whitespace between them.  It then indents the markup
+    by using nxml's indentation rules."
+      (interactive "r")
+        (save-excursion
+              (nxml-mode)
+                  (goto-char begin)
+                      (while (search-forward-regexp "\>[ \\t ]*\<" nil t)
+                                   (backward-char) (insert "\n") (setq end (1+ end)))
+                          (indent-region begin end))
+          (message "Ah, much better!"))
+
+
+
+
 
 
 (defun my-cmake-mode-hook ()
@@ -1807,12 +1827,13 @@ respectively."
     ;; (delete-trailing-whitespace)
     (ignore-errors (company-cancel))
     (ignore-errors (remove-all-highlight)))
+    (ignore-errors (flymake-start))  ;; but show errors
   ;; (ignore-errors (flymake-mode-on)) ;; but show errors
   (keyboard-quit)
   (keyboard-quit-context+) ;; from custom-util-funcs.el
   )
 
-(global-set-key [remap keyboard-quit] #'my-escape-key)
+;; (global-set-key [remap keyboard-quit] #'my-escape-key)
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
 ;; (define-key helm-map (kbd "<escape>") #'helm-keyboard-quit)
@@ -2196,6 +2217,7 @@ If buffer-or-name is nil return current buffer's mode."
                           "*Minibuf"
                           "*terminal*"
                           "*eshell*"
+                          "*shell*"
                           "magit"
                           "git-rebase-todo"
                           "*Backtrace*"
@@ -2847,6 +2869,8 @@ This variable is nil if the current buffer isn't visiting a file.")
     (:map treemacs-mode-map
           ("H" . my-decrease-treemacs-width)
           ("L" . my-increase-treemacs-width)
+          ("a" . treemacs-create-file)
+          ("A" . treemacs-create-dir)
           ;; add-hook no work????
           ("<mouse-1>" . treemacs-single-click-expand-action))
   )
@@ -2868,7 +2892,7 @@ This variable is nil if the current buffer isn't visiting a file.")
                         ;; treemacs-nerd-icons-file-face
                         ;; treemacs-nerd-icons-root-face
                         treemacs-tags-face))
-          (set-face-attribute face nil :family "IBM Plex Sans" :weight 'normal :height 140 :foreground "#C4C4C4" :underline nil :inherit 'unspecified))
+          (set-face-attribute face nil :family "IBM Plex Mono" :weight 'normal :height 140 :foreground "#C4C4C4" :underline nil :inherit 'unspecified))
 
    (when (display-graphic-p)
         (treemacs-load-theme "nerd-icons")
@@ -2954,7 +2978,7 @@ This variable is nil if the current buffer isn't visiting a file.")
   (interactive "p")
   (if (region-active-p)
       (message
-       "search the marked region")
+       "run my-mc/mark-next-like-this")
     (er/mark-symbol))
   (mc/mark-next-like-this-word
    arg)
@@ -2983,8 +3007,7 @@ This variable is nil if the current buffer isn't visiting a file.")
 (defun my-mc/mark-previous-like-this (arg)
   (interactive "p")
   (if (region-active-p)
-      (message
-       "search the marked region")
+      (message "run my-mc/mark-previous-like-this")
     (er/mark-symbol))
   (mc/mark-previous-like-this-word arg)
   ;; copy from multiple-cursors-20211112.2223/mc-cycle-cursors.el

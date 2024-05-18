@@ -79,6 +79,7 @@
         my-replace-char
         my-select-current-line-and-forward-line
         my-set-mark-command-or-deactivate-mark
+        deactivate-mark
         my-yank-but-check-newline
         my-yank-but-check-newline-above
         my-yank-but-check-newline-bellow
@@ -159,6 +160,7 @@
         gcm-scroll-down
         gcm-scroll-up
         god-local-mode
+        god-mode-describe-key
         handle-select-window
         handle-switch-frame
         helm-confirm-and-exit-minibuffer

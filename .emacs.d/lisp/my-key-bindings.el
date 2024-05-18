@@ -19,11 +19,12 @@
         (kill-region beg end))
     (kill-whole-line (or arg 1))))
 
+
 (defun my-set-mark-command-or-deactivate-mark (arg)
   (interactive "p")
   (if (use-region-p)
-      (deactivate-mark t)
-    (push-mark nil nil t)))
+      (deactivate-mark)
+      (push-mark nil nil t)))
 
 
 (defun my-next-line-or-mc/mark-next-like-this (arg)
@@ -182,30 +183,30 @@
 
 
 
-(defun my/scroll-right() (interactive)
-       (save-selected-window
-         (select-window (window-at (cadr (mouse-position))
-                                   (cddr (mouse-position))
-                                   (car (mouse-position))))
-         (scroll-right 2)))
-(defun my/scroll-left() (interactive)
-       (save-selected-window
-         (select-window (window-at (cadr (mouse-position))
-                                   (cddr (mouse-position))
-                                   (car (mouse-position))))
-         (scroll-left 2)))
-
-(global-set-key (kbd "<left-margin> <triple-wheel-left>")  'my/scroll-left)
-(global-set-key (kbd "<left-margin> <triple-wheel-right>")  'my/scroll-right)
-(global-set-key (kbd "<right-margin> <triple-wheel-right>") 'my/scroll-left)
-(global-set-key (kbd "<right-margin> <triple-wheel-left>") 'my/scroll-right)
-
-(global-set-key (kbd "<wheel-left>") 'my/scroll-right)
-(global-set-key (kbd "<double-wheel-left>") 'my/scroll-right)
-(global-set-key (kbd "<triple-wheel-left>") 'my/scroll-right)
-(global-set-key (kbd "<wheel-right>") 'my/scroll-left)
-(global-set-key (kbd "<double-wheel-right>") 'my/scroll-left)
-(global-set-key (kbd "<triple-wheel-right>") 'my/scroll-left)
+;;  (defun my/scroll-right() (interactive)
+;;         (save-selected-window
+;;           (select-window (window-at (cadr (mouse-position))
+;;                                     (cddr (mouse-position))
+;;                                     (car (mouse-position))))
+;;           (scroll-right 1)))
+;;  (defun my/scroll-left() (interactive)
+;;         (save-selected-window
+;;           (select-window (window-at (cadr (mouse-position))
+;;                                     (cddr (mouse-position))
+;;                                     (car (mouse-position))))
+;;           (scroll-left 1)))
+;;
+;;  (global-set-key (kbd "<left-margin> <triple-wheel-left>")  'my/scroll-left)
+;;  (global-set-key (kbd "<left-margin> <triple-wheel-right>")  'my/scroll-right)
+;;  (global-set-key (kbd "<right-margin> <triple-wheel-right>") 'my/scroll-left)
+;;  (global-set-key (kbd "<right-margin> <triple-wheel-left>") 'my/scroll-right)
+;;
+;;  (global-set-key (kbd "<wheel-left>") 'my/scroll-right)
+;;  (global-set-key (kbd "<double-wheel-left>") 'my/scroll-right)
+;;  (global-set-key (kbd "<triple-wheel-left>") 'my/scroll-right)
+;;  (global-set-key (kbd "<wheel-right>") 'my/scroll-left)
+;;  (global-set-key (kbd "<double-wheel-right>") 'my/scroll-left)
+;;  (global-set-key (kbd "<triple-wheel-right>") 'my/scroll-left)
 
 
 
@@ -308,7 +309,7 @@
 
 
 
-(advice-add 'kill-this-buffer :after #'(lambda() (switch-to-buffer (other-buffer))))
+;; (advice-add 'kill-this-buffer :after #'(lambda() (switch-to-buffer (other-buffer))))
 
 
 
@@ -320,6 +321,8 @@
       (eldoc-box-quit-frame)
     (eldoc-box-help-at-point)))
 
+(add-hook 'eldoc-box-buffer-hook #'(lambda() (toggle-truncate-lines t)))
+
 
 
 
@@ -330,7 +333,8 @@
      (define-key dired-mode-map (kbd "SPC") 'my-god-mode-leader-key-1)
      (define-key dired-mode-map (kbd "SPC b") #'switch-to-buffer)
      (define-key dired-mode-map (kbd "SPC B") #'ibuffer)
-     (define-key dired-mode-map (kbd "SPC k") #'kill-this-buffer)
+    ;; (define-key dired-mode-map (kbd "SPC k") #'kill-this-buffer)
+    (define-key dired-mode-map (kbd "SPC k") #'kill-current-buffer)
      (define-key dired-mode-map (kbd "SPC K") #'my-only-current-buffer)
      (define-key dired-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
      (define-key dired-mode-map (kbd "SPC f") #'my-projectile-find-file)
@@ -368,7 +372,7 @@
     (define-key map (kbd "C-h .") #'eldoc-doc-buffer)
     (define-key map (kbd "C-h h") #'my-quit-other-window)
     (define-key map (kbd "C-h C-h") #'my-quit-other-window)
-    (define-key map (kbd "C-c C-c") #'eshell)
+    (define-key map (kbd "C-c C-c") #'shell)
 
     (define-key map (kbd "C-x C-b") #'ibuffer)
     (define-key map (kbd "C-x C-f") #'my-find-files)
@@ -399,6 +403,8 @@
     (define-key map (kbd "C-j") 'my-save-buffer)
     (define-key map (kbd "M-j") 'gcm-scroll-down)
     (define-key map (kbd "M-k") 'gcm-scroll-up)
+    (define-key map (kbd "C-;") 'gcm-scroll-down)
+    (define-key map (kbd "C-'") 'gcm-scroll-up)
     (define-key map (kbd "M-o") 'other-window)
     (define-key map (kbd "M-q") 'my-toggle-god-mode)
 
@@ -496,7 +502,8 @@
     (define-key god-local-mode-map (kbd "SPC b") #'counsel-switch-buffer)
     (define-key god-local-mode-map (kbd "SPC B") #'ibuffer)
     ;; (define-key god-local-mode-map (kbd "SPC B") #'helm-buffers-list)
-    (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
+    ;; (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
+    (define-key god-local-mode-map (kbd "SPC k") #'kill-current-buffer)
     (define-key god-local-mode-map (kbd "SPC K") #'my-only-current-buffer)
     (define-key god-local-mode-map (kbd "SPC P P") #'my-show-file-name)
     (define-key god-local-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
@@ -579,8 +586,8 @@
     (define-key god-local-mode-map (kbd "g g") #'beginning-of-buffer)
     (define-key god-local-mode-map (kbd "G") #'end-of-buffer)
     (define-key god-local-mode-map (kbd "g G") #'end-of-buffer)
-    (define-key god-local-mode-map (kbd "C-e") #'scroll-up-line)
-    (define-key god-local-mode-map (kbd "C-y") #'scroll-down-line)
+    ;; (define-key god-local-mode-map (kbd "C-e") #'scroll-up-line)
+    ;; (define-key god-local-mode-map (kbd "C-y") #'scroll-down-line)
     ;; (define-key god-local-mode-map (kbd "C-a") #'increment-number-at-point)
 
     ;; (define-key god-local-mode-map (kbd "C-, C-h") #'switch-to-prev-buffer)

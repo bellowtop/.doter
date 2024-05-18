@@ -26,7 +26,23 @@
   (require 'go-mode)
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'my-gofmt-before-save nil t)
+
+  (if (eq major-mode 'go-mode)
+    (define-key go-mode-map    (kbd "s-<return>") #'my-go-mode-split-string)
+    (define-key go-ts-mode-map (kbd "s-<return>") #'my-go-mode-split-string)
+    )
 )
+
+
+(defun my-go-mode-split-string(arg)
+  (interactive "*P")
+  (sp-split-sexp arg)
+  (insert-char 43) ; insert char +
+  (newline)
+  (forward-char)
+  (gofmt)
+)
+
 
 ;; (add-hook 'go-mode-hook 'my-go-mode-hook)
 
