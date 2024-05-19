@@ -30,6 +30,7 @@
         dakra-capitalize-dwim
         dakra-downcase-dwim
         dakra-upcase-dwim
+        deactivate-mark
         delete-horizontal-space
         downcase-dwim
         downcase-region
@@ -79,7 +80,7 @@
         my-replace-char
         my-select-current-line-and-forward-line
         my-set-mark-command-or-deactivate-mark
-        deactivate-mark
+        my-wrap-region-with-parens
         my-yank-but-check-newline
         my-yank-but-check-newline-above
         my-yank-but-check-newline-bellow
@@ -168,6 +169,7 @@
         helpful-key
         i3-windmove-left
         iedit-switch-to-mc-mode
+        imenu-list-smart-toggle
         ivy-backward-delete-char
         ivy-wgrep-change-to-wgrep-mode
         lispy-parens
@@ -201,6 +203,7 @@
         my-next-line-or-mc/mark-next-like-this
         my-prev-line-or-mc/mark-next-like-this
         my-quit
+        my-quit-other-window
         my-save-buffer
         my-toggle-god-mode
         org-clock-goto
