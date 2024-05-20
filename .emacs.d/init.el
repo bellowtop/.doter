@@ -1335,6 +1335,8 @@
   :bind
   ("s-h" . centaur-tabs-backward)
   ("s-l" . centaur-tabs-forward)
+  ("C-c h" . centaur-tabs-backward)
+  ("C-c l" . centaur-tabs-forward)
   ("s-t" . centaur-tabs--create-new-tab)
   ("s-w" . centaur-tabs--kill-this-buffer-dont-ask)
   ("s-1" . my-centaur-select-tab-1)
@@ -1385,11 +1387,11 @@
     ;; modified tab underline
     (set-face-underline 'centaur-tabs-selected-modified "cyan" )
     (set-face-underline 'centaur-tabs-modified-marker-selected "cyan" )
-    ;; (unless (display-graphic-p)
+    (unless (display-graphic-p)
     ;;   ;; no underline for selected tab, in terminal mode.
-    ;;   (set-face-underline 'centaur-tabs-selected-modified nil )
-    ;;   (set-face-underline 'centaur-tabs-selected nil )
-    ;;   )
+      (set-face-underline 'centaur-tabs-selected-modified nil )
+      (set-face-underline 'centaur-tabs-selected nil )
+    )
 
     (unless (display-graphic-p)
       (setq centaur-tabs-set-icons nil)
