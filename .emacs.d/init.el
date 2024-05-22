@@ -565,7 +565,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;; '(centaur-tabs-selected ((t (:inherit mode-line :inverse-video t))))
  '(centaur-tabs-selected ((t (:inherit default :foreground "white" :weight normal))))
  '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "yellow"))))
  '(centaur-tabs-unselected ((t (:foreground "#969696" :background "#262830"))))
@@ -982,6 +981,52 @@
 (setq eldoc-box-clear-with-C-g t)
 (require 'eldoc-box)
 
+
+
+(unless (display-graphic-p)
+  (require 'popon)
+  (advice-add #'keyboard-quit :before #'popon-kill-all)
+
+  (defun my-split-long-line-to-sub-lines (long-line wrap-width)
+    (interactive)
+    (let ((total-len (string-width long-line))
+          (idx 0)
+          (collected ()))
+    (while (> (- total-len idx) wrap-width)
+      (push (substring long-line idx (+ idx wrap-width)) collected)
+      (setq idx (+ idx wrap-width)))
+    (when (< idx total-len)
+      (push (substring long-line idx total-len) collected))
+    (reverse collected)))
+
+  ;; (message "%s" (my-split-long-line-to-sub-lines "It is useful to include newlines" 4))
+  ;; (string-width "It is useful to include newlines")
+
+  (defun show-eldoc-popon-at-point ()
+    (interactive)
+    (when (boundp 'eldoc--doc-buffer)
+      (let* ((str (with-current-buffer eldoc--doc-buffer
+                    (buffer-string)))
+             (len (- (window-body-width) 6)) ;; don't count the line-number column
+             (bordered-str (concat (make-string len ?-) "\n" str "\n" (make-string len ?-)))
+             ;; (lines (string-split bordered-str "\n"))
+             ;; (small-lines (mapcar #'(lambda(line) (my-split-long-line-to-sub-lines line len)) lines))
+             ;; (wrapped-lines (flatten-tree small-lines))
+             ;; (new-str (string-join wrapped-lines "\n"))
+             (new-str bordered-str)
+             (pointxy (popon-x-y-at-pos (point)))
+             ;; (pointxy-nextline (cons (car pointxy) (+ (cdr pointxy) 1)))
+             (pointxy-nextline (cons 0 (+ (cdr pointxy) 1)))
+             )
+
+        (popon-create bordered-str pointxy-nextline (get-buffer-window) (current-buffer)))))
+
+  (global-set-key (kbd "C-c i") #'show-eldoc-popon-at-point)
+
+)
+
+
+
 (require 'custom-util-funcs)
 
 (require 'init-eglot)
@@ -1171,7 +1216,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -1335,8 +1380,6 @@
   :bind
   ("s-h" . centaur-tabs-backward)
   ("s-l" . centaur-tabs-forward)
-  ("C-c h" . centaur-tabs-backward)
-  ("C-c l" . centaur-tabs-forward)
   ("s-t" . centaur-tabs--create-new-tab)
   ("s-w" . centaur-tabs--kill-this-buffer-dont-ask)
   ("s-1" . my-centaur-select-tab-1)

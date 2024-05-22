@@ -129,7 +129,7 @@
 
 (use-package eglot-booster
   :after eglot
-  :configi (eglot-booster-mode))
+  :config (eglot-booster-mode))
 
 (use-package eldoc
   :ensure nil

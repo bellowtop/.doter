@@ -80,6 +80,7 @@
         my-replace-char
         my-select-current-line-and-forward-line
         my-set-mark-command-or-deactivate-mark
+        my-toggle-case-char
         my-wrap-region-with-parens
         my-yank-but-check-newline
         my-yank-but-check-newline-above

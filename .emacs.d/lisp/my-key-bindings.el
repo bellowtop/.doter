@@ -316,10 +316,17 @@
 
 (defun my-toggle-eldoc-box-help-at-point ()
   (interactive)
-  (if (and (bound-and-true-p eldoc-box--frame)
-           (frame-visible-p eldoc-box--frame))
-      (eldoc-box-quit-frame)
-    (eldoc-box-help-at-point)))
+  (if (display-graphic-p)
+      ;; graphic, use eldoc-box
+      (if (and (bound-and-true-p eldoc-box--frame)
+               (frame-visible-p
+                eldoc-box--frame))
+          (eldoc-box-quit-frame)
+        (eldoc-box-help-at-point))
+    ;; terminal tui, use popon
+    (if (window-parameter (get-buffer-window) 'popon-list)
+        (popon-kill-all)
+      (show-eldoc-popon-at-point))))
 
 (add-hook 'eldoc-box-buffer-hook #'(lambda() (toggle-truncate-lines t)))
 
@@ -351,10 +358,6 @@
     (define-key map (kbd "M-x") #'my-M-x)
     (define-key map (kbd "C-M-.") #'xref-find-definitions-other-window )
     (define-key map (kbd "C-M-h") #'my-toggle-er/mark-defun)
-
-    (define-key map (kbd "M-;")  #'centaur-tabs-backward)
-    (define-key map (kbd "M-'")  #'centaur-tabs-forward)
-
     (define-key map (kbd "C-s h")  #'centaur-tabs-backward)
     (define-key map (kbd "C-s l")  #'centaur-tabs-forward)
     (define-key map (kbd "C-s n")  #'centaur-tabs--create-new-tab)
@@ -635,8 +638,6 @@
     (define-key map (kbd "h") #'my-backward-char-no-cross-line)
 
     (define-key map (kbd "f") #'avy-goto-word-0)
-    (define-key map (kbd "M-;") #'centaur-tabs-backward)
-    (define-key map (kbd "M-'") #'centaur-tabs-forward)
     (define-key map (kbd "M-o") #'other-window)
     (define-key map (kbd "M-x") #'my-M-x)
 
@@ -651,10 +652,6 @@
 
 (defvar my-ctrl-w-window-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
-
-    (define-key map (kbd "M-;")  #'centaur-tabs-backward)
-    (define-key map (kbd "M-'")  #'centaur-tabs-forward)
-
     (define-key map (kbd "C-w o") #'hydra-cw-o-window-menu/other-window)
     (define-key map (kbd "C-w l") #'windmove-right)
     (define-key map (kbd "C-w h") #'windmove-left)
@@ -688,6 +685,18 @@
 
 
 
+
+(with-eval-after-load 'centaur-tabs
+  (define-key my-keys-minor-mode-map (kbd "C-s h") #'centaur-tabs-backward)
+  (define-key my-keys-minor-mode-map (kbd "C-s l") #'centaur-tabs-forward)
+  (define-key my-keys-minor-mode-map (kbd "C-s n") #'centaur-tabs--create-new-tab)
+  (define-key my-ctrl-w-window-keys-minor-mode-map (kbd "C-s h") #'centaur-tabs-backward)
+  (define-key my-ctrl-w-window-keys-minor-mode-map (kbd "C-s l") #'centaur-tabs-forward)
+  (define-key my-ctrl-w-window-keys-minor-mode-map (kbd "C-s n") #'centaur-tabs--create-new-tab)
+  (define-key my-special-buffer-keys-minor-mode-map (kbd "C-s h") #'centaur-tabs-backward)
+  (define-key my-special-buffer-keys-minor-mode-map (kbd "C-s l") #'centaur-tabs-forward)
+  (define-key my-special-buffer-keys-minor-mode-map (kbd "C-s n") #'centaur-tabs--create-new-tab)
+  )
 
 
 (provide 'my-key-bindings)
