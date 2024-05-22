@@ -565,7 +565,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(centaur-tabs-selected ((t (:inherit default :foreground "white" :weight normal))))
+ '(centaur-tabs-selected ((t (:inherit default :foreground "white" :background "black" :weight normal))))
  '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "yellow"))))
  '(centaur-tabs-unselected ((t (:foreground "#969696" :background "#262830"))))
  '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground "yellow"))))

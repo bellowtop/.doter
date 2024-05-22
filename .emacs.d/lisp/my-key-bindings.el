@@ -508,7 +508,7 @@
     ;; (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)
     (define-key god-local-mode-map (kbd "SPC k") #'kill-current-buffer)
     (define-key god-local-mode-map (kbd "SPC K") #'my-only-current-buffer)
-    (define-key god-local-mode-map (kbd "SPC P P") #'my-show-file-name)
+    (define-key god-local-mode-map (kbd "SPC P P") #'xah-copy-file-path)
     (define-key god-local-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
 
     (define-key god-local-mode-map (kbd "C-\\") #'my-toggle-eldoc-box-help-at-point)
