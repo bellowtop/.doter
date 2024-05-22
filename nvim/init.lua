@@ -1227,6 +1227,9 @@ vim.api.nvim_set_keymap("n", "<C-h><C-h>", ":QFix<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>h", ":bprev<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>l", ":bnext<CR>", { noremap = true })
 
+vim.api.nvim_set_keymap("n", "<C-s>h", ":bprev<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<C-s>l", ":bnext<CR>", { noremap = true })
+
 vim.api.nvim_set_keymap("n", "<Leader>k", ":Bclose<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>K", ":BufOnly<CR> :bfirst<CR>", { noremap = true })
 
