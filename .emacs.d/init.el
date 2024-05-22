@@ -1009,7 +1009,7 @@
                   (buffer-string)))
            (len (- (window-body-width) 8)) ;; don't count the line-number column , and the border chars
            (border-line (make-string len ?-))
-           (bordered-str (concat (make-string len ?-) "\n" str "\n" (make-string len ?-)))
+           (bordered-str (concat border-line "\n" str "\n" border-line))
            (lines (string-split bordered-str "\n"))
            (lines-size (length lines))
            (idx 0)
