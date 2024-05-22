@@ -27,6 +27,10 @@ cfg.keys = {
   { mods = "SUPER|SHIFT",       key = "j",  action = wezterm.action.SendString '\x13\x0a'     }, -- cmd+shift+j  next session,  send C-s C-j
   { mods = "SUPER|SHIFT",       key = "k",  action = wezterm.action.SendString '\x13\x0b'     }, -- cmd+shift+k  next session,  send C-s C-k
 
+  { mods = "SUPER|SHIFT",       key = "h",  action = wezterm.action.SendString '\x13\x13\x68'     }, -- cmd+shift+h  send C-s C-s h
+  { mods = "SUPER|SHIFT",       key = "l",  action = wezterm.action.SendString '\x13\x13\x6c'     }, -- cmd+shift+l  send C-s C-s l
+  { mods = "SUPER|SHIFT",       key = "n",  action = wezterm.action.SendString '\x13\x13\x6e'     }, -- cmd+shift+l  send C-s C-s n
+
   { mods = "SUPER",             key = "h",  action = wezterm.action.SendString '\x13\x68'     }, -- cmd+h        next window,   send C-s h
   { mods = "SUPER",             key = "l",  action = wezterm.action.SendString '\x13\x6c'     }, -- cmd+l        next window,   send C-s l
 
@@ -37,7 +41,8 @@ cfg.keys = {
   -- { mods = "SUPER|SHIFT",       key = "}",  action = wezterm.action.ActivateTabRelative(1)     }, -- cmd+shift+]  next tab
 
   { mods = "SUPER",             key = "t",  action = wezterm.action.SendString '\x13\x6e'     }, -- cmd+t  new window,          send C-s c
-  { mods = "SUPER",             key = "w",  action = wezterm.action.SendString '\x13\x78'     }, -- cmd+d  kill pane,           send C-s X
+  { mods = "SUPER",             key = "w",  action = wezterm.action.SendString '\x13\x78'     }, -- cmd+d  kill pane,           send C-s x
+  { mods = "SUPER",             key = "W",  action = wezterm.action.SendString '\x13\x58'     }, -- cmd+d  kill pane,           send C-s X
   { mods = "SUPER",             key = "r",  action = wezterm.action.SendString '\x13\x5b'     }, -- cmd+r  selection mode,      send C-s [
   { mods = "SUPER",             key = "e",  action = wezterm.action.SendString '\x13\x6d'     }, -- cmd+m  toggle mouse,        send C-s m
 
