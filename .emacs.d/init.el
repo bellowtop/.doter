@@ -1003,23 +1003,34 @@
   ;; (string-width "It is useful to include newlines")
 
   (defun show-eldoc-popon-at-point ()
-    (interactive)
-    (when (boundp 'eldoc--doc-buffer)
-      (let* ((str (with-current-buffer eldoc--doc-buffer
-                    (buffer-string)))
-             (len (- (window-body-width) 6)) ;; don't count the line-number column
-             (bordered-str (concat (make-string len ?-) "\n" str "\n" (make-string len ?-)))
-             ;; (lines (string-split bordered-str "\n"))
-             ;; (small-lines (mapcar #'(lambda(line) (my-split-long-line-to-sub-lines line len)) lines))
-             ;; (wrapped-lines (flatten-tree small-lines))
-             ;; (new-str (string-join wrapped-lines "\n"))
-             (new-str bordered-str)
-             (pointxy (popon-x-y-at-pos (point)))
-             ;; (pointxy-nextline (cons (car pointxy) (+ (cdr pointxy) 1)))
-             (pointxy-nextline (cons 0 (+ (cdr pointxy) 1)))
-             )
+  (interactive)
+  (when (boundp 'eldoc--doc-buffer)
+    (let* ((str (with-current-buffer eldoc--doc-buffer
+                  (buffer-string)))
+           (len (- (window-body-width) 8)) ;; don't count the line-number column , and the border chars
+           (bordered-str (concat (make-string len ?-) "\n" str "\n" (make-string len ?-)))
+           (lines (string-split bordered-str "\n"))
+           (lines-size (length lines))
+           (idx 0)
+           (lines
+            (cl-loop for line in lines
+                     do
+                     (setq idx (1+ idx))
+                     collect
+                     (cond
+                       ((= 1 idx) (concat "+-" line))
+                       ((= lines-size idx) (concat "+-" line))
+                       (t (concat "| " line)))
+                     ))
+           ;; (bordered-lines (mapcar (lambda(line) (concat "| " line)) lines))
+           ;; (wrapped-lines (flatten-tree small-lines))
+           (bordered-str (string-join lines "\n"))
+           (pointxy (popon-x-y-at-pos (point)))
+           ;; (pointxy-nextline (cons (car pointxy) (+ (cdr pointxy) 1)))
+           (pointxy-nextline (cons 0 (+ (cdr pointxy) 1)))
+           )
 
-        (popon-create bordered-str pointxy-nextline (get-buffer-window) (current-buffer)))))
+      (popon-create bordered-str pointxy-nextline (get-buffer-window) (current-buffer)))))
 
   (global-set-key (kbd "C-c i") #'show-eldoc-popon-at-point)
 
