@@ -1015,13 +1015,14 @@
   ;; (message "%s" (my-split-long-line-to-sub-lines "It is useful to include newlines" 4))
   ;; (string-width "It is useful to include newlines")
 
-  (defun show-eldoc-popon-at-point ()
+(defun show-eldoc-popon-at-point ()
   (interactive)
   (when (boundp 'eldoc--doc-buffer)
     (let* ((str (with-current-buffer eldoc--doc-buffer
                   (buffer-string)))
            (len (- (window-body-width) 8)) ;; don't count the line-number column , and the border chars
-           (bordered-str (concat (make-string len ?-) "\n" str "\n" (make-string len ?-)))
+           (border-line (make-string len ?-))
+           (bordered-str (concat border-line "\n" str "\n" border-line))
            (lines (string-split bordered-str "\n"))
            (lines-size (length lines))
            (idx 0)
@@ -1030,10 +1031,12 @@
                      do
                      (setq idx (1+ idx))
                      collect
+                     ;; line
                      (cond
-                       ((= 1 idx) (concat "+-" line))
-                       ((= lines-size idx) (concat "+-" line))
-                       (t (concat "| " line)))
+                      ((= 1 idx) (concat "+-" line))
+                      ((= lines-size idx) (concat "+-" line))
+                      ((string= line "---") (concat "|" border-line))
+                      (t (concat "| " line)))
                      ))
            ;; (bordered-lines (mapcar (lambda(line) (concat "| " line)) lines))
            ;; (wrapped-lines (flatten-tree small-lines))
@@ -1042,7 +1045,6 @@
            ;; (pointxy-nextline (cons (car pointxy) (+ (cdr pointxy) 1)))
            (pointxy-nextline (cons 0 (+ (cdr pointxy) 1)))
            )
-
       (popon-create bordered-str pointxy-nextline (get-buffer-window) (current-buffer)))))
 
   (global-set-key (kbd "C-c i") #'show-eldoc-popon-at-point)
