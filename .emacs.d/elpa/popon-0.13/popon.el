@@ -305,7 +305,7 @@ order."
         (line-boundaries
          (let ((pair popon--line-beginnings)
                (boundaries nil))
-           (when (eq (car pair) (buffer-modified-tick))
+           (when nil
              (setq pair (cdr pair))
              (while pair
                (when (and (integerp (car pair))
