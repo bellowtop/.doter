@@ -837,6 +837,18 @@
                 (xref-go-back)
                 ))
 
+(define-key global-map (kbd "<M-mouse-1>")
+            #'(lambda ()
+                (interactive)
+                (mouse-set-point last-input-event)
+                (xref-find-definitions-at-mouse last-input-event)))
+
+(define-key global-map (kbd "<M-mouse-3>")
+            #'(lambda ()
+                (interactive)
+                (xref-go-back)
+                ))
+
 (define-key global-map (kbd "<C-mouse-3>")
             #'(lambda ()
                 (interactive)
@@ -844,6 +856,7 @@
                 (xref-find-references-at-mouse last-input-event)
                 ))
 (global-unset-key [C-down-mouse-3])
+(global-unset-key [M-down-mouse-3])
 
 
 
