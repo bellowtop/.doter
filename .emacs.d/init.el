@@ -1021,7 +1021,7 @@
     (let* ((str (with-current-buffer eldoc--doc-buffer
                   (buffer-string)))
            (len (- (window-body-width) 8)) ;; don't count the line-number column , and the border chars
-           (border-line (make-string len ?-))
+           (border-line (make-string len ?─))
            (bordered-str (concat border-line "\n" str "\n" border-line))
            (lines (string-split bordered-str "\n"))
            (lines-size (length lines))
@@ -1033,10 +1033,10 @@
                      collect
                      ;; line
                      (cond
-                      ((= 1 idx) (concat "+-" line))
-                      ((= lines-size idx) (concat "+-" line))
-                      ((string= line "---") (concat "|" border-line))
-                      (t (concat "| " line)))
+                      ((= 1 idx) (concat "┌" line))
+                      ((= lines-size idx) (concat "└" line))
+                      ((string= line "---") (concat "│" border-line))
+                      (t (concat "│ " line)))
                      ))
            ;; (bordered-lines (mapcar (lambda(line) (concat "| " line)) lines))
            ;; (wrapped-lines (flatten-tree small-lines))
