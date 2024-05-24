@@ -1015,6 +1015,21 @@
   ;; (message "%s" (my-split-long-line-to-sub-lines "It is useful to include newlines" 4))
   ;; (string-width "It is useful to include newlines")
 
+(defun my-seperate-string (line max-length)
+  (let ((remains line)
+        (result-lines ())
+        )
+    (while (> (length remains) max-length)
+      (push (substring remains 0 max-length) result-lines)
+      (setq remains (substring remains max-length nil))
+      )
+    ;; last one
+    (push remains result-lines)
+    (reverse result-lines)
+    )
+  )
+
+
 (defun show-eldoc-popon-at-point ()
   (interactive)
   (when (boundp 'eldoc--doc-buffer)
@@ -1024,6 +1039,16 @@
            (border-line (make-string len ?─))
            (bordered-str (concat border-line "\n" str "\n" border-line))
            (lines (string-split bordered-str "\n"))
+           ;; (lines (flatten-list (mapcar (lambda(line) (my-seperate-string line (- len 2))) lines)))
+           ;; (lines
+           ;;  (cl-loop for line in lines
+           ;;           do
+           ;;           (setq padding-size (- (- len (length line)) 4))
+           ;;           collect
+           ;;           (cond
+           ;;            ((> padding-size 0) (concat line (make-string padding-size ?\s)))
+           ;;            (t line))
+           ;;           ))
            (lines-size (length lines))
            (idx 0)
            (lines
@@ -1045,7 +1070,12 @@
            ;; (pointxy-nextline (cons (car pointxy) (+ (cdr pointxy) 1)))
            (pointxy-nextline (cons 0 (+ (cdr pointxy) 1)))
            )
-      (popon-create bordered-str pointxy-nextline (get-buffer-window) (current-buffer)))))
+      (message "pointxy-nextline: %s" pointxy-nextline)
+      ;; (let ((point-nextline (save-excursion (line-beginning-position))))
+      ;;   (popup-tip bordered-str :point point-nextline :width (1+ len))
+      ;;   )
+      (popon-create bordered-str pointxy-nextline (get-buffer-window) (current-buffer))
+      )))
 
   (global-set-key (kbd "C-c i") #'show-eldoc-popon-at-point)
 
