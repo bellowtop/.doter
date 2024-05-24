@@ -290,7 +290,10 @@
 ;; (load-theme 'bogster t)
 
 ;; (load-theme 'spolsky t)
-(load-theme 'afternoon t)
+(if (display-graphic-p)
+  (load-theme 'afternoon t)
+  (load-theme 'bogster t)
+)
 
 ;; (require 'vs-dark-theme)
 ;; (load-theme 'vs-dark t)
@@ -837,6 +840,7 @@
                 (xref-go-back)
                 ))
 
+(global-unset-key [M-down-mouse-1])
 (define-key global-map (kbd "<M-mouse-1>")
             #'(lambda ()
                 (interactive)
@@ -857,6 +861,7 @@
                 ))
 (global-unset-key [C-down-mouse-3])
 (global-unset-key [M-down-mouse-3])
+
 
 
 
@@ -1823,17 +1828,11 @@ respectively."
 
 
 
-(advice-add
-  'my-M-x
-  :before
-  (lambda (&rest r) (my-god-mode))
+(advice-add 'my-M-x :before (lambda (&rest r) (refresh-current-mode))
   ; convenient name for identifying or removing this advice later
   '((name . "my-god-mode-before-m-x")))
 
-(advice-add
-  'my-mark-ring
-  :after
-  (lambda (&rest r) (recenter))
+(advice-add 'my-mark-ring :after (lambda (&rest r) (recenter))
   ; convenient name for identifying or removing this advice later
   '((name . "recenter-after-mark-ring")))
 
@@ -1920,7 +1919,7 @@ respectively."
 
 (defun my-escape-key ()
   (interactive)
-  (my-god-mode)
+  (refresh-current-mode)
   (when isearch-mode (isearch-abort) (isearch-abort))
   (when (my-god-this-is-normal-editor-buffer (buffer-name))
     (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
@@ -2327,7 +2326,8 @@ If buffer-or-name is nil return current buffer's mode."
                           "*slime-repl"
                           "*Customize"))
 
-(setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "cfrs-input-mode" "minibuffer-mode"))
+(setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "cfrs-input-mode" "minibuffer-mode"
+                            "deadgrep-edit-mode"))
 
 
 (defun my-god-this-is-special-buffer (bufname)
@@ -2361,27 +2361,30 @@ If buffer-or-name is nil return current buffer's mode."
 )
 
 
-(defun* my-god-mode ()
+(defun* refresh-current-mode ()
   (interactive)
   (my-ctrl-w-window-keys-minor-mode 1)
+  (global-hl-line-mode 0)
 
   (when (my-god-this-is-legendary-buffer (buffer-name))
-    ;; (message "%s is legendary buffer" (buffer-name))
+    (message "%s is legendary buffer" (buffer-name))
     (my-keys-minor-mode 0)
     (my-special-buffer-keys-minor-mode 0)
-    (cl-return-from my-god-mode))
+    (cl-return-from refresh-current-mode))
 
   (if (my-god-this-is-special-buffer (buffer-name))
     (progn
-      ;; (message "%s is special buffer" (buffer-name))
+      (message "%s is special buffer" (buffer-name))
       (ignore)
       (god-local-mode 0)                  ;; start local mode
+      (global-hl-line-mode 0)
       (my-keys-minor-mode 0)
       (my-special-buffer-keys-minor-mode 1)
       )
     (progn
-      ;; (message "%s not a special buffer" (buffer-name))
+      (message "%s not a special buffer" (buffer-name))
       (god-local-mode 1)                  ;; start local mode
+      (global-hl-line-mode 1)
       ;; (visual-line-mode 1)
       ;; (global-visual-line-mode 1) ;;
       (setq my-god-mode-is-active-flag t)
@@ -2390,15 +2393,12 @@ If buffer-or-name is nil return current buffer's mode."
     nil)
   )
 
-(add-hook 'find-file-hook 'my-god-mode)
+(add-hook 'find-file-hook 'refresh-current-mode)
 
 (defun my-quit-god-mode()
   (interactive)
   (my-ctrl-w-window-keys-minor-mode 0)
-
-  (god-local-mode -1)
-  ;; my-god-mode is meant to have value, but it's not set, maybe god-mode bug?
-  ;; anyway, we use our own flags here
+  (god-local-mode 0)
   (setq my-god-mode-is-active-flag nil)
   )
 
@@ -2406,7 +2406,7 @@ If buffer-or-name is nil return current buffer's mode."
   (interactive)
   (if (bound-and-true-p god-local-mode)
     (my-quit-god-mode)
-    (my-god-mode)))
+    (refresh-current-mode)))
 
 
 
@@ -2414,7 +2414,7 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-god-mode-with-switch-any-buffer(prev curr)
   (cl-assert (eq curr (current-buffer)))  ;; Always t
   ;; (message "%S -> %S -> %S" prev curr (string-trim (buffer-name curr)))
-  (my-god-mode)
+  (refresh-current-mode)
   )
 (add-hook 'switch-buffer-functions #'my-god-mode-with-switch-any-buffer)
 
@@ -2619,7 +2619,6 @@ If buffer-or-name is nil return current buffer's mode."
     (smartparens-mode -1)
     ;; (electric-indent-mode -1)
     ;; (global-undo-tree-mode -1)
-    (global-hl-line-mode -1)
     (undo-tree-mode -1)
     (setq my-code-intelligence nil)
     ;; (message "code-intelligence is disabled.")
@@ -2633,7 +2632,6 @@ If buffer-or-name is nil return current buffer's mode."
     (smartparens-mode 1)
     ;; (electric-indent-mode 1)
     ;; (global-undo-tree-mode 1)
-    (global-hl-line-mode 1)
     (undo-tree-mode 1)
     (setq my-code-intelligence 't)
     ;; (message "code-intelligence is enabled.")
@@ -3038,7 +3036,7 @@ This variable is nil if the current buffer isn't visiting a file.")
   (interactive)
   (revert-buffer
    :ignore-auto :noconfirm)
-  (my-god-mode))
+  (refresh-current-mode))
 
 
 (global-auto-revert-mode 1)
@@ -3211,29 +3209,27 @@ _o_: other-window
 (defun my-deadgrep-edit-enter()
   (interactive)
   (my-disable-code-intelligence)
-  (god-local-mode -1)
+  (refresh-current-mode)
   (remove-hook 'before-save-hook #'delete-trailing-whitespace)
   (remove-hook 'switch-buffer-functions #'my-god-mode-with-switch-any-buffer)
-  (my-special-buffer-keys-minor-mode 0)
   )
 
 
 (defun my-deadgrep-edit-exit()
   (interactive)
   (my-enable-code-intelligence)
-  (god-local-mode 1)
+  (refresh-current-mode)
   (add-hook 'before-save-hook #'delete-trailing-whitespace)
   (add-hook 'switch-buffer-functions #'my-god-mode-with-switch-any-buffer)
-  (my-special-buffer-keys-minor-mode 1)
   (deadgrep-mode)
   )
 
 (use-package
   deadgrep
   :ensure t
-  :config (setq-default
-           deadgrep--context
-           (cons 3 3))
+  :config
+  (setq-default deadgrep--context (cons 3 3))
+  (setq-default deadgrep-max-line-length 2000)
   :bind (("C-c g" . deadgrep)
          :map deadgrep-mode-map
          ("RET" . deadgrep-visit-result)
@@ -3250,14 +3246,17 @@ _o_: other-window
          ("p" . deadgrep-backward-match)
          ("N" . deadgrep-forward-filename)
          ("P" . deadgrep-backward-filename)
-         ("C-x C-q" . deadgrep-edit-mode)
+         ("C-c C-q" . deadgrep-edit-mode)
          :map deadgrep-edit-mode-map
          ("C-c C-c" . my-deadgrep-edit-exit))
   :hook (deadgrep-edit-mode . my-deadgrep-edit-enter)
   :init
   (advice-add 'deadgrep-visit-result :after 'xref-pulse-momentarily)
   (advice-add 'deadgrep-visit-result :after 'my-delete-other-windows)
-  (advice-add 'deadgrep-visit-result-other-window :after 'xref-pulse-momentarily))
+  (advice-add 'deadgrep-visit-result-other-window :after 'xref-pulse-momentarily)
+  (advice-add 'deadgrep-edit-mode :after 'xref-pulse-momentarily)
+  )
+
 
 
 
