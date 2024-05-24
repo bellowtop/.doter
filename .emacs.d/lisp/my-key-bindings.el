@@ -328,8 +328,6 @@
         (popon-kill-all)
       (show-eldoc-popon-at-point))))
 
-(add-hook 'eldoc-box-buffer-hook #'(lambda() (toggle-truncate-lines t)))
-
 
 
 
@@ -348,6 +346,7 @@
      (define-key dired-mode-map (kbd "SPC p") #'my-find-files)
      (define-key dired-mode-map (kbd "SPC m") #'deadgrep)
      (define-key dired-mode-map (kbd "SPC L") #'display-line-numbers-mode)
+     (define-key dired-mode-map (kbd "SPC w") #'toggle-truncate-lines)
      (define-key dired-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
      ))
 
@@ -519,6 +518,7 @@
     (define-key god-local-mode-map (kbd "SPC m") #'deadgrep)
     (define-key god-local-mode-map (kbd "SPC o") #'cff-find-other-file)    ;; switch between c header/source file
     (define-key god-local-mode-map (kbd "SPC L") #'display-line-numbers-mode)
+    (define-key god-local-mode-map (kbd "SPC w") #'toggle-truncate-lines)
     (define-key god-local-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
 
     (define-key god-local-mode-map (kbd "SPC l") #'centaur-tabs-forward)
