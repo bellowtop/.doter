@@ -278,7 +278,7 @@ autocmd BufWritePost,TextChanged,TextChangedI * call lightline#update()
 vim.opt.showtabline = 2
 
 vim.g.lightline = {
-       colorscheme = 'tokyonight',
+       colorscheme = 'ayu_mirage',
        active = {
          left = { { 'mode', 'paste' }, { 'readonly', 'filename', 'modified' } }
        },
@@ -296,6 +296,7 @@ vim.g.lightline = {
          filename = 'LightlineTruncatedFileName'
        },
        }
+
 
 
 
@@ -1175,6 +1176,8 @@ vim.api.nvim_set_keymap("i", "<M-BS>", "<C-w>", { noremap = true } )
 
 -- vim.keymap.set("i", "<M-d>", function() vim.cmd.execute('"normal dwa"') end, { noremap = true })
 vim.keymap.set("i", "<M-d>", function() disable_diagnostic_temp_then_reactivate('"normal dwa"') end, { noremap = true })
+vim.keymap.set("i", "<M-f>", function() disable_diagnostic_temp_then_reactivate('"normal wa"') end, { noremap = true })
+vim.keymap.set("i", "<M-b>", function() disable_diagnostic_temp_then_reactivate('"normal ba"') end, { noremap = true })
 
 -- vim.keymap.set("i", "<C-_>", function() vim.cmd.execute('"normal ua"') end, { noremap = true })
 vim.keymap.set("i", "<C-_>", function() disable_diagnostic_temp_then_reactivate('"normal ua"') end, { noremap = true })

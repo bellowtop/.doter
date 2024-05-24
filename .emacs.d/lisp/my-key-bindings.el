@@ -53,7 +53,7 @@
   "delete current word, goto insert mode"
   (interactive)
   (save-buffer)
-  (my-god-mode)
+  (refresh-current-mode)
   ;; (my-quit-mc-mode-if-need)
   )
 
@@ -211,6 +211,13 @@
 
 
 
+(global-set-key (kbd "C-h h") #'my-quit-other-window)
+(global-set-key (kbd "C-h C-h") #'my-quit-other-window)
+
+
+
+
+
 
 (defun my-goto-match-paren (arg)
   "Go to the matching parenthesis if on parenthesis. Else go to the
@@ -332,6 +339,16 @@
 
 
 
+(global-set-key (kbd "M-RET") #'my-break-to-multiple-lines)
+(defun my-break-to-multiple-lines(arg)
+  (interactive "*P")
+  (sp-split-sexp arg)
+  (insert-char ?+)
+  (newline-and-indent)
+)
+
+
+
 (eval-after-load "dired"
   '(progn
      (define-prefix-command 'my-god-mode-leader-key-1)
@@ -346,7 +363,7 @@
      (define-key dired-mode-map (kbd "SPC p") #'my-find-files)
      (define-key dired-mode-map (kbd "SPC m") #'deadgrep)
      (define-key dired-mode-map (kbd "SPC L") #'display-line-numbers-mode)
-     (define-key dired-mode-map (kbd "SPC w") #'toggle-truncate-lines)
+     (define-key dired-mode-map (kbd "SPC T") #'toggle-truncate-lines)
      (define-key dired-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
      ))
 
@@ -372,9 +389,7 @@
     ;; (define-key map (kbd "C-x C-b") #'switch-to-buffer)
 
     (define-key map (kbd "C-h .") #'eldoc-doc-buffer)
-    (define-key map (kbd "C-h h") #'my-quit-other-window)
-    (define-key map (kbd "C-h C-h") #'my-quit-other-window)
-    (define-key map (kbd "C-c C-c") #'shell)
+    (define-key map (kbd "C-c .") #'shell)
 
     (define-key map (kbd "C-x C-b") #'ibuffer)
     (define-key map (kbd "C-x C-f") #'my-find-files)
@@ -518,7 +533,7 @@
     (define-key god-local-mode-map (kbd "SPC m") #'deadgrep)
     (define-key god-local-mode-map (kbd "SPC o") #'cff-find-other-file)    ;; switch between c header/source file
     (define-key god-local-mode-map (kbd "SPC L") #'display-line-numbers-mode)
-    (define-key god-local-mode-map (kbd "SPC w") #'toggle-truncate-lines)
+    (define-key god-local-mode-map (kbd "SPC T") #'toggle-truncate-lines)
     (define-key god-local-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
 
     (define-key god-local-mode-map (kbd "SPC l") #'centaur-tabs-forward)

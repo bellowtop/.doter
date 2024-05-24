@@ -144,6 +144,7 @@
 
 (setq mc/cmds-to-run-once
       '(
+        avy-goto-word-0
         beginning-of-buffer
         comment-region
         counsel-M-x
