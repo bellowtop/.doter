@@ -253,6 +253,7 @@
     (er/mark-defun))
   )
 
+
 (defun my-toggle-er/mark-inside-paren (arg)
   (interactive "p")
   (if (use-region-p)
@@ -261,7 +262,11 @@
         (keyboard-quit)
         )
     (point-to-register 'a)
-    (er/mark-inside-pairs))
+    (cond
+     ((er--point-inside-string-p) (er/mark-inside-quotes))
+     ((er--point-inside-pairs-p) (er/mark-inside-pairs))
+     )
+    )
   )
 
 (defun my-toggle-er/mark-outside-paren (arg)
@@ -271,8 +276,11 @@
         (jump-to-register 'a)
         (keyboard-quit))
     (point-to-register 'a)
-    (er/mark-inside-pairs)
-    (er/mark-outside-pairs))
+    (cond
+     ((er--point-inside-string-p) (er/mark-outside-quotes))
+     ((er--point-inside-pairs-p) (er/mark-outside-pairs))
+     )
+    )
   )
 
 
@@ -505,9 +513,6 @@
 
     (define-key god-local-mode-map (kbd "C-.") #'repeat)
     (define-key god-local-mode-map (kbd "C-~") #'my-toggle-case-char)
-
-    (define-key god-local-mode-map (kbd "C-o") 'nice-jumper/backward)
-    (define-key god-local-mode-map (kbd "C-i") 'nice-jumper/forward)
 
     (define-key god-local-mode-map (kbd "C-n") #'my-next-line-or-mc/mark-next-like-this)
     (define-key god-local-mode-map (kbd "C-p") #'my-prev-line-or-mc/mark-next-like-this)
