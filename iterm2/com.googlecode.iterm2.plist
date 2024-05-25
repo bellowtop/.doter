@@ -1997,6 +1997,8 @@
 		<key>http</key>
 		<string>A16CDC53-C1DD-4045-A60B-74BF40041CF2</string>
 	</dict>
+	<key>VerticalBarCursorWidth</key>
+	<real>2</real>
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>kCPKSelectionViewPreferredModeKey</key>
