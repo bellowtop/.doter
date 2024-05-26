@@ -357,6 +357,21 @@
 
 
 
+(defun my-comment-region-or-line()
+  (interactive)
+  (if (region-active-p)
+      (let ((beg (save-excursion (goto-char (region-beginning))
+                                 (line-beginning-position)))
+            (end (save-excursion (goto-char (region-end))
+                                 ;; if is V mode, i.e. selection lines, then ignore last line.
+                                 (if (bolp) (region-end)
+                                   (line-end-position))
+                                 )))
+        (comment-or-uncomment-region beg end))
+    (comment-line 1)))
+
+
+
 (eval-after-load "dired"
   '(progn
      (define-prefix-command 'my-god-mode-leader-key-1)
@@ -414,6 +429,8 @@
 
     (define-key map (kbd "C-c v") 'set-rectangular-region-anchor)
     (define-key map (kbd "C-c C-v") 'set-rectangular-region-anchor)
+
+    (define-key map (kbd "C-c C-c") 'my-comment-region-or-line)
 
     (define-key map (kbd "C-c C-o") 'my-occur)
     (define-key map (kbd "C-c C-s") 'my-rg-at-point)
@@ -487,6 +504,7 @@
     (define-key god-local-mode-map (kbd "d b") #'backward-kill-word)
     (define-key god-local-mode-map (kbd "d H") #'my-delete-to-beginning)
     (define-key god-local-mode-map (kbd "d L") #'my-delete-to-end)
+    (define-key god-local-mode-map (kbd "d G") #'my-delete-to-eof)
 
     ;; (define-key god-local-mode-map (kbd "<RET>") #'next-line)
 

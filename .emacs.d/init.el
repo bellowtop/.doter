@@ -2209,20 +2209,20 @@ respectively."
 
 (advice-add 'avy-goto-word-0
  :before
- (lambda (&rest r) (my-disable-code-intelligence))
+ (lambda (&rest r) (my-disable-code-intelligence) (global-hl-line-mode 0))
  '((name . "avy-start"))
 )
 
 ;; avy aborted
 (advice-add 'avy-handler-default
  :before
- (lambda (&rest r) (my-enable-code-intelligence))
+ (lambda (&rest r) (my-enable-code-intelligence) (global-hl-line-mode 1))
  '((name . "avy-aborted-end"))
 )
 ;; avy success
 (advice-add 'avy-action-goto
  :before
- (lambda (&rest r) (my-enable-code-intelligence))
+ (lambda (&rest r) (my-enable-code-intelligence) (global-hl-line-mode 1))
  '((name . "avy-success-end"))
 )
 
@@ -2473,6 +2473,17 @@ If buffer-or-name is nil return current buffer's mode."
   (delete-region
    (region-beginning)
    (region-end)))
+
+(defun my-delete-to-eof(args)
+  (interactive "p")
+  (set-mark-command nil)
+  (forward-line 0)
+  (set-mark-command nil)
+  (end-of-buffer)
+  (delete-region
+   (region-beginning)
+   (region-end)))
+
 
 (defun increment-number-at-point ()
   (interactive)
