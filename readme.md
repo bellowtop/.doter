@@ -43,6 +43,9 @@ brew install d12frosted/emacs-plus/emacs-plus@30
 ln -s /opt/homebrew/opt/emacs-plus@30/Emacs.app /Applications
 ```
 
+install epc, emacs/lisp/blink-search need this.
+pip3 install epc  --break-system-packages
+
 
 #### kak
 

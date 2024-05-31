@@ -109,6 +109,7 @@
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/emacswiki.org"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/blink-search"))
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/lisp"))
 
 
@@ -1419,6 +1420,7 @@
   (push "*Messages" centaur-tabs-excluded-prefixes)
   (push "*Warnings" centaur-tabs-excluded-prefixes)
   (push "*Backtrace" centaur-tabs-excluded-prefixes)
+  (push "*blink-search" centaur-tabs-excluded-prefixes)
   (push "*Gofmt" centaur-tabs-excluded-prefixes)
   (push "*Semantic" centaur-tabs-excluded-prefixes)
   (push "*Flymake" centaur-tabs-excluded-prefixes)
@@ -1695,6 +1697,12 @@ respectively."
 
 
 
+(setq blink-search-history-path
+      (expand-file-name (concat user-emacs-directory ".local" (file-name-as-directory "blink-search") "history.txt")))
+(setq blink-search-db-path
+      (expand-file-name (concat user-emacs-directory ".local" (file-name-as-directory "blink-search") "blink-search.db")))
+(require 'blink-search)
+
 
 
 (use-package ivy
@@ -1823,7 +1831,9 @@ respectively."
 (defun my-projectile-find-file ()
   (interactive)
   ;; (helm-projectile-find-file)
-  (projectile-find-file))
+  ;; (projectile-find-file)
+  (blink-search)
+  )
 
 
 
@@ -1934,8 +1944,9 @@ respectively."
     ;; (delete-trailing-whitespace)
     (ignore-errors (company-cancel))
     (ignore-errors (remove-all-highlight)))
-    (ignore-errors (flymake-start))  ;; but show errors
+  (ignore-errors (flymake-start))  ;; but show errors
   ;; (ignore-errors (flymake-mode-on)) ;; but show errors
+  (blink-search-quit)
   (keyboard-quit)
   (keyboard-quit-context+) ;; from custom-util-funcs.el
   )
@@ -2324,6 +2335,8 @@ If buffer-or-name is nil return current buffer's mode."
                           "*Minibuf"
                           "*terminal*"
                           "*eshell*"
+                          "*blink-search"
+                          "*blink search"
                           "*shell*"
                           "magit"
                           "git-rebase-todo"
