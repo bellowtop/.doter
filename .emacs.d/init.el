@@ -1698,9 +1698,9 @@ respectively."
 
 
 (setq blink-search-history-path
-      (expand-file-name (concat user-emacs-directory ".local" (file-name-as-directory "blink-search") "history.txt")))
+      (expand-file-name (concat user-emacs-directory ".local/" (file-name-as-directory "blink-search") "history.txt")))
 (setq blink-search-db-path
-      (expand-file-name (concat user-emacs-directory ".local" (file-name-as-directory "blink-search") "blink-search.db")))
+      (expand-file-name (concat user-emacs-directory ".local/" (file-name-as-directory "blink-search") "blink-search.db")))
 (require 'blink-search)
 
 
