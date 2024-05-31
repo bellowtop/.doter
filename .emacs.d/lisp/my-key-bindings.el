@@ -412,7 +412,7 @@
     ;; (define-key map (kbd "C-x C-b") #'switch-to-buffer)
 
     (define-key map (kbd "C-h .") #'eldoc-doc-buffer)
-    (define-key map (kbd "C-c .") #'shell)
+    (define-key map (kbd "C-h C-c") #'shell)
 
     (define-key map (kbd "C-x C-b") #'ibuffer)
     (define-key map (kbd "C-x C-f") #'my-find-files)

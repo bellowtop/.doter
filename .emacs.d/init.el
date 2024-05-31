@@ -570,10 +570,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(centaur-tabs-selected ((t (:inherit default :foreground "white" :background "black" :weight normal))))
- '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "yellow"))))
+ '(centaur-tabs-selected ((t (:inherit default :foreground "black" :background "#FFC44C" :weight normal))))
+ '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "black"))))
  '(centaur-tabs-unselected ((t (:foreground "#969696" :background "#262830"))))
- '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground "yellow"))))
+ '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground "white"))))
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -830,41 +830,35 @@
   (nice-jumper--set-jump))
 
 
-(define-key global-map (kbd "<s-mouse-1>")
-            #'(lambda ()
-                (interactive)
-                (mouse-set-point last-input-event)
-                (xref-find-definitions-at-mouse last-input-event)))
 
-(define-key global-map (kbd "<s-mouse-3>")
-            #'(lambda ()
-                (interactive)
-                (xref-go-back)
-                ))
 
+
+(defun my-mouse-find-definition-at-mouse()
+  (interactive)
+  (mouse-set-point last-input-event)
+  (xref-find-definitions-at-mouse last-input-event)
+  )
+
+(defun my-mouse-find-definition-at-mouse-simulate(arg)
+  (interactive)
+  (mouse-set-point last-input-event)
+  (xref-find-definitions-at-mouse last-input-event)
+  )
+
+
+(define-key my-keys-minor-mode-map (kbd "C-s g d") #'(lambda() (interactive) (my-mouse-find-definition-at-mouse-simulate (posn-at-point))))
+(define-key my-keys-minor-mode-map (kbd "C-s g b") #'xref-go-back)
+
+(define-key global-map (kbd "<s-mouse-1>") #'my-mouse-find-definition-at-mouse)
+(define-key global-map (kbd "<s-mouse-3>") #'xref-go-back)
+
+(define-key global-map (kbd "<M-mouse-1>") #'my-mouse-find-definition-at-mouse)
 (global-unset-key [M-down-mouse-1])
-(define-key global-map (kbd "<M-mouse-1>")
-            #'(lambda ()
-                (interactive)
-                (mouse-set-point last-input-event)
-                (xref-find-definitions-at-mouse last-input-event)))
 
-(define-key global-map (kbd "<M-mouse-3>")
-            #'(lambda ()
-                (interactive)
-                (xref-go-back)
-                ))
-
-(define-key global-map (kbd "<C-mouse-3>")
-            #'(lambda ()
-                (interactive)
-                (mouse-set-point last-input-event)
-                (xref-find-references-at-mouse last-input-event)
-                ))
+(define-key global-map (kbd "<M-mouse-3>") #'xref-go-back)
+(define-key global-map (kbd "<C-mouse-3>") #'my-mouse-find-definition-at-mouse)
 (global-unset-key [C-down-mouse-3])
 (global-unset-key [M-down-mouse-3])
-
-
 
 
 
@@ -1279,7 +1273,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+   '(py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -1501,17 +1495,24 @@
 
     (unless (display-graphic-p)
       (setq centaur-tabs-set-icons nil)
-      (setq centaur-tabs-modified-marker "")
       (setq centaur-tabs-close-button "")
+      (setq centaur-tabs-set-modified-marker t)
+      (setq centaur-tabs-modified-marker "*")
+      (set-face-underline 'centaur-tabs-selected-modified nil )
+      (set-face-underline 'centaur-tabs-modified-marker-selected nil )
     )
 )
 
 
-(use-package
-  py-autopep8
+(use-package py-autopep8
   :defer t
-  :init)
-(add-hook 'python-mode-hook 'py-autopep8-mode)
+  :init
+  :config
+  (setq py-autopep8-options '("--max-line-length=100"))
+  :hook
+  (python-mode . py-autopep8-mode)
+  (python-ts-mode . py-autopep8-mode)
+)
 
 
 
@@ -1915,6 +1916,10 @@ respectively."
 
 (add-to-list 'default-frame-alist
              '(vertical-scroll-bars . nil))
+
+
+(global-set-key (kbd "<mouse-4>") #'(lambda() (interactive) (scroll-down 2)))
+(global-set-key (kbd "<mouse-5>") #'(lambda() (interactive) (scroll-up 2)))
 
 
 
@@ -2369,14 +2374,14 @@ If buffer-or-name is nil return current buffer's mode."
   (global-hl-line-mode 0)
 
   (when (my-god-this-is-legendary-buffer (buffer-name))
-    (message "%s is legendary buffer" (buffer-name))
+    ;; (message "%s is legendary buffer" (buffer-name))
     (my-keys-minor-mode 0)
     (my-special-buffer-keys-minor-mode 0)
     (cl-return-from refresh-current-mode))
 
   (if (my-god-this-is-special-buffer (buffer-name))
     (progn
-      (message "%s is special buffer" (buffer-name))
+      ;; (message "%s is special buffer" (buffer-name))
       (ignore)
       (god-local-mode 0)                  ;; start local mode
       (global-hl-line-mode 0)
@@ -2384,7 +2389,7 @@ If buffer-or-name is nil return current buffer's mode."
       (my-special-buffer-keys-minor-mode 1)
       )
     (progn
-      (message "%s not a special buffer" (buffer-name))
+      ;; (message "%s not a special buffer" (buffer-name))
       (god-local-mode 1)                  ;; start local mode
       (global-hl-line-mode 1)
       ;; (visual-line-mode 1)
@@ -2434,6 +2439,7 @@ If buffer-or-name is nil return current buffer's mode."
   (beginning-of-line)
   (newline)
   (previous-line)
+  (indent-for-tab-command)
   (my-quit-god-mode))
 
 (defun my-god-mwin-end-and-insert-mode ()

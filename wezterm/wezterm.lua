@@ -76,6 +76,19 @@ local config = mytable.merge_all(
   cfg_key_bindings,
   {
         mouse_bindings = {
+            -- -- CMD + left
+            -- {
+            --     mods="SUPER",
+            --     event={Down={streak=1, button="Left" }},
+            --     action=wezterm.action.SendString '\x13\x13\x67\x64',   -- super + left, send C-s g d, in emacs, find definition
+            -- },
+            -- -- CMD + right
+            -- {
+            --     mods="SUPER",
+            --     event={Down={streak=1, button="Right" }},
+            --     action=wezterm.action.SendString '\x13\x13\x67\x62',   -- super + left, send C-s g b, in emacs, go back
+            -- },
+
             -- Right click send C-s [
             {
                 mods="CTRL",
