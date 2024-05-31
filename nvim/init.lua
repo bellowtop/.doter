@@ -1414,8 +1414,6 @@ colorscheme bogster
 
 
 
-vim.opt.pastetoggle = '<F2>'
-
 
 
 
