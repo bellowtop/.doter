@@ -70,7 +70,7 @@
   :ensure t
   :config ;; To disable collection of benchmark data after init is done.
   (add-hook 'after-init-hook 'benchmark-init/deactivate)
-)
+  )
 
 
 (require 'cl)
@@ -141,13 +141,13 @@
    ignored-projectile-projects))
 
 (setq-default
-   projectile-cache-file (expand-file-name "~/.emacs.d/.local/projectile.cache")
-   projectile-known-projects-file (expand-file-name "~/.emacs.d/.local/projectile-bookmarks.eld")
-   projectile-enable-caching t
-   projectile-indexing-method 'native
-   projectile-track-known-projects-automatically t
-   projectile-ignored-project-function 'ignored-projectile-project
-)
+ projectile-cache-file (expand-file-name "~/.emacs.d/.local/projectile.cache")
+ projectile-known-projects-file (expand-file-name "~/.emacs.d/.local/projectile-bookmarks.eld")
+ projectile-enable-caching t
+ projectile-indexing-method 'native
+ projectile-track-known-projects-automatically t
+ projectile-ignored-project-function 'ignored-projectile-project
+ )
 (require 'projectile)
 (projectile-mode 1)
 
@@ -239,30 +239,30 @@
 
 (require 'diminish)
 (defun purge-minor-modes ()
-    (diminish 'flymake-mode)
-    (diminish 'my-ctrl-w-window-keys-minor-mode)
-    (diminish 'ivy-mode)
-    (diminish 'ivy-posframe-mode)
-    (diminish 'which-key-mode)
-    (diminish 'selected-minor-mode)
-    (diminish 'selected-global-mode)
-    (diminish 'my-keys-minor-mode)
-    (diminish 'projectile-mode)
-    (diminish 'global-hl-line-mode)
-    (diminish 'highlight-parentheses-mode)
-    (diminish 'undo-tree-mode)
-    (diminish 'company-mode)
-    (diminish 'company-posframe-mode)
-    (diminish 'global-company-mode)
-    (diminish 'line-number-mode)
-    (diminish 'global-eldoc-mode)
-    (diminish 'eldoc-mode)
-    (diminish 'yas-minor-mode)
-    (diminish 'smartparens-mode)
-    (diminish 'smartparens-global-mode)
-    (diminish 'show-paren-mode)
-    (diminish 'abbrev-mode)
-    (diminish 'electric-indent-mode))
+  (diminish 'flymake-mode)
+  (diminish 'my-ctrl-w-window-keys-minor-mode)
+  (diminish 'ivy-mode)
+  (diminish 'ivy-posframe-mode)
+  (diminish 'which-key-mode)
+  (diminish 'selected-minor-mode)
+  (diminish 'selected-global-mode)
+  (diminish 'my-keys-minor-mode)
+  (diminish 'projectile-mode)
+  (diminish 'global-hl-line-mode)
+  (diminish 'highlight-parentheses-mode)
+  (diminish 'undo-tree-mode)
+  (diminish 'company-mode)
+  (diminish 'company-posframe-mode)
+  (diminish 'global-company-mode)
+  (diminish 'line-number-mode)
+  (diminish 'global-eldoc-mode)
+  (diminish 'eldoc-mode)
+  (diminish 'yas-minor-mode)
+  (diminish 'smartparens-mode)
+  (diminish 'smartparens-global-mode)
+  (diminish 'show-paren-mode)
+  (diminish 'abbrev-mode)
+  (diminish 'electric-indent-mode))
 (add-hook 'after-change-major-mode-hook 'purge-minor-modes)
 
 
@@ -294,9 +294,9 @@
 
 ;; (load-theme 'spolsky t)
 (if (display-graphic-p)
-  (load-theme 'afternoon t)
+    (load-theme 'afternoon t)
   (load-theme 'bogster t)
-)
+  )
 
 ;; (require 'vs-dark-theme)
 ;; (load-theme 'vs-dark t)
@@ -315,19 +315,19 @@
 
 
 (use-package doom-themes
-   :ensure t
-   :config
-;;   (setq doom-themes-enable-bold nil    ; if nil, bold is universally disabled
-;;         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
-   (doom-themes-neotree-config)
-   ;; (doom-themes-treemacs-config)
-   ;; (setq doom-themes-neotree-file-icons t)
-   ;; (setq doom-themes-treemacs-theme "doom-colors")
+  :ensure t
+  :config
+  ;;   (setq doom-themes-enable-bold nil    ; if nil, bold is universally disabled
+  ;;         doom-themes-enable-italic nil) ; if nil, italics is universally disabled
+  (doom-themes-neotree-config)
+  ;; (doom-themes-treemacs-config)
+  ;; (setq doom-themes-neotree-file-icons t)
+  ;; (setq doom-themes-treemacs-theme "doom-colors")
 
-;;   ;; (load-theme 'doom-xcode t)
-;;   (load-theme 'doom-dracula t)
-;;   ;; (load-theme 'doom-oceanic-next t)
-   )
+  ;;   ;; (load-theme 'doom-xcode t)
+  ;;   (load-theme 'doom-dracula t)
+  ;;   ;; (load-theme 'doom-oceanic-next t)
+  )
 
 ;; (load-theme 'kaolin-ocean t)
 
@@ -387,7 +387,7 @@
   (when (memq (terminal-live-p (frame-terminal)) '(t pc))
     (let ((esc-binding (personal/-lookup-key input-decode-map ?\e)))
       (define-key input-decode-map
-        [?\e] `(menu-item "" ,esc-binding :filter personal/-tty-ESC-filter)))))
+		  [?\e] `(menu-item "" ,esc-binding :filter personal/-tty-ESC-filter)))))
 (personal/catch-tty-ESC)
 
 
@@ -477,31 +477,31 @@
 (defun my-imenu-list-check-window-is-open()
   (interactive)
   (and
-    (bound-and-true-p imenu-list-buffer-name)
-    (get-buffer-window imenu-list-buffer-name t)
-    t)
+   (bound-and-true-p imenu-list-buffer-name)
+   (get-buffer-window imenu-list-buffer-name t)
+   t)
   )
 
 (defun my-imenu-list-smart-toggle-refresh()
   (interactive)
   (when (my-imenu-list-check-window-is-open)
-      (imenu-list-quit-window)
-  )
+    (imenu-list-quit-window)
+    )
   (imenu-list-minor-mode 1)
   (select-window (get-buffer-window (imenu-list-get-buffer-create)))
-)
+  )
 
 (use-package imenu-list
   :defer t
   :bind (
-    (:map imenu-list-major-mode-map
-         ("H" . my-enlarge-imenu-width)
-         ("M" . my-fit-imenu-width)
-         ("L" . my-shrink-imenu-width)
-         ("m" . my-imenu-list-smart-toggle-refresh)
-    )
+	 (:map imenu-list-major-mode-map
+               ("H" . my-enlarge-imenu-width)
+               ("M" . my-fit-imenu-width)
+               ("L" . my-shrink-imenu-width)
+               ("m" . my-imenu-list-smart-toggle-refresh)
+	       )
+	 )
   )
-)
 
 
 
@@ -700,12 +700,12 @@
 (defun highlight-current-line ()
   (interactive)
   (let ((overlay-highlight (make-overlay
-                              (line-beginning-position)
-                              (+ 1 (line-end-position)))))
-        (overlay-put overlay-highlight 'face '(:inverse-video t))
-        ;; (overlay-put overlay-highlight 'face '(:inherit hl-line))
-        ;; (overlay-put overlay-highlight 'face '(:background "#1b5aa1"))
-        (overlay-put overlay-highlight 'my-marker-name-for-line-highlight-overlay t))
+                            (line-beginning-position)
+                            (+ 1 (line-end-position)))))
+    (overlay-put overlay-highlight 'face '(:inverse-video t))
+    ;; (overlay-put overlay-highlight 'face '(:inherit hl-line))
+    ;; (overlay-put overlay-highlight 'face '(:background "#1b5aa1"))
+    (overlay-put overlay-highlight 'my-marker-name-for-line-highlight-overlay t))
   )
 
 (defun dehighlight-current-line ()
@@ -876,21 +876,21 @@
   ;; (add-to-list 'xref-after-return-hook 'my-recenter-scroll-to-top)
   ;; (setq xref-after-jump-hook (delete 'recenter xref-after-jump-hook))
   ;; (add-to-list 'xref-after-jump-hook 'my-recenter-scroll-to-top)
-)
+  )
 
 (defun ivy-xref-call-or-done ()
   (interactive)
   (let (orig-point orig-buffer
                    new-point new-buffer)
     (with-ivy-window
-      (setq orig-point  (point)
-            orig-buffer (current-buffer)))
+     (setq orig-point  (point)
+           orig-buffer (current-buffer)))
 
     (ivy-call)
 
     (with-ivy-window
-      (setq new-point  (point)
-            new-buffer (current-buffer)))
+     (setq new-point  (point)
+           new-buffer (current-buffer)))
 
     (when (and (eq new-point  orig-point)
                (eq new-buffer orig-buffer))
@@ -903,20 +903,20 @@
   (setq xref-show-definitions-function #'ivy-xref-show-defs)
   (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)
   :bind
-    (:map ivy-minibuffer-map
-     ("C-l" . ivy-xref-call-or-done)
-     ("M-l" . ivy-call-and-recenter)
-    )
-)
+  (:map ivy-minibuffer-map
+	("C-l" . ivy-xref-call-or-done)
+	("M-l" . ivy-call-and-recenter)
+	)
+  )
 
 
 
 (with-eval-after-load 'pulse
-;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background "#1f4670")
-;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background 'unspecified :inverse-video t)
-;;   ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "green" :background "black")
-    (setq pulse-delay 0.01) ;; pulse fast!
-)
+  ;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background "#1f4670")
+  ;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background 'unspecified :inverse-video t)
+  ;;   ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "green" :background "black")
+  (setq pulse-delay 0.01) ;; pulse fast!
+  )
 
 
 
@@ -929,7 +929,7 @@
   ;;   (setq-default format-all-formatters
   ;;                 '(("C"     (astyle "--mode=c"))
   ;;                   ("Shell" (shfmt "-i" "4" "-ci"))))
-)
+  )
 
 
 
@@ -980,7 +980,7 @@
 
 ;; enable mouse click in terminal
 (unless (display-graphic-p)
-    (xterm-mouse-mode 1)
+  (xterm-mouse-mode 1)
   )
 
 
@@ -1050,8 +1050,8 @@
 (add-hook 'before-save-hook 'company-cancel)
 
 ;; company-posframe-mode
-;  (require 'company-posframe)
-;  (company-posframe-mode 1)
+					;  (require 'company-posframe)
+					;  (company-posframe-mode 1)
 
 ;; http://company-mode.github.io/manual/Getting-Started.html#Initial-Setup
 (with-eval-after-load 'company
@@ -1074,9 +1074,9 @@
 
 (use-package yasnippet
   :config
-    (add-hook 'prog-mode-hook 'yas-minor-mode)
-    (add-hook 'yas-before-expand-snippet-hook 'my-disable-eglot-highlight)
-    (add-hook 'yas-after-exit-snippet-hook    'my-enable-eglot-highlight)
+  (add-hook 'prog-mode-hook 'yas-minor-mode)
+  (add-hook 'yas-before-expand-snippet-hook 'my-disable-eglot-highlight)
+  (add-hook 'yas-after-exit-snippet-hook    'my-enable-eglot-highlight)
   )
 
 
@@ -1226,9 +1226,9 @@
 
 
 (set-face-attribute 'whitespace-tab nil
-                      :background (face-background 'default)
-                      :foreground "#627D9D"
-                      )
+                    :background (face-background 'default)
+                    :foreground "#627D9D"
+                    )
 
 
 
@@ -1243,13 +1243,13 @@
 ;; render like github
 (defun markdown-html-github (buffer)
   (princ (with-current-buffer buffer
-                              (format "<!DOCTYPE html><html><script src=\"https://cdnjs.cloudflare.com/ajax/libs/he/1.1.1/he.js\"></script><link rel=\"stylesheet\" href=\"https://assets-cdn.github.com/assets/github-e6bb18b320358b77abe040d2eb46b547.css\"><link rel=\"stylesheet\" href=\"https://assets-cdn.github.com/assets/frameworks-95aff0b550d3fe338b645a4deebdcb1b.css\"><title>Impatient Markdown</title><div id=\"markdown-content\" style=\"display:none\">%s</div><div class=\"markdown-body\" style=\"max-width:968px;margin:0 auto;\"></div><script>fetch('https://api.github.com/markdown', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ \"text\": document.getElementById('markdown-content').innerHTML, \"mode\": \"gfm\", \"context\": \"knit-pk/homepage-nuxtjs\"}) }).then(response => response.text()).then(response => {document.querySelector('.markdown-body').innerHTML = he.decode(response)}).then(() => { fetch(\"https://gist.githubusercontent.com/FieryCod/b6938b29531b6ec72de25c76fa978b2c/raw/\").then(response => response.text()).then(eval)});</script></html>"
-                                      (buffer-substring-no-properties (point-min) (point-max))))
+           (format "<!DOCTYPE html><html><script src=\"https://cdnjs.cloudflare.com/ajax/libs/he/1.1.1/he.js\"></script><link rel=\"stylesheet\" href=\"https://assets-cdn.github.com/assets/github-e6bb18b320358b77abe040d2eb46b547.css\"><link rel=\"stylesheet\" href=\"https://assets-cdn.github.com/assets/frameworks-95aff0b550d3fe338b645a4deebdcb1b.css\"><title>Impatient Markdown</title><div id=\"markdown-content\" style=\"display:none\">%s</div><div class=\"markdown-body\" style=\"max-width:968px;margin:0 auto;\"></div><script>fetch('https://api.github.com/markdown', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ \"text\": document.getElementById('markdown-content').innerHTML, \"mode\": \"gfm\", \"context\": \"knit-pk/homepage-nuxtjs\"}) }).then(response => response.text()).then(response => {document.querySelector('.markdown-body').innerHTML = he.decode(response)}).then(() => { fetch(\"https://gist.githubusercontent.com/FieryCod/b6938b29531b6ec72de25c76fa978b2c/raw/\").then(response => response.text()).then(eval)});</script></html>"
+                   (buffer-substring-no-properties (point-min) (point-max))))
          (current-buffer)))
 
 (defun markdown-html (buffer)
   (princ (with-current-buffer buffer
-                              (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
+           (format "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>" (buffer-substring-no-properties (point-min) (point-max))))
          (current-buffer)))
 
 (use-package
@@ -1275,7 +1275,7 @@
 
 ;; alternatively, use Meta-<left> Meta-<right> to move cursor to window
 ;; for iTerms2 user, disable alt-> alt-< to send alt-f alt-b in `profile->keys`
- (windmove-default-keybindings 'meta)
+(windmove-default-keybindings 'meta)
 
 
 
@@ -1291,7 +1291,7 @@
          (n (if (> tabs-count n) n tabs-count))
          (n (- n 1))
          (tab (nth n tabs-view))
-        )
+         )
     (centaur-tabs-buffer-select-tab tab)
     ;; (message "n %d, tabs-view:%s, tab: %s" n tabs-view tab)
     ))
@@ -1299,12 +1299,12 @@
 (defmacro def-centaur-select-tab-funs (numbers)
   `(progn
      ,@(cl-loop for number in numbers
-        collect
-        `(defun ,(read (format "my-centaur-select-tab-%s" number))
-              ()
-            (interactive)
-            (my-centaur-select-tab ,number))
-        )))
+		collect
+		`(defun ,(read (format "my-centaur-select-tab-%s" number))
+		     ()
+		   (interactive)
+		   (my-centaur-select-tab ,number))
+		)))
 
 (def-centaur-select-tab-funs (1 2 3 4 5 6 7 8 9))
 
@@ -1319,17 +1319,17 @@
   (setq centaur-tabs-enable-key-bindings t)
   :config
   (setq
-        ;; centaur-tabs-gray-out-icons 'buffer
-        centaur-tabs-set-icons nil
-        ;; centaur-tabs-icon-scale-factor 0.8
-        centaur-tabs-set-modified-marker nil
-        centaur-tabs-set-close-button nil
-        centaur-tabs-left-edge-margin "  "
-        centaur-tabs-right-edge-margin "  "
-        centaur-tabs-set-bar 'under
-        x-underline-at-descent-line t
-        centaur-tabs-show-jump-identifier nil
-        )
+   ;; centaur-tabs-gray-out-icons 'buffer
+   centaur-tabs-set-icons nil
+   ;; centaur-tabs-icon-scale-factor 0.8
+   centaur-tabs-set-modified-marker nil
+   centaur-tabs-set-close-button nil
+   centaur-tabs-left-edge-margin "  "
+   centaur-tabs-right-edge-margin "  "
+   centaur-tabs-set-bar 'under
+   x-underline-at-descent-line t
+   centaur-tabs-show-jump-identifier nil
+   )
   (centaur-tabs-headline-match)
   (centaur-tabs-mode t)
   (push "*scratch" centaur-tabs-excluded-prefixes)
@@ -1368,10 +1368,10 @@
   ("s-7" . my-centaur-select-tab-7)
   ("s-8" . my-centaur-select-tab-8)
   ("s-9" . my-centaur-select-tab-9)
-)
+  )
 
 (with-eval-after-load 'centaur-tabs
-    (dolist (face '(centaur-tabs-default
+  (dolist (face '(centaur-tabs-default
                   centaur-tabs-unselected
                   centaur-tabs-selected
                   centaur-tabs-unselected-modified
@@ -1386,42 +1386,42 @@
                   centaur-tabs-jump-identifier-selected
                   centaur-tabs-jump-identifier-unselected
                   centaur-tabs-dim-buffer-face))
-        (set-face-attribute face nil :weight 'normal :family "IBM Plex Sans" :height 140)
+    (set-face-attribute face nil :weight 'normal :family "IBM Plex Sans" :height 140)
     )
 
-    ;; ;; modified tab foreground
-    ;; (set-face-foreground 'centaur-tabs-selected-modified "#61AFEF")
-    ;; (set-face-foreground 'centaur-tabs-unselected-modified "#61AFEF")
+  ;; ;; modified tab foreground
+  ;; (set-face-foreground 'centaur-tabs-selected-modified "#61AFEF")
+  ;; (set-face-foreground 'centaur-tabs-unselected-modified "#61AFEF")
 
-    ;; (set-face-background 'centaur-tabs-selected-modified "#161C23")
-    ;; (set-face-background 'centaur-tabs-selected          "#161C23")
+  ;; (set-face-background 'centaur-tabs-selected-modified "#161C23")
+  ;; (set-face-background 'centaur-tabs-selected          "#161C23")
 
-    ;; (set-face-attribute 'centaur-tabs-selected nil
-    ;;                     :background "#161C23"
-    ;;                     :foreground "#ABB2BF"
-    ;;                     :overline nil
-    ;;                     :underline "#528BFF"
-    ;;                     :weight light)
+  ;; (set-face-attribute 'centaur-tabs-selected nil
+  ;;                     :background "#161C23"
+  ;;                     :foreground "#ABB2BF"
+  ;;                     :overline nil
+  ;;                     :underline "#528BFF"
+  ;;                     :weight light)
 
-    (set-face-underline 'centaur-tabs-selected "cyan" )
-    ;; modified tab underline
-    (set-face-underline 'centaur-tabs-selected-modified "cyan" )
-    (set-face-underline 'centaur-tabs-modified-marker-selected "cyan" )
-    (unless (display-graphic-p)
+  (set-face-underline 'centaur-tabs-selected "cyan" )
+  ;; modified tab underline
+  (set-face-underline 'centaur-tabs-selected-modified "cyan" )
+  (set-face-underline 'centaur-tabs-modified-marker-selected "cyan" )
+  (unless (display-graphic-p)
     ;;   ;; no underline for selected tab, in terminal mode.
-      (set-face-underline 'centaur-tabs-selected-modified nil )
-      (set-face-underline 'centaur-tabs-selected nil )
+    (set-face-underline 'centaur-tabs-selected-modified nil )
+    (set-face-underline 'centaur-tabs-selected nil )
     )
 
-    (unless (display-graphic-p)
-      (setq centaur-tabs-set-icons nil)
-      (setq centaur-tabs-close-button "")
-      (setq centaur-tabs-set-modified-marker t)
-      (setq centaur-tabs-modified-marker "*")
-      (set-face-underline 'centaur-tabs-selected-modified nil )
-      (set-face-underline 'centaur-tabs-modified-marker-selected nil )
+  (unless (display-graphic-p)
+    (setq centaur-tabs-set-icons nil)
+    (setq centaur-tabs-close-button "")
+    (setq centaur-tabs-set-modified-marker t)
+    (setq centaur-tabs-modified-marker "*")
+    (set-face-underline 'centaur-tabs-selected-modified nil )
+    (set-face-underline 'centaur-tabs-modified-marker-selected nil )
     )
-)
+  )
 
 
 (use-package py-autopep8
@@ -1432,7 +1432,7 @@
   :hook
   (python-mode . py-autopep8-mode)
   (python-ts-mode . py-autopep8-mode)
-)
+  )
 
 
 
@@ -1479,41 +1479,41 @@
 
 ;; delete all other buffers, only keep current one.
 (defun my-only-current-buffer ()
-    "Kill all non-star other buffers."
-    (interactive)
-    (mapc 'kill-buffer
-          (delq (current-buffer) (remove-if-not 'buffer-file-name (buffer-list))))      ;; this keep * buffers alive
-    (if (bound-and-true-p centaur-tabs-mode)
+  "Kill all non-star other buffers."
+  (interactive)
+  (mapc 'kill-buffer
+        (delq (current-buffer) (remove-if-not 'buffer-file-name (buffer-list))))      ;; this keep * buffers alive
+  (if (bound-and-true-p centaur-tabs-mode)
       (centaur-tabs-kill-other-buffers-in-current-group))
-    )
+  )
 
 ;; delete all other buffers, only keep current one.
 (defun my-only-current-buffer-include-specials ()
-    "Kill all other buffers."
-    (interactive)
-    (mapc 'kill-buffer
-          (delq (current-buffer) (buffer-list)))                                       ;; this destroy * buffers too
-    (if (bound-and-true-p centaur-tabs-mode)
+  "Kill all other buffers."
+  (interactive)
+  (mapc 'kill-buffer
+        (delq (current-buffer) (buffer-list)))                                       ;; this destroy * buffers too
+  (if (bound-and-true-p centaur-tabs-mode)
       (centaur-tabs-kill-other-buffers-in-current-group))
-    )
+  )
 
 
 
 
 (defun bf-pretty-print-xml-region (begin end)
-    "Pretty format XML markup in region. You need to have nxml-mode
+  "Pretty format XML markup in region. You need to have nxml-mode
     http://www.emacswiki.org/cgi-bin/wiki/NxmlMode installed to do
     this.  The function inserts linebreaks to separate tags that have
     nothing but whitespace between them.  It then indents the markup
     by using nxml's indentation rules."
-      (interactive "r")
-        (save-excursion
-              (nxml-mode)
-                  (goto-char begin)
-                      (while (search-forward-regexp "\>[ \\t ]*\<" nil t)
-                                   (backward-char) (insert "\n") (setq end (1+ end)))
-                          (indent-region begin end))
-          (message "Ah, much better!"))
+  (interactive "r")
+  (save-excursion
+    (nxml-mode)
+    (goto-char begin)
+    (while (search-forward-regexp "\>[ \\t ]*\<" nil t)
+      (backward-char) (insert "\n") (setq end (1+ end)))
+    (indent-region begin end))
+  (message "Ah, much better!"))
 
 
 
@@ -1571,20 +1571,20 @@ defines the functions WRAP-WITH-PAREN and WRAP-WITH-BRACKET,
 respectively."
   `(progn
      ,@(cl-loop for (key . val) in pairs
-             collect
-             `(defun ,(read (concat
-                             "my-wrap-region-with-"
-                             (prin1-to-string key)
-                             "s"))
-                  (start stop)
-                (interactive "r")
-                (sp-wrap-with-pair ,val)
+		collect
+		`(defun ,(read (concat
+				"my-wrap-region-with-"
+				(prin1-to-string key)
+				"s"))
+                     (start stop)
+                   (interactive "r")
+                   (sp-wrap-with-pair ,val)
 
-                (goto-char (+ 1 start))
-                (push-mark (+ 1 stop))
-                (setq deactivate-mark  nil)
+                   (goto-char (+ 1 start))
+                   (push-mark (+ 1 stop))
+                   (setq deactivate-mark  nil)
 
-                ))))
+                   ))))
 
 (def-region-pairs ((paren . "(")
                    (bracket . "[")
@@ -1628,13 +1628,13 @@ respectively."
   :diminish (ivy-mode . "")
   :bind
   (
-    (:map ivy-minibuffer-map
-        ;; ("C-'" . ivy-avy)
-        ("TAB" . ivy-next-line)
-        ("<backtab>" . ivy-previous-line)
-        ("<escape>"  . keyboard-escape-quit)
-    )
-  )
+   (:map ivy-minibuffer-map
+         ;; ("C-'" . ivy-avy)
+         ("TAB" . ivy-next-line)
+         ("<backtab>" . ivy-previous-line)
+         ("<escape>"  . keyboard-escape-quit)
+	 )
+   )
   :config
   (ivy-mode 1)
   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
@@ -1691,7 +1691,7 @@ respectively."
   (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
 
   (ivy-posframe-mode 1)
-)
+  )
 
 
 ;; (use-package
@@ -1760,12 +1760,12 @@ respectively."
 
 
 (advice-add 'my-M-x :before (lambda (&rest r) (refresh-current-mode))
-  ; convenient name for identifying or removing this advice later
-  '((name . "my-god-mode-before-m-x")))
+					; convenient name for identifying or removing this advice later
+	    '((name . "my-god-mode-before-m-x")))
 
 (advice-add 'my-mark-ring :after (lambda (&rest r) (recenter))
-  ; convenient name for identifying or removing this advice later
-  '((name . "recenter-after-mark-ring")))
+					; convenient name for identifying or removing this advice later
+	    '((name . "recenter-after-mark-ring")))
 
 
 
@@ -1902,19 +1902,19 @@ respectively."
 
 
 (setq default-frame-alist '(
-  ;; (undecorated . t)  ;;;;会导致所有边框全部消失无法拖动调整窗口大小 需要加上后面两句
-  ;; (drag-internal-border . 1)
-  ;; (internal-border-width . 5)
-  (vertical-scroll-bars);隐藏滚动条
-  (left-fringe);显示左fringe
-  (right-fringe . 0);关闭右fringe
-))
+			    ;; (undecorated . t)  ;;;;会导致所有边框全部消失无法拖动调整窗口大小 需要加上后面两句
+			    ;; (drag-internal-border . 1)
+			    ;; (internal-border-width . 5)
+			    (vertical-scroll-bars);隐藏滚动条
+			    (left-fringe);显示左fringe
+			    (right-fringe . 0);关闭右fringe
+			    ))
 
 
 
-; (smerge-mode -1)
-; (menu-bar-mode -1)
-; (tool-bar-mode -1)
+					; (smerge-mode -1)
+					; (menu-bar-mode -1)
+					; (tool-bar-mode -1)
 
 (when (display-graphic-p)
   ;;; ;; awesome-tray is from emacswiki sub-directory
@@ -2011,12 +2011,12 @@ respectively."
   "Collapse prettified json in region between BEG and END to a single line"
   (interactive "r")
   (if (use-region-p)
-    (save-excursion
-      (save-restriction
-        (narrow-to-region beg end)
-        (goto-char (point-min))
-        (while (re-search-forward "[[:space:]\n]+" nil t)
-               (replace-match " "))))
+      (save-excursion
+	(save-restriction
+          (narrow-to-region beg end)
+          (goto-char (point-min))
+          (while (re-search-forward "[[:space:]\n]+" nil t)
+            (replace-match " "))))
     (print "This function operates on a region")))
 
 
@@ -2045,12 +2045,12 @@ respectively."
         (starting-ov-count (length (overlays-in (point-min) (point-max))))
         )
     (if (derived-mode-p 'c++-mode)
-      ; find namespace, go below one line, and then hide
-      (save-excursion
-        (goto-char (point-min))
-        (re-search-forward "namespace.*?{" nil t)
-        (next-line)
-        (hs-hide-level 1))
+					; find namespace, go below one line, and then hide
+	(save-excursion
+          (goto-char (point-min))
+          (re-search-forward "namespace.*?{" nil t)
+          (next-line)
+          (hs-hide-level 1))
       (hs-hide-all))
     (when (equal (length (overlays-in (point-min) (point-max))) starting-ov-count)
       (hs-show-all)
@@ -2060,7 +2060,7 @@ respectively."
   (interactive)
   (hs-minor-mode 1)
   (if (hs-already-hidden-p)
-    (hs-show-block)
+      (hs-show-block)
     (hs-hide-block)))
 
 (defun my-hide-all()
@@ -2088,9 +2088,9 @@ respectively."
 (defadvice kill-region (before slick-cut activate compile)
   "When called interactively with no active region, kill a single line instead."
   (interactive
-    (if mark-active
-      (list (region-beginning) (region-end))
-      (list (line-beginning-position) (line-beginning-position 2)))))
+   (if mark-active
+       (list (region-beginning) (region-end))
+     (list (line-beginning-position) (line-beginning-position 2)))))
 
 (defadvice kill-ring-save (before slick-copy activate compile)
   "When called interactively with no active region, copy a single line instead."
@@ -2109,11 +2109,11 @@ respectively."
         (yank))
     (if (my-copied-content-is-end-of-newline)
         (progn
-         (end-of-line)
-         (newline)
-         (beginning-of-line)
-         (yank arg)
-         (backward-delete-char 1))
+          (end-of-line)
+          (newline)
+          (beginning-of-line)
+          (yank arg)
+          (backward-delete-char 1))
       (yank arg))))
 
 (defun my-yank-but-check-newline-above (arg)
@@ -2125,11 +2125,11 @@ respectively."
         (yank))
     (if (my-copied-content-is-end-of-newline)
         (progn
-         (beginning-of-line)
-         (newline)
-         (previous-line)
-         (yank arg)
-         (delete-char 1))
+          (beginning-of-line)
+          (newline)
+          (previous-line)
+          (yank arg)
+          (delete-char 1))
       (yank arg))))
 
 
@@ -2142,34 +2142,34 @@ respectively."
 
 
 (advice-add 'avy-goto-word-0
- :before
- (lambda (&rest r) (my-disable-code-intelligence) (global-hl-line-mode 0))
- '((name . "avy-start"))
-)
+	    :before
+	    (lambda (&rest r) (my-disable-code-intelligence) (global-hl-line-mode 0))
+	    '((name . "avy-start"))
+	    )
 
 ;; avy aborted
 (advice-add 'avy-handler-default
- :before
- (lambda (&rest r) (my-enable-code-intelligence) (global-hl-line-mode 1))
- '((name . "avy-aborted-end"))
-)
+	    :before
+	    (lambda (&rest r) (my-enable-code-intelligence) (global-hl-line-mode 1))
+	    '((name . "avy-aborted-end"))
+	    )
 ;; avy success
 (advice-add 'avy-action-goto
- :before
- (lambda (&rest r) (my-enable-code-intelligence) (global-hl-line-mode 1))
- '((name . "avy-success-end"))
-)
+	    :before
+	    (lambda (&rest r) (my-enable-code-intelligence) (global-hl-line-mode 1))
+	    '((name . "avy-success-end"))
+	    )
 
 
 (set-face-attribute 'avy-lead-face nil
-                      :background (face-background 'default)
-                      :foreground "#E20000"
-                      )
+                    :background (face-background 'default)
+                    :foreground "#E20000"
+                    )
 
 (set-face-attribute 'avy-lead-face-0 nil
-                      :background (face-background 'default)
-                      :foreground "#FFB400"
-                      )
+                    :background (face-background 'default)
+                    :foreground "#FFB400"
+                    )
 
 
 
@@ -2223,46 +2223,46 @@ If buffer-or-name is nil return current buffer's mode."
                             "dired-mode"
                             ))
 (setq special-buffers (list
-                        "*Pos-Frame-Read*"
-                        "*Treemacs"
-                        "*Messages*"
-                        "HELLO"
-                        "*Ibuffer*"
-                        "*deadgrep"
-                        "*xref"
-                        "*Buffer"
-                        "*Packages"
-                        "*lsp-log*"
-                        "*Help*"
-                        "*Ivy"
-                        "*Occur*"
-                        "*info*"
-                        "*Warnings*"
-                        "helm-*"
-                        ;; "*helm-mode-switch-to-buffer*"
-                        "*Helm Help*"
-                        "*Flymake diagnostics"
-                        "*ansi-term*"
-                        "*fzf*"
-                        "*Ilist*"
-                        "*NeoTree*"))
+                       "*Pos-Frame-Read*"
+                       "*Treemacs"
+                       "*Messages*"
+                       "HELLO"
+                       "*Ibuffer*"
+                       "*deadgrep"
+                       "*xref"
+                       "*Buffer"
+                       "*Packages"
+                       "*lsp-log*"
+                       "*Help*"
+                       "*Ivy"
+                       "*Occur*"
+                       "*info*"
+                       "*Warnings*"
+                       "helm-*"
+                       ;; "*helm-mode-switch-to-buffer*"
+                       "*Helm Help*"
+                       "*Flymake diagnostics"
+                       "*ansi-term*"
+                       "*fzf*"
+                       "*Ilist*"
+                       "*NeoTree*"))
 
 ;; legendary-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
 (setq legendary-buffers (list
-                          "*this-buffer-is-left-alone-without-god-mode-at-all"
-                          "*Minibuf"
-                          "*terminal*"
-                          "*eshell*"
-                          "*blink-search"
-                          "*blink search"
-                          "*shell*"
-                          "magit"
-                          "git-rebase-todo"
-                          "*Backtrace*"
-                          "menu"
-                          "*ielm*"
-                          "*slime-repl"
-                          "*Customize"))
+                         "*this-buffer-is-left-alone-without-god-mode-at-all"
+                         "*Minibuf"
+                         "*terminal*"
+                         "*eshell*"
+                         "*blink-search"
+                         "*blink search"
+                         "*shell*"
+                         "magit"
+                         "git-rebase-todo"
+                         "*Backtrace*"
+                         "menu"
+                         "*ielm*"
+                         "*slime-repl"
+                         "*Customize"))
 
 (setq legendary-modes (list "*this-buffer-is-left-alone-without-god-mode-at-all" "cfrs-input-mode" "minibuffer-mode"
                             "deadgrep-edit-mode"))
@@ -2279,57 +2279,57 @@ If buffer-or-name is nil return current buffer's mode."
          (lambda (n) (string-prefix-p n this-buffer-mode)) special-buffer-modes))))
 
 (defun* my-god-this-is-legendary-buffer (bufname)
-  (interactive)
-  ;; (message "buffer-mode type is %s" (type-of (buffer-mode bufname))) ==> symbol
+	(interactive)
+	;; (message "buffer-mode type is %s" (type-of (buffer-mode bufname))) ==> symbol
 ;;;; use symbol-name convert symbol to string; And for the reverse, (intern "some-string") to get symbol
-  (let ((this-buffer-name (string-trim bufname))
-        (this-buffer-mode (symbol-name
-                           (buffer-mode bufname))))
-    ;; (message "this-buffer-name %s" this-buffer-name)
-    ;; (message "this-buffer-mode %s" this-buffer-mode)
-    (or (seq-filter
-         (lambda (n) (string-prefix-p n this-buffer-name)) legendary-buffers)
-        (seq-filter
-         (lambda (n) (string-prefix-p n this-buffer-mode)) legendary-modes))))
+	(let ((this-buffer-name (string-trim bufname))
+              (this-buffer-mode (symbol-name
+				 (buffer-mode bufname))))
+	  ;; (message "this-buffer-name %s" this-buffer-name)
+	  ;; (message "this-buffer-mode %s" this-buffer-mode)
+	  (or (seq-filter
+               (lambda (n) (string-prefix-p n this-buffer-name)) legendary-buffers)
+              (seq-filter
+               (lambda (n) (string-prefix-p n this-buffer-mode)) legendary-modes))))
 
 
 (defun my-god-this-is-normal-editor-buffer (bufname)
   (interactive)
   (not (or (my-god-this-is-special-buffer bufname) (my-god-this-is-legendary-buffer bufname)))
-)
+  )
 
 
 (defun* refresh-current-mode ()
-  (interactive)
-  (my-ctrl-w-window-keys-minor-mode 1)
-  (global-hl-line-mode 0)
+	(interactive)
+	(my-ctrl-w-window-keys-minor-mode 1)
+	(global-hl-line-mode 0)
 
-  (when (my-god-this-is-legendary-buffer (buffer-name))
-    ;; (message "%s is legendary buffer" (buffer-name))
-    (my-keys-minor-mode 0)
-    (my-special-buffer-keys-minor-mode 0)
-    (cl-return-from refresh-current-mode))
+	(when (my-god-this-is-legendary-buffer (buffer-name))
+	  ;; (message "%s is legendary buffer" (buffer-name))
+	  (my-keys-minor-mode 0)
+	  (my-special-buffer-keys-minor-mode 0)
+	  (cl-return-from refresh-current-mode))
 
-  (if (my-god-this-is-special-buffer (buffer-name))
-    (progn
-      ;; (message "%s is special buffer" (buffer-name))
-      (ignore)
-      (god-local-mode 0)                  ;; start local mode
-      (global-hl-line-mode 0)
-      (my-keys-minor-mode 0)
-      (my-special-buffer-keys-minor-mode 1)
-      )
-    (progn
-      ;; (message "%s not a special buffer" (buffer-name))
-      (god-local-mode 1)                  ;; start local mode
-      (global-hl-line-mode 1)
-      ;; (visual-line-mode 1)
-      ;; (global-visual-line-mode 1) ;;
-      (setq my-god-mode-is-active-flag t)
-      (my-special-buffer-keys-minor-mode 0)
-      )
-    nil)
-  )
+	(if (my-god-this-is-special-buffer (buffer-name))
+	    (progn
+	      ;; (message "%s is special buffer" (buffer-name))
+	      (ignore)
+	      (god-local-mode 0)                  ;; start local mode
+	      (global-hl-line-mode 0)
+	      (my-keys-minor-mode 0)
+	      (my-special-buffer-keys-minor-mode 1)
+	      )
+	  (progn
+	    ;; (message "%s not a special buffer" (buffer-name))
+	    (god-local-mode 1)                  ;; start local mode
+	    (global-hl-line-mode 1)
+	    ;; (visual-line-mode 1)
+	    ;; (global-visual-line-mode 1) ;;
+	    (setq my-god-mode-is-active-flag t)
+	    (my-special-buffer-keys-minor-mode 0)
+	    )
+	  nil)
+	)
 
 (add-hook 'find-file-hook 'refresh-current-mode)
 
@@ -2343,7 +2343,7 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-toggle-god-mode()
   (interactive)
   (if (bound-and-true-p god-local-mode)
-    (my-quit-god-mode)
+      (my-quit-god-mode)
     (refresh-current-mode)))
 
 
@@ -2607,10 +2607,10 @@ If buffer-or-name is nil return current buffer's mode."
   (setcdr lispy-mode-map-paredit nil)
   (setcdr lispy-mode-map-parinfer nil)
   (setcdr lispy-mode-map-c-digits nil)
-         (define-key lispy-mode-map (kbd "M") 'special-lispy-alt-multiline)
-         (define-key lispy-mode-map (kbd "s-m") 'special-lispy-alt-multiline)
-         (define-key lispy-mode-map (kbd "s-j") 'lispy-down)
-         (define-key lispy-mode-map (kbd "s-k") 'lispy-up)
+  (define-key lispy-mode-map (kbd "M") 'special-lispy-alt-multiline)
+  (define-key lispy-mode-map (kbd "s-m") 'special-lispy-alt-multiline)
+  (define-key lispy-mode-map (kbd "s-j") 'lispy-down)
+  (define-key lispy-mode-map (kbd "s-k") 'lispy-up)
   )
 
 
@@ -2641,7 +2641,7 @@ If buffer-or-name is nil return current buffer's mode."
                                 (eq window (minibuffer-selected-window))))))
                    (if (bound-and-true-p god-local-mode)
                        'error
-                       '(:foreground "#7fdc59")
+                     '(:foreground "#7fdc59")
                      )
                  'mode-line-buffer-id)
          'mouse-face 'mode-line-highlight
@@ -2661,13 +2661,13 @@ This variable is nil if the current buffer isn't visiting a file.")
     (setq buffer-filename-with-git-directory
           (or
            (when-let* ((buffer-file-truename buffer-file-truename)
-                                  (prj (cdr-safe (project-current)))
-                                  (prj-parent (file-name-directory (directory-file-name (expand-file-name prj)))))
-                                 (concat
-                                   (file-relative-name
-                                     (file-name-directory buffer-file-truename) prj-parent)
-                                   (file-name-nondirectory buffer-file-truename))
-                                 )
+                       (prj (cdr-safe (project-current)))
+                       (prj-parent (file-name-directory (directory-file-name (expand-file-name prj)))))
+             (concat
+              (file-relative-name
+               (file-name-directory buffer-file-truename) prj-parent)
+              (file-name-nondirectory buffer-file-truename))
+             )
            buffer-file-name))))
 
 (add-hook 'find-file-hook 'set-buffer-filename-with-git-directory)
@@ -2689,37 +2689,37 @@ This variable is nil if the current buffer isn't visiting a file.")
 
 (defun my-god-mode-update-cursor-type ()
   ;; (when (display-graphic-p)
-    ;; (setq cursor-type (if (or (bound-and-true-p god-local-mode) buffer-read-only) 'box 'bar))
-    ;; (set-cursor-color (if (or (bound-and-true-p god-local-mode) buffer-read-only) "red" "red"))
-    ;; (blink-cursor-mode (if (or (bound-and-true-p god-local-mode) buffer-read-only) -1 -1))
-    (setq cursor-type (if (bound-and-true-p god-local-mode) 'bar 'bar))
-    (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
-    (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 1))
+  ;; (setq cursor-type (if (or (bound-and-true-p god-local-mode) buffer-read-only) 'box 'bar))
+  ;; (set-cursor-color (if (or (bound-and-true-p god-local-mode) buffer-read-only) "red" "red"))
+  ;; (blink-cursor-mode (if (or (bound-and-true-p god-local-mode) buffer-read-only) -1 -1))
+  (setq cursor-type (if (bound-and-true-p god-local-mode) 'bar 'bar))
+  (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
+  (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 1))
   ;; )
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
   (if (bound-and-true-p god-local-mode)
-    (progn
-      (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#33485e")
-      (set-face-attribute 'line-number-current-line nil :foreground "white" :background "#33485e")
-      (when (display-graphic-p)
-        (set-face-attribute 'window-divider nil                 :foreground window-divider-right-color)
-        (set-face-attribute 'window-divider-first-pixel nil     :foreground window-divider-right-color)
-        (set-face-attribute 'window-divider-last-pixel nil      :foreground window-divider-right-color)
-        ;; (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
-        ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
-        ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#262831" :foreground "#7AA2F7")
-        )
-      ;; (unless (display-graphic-p)
-      ;;   (set-face-attribute 'mode-line          nil :foreground "black" :background "#00AFFF")
-      ;;   (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
-      ;;   )
-      ;; (setq cursor-type 'bar)
-      ;; (set-cursor-color "red")
-      ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
-      ;; (set-face-attribute 'mode-line nil :background "#38424B")
-      (set-face-foreground 'vertical-border window-divider-color)
-      ;; (set-face-foreground 'vertical-border "#374250")
-      )
+      (progn
+	(set-face-attribute 'hl-line nil :foreground 'unspecified :background "#33485e")
+	(set-face-attribute 'line-number-current-line nil :foreground "white" :background "#33485e")
+	(when (display-graphic-p)
+          (set-face-attribute 'window-divider nil                 :foreground window-divider-right-color)
+          (set-face-attribute 'window-divider-first-pixel nil     :foreground window-divider-right-color)
+          (set-face-attribute 'window-divider-last-pixel nil      :foreground window-divider-right-color)
+          ;; (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
+          ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
+          ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#262831" :foreground "#7AA2F7")
+          )
+	;; (unless (display-graphic-p)
+	;;   (set-face-attribute 'mode-line          nil :foreground "black" :background "#00AFFF")
+	;;   (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
+	;;   )
+	;; (setq cursor-type 'bar)
+	;; (set-cursor-color "red")
+	;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
+	;; (set-face-attribute 'mode-line nil :background "#38424B")
+	(set-face-foreground 'vertical-border window-divider-color)
+	;; (set-face-foreground 'vertical-border "#374250")
+	)
     (progn
       (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
       (when (my-god-this-is-normal-editor-buffer (buffer-name))
@@ -2815,16 +2815,16 @@ This variable is nil if the current buffer isn't visiting a file.")
 
 
 (defun neotree-project-dir ()
-    "Open NeoTree using the git root."
-    (interactive)
-    (let ((project-dir (projectile-project-root))
-          (file-name (buffer-file-name)))
-      (neotree-toggle)
-      (if project-dir
-          (when (neo-global--window-exists-p)
-                (neotree-dir project-dir)
-                (neotree-find file-name))
-        (message "Could not find git project root."))))
+  "Open NeoTree using the git root."
+  (interactive)
+  (let ((project-dir (projectile-project-root))
+        (file-name (buffer-file-name)))
+    (neotree-toggle)
+    (if project-dir
+        (when (neo-global--window-exists-p)
+          (neotree-dir project-dir)
+          (neotree-find file-name))
+      (message "Could not find git project root."))))
 
 (defun my-neotree-toggle ()
   (interactive)
@@ -2844,9 +2844,9 @@ This variable is nil if the current buffer isn't visiting a file.")
 
 
 (defun my-add-padding-for-neotree()
-    (set-window-margins
-      (get-buffer-window " *NeoTree*" 'visible) 1)
-)
+  (set-window-margins
+   (get-buffer-window " *NeoTree*" 'visible) 1)
+  )
 (advice-add 'neotree-show :after 'my-add-padding-for-neotree)
 
 
@@ -2870,95 +2870,95 @@ This variable is nil if the current buffer isn't visiting a file.")
 (use-package treemacs
   :init
   :config
-    (setq treemacs-hide-gitignored-files-mode 1)
-    (setq treemacs-space-between-root-nodes nil)
-    (setq treemacs-show-hidden-files t)
-    (setq treemacs-show-cursor t)
-    (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
-    (setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
-    (setq treemacs-expand-after-init nil)
-    (setq treemacs-width-is-initially-locked nil)
+  (setq treemacs-hide-gitignored-files-mode 1)
+  (setq treemacs-space-between-root-nodes nil)
+  (setq treemacs-show-hidden-files t)
+  (setq treemacs-show-cursor t)
+  (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
+  (setq treemacs-last-error-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
+  (setq treemacs-expand-after-init nil)
+  (setq treemacs-width-is-initially-locked nil)
 
-    (global-set-key (kbd "C-c C-p") treemacs-project-map)
-    (global-set-key (kbd "C-c C-w") treemacs-workspace-map)
-    ;; (treemacs-resize-icons 26)
+  (global-set-key (kbd "C-c C-p") treemacs-project-map)
+  (global-set-key (kbd "C-c C-w") treemacs-workspace-map)
+  ;; (treemacs-resize-icons 26)
 
-    (defun my-add-padding-for-treemacs()
-      (set-window-margins (treemacs-get-local-window) 1 1)
-      (set-fringe-mode 0)
-      )
+  (defun my-add-padding-for-treemacs()
+    (set-window-margins (treemacs-get-local-window) 1 1)
+    (set-fringe-mode 0)
+    )
 
-    (defun dim-treemacs-window-background()
-      (set (make-local-variable 'face-remapping-alist) '((default :background "#26282F"))))
+  (defun dim-treemacs-window-background()
+    (set (make-local-variable 'face-remapping-alist) '((default :background "#26282F"))))
 
-    (defun my-decrease-treemacs-width()
-      (interactive)
-      ;; call inner api
-      (treemacs--set-width 25))
+  (defun my-decrease-treemacs-width()
+    (interactive)
+    ;; call inner api
+    (treemacs--set-width 25))
 
-    (defun my-increase-treemacs-width()
-      (interactive)
-      ;; call inner api
-      (treemacs--set-width (/ (frame-width) 3)))
+  (defun my-increase-treemacs-width()
+    (interactive)
+    ;; call inner api
+    (treemacs--set-width (/ (frame-width) 3)))
 
-    (defun display-treemacs-widow-in-ace-window-selection()
-        (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))
+  (defun display-treemacs-widow-in-ace-window-selection()
+    (setq aw-ignored-buffers (delete 'treemacs-mode aw-ignored-buffers)))
 
     ;;;; custom highlight for treemacs current line
-    (defface my-treemacs-custom-line-highlight '((t (:background "#59dcb7" :foreground "black" :weight normal))) "")
-    (defun change-treemacs-hl-line-mode ()
-       (setq-local hl-line-face 'my-treemacs-custom-line-highlight)
-       (overlay-put hl-line-overlay 'face hl-line-face))
+  (defface my-treemacs-custom-line-highlight '((t (:background "#59dcb7" :foreground "black" :weight normal))) "")
+  (defun change-treemacs-hl-line-mode ()
+    (setq-local hl-line-face 'my-treemacs-custom-line-highlight)
+    (overlay-put hl-line-overlay 'face hl-line-face))
 
-    (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
-    (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
-    (add-hook 'treemacs-mode-hook #'dim-treemacs-window-background)
-    (add-hook 'treemacs-mode-hook #'change-treemacs-hl-line-mode)
-    ;; (add-hook 'treemacs-mode-hook #'my-set-bigger-spacing)
+  (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
+  (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
+  (add-hook 'treemacs-mode-hook #'dim-treemacs-window-background)
+  (add-hook 'treemacs-mode-hook #'change-treemacs-hl-line-mode)
+  ;; (add-hook 'treemacs-mode-hook #'my-set-bigger-spacing)
 
-    (treemacs-follow-mode -1)
+  (treemacs-follow-mode -1)
   :bind
-    (:map treemacs-mode-map
-          ("H" . my-decrease-treemacs-width)
-          ("L" . my-increase-treemacs-width)
-          ("a" . treemacs-create-file)
-          ("A" . treemacs-create-dir)
-          ;; add-hook no work????
-          ("<mouse-1>" . treemacs-single-click-expand-action))
+  (:map treemacs-mode-map
+        ("H" . my-decrease-treemacs-width)
+        ("L" . my-increase-treemacs-width)
+        ("a" . treemacs-create-file)
+        ("A" . treemacs-create-dir)
+        ;; add-hook no work????
+        ("<mouse-1>" . treemacs-single-click-expand-action))
   )
 
 (with-eval-after-load 'treemacs
-    (require 'treemacs-nerd-icons)
+  (require 'treemacs-nerd-icons)
 
-    (dolist (face '(treemacs-root-face
-                        treemacs-git-unmodified-face
-                        treemacs-git-modified-face
-                        treemacs-git-renamed-face
-                        treemacs-git-ignored-face
-                        treemacs-git-untracked-face
-                        treemacs-git-added-face
-                        treemacs-git-conflict-face
-                        treemacs-directory-face
-                        treemacs-directory-collapsed-face
-                        treemacs-file-face
-                        ;; treemacs-nerd-icons-file-face
-                        ;; treemacs-nerd-icons-root-face
-                        treemacs-tags-face))
-          (set-face-attribute face nil :family "IBM Plex Mono" :weight 'normal :height 140 :foreground "#C4C4C4" :underline nil :inherit 'unspecified))
+  (dolist (face '(treemacs-root-face
+                  treemacs-git-unmodified-face
+                  treemacs-git-modified-face
+                  treemacs-git-renamed-face
+                  treemacs-git-ignored-face
+                  treemacs-git-untracked-face
+                  treemacs-git-added-face
+                  treemacs-git-conflict-face
+                  treemacs-directory-face
+                  treemacs-directory-collapsed-face
+                  treemacs-file-face
+                  ;; treemacs-nerd-icons-file-face
+                  ;; treemacs-nerd-icons-root-face
+                  treemacs-tags-face))
+    (set-face-attribute face nil :family "IBM Plex Mono" :weight 'normal :height 140 :foreground "#C4C4C4" :underline nil :inherit 'unspecified))
 
-   (when (display-graphic-p)
-        (treemacs-load-theme "nerd-icons")
-        ;; (require 'treemacs-all-the-icons)
-        ;; (treemacs-load-theme "all-the-icons")
-        ;; (require 'treemacs-compatibility)
-        ;; (treemacs-load-all-the-icons-with-workaround-font "Segoe UI")
-     )
+  (when (display-graphic-p)
+    (treemacs-load-theme "nerd-icons")
+    ;; (require 'treemacs-all-the-icons)
+    ;; (treemacs-load-theme "all-the-icons")
+    ;; (require 'treemacs-compatibility)
+    ;; (treemacs-load-all-the-icons-with-workaround-font "Segoe UI")
+    )
 
-   (unless (display-graphic-p)
-        (treemacs-load-theme "nerd-icons")
-     )
+  (unless (display-graphic-p)
+    (treemacs-load-theme "nerd-icons")
+    )
 
-)
+  )
 
 
 
@@ -3090,30 +3090,30 @@ This variable is nil if the current buffer isn't visiting a file.")
 
 
 (use-package undo-tree
-    :config
-    (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.local/.undo-tree-files")))
-    (setq undo-tree-auto-save-history nil)
-    :init
-    (add-hook 'prog-mode-hook #'undo-tree-mode)
-    (add-hook 'cmake-mode-hook #'undo-tree-mode)
-    (add-hook 'conf-mode-hook #'undo-tree-mode)
-    (add-hook 'markdown-mode-hook #'undo-tree-mode)   ;; these modes are not prog mode...
-    (advice-add #'undo-tree-load-history :around #'radian--undo-tree-suppress-buffer-modified-message)
-)
+  :config
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.local/.undo-tree-files")))
+  (setq undo-tree-auto-save-history nil)
+  :init
+  (add-hook 'prog-mode-hook #'undo-tree-mode)
+  (add-hook 'cmake-mode-hook #'undo-tree-mode)
+  (add-hook 'conf-mode-hook #'undo-tree-mode)
+  (add-hook 'markdown-mode-hook #'undo-tree-mode)   ;; these modes are not prog mode...
+  (advice-add #'undo-tree-load-history :around #'radian--undo-tree-suppress-buffer-modified-message)
+  )
 
 ;; (global-undo-tree-mode)
 
 ;; Suppress the message saying that the undo history file was
 ;; saved (because this happens every single time you save a file).
 (defun radian--undo-tree-suppress-undo-history-saved-message
-  (undo-tree-save-history &rest args)
+    (undo-tree-save-history &rest args)
   (let ((inhibit-message t))
     (apply undo-tree-save-history args)))
 
 ;; Suppress the message saying that the undo history could not be
 ;; loaded because the file changed outside of Emacs.
 (defun radian--undo-tree-suppress-buffer-modified-message
-  (undo-tree-load-history &rest args)
+    (undo-tree-load-history &rest args)
   (let ((inhibit-message t))
     (apply undo-tree-load-history args)))
 
@@ -3124,18 +3124,18 @@ This variable is nil if the current buffer isn't visiting a file.")
 ;; Have to use require, not use-package
 (require 'hydra)
 (defhydra undo-tree-menu (global-map "C-c u")
-  "
+	  "
 _u_: undo      _r_: redo
 "
-  ("u" undo-tree-undo)
-  ("r" undo-tree-redo))
+	  ("u" undo-tree-undo)
+	  ("r" undo-tree-redo))
 
 (defhydra hydra-cw-o-window-menu (global-map "C-c C-w")
-  "
+	  "
 _o_: other-window
 "
-  ("o" other-window)
-  )
+	  ("o" other-window)
+	  )
 
 
 ;;;  ;; Have to use require, not use-package
@@ -3300,7 +3300,7 @@ _o_: other-window
                ("\"" . my-wrap-region-with-double-quotes)
                ("_" . my-wrap-region-with-underscores)
                ("`" . my-wrap-region-with-back-quotes)))
-)
+  )
 (selected-global-mode 1)
 
 
@@ -3309,41 +3309,41 @@ _o_: other-window
   "add special keybindings for visual selected mode"
   (interactive)
   (if (bound-and-true-p selected-region-active-mode)
-    (progn
+      (progn
 
-      ;; only non-special buffer need this timer.
-      (when (my-god-this-is-normal-editor-buffer (buffer-name))
+	;; only non-special buffer need this timer.
+	(when (my-god-this-is-normal-editor-buffer (buffer-name))
           (when (bound-and-true-p selected-active-timer) (cancel-timer selected-active-timer))
           (setq selected-active-timer
                 (run-with-timer 0.05 nil #'(lambda() (when (region-active-p)
-                                                      (remove-all-highlight)
-                                                      (my-disable-paren-highlight)
-                                                      (my-disable-eglot-highlight)))))
+                                                       (remove-all-highlight)
+                                                       (my-disable-paren-highlight)
+                                                       (my-disable-eglot-highlight)))))
           )
 
-      (if (bound-and-true-p my-god-mode-is-active-flag)
-        (progn
-          ;; (message "god mode, & selected-region-active mode")
-          ;; (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
-          ;; (define-key selected-keymap (kbd "i w") #'er/mark-symbol)
-          ;; (define-key selected-keymap (kbd "v") #'keyboard-quit)
-          (define-key selected-keymap (kbd "d") #'kill-region)
-          ;; (define-key selected-keymap (kbd "x") #'kill-region)
-          ;; (define-key selected-keymap (kbd "C-n") #'my-mc/mark-next-like-this)
-          ;; (define-key selected-keymap (kbd "C-p") #'my-mc/mark-previous-like-this)
-          )
-        (progn
-          ;; (message "not god mode, & selected-region-active mode")
-          ;; (message "is not god-local-mode")
-          ;; (define-key selected-keymap (kbd "i p") nil)
-          ;; (define-key selected-keymap (kbd "i w") nil)
-          ;; (define-key selected-keymap (kbd "v") nil)
-          ;; (define-key selected-keymap (kbd "d") nil)
-          ;; (define-key selected-keymap (kbd "x") nil)
-          ;; (define-key selected-keymap (kbd "C-n") nil)
-          ;; (define-key selected-keymap (kbd "C-p") nil)
-          )
-        ))
+	(if (bound-and-true-p my-god-mode-is-active-flag)
+            (progn
+              ;; (message "god mode, & selected-region-active mode")
+              ;; (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
+              ;; (define-key selected-keymap (kbd "i w") #'er/mark-symbol)
+              ;; (define-key selected-keymap (kbd "v") #'keyboard-quit)
+              (define-key selected-keymap (kbd "d") #'kill-region)
+              ;; (define-key selected-keymap (kbd "x") #'kill-region)
+              ;; (define-key selected-keymap (kbd "C-n") #'my-mc/mark-next-like-this)
+              ;; (define-key selected-keymap (kbd "C-p") #'my-mc/mark-previous-like-this)
+              )
+          (progn
+            ;; (message "not god mode, & selected-region-active mode")
+            ;; (message "is not god-local-mode")
+            ;; (define-key selected-keymap (kbd "i p") nil)
+            ;; (define-key selected-keymap (kbd "i w") nil)
+            ;; (define-key selected-keymap (kbd "v") nil)
+            ;; (define-key selected-keymap (kbd "d") nil)
+            ;; (define-key selected-keymap (kbd "x") nil)
+            ;; (define-key selected-keymap (kbd "C-n") nil)
+            ;; (define-key selected-keymap (kbd "C-p") nil)
+            )
+          ))
     (progn
       ;; (message "not selected-region-active mode")
       (my-enable-eglot-highlight)
