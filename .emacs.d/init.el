@@ -527,12 +527,13 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
   '
-  (ahs-definition-face
-    ((t (:background "green" :foreground "black"))))
+  (ahs-plugin-default-face
+    ((t (:background "#59dcb7" :foreground "Black"))))
+  '(ahs-definition-face ((t (:inherit ahs-plugin-default-face))))
   '
   (ahs-definition-face-unfocused
-    ((t (:background "green" :foreground "black"))))
-  '(ahs-face ((t (:background "yellowgreen" :foreground "black"))))
+    ((t (:inherit ahs-plugin-default-face))))
+  '(ahs-face ((t (:inherit ahs-plugin-default-face))))
   '
   (centaur-tabs-selected
     (
@@ -2915,7 +2916,7 @@ If buffer-or-name is nil return current buffer's mode."
 (add-hook
   'emacs-lisp-mode-hook
   (lambda ()
-    ()
+    (setq ahs-idle-interval 0.3)
     (require 'auto-highlight-symbol)
     (auto-highlight-symbol-mode 1)))
 
