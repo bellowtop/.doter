@@ -575,6 +575,7 @@
  '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "black"))))
  '(centaur-tabs-unselected ((t (:foreground "#969696" :background "#262830"))))
  '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground "white"))))
+ '(corfu-default ((t (:inherit default))))
  '(counsel-outline-default ((t (:inherit green))))
  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
@@ -997,91 +998,6 @@
 (require 'eldoc-box)
 
 
-
-(unless (display-graphic-p)
-  (require 'popon)
-  (advice-add #'keyboard-quit :before #'popon-kill-all)
-
-  (defun my-split-long-line-to-sub-lines (long-line wrap-width)
-    (interactive)
-    (let ((total-len (string-width long-line))
-          (idx 0)
-          (collected ()))
-    (while (> (- total-len idx) wrap-width)
-      (push (substring long-line idx (+ idx wrap-width)) collected)
-      (setq idx (+ idx wrap-width)))
-    (when (< idx total-len)
-      (push (substring long-line idx total-len) collected))
-    (reverse collected)))
-
-  ;; (message "%s" (my-split-long-line-to-sub-lines "It is useful to include newlines" 4))
-  ;; (string-width "It is useful to include newlines")
-
-(defun my-seperate-string (line max-length)
-  (let ((remains line)
-        (result-lines ())
-        )
-    (while (> (length remains) max-length)
-      (push (substring remains 0 max-length) result-lines)
-      (setq remains (substring remains max-length nil))
-      )
-    ;; last one
-    (push remains result-lines)
-    (reverse result-lines)
-    )
-  )
-
-
-(defun show-eldoc-popon-at-point ()
-  (interactive)
-  (when (boundp 'eldoc--doc-buffer)
-    (let* ((str (with-current-buffer eldoc--doc-buffer
-                  (buffer-string)))
-           (len (- (window-body-width) 8)) ;; don't count the line-number column , and the border chars
-           (border-line (make-string len ?─))
-           (bordered-str (concat border-line "\n" str "\n" border-line))
-           (lines (string-split bordered-str "\n"))
-           ;; (lines (flatten-list (mapcar (lambda(line) (my-seperate-string line (- len 2))) lines)))
-           ;; (lines
-           ;;  (cl-loop for line in lines
-           ;;           do
-           ;;           (setq padding-size (- (- len (length line)) 4))
-           ;;           collect
-           ;;           (cond
-           ;;            ((> padding-size 0) (concat line (make-string padding-size ?\s)))
-           ;;            (t line))
-           ;;           ))
-           (lines-size (length lines))
-           (idx 0)
-           (lines
-            (cl-loop for line in lines
-                     do
-                     (setq idx (1+ idx))
-                     collect
-                     ;; line
-                     (cond
-                      ((= 1 idx) (concat "┌" line))
-                      ((= lines-size idx) (concat "└" line))
-                      ((string= line "---") (concat "│" border-line))
-                      (t (concat "│ " line)))
-                     ))
-           ;; (bordered-lines (mapcar (lambda(line) (concat "| " line)) lines))
-           ;; (wrapped-lines (flatten-tree small-lines))
-           (bordered-str (string-join lines "\n"))
-           (pointxy (popon-x-y-at-pos (point)))
-           ;; (pointxy-nextline (cons (car pointxy) (+ (cdr pointxy) 1)))
-           (pointxy-nextline (cons 0 (+ (cdr pointxy) 1)))
-           )
-      (message "pointxy-nextline: %s" pointxy-nextline)
-      ;; (let ((point-nextline (save-excursion (line-beginning-position))))
-      ;;   (popup-tip bordered-str :point point-nextline :width (1+ len))
-      ;;   )
-      (popon-create bordered-str pointxy-nextline (get-buffer-window) (current-buffer))
-      )))
-
-  (global-set-key (kbd "C-c i") #'show-eldoc-popon-at-point)
-
-)
 
 
 
