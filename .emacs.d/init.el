@@ -499,7 +499,7 @@
                ("M" . my-fit-imenu-width)
                ("L" . my-shrink-imenu-width)
                ("m" . my-imenu-list-smart-toggle-refresh)
-	       )
+               )
 	 )
   )
 
@@ -1215,7 +1215,7 @@
 (setq whitespace-line-column 85)
 (setq whitespace-display-mappings
       '(
-        (tab-mark     ?\t   [?\x203a ?\t] [?\\ ?\t])	; tab
+        (tab-mark     ?\t   [?\x203a ?\t] [?\\ ?\t])    ; tab
         (newline-mark ?\n   [?\x203a ?\n] [?\\ ?\n])
         ))
 (setq-default tab-width 4)
@@ -1761,11 +1761,11 @@ respectively."
 
 (advice-add 'my-M-x :before (lambda (&rest r) (refresh-current-mode))
 					; convenient name for identifying or removing this advice later
-	    '((name . "my-god-mode-before-m-x")))
+            '((name . "my-god-mode-before-m-x")))
 
 (advice-add 'my-mark-ring :after (lambda (&rest r) (recenter))
 					; convenient name for identifying or removing this advice later
-	    '((name . "recenter-after-mark-ring")))
+            '((name . "recenter-after-mark-ring")))
 
 
 
@@ -2142,23 +2142,23 @@ respectively."
 
 
 (advice-add 'avy-goto-word-0
-	    :before
-	    (lambda (&rest r) (my-disable-code-intelligence) (global-hl-line-mode 0))
-	    '((name . "avy-start"))
-	    )
+            :before
+            (lambda (&rest r) (my-disable-code-intelligence) (global-hl-line-mode 0))
+            '((name . "avy-start"))
+            )
 
 ;; avy aborted
 (advice-add 'avy-handler-default
-	    :before
-	    (lambda (&rest r) (my-enable-code-intelligence) (global-hl-line-mode 1))
-	    '((name . "avy-aborted-end"))
-	    )
+            :before
+            (lambda (&rest r) (my-enable-code-intelligence) (global-hl-line-mode 1))
+            '((name . "avy-aborted-end"))
+            )
 ;; avy success
 (advice-add 'avy-action-goto
-	    :before
-	    (lambda (&rest r) (my-enable-code-intelligence) (global-hl-line-mode 1))
-	    '((name . "avy-success-end"))
-	    )
+            :before
+            (lambda (&rest r) (my-enable-code-intelligence) (global-hl-line-mode 1))
+            '((name . "avy-success-end"))
+            )
 
 
 (set-face-attribute 'avy-lead-face nil
@@ -2311,23 +2311,23 @@ If buffer-or-name is nil return current buffer's mode."
 	  (cl-return-from refresh-current-mode))
 
 	(if (my-god-this-is-special-buffer (buffer-name))
-	    (progn
-	      ;; (message "%s is special buffer" (buffer-name))
-	      (ignore)
-	      (god-local-mode 0)                  ;; start local mode
-	      (global-hl-line-mode 0)
-	      (my-keys-minor-mode 0)
-	      (my-special-buffer-keys-minor-mode 1)
-	      )
+            (progn
+              ;; (message "%s is special buffer" (buffer-name))
+              (ignore)
+              (god-local-mode 0)                  ;; start local mode
+              (global-hl-line-mode 0)
+              (my-keys-minor-mode 0)
+              (my-special-buffer-keys-minor-mode 1)
+              )
 	  (progn
-	    ;; (message "%s not a special buffer" (buffer-name))
-	    (god-local-mode 1)                  ;; start local mode
-	    (global-hl-line-mode 1)
-	    ;; (visual-line-mode 1)
-	    ;; (global-visual-line-mode 1) ;;
-	    (setq my-god-mode-is-active-flag t)
-	    (my-special-buffer-keys-minor-mode 0)
-	    )
+            ;; (message "%s not a special buffer" (buffer-name))
+            (god-local-mode 1)                  ;; start local mode
+            (global-hl-line-mode 1)
+            ;; (visual-line-mode 1)
+            ;; (global-visual-line-mode 1) ;;
+            (setq my-god-mode-is-active-flag t)
+            (my-special-buffer-keys-minor-mode 0)
+            )
 	  nil)
 	)
 
