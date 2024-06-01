@@ -465,12 +465,12 @@
   :defer t
   :bind
   (
-   (:map
-    imenu-list-major-mode-map
-    ("H" . my-enlarge-imenu-width)
-    ("M" . my-fit-imenu-width)
-    ("L" . my-shrink-imenu-width)
-    ("m" . my-imenu-list-smart-toggle-refresh))))
+    (:map
+      imenu-list-major-mode-map
+      ("H" . my-enlarge-imenu-width)
+      ("M" . my-fit-imenu-width)
+      ("L" . my-shrink-imenu-width)
+      ("m" . my-imenu-list-smart-toggle-refresh))))
 
 
 (defun my-set-bigger-spacing ()
