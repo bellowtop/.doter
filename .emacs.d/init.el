@@ -526,14 +526,14 @@
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
-  '
-  (ahs-plugin-default-face
-    ((t (:background "#59dcb7" :foreground "Black"))))
   '(ahs-definition-face ((t (:inherit ahs-plugin-default-face))))
   '
   (ahs-definition-face-unfocused
     ((t (:inherit ahs-plugin-default-face))))
   '(ahs-face ((t (:inherit ahs-plugin-default-face))))
+  '
+  (ahs-plugin-default-face
+    ((t (:background "#59dcb7" :foreground "Black"))))
   '
   (centaur-tabs-selected
     (
@@ -1380,7 +1380,8 @@
   '
   (package-selected-packages
     '
-    (elisp-autofmt
+    (symbol-overlay
+      elisp-autofmt
       corfu-terminal
       py-autopep8
       popon
@@ -2912,13 +2913,17 @@ If buffer-or-name is nil return current buffer's mode."
   :hook (emacs-lisp-mode . elisp-autofmt-mode)
   :config (setq elisp-autofmt-style 'fixed))
 
+(use-package
+  symbol-overlay
+  :hook (emacs-lisp-mode . symbol-overlay-mode))
 
-(add-hook
-  'emacs-lisp-mode-hook
-  (lambda ()
-    (setq ahs-idle-interval 0.3)
-    (require 'auto-highlight-symbol)
-    (auto-highlight-symbol-mode 1)))
+;; (add-hook
+;;   'emacs-lisp-mode-hook
+;;   (lambda ()
+;;     (setq ahs-idle-interval 0.3)
+;;     (require 'auto-highlight-symbol)
+;;     (auto-highlight-symbol-mode 1)
+;;     ))
 
 
 (setq hl-line-inhibit-highlighting-for-modes
