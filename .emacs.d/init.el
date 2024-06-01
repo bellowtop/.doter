@@ -527,6 +527,13 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
   '
+  (ahs-definition-face
+    ((t (:background "green" :foreground "black"))))
+  '
+  (ahs-definition-face-unfocused
+    ((t (:background "green" :foreground "black"))))
+  '(ahs-face ((t (:background "yellowgreen" :foreground "black"))))
+  '
   (centaur-tabs-selected
     (
       (t
@@ -2897,6 +2904,20 @@ If buffer-or-name is nil return current buffer's mode."
   (define-key lispy-mode-map (kbd "s-m") 'special-lispy-alt-multiline)
   (define-key lispy-mode-map (kbd "s-j") 'lispy-down)
   (define-key lispy-mode-map (kbd "s-k") 'lispy-up))
+
+
+(use-package
+  elisp-autofmt
+  :hook (emacs-lisp-mode . elisp-autofmt-mode)
+  :config (setq elisp-autofmt-style 'fixed))
+
+
+(add-hook
+  'emacs-lisp-mode-hook
+  (lambda ()
+    ()
+    (require 'auto-highlight-symbol)
+    (auto-highlight-symbol-mode 1)))
 
 
 (setq hl-line-inhibit-highlighting-for-modes
