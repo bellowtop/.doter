@@ -329,19 +329,30 @@
 
 
 
+(unless (display-graphic-p)
+  (require 'my-term-popup))
+
+
 (defun my-toggle-eldoc-box-help-at-point ()
   (interactive)
+
+  ;; always use my-term-popup
+  ;; (if my-term-popup-show-p
+  ;;     (my-term-popup-close)
+  ;;   (show-eldoc-popup-at-point))
+
   (if (display-graphic-p)
       ;; graphic, use eldoc-box
       (if (and (bound-and-true-p eldoc-box--frame)
-               (frame-visible-p
-                eldoc-box--frame))
+               (frame-visible-p eldoc-box--frame))
           (eldoc-box-quit-frame)
         (eldoc-box-help-at-point))
-    ;; terminal tui, use popon
-    (if (window-parameter (get-buffer-window) 'popon-list)
-        (popon-kill-all)
-      (show-eldoc-popon-at-point))))
+    ;; terminal tui, use my-term-popup
+    (if my-term-popup-show-p
+        (my-term-popup-close)
+      (show-eldoc-popup-at-point)))
+
+  )
 
 
 
