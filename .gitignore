@@ -27,6 +27,7 @@ anaconda-mode/
 /karabiner/automatic_backups
 
 /.emacs.desktop
+/.emacs.d/elisp-autofmt-cache/
 /.emacs.d/eclipse.jdt.ls/
 /.emacs.d/projects
 /.emacs.d/share
