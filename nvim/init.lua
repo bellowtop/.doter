@@ -183,7 +183,7 @@ vim.opt.shiftwidth =4
 
 vim.opt.hidden = true
 vim.opt.autoindent = true
-vim.opt.mouse = ""
+vim.opt.mouse = "a"
 
 
 vim.opt.maxmempattern = 20000
