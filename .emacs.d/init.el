@@ -527,61 +527,21 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
   '(ahs-definition-face ((t (:inherit ahs-plugin-default-face))))
-  '
-  (ahs-definition-face-unfocused
-    ((t (:inherit ahs-plugin-default-face))))
+  '(ahs-definition-face-unfocused ((t (:inherit ahs-plugin-default-face))))
   '(ahs-face ((t (:inherit ahs-plugin-default-face))))
-  '
-  (ahs-plugin-default-face
-    ((t (:background "#59dcb7" :foreground "Black"))))
-  '
-  (centaur-tabs-selected
-    (
-      (t
-        (:inherit
-          default
-          :foreground "black"
-          :background "#FFC44C"
-          :weight normal))))
-  '
-  (centaur-tabs-selected-modified
-    ((t (:inherit centaur-tabs-selected :foreground "black"))))
-  '
-  (centaur-tabs-unselected
-    ((t (:foreground "#969696" :background "#262830"))))
-  '
-  (centaur-tabs-unselected-modified
-    ((t (:inherit centaur-tabs-unselected :foreground "white"))))
+  '(ahs-plugin-default-face ((t (:background "#59dcb7" :foreground "Black"))))
+  '(centaur-tabs-selected ((t (:inherit default :foreground "black" :background "#FFC44C" :weight normal))))
+  '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "black"))))
+  '(centaur-tabs-unselected ((t (:foreground "#969696" :background "#262830"))))
+  '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground "white"))))
   '(corfu-default ((t (:inherit default))))
   '(counsel-outline-default ((t (:inherit green))))
-  '
-  (deadgrep-match-face
-    (
-      (t
-        (:foreground
-          "#7fdc59"
-          :background "#232d38"
-          :weight normal))))
-  '
-  (deadgrep-search-term-face
-    (
-      (t
-        (:foreground
-          "#000000"
-          :background "#7fdc59"
-          :weight normal))))
-  '
-  (diff-added
-    ((t (:extend t :foreground "green" :background "black"))))
-  '
-  (diff-indicator-added
-    ((t (:extend t :foreground "green" :background "black"))))
-  '
-  (diff-indicator-removed
-    ((t (:extend t :foreground "red" :background "black"))))
-  '
-  (diff-removed
-    ((t (:extend t :foreground "red" :background "black"))))
+  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
+  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+  '(diff-added ((t (:extend t :foreground "green" :background "black"))))
+  '(diff-indicator-added ((t (:extend t :foreground "green" :background "black"))))
+  '(diff-indicator-removed ((t (:extend t :foreground "red" :background "black"))))
+  '(diff-removed ((t (:extend t :foreground "red" :background "black"))))
   '(doom-modeline-buffer-file ((t (:inherit nil))))
   '(doom-modeline-buffer-major-mode ((t (:inherit nil))))
   '(doom-modeline-buffer-minor-mode ((t nil)))
@@ -592,190 +552,60 @@
   '(doom-modeline-project-dir ((t (:inherit nil))))
   '(doom-modeline-project-parent-dir ((t (:inherit nil))))
   '(doom-modeline-project-root-dir ((t (:inherit nil))))
-  '
-  (eglot-highlight-symbol-face
-    ((t (:background "#59dcb7" :foreground "black" :weight normal))))
+  '(eglot-highlight-symbol-face ((t (:background "#59dcb7" :foreground "black" :weight normal))))
   '(eldoc-box-body ((t (:inherit default))))
-  '
-  (flymake-diagnostic-at-point-posframe-background-face
-    ((t (:background "dark magenta"))))
-  '
-  (flymake-error
-    (
-      (t
-        (:foreground
-          "DeepPink"
-          :underline (:color foreground-color :style line :position line)))))
+  '(flymake-diagnostic-at-point-posframe-background-face ((t (:background "dark magenta"))))
+  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
   '(flymake-error-echo ((t nil)))
   '(flymake-warning ((t (weight normal))))
   '(flymake-warning-echo ((t nil)))
   '(helm-selection ((t (:foreground "white" :background "purple"))))
   '(help-argument-name ((t (:inherit italic :underline nil))))
-  '
-  (highlight
-    ((t (:background "#7ED9B9" :foreground "black" :weight normal))))
+  '(highlight ((t (:background "#7ED9B9" :foreground "black" :weight normal))))
   '(hl-line ((t (:extend t :background "#33485e" :underline nil))))
   '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
-  '
-  (isearch
-    (
-      (t
-        (:background
-          "orange1"
-          :foreground "black"
-          :weight normal
-          :inverse-video nil))))
-  '
-  (ivy-current-match
-    ((t (:inherit region :background nil :foreground nil))))
+  '(isearch ((t (:background "orange1" :foreground "black" :weight normal :inverse-video nil))))
+  '(ivy-current-match ((t (:inherit region :background nil :foreground nil))))
   '(ivy-posframe ((t (:background "black"))))
   '(ivy-posframe-border ((t (:background "green"))))
-  '
-  (lazy-highlight
-    (
-      (t
-        (:background
-          "light green"
-          :foreground "black"
-          :weight normal))))
-  '
-  (line-number
-    (
-      (t
-        (:inherit
-          default
-          :foreground "#565575"
-          :slant normal
-          :weight normal))))
-  '
-  (line-number-current-line
-    (
-      (t
-        (:inherit
-          (hl-line default)
-          :foreground "#CBE3E7"
-          :slant normal
-          :weight normal))))
-  '
-  (lsp-face-highlight-read
-    (
-      (t
-        (:foreground
-          "#000000"
-          :background "#7fdc59"
-          :weight normal))))
-  '
-  (lsp-face-highlight-textual
-    (
-      (t
-        (:foreground
-          "#000000"
-          :background "#7fdc59"
-          :weight normal))))
-  '
-  (lsp-face-highlight-write
-    (
-      (t
-        (:foreground
-          "#000000"
-          :background "#7fdc59"
-          :weight normal))))
+  '(lazy-highlight ((t (:background "light green" :foreground "black" :weight normal))))
+  '(line-number ((t (:inherit default :foreground "#565575" :slant normal :weight normal))))
+  '(line-number-current-line ((t (:inherit (hl-line default) :foreground "#CBE3E7" :slant normal :weight normal))))
+  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
   '(magit-diff-added ((t (:extend t :foreground "forest green"))))
-  '
-  (magit-diff-added-highlight
-    ((t (:extend t :background "black" :foreground "green"))))
+  '(magit-diff-added-highlight ((t (:extend t :background "black" :foreground "green"))))
   '(magit-diff-file-heading ((t (:extend t :weight normal))))
-  '
-  (magit-diff-file-heading-highlight
-    ((t (:extend t :background "black" :weight bold))))
-  '
-  (magit-diff-hunk-heading
-    ((t (:extend t :background "#252832" :foreground "yellow4"))))
-  '
-  (magit-diff-hunk-heading-highlight
-    ((t (:extend t :background "black" :foreground "yellow"))))
+  '(magit-diff-file-heading-highlight ((t (:extend t :background "black" :weight bold))))
+  '(magit-diff-hunk-heading ((t (:extend t :background "#252832" :foreground "yellow4"))))
+  '(magit-diff-hunk-heading-highlight ((t (:extend t :background "black" :foreground "yellow"))))
   '(magit-diff-removed ((t (:extend t :foreground "indian red"))))
-  '
-  (magit-diff-removed-highlight
-    ((t (:extend t :background "black" :foreground "red"))))
-  '
-  (mc/region-face
-    ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
-  '
-  (mode-line
-    (
-      (t
-        (:background
-          "#262831"
-          :foreground "#7AA2F7"
-          :overline "#374250"
-          :box nil))))
-  '
-  (mode-line-inactive
-    (
-      (t
-        (:background
-          "#262831"
-          :foreground "#7AA2F7"
-          :overline "#374250"
-          :box nil))))
+  '(magit-diff-removed-highlight ((t (:extend t :background "black" :foreground "red"))))
+  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
+  '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
+  '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
   '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
   '(region ((t (:inverse-video t :foreground nil :background nil))))
   '(show-paren-match ((t (:foreground "green" :weight bold))))
-  '
-  (tab-line
-    (
-      (t
-        (:inherit
-          variable-pitch
-          :background "#1F2335"
-          :foreground "black"))))
-  '
-  (term-color-black
-    ((t (:foreground "#282a36" :background "#6272a4"))))
-  '
-  (term-color-blue
-    ((t (:foreground "#bd93f9" :background "#bd93f9"))))
-  '
-  (term-color-cyan
-    ((t (:foreground "#8be9fd" :background "#8be9fd"))))
-  '
-  (term-color-green
-    ((t (:foreground "#50fa7b" :background "#50fa7b"))))
-  '
-  (term-color-magenta
-    ((t (:foreground "#ff79c6" :background "#ff79c6"))))
-  '
-  (term-color-red
-    ((t (:foreground "#ff5555" :background "#ff5555"))))
-  '
-  (term-color-white
-    ((t (:foreground "#f8f8f2" :background "#656555"))))
-  '
-  (term-color-yellow
-    ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
+  '(tab-line ((t (:inherit variable-pitch :background "#1F2335" :foreground "black"))))
+  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
+  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
+  '(term-color-cyan ((t (:foreground "#8be9fd" :background "#8be9fd"))))
+  '(term-color-green ((t (:foreground "#50fa7b" :background "#50fa7b"))))
+  '(term-color-magenta ((t (:foreground "#ff79c6" :background "#ff79c6"))))
+  '(term-color-red ((t (:foreground "#ff5555" :background "#ff5555"))))
+  '(term-color-white ((t (:foreground "#f8f8f2" :background "#656555"))))
+  '(term-color-yellow ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
   '(term-default-bg-color ((t (:inherit term-color-black))))
   '(term-default-fg-color ((t (:inherit term-color-white))))
   '(tty-menu-enabled-face ((t (:inherit hl-line))))
-  '
-  (tty-menu-selected-face
-    ((t (:inherit eglot-highlight-symbol-face))))
-  '
-  (whitespace-trailing
-    ((t (:background "black" :foreground "#42546A" :weight bold))))
-  '
-  (widget-field
-    ((t (:extend t :background "gray" :foreground "black"))))
+  '(tty-menu-selected-face ((t (:inherit eglot-highlight-symbol-face))))
+  '(whitespace-trailing ((t (:background "black" :foreground "#42546A" :weight bold))))
+  '(widget-field ((t (:extend t :background "gray" :foreground "black"))))
   '(window-divider ((t (:foreground "green"))))
   '(xref-match ((t (:inherit region))))
-  '
-  (yas-field-highlight-face
-    (
-      (t
-        (:foreground
-          "#000000"
-          :background "#7fdc59"
-          :weight normal)))))
+  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
 
 
 ;; (set-face-attribute 'region nil :inverse-video 't)
@@ -2911,7 +2741,9 @@ If buffer-or-name is nil return current buffer's mode."
 (use-package
   elisp-autofmt
   :hook (emacs-lisp-mode . elisp-autofmt-mode)
-  :config (setq elisp-autofmt-style 'fixed))
+  :config
+  (setq elisp-autofmt-style 'fixed)
+  (setq elisp-autofmt-format-quoted nil))
 
 (use-package
   symbol-overlay
