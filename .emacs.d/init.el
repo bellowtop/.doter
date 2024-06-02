@@ -958,6 +958,9 @@
 ;;       (slot . 0))))
 
 
+;; for my-elisp-eldoc-var-docstring-with-value
+;; (require 'my-utils)
+
 (use-package
   eldoc
   :config
@@ -966,9 +969,7 @@
   ;; show more doc in elisp mode
   (add-hook
     'emacs-lisp-mode-hook
-    '
-    (lambda () (add-to-list 'eldoc-documentation-functions 'elisp-eldoc-var-docstring-with-value)))
-  )
+    '(lambda () (add-to-list 'eldoc-documentation-functions 'elisp-eldoc-var-docstring-with-value))))
 
 (use-package
   eldoc-box
@@ -1642,8 +1643,7 @@
 
 
 (defun my-elisp-mode-hook ()
-  (setq indent-tabs-mode nil)
-  )
+  (setq indent-tabs-mode nil))
 
 (add-hook 'emacs-lisp-mode-hook 'my-elisp-mode-hook)
 

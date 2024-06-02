@@ -46,4 +46,33 @@
       (buffer-string))))
 
 
+
+;; ;; copy from elisp-eldoc-var-docstring-with-value
+;; (defun my-elisp-eldoc-var-docstring-with-value (callback &rest _)
+;;   (when-let ((cs (elisp--current-symbol)))
+;;     (when (and (boundp cs)
+;; 	           ;; nil and t are boundp!
+;; 	           (not (null cs))
+;; 	           (not (eq cs t)))
+;;       (funcall callback
+;; 	           (format "%s"
+;; 		               (let* ((doc
+;;                                (describe-function cs)
+;;                                ;; (documentation-property
+;;                                ;;      cs 'variable-documentation t)
+;;                                )
+;; 			                  (more (- (length doc) 1000)))
+;;                          (message "doc: %s" doc)
+;; 			             (concat (propertize
+;; 				                  (string-limit (if (string= doc "nil")
+;; 						                            "Undocumented."
+;; 						                          doc)
+;; 					                            1000)
+;; 				                  'face 'font-lock-doc-face)
+;; 				                 (when (> more 0)
+;; 				                   (format "[%sc more]" more)))))
+;; 	           :thing cs
+;; 	           :face 'font-lock-variable-name-face))))
+
+
 (provide 'my-utils)

@@ -12,7 +12,7 @@
 (setq my-term-popup-engine 'corfu-terminal)
 (setq my-term-popup-show-p nil)
 
-(defun my-term-popup-close (&optional arg)
+(defun my-term-popup-close (&rest args)
   (interactive)
   (corfu--popup-hide)
   (if (window-parameter (get-buffer-window) 'popon-list)
@@ -99,6 +99,9 @@
 
 (advice-add 'scroll-half-page-up :after 'my-term-popup-close)
 (advice-add 'scroll-half-page-down :after 'my-term-popup-close)
+
+(advice-add 'xref-go-back :after 'my-term-popup-close)
+(advice-add 'xref-go-forward :after 'my-term-popup-close)
 
 
 
