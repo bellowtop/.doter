@@ -948,19 +948,32 @@
   (xterm-mouse-mode 1))
 
 
-(setq display-buffer-alist
-  `
-  (
-    ("*eldoc*"
-      (display-buffer-in-side-window)
-      (side . bottom)
-      (window-height . 0.16)
-      (slot . 0))))
+;; (setq display-buffer-alist
+;;   `
+;;   (
+;;     ("*eldoc*"
+;;       (display-buffer-in-side-window)
+;;       (side . bottom)
+;;       (window-height . 0.16)
+;;       (slot . 0))))
 
 
-(setq eldoc-idle-delay 0.2)
-(setq eldoc-box-clear-with-C-g t)
-(require 'eldoc-box)
+(use-package
+  eldoc
+  :config
+  (setq eldoc-echo-area-use-multiline-p 1)
+  (setq eldoc-idle-delay 0.2)
+  ;; show more doc in elisp mode
+  (add-hook
+    'emacs-lisp-mode-hook
+    '
+    (lambda () (add-to-list 'eldoc-documentation-functions 'elisp-eldoc-var-docstring-with-value)))
+  )
+
+(use-package
+  eldoc-box
+  :config (setq eldoc-box-clear-with-C-g t)
+  :commands (eldoc-box-help-at-point))
 
 
 (require 'custom-util-funcs)
@@ -1629,7 +1642,8 @@
 
 
 (defun my-elisp-mode-hook ()
-  (setq indent-tabs-mode nil))
+  (setq indent-tabs-mode nil)
+  )
 
 (add-hook 'emacs-lisp-mode-hook 'my-elisp-mode-hook)
 
@@ -2744,6 +2758,7 @@ If buffer-or-name is nil return current buffer's mode."
   :config
   (setq elisp-autofmt-style 'fixed)
   (setq elisp-autofmt-format-quoted nil))
+
 
 (use-package
   symbol-overlay

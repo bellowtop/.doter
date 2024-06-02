@@ -131,15 +131,6 @@
   :after eglot
   :config (eglot-booster-mode))
 
-(use-package eldoc
-  :ensure nil
-  :defer t
-  :config
-  (setq eldoc-echo-area-use-multiline-p 1))
-
-(use-package eldoc-box
-  :commands (eldoc-box-eglot-help-at-point))
-
 
 (provide 'init-eglot)
 
