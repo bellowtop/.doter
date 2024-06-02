@@ -9,7 +9,9 @@
 (advice-add #'keyboard-quit :before #'popon-kill-all)
 
 
-(setq my-term-popup-engine 'corfu-terminal)
+;; (setq my-term-popup-engine 'corfu-terminal)
+(setq my-term-popup-engine 'popon)
+
 (setq my-term-popup-show-p nil)
 
 (defun my-term-popup-close (&optional arg)
