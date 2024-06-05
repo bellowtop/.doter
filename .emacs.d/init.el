@@ -189,6 +189,10 @@
 ;; invoke M-x treesit-auto-install-all to install treesit libs to ~/.emacs.d/tree-sitter/
 (use-package treesit-auto :config (global-treesit-auto-mode))
 
+(setq quicklisp-helper
+  (expand-file-name "~/quicklisp/slime-helper.el"))
+(when (file-exists-p quicklisp-helper)
+  (load quicklisp-helper))
 
 (setq inferior-lisp-program (executable-find "sbcl"))
 
@@ -585,7 +589,7 @@
   '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
   '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
   '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
-  '(show-paren-match ((t (:foreground "black" :background "white" :weight bold))))
+  '(show-paren-match ((t (:foreground "red" :background "green" :weight bold))))
   '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
   '(region ((t (:inverse-video t :foreground nil :background nil))))
   '(tab-line ((t (:inherit variable-pitch :background "#1F2335" :foreground "black"))))
@@ -2537,7 +2541,7 @@ If buffer-or-name is nil return current buffer's mode."
   (interactive)
   (ignore-errors
     (set-face-attribute 'show-paren-match nil
-      :foreground "green"
+      :foreground "red"
       :weight 'bold)))
 
 
