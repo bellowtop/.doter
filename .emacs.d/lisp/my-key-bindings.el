@@ -458,7 +458,6 @@
     (define-key map (kbd "M-k") 'gcm-scroll-up)
     (define-key map (kbd "C-;") 'gcm-scroll-down)
     (define-key map (kbd "C-'") 'gcm-scroll-up)
-    (define-key map (kbd "M-o") 'other-window)
     (define-key map (kbd "M-q") 'my-toggle-god-mode)
 
     ;; (define-key map (kbd "M-u") 'upcase-dwim)
@@ -687,7 +686,6 @@
     (define-key map (kbd "h") #'my-backward-char-no-cross-line)
 
     (define-key map (kbd "f") #'avy-goto-word-0)
-    (define-key map (kbd "M-o") #'other-window)
     (define-key map (kbd "M-x") #'my-M-x)
 
     map)
