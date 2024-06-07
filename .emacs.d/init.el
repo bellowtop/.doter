@@ -182,6 +182,7 @@
   (push '(c-mode . c-ts-mode) major-mode-remap-alist)
   (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode)) ;; tell h file to c++-ts-mode
+  (add-to-list 'auto-mode-alist '("\\.ros\\'" . lisp-mode)) ;; tell ros file to lisp mode
   ;; (setq treesit-extra-load-path `( ,(expand-file-name "~/.emacs.d/.local/tree-sitter-grammars") ))
   )
 
@@ -540,6 +541,7 @@
   '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground "white"))))
   '(corfu-default ((t (:inherit default))))
   '(counsel-outline-default ((t (:inherit green))))
+  '(deadgrep-filename-face ((t (:inherit bold :foreground "green"))))
   '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
   '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
   '(diff-added ((t (:extend t :foreground "green" :background "black"))))
@@ -589,9 +591,9 @@
   '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
   '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
   '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
-  '(show-paren-match ((t (:foreground "red" :background "green" :weight bold))))
   '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
   '(region ((t (:inverse-video t :foreground nil :background nil))))
+  '(show-paren-match ((t (:foreground "red" :background "green" :weight bold))))
   '(tab-line ((t (:inherit variable-pitch :background "#1F2335" :foreground "black"))))
   '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
   '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
@@ -969,7 +971,10 @@
   (setq eldoc-idle-delay 0.2)
   ;; show more doc in elisp mode
   (add-hook
-    'emacs-lisp-mode-hook
+   'emacs-lisp-mode-hook
+   '(lambda () (add-to-list 'eldoc-documentation-functions 'elisp-eldoc-var-docstring-with-value)))
+  (add-hook
+    'lisp-mode-hook
     '(lambda () (add-to-list 'eldoc-documentation-functions 'elisp-eldoc-var-docstring-with-value))))
 
 (use-package
@@ -1064,128 +1069,121 @@
 
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-  '
-  (ansi-color-names-vector
-    ["#14141e" "#e84c58" "#35BF88" "#dbac66" "#4ca6e8" "#c79af4" "#6bd9db" "#e6e6e8"])
-  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/.local/autosaves/\\1" t)))
-  '(auto-save-list-file-prefix (expand-file-name "~/.emacs.d/.local/auto-save-list/"))
-  '(backup-directory-alist '((".*" . "~/.emacs.d/.local/backups/")))
-  '
-  (connection-local-criteria-alist
-    '
-    (((:application tramp :machine "MBP-14.local")
-       tramp-connection-local-darwin-ps-profile)
-      ((:application tramp :machine "MacBook-Pro-2.local")
-        tramp-connection-local-darwin-ps-profile)
-      ((:application tramp :protocol "flatpak")
-        tramp-container-connection-local-default-flatpak-profile)
-      ((:application tramp :machine "localhost")
-        tramp-connection-local-darwin-ps-profile)
-      ((:application tramp :machine "MacBook-Pro.local")
-        tramp-connection-local-darwin-ps-profile)
-      ((:application tramp)
-        tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)
-      ((:application eshell)
-        eshell-connection-default-profile)))
-  '
-  (connection-local-profile-alist
-    '
-    ((tramp-container-connection-local-default-flatpak-profile
-       (tramp-remote-path "/app/bin" tramp-default-remote-path "/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin" "/local/bin" "/local/freeware/bin" "/local/gnu/bin" "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin" "/opt/bin" "/opt/sbin" "/opt/local/bin"))
-      (tramp-connection-local-darwin-ps-profile
-        (tramp-process-attributes-ps-args "-acxww" "-o" "pid,uid,user,gid,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state=abcde" "-o" "ppid,pgid,sess,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etime,pcpu,pmem,args")
-        (tramp-process-attributes-ps-format
-          (pid . number)
-          (euid . number)
-          (user . string)
-          (egid . number)
-          (comm . 52)
-          (state . 5)
-          (ppid . number)
-          (pgrp . number)
-          (sess . number)
-          (ttname . string)
-          (tpgid . number)
-          (minflt . number)
-          (majflt . number)
-          (time . tramp-ps-time)
-          (pri . number)
-          (nice . number)
-          (vsize . number)
-          (rss . number)
-          (etime . tramp-ps-time)
-          (pcpu . number)
-          (pmem . number)
-          (args)))
-      (tramp-connection-local-busybox-ps-profile
-        (tramp-process-attributes-ps-args "-o" "pid,user,group,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "stat=abcde" "-o" "ppid,pgid,tty,time,nice,etime,args")
-        (tramp-process-attributes-ps-format
-          (pid . number)
-          (user . string)
-          (group . string)
-          (comm . 52)
-          (state . 5)
-          (ppid . number)
-          (pgrp . number)
-          (ttname . string)
-          (time . tramp-ps-time)
-          (nice . number)
-          (etime . tramp-ps-time)
-          (args)))
-      (tramp-connection-local-bsd-ps-profile
-        (tramp-process-attributes-ps-args "-acxww" "-o" "pid,euid,user,egid,egroup,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state,ppid,pgid,sid,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etimes,pcpu,pmem,args")
-        (tramp-process-attributes-ps-format
-          (pid . number)
-          (euid . number)
-          (user . string)
-          (egid . number)
-          (group . string)
-          (comm . 52)
-          (state . string)
-          (ppid . number)
-          (pgrp . number)
-          (sess . number)
-          (ttname . string)
-          (tpgid . number)
-          (minflt . number)
-          (majflt . number)
-          (time . tramp-ps-time)
-          (pri . number)
-          (nice . number)
-          (vsize . number)
-          (rss . number)
-          (etime . number)
-          (pcpu . number)
-          (pmem . number)
-          (args)))
-      (tramp-connection-local-default-shell-profile
-        (shell-file-name . "/bin/sh")
-        (shell-command-switch . "-c"))
-      (tramp-connection-local-default-system-profile
-        (path-separator . ":")
-        (null-device . "/dev/null"))
-      (eshell-connection-default-profile
-        (eshell-path-env-list))))
-  '(create-lockfiles nil)
-  '(helm-minibuffer-history-key "M-p")
-  '(inhibit-startup-screen t)
-  '(leetcode-prefer-language "cpp")
-  '(leetcode-save-solutions t)
-  '
-  (package-selected-packages
-    '(symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
-  '(pos-tip-background-color "#1d1d2b")
-  '(pos-tip-foreground-color "#d4d4d6")
-  '
-  (projectile-globally-ignored-directories
-    '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
-  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
-  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
-  '(warning-suppress-types '((use-package) (lsp-mode))))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#14141e" "#e84c58" "#35BF88" "#dbac66" "#4ca6e8" "#c79af4" "#6bd9db" "#e6e6e8"])
+ '(auto-save-file-name-transforms '((".*" "~/.emacs.d/.local/autosaves/\\1" t)))
+ '(auto-save-list-file-prefix (expand-file-name "~/.emacs.d/.local/auto-save-list/"))
+ '(backup-directory-alist '((".*" . "~/.emacs.d/.local/backups/")))
+ '(connection-local-criteria-alist
+   '(((:application tramp :machine "MBP-14.local")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "MacBook-Pro-2.local")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :protocol "flatpak")
+      tramp-container-connection-local-default-flatpak-profile)
+     ((:application tramp :machine "localhost")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp :machine "MacBook-Pro.local")
+      tramp-connection-local-darwin-ps-profile)
+     ((:application tramp)
+      tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)
+     ((:application eshell)
+      eshell-connection-default-profile)))
+ '(connection-local-profile-alist
+   '((tramp-container-connection-local-default-flatpak-profile
+      (tramp-remote-path "/app/bin" tramp-default-remote-path "/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin" "/local/bin" "/local/freeware/bin" "/local/gnu/bin" "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin" "/opt/bin" "/opt/sbin" "/opt/local/bin"))
+     (tramp-connection-local-darwin-ps-profile
+      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,uid,user,gid,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state=abcde" "-o" "ppid,pgid,sess,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etime,pcpu,pmem,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (euid . number)
+       (user . string)
+       (egid . number)
+       (comm . 52)
+       (state . 5)
+       (ppid . number)
+       (pgrp . number)
+       (sess . number)
+       (ttname . string)
+       (tpgid . number)
+       (minflt . number)
+       (majflt . number)
+       (time . tramp-ps-time)
+       (pri . number)
+       (nice . number)
+       (vsize . number)
+       (rss . number)
+       (etime . tramp-ps-time)
+       (pcpu . number)
+       (pmem . number)
+       (args)))
+     (tramp-connection-local-busybox-ps-profile
+      (tramp-process-attributes-ps-args "-o" "pid,user,group,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "stat=abcde" "-o" "ppid,pgid,tty,time,nice,etime,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (user . string)
+       (group . string)
+       (comm . 52)
+       (state . 5)
+       (ppid . number)
+       (pgrp . number)
+       (ttname . string)
+       (time . tramp-ps-time)
+       (nice . number)
+       (etime . tramp-ps-time)
+       (args)))
+     (tramp-connection-local-bsd-ps-profile
+      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,euid,user,egid,egroup,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state,ppid,pgid,sid,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etimes,pcpu,pmem,args")
+      (tramp-process-attributes-ps-format
+       (pid . number)
+       (euid . number)
+       (user . string)
+       (egid . number)
+       (group . string)
+       (comm . 52)
+       (state . string)
+       (ppid . number)
+       (pgrp . number)
+       (sess . number)
+       (ttname . string)
+       (tpgid . number)
+       (minflt . number)
+       (majflt . number)
+       (time . tramp-ps-time)
+       (pri . number)
+       (nice . number)
+       (vsize . number)
+       (rss . number)
+       (etime . number)
+       (pcpu . number)
+       (pmem . number)
+       (args)))
+     (tramp-connection-local-default-shell-profile
+      (shell-file-name . "/bin/sh")
+      (shell-command-switch . "-c"))
+     (tramp-connection-local-default-system-profile
+      (path-separator . ":")
+      (null-device . "/dev/null"))
+     (eshell-connection-default-profile
+      (eshell-path-env-list))))
+ '(create-lockfiles nil)
+ '(helm-minibuffer-history-key "M-p")
+ '(inhibit-startup-screen t)
+ '(leetcode-prefer-language "cpp")
+ '(leetcode-save-solutions t)
+ '(package-selected-packages
+   '(symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+ '(pos-tip-background-color "#1d1d2b")
+ '(pos-tip-foreground-color "#d4d4d6")
+ '(projectile-globally-ignored-directories
+   '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
+ '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
+ '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
+ '(warning-suppress-types '((use-package) (lsp-mode))))
 
 
 ;; lsp-mode session file
@@ -1493,9 +1491,11 @@
 
 
 (defun my-elisp-mode-hook ()
-  (setq indent-tabs-mode nil))
+  (setq indent-tabs-mode nil)
+  (setq lisp-indent-offset 2))
 
 (add-hook 'emacs-lisp-mode-hook 'my-elisp-mode-hook)
+(add-hook 'lisp-mode-hook 'my-elisp-mode-hook)
 
 
 (require 'smartparens-config)
@@ -2212,6 +2212,7 @@ If buffer-or-name is nil return current buffer's mode."
     "*blink-search"
     "*blink search"
     "*shell*"
+    "*sldb"
     "magit"
     "git-rebase-todo"
     "*Backtrace*"
