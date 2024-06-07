@@ -2949,7 +2949,9 @@ This variable is nil if the current buffer isn't visiting a file.")
     ("N" . my-isearch-backward)
     ("A" . treemacs-create-dir)
     ;; add-hook no work????
-    ("<mouse-1>" . treemacs-single-click-expand-action)))
+    ;; ("<mouse-1>" . treemacs-single-click-expand-action)
+    ("<double-mouse-1>" . treemacs-RET-action)
+    ))
 
 (with-eval-after-load 'treemacs
   (require 'treemacs-nerd-icons)
