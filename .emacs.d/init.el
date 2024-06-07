@@ -1469,6 +1469,8 @@
   (push "*Gofmt" centaur-tabs-excluded-prefixes)
   (push "*Semantic" centaur-tabs-excluded-prefixes)
   (push "*Flymake" centaur-tabs-excluded-prefixes)
+  (push "*slime" centaur-tabs-excluded-prefixes)
+  (push "*inferior-lisp*" centaur-tabs-excluded-prefixes)
   (push "*Customize" centaur-tabs-excluded-prefixes)
   (push "*xref" centaur-tabs-excluded-prefixes)
   (push "*Async-native-compile-log" centaur-tabs-excluded-prefixes)
@@ -2360,6 +2362,7 @@ If buffer-or-name is nil return current buffer's mode."
     "*blink-search"
     "*blink search"
     "*shell*"
+    "*slime"
     "magit"
     "git-rebase-todo"
     "*Backtrace*"
@@ -2422,14 +2425,16 @@ If buffer-or-name is nil return current buffer's mode."
   refresh-current-mode
   ()
   (interactive)
-  (my-ctrl-w-window-keys-minor-mode 1)
   (global-hl-line-mode 0)
 
   (when (my-god-this-is-legendary-buffer (buffer-name))
     ;; (message "%s is legendary buffer" (buffer-name))
     (my-keys-minor-mode 0)
+    (my-ctrl-w-window-keys-minor-mode 0)
     (my-special-buffer-keys-minor-mode 0)
     (cl-return-from refresh-current-mode))
+
+  (my-ctrl-w-window-keys-minor-mode 1)
 
   (if (my-god-this-is-special-buffer (buffer-name))
     (progn
