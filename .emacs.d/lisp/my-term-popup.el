@@ -86,8 +86,7 @@
           (save-excursion (goto-char (point)) (current-column))
           display-width
           lines)))
-    )
-  )
+    ))
 
 (global-set-key (kbd "C-c C-i") #'my-show-popup)
 (global-set-key (kbd "C-c C-j") #'(lambda() (interactive) (my-show-popup (list "hello this is a" "new line" "hhehe"))))
