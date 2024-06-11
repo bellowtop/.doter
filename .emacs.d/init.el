@@ -807,31 +807,20 @@
   (xref-find-definitions-at-mouse last-input-event))
 
 
-(define-key
-  my-keys-minor-mode-map (kbd "C-s g d")
-  #'
-  (lambda ()
-    (interactive)
-    (my-mouse-find-definition-at-mouse-simulate (posn-at-point))))
+(define-key my-keys-minor-mode-map (kbd "C-s g d") #'(lambda ()
+                                                       (interactive)
+                                                       (my-mouse-find-definition-at-mouse-simulate
+                                                         (posn-at-point))))
 (define-key my-keys-minor-mode-map (kbd "C-s g b") #'xref-go-back)
 
-(define-key
-  global-map
-  (kbd "<s-mouse-1>")
-  #'my-mouse-find-definition-at-mouse)
+(define-key global-map (kbd "<s-mouse-1>") #'my-mouse-find-definition-at-mouse)
 (define-key global-map (kbd "<s-mouse-3>") #'xref-go-back)
 
-(define-key
-  global-map
-  (kbd "<M-mouse-1>")
-  #'my-mouse-find-definition-at-mouse)
+(define-key global-map (kbd "<M-mouse-1>") #'my-mouse-find-definition-at-mouse)
 (global-unset-key [M-down-mouse-1])
 
 (define-key global-map (kbd "<M-mouse-3>") #'xref-go-back)
-(define-key
-  global-map
-  (kbd "<C-mouse-3>")
-  #'my-mouse-find-definition-at-mouse)
+(define-key global-map (kbd "<C-mouse-3>") #'xref-find-references-at-mouse)
 (global-unset-key [C-down-mouse-3])
 (global-unset-key [M-down-mouse-3])
 
