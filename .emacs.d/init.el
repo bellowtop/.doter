@@ -2550,6 +2550,18 @@ If buffer-or-name is nil return current buffer's mode."
       :foreground 'unspecified
       :weight 'bold)))
 
+(defun my-enable-symbol-overlay-highlight ()
+  (interactive)
+  (when (derived-mode-p 'emacs-lisp-mode)
+    (ignore-errors
+      (symbol-overlay-mode 1))))
+
+
+(defun my-disable-symbol-overlay-highlight ()
+  (interactive)
+  (ignore-errors
+    (symbol-overlay-mode 0)))
+
 
 (defun my-disable-code-intelligence ()
   (interactive)
@@ -3318,6 +3330,7 @@ _o_: other-window
             (lambda ()
               (when (region-active-p)
                 (remove-all-highlight)
+                (my-disable-symbol-overlay-highlight)
                 (my-disable-paren-highlight)
                 (my-disable-eglot-highlight))))))
 
@@ -3346,6 +3359,7 @@ _o_: other-window
     (progn
       ;; (message "not selected-region-active mode")
       (my-enable-eglot-highlight)
+      (my-enable-symbol-overlay-highlight)
       (my-enable-paren-highlight))))
 ;;;;
 (setq selected-region-active-mode-hook
