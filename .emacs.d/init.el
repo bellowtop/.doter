@@ -1239,8 +1239,9 @@
   :delight
   :config
   (ace-window-display-mode 1)
-  (setq aw-keys '(?h ?j ?k ?l ?a ?s ?d ?f ?g))
-  :bind (("M-`" . #'ace-window)))
+  (setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?0))
+  ;; :bind (("M-`" . #'ace-window))
+  )
 
 ;; alternatively, use Meta-<left> Meta-<right> to move cursor to window
 ;; for iTerms2 user, disable alt-> alt-< to send alt-f alt-b in `profile->keys`
@@ -1724,8 +1725,11 @@ respectively."
 (defun my-projectile-find-file ()
   (interactive)
   ;; (helm-projectile-find-file)
-  ;; (projectile-find-file)
-  (blink-search))
+  (projectile-find-file)
+  ;; (progn
+  ;;   (blink-search-restart-process)
+  ;;   (blink-search))
+  )
 
 
 (advice-add 'my-M-x :before (lambda (&rest r) (refresh-current-mode))
@@ -1869,7 +1873,6 @@ respectively."
 (global-set-key (kbd "C-k") #'my-delete-to-end)
 
 (global-set-key (kbd "<RET>") #'newline-and-indent)
-(global-set-key (kbd "M-o") #'other-window)
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -2718,34 +2721,21 @@ This variable is nil if the current buffer isn't visiting a file.")
   ;; (set-cursor-color (if (or (bound-and-true-p god-local-mode) buffer-read-only) "red" "red"))
   ;; (blink-cursor-mode (if (or (bound-and-true-p god-local-mode) buffer-read-only) -1 -1))
   (setq cursor-type
-    (if (bound-and-true-p god-local-mode)
-      'box
-      'box))
+    (if (bound-and-true-p god-local-mode) 'box 'box))
   (set-cursor-color
-    (if (bound-and-true-p god-local-mode)
-      "red"
-      "red"))
+    (if (bound-and-true-p god-local-mode) "red" "red"))
   (blink-cursor-mode
-    (if (bound-and-true-p god-local-mode)
-      -1
-      -1))
+    (if (bound-and-true-p god-local-mode) -1 -1))
   ;; )
   ;; (setq cursor-type (if (or god-local-mode buffer-read-only) 'box 'bar))
   (if (bound-and-true-p god-local-mode)
     (progn
-      (set-face-attribute 'hl-line nil
-        :foreground 'unspecified
-        :background "#33485e")
-      (set-face-attribute 'line-number-current-line nil
-        :foreground "white"
-        :background "#33485e")
+      (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#33485e")
+      (set-face-attribute 'line-number-current-line nil :foreground "white" :background "#33485e")
       (when (display-graphic-p)
-        (set-face-attribute 'window-divider nil
-          :foreground window-divider-right-color)
-        (set-face-attribute 'window-divider-first-pixel nil
-          :foreground window-divider-right-color)
-        (set-face-attribute 'window-divider-last-pixel nil
-          :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider-first-pixel nil :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider-last-pixel nil :foreground window-divider-right-color)
         ;; (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
         ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
         ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#262831" :foreground "#7AA2F7")
@@ -2762,20 +2752,14 @@ This variable is nil if the current buffer isn't visiting a file.")
       ;; (set-face-foreground 'vertical-border "#374250")
       )
     (progn
-      (set-face-attribute 'line-number-current-line nil
-        :foreground "black"
-        :background "#7fdc59")
+      (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
       (when (my-god-this-is-normal-editor-buffer (buffer-name))
-        (set-face-attribute 'hl-line nil
-          :background (face-background 'default)))
+        (set-face-attribute 'hl-line nil :background (face-background 'default)))
       ;; (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
       (when (display-graphic-p)
-        (set-face-attribute 'window-divider nil
-          :foreground window-divider-right-color)
-        (set-face-attribute 'window-divider-first-pixel nil
-          :foreground window-divider-right-color)
-        (set-face-attribute 'window-divider-last-pixel nil
-          :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider-first-pixel nil :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider-last-pixel nil :foreground window-divider-right-color)
         ;; (set-face-attribute 'mode-line nil          :background "#7fdc59" :foreground "black" :overline "green"   :box nil) ;; draw a line above mode-line
         ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
         ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#7AA2F7" :foreground "black")

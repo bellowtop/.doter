@@ -9,8 +9,8 @@
 (advice-add #'keyboard-quit :before #'popon-kill-all)
 
 
-(setq my-term-popup-engine 'corfu-terminal)
-;; (setq my-term-popup-engine 'popon)
+;; (setq my-term-popup-engine 'corfu-terminal)
+(setq my-term-popup-engine 'popon)
 
 (setq my-term-popup-show-p nil)
 
@@ -63,30 +63,36 @@
 
     (if (eq my-term-popup-engine 'popon)
       ;; implemented using popon
-      (popon-create
-        (string-join lines "\n")
-        (cons 0
-          (+ (cdr (popon-x-y-at-pos (point))) 1))
-        (get-buffer-window)
-        (current-buffer))
+      (show-popup-with-popon lines display-width)
       ;; implemented using corfu-terminal, I think it's more stable
-      (progn
-        (setq lines (cl-loop for line in lines
-                      do (message "line width: %s" (length line))
-                      collect (cond
-                                ((> (length line) display-width)
-                                  (substring-no-properties line 0 display-width))
-                                ((< (length line) display-width)
-                                  (concat line (make-string (- display-width (length line)) ?\s)))
-                                (t line))))
-        ;; (message "lines length: %s" (length lines))
-        ;; (loop for line in lines do (message "line width: %s" (length line)))
-        (corfu--popup-show
-          (posn-at-point)
-          (save-excursion (goto-char (point)) (current-column))
-          display-width
-          lines)))
+      (show-popup-with-corfu-terminal lines display-width))
     ))
+
+(defun show-popup-with-popon(lines display-width)
+  (popon-create
+    (string-join lines "\n")
+    (cons 0
+      (+ (cdr (popon-x-y-at-pos (point))) 1))
+    (get-buffer-window)
+    (current-buffer)))
+
+(defun show-popup-with-corfu-terminal(lines display-width)
+  (progn
+    (setq lines (cl-loop for line in lines
+                  do (message "line width: %s" (length line))
+                  collect (cond
+                            ((> (length line) display-width)
+                              (substring-no-properties line 0 display-width))
+                            ((< (length line) display-width)
+                              (concat line (make-string (- display-width (length line)) ?\s)))
+                            (t line))))
+    (message "after truncate, lines length: %s, display-width: %s" (length lines) display-width)
+    (cl-loop for line in lines do (message "line width: %s" (length line)))
+    (corfu--popup-show
+      (posn-at-point)
+      (save-excursion (goto-char (point)) (current-column))
+      display-width
+      lines)))
 
 (global-set-key (kbd "C-c C-i") #'my-show-popup)
 (global-set-key (kbd "C-c C-j") #'(lambda() (interactive) (my-show-popup (list "hello this is a" "new line" "hhehe"))))
