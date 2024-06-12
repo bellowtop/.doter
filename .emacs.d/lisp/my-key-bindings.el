@@ -64,10 +64,17 @@
   If a region is already selected when calling this command, only move
   the cursor by ARG lines."
   (interactive "p")
-  (when (not (use-region-p))
+  (if (use-region-p)
+    (let ((beg (region-beginning))
+           (end (region-end)))
+      (goto-char beg)
+      (beginning-of-line)
+      (set-mark-command nil)
+      (goto-char end)
+      (end-of-line))
     (forward-line 0)
-    (set-mark-command nil))
-  (forward-line arg))
+    (set-mark-command nil)
+    (forward-line arg)))
 
 
 (defun my-join-lines (arg)
