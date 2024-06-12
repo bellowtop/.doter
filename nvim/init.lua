@@ -98,8 +98,9 @@ require('packer').startup(function(use)
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
 
-  use 'hrsh7th/cmp-vsnip'
-  use 'hrsh7th/vim-vsnip'
+  -- use 'hrsh7th/cmp-vsnip'
+  -- use 'hrsh7th/vim-vsnip'
+  use 'L3MON4D3/LuaSnip'
 
   use 'ziglang/zig.vim'
 
@@ -860,6 +861,7 @@ require 'nt-cpp-tools'.setup({
 --
 --
 local cmp = require'cmp'
+local luasnip = require'luasnip'
 
 
 local has_words_before = function()
@@ -904,7 +906,8 @@ cmp.setup({
   snippet = {
     -- REQUIRED - you must specify a snippet engine
     expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      luasnip.lsp_expand(args.body)
+      -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
     end,
   },
   mapping = {
@@ -927,10 +930,10 @@ cmp.setup({
 
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'vsnip' }, -- For vsnip users.
-  }, {
+    { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
+    -- { name = 'vsnip' }, -- For vsnip users.
   })
 })
 
