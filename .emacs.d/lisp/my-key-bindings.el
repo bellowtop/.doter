@@ -454,7 +454,7 @@
     (define-key map (kbd "C-c v") 'set-rectangular-region-anchor)
     (define-key map (kbd "C-c C-v") 'set-rectangular-region-anchor)
 
-    (define-key map (kbd "C-c C-c") 'my-comment-region-or-line)
+    (define-key map (kbd "M-/") 'my-comment-region-or-line)
 
     (define-key map (kbd "C-c C-o") 'my-occur)
     (define-key map (kbd "C-c C-s") 'my-rg-at-point)
@@ -608,28 +608,27 @@
     ;; (define-key god-local-mode-map (kbd "q x") #'delete-window)         ;; delete this window
     (define-key god-local-mode-map (kbd "q q") #'my-quit-other-window)  ;; delete other window
 
-    (define-key god-local-mode-map (kbd "M-o o") #'ace-window)
-    (define-key god-local-mode-map (kbd "M-o M-o") #'ace-window)
-    (define-key god-local-mode-map (kbd "M-o l") #'windmove-right)
-    (define-key god-local-mode-map (kbd "M-o h") #'windmove-left)
-    (define-key god-local-mode-map (kbd "M-o k") #'windmove-up)
-    (define-key god-local-mode-map (kbd "M-o j") #'windmove-down)
-    (define-key god-local-mode-map (kbd "M-o v") #'split-window-right)
-    (define-key god-local-mode-map (kbd "M-o s") #'split-window-below)
-    (define-key god-local-mode-map (kbd "M-o t") #'transpose-frame)
-    (define-key god-local-mode-map (kbd "M-o x") #'delete-window)         ;; delete this window
-    (define-key god-local-mode-map (kbd "M-o d") #'delete-other-windows)  ;; delete other window
-    (define-key god-local-mode-map (kbd "M-o q") #'other-window)
+    (define-key god-local-mode-map (kbd "C-w o") #'ace-window)
+    (define-key god-local-mode-map (kbd "C-w l") #'windmove-right)
+    (define-key god-local-mode-map (kbd "C-w h") #'windmove-left)
+    (define-key god-local-mode-map (kbd "C-w k") #'windmove-up)
+    (define-key god-local-mode-map (kbd "C-w j") #'windmove-down)
+    (define-key god-local-mode-map (kbd "C-w v") #'split-window-right)
+    (define-key god-local-mode-map (kbd "C-w s") #'split-window-below)
+    (define-key god-local-mode-map (kbd "C-w t") #'transpose-frame)
+    (define-key god-local-mode-map (kbd "C-w x") #'delete-window)         ;; delete this window
+    (define-key god-local-mode-map (kbd "C-w d") #'delete-other-windows)  ;; delete other window
+    (define-key god-local-mode-map (kbd "C-w q") #'other-window)
 
-    (define-key god-local-mode-map (kbd "M-o ]") #'my-enlarge-half-width)
-    (define-key god-local-mode-map (kbd "M-o [") #'my-shrink-half-width)
-    (define-key god-local-mode-map (kbd "M-o =") #'my-enlarge-half-height)
-    (define-key god-local-mode-map (kbd "M-o -") #'my-shrink-half-height)
+    (define-key god-local-mode-map (kbd "C-w ]") #'my-enlarge-half-width)
+    (define-key god-local-mode-map (kbd "C-w [") #'my-shrink-half-width)
+    (define-key god-local-mode-map (kbd "C-w =") #'my-enlarge-half-height)
+    (define-key god-local-mode-map (kbd "C-w -") #'my-shrink-half-height)
 
-    (define-key god-local-mode-map (kbd "M-o C-l") #'windmove-right)
-    (define-key god-local-mode-map (kbd "M-o C-h") #'windmove-left)
-    (define-key god-local-mode-map (kbd "M-o C-k") #'windmove-up)
-    (define-key god-local-mode-map (kbd "M-o C-j") #'windmove-down)
+    (define-key god-local-mode-map (kbd "C-w C-l") #'windmove-right)
+    (define-key god-local-mode-map (kbd "C-w C-h") #'windmove-left)
+    (define-key god-local-mode-map (kbd "C-w C-k") #'windmove-up)
+    (define-key god-local-mode-map (kbd "C-w C-j") #'windmove-down)
 
     (define-key god-local-mode-map (kbd ", w") #'my-save-buffer)
     (define-key god-local-mode-map (kbd ", b") #'flip-buffer-to-window)
@@ -679,12 +678,8 @@
 
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
-  :init-value t
+  :init-value nil
   :lighter " my-keys")
-
-;; Active my keys minor mode
-(my-keys-minor-mode 1)
-
 
 
 
@@ -706,37 +701,36 @@
   "my-special-buffer-keys-minor-mode keymap.")
 (define-minor-mode my-special-buffer-keys-minor-mode
   "A minor mode add some bindings for special-buffers."
-  :init-value t
+  :init-value nil
   :lighter " my-special-buffer-keys")
 
 
 
 (defvar my-ctrl-w-window-keys-minor-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "M-o o") #'ace-window)
-    (define-key map (kbd "M-o M-o") #'ace-window)
-    (define-key map (kbd "M-o l") #'windmove-right)
-    (define-key map (kbd "M-o h") #'windmove-left)
-    (define-key map (kbd "M-o k") #'windmove-up)
-    (define-key map (kbd "M-o j") #'windmove-down)
-    (define-key map (kbd "M-o Q") #'delete-window)      ;; delete this window
-    (define-key map (kbd "M-o d") #'delete-other-windows)  ;; delete other window
-    (define-key map (kbd "M-o v") #'split-window-right)
-    (define-key map (kbd "M-o s") #'split-window-below)
-    (define-key map (kbd "M-o t") #'transpose-frame)
-    (define-key map (kbd "M-o w") #'other-window)
+    (define-key map (kbd "C-w o") #'ace-window)
+    (define-key map (kbd "C-w l") #'windmove-right)
+    (define-key map (kbd "C-w h") #'windmove-left)
+    (define-key map (kbd "C-w k") #'windmove-up)
+    (define-key map (kbd "C-w j") #'windmove-down)
+    (define-key map (kbd "C-w Q") #'delete-window)      ;; delete this window
+    (define-key map (kbd "C-w d") #'delete-other-windows)  ;; delete other window
+    (define-key map (kbd "C-w v") #'split-window-right)
+    (define-key map (kbd "C-w s") #'split-window-below)
+    (define-key map (kbd "C-w t") #'transpose-frame)
+    (define-key map (kbd "C-w w") #'other-window)
 
-    (define-key map (kbd "M-o ]") #'my-enlarge-half-width)
-    (define-key map (kbd "M-o [") #'my-shrink-half-width)
-    (define-key map (kbd "M-o =") #'my-enlarge-half-height)
-    (define-key map (kbd "M-o -") #'my-shrink-half-height)
+    (define-key map (kbd "C-w ]") #'my-enlarge-half-width)
+    (define-key map (kbd "C-w [") #'my-shrink-half-width)
+    (define-key map (kbd "C-w =") #'my-enlarge-half-height)
+    (define-key map (kbd "C-w -") #'my-shrink-half-height)
 
-    (define-key map (kbd "M-o C-l") #'windmove-right)
-    (define-key map (kbd "M-o C-h") #'windmove-left)
-    (define-key map (kbd "M-o C-k") #'windmove-up)
-    (define-key map (kbd "M-o C-j") #'windmove-down)
+    (define-key map (kbd "C-w C-l") #'windmove-right)
+    (define-key map (kbd "C-w C-h") #'windmove-left)
+    (define-key map (kbd "C-w C-k") #'windmove-up)
+    (define-key map (kbd "C-w C-j") #'windmove-down)
 
-    (define-key map (kbd "M-o ,") #'flip-buffer-to-window)
+    (define-key map (kbd "C-w ,") #'flip-buffer-to-window)
 
     map)
   "my-ctrl-w-window-keys-minor-mode keymap.")
