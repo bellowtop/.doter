@@ -182,7 +182,7 @@
   (push '(c-mode . c-ts-mode) major-mode-remap-alist)
   (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
   (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode)) ;; tell h file to c++-ts-mode
-  (add-to-list 'auto-mode-alist '("\\.ros\\'" . lisp-mode)) ;; tell ros file to lisp mode
+  (add-to-list 'auto-mode-alist '("\\.ros\\'" . lisp-mode)) ;; tell ros file to emacs lisp mode
   ;; (setq treesit-extra-load-path `( ,(expand-file-name "~/.emacs.d/.local/tree-sitter-grammars") ))
   )
 
@@ -190,12 +190,33 @@
 ;; invoke M-x treesit-auto-install-all to install treesit libs to ~/.emacs.d/tree-sitter/
 (use-package treesit-auto :config (global-treesit-auto-mode))
 
-(setq quicklisp-helper
-  (expand-file-name "~/quicklisp/slime-helper.el"))
-(when (file-exists-p quicklisp-helper)
-  (load quicklisp-helper))
 
-(setq inferior-lisp-program (executable-find "sbcl"))
+(use-package slime
+  :ensure t
+  :defer t
+  :init
+    (setq inferior-lisp-program (executable-find "sbcl"))
+  :config
+    (slime-setup '(slime-fancy slime-company))
+  :hook
+  (slime-mode . slime-company)
+  (slime-mode . (lambda ()
+                  (load (expand-file-name "~/quicklisp/slime-helper.el"))
+                  (add-to-list 'slime-contribs 'slime-fancy)
+                  (add-to-list 'slime-contribs 'inferior-slime))))
+
+(use-package slime-company
+  :after slime
+  :bind
+  ((:map slime-repl-mode-map
+    ("C-n" . company-select-next)
+    ("C-p" . company-select-previous)
+    ("M-." . company-show-location)
+  ))
+  :config (setq slime-company-completion 'fuzzy
+                slime-company-after-completion 'slime-company-just-one-space))
+
+
 
 
 ;;
@@ -527,91 +548,91 @@
 
 
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
-  '(ahs-definition-face ((t (:inherit ahs-plugin-default-face))))
-  '(ahs-definition-face-unfocused ((t (:inherit ahs-plugin-default-face))))
-  '(ahs-face ((t (:inherit ahs-plugin-default-face))))
-  '(ahs-plugin-default-face ((t (:background "#59dcb7" :foreground "Black"))))
-  '(centaur-tabs-selected ((t (:inherit default :foreground "black" :background "#FFC44C" :weight normal))))
-  '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "black"))))
-  '(centaur-tabs-unselected ((t (:foreground "#969696" :background "#262830"))))
-  '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground "white"))))
-  '(corfu-default ((t (:inherit default))))
-  '(counsel-outline-default ((t (:inherit green))))
-  '(deadgrep-filename-face ((t (:inherit bold :foreground "green"))))
-  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
-  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
-  '(diff-added ((t (:extend t :foreground "green" :background "black"))))
-  '(diff-indicator-added ((t (:extend t :foreground "green" :background "black"))))
-  '(diff-indicator-removed ((t (:extend t :foreground "red" :background "black"))))
-  '(diff-removed ((t (:extend t :foreground "red" :background "black"))))
-  '(doom-modeline-buffer-file ((t (:inherit nil))))
-  '(doom-modeline-buffer-major-mode ((t (:inherit nil))))
-  '(doom-modeline-buffer-minor-mode ((t nil)))
-  '(doom-modeline-buffer-modified ((t (:inherit nil))))
-  '(doom-modeline-buffer-path ((t nil)))
-  '(doom-modeline-god ((t (:foreground "red" :weight bold))))
-  '(doom-modeline-info ((t (:inherit nil))))
-  '(doom-modeline-project-dir ((t (:inherit nil))))
-  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
-  '(doom-modeline-project-root-dir ((t (:inherit nil))))
-  '(eglot-highlight-symbol-face ((t (:background "#59dcb7" :foreground "black" :weight normal))))
-  '(eldoc-box-body ((t (:inherit default))))
-  '(flymake-diagnostic-at-point-posframe-background-face ((t (:background "dark magenta"))))
-  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
-  '(flymake-error-echo ((t nil)))
-  '(flymake-warning ((t (weight normal))))
-  '(flymake-warning-echo ((t nil)))
-  '(helm-selection ((t (:foreground "white" :background "purple"))))
-  '(help-argument-name ((t (:inherit italic :underline nil))))
-  '(highlight ((t (:background "#7ED9B9" :foreground "black" :weight normal))))
-  '(hl-line ((t (:extend t :background "#33485e" :underline nil))))
-  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
-  '(isearch ((t (:background "orange1" :foreground "black" :weight normal :inverse-video nil))))
-  '(ivy-current-match ((t (:inherit region :background nil :foreground nil))))
-  '(ivy-posframe ((t (:background "black"))))
-  '(ivy-posframe-border ((t (:background "green"))))
-  '(lazy-highlight ((t (:background "light green" :foreground "black" :weight normal))))
-  '(line-number ((t (:inherit default :foreground "#565575" :slant normal :weight normal))))
-  '(line-number-current-line ((t (:inherit (hl-line default) :foreground "#CBE3E7" :slant normal :weight normal))))
-  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
-  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
-  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
-  '(magit-diff-added ((t (:extend t :foreground "forest green"))))
-  '(magit-diff-added-highlight ((t (:extend t :background "black" :foreground "green"))))
-  '(magit-diff-file-heading ((t (:extend t :weight normal))))
-  '(magit-diff-file-heading-highlight ((t (:extend t :background "black" :weight bold))))
-  '(magit-diff-hunk-heading ((t (:extend t :background "#252832" :foreground "yellow4"))))
-  '(magit-diff-hunk-heading-highlight ((t (:extend t :background "black" :foreground "yellow"))))
-  '(magit-diff-removed ((t (:extend t :foreground "indian red"))))
-  '(magit-diff-removed-highlight ((t (:extend t :background "black" :foreground "red"))))
-  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
-  '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
-  '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
-  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
-  '(region ((t (:inverse-video t :foreground nil :background nil))))
-  '(show-paren-match ((t (:foreground "red" :background "green" :weight bold))))
-  '(tab-line ((t (:inherit variable-pitch :background "#1F2335" :foreground "black"))))
-  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
-  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
-  '(term-color-cyan ((t (:foreground "#8be9fd" :background "#8be9fd"))))
-  '(term-color-green ((t (:foreground "#50fa7b" :background "#50fa7b"))))
-  '(term-color-magenta ((t (:foreground "#ff79c6" :background "#ff79c6"))))
-  '(term-color-red ((t (:foreground "#ff5555" :background "#ff5555"))))
-  '(term-color-white ((t (:foreground "#f8f8f2" :background "#656555"))))
-  '(term-color-yellow ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
-  '(term-default-bg-color ((t (:inherit term-color-black))))
-  '(term-default-fg-color ((t (:inherit term-color-white))))
-  '(tty-menu-enabled-face ((t (:inherit hl-line))))
-  '(tty-menu-selected-face ((t (:inherit eglot-highlight-symbol-face))))
-  '(whitespace-trailing ((t (:background "black" :foreground "#42546A" :weight bold))))
-  '(widget-field ((t (:extend t :background "gray" :foreground "black"))))
-  '(window-divider ((t (:foreground "green"))))
-  '(xref-match ((t (:inherit region))))
-  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ahs-definition-face ((t (:inherit ahs-plugin-default-face))))
+ '(ahs-definition-face-unfocused ((t (:inherit ahs-plugin-default-face))))
+ '(ahs-face ((t (:inherit ahs-plugin-default-face))))
+ '(ahs-plugin-default-face ((t (:background "#59dcb7" :foreground "Black"))))
+ '(centaur-tabs-selected ((t (:inherit default :foreground "black" :background "#FFC44C" :weight normal))))
+ '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "black"))))
+ '(centaur-tabs-unselected ((t (:foreground "#969696" :background "#262830"))))
+ '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground "white"))))
+ '(corfu-default ((t (:inherit default))))
+ '(counsel-outline-default ((t (:inherit green))))
+ '(deadgrep-filename-face ((t (:inherit bold :foreground "green"))))
+ '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
+ '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+ '(diff-added ((t (:extend t :foreground "green" :background "black"))))
+ '(diff-indicator-added ((t (:extend t :foreground "green" :background "black"))))
+ '(diff-indicator-removed ((t (:extend t :foreground "red" :background "black"))))
+ '(diff-removed ((t (:extend t :foreground "red" :background "black"))))
+ '(doom-modeline-buffer-file ((t (:inherit nil))))
+ '(doom-modeline-buffer-major-mode ((t (:inherit nil))))
+ '(doom-modeline-buffer-minor-mode ((t nil)))
+ '(doom-modeline-buffer-modified ((t (:inherit nil))))
+ '(doom-modeline-buffer-path ((t nil)))
+ '(doom-modeline-god ((t (:foreground "red" :weight bold))))
+ '(doom-modeline-info ((t (:inherit nil))))
+ '(doom-modeline-project-dir ((t (:inherit nil))))
+ '(doom-modeline-project-parent-dir ((t (:inherit nil))))
+ '(doom-modeline-project-root-dir ((t (:inherit nil))))
+ '(eglot-highlight-symbol-face ((t (:background "#59dcb7" :foreground "black" :weight normal))))
+ '(eldoc-box-body ((t (:inherit default))))
+ '(flymake-diagnostic-at-point-posframe-background-face ((t (:background "dark magenta"))))
+ '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
+ '(flymake-error-echo ((t nil)))
+ '(flymake-warning ((t (weight normal))))
+ '(flymake-warning-echo ((t nil)))
+ '(helm-selection ((t (:foreground "white" :background "purple"))))
+ '(help-argument-name ((t (:inherit italic :underline nil))))
+ '(highlight ((t (:background "#7ED9B9" :foreground "black" :weight normal))))
+ '(hl-line ((t (:extend t :background "#33485e" :underline nil))))
+ '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
+ '(isearch ((t (:background "orange1" :foreground "black" :weight normal :inverse-video nil))))
+ '(ivy-current-match ((t (:inherit region :background nil :foreground nil))))
+ '(ivy-posframe ((t (:background "black"))))
+ '(ivy-posframe-border ((t (:background "green"))))
+ '(lazy-highlight ((t (:background "light green" :foreground "black" :weight normal))))
+ '(line-number ((t (:inherit default :foreground "#565575" :slant normal :weight normal))))
+ '(line-number-current-line ((t (:inherit (hl-line default) :foreground "#CBE3E7" :slant normal :weight normal))))
+ '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+ '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+ '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+ '(magit-diff-added ((t (:extend t :foreground "forest green"))))
+ '(magit-diff-added-highlight ((t (:extend t :background "black" :foreground "green"))))
+ '(magit-diff-file-heading ((t (:extend t :weight normal))))
+ '(magit-diff-file-heading-highlight ((t (:extend t :background "black" :weight bold))))
+ '(magit-diff-hunk-heading ((t (:extend t :background "#252832" :foreground "yellow4"))))
+ '(magit-diff-hunk-heading-highlight ((t (:extend t :background "black" :foreground "yellow"))))
+ '(magit-diff-removed ((t (:extend t :foreground "indian red"))))
+ '(magit-diff-removed-highlight ((t (:extend t :background "black" :foreground "red"))))
+ '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
+ '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
+ '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
+ '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
+ '(region ((t (:inverse-video t :foreground nil :background nil))))
+ '(show-paren-match ((t (:foreground "red" :background "green" :weight bold))))
+ '(tab-line ((t (:inherit variable-pitch :background "#1F2335" :foreground "black"))))
+ '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
+ '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
+ '(term-color-cyan ((t (:foreground "#8be9fd" :background "#8be9fd"))))
+ '(term-color-green ((t (:foreground "#50fa7b" :background "#50fa7b"))))
+ '(term-color-magenta ((t (:foreground "#ff79c6" :background "#ff79c6"))))
+ '(term-color-red ((t (:foreground "#ff5555" :background "#ff5555"))))
+ '(term-color-white ((t (:foreground "#f8f8f2" :background "#656555"))))
+ '(term-color-yellow ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
+ '(term-default-bg-color ((t (:inherit term-color-black))))
+ '(term-default-fg-color ((t (:inherit term-color-white))))
+ '(tty-menu-enabled-face ((t (:inherit hl-line))))
+ '(tty-menu-selected-face ((t (:inherit eglot-highlight-symbol-face))))
+ '(whitespace-trailing ((t (:background "black" :foreground "#42546A" :weight bold))))
+ '(widget-field ((t (:extend t :background "gray" :foreground "black"))))
+ '(window-divider ((t (:foreground "green"))))
+ '(xref-match ((t (:inherit region))))
+ '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
 
 
 ;; (set-face-attribute 'region nil :inverse-video 't)
@@ -630,10 +651,7 @@
 
 ;; fix terminal vertical-border char gap
 (defun my-change-window-divider ()
-  (let
-    (
-      (display-table
-        (or buffer-display-table standard-display-table)))
+  (let ((display-table (or buffer-display-table standard-display-table)))
     (set-display-table-slot display-table 5 ?│)
     (set-window-display-table (selected-window) display-table)))
 
@@ -651,10 +669,7 @@
 
 
 (defun find-overlays-specifying (prop pos)
-  (let
-    (
-      (overlays (overlays-at pos))
-      found)
+  (let ((overlays (overlays-at pos)) found)
     (while overlays
       (let ((overlay (car overlays)))
         (if (overlay-get overlay prop)
@@ -664,44 +679,26 @@
 
 (defun highlight-current-line ()
   (interactive)
-  (let
-    (
-      (overlay-highlight
-        (make-overlay
-          (line-beginning-position)
-          (+ 1 (line-end-position)))))
+  (let ((overlay-highlight (make-overlay (line-beginning-position) (+ 1 (line-end-position)))))
     (overlay-put overlay-highlight 'face '(:inverse-video t))
     ;; (overlay-put overlay-highlight 'face '(:inherit hl-line))
     ;; (overlay-put overlay-highlight 'face '(:background "#1b5aa1"))
-    (overlay-put
-      overlay-highlight
-      'my-marker-name-for-line-highlight-overlay
-      t)))
+    (overlay-put overlay-highlight 'my-marker-name-for-line-highlight-overlay t)))
 
 (defun dehighlight-current-line ()
   (interactive)
-  (remove-overlays
-    (line-beginning-position)
-    (+ 1 (line-end-position))
-    'my-marker-name-for-line-highlight-overlay
-    t))
+  (remove-overlays (line-beginning-position)
+    (+ 1 (line-end-position)) 'my-marker-name-for-line-highlight-overlay t))
 
 (defun highlight-or-dehighlight-line ()
   (interactive)
-  (if
-    (find-overlays-specifying
-      'my-marker-name-for-line-highlight-overlay
-      (line-beginning-position))
+  (if (find-overlays-specifying 'my-marker-name-for-line-highlight-overlay (line-beginning-position))
     (dehighlight-current-line)
     (highlight-current-line)))
 
 (defun remove-all-highlight ()
   (interactive)
-  (remove-overlays
-    (point-min)
-    (point-max)
-    'my-marker-name-for-line-highlight-overlay
-    t)
+  (remove-overlays (point-min) (point-max) 'my-marker-name-for-line-highlight-overlay t)
   ;; this truly removes all, not restricted by the name
   ;; (remove-overlays (point-min) (point-max))
   )
@@ -805,6 +802,7 @@
   (interactive)
   (mouse-set-point last-input-event)
   (xref-find-definitions-at-mouse last-input-event))
+
 
 
 (define-key my-keys-minor-mode-map (kbd "C-s g d") #'(lambda ()
@@ -1066,113 +1064,113 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
-   ["#14141e" "#e84c58" "#35BF88" "#dbac66" "#4ca6e8" "#c79af4" "#6bd9db" "#e6e6e8"])
+    ["#14141e" "#e84c58" "#35BF88" "#dbac66" "#4ca6e8" "#c79af4" "#6bd9db" "#e6e6e8"])
  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/.local/autosaves/\\1" t)))
  '(auto-save-list-file-prefix (expand-file-name "~/.emacs.d/.local/auto-save-list/"))
  '(backup-directory-alist '((".*" . "~/.emacs.d/.local/backups/")))
  '(connection-local-criteria-alist
-   '(((:application tramp :machine "MBP-14.local")
-      tramp-connection-local-darwin-ps-profile)
-     ((:application tramp :machine "MacBook-Pro-2.local")
-      tramp-connection-local-darwin-ps-profile)
-     ((:application tramp :protocol "flatpak")
-      tramp-container-connection-local-default-flatpak-profile)
-     ((:application tramp :machine "localhost")
-      tramp-connection-local-darwin-ps-profile)
-     ((:application tramp :machine "MacBook-Pro.local")
-      tramp-connection-local-darwin-ps-profile)
-     ((:application tramp)
-      tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)
-     ((:application eshell)
-      eshell-connection-default-profile)))
+    '(((:application tramp :machine "MBP-14.local")
+        tramp-connection-local-darwin-ps-profile)
+       ((:application tramp :machine "MacBook-Pro-2.local")
+         tramp-connection-local-darwin-ps-profile)
+       ((:application tramp :protocol "flatpak")
+         tramp-container-connection-local-default-flatpak-profile)
+       ((:application tramp :machine "localhost")
+         tramp-connection-local-darwin-ps-profile)
+       ((:application tramp :machine "MacBook-Pro.local")
+         tramp-connection-local-darwin-ps-profile)
+       ((:application tramp)
+         tramp-connection-local-default-system-profile tramp-connection-local-default-shell-profile)
+       ((:application eshell)
+         eshell-connection-default-profile)))
  '(connection-local-profile-alist
-   '((tramp-container-connection-local-default-flatpak-profile
-      (tramp-remote-path "/app/bin" tramp-default-remote-path "/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin" "/local/bin" "/local/freeware/bin" "/local/gnu/bin" "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin" "/opt/bin" "/opt/sbin" "/opt/local/bin"))
-     (tramp-connection-local-darwin-ps-profile
-      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,uid,user,gid,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state=abcde" "-o" "ppid,pgid,sess,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etime,pcpu,pmem,args")
-      (tramp-process-attributes-ps-format
-       (pid . number)
-       (euid . number)
-       (user . string)
-       (egid . number)
-       (comm . 52)
-       (state . 5)
-       (ppid . number)
-       (pgrp . number)
-       (sess . number)
-       (ttname . string)
-       (tpgid . number)
-       (minflt . number)
-       (majflt . number)
-       (time . tramp-ps-time)
-       (pri . number)
-       (nice . number)
-       (vsize . number)
-       (rss . number)
-       (etime . tramp-ps-time)
-       (pcpu . number)
-       (pmem . number)
-       (args)))
-     (tramp-connection-local-busybox-ps-profile
-      (tramp-process-attributes-ps-args "-o" "pid,user,group,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "stat=abcde" "-o" "ppid,pgid,tty,time,nice,etime,args")
-      (tramp-process-attributes-ps-format
-       (pid . number)
-       (user . string)
-       (group . string)
-       (comm . 52)
-       (state . 5)
-       (ppid . number)
-       (pgrp . number)
-       (ttname . string)
-       (time . tramp-ps-time)
-       (nice . number)
-       (etime . tramp-ps-time)
-       (args)))
-     (tramp-connection-local-bsd-ps-profile
-      (tramp-process-attributes-ps-args "-acxww" "-o" "pid,euid,user,egid,egroup,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state,ppid,pgid,sid,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etimes,pcpu,pmem,args")
-      (tramp-process-attributes-ps-format
-       (pid . number)
-       (euid . number)
-       (user . string)
-       (egid . number)
-       (group . string)
-       (comm . 52)
-       (state . string)
-       (ppid . number)
-       (pgrp . number)
-       (sess . number)
-       (ttname . string)
-       (tpgid . number)
-       (minflt . number)
-       (majflt . number)
-       (time . tramp-ps-time)
-       (pri . number)
-       (nice . number)
-       (vsize . number)
-       (rss . number)
-       (etime . number)
-       (pcpu . number)
-       (pmem . number)
-       (args)))
-     (tramp-connection-local-default-shell-profile
-      (shell-file-name . "/bin/sh")
-      (shell-command-switch . "-c"))
-     (tramp-connection-local-default-system-profile
-      (path-separator . ":")
-      (null-device . "/dev/null"))
-     (eshell-connection-default-profile
-      (eshell-path-env-list))))
+    '((tramp-container-connection-local-default-flatpak-profile
+        (tramp-remote-path "/app/bin" tramp-default-remote-path "/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin" "/local/bin" "/local/freeware/bin" "/local/gnu/bin" "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin" "/opt/bin" "/opt/sbin" "/opt/local/bin"))
+       (tramp-connection-local-darwin-ps-profile
+         (tramp-process-attributes-ps-args "-acxww" "-o" "pid,uid,user,gid,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state=abcde" "-o" "ppid,pgid,sess,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etime,pcpu,pmem,args")
+         (tramp-process-attributes-ps-format
+           (pid . number)
+           (euid . number)
+           (user . string)
+           (egid . number)
+           (comm . 52)
+           (state . 5)
+           (ppid . number)
+           (pgrp . number)
+           (sess . number)
+           (ttname . string)
+           (tpgid . number)
+           (minflt . number)
+           (majflt . number)
+           (time . tramp-ps-time)
+           (pri . number)
+           (nice . number)
+           (vsize . number)
+           (rss . number)
+           (etime . tramp-ps-time)
+           (pcpu . number)
+           (pmem . number)
+           (args)))
+       (tramp-connection-local-busybox-ps-profile
+         (tramp-process-attributes-ps-args "-o" "pid,user,group,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "stat=abcde" "-o" "ppid,pgid,tty,time,nice,etime,args")
+         (tramp-process-attributes-ps-format
+           (pid . number)
+           (user . string)
+           (group . string)
+           (comm . 52)
+           (state . 5)
+           (ppid . number)
+           (pgrp . number)
+           (ttname . string)
+           (time . tramp-ps-time)
+           (nice . number)
+           (etime . tramp-ps-time)
+           (args)))
+       (tramp-connection-local-bsd-ps-profile
+         (tramp-process-attributes-ps-args "-acxww" "-o" "pid,euid,user,egid,egroup,comm=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" "-o" "state,ppid,pgid,sid,tty,tpgid,minflt,majflt,time,pri,nice,vsz,rss,etimes,pcpu,pmem,args")
+         (tramp-process-attributes-ps-format
+           (pid . number)
+           (euid . number)
+           (user . string)
+           (egid . number)
+           (group . string)
+           (comm . 52)
+           (state . string)
+           (ppid . number)
+           (pgrp . number)
+           (sess . number)
+           (ttname . string)
+           (tpgid . number)
+           (minflt . number)
+           (majflt . number)
+           (time . tramp-ps-time)
+           (pri . number)
+           (nice . number)
+           (vsize . number)
+           (rss . number)
+           (etime . number)
+           (pcpu . number)
+           (pmem . number)
+           (args)))
+       (tramp-connection-local-default-shell-profile
+         (shell-file-name . "/bin/sh")
+         (shell-command-switch . "-c"))
+       (tramp-connection-local-default-system-profile
+         (path-separator . ":")
+         (null-device . "/dev/null"))
+       (eshell-connection-default-profile
+         (eshell-path-env-list))))
  '(create-lockfiles nil)
  '(helm-minibuffer-history-key "M-p")
  '(inhibit-startup-screen t)
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+    '(slime-company symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
-   '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
+    '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
@@ -1240,7 +1238,7 @@
   :config
   (ace-window-display-mode 1)
   (setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?0))
-  ;; :bind (("M-`" . #'ace-window))
+  :bind (("M-o" . #'ace-window))
   )
 
 ;; alternatively, use Meta-<left> Meta-<right> to move cursor to window
@@ -1309,6 +1307,7 @@
   (push "*blink-search" centaur-tabs-excluded-prefixes)
   (push "*Gofmt" centaur-tabs-excluded-prefixes)
   (push "*Semantic" centaur-tabs-excluded-prefixes)
+  (push "*Completion" centaur-tabs-excluded-prefixes)
   (push "*Annotate" centaur-tabs-excluded-prefixes)
   (push "*vc-diff*" centaur-tabs-excluded-prefixes)
   (push "*Flymake" centaur-tabs-excluded-prefixes)
@@ -2106,20 +2105,23 @@ respectively."
 (advice-add 'avy-goto-word-0 :before
   (lambda (&rest r)
     (my-disable-code-intelligence)
-    (global-hl-line-mode 0))
+    ;; (global-hl-line-mode 0)
+    )
   '((name . "avy-start")))
 
 ;; avy aborted
 (advice-add 'avy-handler-default :before
   (lambda (&rest r)
     (my-enable-code-intelligence)
-    (global-hl-line-mode 1))
+    ;; (global-hl-line-mode 1)
+    )
   '((name . "avy-aborted-end")))
 ;; avy success
 (advice-add 'avy-action-goto :before
   (lambda (&rest r)
     (my-enable-code-intelligence)
-    (global-hl-line-mode 1))
+    ;; (global-hl-line-mode 1)
+    )
   '((name . "avy-success-end")))
 
 
@@ -2223,6 +2225,8 @@ If buffer-or-name is nil return current buffer's mode."
   (list
     "*this-buffer-is-left-alone-without-god-mode-at-all"
     "cfrs-input-mode"
+    "lisp-mode"
+    "slime-mode"
     "minibuffer-mode"
     "deadgrep-edit-mode"))
 
@@ -2241,9 +2245,7 @@ If buffer-or-name is nil return current buffer's mode."
         (lambda (n) (string-prefix-p n this-buffer-mode))
         special-buffer-modes))))
 
-(defun*
-  my-god-this-is-legendary-buffer
-  (bufname)
+(defun* my-god-this-is-legendary-buffer (bufname)
   (interactive)
   ;; (message "buffer-mode type is %s" (type-of (buffer-mode bufname))) ==> symbol
   ;;;; use symbol-name convert symbol to string; And for the reverse, (intern "some-string") to get symbol
@@ -2269,11 +2271,9 @@ If buffer-or-name is nil return current buffer's mode."
       (my-god-this-is-legendary-buffer bufname))))
 
 
-(defun*
-  refresh-current-mode
-  ()
+(defun* refresh-current-mode ()
   (interactive)
-  (global-hl-line-mode 0)
+  (hl-line-mode 0)
 
   (when (my-god-this-is-legendary-buffer (buffer-name))
     ;; (message "%s is legendary buffer" (buffer-name))
@@ -2289,13 +2289,13 @@ If buffer-or-name is nil return current buffer's mode."
       ;; (message "%s is special buffer" (buffer-name))
       (ignore)
       (god-local-mode 0) ;; start local mode
-      (global-hl-line-mode 0)
+      (hl-line-mode 0)
       (my-keys-minor-mode 0)
-      (my-special-buffer-keys-minor-mode 1))
+      (my-special-buffer-keys-minor-mode 0))
     (progn
       ;; (message "%s not a special buffer" (buffer-name))
       (god-local-mode 1) ;; start local mode
-      (global-hl-line-mode 1)
+      (hl-line-mode 1)
       ;; (visual-line-mode 1)
       ;; (global-visual-line-mode 1) ;;
       (setq my-god-mode-is-active-flag t)
@@ -2640,13 +2640,12 @@ If buffer-or-name is nil return current buffer's mode."
 
 (setq hl-line-inhibit-highlighting-for-modes
   '(dired-mode deadgrep-mode deadgrep-edit-mode treemacs-mode))
-(global-hl-line-mode 1)
+
+(global-hl-line-mode 0)
 
 
 (set-face-background 'line-number (face-background 'default))
-(set-face-background
-  'line-number-current-line
-  (face-background 'hl-line))
+(set-face-background 'line-number-current-line (face-background 'hl-line))
 
 
 (defun my-buffer-identification (fmt)
@@ -3262,14 +3261,12 @@ _o_: other-window
   (setq dired-dwim-target t))
 
 (add-hook 'view-mode-hook 'View-exit)
-(add-hook 'view-mode-hook 'my-special-buffer-keys-minor-mode)
+;; (add-hook 'view-mode-hook 'my-special-buffer-keys-minor-mode)
 
 
 ;; Diactive my all special keys for minibuffer
 (add-hook 'minibuffer-setup-hook #'(lambda () (my-keys-minor-mode 0)))
-(add-hook
-  'minibuffer-setup-hook
-  #'(lambda () (my-special-buffer-keys-minor-mode 0)))
+(add-hook 'minibuffer-setup-hook #'(lambda () (my-special-buffer-keys-minor-mode 0)))
 ;; (add-hook 'helm-minibuffer-set-up-hook #'(lambda () (my-special-buffer-keys-minor-mode 0)))
 
 
