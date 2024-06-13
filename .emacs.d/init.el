@@ -1633,6 +1633,8 @@ respectively."
   (add-to-list 'ivy-ignore-buffers "\\*rdm\\*")
   (add-to-list 'ivy-ignore-buffers "\\*Backtrace\\*")
   (add-to-list 'ivy-ignore-buffers "\\*Ibuffer\\*"))
+;; why ensure not work?
+(require 'ivy)
 
 
 (use-package
