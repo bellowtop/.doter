@@ -13,20 +13,10 @@
 ;; (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
 ;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 
-(add-to-list
-  'package-archives
-  '("gnu" . "https://elpa.gnu.org/packages/")
-  t)
-(add-to-list
-  'package-archives
-  '("nongnu" . "https://elpa.nongnu.org/nongnu/")
-  t)
-(add-to-list
-  'package-archives
-  '("melpa" . "https://melpa.org/packages/")
-  t)
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/")
-  t)
+(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
+(add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 
 (package-initialize)
 
@@ -73,16 +63,12 @@
     (start-process "*tic process*" "*Messages*" "tic"
       (expand-file-name terminfo-file))))
 
-(add-hook
-  'eshell-mode-hook
-  '
-  (lambda ()
+(add-hook 'eshell-mode-hook ' (lambda ()
     (setenv "TERM" comint-terminfo-terminal)
     (setenv "PAGER" "cat")))
 
 
-(use-package
-  benchmark-init
+(use-package benchmark-init
   :ensure t
   :config ;; To disable collection of benchmark data after init is done.
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
@@ -96,9 +82,7 @@
 (setq gc-cons-threshold most-positive-fixnum)
 
 ;; Lower threshold back to 8 MiB (default is 800kB)
-(add-hook
-  'emacs-startup-hook
-  (lambda () (setq gc-cons-threshold (* 8192 8192))))
+(add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 8192 8192))))
 
 
 ;; (setq  x-meta-keysym 'super
@@ -117,12 +101,8 @@
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/emacswiki.org"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-(add-to-list
-  'load-path
-  (expand-file-name "~/.emacs.d/lisp/blink-search"))
-(add-to-list
-  'custom-theme-load-path
-  (expand-file-name "~/.emacs.d/lisp"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/blink-search"))
+(add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/lisp"))
 
 
 (defun darker-background-for-sidebar ()
@@ -164,8 +144,7 @@
 ;; you can also put them to ~/.emacs.d/tree-sitter, so without setting the treesit-extra-load-path
 
 
-(use-package
-  treesit
+(use-package treesit
   :demand t
   :custom
   (treesit-font-lock-level 4) ;; skittles highlighting
@@ -330,8 +309,7 @@
 ;; (load-theme 'atom-one-dark t)
 
 
-(use-package
-  doom-themes
+(use-package doom-themes
   :ensure t
   :config
   ;;   (setq doom-themes-enable-bold nil    ; if nil, bold is universally disabled
@@ -424,13 +402,9 @@
 (use-package expand-region :bind (("M-i" . 'er/expand-region)))
 
 
-(advice-add
-  'er/expand-region
-  :before (lambda (&rest r) (my-remove-all-highlight)))
+(advice-add 'er/expand-region :before (lambda (&rest r) (my-remove-all-highlight)))
 
-(advice-add
-  'er/mark-inside-pairs
-  :before (lambda (&rest r) (my-remove-all-highlight)))
+(advice-add 'er/mark-inside-pairs :before (lambda (&rest r) (my-remove-all-highlight)))
 
 
 ;;;;
@@ -486,8 +460,7 @@
   (imenu-list-minor-mode 1)
   (select-window (get-buffer-window (imenu-list-get-buffer-create))))
 
-(use-package
-  imenu-list
+(use-package imenu-list
   :defer t
   :bind
   (
@@ -1804,35 +1777,15 @@ respectively."
 
 (global-set-key [remap scroll-down-command] #'scroll-half-page-down)
 (global-set-key [remap scroll-up-command] #'scroll-half-page-up)
-(define-key
-  global-map [(meta up)]
-  #'
-  (lambda ()
-    (interactive)
-    (scroll-other-window-half-page-down)))
-(define-key
-  global-map [(meta down)]
-  #'
-  (lambda ()
-    (interactive)
-    (scroll-other-window-half-page-up)))
+(define-key global-map [(meta up)] #' (lambda () (interactive) (scroll-other-window-half-page-down)))
+(define-key global-map [(meta down)] #' (lambda () (interactive) (scroll-other-window-half-page-up)))
 
 
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
 
 
-(global-set-key
-  (kbd "<mouse-4>")
-  #'
-  (lambda ()
-    (interactive)
-    (scroll-down 2)))
-(global-set-key
-  (kbd "<mouse-5>")
-  #'
-  (lambda ()
-    (interactive)
-    (scroll-up 2)))
+(global-set-key (kbd "<mouse-4>") #' (lambda () (interactive) (scroll-down 2)))
+(global-set-key (kbd "<mouse-5>") #' (lambda () (interactive) (scroll-up 2)))
 
 
 (defun my-escape-key ()
@@ -1863,17 +1816,16 @@ respectively."
 
 (global-set-key (kbd "<escape>") #'my-escape-key)
 ;; (define-key helm-map (kbd "<escape>") #'helm-keyboard-quit)
-(define-key
-  minibuffer-local-map
-  (kbd "<escape>")
-  #'minibuffer-keyboard-quit)
+(define-key minibuffer-local-map (kbd "<escape>") #'minibuffer-keyboard-quit)
 
 
 ;; must be set as global
 (global-set-key (kbd "C-S-k") #'my-delete-to-beginning)
 (global-set-key (kbd "C-k") #'my-delete-to-end)
+(global-set-key (kbd "C-j") #'save-buffer)
 
 (global-set-key (kbd "<RET>") #'newline-and-indent)
+
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
@@ -1883,8 +1835,7 @@ respectively."
 
 
 (setq default-frame-alist
-  '
-  (
+  '(
     ;; (undecorated . t)  ;;;;会导致所有边框全部消失无法拖动调整窗口大小 需要加上后面两句
     ;; (drag-internal-border . 1)
     ;; (internal-border-width . 5)
@@ -1951,8 +1902,7 @@ respectively."
   (expand-file-name "~/.emacs.d/.local/smex-items.cache"))
 
 
-(defun my/return-t (orig-fun &rest args)
-  t)
+(defun my/return-t (orig-fun &rest args) t)
 (defun my/disable-yornp (orig-fun &rest args)
   (advice-add 'yes-or-no-p :around #'my/return-t)
   (advice-add 'y-or-n-p :around #'my/return-t)
