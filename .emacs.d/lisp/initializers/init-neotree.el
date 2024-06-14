@@ -27,6 +27,7 @@
   ;; (setq neo-window-width (/ (display-pixel-width) 4))
   ;; (setq neo-window-width 45)
   ;; (setq neo-toggle-window-keep-p 't)
+  :hook (neotree-mode . my-special-buffer-keys-minor-mode)
   :bind
   (:map
     neotree-mode-map

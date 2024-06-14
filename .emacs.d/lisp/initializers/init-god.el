@@ -102,29 +102,29 @@
       (my-god-this-is-legendary-buffer bufname))))
 
 
+(setq my-god-mode-is-active-flag nil)
+
 (defun* refresh-current-mode ()
   (interactive)
-  (hl-line-mode 0)
-
-  (when (my-god-this-is-legendary-buffer (buffer-name))
-    ;; (message "%s is legendary buffer" (buffer-name))
-    (my-keys-minor-mode 0)
-    (my-ctrl-w-window-keys-minor-mode 0)
-    (my-special-buffer-keys-minor-mode 0)
-    (cl-return-from refresh-current-mode))
-
-  (my-ctrl-w-window-keys-minor-mode 1)
-
-  (if (my-god-this-is-special-buffer (buffer-name))
-    (progn
-      ;; (message "%s is special buffer" (buffer-name))
-      (ignore)
-      (god-local-mode 0) ;; start local mode
+  (cond
+    ((my-god-this-is-legendary-buffer (buffer-name))
+      ;; (message "%s is legendary buffer" (buffer-name))
+      (my-ctrl-w-window-keys-minor-mode 0)
+      (god-local-mode 0)
       (hl-line-mode 0)
       (my-keys-minor-mode 0)
+      (my-ctrl-w-window-keys-minor-mode 0)
       (my-special-buffer-keys-minor-mode 0))
-    (progn
+    ((my-god-this-is-special-buffer (buffer-name))
+      ;; (message "%s is special buffer" (buffer-name))
+      (my-ctrl-w-window-keys-minor-mode 1)
+      (god-local-mode 0)
+      (hl-line-mode 1)
+      (my-keys-minor-mode 0)
+      (my-special-buffer-keys-minor-mode 1))
+    (t
       ;; (message "%s not a special buffer" (buffer-name))
+      (my-ctrl-w-window-keys-minor-mode 1)
       (god-local-mode 1) ;; start local mode
       (hl-line-mode 1)
       (my-keys-minor-mode 1)
@@ -132,7 +132,7 @@
       ;; (global-visual-line-mode 1) ;;
       (setq my-god-mode-is-active-flag t)
       (my-special-buffer-keys-minor-mode 0))
-    nil))
+    ))
 
 (add-hook 'find-file-hook 'refresh-current-mode)
 

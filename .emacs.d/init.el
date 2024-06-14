@@ -1170,9 +1170,7 @@
 (require 'init-neotree)
 
 
-
 (require 'init-treemacs)
-
 
 
 (require 'init-multi-cursor)
