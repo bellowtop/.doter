@@ -799,16 +799,12 @@
 (require 'init-smartparens)
 
 
-
-(setq blink-search-history-path
-  (expand-file-name
-    (concat user-emacs-directory ".local/" (file-name-as-directory "blink-search") "history.txt")))
-(setq blink-search-db-path
-  (expand-file-name
-    (concat user-emacs-directory ".local/" (file-name-as-directory "blink-search") "blink-search.db")))
-
-
-(require 'blink-search)
+(unless (directory-empty-p (expand-file-name "~/.emacs.d/lisp/blink-search"))
+  (setq blink-search-history-path
+    (expand-file-name (concat user-emacs-directory ".local/blink-search/history.txt")))
+  (setq blink-search-db-path
+    (expand-file-name (concat user-emacs-directory ".local/blink-search/blink-search.db")))
+  (require 'blink-search))
 
 
 (require 'init-ivy)
