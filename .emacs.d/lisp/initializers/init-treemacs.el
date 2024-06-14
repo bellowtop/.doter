@@ -11,6 +11,7 @@
     (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
   (setq treemacs-expand-after-init nil)
   (setq treemacs-width-is-initially-locked nil)
+  (treemacs-follow-mode 0)
 
   (global-set-key (kbd "C-c C-p") treemacs-project-map)
   (global-set-key (kbd "C-c C-w") treemacs-workspace-map)
@@ -50,10 +51,8 @@
   (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
   (add-hook 'treemacs-mode-hook #'dim-treemacs-window-background)
   (add-hook 'treemacs-mode-hook #'change-treemacs-hl-line-mode)
+  (add-hook 'treemacs-mode-hook #'my-special-buffer-keys-minor-mode)
   ;; (add-hook 'treemacs-mode-hook #'my-set-bigger-spacing)
-
-  (treemacs-follow-mode -1)
-
   :bind
   (:map
     treemacs-mode-map
