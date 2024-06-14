@@ -185,6 +185,12 @@
 (personal/catch-tty-ESC)
 
 
+
+(require 'term-cursor)
+(global-term-cursor-mode 1)
+
+
+
 (setq visible-bell t)
 
 
@@ -914,7 +920,6 @@
 (global-set-key (kbd "C-S-k") #'my-delete-to-beginning)
 (global-set-key (kbd "C-k") #'my-delete-to-end)
 (global-set-key (kbd "C-j") #'save-buffer)
-
 (global-set-key (kbd "<RET>") #'newline-and-indent)
 
 
@@ -935,19 +940,17 @@
   (interactive)
   (hs-minor-mode 1)
   (let ((starting-ov-count
-        (length (overlays-in (point-min) (point-max)))))
+          (length (overlays-in (point-min) (point-max)))))
     (if (derived-mode-p 'c++-mode)
-      ; find namespace, go below one line, and then hide
       (save-excursion
         (goto-char (point-min))
         (re-search-forward "namespace.*?{" nil t)
         (next-line)
         (hs-hide-level 1))
       (hs-hide-all))
-    (when
-      (equal
-        (length (overlays-in (point-min) (point-max)))
-        starting-ov-count)
+    (when (equal
+            (length (overlays-in (point-min) (point-max)))
+            starting-ov-count)
       (hs-show-all)
       (recenter))))
 
@@ -1137,111 +1140,11 @@
 (set-face-background 'line-number (face-background 'default))
 (set-face-background 'line-number-current-line (face-background 'hl-line))
 
+(require 'init-modeline)
 
-(defun my-buffer-identification (fmt)
-  (list
-    (propertize fmt 'face (if (let ((window (selected-window)))
-                                (or (eq window (old-selected-window))
-                                  (and (minibuffer-window-active-p (minibuffer-window))
-                                    (with-selected-window (minibuffer-window)
-                                      (eq window (minibuffer-selected-window))))))
-                            (if (bound-and-true-p god-local-mode)
-                              'error
-                              '(:foreground "#7fdc59"))
-                            'mode-line-buffer-id)
-      'mouse-face
-      'mode-line-highlight
-      'local-map
-      mode-line-buffer-identification-keymap)))
-
-;; (setq-default mode-line-buffer-identification
-;;               '(:eval (my-buffer-identification "%12b")))
-
-
-(defvar buffer-filename-with-git-directory nil
-  "Parent directory of the current directory.
-This variable is nil if the current buffer isn't visiting a file.")
-
-(make-variable-buffer-local 'buffer-filename-with-git-directory)
-(put 'buffer-filename-with-git-directory 'permanent-local t)
-(defun set-buffer-filename-with-git-directory ()
-  (when buffer-file-name
-    (setq buffer-filename-with-git-directory
-      (or
-        (when-let* ((buffer-file-truename buffer-file-truename)
-                     (prj (cdr-safe (project-current)))
-                     (prj-parent
-                       (file-name-directory
-                         (directory-file-name (expand-file-name prj)))))
-          (concat (file-relative-name (file-name-directory buffer-file-truename) prj-parent)
-            (file-name-nondirectory buffer-file-truename)))
-        buffer-file-name))))
-
-(add-hook 'find-file-hook 'set-buffer-filename-with-git-directory)
-
-(setq-default mode-line-buffer-identification `(:eval (my-buffer-identification
-                                                        (or buffer-filename-with-git-directory ""))))
-
-
-(require 'term-cursor)
-(global-term-cursor-mode 1)
 
 (setq blink-cursor-blinks 0)
 (setq blink-cursor-interval 0.3)
-
-(setq window-divider-color "#06C668")
-(setq window-divider-right-color "#26282F")
-
-(defun my-god-mode-update-cursor-type ()
-  (setq cursor-type (if (bound-and-true-p god-local-mode) 'box 'box))
-  (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
-  (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
-  (if (bound-and-true-p god-local-mode)
-    (progn
-      (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#33485e")
-      (set-face-attribute 'line-number-current-line nil :foreground "white" :background "#33485e")
-      (when (display-graphic-p)
-        (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
-        (set-face-attribute 'window-divider-first-pixel nil :foreground window-divider-right-color)
-        (set-face-attribute 'window-divider-last-pixel nil :foreground window-divider-right-color)
-        ;; (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
-        ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
-        ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#262831" :foreground "#7AA2F7")
-        )
-      ;; (unless (display-graphic-p)
-      ;;   (set-face-attribute 'mode-line          nil :foreground "black" :background "#00AFFF")
-      ;;   (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
-      ;;   )
-      ;; (setq cursor-type 'bar)
-      ;; (set-cursor-color "red")
-      ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
-      ;; (set-face-attribute 'mode-line nil :background "#38424B")
-      (set-face-foreground 'vertical-border window-divider-color)
-      ;; (set-face-foreground 'vertical-border "#374250")
-      )
-    (progn
-      (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
-      (when (my-god-this-is-normal-editor-buffer (buffer-name))
-        (set-face-attribute 'hl-line nil :background (face-background 'default)))
-      ;; (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
-      (when (display-graphic-p)
-        (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
-        (set-face-attribute 'window-divider-first-pixel nil :foreground window-divider-right-color)
-        (set-face-attribute 'window-divider-last-pixel nil :foreground window-divider-right-color)
-        ;; (set-face-attribute 'mode-line nil          :background "#7fdc59" :foreground "black" :overline "green"   :box nil) ;; draw a line above mode-line
-        ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
-        ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#7AA2F7" :foreground "black")
-        )
-      ;; (unless (display-graphic-p)
-      ;;   (set-face-attribute 'mode-line          nil :foreground "black" :background "cyan")
-      ;;   (set-face-attribute 'mode-line-inactive nil :foreground "#00AFFF" :background "black")
-      ;;   )
-      ;; (setq cursor-type 'bar)
-      ;; (set-cursor-color "red")
-      ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "green" ))
-      ;;(set-face-attribute 'mode-line nil :background "#38424B")
-      ;; (set-face-foreground 'vertical-border "#7fdc59")
-      (set-face-foreground 'vertical-border window-divider-color))))
 
 
 (add-hook 'god-mode-enabled-hook 'my-god-mode-update-cursor-type)
