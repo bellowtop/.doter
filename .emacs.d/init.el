@@ -900,7 +900,7 @@
     (ignore-errors (company-cancel))
     (ignore-errors (remove-all-highlight)))
   (ignore-errors (flymake-start)) ;; but show errors
-  (blink-search-quit)
+  (ignore-errors (blink-search-quit))
   (keyboard-quit)
   (keyboard-quit-context+) ;; from custom-util-funcs.el
   )
