@@ -1,3 +1,4 @@
+(require 'fringe)
 
 (use-package treemacs
   :init
