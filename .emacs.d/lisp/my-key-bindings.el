@@ -422,8 +422,8 @@
 (bind-key* (kbd "C-x C-f") #'my-find-files)
 (bind-key* (kbd "C-x C-k") #'kill-this-buffer)
 (bind-key* (kbd "C-c b") #'my-blink-search)
-(bind-key* (kbd "M-n")  #'my-toggle-er/mark-inside-paren)
-(bind-key* (kbd "M-m")  #'my-toggle-er/mark-outside-paren)
+(bind-key* (kbd "M-m")  #'my-toggle-er/mark-inside-paren)
+(bind-key* (kbd "M-M")  #'my-toggle-er/mark-outside-paren)
 
 
 

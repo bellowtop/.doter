@@ -77,6 +77,7 @@
          my-god-char-forward-and-insert-mode
          my-goto-match-paren
          my-join-lines
+         my-kill-whole-line-or-kill-region
          my-quit-god-mode
          my-replace-char
          my-select-current-line-and-forward-line

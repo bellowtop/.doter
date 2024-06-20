@@ -67,6 +67,7 @@
   (push "*Ilist*" centaur-tabs-excluded-prefixes)
   (push "*Occur*" centaur-tabs-excluded-prefixes)
   (push "*Ibuffer*" centaur-tabs-excluded-prefixes)
+  (push "*hmoccur" centaur-tabs-excluded-prefixes)
   (push "*Ivy" centaur-tabs-excluded-prefixes)
   ;; (centaur-tabs-projectile-buffer-groups)
   (defun centaur-tabs-buffer-groups ()
