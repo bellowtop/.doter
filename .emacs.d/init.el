@@ -229,7 +229,7 @@
  '(ahs-definition-face-unfocused ((t (:inherit ahs-plugin-default-face))))
  '(ahs-face ((t (:inherit ahs-plugin-default-face))))
  '(ahs-plugin-default-face ((t (:background "#59dcb7" :foreground "Black"))))
- '(minibuffer-prompt ((t (:inherit default :foreground "black" :background "#FFC44C" :weight normal))))
+ '(minibuffer-prompt ((t (:inherit default :foreground "white" :background "#1E2127" :weight normal))))
  '(centaur-tabs-selected ((t (:inherit default :foreground "black" :background "#FFC44C" :weight normal))))
  '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "black"))))
  '(centaur-tabs-unselected ((t (:foreground "#969696" :background "#262830"))))
