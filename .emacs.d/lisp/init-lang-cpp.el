@@ -73,6 +73,22 @@ otherwise assumed alphabetic."
 
 
 
+(setq cmake-project-default-build-dir-name "build/")
+(require 'cmake-project)
+
+(defun maybe-cmake-project-mode ()
+  (if (or (file-exists-p "CMakeLists.txt")
+          (file-exists-p (expand-file-name "CMakeLists.txt" (car (project-roots (project-current))))))
+      (cmake-project-mode)))
+
+(add-hook 'c-mode-hook 'maybe-cmake-project-mode)
+(add-hook 'c++-mode-hook 'maybe-cmake-project-mode)
+(add-hook 'cmake-mode-hook 'maybe-cmake-project-mode)
+
+(add-hook 'c-ts-mode-hook 'maybe-cmake-project-mode)
+(add-hook 'c++-ts-mode-hook 'maybe-cmake-project-mode)
+(add-hook 'cmake-ts-mode-hook 'maybe-cmake-project-mode)
+
 
 
 

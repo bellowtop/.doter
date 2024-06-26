@@ -55,6 +55,7 @@
   (push "*Gofmt" centaur-tabs-excluded-prefixes)
   (push "*Semantic" centaur-tabs-excluded-prefixes)
   (push "*Completion" centaur-tabs-excluded-prefixes)
+  (push "*compilation" centaur-tabs-excluded-prefixes)
   (push "*Annotate" centaur-tabs-excluded-prefixes)
   (push "*vc-diff*" centaur-tabs-excluded-prefixes)
   (push "*Flymake" centaur-tabs-excluded-prefixes)

@@ -288,7 +288,8 @@
 
 
 (defun my-god-mode-update-cursor-type ()
-  (setq cursor-type (if (bound-and-true-p god-local-mode) 'bar 'bar))
+  ;; (setq cursor-type (if (bound-and-true-p god-local-mode) 'bar 'bar))
+  (setq cursor-type (if (display-graphic-p) 'bar 'bar))
   (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
   (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
   (if (bound-and-true-p god-local-mode)
