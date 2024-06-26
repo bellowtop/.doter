@@ -12,7 +12,6 @@
 ;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 ;; (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/") t)
 ;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
 (add-to-list 'package-archives '("nongnu" . "https://elpa.nongnu.org/nongnu/") t)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -204,6 +203,26 @@
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 
 
+(defun bury-compile-buffer-if-successful (buffer string)
+  "Bury a compilation buffer if succeeded without warnings "
+  (when (and
+          (buffer-live-p buffer)
+          (string-match "compilation" (buffer-name buffer))
+          (string-match "finished" string)
+          (not
+            (with-current-buffer buffer
+              (goto-char (point-min))
+              (search-forward "warning" nil t))))
+    (run-with-timer 1 nil
+      (lambda (buf)
+        (delete-windows-on buf)
+        (bury-buffer buf)
+        ;; (switch-to-prev-buffer (get-buffer-window buf) 'kill)
+        )
+      buffer)))
+(add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
+
+
 (use-package expand-region :bind (("M-i" . 'er/expand-region)))
 
 
@@ -254,7 +273,7 @@
  '(doom-modeline-project-dir ((t (:inherit nil))))
  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
  '(doom-modeline-project-root-dir ((t (:inherit nil))))
- '(eglot-highlight-symbol-face ((t (:background "#59dcb7" :foreground "black" :weight normal))))
+ '(eglot-highlight-symbol-face ((t (:inherit highlight))))
  '(eldoc-box-body ((t (:inherit default))))
  '(flymake-diagnostic-at-point-posframe-background-face ((t (:background "dark magenta"))))
  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
@@ -1057,7 +1076,7 @@
   (ignore-errors
     (setq eglot-ignored-server-capabilities
       (add-to-list 'eglot-ignored-server-capabilities ':documentHighlightProvider))
-    (set-face-attribute 'eglot-highlight-symbol-face nil :background 'unspecified :foreground 'unspecified)
+    (set-face-attribute 'eglot-highlight-symbol-face nil :inherit nil)
     (set-face-attribute 'flymake-error nil :underline 'unspecified :foreground 'unspecified :background 'unspecified)
     ;; (flymake-mode-off)
     ))
@@ -1067,7 +1086,7 @@
   (ignore-errors
     (setq eglot-ignored-server-capabilities
       (delete ':documentHighlightProvider eglot-ignored-server-capabilities))
-    (set-face-attribute 'eglot-highlight-symbol-face nil :background "#59dcb7" :foreground "black" :weight 'normal)
+    (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'highlight)
     (set-face-attribute 'flymake-error nil :underline t :foreground "DeepPink" :background (face-background 'default))
     ;; (flymake-mode-on)
     ))
