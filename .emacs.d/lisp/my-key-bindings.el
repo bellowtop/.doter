@@ -576,6 +576,7 @@
     (define-key god-local-mode-map (kbd "C-\\") #'my-toggle-eldoc-box-help-at-point)
     (define-key god-local-mode-map (kbd "SPC R") #'my-revert-buffer-no-confirm)
 
+    (define-key god-local-mode-map (kbd "SPC M-f") #'my-projectile-switch-project-find-file)
     (define-key god-local-mode-map (kbd "SPC f") #'my-projectile-find-file)
     (define-key god-local-mode-map (kbd "SPC p") #'my-find-files)
     (define-key god-local-mode-map (kbd "SPC m") #'deadgrep)
