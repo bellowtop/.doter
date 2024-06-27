@@ -19,8 +19,15 @@
 
 
 (setq projectile-completion-system 'ivy)
+
 (defun my-projectile-find-file ()
   (interactive)
+  (projectile-find-file)
+)
+
+(defun my-projectile-switch-project-find-file ()
+  (interactive)
+  (projectile-switch-project)
   (projectile-find-file)
 )
 

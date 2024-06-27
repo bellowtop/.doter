@@ -341,16 +341,6 @@ vim.cmd([[
 -- nvim-telescope
 --
 --
--- reference:
--- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua#L136
-
-vim.api.nvim_set_keymap("n", "<leader>f", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true } )
-vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua require('telescope.builtin').live_grep({layout_strategy='vertical'})<cr>",  { noremap = true } )
-vim.api.nvim_set_keymap("n", "<leader>b", "<cmd>lua require('telescope.builtin').buffers()<cr>",    { noremap = true } )
-vim.api.nvim_set_keymap("n", "<leader>s",   "<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>",    { noremap = true } )
-vim.api.nvim_set_keymap("n", "<leader>p", ":Telescope file_browser<cr>",    { noremap = true } )
-
--- vim.api.nvim_set_keymap("n", "<C-g>",     "<ESC><ESC><ESC>",                                        { noremap = true } )
 
 local actions = require "telescope.actions"
 local telescope_config = require "telescope.config"
@@ -364,11 +354,22 @@ require('telescope').setup{
       i = {
         ["<C-g>"] = actions.close,
         ["<C-c>"] = actions.close,
-        -- ["<C-[>"] = actions.close,
+
+        ["<M-BS>"] = function() vim.api.nvim_input "<c-s-w>" end,
+        ["<C-d>"]  = function() vim.api.nvim_input "<C-o>x" end,
+        ["<C-e>" ] = function() vim.api.nvim_input "<C-o>$" end,
+        ["<C-a>" ] = function() vim.api.nvim_input "<C-o>^" end,
+        ["<C-b>" ] = function() vim.api.nvim_input "<Left>" end,
+        ["<C-f>" ] = function() vim.api.nvim_input "<Right>" end,
+        ["<C-k>" ] = function() vim.api.nvim_input "<C-o>D" end,
+        ["<M-k>" ] = function() vim.api.nvim_input "<C-o>d0" end,
+        ["<C-t>" ] = function() vim.api.nvim_input "<C-o>O" end,
+
       },
       n = {
         ["<C-g>"] = actions.close,
         ["<C-c>"] = actions.close,
+        ["<M-BS>"] = function() vim.api.nvim_input "a<c-s-w>" end,
         [";"] = function(prompt_bufnr)
           local results_win = ts_state.get_status(prompt_bufnr).results_win
           local height = vim.api.nvim_win_get_height(results_win)
@@ -394,6 +395,35 @@ require("telescope").load_extension("recent_files")
 
 vim.api.nvim_set_keymap("n", "F", [[<cmd>lua require('telescope').extensions.recent_files.pick()<CR>]], {noremap = true, silent = true})
 
+
+
+-- reference:
+-- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua#L136
+
+--vim.api.nvim_set_keymap("n", "<leader>f", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true } )
+--vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua require('telescope.builtin').live_grep({layout_strategy='vertical'})<cr>",  { noremap = true } )
+--vim.api.nvim_set_keymap("n", "<leader>b", "<cmd>lua require('telescope.builtin').buffers()<cr>",    { noremap = true } )
+--vim.api.nvim_set_keymap("n", "<leader>s", "<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>",    { noremap = true } )
+--vim.api.nvim_set_keymap("n", "<leader>p", ":Telescope file_browser<cr>",    { noremap = true } )
+
+local builtin = require('telescope.builtin')
+local file_browser = require("telescope").extensions.file_browser
+
+local custom_find_files = function()
+  builtin.find_files {
+    find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' },
+    previewer = false
+  }
+end
+
+vim.keymap.set('n', '<leader>f', custom_find_files, {})
+vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>b', builtin.buffers, {})
+vim.keymap.set('n', '<leader>s', builtin.lsp_document_symbols, {})
+vim.keymap.set('n', '<leader>p', file_browser.file_browser, {})
+
+
+-- vim.api.nvim_set_keymap("n", "<C-g>",     "<ESC><ESC><ESC>",                                        { noremap = true } )
 
 
 --
@@ -1041,7 +1071,7 @@ vim.api.nvim_set_keymap("n", "<Leader>O",         ":CtrlSFOpen<CR> ",           
 vim.g.ctrlsf_backend = 'rg'
 vim.g.ctrlsf_auto_focus = { at = "start" }
 vim.g.ctrlsf_search_mode = 'async'
-vim.g.ctrlsf_extra_backend_args = { rg = '--no-ignore' }
+vim.g.ctrlsf_extra_backend_args = { rg = '--no-ignore --hidden --glob "!.git"' }
 
 
 
