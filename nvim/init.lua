@@ -16,18 +16,12 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
-
-
   use 'nvim-tree/nvim-web-devicons'
   use 'nvim-tree/nvim-tree.lua'
 
   use 'neovim/nvim-lspconfig'
   use 'kevinhwang91/nvim-bqf'
 
-  use {'junegunn/fzf', run = function()
-        vim.fn['fzf#install']()
-    end
-  }
 
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use {'nvim-treesitter/playground'}
@@ -49,6 +43,7 @@ require('packer').startup(function(use)
 
   use 'nvim-lua/plenary.nvim'
 
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use { 'nvim-telescope/telescope.nvim', tag =  '0.1.4' }
   use { "nvim-telescope/telescope-file-browser.nvim" }
   use { "smartpde/telescope-recent-files" }
@@ -342,18 +337,19 @@ vim.cmd([[
 --
 --
 
-local actions = require "telescope.actions"
-local telescope_config = require "telescope.config"
+local telescope_actions = require("telescope.actions")
+local telescope_config = require("telescope.config")
+local telescope_state = require("telescope.state")
 
-local ts_state = require('telescope.state')
-local ts_action_set = require "telescope.actions.set"
+local ts_action_set = require("telescope.actions.set")
+
 require('telescope').setup{
   defaults = {
     scroll_strategy = "limit",
     mappings = {
       i = {
-        ["<C-g>"] = actions.close,
-        ["<C-c>"] = actions.close,
+        ["<C-g>"] = telescope_actions.close,
+        ["<C-c>"] = telescope_actions.close,
 
         ["<M-BS>"] = function() vim.api.nvim_input "<c-s-w>" end,
         ["<C-d>"]  = function() vim.api.nvim_input "<C-o>x" end,
@@ -367,47 +363,46 @@ require('telescope').setup{
 
       },
       n = {
-        ["<C-g>"] = actions.close,
-        ["<C-c>"] = actions.close,
+        ["<C-g>"] = telescope_actions.close,
+        ["<C-c>"] = telescope_actions.close,
         ["<M-BS>"] = function() vim.api.nvim_input "a<c-s-w>" end,
         [";"] = function(prompt_bufnr)
-          local results_win = ts_state.get_status(prompt_bufnr).results_win
+          local results_win = telescope_state.get_status(prompt_bufnr).results_win
           local height = vim.api.nvim_win_get_height(results_win)
           ts_action_set.shift_selection(prompt_bufnr, math.floor(height/2))
         end,
         ["'"] = function(prompt_bufnr)
-          local results_win = ts_state.get_status(prompt_bufnr).results_win
+          local results_win = telescope_state.get_status(prompt_bufnr).results_win
           local height = vim.api.nvim_win_get_height(results_win)
           ts_action_set.shift_selection(prompt_bufnr, -math.floor(height/2))
         end,
 
-        -- ["'"] = actions.results_scrolling_up,
-        -- [";"] = actions.results_scrolling_down,
-        -- ["<C-[>"] = actions.close,
+        -- ["'"] = telescope_actions.results_scrolling_up,
+        -- [";"] = telescope_actions.results_scrolling_down,
+        -- ["<C-[>"] = telescope_actions.close,
       },
     }
   },
+  extensions = {
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = true,  -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
+    }
+  }
+
 }
 
-require("telescope").load_extension "file_browser"
+require("telescope").load_extension("file_browser")
 require("telescope").load_extension("recent_files")
+require('telescope').load_extension('fzf')
 
-
-vim.api.nvim_set_keymap("n", "F", [[<cmd>lua require('telescope').extensions.recent_files.pick()<CR>]], {noremap = true, silent = true})
-
-
-
--- reference:
--- https://github.com/nvim-telescope/telescope.nvim/blob/master/lua/telescope/mappings.lua#L136
-
---vim.api.nvim_set_keymap("n", "<leader>f", "<cmd>lua require('telescope.builtin').find_files()<cr>", { noremap = true } )
---vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua require('telescope.builtin').live_grep({layout_strategy='vertical'})<cr>",  { noremap = true } )
---vim.api.nvim_set_keymap("n", "<leader>b", "<cmd>lua require('telescope.builtin').buffers()<cr>",    { noremap = true } )
---vim.api.nvim_set_keymap("n", "<leader>s", "<cmd>lua require('telescope.builtin').lsp_document_symbols()<cr>",    { noremap = true } )
---vim.api.nvim_set_keymap("n", "<leader>p", ":Telescope file_browser<cr>",    { noremap = true } )
 
 local builtin = require('telescope.builtin')
 local file_browser = require("telescope").extensions.file_browser
+local recent_files = require("telescope").extensions.recent_files
 
 local custom_find_files = function()
   builtin.find_files {
@@ -421,9 +416,10 @@ vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>b', builtin.buffers, {})
 vim.keymap.set('n', '<leader>s', builtin.lsp_document_symbols, {})
 vim.keymap.set('n', '<leader>p', file_browser.file_browser, {})
+vim.keymap.set('n', 'F',         recent_files.pick, {})
 
 
--- vim.api.nvim_set_keymap("n", "<C-g>",     "<ESC><ESC><ESC>",                                        { noremap = true } )
+
 
 
 --
