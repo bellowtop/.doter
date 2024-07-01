@@ -41,7 +41,9 @@ respectively."
 
              (goto-char (+ 1 start))
              (push-mark (+ 1 stop))
-             (setq deactivate-mark nil)))))
+             ;; (setq deactivate-mark nil)
+             ;; i prefer deactivate mark
+             (setq deactivate-mark t)))))
 
 (def-region-pairs ((paren . "(")
                     (bracket . "[")

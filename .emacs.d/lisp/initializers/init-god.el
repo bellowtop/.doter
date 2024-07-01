@@ -316,8 +316,8 @@
       ;; (set-face-foreground 'vertical-border "#374250")
       )
     (progn
-      (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
       (when (my-god-this-is-normal-editor-buffer (buffer-name))
+        (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
         (set-face-attribute 'hl-line nil :background (face-background 'default)))
       ;; (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
       (when (display-graphic-p)

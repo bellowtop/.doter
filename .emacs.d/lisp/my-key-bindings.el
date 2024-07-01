@@ -416,6 +416,7 @@
 (bind-key* (kbd "C-c C-v") #'set-rectangular-region-anchor)
 (bind-key* (kbd "C-c C-o") #'my-occur)
 (bind-key* (kbd "C-c C-s") #'my-rg-at-point)
+(bind-key* (kbd "C-c C-c") #'compile)
 (bind-key* (kbd "C-h C-c") #'shell)
 (bind-key* (kbd "C-h C-h") #'my-quit-other-window)
 (bind-key* (kbd "C-x C-b") #'ibuffer)
