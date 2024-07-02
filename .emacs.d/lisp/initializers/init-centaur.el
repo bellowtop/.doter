@@ -25,8 +25,8 @@
 
 
 ;; have to set here!
-(setq centaur-tabs-bar-height 28)
-(setq centaur-tabs-height 28)
+(setq centaur-tabs-bar-height 22)
+(setq centaur-tabs-height 22)
 
 (use-package centaur-tabs
   :demand
@@ -38,8 +38,8 @@
     ;; centaur-tabs-icon-scale-factor 0.8
     centaur-tabs-set-modified-marker nil
     centaur-tabs-set-close-button nil
-    centaur-tabs-left-edge-margin "  "
-    centaur-tabs-right-edge-margin "  "
+    centaur-tabs-left-edge-margin " "
+    centaur-tabs-right-edge-margin " "
     centaur-tabs-set-bar 'under
     x-underline-at-descent-line t
     centaur-tabs-show-jump-identifier nil)
@@ -107,7 +107,7 @@
                    centaur-tabs-dim-buffer-face))
     (set-face-attribute face nil
       :weight 'normal
-      :family "IBM Plex Sans"
+      :family "IBM Plex Mono"
       :height 140))
 
   ;; ;; modified tab foreground

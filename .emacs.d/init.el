@@ -238,6 +238,12 @@
 (require 'init-imenu)
 
 
+  ;;;; custom highlight for treemacs current line
+(defface my-highlight-font-chars-face
+  '((t (:foreground "green" :weight bold)))
+  "")
+
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -309,6 +315,7 @@
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(region ((t (:inverse-video t :foreground nil :background nil))))
  '(show-paren-match ((t (:foreground "red" :background "green" :weight bold))))
+ '(symbol-overlay-default-face ((t (:inherit my-highlight-font-chars-face))))
  '(tab-line ((t (:inherit variable-pitch :background "#1F2335" :foreground "black"))))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
@@ -1106,7 +1113,7 @@
   (ignore-errors
     (setq eglot-ignored-server-capabilities
       (delete ':documentHighlightProvider eglot-ignored-server-capabilities))
-    (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'highlight)
+    (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'my-highlight-font-chars-face)
     (set-face-attribute 'flymake-error nil :underline t :foreground "DeepPink" :background (face-background 'default))
     ;; (flymake-mode-on)
     ))
@@ -1243,3 +1250,4 @@
 ;; (define-key input-decode-map [?\C-i] [control-i])
 
 (require 'init-selected)
+(put 'scroll-left 'disabled nil)

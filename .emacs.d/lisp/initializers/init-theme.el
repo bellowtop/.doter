@@ -31,13 +31,13 @@
 
 
 ;; (require 'autothemer)
-;; (load-theme 'bogster t)
+(load-theme 'bogster t)
 
-;; (load-theme 'spolsky t)
-(if (display-graphic-p)
-  ;; (load-theme 'afternoon t)
-  (load-theme 'leuven-dark t)
-  (load-theme 'bogster t))
+;; ;; (load-theme 'spolsky t)
+;; (if (display-graphic-p)
+;;   ;; (load-theme 'afternoon t)
+;;   (load-theme 'leuven-dark t)
+;;   (load-theme 'bogster t))
 
 
 
