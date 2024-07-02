@@ -8,7 +8,7 @@
 (advice-add 'avy-goto-word-0 :before
   (lambda (&rest r)
     (my-disable-code-intelligence)
-    ;; (global-hl-line-mode 0)
+    (when (bound-and-true-p hl-line-mode) (hl-line-mode 0))
     )
   '((name . "avy-start")))
 
@@ -16,14 +16,14 @@
 (advice-add 'avy-handler-default :before
   (lambda (&rest r)
     (my-enable-code-intelligence)
-    ;; (global-hl-line-mode 1)
+    (when (boundp hl-line-mode) (hl-line-mode 1))
     )
   '((name . "avy-aborted-end")))
 ;; avy success
 (advice-add 'avy-action-goto :before
   (lambda (&rest r)
     (my-enable-code-intelligence)
-    ;; (global-hl-line-mode 1)
+    (when (boundp hl-line-mode) (hl-line-mode 1))
     )
   '((name . "avy-success-end")))
 
