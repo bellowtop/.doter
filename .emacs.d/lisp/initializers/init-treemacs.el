@@ -36,6 +36,28 @@
     ;; call inner api
     (treemacs--set-width (/ (frame-width) 3)))
 
+  (defun my-treemacs-mark-or-unmark-path-at-point()
+    (interactive)
+    (treemacs-mark-or-unmark-path-at-point)
+    (next-line)
+    )
+
+  (defun my-treemacs-duplicate-current-file()
+    (interactive)
+    (with-simulated-input ("RET") (treemacs-copy-file))
+    (treemacs-refresh)
+    (with-simulated-input ("M-b" "C-b") (treemacs-rename-file))
+    )
+
+  (defun my-treemacs-delete-current-file-without-confirm()
+    (interactive)
+    (with-simulated-input ("yes" "RET")
+      (if (eq treemacs--marked-paths nil)
+        (treemacs-delete-file)
+        (treemacs-delete-marked-paths)))
+    (treemacs-refresh))
+
+
   (defun display-treemacs-widow-in-ace-window-selection ()
     (setq aw-ignored-buffers
       (delete 'treemacs-mode aw-ignored-buffers)))
@@ -48,17 +70,41 @@
     (setq-local hl-line-face 'my-treemacs-custom-line-highlight)
     (overlay-put hl-line-overlay 'face hl-line-face))
 
-  ;; (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
+
+  ;; CAUTION: private api. copied from treemacs-core-utils.el
+  ;; because i want _Copy1 instead of (Copy 1)
+  (defun treemacs--find-repeated-file-name (path)
+    "Find a fitting copy name for given file PATH.
+Returns a name in the /file/name_Copy1.ext.  If that also already
+exists it returns /file/name_Copy2.ext etc."
+    (let* ((n 0)
+            (dir (treemacs--parent-dir path))
+            (filename (treemacs--filename path))
+            (filename-no-ext (file-name-sans-extension path))
+            (ext (--when-let (file-name-extension filename) (concat "." it)))
+            (template "_Copy%d")
+            (new-path path))
+      (while (file-exists-p new-path)
+        (cl-incf n)
+        (setf new-path (treemacs-join-path dir (concat filename-no-ext (format template n) ext))))
+      new-path))
+
+
+  (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
   (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
-  ;; (add-hook 'treemacs-mode-hook #'dim-treemacs-window-background)
+  (add-hook 'treemacs-mode-hook #'dim-treemacs-window-background)
   (add-hook 'treemacs-mode-hook #'change-treemacs-hl-line-mode)
   (add-hook 'treemacs-mode-hook #'my-special-buffer-keys-minor-mode)
   ;; (add-hook 'treemacs-mode-hook #'my-set-bigger-spacing)
   :bind
   (:map
     treemacs-mode-map
+    ("M" . my-treemacs-mark-or-unmark-path-at-point)
+    ("U" . treemacs-reset-marks)
     ("H" . my-decrease-treemacs-width)
     ("L" . my-increase-treemacs-width)
+    ("Y" . my-treemacs-duplicate-current-file)
+    ("D" . my-treemacs-delete-current-file-without-confirm)
     ("a" . treemacs-create-file)
     ("n" . my-isearch-forward)
     ("N" . my-isearch-backward)
