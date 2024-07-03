@@ -316,9 +316,9 @@
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(minibuffer-prompt ((t (:inherit default :foreground "white" :background "#1E2127" :weight normal))))
  '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
- '(mode-line-active ((t :box (:line-width 6 :color "#262831" :style nil))))
- '(mode-line-highlight ((t :box (:color "#e5ded6"))))
- '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
+ '(mode-line-active ((t :box nil)))
+ '(mode-line-highlight ((t :box nil)))
+ '(mode-line-inactive ((t (:background "#262831" :foreground "#C4C4C4" :overline "#374250" :box nil))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(region ((t (:inverse-video t :foreground nil :background nil))))
  '(show-paren-match ((t (:foreground "red" :background "green" :weight bold))))
@@ -687,16 +687,12 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-    '(dashboard dashboard-hackernews spacious-padding blamer paredit slime-company symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+    '(with-simulated-input dashboard dashboard-hackernews blamer paredit slime-company symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
     '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
- '(spacious-padding-mode t)
- '(spacious-padding-subtle-mode-line t)
- '(spacious-padding-widths
-    '(:internal-border-width 15 :header-line-width 4 :mode-line-width 0 :tab-width 4 :right-divider-width 30 :scroll-bar-width 8 :fringe-width 8))
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 
@@ -788,8 +784,6 @@
   )
 
 
-(require 'spacious-padding)
-(spacious-padding-mode 1)
 
 
 ;; use-package with package.el:
@@ -975,6 +969,11 @@
 
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
 (add-to-list 'default-frame-alist '(background-color . "#161c23"))
+
+
+
+;; truncate-lines right margin sign
+(set-display-table-slot standard-display-table 0 ?→)
 
 
 

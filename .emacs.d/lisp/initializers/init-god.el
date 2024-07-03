@@ -14,6 +14,7 @@
                         "*Messages*"
                         "HELLO"
                         "*Ibuffer*"
+                        "*dashboard*"
                         "*deadgrep"
                         "*xref"
                         "*Buffer"
@@ -121,6 +122,7 @@
       (god-local-mode 0)
       (hl-line-mode 1)
       (my-keys-minor-mode 0)
+      (set (make-local-variable 'face-remapping-alist) '((default :background "#26282F")))
       (my-special-buffer-keys-minor-mode 1))
     (t
       ;; (message "%s not a special buffer" (buffer-name))
@@ -283,7 +285,8 @@
 
 
 (setq window-divider-color "#06C668")
-(setq window-divider-right-color "green")
+;; (setq window-divider-right-color "green")
+(setq window-divider-right-color "#26282F")
 
 
 
@@ -297,9 +300,9 @@
       (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#33485e")
       (set-face-attribute 'line-number-current-line nil :foreground "white" :background "#33485e")
       (when (display-graphic-p)
-        ;; (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
-        (set-face-attribute 'window-divider-first-pixel nil :foreground window-divider-right-color)
-        ;; (set-face-attribute 'window-divider-last-pixel nil :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider-last-pixel nil :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider-first-pixel nil :foreground "green")
         ;; (set-face-attribute 'mode-line nil          :background "#7AA2F7" :foreground "#262831" :overline "#374250"   :box nil) ;; draw a line above mode-line
         ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
         ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#262831" :foreground "#7AA2F7")
@@ -321,9 +324,9 @@
         (set-face-attribute 'hl-line nil :background (face-background 'default)))
       ;; (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
       (when (display-graphic-p)
-        ;; (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
-        (set-face-attribute 'window-divider-first-pixel nil :foreground window-divider-right-color)
-        ;; (set-face-attribute 'window-divider-last-pixel nil :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider-last-pixel nil :foreground window-divider-right-color)
+        (set-face-attribute 'window-divider-first-pixel nil :foreground "green")
         ;; (set-face-attribute 'mode-line nil          :background "#7fdc59" :foreground "black" :overline "green"   :box nil) ;; draw a line above mode-line
         ;; (set-face-attribute 'mode-line-inactive nil :background "#262831" :foreground "#7AA2F7" :overline "#374250"  :box nil)
         ;; (set-face-attribute 'mode-line-buffer-id nil :distant-foreground "#7AA2F7" :foreground "black")
