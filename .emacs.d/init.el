@@ -285,6 +285,9 @@
  '(flymake-error-echo ((t nil)))
  '(flymake-warning ((t (weight normal))))
  '(flymake-warning-echo ((t nil)))
+ '(fringe ((t :background "#161c23")))
+ '(header-line ((t :box (:line-width 4 :color "grey20" :style nil))))
+ '(header-line-highlight ((t :box (:color "#e5ded6"))))
  '(helm-selection ((t (:foreground "white" :background "purple"))))
  '(help-argument-name ((t (:inherit italic :underline nil))))
  '(highlight ((t (:background "#7ED9B9" :foreground "black" :weight normal))))
@@ -295,6 +298,7 @@
  '(ivy-current-match ((t (:inherit region :background nil :foreground nil))))
  '(ivy-posframe ((t (:background "black"))))
  '(ivy-posframe-border ((t (:background "green"))))
+ '(keycast-key ((t)))
  '(lazy-highlight ((t (:background "light green" :foreground "black" :weight normal))))
  '(line-number ((t (:inherit default :foreground "#565575" :slant normal :weight normal))))
  '(line-number-current-line ((t (:inherit (hl-line default) :foreground "#CBE3E7" :slant normal :weight normal))))
@@ -312,12 +316,19 @@
  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
  '(minibuffer-prompt ((t (:inherit default :foreground "white" :background "#1E2127" :weight normal))))
  '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
+ '(mode-line-active ((t :box (:line-width 6 :color "#262831" :style nil))))
+ '(mode-line-highlight ((t :box (:color "#e5ded6"))))
  '(mode-line-inactive ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(region ((t (:inverse-video t :foreground nil :background nil))))
  '(show-paren-match ((t (:foreground "red" :background "green" :weight bold))))
  '(symbol-overlay-default-face ((t (:inherit my-highlight-font-chars-face))))
+ '(tab-bar-tab ((t :box (:line-width 4 :color "grey85" :style nil))))
+ '(tab-bar-tab-inactive ((t :box (:line-width 4 :color "grey75" :style nil))))
  '(tab-line ((t (:inherit variable-pitch :background "#1F2335" :foreground "black"))))
+ '(tab-line-tab ((t)))
+ '(tab-line-tab-active ((t)))
+ '(tab-line-tab-inactive ((t)))
  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
  '(term-color-cyan ((t (:foreground "#8be9fd" :background "#8be9fd"))))
@@ -330,9 +341,12 @@
  '(term-default-fg-color ((t (:inherit term-color-white))))
  '(tty-menu-enabled-face ((t (:inherit hl-line))))
  '(tty-menu-selected-face ((t (:inherit eglot-highlight-symbol-face))))
+ '(vertical-border ((t :background "#161c23" :foreground "#161c23")))
  '(whitespace-trailing ((t (:background "black" :foreground "#42546A" :weight bold))))
  '(widget-field ((t (:extend t :background "gray" :foreground "black"))))
  '(window-divider ((t (:foreground "green"))))
+ '(window-divider-first-pixel ((t (:background "#161c23" :foreground "#161c23"))))
+ '(window-divider-last-pixel ((t (:background "#161c23" :foreground "#161c23"))))
  '(xref-match ((t (:inherit region))))
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
 
@@ -673,12 +687,16 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-    '(spacious-padding blamer paredit slime-company symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+    '(dashboard dashboard-hackernews spacious-padding blamer paredit slime-company symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
     '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
+ '(spacious-padding-mode t)
+ '(spacious-padding-subtle-mode-line t)
+ '(spacious-padding-widths
+    '(:internal-border-width 15 :header-line-width 4 :mode-line-width 0 :tab-width 4 :right-divider-width 30 :scroll-bar-width 8 :fringe-width 8))
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 
@@ -768,6 +786,22 @@
   ;; :config
   ;; (global-blamer-mode 1)
   )
+
+
+(require 'spacious-padding)
+(spacious-padding-mode 1)
+
+
+;; use-package with package.el:
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook))
+
+(use-package dashboard-hackernews)
+
+
+
 
 
 
@@ -940,6 +974,8 @@
 
 
 (add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+(add-to-list 'default-frame-alist '(background-color . "#161c23"))
+
 
 
 
