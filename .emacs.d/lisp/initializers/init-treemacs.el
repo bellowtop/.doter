@@ -42,19 +42,21 @@
     (next-line)
     )
 
-  (defun my-treemacs-duplicate-current-file()
+  (defun my-treemacs-duplicate-current-file ()
     (interactive)
     (let* ((source (treemacs--prop-at-point :path))
             (destination (treemacs--parent-dir source))
             (target-name (treemacs--filename source))
-            (target (->> target-name
-                      (treemacs-join-path destination)
+            (target (->>
+                      target-name
+                      (treemacs-join-path
+                        destination)
                       (treemacs--find-repeated-file-name)))
-            (copy-fn (if (file-directory-p source) #'copy-directory #'copy-file))
-            )
+            (copy-fn (if (file-directory-p source)
+                       #'copy-directory
+                       #'copy-file)))
       (funcall copy-fn source target)
-      (treemacs-refresh)
-      ))
+      (treemacs-refresh)))
 
   (defun my-treemacs-delete-marked-or-current-file-without-confirm()
     (interactive)
