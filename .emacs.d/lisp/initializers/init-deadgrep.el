@@ -47,7 +47,15 @@
   (advice-add 'deadgrep-visit-result :after 'xref-pulse-momentarily)
   (advice-add 'deadgrep-visit-result :after 'my-delete-other-windows)
   (advice-add 'deadgrep-visit-result-other-window :after 'xref-pulse-momentarily)
-  (advice-add 'deadgrep-edit-mode :after 'xref-pulse-momentarily))
+  (advice-add 'deadgrep-edit-mode :after 'xref-pulse-momentarily)
+  (advice-add 'deadgrep--arguments :filter-return #'deadgrep--include-args)
+)
+
+
+(defun deadgrep--include-args (rg-args)
+  (push "--hidden" rg-args) ;; consider hidden folders/files
+  (push "--follow" rg-args) ;; follow symlink
+  )
 
 
 (provide 'init-deadgrep)
