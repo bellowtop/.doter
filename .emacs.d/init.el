@@ -582,21 +582,21 @@
 
 ;; (global-set-key [remap keyboard-quit] #'my-escape-key)
 
-(bind-key* (kbd "<escape>") #'my-escape-key)
-(define-key minibuffer-local-map (kbd "<escape>") #'minibuffer-keyboard-quit)
+(bind-key (kbd "<escape>") #'my-escape-key)
+(bind-key (kbd "<escape>") #'minibuffer-keyboard-quit minibuffer-local-map)
 ;; (define-key helm-map (kbd "<escape>") #'helm-keyboard-quit)
 
 
 ;; must be set as global
-(bind-key* (kbd "C-S-k") #'my-delete-to-beginning)
-(bind-key* (kbd "C-k") #'my-delete-to-end)
-(bind-key* (kbd "C-j") #'save-buffer)
+(bind-key (kbd "C-S-k") #'my-delete-to-beginning)
+(bind-key (kbd "C-k") #'my-delete-to-end)
+(bind-key (kbd "C-j") #'save-buffer)
 
 
 (when (display-graphic-p)
-  (bind-key* [escape] 'my-escape-key)
+  (bind-key [escape] 'my-escape-key)
   (define-key input-decode-map [?\C-\[] (kbd "<C-[>"))
-  (bind-key* (kbd "<C-[>") 'my-escape-key))
+  (bind-key (kbd "<C-[>") 'my-escape-key))
 
 
 (setq smex-save-file (expand-file-name "~/.emacs.d/.local/smex-items.cache"))
