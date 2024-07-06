@@ -240,4 +240,460 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+(defun my-yank-but-check-newline-bellow (arg)
+  (interactive "p")
+  (if (use-region-p)
+    (let ((beg (region-beginning))
+           (end (copy-marker (region-end))))
+      (delete-region beg end)
+      (yank))
+    (if (my-copied-content-is-end-of-newline)
+      (progn
+        (end-of-line)
+        (newline)
+        (beginning-of-line)
+        (yank arg)
+        (backward-delete-char 1))
+      (yank arg))))
+
+(defun my-yank-but-check-newline-above (arg)
+  (interactive "p")
+  (if (use-region-p)
+    (let ((beg (region-beginning))
+           (end (copy-marker (region-end))))
+      (delete-region beg end)
+      (yank))
+    (if (my-copied-content-is-end-of-newline)
+      (progn
+        (beginning-of-line)
+        (newline)
+        (previous-line)
+        (yank arg)
+        (delete-char 1))
+      (yank arg))))
+
+
+
+
+(defun my-hs-toggle-all ()
+  "If anything isn't hidden, run `hs-hide-all', else run `hs-show-all'."
+  (interactive)
+  (hs-minor-mode 1)
+  (let ((starting-ov-count
+          (length (overlays-in (point-min) (point-max)))))
+    (if (derived-mode-p 'c++-mode)
+      (save-excursion
+        (goto-char (point-min))
+        (re-search-forward "namespace.*?{" nil t)
+        (next-line)
+        (hs-hide-level 1))
+      (hs-hide-all))
+    (when (equal
+            (length (overlays-in (point-min) (point-max)))
+            starting-ov-count)
+      (hs-show-all)
+      (recenter))))
+
+(defun my-hs-toggle-hiding ()
+  (interactive)
+  (hs-minor-mode 1)
+  (if (hs-already-hidden-p)
+    (hs-show-block)
+    (hs-hide-block)))
+
+(defun my-hide-all ()
+  (interactive)
+  (hs-minor-mode 1)
+  (hs-hide-all))
+
+;; (add-hook 'prog-mode-hook 'my-hide-all)
+
+
+
+(defun my-M-x ()
+  (interactive)
+  (counsel-M-x))
+
+(defun my-occur ()
+  (interactive)
+  (counsel-grep))
+
+(defun my-rg-at-point ()
+  (interactive)
+  (counsel-rg))
+
+(defun my-find-files ()
+  (interactive)
+  (counsel-find-file))
+
+(defun my-mark-ring ()
+  (interactive)
+  (counsel-mark-ring))
+
+
+
+(advice-add 'my-M-x :before (lambda (&rest r) (refresh-current-mode))
+                                        ; convenient name for identifying or removing this advice later
+  '((name . "my-god-mode-before-m-x")))
+
+(advice-add 'my-mark-ring :after (lambda (&rest r) (recenter))
+                                        ; convenient name for identifying or removing this advice later
+  '((name . "recenter-after-mark-ring")))
+
+
+
+
+;; delete all other buffers, only keep current one.
+(defun my-only-current-buffer ()
+  "Kill all non-star other buffers."
+  (interactive)
+  (mapc 'kill-buffer (delq
+                       (current-buffer)
+                       (remove-if-not 'buffer-file-name (buffer-list)))) ;; this keep * buffers alive
+  (if (bound-and-true-p centaur-tabs-mode)
+    (centaur-tabs-kill-other-buffers-in-current-group)))
+
+;; delete all other buffers, only keep current one.
+(defun my-only-current-buffer-include-specials ()
+  "Kill all other buffers."
+  (interactive)
+  (mapc 'kill-buffer (delq
+                       (current-buffer)
+                       (buffer-list))) ;; this destroy * buffers too
+  (if (bound-and-true-p centaur-tabs-mode)
+    (centaur-tabs-kill-other-buffers-in-current-group)))
+
+
+
+
+(defun my-joindirs (root &rest dirs)
+  "Joins a series of directories together, like Python's os.path.join,
+  (dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") => /tmp/a/b/c"
+  (if (not dirs)
+    root
+    (apply 'joindirs (expand-file-name (car dirs) root) (cdr dirs))))
+
+
+
+
+(defun bury-compile-buffer-if-successful (buffer string)
+  "Bury a compilation buffer if succeeded without warnings "
+  (when (and
+          (buffer-live-p buffer)
+          (string-match "compilation" (buffer-name buffer))
+          (string-match "finished" string)
+          (not
+            (with-current-buffer buffer
+              (goto-char (point-min))
+              (search-forward "warning" nil t))))
+    (run-with-timer 1 nil
+      (lambda (buf)
+        (delete-windows-on buf)
+        (bury-buffer buf)
+        ;; (switch-to-prev-buffer (get-buffer-window buf) 'kill)
+        )
+      buffer)))
+
+
+(defun upcase-p(str) (string= str (upcase str)))
+
+(defun downcase-p(str) (string= str (downcase str)))
+
+
+(defun my-toggle-case-char ()
+  (interactive)
+  (if (region-active-p)
+    (let* ((i 0)
+            (start (region-beginning))
+            (end (region-end))
+            (return-string "")
+            (input (buffer-substring-no-properties start end)))
+                                        ; (message "input-string: %s" input)
+      (while (< i (- end start))
+        (let ((current-char (substring input i (+ i 1))))
+                                        ; (message "current-char: %s, is downcase? %s" current-char (downcase-p current-char))
+          (if (downcase-p current-char)
+            (setq return-string
+              (concat return-string (upcase current-char)))
+            (setq return-string
+              (concat return-string (downcase current-char)))))
+        (setq i (+ i 1)))
+      (delete-region (region-beginning) (region-end))
+      (insert return-string)
+      ;; select the region again
+      (goto-char start)
+      (set-mark-command nil)
+      (goto-char end)
+      (setq deactivate-mark nil))
+    (let* ((current-char (buffer-substring-no-properties (point) (+ 1 (point))))
+            (upcased (upcase-p current-char))
+            (f (if upcased 'downcase-region 'upcase-region)))
+                                        ; (message "input: %s" current-char)
+      (funcall f (point) (+ 1 (point)))
+      (forward-char))))
+
+
+
+
+(defun my-goto-match-paren (arg)
+  "Go to the matching parenthesis if on parenthesis. Else go to the
+  opening parenthesis one level up."
+  (interactive "p")
+  (cond ((looking-at "\\s\(") (forward-list 1))
+    (t
+      (backward-char 1)
+      (cond ((looking-at "\\s\)")
+              (forward-char 1) (backward-list 1))
+        (t
+          (while (not (looking-at "\\s("))
+            (backward-char 1)
+            (cond ((looking-at "\\s\)")
+                    (message "->> )")
+                    (forward-char 1)
+                    (backward-list 1)
+                    (backward-char 1)))
+            ))))))
+
+
+(defun my-comment-region-or-line()
+  (interactive)
+  (if (region-active-p)
+    (let ((beg (save-excursion (goto-char (region-beginning))
+                 (line-beginning-position)))
+           (end (save-excursion (goto-char (region-end))
+                  ;; if is V mode, i.e. selection lines, then ignore last line.
+                  (if (bolp) (region-end)
+                    (line-end-position))
+                  )))
+      (comment-or-uncomment-region beg end))
+    (comment-line 1)))
+
+
+
+
+(defun my-delete-char-or-kill-region (arg)
+  (interactive "p")
+  (if (use-region-p)
+    (let ((beg (region-beginning))
+           (end (copy-marker (region-end))))
+      (kill-region beg end))
+    (delete-forward-char
+      (or arg 1))))
+
+(defun my-kill-whole-line-or-kill-region (arg)
+  (interactive "p")
+  (if (use-region-p)
+    (let ((beg (region-beginning))
+           (end (copy-marker (region-end))))
+      (kill-region beg end))
+    (kill-whole-line (or arg 1))))
+
+
+(defun my-set-mark-command-or-deactivate-mark (arg)
+  (interactive "p")
+  (if (use-region-p)
+    (deactivate-mark)
+    (push-mark nil nil t)))
+
+
+(defun my-next-line-or-mc/mark-next-like-this (arg)
+  (interactive "p")
+  (if (use-region-p)
+    (my-mc/mark-next-like-this arg)
+    (next-line)))
+
+(defun my-prev-line-or-mc/mark-next-like-this (arg)
+  (interactive "p")
+  (if (use-region-p)
+    (my-mc/mark-previous-like-this
+      arg)
+    (previous-line)))
+
+
+(defun my-replace-char ()
+  "delete current char, goto insert mode"
+  (interactive)
+  (delete-forward-char 1)
+  ;; (call-interactively (key-binding (kbd "q")))
+  (my-quit-god-mode))
+
+
+(defun my-save-buffer ()
+  "delete current word, goto insert mode"
+  (interactive)
+  (save-buffer)
+  (refresh-current-mode)
+  ;; (my-quit-mc-mode-if-need)
+  )
+
+
+(defun my-select-current-line-and-forward-line (arg)
+  "Select the current line and move the cursor by ARG lines IF
+  no region is selected.
+  If a region is already selected when calling this command, only move
+  the cursor by ARG lines."
+  (interactive "p")
+  (if (use-region-p)
+    (let ((beg (region-beginning))
+           (end (region-end)))
+      (goto-char beg)
+      (beginning-of-line)
+      (set-mark-command nil)
+      (goto-char end)
+      (end-of-line))
+    (forward-line 0)
+    (set-mark-command nil)
+    (forward-line arg)))
+
+
+(defun my-join-lines (arg)
+  "Apply join-line over region."
+  (interactive "p")
+  (forward-line 0)
+  ;; goto line begin
+  (if (use-region-p)
+    (let ((beg (region-beginning))
+           (end (copy-marker (region-end))))
+      (goto-char beg)
+      (while (< (point) end)
+        (join-line 1)))
+    (progn
+      (set-mark-command nil)
+      (end-of-line)
+      (join-line -1))))
+
+
+(defun my-is-beginning-of-line ()
+  (interactive)
+  (= (point)
+    (line-beginning-position)))
+
+
+(defun my-is-end-of-line ()
+  (interactive)
+  (= (point) (line-end-position)))
+
+
+(defun my-enlarge-half-height ()
+  "Expand current window to use half of the other window's lines."
+  (interactive)
+  (enlarge-window
+    (/ (window-body-height) 4)))
+
+(defun my-enlarge-half-width ()
+  "Expand current window to use half of the other window's lines."
+  (interactive)
+  (enlarge-window-horizontally
+    (/ (window-body-width) 4)))
+
+(defun my-shrink-half-height ()
+  "Expand current window to use half of the other window's lines."
+  (interactive)
+  (shrink-window
+    (/ (window-body-height) 4)))
+
+(defun my-shrink-half-width ()
+  "Expand current window to use half of the other window's lines."
+  (interactive)
+  (shrink-window-horizontally
+    (/ (window-body-width) 4)))
+
+
+(defun my-delete-other-windows ()
+  (interactive)
+  (delete-other-windows)
+  (recenter-top-bottom))
+
+
+(defun my-forward-char-no-cross-line ()
+  (interactive)
+  (unless (my-is-end-of-line)
+    (forward-char)))
+
+(defun my-forward-to-word ()
+  (interactive)
+  (let* ((pos-before (point))
+          (pos-after (save-excursion
+                       (forward-to-word 1)
+                       (point)))
+          (sub-string (buffer-substring
+                        pos-before
+                        pos-after)))
+    ;; NOTE: the ] must be first char in the regex candicates. see https://www.gnu.org/software/emacs/manual/html_node/emacs/Regexps.html
+    (if-let ((distance (string-match-p "[])}([{&=\*\:\"\,\.]" sub-string)))
+      (progn
+        ;; if next char is special then find next regular char, because forward 0 distance is meaningless
+        (when (= distance 0)
+          (setq distance (string-match-p "[^])}([{&=\*\:\"\,\.\s]" sub-string)))
+        ;; if all chars are special chars, then just do forward-to-word.
+        (if distance
+          (forward-char distance)
+          (forward-to-word 1)))
+      (forward-to-word 1))))
+
+(defun my-kill-word()
+  (interactive)
+  (push-mark nil nil t)
+  (my-forward-to-word)
+  (backward-delete-char-untabify 1)
+  )
+
+(defun my-backward-char-no-cross-line ()
+  (interactive)
+  (unless (my-is-beginning-of-line)
+    (backward-char)))
+
+
+
+(defun my-quit-other-window()
+  (interactive)
+  (delete-other-windows)
+  (ignore-errors
+    (when (my-imenu-list-check-window-is-open) (imenu-list-quit-window)))
+  ;; (ignore-errors
+  ;;   (when (eq (treemacs-current-visibility) 'visible) (delete-window (treemacs-get-local-window))))
+  (keyboard-quit))
+
+
+
+(defun my-toggle-eldoc-box-help-at-point ()
+  (interactive)
+
+  ;; always use my-term-popup
+  ;; (if my-term-popup-show-p
+  ;;     (my-term-popup-close)
+  ;;   (show-eldoc-popup-at-point))
+
+  (if (display-graphic-p)
+    ;; graphic, use eldoc-box
+    (if (and (bound-and-true-p eldoc-box--frame)
+          (frame-visible-p eldoc-box--frame))
+      (eldoc-box-quit-frame)
+      (eldoc-box-help-at-point))
+    ;; terminal tui, use my-term-popup
+    (if my-term-popup-show-p
+      (my-term-popup-close)
+      (show-eldoc-popup-at-point)))
+  )
+
+
+
+
+(defun my-break-to-multiple-lines(arg)
+  (interactive "*P")
+  (sp-split-sexp arg)
+  (insert-char ?+)
+  (newline-and-indent)
+  )
+
+
+
+(defun my-blink-search()
+  (interactive)
+  (blink-search-restart-process)
+  (blink-search))
+
+
+
+
 (provide 'my-utils)

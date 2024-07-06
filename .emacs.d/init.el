@@ -1,9 +1,6 @@
 ;; load emacs 24's package system. Add MELPA repository.
 (define-key special-event-map [config-changed-event] #'ignore)
 
-;; unset C-m, seperate it with the RET key
-;; (define-key input-decode-map [?\C-m] [C-m])
-
 ;; Set garbage collection threshold to 1GB.
 ;; (setq gc-cons-threshold #x20000000)
 
@@ -32,45 +29,11 @@
 (setq mac-command-modifier 'super)
 
 
-(use-package exec-path-from-shell
-  :config (exec-path-from-shell-initialize))
-
-
-;; eshell with colors
-;; SEE https://emacs.stackexchange.com/questions/51027/missing-color-support-for-exa-in-eshell
-(setq comint-terminfo-terminal "dumb-emacs-ansi")
-
-(let* ((terminfo-file (format "~/.terminfo/%s.ti" comint-terminfo-terminal))
-        (default-directory (file-name-directory terminfo-file)))
-  (unless (file-exists-p terminfo-file)
-    (make-directory default-directory t)
-    (with-temp-buffer
-      (insert
-        "dumb-emacs-ansi|Emacs dumb terminal with ANSI color codes,
-    am,
-    colors#8, it#8, ncv#13, pairs#64,
-    bold=\\E[1m, cud1=^J, ht=^I, ind=^J, op=\\E[39;49m,
-    ritm=\\E[23m, rmul=\\E[24m, setab=\\E[4%p1%dm,
-    setaf=\\E[3%p1%dm, sgr0=\\E[m, sitm=\\E[3m, smul=\\E[4m,")
-      (write-file terminfo-file)))
-  (unless (file-exists-p (concat default-directory "d/" comint-terminfo-terminal))
-    (start-process "*tic process*" "*Messages*" "tic"
-      (expand-file-name terminfo-file))))
-
-(add-hook 'eshell-mode-hook #'(lambda ()
-                                (setenv "TERM" comint-terminfo-terminal)
-                                (setenv "PAGER" "cat")))
-
-
-(use-package benchmark-init
-  :ensure t
-  :config ;; To disable collection of benchmark data after init is done.
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
-
-
 (require 'cl)
 (require 's)
 
+;; more powerful than global-set-key! seems have the highest priority
+(require 'bind-key)
 
 
 ;; Minimize garbage collection during startup
@@ -78,8 +41,6 @@
 
 ;; Lower threshold back to 8 MiB (default is 800kB)
 (add-hook 'emacs-startup-hook (lambda () (setq gc-cons-threshold (* 8192 8192))))
-
-
 
 ;; create the autosave dir if necessary, since emacs won't.
 (make-directory "~/.emacs.d/.local/auto-save-list/" t)
@@ -99,13 +60,22 @@
 
 
 
+(require 'init-eshell)
+
+
+
+(use-package benchmark-init
+  :ensure t
+  :config ;; To disable collection of benchmark data after init is done.
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
+
 
 ;; don't need it!!!
-(electric-indent-mode -1)
+(electric-indent-mode 0)
 
 
 (require 'init-god)
-
 
 
 (require 'init-projectile)
@@ -120,80 +90,30 @@
 (require 'init-theme)
 
 
-
-
-(require 'diminish)
-(defun purge-minor-modes ()
-  (diminish 'flymake-mode)
-  (diminish 'my-ctrl-w-window-keys-minor-mode)
-  (diminish 'ivy-mode)
-  (diminish 'ivy-posframe-mode)
-  (diminish 'which-key-mode)
-  (diminish 'selected-minor-mode)
-  (diminish 'selected-global-mode)
-  (diminish 'my-keys-minor-mode)
-  (diminish 'projectile-mode)
-  (diminish 'global-hl-line-mode)
-  (diminish 'highlight-parentheses-mode)
-  (diminish 'undo-tree-mode)
-  (diminish 'company-mode)
-  (diminish 'company-posframe-mode)
-  (diminish 'global-company-mode)
-  (diminish 'line-number-mode)
-  (diminish 'global-eldoc-mode)
-  (diminish 'eldoc-mode)
-  (diminish 'yas-minor-mode)
-  (diminish 'smartparens-mode)
-  (diminish 'smartparens-global-mode)
-  (diminish 'show-paren-mode)
-  (diminish 'abbrev-mode)
-  (diminish 'electric-indent-mode))
-(add-hook 'after-change-major-mode-hook 'purge-minor-modes)
-
-
 (require 'my-key-bindings)
 
 
 (global-unset-key [(control z)])
 
 
+
+
+(unless (display-graphic-p)
+  (require 'my-catch-term-escape-key)
+  (require 'my-term-cursor)
+  (require 'my-term-popup)
+  )
+
+
+
 (setq warning-minimum-level :emergency)
-
-
-
-
-
-;;;;;; catch ESC in terminal(-nw) ;;;;;;;;;;;;
-(defvar personal/fast-keyseq-timeout 1)
-(defun personal/-tty-ESC-filter (map)
-  (if (and (equal (this-single-command-keys) [?\e])
-        (sit-for (/ personal/fast-keyseq-timeout 1000.0)))
-    [escape]
-    map))
-(defun personal/-lookup-key (map key)
-  (catch 'found
-    (map-keymap (lambda (k b)
-                  (if (equal key k)
-                    (throw 'found b)))
-      map)))
-(defun personal/catch-tty-ESC ()
-  "Setup key mappings of current terminal to turn a tty's ESC into `escape'."
-  (when (memq (terminal-live-p (frame-terminal)) '(t pc))
-    (let ((esc-binding (personal/-lookup-key input-decode-map ?\e)))
-      (define-key input-decode-map [?\e] `(menu-item "" ,esc-binding :filter personal/-tty-ESC-filter)))))
-(personal/catch-tty-ESC)
-
-
-
-(require 'term-cursor)
-(global-term-cursor-mode 1)
-
-
-
 (setq visible-bell t)
-
-
 (setq ring-bell-function #'ignore)
+;; all themes safe
+(setq custom-safe-themes t)
+(setq recenter-redisplay nil)
+(setq blink-cursor-blinks 0)
+(setq blink-cursor-interval 0.3)
 
 
 (set-default 'truncate-lines t)
@@ -201,35 +121,11 @@
 
 ;; compile log with colors
 (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
-
-
-(defun bury-compile-buffer-if-successful (buffer string)
-  "Bury a compilation buffer if succeeded without warnings "
-  (when (and
-          (buffer-live-p buffer)
-          (string-match "compilation" (buffer-name buffer))
-          (string-match "finished" string)
-          (not
-            (with-current-buffer buffer
-              (goto-char (point-min))
-              (search-forward "warning" nil t))))
-    (run-with-timer 1 nil
-      (lambda (buf)
-        (delete-windows-on buf)
-        (bury-buffer buf)
-        ;; (switch-to-prev-buffer (get-buffer-window buf) 'kill)
-        )
-      buffer)))
 (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
 
 
-(use-package expand-region :bind (("M-i" . 'er/expand-region)))
 
-
-(advice-add 'er/expand-region :before (lambda (&rest r) (my-remove-all-highlight)))
-
-(advice-add 'er/mark-inside-pairs :before (lambda (&rest r) (my-remove-all-highlight)))
-
+(require 'init-expand-region)
 
 
 (toggle-truncate-lines t)
@@ -238,10 +134,9 @@
 (require 'init-imenu)
 
 
-  ;;;; custom highlight for treemacs current line
 (defface my-highlight-font-chars-face
   '((t (:foreground "green" :weight bold)))
-  "")
+  "custom highlight for treemacs current line")
 
 
 
@@ -321,7 +216,7 @@
  '(mode-line-inactive ((t (:background "#262831" :foreground "#C4C4C4" :overline "#374250" :box nil))))
  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
  '(region ((t (:inverse-video t :foreground nil :background nil))))
- '(show-paren-match ((t (:foreground "red" :background "green" :weight bold))))
+ '(show-paren-match ((t (:foreground "black" :background "yellow"))))
  '(symbol-overlay-default-face ((t (:inherit my-highlight-font-chars-face))))
  '(tab-bar-tab ((t :box (:line-width 4 :color "grey85" :style nil))))
  '(tab-bar-tab-inactive ((t :box (:line-width 4 :color "grey75" :style nil))))
@@ -351,52 +246,14 @@
  '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
 
 
-;; (set-face-attribute 'region nil :inverse-video 't)
-
-
-
-;; (global-font-lock-mode -1)
-
 
 (require 'my-highlight-current-line)
 
 
 
-(defun my-remove-all-highlight ()
-  (interactive)
-  (remove-all-highlight)
-  (my-disable-paren-highlight)
-  (my-disable-eglot-highlight))
-
-(defun my-enable-all-highlight ()
-  (interactive)
-  (my-enable-paren-highlight)
-  (my-enable-eglot-highlight))
 
 
-(defun my-recenter-scroll-to-top ()
-  (interactive)
-  (recenter-top-bottom 1)
-  (setq recenter-last-op nil))
-
-
-;; load from ./lisp
-(require 'nice-jumper)
-(global-nice-jumper-mode t)
-;; (add-hook 'nice-jumper-post-jump-hook 'my-recenter)
-(add-hook 'nice-jumper-post-jump-hook 'xref-pulse-momentarily)
-(when (display-graphic-p)
-  ;; cmd+[ cmd+]
-  (global-set-key (kbd "s-[") 'nice-jumper/backward)
-  (global-set-key (kbd "s-]") 'nice-jumper/forward))
-;; for terminal
-;; C-o C-M-o
-(global-set-key (kbd "C-o") 'nice-jumper/backward)
-(global-set-key (kbd "C-M-o") 'nice-jumper/forward)
-
-;; (defadvice deadgrep (before nice-jumper activate)
-;;   (nice-jumper--set-jump))
-
+(require 'init-nice-jumper)
 
 
 
@@ -404,57 +261,8 @@
 
 
 
-;; quit xref buffer after enter
-(with-eval-after-load 'xref
-  (define-key
-    xref--xref-buffer-mode-map (kbd "o")
-    #'
-    (lambda ()
-      (interactive)
-      (xref-goto-xref t)))
-  ;; directly open it when there is only one candidate.
-  ;; (setq xref-show-xrefs-function #'xref-show-definitions-buffer)
-  ;; (setq xref-show-xrefs-function #'xref-show-definitions-buffer-at-bottom)
+(require 'init-xref)
 
-  ;; (add-to-list 'xref-after-return-hook 'my-recenter-scroll-to-top)
-  ;; (setq xref-after-jump-hook (delete 'recenter xref-after-jump-hook))
-  ;; (add-to-list 'xref-after-jump-hook 'my-recenter-scroll-to-top)
-  )
-
-(defun ivy-xref-call-or-done ()
-  (interactive)
-  (let
-    (
-      orig-point
-      orig-buffer
-      new-point
-      new-buffer)
-    (with-ivy-window
-      (setq
-        orig-point (point)
-        orig-buffer (current-buffer)))
-
-    (ivy-call)
-
-    (with-ivy-window
-      (setq
-        new-point (point)
-        new-buffer (current-buffer)))
-
-    (when (and (eq new-point orig-point) (eq new-buffer orig-buffer))
-      (ivy-done))))
-
-(use-package ivy-xref
-  :ensure t
-  :after (ivy xref)
-  :init
-  (setq xref-show-definitions-function #'ivy-xref-show-defs)
-  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)
-  :bind
-  (:map
-    ivy-minibuffer-map
-    ("C-l" . ivy-xref-call-or-done)
-    ("M-l" . ivy-call-and-recenter)))
 
 
 (with-eval-after-load 'pulse
@@ -465,15 +273,7 @@
   )
 
 
-(use-package
-  format-all
-  :commands format-all-mode
-  :hook (prog-mode . format-all-mode)
-  ;;   :config
-  ;;   (setq-default format-all-formatters
-  ;;                 '(("C"     (astyle "--mode=c"))
-  ;;                   ("Shell" (shfmt "-i" "4" "-ci"))))
-  )
+(require 'init-format-all)
 
 
 
@@ -500,83 +300,33 @@
 
 
 (require 'init-eglot)
-(add-hook 'eglot-managed-mode-hook (lambda () (eglot-inlay-hints-mode -1)))
 
 ;; (require 'init-lang-java)
 ;; (require 'download-lombok)
 
 (require 'init-lang-go)
-(add-hook 'go-mode-hook #'my-go-mode-hook)
-(add-hook 'go-ts-mode-hook #'my-go-mode-hook)
-
-(add-hook 'go-ts-mode-hook #'(lambda () (setq go-ts-mode-indent-offset 4)))
 
 
 (require 'init-lang-cpp)
-(add-hook 'c++-ts-mode-hook #'my-c-ts-mode-hook)
-(add-hook 'c-ts-mode-hook #'my-c-ts-mode-hook)
 
 
 (require 'init-lang-zig)
 
+
 (require 'init-lang-swift)
 
 
-;; book-mode break isearch echo area!
-;; (require 'book-mode)
+(require 'init-company)
 
 
-(defun my-joindirs (root &rest dirs)
-  "Joins a series of directories together, like Python's os.path.join,
-  (dotemacs-joindirs \"/tmp\" \"a\" \"b\" \"c\") => /tmp/a/b/c"
-  (if (not dirs)
-    root
-    (apply 'joindirs (expand-file-name (car dirs) root) (cdr dirs))))
+(require 'init-yasnippet)
 
 
-;; company-mode
-(setq company-dabbrev-downcase nil)
-(add-hook 'after-init-hook 'global-company-mode)
-(add-hook 'before-save-hook 'company-cancel)
-
-;; company-posframe-mode
-;  (require 'company-posframe)
-;  (company-posframe-mode 1)
-
-;; http://company-mode.github.io/manual/Getting-Started.html#Initial-Setup
-(with-eval-after-load 'company
-  (define-key
-    company-active-map
-    (kbd "<tab>")
-    #'company-select-next-if-tooltip-visible-or-complete-selection)
-  (define-key
-    company-active-map
-    (kbd "<backtab>")
-    #'company-select-previous-or-abort)
-  (define-key
-    company-active-map
-    (kbd "RET")
-    #'company-complete-selection)
-
-  (global-set-key (kbd "s-r") #'company-yasnippet))
-;; Use (kbd "TAB") (or use (kbd "<tab>"), if you want to distinguish C-i from the <tab> key)
+;; (use-package transpose-frame
+;;   :defer t)
 
 
-(use-package transpose-frame :defer t)
 
-
-(use-package
-  yasnippet
-  :config
-  (add-hook 'prog-mode-hook 'yas-minor-mode)
-  (add-hook
-    'yas-before-expand-snippet-hook
-    'my-disable-eglot-highlight)
-  (add-hook 'yas-after-exit-snippet-hook 'my-enable-eglot-highlight))
-
-
-;; all themes safe
-(setq custom-safe-themes t)
 
 
 (custom-set-variables
@@ -584,8 +334,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-names-vector
-    ["#14141e" "#e84c58" "#35BF88" "#dbac66" "#4ca6e8" "#c79af4" "#6bd9db" "#e6e6e8"])
  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/.local/autosaves/\\1" t)))
  '(auto-save-list-file-prefix (expand-file-name "~/.emacs.d/.local/auto-save-list/"))
  '(backup-directory-alist '((".*" . "~/.emacs.d/.local/backups/")))
@@ -701,111 +449,31 @@
 (setq lsp-session-file (expand-file-name "~/.emacs.d/.local/.lsp-session-v1"))
 
 
-(global-whitespace-mode 1)
-(setq whitespace-style '(face trailing tabs tab-mark))
-(setq whitespace-line-column 85)
-(setq whitespace-display-mappings '((tab-mark ?\t [?\x203a ?\t] [?\\ ?\t]) ; tab
-                                     (newline-mark ?\n [?\x203a ?\n] [?\\ ?\n])))
-(setq-default tab-width 4)
+(require 'init-whitespace-mode)
 
 
-(add-hook 'before-save-hook #'delete-trailing-whitespace)
+(use-package iedit
+  :defer t
+  :bind (("C-M-'" . iedit-mode)))
 
 
-(set-face-attribute 'whitespace-tab nil
-  :background (face-background 'default)
-  :foreground "#627D9D")
+(require 'init-impatient-markdown)
 
 
-(use-package iedit :defer t :bind (("C-M-'" . iedit-mode)))
-
-
-;; render like github
-(defun markdown-html-github (buffer)
-  (princ
-    (with-current-buffer buffer
-      (format
-        "<!DOCTYPE html><html><script src=\"https://cdnjs.cloudflare.com/ajax/libs/he/1.1.1/he.js\"></script><link rel=\"stylesheet\" href=\"https://assets-cdn.github.com/assets/github-e6bb18b320358b77abe040d2eb46b547.css\"><link rel=\"stylesheet\" href=\"https://assets-cdn.github.com/assets/frameworks-95aff0b550d3fe338b645a4deebdcb1b.css\"><title>Impatient Markdown</title><div id=\"markdown-content\" style=\"display:none\">%s</div><div class=\"markdown-body\" style=\"max-width:968px;margin:0 auto;\"></div><script>fetch('https://api.github.com/markdown', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ \"text\": document.getElementById('markdown-content').innerHTML, \"mode\": \"gfm\", \"context\": \"knit-pk/homepage-nuxtjs\"}) }).then(response => response.text()).then(response => {document.querySelector('.markdown-body').innerHTML = he.decode(response)}).then(() => { fetch(\"https://gist.githubusercontent.com/FieryCod/b6938b29531b6ec72de25c76fa978b2c/raw/\").then(response => response.text()).then(eval)});</script></html>"
-        (buffer-substring-no-properties (point-min) (point-max))))
-    (current-buffer)))
-
-(defun markdown-html (buffer)
-  (princ
-    (with-current-buffer buffer
-      (format
-        "<!DOCTYPE html><html><title>Impatient Markdown</title><xmp theme=\"united\" style=\"display:none;\"> %s  </xmp><script src=\"http://ndossougbe.github.io/strapdown/dist/strapdown.js\"></script></html>"
-        (buffer-substring-no-properties (point-min) (point-max))))
-    (current-buffer)))
-
-(use-package impatient-mode
-  :config
-  (add-hook
-    'markdown-mode-hook
-    #'
-    (lambda ()
-      (impatient-mode 1)
-      (imp-set-user-filter 'markdown-html-github))))
-
-
-(use-package ace-window
-  :ensure t
-  ;; must ensure, treemacs depend on it
-  :delight
-  :config
-  (ace-window-display-mode 1)
-  (setq aw-keys '(?1 ?2 ?3 ?4 ?5 ?6 ?7 ?8 ?9 ?0))
-  :bind (("M-o" . #'ace-window))
-  )
-
-;; alternatively, use Meta-<left> Meta-<right> to move cursor to window
-;; for iTerms2 user, disable alt-> alt-< to send alt-f alt-b in `profile->keys`
-(windmove-default-keybindings 'meta)
+(require 'init-ace-window)
 
 
 (require 'init-centaur)
 
 
-
-(use-package blamer
-  :defer t
-  :bind (("s-i" . blamer-show-commit-info)
-          ("C-c i" . blamer-show-posframe-commit-info))
-  :defer 20
-  :custom
-  (blamer-idle-time 0.3)
-  (blamer-min-offset 70)
-  :custom-face
-  (blamer-face ((t :foreground "#7a88cf"
-                  :background nil
-                  :height 140
-                  :italic t)))
-  ;; :config
-  ;; (global-blamer-mode 1)
-  )
+(require 'init-blamer)
 
 
+(require 'init-dashboard)
 
 
-;; use-package with package.el:
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook))
+(require 'init-autopep8)
 
-(use-package dashboard-hackernews)
-
-
-
-
-
-
-(use-package py-autopep8
-  :defer t
-  :init
-  :config (setq py-autopep8-options '("--max-line-length=100"))
-  :hook
-  (python-mode . py-autopep8-mode)
-  (python-ts-mode . py-autopep8-mode))
 
 
 (use-package rust-mode
@@ -826,41 +494,19 @@
   (add-to-list 'auto-mode-alist '("\\.yaml\\.j2\\'" . yaml-mode)))
 
 
-(use-package ansible :defer t)
+(use-package ansible
+  :defer t)
 
 
-;; line number fixed width
-(setq display-line-numbers-width-start 100)
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
-(add-hook 'markdown-mode-hook 'display-line-numbers-mode)
-(add-hook 'nxml-mode-hook 'display-line-numbers-mode)
-(add-hook 'yaml-mode-hook 'display-line-numbers-mode)
-(add-hook 'yaml-mode-hook #'(lambda () (ansible 1)))
-(add-hook 'conf-mode-hook 'display-line-numbers-mode)
+(require 'init-display-line-numbers)
 
 
-(add-hook 'prog-mode-hook 'highlight-numbers-mode)
 
+(use-package yaml-mode
+  :defer t
+  :hook
+  (prog-mode . highlight-numbers-mode))
 
-;; delete all other buffers, only keep current one.
-(defun my-only-current-buffer ()
-  "Kill all non-star other buffers."
-  (interactive)
-  (mapc 'kill-buffer (delq
-                       (current-buffer)
-                       (remove-if-not 'buffer-file-name (buffer-list)))) ;; this keep * buffers alive
-  (if (bound-and-true-p centaur-tabs-mode)
-    (centaur-tabs-kill-other-buffers-in-current-group)))
-
-;; delete all other buffers, only keep current one.
-(defun my-only-current-buffer-include-specials ()
-  "Kill all other buffers."
-  (interactive)
-  (mapc 'kill-buffer (delq
-                       (current-buffer)
-                       (buffer-list))) ;; this destroy * buffers too
-  (if (bound-and-true-p centaur-tabs-mode)
-    (centaur-tabs-kill-other-buffers-in-current-group)))
 
 
 
@@ -881,75 +527,15 @@
 (require 'init-smartparens)
 
 
-(unless (directory-empty-p (expand-file-name "~/.emacs.d/lisp/blink-search"))
-  (setq blink-search-history-path
-    (expand-file-name (concat user-emacs-directory ".local/blink-search/history.txt")))
-  (setq blink-search-db-path
-    (expand-file-name (concat user-emacs-directory ".local/blink-search/blink-search.db")))
-  (require 'blink-search))
+(require 'init-blink-search)
 
 
 (require 'init-ivy)
 
 
-;; (use-package
-;;   flymake-posframe
-;;   :load-path "~/.emacs.d/lisp/flymake-posframe.el"
-;;   :hook (flymake-mode . flymake-posframe-mode))
+(require 'init-flymake)
 
 
-(use-package flymake-diagnostic-at-point
-  :load-path "~/.emacs.d/lisp/flymake-diagnostic-at-point.el"
-  :after flymake
-  :config
-  (setq flymake-start-syntax-check-on-find-file nil)
-  (setq flymake-diagnostic-at-point-error-prefix " > ")
-  (setq flymake-diagnostic-at-point-display-diagnostic-function
-    'flymake-diagnostic-at-point-display-posframe)
-  (unless (display-graphic-p)
-    (setq flymake-diagnostic-at-point-display-diagnostic-function
-      'flymake-diagnostic-at-point-display-minibuffer))
-  (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
-
-
-;;
-;; deprecated, use flymake-posframe.
-;;
-;; (use-package flymake-diagnostic-at-point
-;;   :after flymake
-;;   :config
-;;   (add-hook 'flymake-mode-hook #'flymake-diagnostic-at-point-mode))
-
-
-(defun my-M-x ()
-  (interactive)
-  (counsel-M-x))
-
-(defun my-occur ()
-  (interactive)
-  (counsel-grep))
-
-(defun my-rg-at-point ()
-  (interactive)
-  (counsel-rg))
-
-(defun my-find-files ()
-  (interactive)
-  (counsel-find-file))
-
-(defun my-mark-ring ()
-  (interactive)
-  (counsel-mark-ring))
-
-
-
-(advice-add 'my-M-x :before (lambda (&rest r) (refresh-current-mode))
-  ; convenient name for identifying or removing this advice later
-  '((name . "my-god-mode-before-m-x")))
-
-(advice-add 'my-mark-ring :after (lambda (&rest r) (recenter))
-  ; convenient name for identifying or removing this advice later
-  '((name . "recenter-after-mark-ring")))
 
 
 (delete-selection-mode 1)
@@ -984,7 +570,7 @@
   (refresh-current-mode)
   (when isearch-mode (isearch-abort) (isearch-abort))  ;; must double abort
   (when (my-god-this-is-normal-editor-buffer (buffer-name))
-    (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode -1))
+    (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode 0))
     (when (bound-and-true-p iedit-mode) (iedit-done)) ;; exit iedit mode, if needed.
     (ignore-errors (company-cancel))
     (ignore-errors (remove-all-highlight)))
@@ -996,63 +582,24 @@
 
 ;; (global-set-key [remap keyboard-quit] #'my-escape-key)
 
-(global-set-key (kbd "<escape>") #'my-escape-key)
-;; (define-key helm-map (kbd "<escape>") #'helm-keyboard-quit)
+(bind-key* (kbd "<escape>") #'my-escape-key)
 (define-key minibuffer-local-map (kbd "<escape>") #'minibuffer-keyboard-quit)
+;; (define-key helm-map (kbd "<escape>") #'helm-keyboard-quit)
 
 
 ;; must be set as global
-(global-set-key (kbd "C-S-k") #'my-delete-to-beginning)
-(global-set-key (kbd "C-k") #'my-delete-to-end)
-(global-set-key (kbd "C-j") #'save-buffer)
-(global-set-key (kbd "<RET>") #'newline-and-indent)
+(bind-key* (kbd "C-S-k") #'my-delete-to-beginning)
+(bind-key* (kbd "C-k") #'my-delete-to-end)
+(bind-key* (kbd "C-j") #'save-buffer)
 
 
 (when (display-graphic-p)
-  (global-set-key [escape] 'my-escape-key)
+  (bind-key* [escape] 'my-escape-key)
   (define-key input-decode-map [?\C-\[] (kbd "<C-[>"))
-  (global-set-key (kbd "<C-[>") 'my-escape-key))
+  (bind-key* (kbd "<C-[>") 'my-escape-key))
 
 
 (setq smex-save-file (expand-file-name "~/.emacs.d/.local/smex-items.cache"))
-
-
-
-
-
-(defun my-hs-toggle-all ()
-  "If anything isn't hidden, run `hs-hide-all', else run `hs-show-all'."
-  (interactive)
-  (hs-minor-mode 1)
-  (let ((starting-ov-count
-          (length (overlays-in (point-min) (point-max)))))
-    (if (derived-mode-p 'c++-mode)
-      (save-excursion
-        (goto-char (point-min))
-        (re-search-forward "namespace.*?{" nil t)
-        (next-line)
-        (hs-hide-level 1))
-      (hs-hide-all))
-    (when (equal
-            (length (overlays-in (point-min) (point-max)))
-            starting-ov-count)
-      (hs-show-all)
-      (recenter))))
-
-(defun my-hs-toggle-hiding ()
-  (interactive)
-  (hs-minor-mode 1)
-  (if (hs-already-hidden-p)
-    (hs-show-block)
-    (hs-hide-block)))
-
-(defun my-hide-all ()
-  (interactive)
-  (hs-minor-mode 1)
-  (hs-hide-all))
-
-;; (add-hook 'prog-mode-hook 'my-hide-all)
-
 
 
 
@@ -1071,43 +618,8 @@
       (message "Copied line")
       (list (line-beginning-position) (line-beginning-position 2)))))
 
-(defun my-yank-but-check-newline-bellow (arg)
-  (interactive "p")
-  (if (use-region-p)
-    (let ((beg (region-beginning))
-           (end (copy-marker (region-end))))
-      (delete-region beg end)
-      (yank))
-    (if (my-copied-content-is-end-of-newline)
-      (progn
-        (end-of-line)
-        (newline)
-        (beginning-of-line)
-        (yank arg)
-        (backward-delete-char 1))
-      (yank arg))))
-
-(defun my-yank-but-check-newline-above (arg)
-  (interactive "p")
-  (if (use-region-p)
-    (let ((beg (region-beginning))
-           (end (copy-marker (region-end))))
-      (delete-region beg end)
-      (yank))
-    (if (my-copied-content-is-end-of-newline)
-      (progn
-        (beginning-of-line)
-        (newline)
-        (previous-line)
-        (yank arg)
-        (delete-char 1))
-      (yank arg))))
-
 
 (require 'init-avy)
-
-
-(setq recenter-redisplay nil)
 
 
 (which-key-mode 1)
@@ -1133,81 +645,7 @@
 
 
 
-
-
-(defvar my-code-intelligence 't
-  "enable by default")
-
-
-(defun my-disable-eglot-highlight ()
-  (interactive)
-  (ignore-errors
-    (setq eglot-ignored-server-capabilities
-      (add-to-list 'eglot-ignored-server-capabilities ':documentHighlightProvider))
-    (set-face-attribute 'eglot-highlight-symbol-face nil :inherit nil)
-    (set-face-attribute 'flymake-error nil :underline 'unspecified :foreground 'unspecified :background 'unspecified)
-    ;; (flymake-mode-off)
-    ))
-
-(defun my-enable-eglot-highlight ()
-  (interactive)
-  (ignore-errors
-    (setq eglot-ignored-server-capabilities
-      (delete ':documentHighlightProvider eglot-ignored-server-capabilities))
-    (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'my-highlight-font-chars-face)
-    (set-face-attribute 'flymake-error nil :underline t :foreground "DeepPink" :background (face-background 'default))
-    ;; (flymake-mode-on)
-    ))
-
-
-(defun my-enable-paren-highlight ()
-  (interactive)
-  (ignore-errors
-    (set-face-attribute 'show-paren-match nil :foreground "red" :weight 'bold)))
-
-(defun my-disable-paren-highlight ()
-  (interactive)
-  (ignore-errors
-    (set-face-attribute 'show-paren-match nil :foreground 'unspecified :weight 'bold)))
-
-(defun my-enable-symbol-overlay-highlight ()
-  (interactive)
-  (when (derived-mode-p 'emacs-lisp-mode)
-    (ignore-errors
-      (symbol-overlay-mode 1))))
-
-
-(defun my-disable-symbol-overlay-highlight ()
-  (interactive)
-  (ignore-errors
-    (symbol-overlay-mode 0)))
-
-
-(defun my-disable-code-intelligence ()
-  (interactive)
-  (when my-code-intelligence
-    (my-disable-eglot-highlight)
-    (smartparens-global-mode -1)
-    (smartparens-mode -1)
-    ;; (electric-indent-mode -1)
-    ;; (global-undo-tree-mode -1)
-    (undo-tree-mode -1)
-    (setq my-code-intelligence nil)
-    ;; (message "code-intelligence is disabled.")
-    ))
-
-(defun my-enable-code-intelligence ()
-  (interactive)
-  (unless my-code-intelligence
-    (my-enable-eglot-highlight)
-    (smartparens-global-mode 1)
-    (smartparens-mode 1)
-    ;; (electric-indent-mode 1)
-    ;; (global-undo-tree-mode 1)
-    (undo-tree-mode 1)
-    (setq my-code-intelligence 't)
-    ;; (message "code-intelligence is enabled.")
-    ))
+(require 'my-toggle-code-intelligence)
 
 (add-hook 'isearch-mode-hook #'my-disable-code-intelligence)
 (add-hook 'isearch-mode-end-hook #'my-enable-code-intelligence)
@@ -1216,6 +654,7 @@
 (require 'init-emacs-lispy)
 
 
+;; for hl-line+.el
 (setq hl-line-inhibit-highlighting-for-modes
   '(dired-mode deadgrep-mode deadgrep-edit-mode treemacs-mode))
 
@@ -1225,31 +664,21 @@
 (set-face-background 'line-number (face-background 'default))
 (set-face-background 'line-number-current-line (face-background 'hl-line))
 
+
 (require 'init-modeline)
-
-
-(setq blink-cursor-blinks 0)
-(setq blink-cursor-interval 0.3)
-
-
-(add-hook 'god-mode-enabled-hook 'my-god-mode-update-cursor-type)
-
-(add-hook 'god-mode-disabled-hook 'my-god-mode-update-cursor-type)
 
 
 (toggle-truncate-lines t)
 
+
 (global-auto-revert-mode 1)
+
 
 ;;;  treats underscores as part of words
 (superword-mode 1)
 
 
-
-(use-package all-the-icons
-  :config
-  (setq all-the-icons-scale-factor 1.0)
-  (setq all-the-icons-default-adjust 0.0))
+(require 'init-all-the-icons)
 
 
 (require 'init-neotree)
