@@ -49,6 +49,15 @@
 (with-eval-after-load 'exec-path-from-shell
     (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
 
+
+(add-hook 'go-mode-hook #'my-go-mode-hook)
+(add-hook 'go-ts-mode-hook #'my-go-mode-hook)
+
+
+(add-hook 'go-ts-mode-hook #'(lambda () (setq go-ts-mode-indent-offset 4)))
+
+
+
 (provide 'init-lang-go)
 
 ;;; init-lang-go.el ends here

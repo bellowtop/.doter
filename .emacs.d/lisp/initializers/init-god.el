@@ -14,7 +14,6 @@
                         "*Messages*"
                         "HELLO"
                         "*Ibuffer*"
-                        "*dashboard*"
                         "*deadgrep"
                         "*xref"
                         "*Buffer"
@@ -45,6 +44,7 @@
                           "*blink-search"
                           "*blink search"
                           "*shell*"
+                          "*dashboard*"
                           "*slime"
                           "*sldb"
                           "magit"
@@ -292,7 +292,7 @@
 
 (defun my-god-mode-update-cursor-type ()
   ;; (setq cursor-type (if (bound-and-true-p god-local-mode) 'bar 'bar))
-  (setq cursor-type (if (display-graphic-p) 'bar 'bar))
+  (setq cursor-type (if (display-graphic-p) 'box 'bar))
   (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
   (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
   (if (bound-and-true-p god-local-mode)
@@ -341,6 +341,11 @@
       ;;(set-face-attribute 'mode-line nil :background "#38424B")
       ;; (set-face-foreground 'vertical-border "#7fdc59")
       (set-face-foreground 'vertical-border window-divider-color))))
+
+
+
+(add-hook 'god-mode-enabled-hook 'my-god-mode-update-cursor-type)
+(add-hook 'god-mode-disabled-hook 'my-god-mode-update-cursor-type)
 
 
 (provide 'init-god)

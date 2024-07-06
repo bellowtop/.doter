@@ -90,6 +90,8 @@ otherwise assumed alphabetic."
 (add-hook 'cmake-ts-mode-hook 'maybe-cmake-project-mode)
 
 
+(add-hook 'c++-ts-mode-hook #'my-c-ts-mode-hook)
+(add-hook 'c-ts-mode-hook #'my-c-ts-mode-hook)
 
 
 ;; (defun my-rtags-find-symbol-at-point()
