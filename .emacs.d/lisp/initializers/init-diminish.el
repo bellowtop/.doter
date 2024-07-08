@@ -1,7 +1,6 @@
 (require 'diminish)
 (defun purge-minor-modes ()
   (diminish 'flymake-mode)
-  (diminish 'my-ctrl-w-window-keys-minor-mode)
   (diminish 'ivy-mode)
   (diminish 'ivy-posframe-mode)
   (diminish 'which-key-mode)

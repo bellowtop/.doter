@@ -656,6 +656,18 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+(defun my-quit-other-buffer ()
+  "Function to quit help in other-window."
+  (interactive)
+  (unless (one-window-p)
+    (save-excursion
+      (let ((next 1))
+        (other-window next)
+        (quit-window)
+        ))))
+
+
+
 (defun my-toggle-eldoc-box-help-at-point ()
   (interactive)
 
@@ -692,6 +704,8 @@ If buffer-or-name is nil return current buffer's mode."
   (interactive)
   (blink-search-restart-process)
   (blink-search))
+
+
 
 
 

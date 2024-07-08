@@ -55,6 +55,7 @@
 (defun deadgrep--include-args (rg-args)
   (push "--hidden" rg-args) ;; consider hidden folders/files
   (push "--follow" rg-args) ;; follow symlink
+  (push "--glob=!.git" rg-args)
   )
 
 
