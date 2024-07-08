@@ -65,6 +65,7 @@
   (push "*xref" centaur-tabs-excluded-prefixes)
   (push "*Async-native-compile-log" centaur-tabs-excluded-prefixes)
   (push "*EGLOT" centaur-tabs-excluded-prefixes)
+  (push "*emacs" centaur-tabs-excluded-prefixes)
   (push "*Ilist*" centaur-tabs-excluded-prefixes)
   (push "*Occur*" centaur-tabs-excluded-prefixes)
   (push "*Ibuffer*" centaur-tabs-excluded-prefixes)

@@ -373,6 +373,8 @@
 
 (require 'init-centaur)
 
+;; (require 'init-tabline)
+
 
 (require 'init-blamer)
 
@@ -499,6 +501,7 @@
 (bind-key (kbd "C-S-k") #'my-delete-to-beginning)
 (bind-key (kbd "C-k") #'my-delete-to-end)
 (bind-key (kbd "C-j") #'save-buffer)
+(bind-key (kbd "<RET>") #'newline-and-indent)
 
 
 (when (display-graphic-p)
