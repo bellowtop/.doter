@@ -110,15 +110,12 @@
   (cond
     ((my-god-this-is-legendary-buffer (buffer-name))
       ;; (message "%s is legendary buffer" (buffer-name))
-      (my-ctrl-w-window-keys-minor-mode 0)
       (god-local-mode 0)
       (hl-line-mode 0)
       (my-keys-minor-mode 0)
-      (my-ctrl-w-window-keys-minor-mode 0)
       (my-special-buffer-keys-minor-mode 0))
     ((my-god-this-is-special-buffer (buffer-name))
       ;; (message "%s is special buffer" (buffer-name))
-      (my-ctrl-w-window-keys-minor-mode 1)
       (god-local-mode 0)
       (hl-line-mode 1)
       (my-keys-minor-mode 0)
@@ -126,7 +123,6 @@
       (my-special-buffer-keys-minor-mode 1))
     (t
       ;; (message "%s not a special buffer" (buffer-name))
-      (my-ctrl-w-window-keys-minor-mode 1)
       (god-local-mode 1) ;; start local mode
       (hl-line-mode 1)
       (my-keys-minor-mode 1)
@@ -140,7 +136,6 @@
 
 (defun my-quit-god-mode ()
   (interactive)
-  (my-ctrl-w-window-keys-minor-mode 0)
   (god-local-mode 0)
   (setq my-god-mode-is-active-flag nil))
 
