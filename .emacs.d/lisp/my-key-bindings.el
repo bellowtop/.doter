@@ -41,6 +41,11 @@
 (bind-key* (kbd "M-M")  #'my-toggle-er/mark-outside-paren)
 (bind-key* (kbd "M-o")  #'ace-window)
 
+(bind-key* (kbd "M-j") #'gcm-scroll-down)
+(bind-key* (kbd "M-k") #'gcm-scroll-up)
+(bind-key* (kbd "C-;") #'gcm-scroll-down)
+(bind-key* (kbd "C-'") #'gcm-scroll-up)
+
 
 
 
@@ -85,10 +90,6 @@
     ;; (define-key map (kbd "C-M-;") 'avy-goto-word-0)
     (define-key map (kbd "M-s") 'my-save-buffer)
     (define-key map (kbd "C-j") 'my-save-buffer)
-    (define-key map (kbd "M-j") 'gcm-scroll-down)
-    (define-key map (kbd "M-k") 'gcm-scroll-up)
-    (define-key map (kbd "C-;") 'gcm-scroll-down)
-    (define-key map (kbd "C-'") 'gcm-scroll-up)
     (define-key map (kbd "M-q") 'my-toggle-god-mode)
 
     ;; (define-key map (kbd "M-u") 'upcase-dwim)
