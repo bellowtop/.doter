@@ -539,12 +539,14 @@
 (xclip-mode 1)
 
 
+(save-place-mode 1)
+
 (require 'mwim)
 (global-set-key [remap move-end-of-line] #'mwim-end-of-code-or-line)
 (global-set-key [remap move-beginning-of-line] #'mwim-beginning-of-code-or-line)
 
 (require 'yank-indent)
-(global-yank-indent-mode t)
+(global-yank-indent-mode 1)
 
 
 ;; semantic-refactor, use in c++ mode
