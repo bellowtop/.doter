@@ -42,6 +42,12 @@
     (next-line)
     )
 
+  (defun my-projectile-find-file-in-treemacs()
+    (interactive)
+    (let ((root (projectile-acquire-root)))
+      (advise-once 'pop-to-buffer-same-window :before (lambda (&rest _) (other-window 1)))
+      (projectile-find-file-in-directory root)))
+
   (defun my-treemacs-duplicate-current-file ()
     (interactive)
     (let* ((source (treemacs--prop-at-point :path))
@@ -116,6 +122,7 @@ exists it returns /file/name_Copy2.ext etc."
   :bind
   (:map
     treemacs-mode-map
+    ("F" . my-projectile-find-file-in-treemacs)
     ("M" . my-treemacs-mark-or-unmark-path-at-point)
     ("U" . treemacs-reset-marks)
     ("H" . my-decrease-treemacs-width)
