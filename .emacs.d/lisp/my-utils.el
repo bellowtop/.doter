@@ -706,6 +706,10 @@ If buffer-or-name is nil return current buffer's mode."
   (blink-search))
 
 
+(defun advise-once (symbol where function &optional props)
+  (advice-add symbol :after `(lambda (&rest _) (advice-remove ',symbol ',function)))
+  (advice-add symbol where function props))
+
 
 
 

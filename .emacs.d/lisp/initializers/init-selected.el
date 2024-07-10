@@ -2,6 +2,15 @@
 (use-package selected
   :ensure t
   :commands selected-minor-mode
+
+  :config
+  (defun my-kill-region-and-insert-d-in-selected()
+    (interactive)
+    (kill-region (region-beginning) (region-end))
+    (unless (bound-and-true-p god-local-mode)
+      (insert-char ?d))
+    )
+
   :bind ((:map
            selected-keymap
            ("C-c i" . clang-format-region)
@@ -12,7 +21,10 @@
            ("'" . my-wrap-region-with-single-quotes)
            ("\"" . my-wrap-region-with-double-quotes)
            ("_" . my-wrap-region-with-underscores)
-           ("`" . my-wrap-region-with-back-quotes))))
+           ("`" . my-wrap-region-with-back-quotes)
+           ("d" . my-kill-region-and-insert-d-in-selected)
+           ("C-d" . kill-region)
+           )))
 
 (selected-global-mode 1)
 
@@ -33,28 +45,7 @@
                                                                    (my-disable-paren-highlight)
                                                                    (my-disable-eglot-highlight))))))
 
-      (if (bound-and-true-p my-god-mode-is-active-flag)
-        (progn
-          ;; (message "god mode, & selected-region-active mode")
-          ;; (define-key selected-keymap (kbd "i p") #'er/mark-text-paragraph)
-          ;; (define-key selected-keymap (kbd "i w") #'er/mark-symbol)
-          ;; (define-key selected-keymap (kbd "v") #'keyboard-quit)
-          (define-key selected-keymap (kbd "d") #'kill-region)
-          ;; (define-key selected-keymap (kbd "x") #'kill-region)
-          ;; (define-key selected-keymap (kbd "C-n") #'my-mc/mark-next-like-this)
-          ;; (define-key selected-keymap (kbd "C-p") #'my-mc/mark-previous-like-this)
-          )
-        (progn
-          ;; (message "not god mode, & selected-region-active mode")
-          ;; (message "is not god-local-mode")
-          ;; (define-key selected-keymap (kbd "i p") nil)
-          ;; (define-key selected-keymap (kbd "i w") nil)
-          ;; (define-key selected-keymap (kbd "v") nil)
-          ;; (define-key selected-keymap (kbd "d") nil)
-          ;; (define-key selected-keymap (kbd "x") nil)
-          ;; (define-key selected-keymap (kbd "C-n") nil)
-          ;; (define-key selected-keymap (kbd "C-p") nil)
-          )))
+      )
     (progn
       ;; (message "not selected-region-active mode")
       (my-enable-eglot-highlight)
