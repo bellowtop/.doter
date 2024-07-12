@@ -104,10 +104,32 @@
       (my-god-this-is-legendary-buffer bufname))))
 
 
+
+(setq should-not-display-dark-background-modes (list
+                        "dired-mode"
+                        "dashboard-mode"
+                        ))
+
+
+(defun my-god-this-is-dark-background-buffer (bufname)
+  (interactive)
+  (let ((this-buffer-name (string-trim bufname))
+         (this-buffer-mode (symbol-name (buffer-mode bufname))))
+    (and
+      (eq buffer-read-only t)
+      (not
+        (seq-filter
+        (lambda (n) (string-prefix-p n this-buffer-mode))
+        should-not-display-dark-background-modes))
+      )))
+
+
 (setq my-god-mode-is-active-flag nil)
 
 (defun* refresh-current-mode ()
   (interactive)
+  (when (my-god-this-is-dark-background-buffer (buffer-name))
+    (set (make-local-variable 'face-remapping-alist) '((default :background "#26282F"))))
   (cond
     ((my-god-this-is-legendary-buffer (buffer-name))
       ;; (message "%s is legendary buffer" (buffer-name))
@@ -120,7 +142,6 @@
       (god-local-mode 0)
       (hl-line-mode 1)
       (my-keys-minor-mode 0)
-      (set (make-local-variable 'face-remapping-alist) '((default :background "#26282F")))
       (my-special-buffer-keys-minor-mode 1))
     (t
       ;; (message "%s not a special buffer" (buffer-name))
@@ -293,7 +314,7 @@
   (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
   (if (bound-and-true-p god-local-mode)
     (progn
-      (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#33485e")
+      ;; (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#33485e")
       (set-face-attribute 'line-number-current-line nil :foreground "white" :background "#33485e")
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
@@ -317,7 +338,8 @@
     (progn
       (when (my-god-this-is-normal-editor-buffer (buffer-name))
         (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
-        (set-face-attribute 'hl-line nil :background (face-background 'default)))
+        ;; (set-face-attribute 'hl-line nil :background (face-background 'default))
+        )
       ;; (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
