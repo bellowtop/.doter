@@ -1,5 +1,8 @@
 (require 'diminish)
 (defun purge-minor-modes ()
+  (diminish 'global-whitespace-mode)
+  (diminish 'yank-indent-mode)
+  (diminish 'format-all-mode)
   (diminish 'flymake-mode)
   (diminish 'ivy-mode)
   (diminish 'ivy-posframe-mode)
