@@ -79,7 +79,7 @@
 (electric-indent-mode 0)
 
 
-(setq use-dark-theme-mode nil)
+(setq use-dark-theme-mode t)
 (if use-dark-theme-mode
   (progn
         (setq darker-window-bg-color "#26282F")
@@ -243,7 +243,7 @@
  ;;;;  '(helm-selection ((t (:foreground "white" :background "purple"))))
  ;;;;  '(help-argument-name ((t (:inherit italic :underline nil))))
  ;;;;  '(highlight ((t (:background "#7ED9B9" :foreground "black" :weight normal))))
- ;;;;  ;; '(hl-line ((t (:extend t :background "#33485e" :underline nil))))
+ '(hl-line ((t (:extend t :background "#33485e" :underline nil))))
  ;;;;  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  ;;;;  '(iedit-occurrence ((t (:inherit nil :foreground "yellow"))))
  ;;;;  '(isearch ((t (:background "orange1" :foreground "black" :weight normal :inverse-video nil))))
@@ -301,7 +301,8 @@
  ;;;;  '(window-divider-first-pixel ((t (:background "#161c23" :foreground "#161c23"))))
  ;;;;  '(window-divider-last-pixel ((t (:background "#161c23" :foreground "#161c23"))))
  ;;;;  '(xref-match ((t (:inherit region))))
- '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal)))))
+ '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
+ )
 
 
 

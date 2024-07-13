@@ -306,7 +306,6 @@
 (setq window-divider-right-color "#26282F")
 
 
-(global-display-line-numbers-mode 1)
 
 
 
@@ -317,9 +316,12 @@
   (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
   (if (bound-and-true-p god-local-mode)
     (progn
-      ;; (set-face-attribute 'line-number-current-line nil :foreground "white" :background "#33485e")
       ;; reset
-      (set-face-attribute 'line-number-current-line nil :foreground (face-foreground 'line-number) :background (face-background 'line-number))
+      (when (my-god-this-is-normal-editor-buffer (buffer-name))
+        (display-line-numbers-mode 1)
+        (set-face-attribute 'line-number-current-line nil :foreground (face-foreground 'line-number) :background (face-background 'line-number))
+        ;; (set-face-attribute 'hl-line nil :background (face-background 'default))
+        )
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
         (set-face-attribute 'window-divider-last-pixel nil :foreground window-divider-right-color)
@@ -341,6 +343,7 @@
       )
     (progn
       (when (my-god-this-is-normal-editor-buffer (buffer-name))
+        (display-line-numbers-mode 1)
         (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
         ;; (set-face-attribute 'hl-line nil :background (face-background 'default))
         )
