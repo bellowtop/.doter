@@ -79,7 +79,29 @@
 (electric-indent-mode 0)
 
 
-(setq use-dark-theme-mode t)
+
+
+;;;
+;;; my theme
+;;;
+(set-face-attribute 'default nil :font "IBM Plex Mono 1.2-15.0")
+(add-to-list 'default-frame-alist '(font . "IBM Plex Mono 1.2-15.0"))
+(when (my-system-type-is-darwin)
+  (set-face-attribute 'default nil :font "IBM Plex Mono 1.2-15.0") ;;; :weight 'light)
+  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono 1.2-15.0")))
+;; ;;; https://github.com/supercomputra/SF-Mono-Font
+;; ;;;
+;; (set-face-attribute 'default nil :font "SF Mono-16.0")
+;; (add-to-list 'default-frame-alist '(font . "SF Mono-16.0"))
+;;
+;; (when (my-system-type-is-darwin)
+;;   (set-face-attribute 'default nil :font "SF Mono-16.0" :weight 'light)
+;;   (add-to-list 'default-frame-alist '(font . "SF Mono-16.0")))
+
+(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
+;; (add-to-list 'default-frame-alist '(background-color . "#161c23"))
+
+(setq use-dark-theme-mode nil)
 (if use-dark-theme-mode
   (progn
         (setq darker-window-bg-color "#26282F")
@@ -89,6 +111,8 @@
         (setq highlight-font-chars-face-underline nil)
         ;;
         (setq whitespace-tab-fg-color "#627D9D")
+        ;;
+        (setq hl-line-bg-color "#33485e")
         ;;
         (invert-face 'default)
     )
@@ -100,6 +124,8 @@
         (setq highlight-font-chars-face-underline t)
         ;;
         (setq whitespace-tab-fg-color "#627D9D")
+        ;;
+        (setq hl-line-bg-color (face-background 'highlight))
     )
   )
 (defface my-highlight-font-chars-face
@@ -124,27 +150,6 @@
 
 
 (require 'init-slime)
-
-
-
-
-(set-face-attribute 'default nil :font "IBM Plex Mono 1.2-15.0")
-(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0"))
-(when (my-system-type-is-darwin)
-  (set-face-attribute 'default nil :font "IBM Plex Mono 1.2-15.0") ;;; :weight 'light)
-  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0")))
-;; ;;; https://github.com/supercomputra/SF-Mono-Font
-;; ;;;
-;; (set-face-attribute 'default nil :font "SF Mono-16.0")
-;; (add-to-list 'default-frame-alist '(font . "SF Mono-16.0"))
-;;
-;; (when (my-system-type-is-darwin)
-;;   (set-face-attribute 'default nil :font "SF Mono-16.0" :weight 'light)
-;;   (add-to-list 'default-frame-alist '(font . "SF Mono-16.0")))
-
-(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
-;; (add-to-list 'default-frame-alist '(background-color . "#161c23"))
-
 
 
 ;; (require 'init-theme)
@@ -243,7 +248,7 @@
  ;;;;  '(helm-selection ((t (:foreground "white" :background "purple"))))
  ;;;;  '(help-argument-name ((t (:inherit italic :underline nil))))
  ;;;;  '(highlight ((t (:background "#7ED9B9" :foreground "black" :weight normal))))
- '(hl-line ((t (:extend t :background "#33485e" :underline nil))))
+ ;;;;  ;; '(hl-line ((t (:extend t :background "#33485e" :underline nil))))
  ;;;;  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
  ;;;;  '(iedit-occurrence ((t (:inherit nil :foreground "yellow"))))
  ;;;;  '(isearch ((t (:background "orange1" :foreground "black" :weight normal :inverse-video nil))))
