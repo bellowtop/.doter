@@ -10,9 +10,10 @@
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
 
+
 (set-face-attribute 'whitespace-tab nil
   :background (face-background 'default)
-  :foreground "#627D9D")
+  :foreground whitespace-tab-fg-color)
 
 
 

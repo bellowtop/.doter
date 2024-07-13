@@ -23,8 +23,7 @@
     (set-fringe-mode 0))
 
   (defun dim-treemacs-window-background ()
-    (set (make-local-variable 'face-remapping-alist)
-      '((default :background "#26282F"))))
+    (set (make-local-variable 'face-remapping-alist) `((default :background ,darker-window-bg-color))))
 
   (defun my-decrease-treemacs-width ()
     (interactive)
@@ -162,7 +161,7 @@ exists it returns /file/name_Copy2.ext etc."
       :family "IBM Plex Mono"
       :weight 'normal
       :height 140
-      :foreground "#C4C4C4"
+      :foreground darker-window-fg-color
       :underline nil
       :inherit 'unspecified))
 

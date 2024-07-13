@@ -129,7 +129,7 @@
 (defun* refresh-current-mode ()
   (interactive)
   (when (my-god-this-is-dark-background-buffer (buffer-name))
-    (set (make-local-variable 'face-remapping-alist) '((default :background "#26282F"))))
+    (set (make-local-variable 'face-remapping-alist) `((default :background ,darker-window-bg-color))))
   (cond
     ((my-god-this-is-legendary-buffer (buffer-name))
       ;; (message "%s is legendary buffer" (buffer-name))
@@ -306,6 +306,9 @@
 (setq window-divider-right-color "#26282F")
 
 
+(global-display-line-numbers-mode 1)
+
+
 
 (defun my-god-mode-update-cursor-type ()
   ;; (setq cursor-type (if (bound-and-true-p god-local-mode) 'bar 'bar))
@@ -314,8 +317,9 @@
   (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
   (if (bound-and-true-p god-local-mode)
     (progn
-      ;; (set-face-attribute 'hl-line nil :foreground 'unspecified :background "#33485e")
-      (set-face-attribute 'line-number-current-line nil :foreground "white" :background "#33485e")
+      ;; (set-face-attribute 'line-number-current-line nil :foreground "white" :background "#33485e")
+      ;; reset
+      (set-face-attribute 'line-number-current-line nil :foreground (face-foreground 'line-number) :background (face-background 'line-number))
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
         (set-face-attribute 'window-divider-last-pixel nil :foreground window-divider-right-color)
