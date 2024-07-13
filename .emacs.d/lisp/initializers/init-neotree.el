@@ -13,6 +13,8 @@
   )
 
 
+(defun darker-background-for-sidebar ()
+  (face-remap-add-relative 'default '(:background "#1E2127")))
 
 (use-package neotree
   :ensure t

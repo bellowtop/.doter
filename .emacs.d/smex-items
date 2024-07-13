@@ -1,0 +1,18 @@
+
+;; ----- smex-history -----
+(
+ toggle-debug-on-error
+ global-display-line-numbers-mode
+ line-number-mode
+ cd
+ 5x5
+ arp
+ dbx
+)
+
+;; ----- smex-data -----
+(
+ (line-number-mode . 1)
+ (global-display-line-numbers-mode . 1)
+ (toggle-debug-on-error . 1)
+)

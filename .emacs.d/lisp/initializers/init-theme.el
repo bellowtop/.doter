@@ -76,22 +76,6 @@
 
 
 
-(set-face-attribute 'default nil :font "IBM Plex Mono 1.2-15.0")
-(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0"))
-
-(when (my-system-type-is-darwin)
-  (set-face-attribute 'default nil :font "IBM Plex Mono 1.2-15.0") ;;; :weight 'light)
-  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-15.0")))
-
-
-;; ;;; https://github.com/supercomputra/SF-Mono-Font
-;; ;;;
-;; (set-face-attribute 'default nil :font "SF Mono-16.0")
-;; (add-to-list 'default-frame-alist '(font . "SF Mono-16.0"))
-;;
-;; (when (my-system-type-is-darwin)
-;;   (set-face-attribute 'default nil :font "SF Mono-16.0" :weight 'light)
-;;   (add-to-list 'default-frame-alist '(font . "SF Mono-16.0")))
 
 (set-cursor-color "red")
 (setq-default cursor-type 'bar)
@@ -184,8 +168,6 @@
 
 
 
-(defun darker-background-for-sidebar ()
-  (face-remap-add-relative 'default '(:background "#1E2127")))
 
 
 
