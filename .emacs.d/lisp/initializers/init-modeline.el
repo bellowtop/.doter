@@ -8,7 +8,11 @@
                                       (eq window (minibuffer-selected-window))))))
                             (if (bound-and-true-p god-local-mode)
                               'error
-                              '(:foreground "#7fdc59"))
+                              `(
+                                :foreground  ,(face-foreground 'line-number-current-line)
+                                :background ,(face-background 'line-number-current-line)
+                               )
+                            )
                             'mode-line-buffer-id)
       'mouse-face
       'mode-line-highlight
