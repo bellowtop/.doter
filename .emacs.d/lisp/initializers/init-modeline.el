@@ -7,7 +7,7 @@
                                     (with-selected-window (minibuffer-window)
                                       (eq window (minibuffer-selected-window))))))
                             (if (bound-and-true-p god-local-mode)
-                              'error
+                              '(:inherit mode-line-active)
                               `(
                                 :foreground  ,(face-foreground 'line-number-current-line)
                                 :background ,(face-background 'line-number-current-line)

@@ -8,8 +8,7 @@
     (setq eglot-ignored-server-capabilities
       (add-to-list 'eglot-ignored-server-capabilities ':documentHighlightProvider))
     (set-face-attribute 'eglot-highlight-symbol-face nil :inherit nil)
-    (set-face-attribute 'flymake-error nil :underline 'unspecified :foreground 'unspecified :background 'unspecified)
-    ;; (flymake-mode-off)
+    (flymake-mode 0)
     ))
 
 (defun my-enable-eglot-highlight ()
@@ -18,8 +17,8 @@
     (setq eglot-ignored-server-capabilities
       (delete ':documentHighlightProvider eglot-ignored-server-capabilities))
     (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'my-highlight-font-chars-face)
-    (set-face-attribute 'flymake-error nil :underline t :foreground "DeepPink" :background (face-background 'default))
-    ;; (flymake-mode-on)
+    (flymake-mode 1)
+    (flymake-start)
     ))
 
 

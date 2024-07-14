@@ -106,8 +106,6 @@
 
 
 
-;; Set symbol for the border
-(set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?│))
 
 
 
@@ -119,15 +117,7 @@
 (tab-bar-mode -1)
 
 
-(setq default-frame-alist
-  '(
-     ;; (undecorated . t)  ;;;;会导致所有边框全部消失无法拖动调整窗口大小 需要加上后面两句
-     ;; (drag-internal-border . 1)
-     ;; (internal-border-width . 5)
-     (vertical-scroll-bars) ;隐藏滚动条
-     (left-fringe) ;显示左fringe
-     (right-fringe . 0) ;关闭右fringe
-     ))
+
 
 
 (when (display-graphic-p)
@@ -181,9 +171,7 @@
 
 
 
-(setq-default
-  left-margin-width 0
-  right-margin-width 0)
+
 
 
 (provide 'init-theme)

@@ -322,7 +322,9 @@
       ;; reset
       (when (my-god-this-is-normal-editor-buffer (buffer-name))
         (display-line-numbers-mode 1)
-        (set-face-attribute 'line-number-current-line nil :foreground (face-foreground 'line-number) :background (face-background 'line-number))
+        (set-face-attribute 'line-number-current-line nil
+                            :foreground (or (face-foreground 'line-number) 'unspecified)
+                            :background (or (face-background 'line-number) 'unspecified))
         )
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
@@ -348,7 +350,9 @@
       ;; (set-face-background 'hl-line hl-line-bg-color)
       (when (my-god-this-is-normal-editor-buffer (buffer-name))
         (display-line-numbers-mode 1)
-        (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
+        (set-face-attribute 'line-number-current-line nil
+                            :foreground "black"
+                            :background "#7fdc59")
         )
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
