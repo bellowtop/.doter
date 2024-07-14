@@ -81,27 +81,36 @@
 
 
 
-;;;
-;;; my theme
-;;;
-(set-face-attribute 'default nil :font "IBM Plex Mono 1.2-15.0")
-(add-to-list 'default-frame-alist '(font . "IBM Plex Mono 1.2-15.0"))
-(when (my-system-type-is-darwin)
-  (set-face-attribute 'default nil :font "IBM Plex Mono 1.2-15.0") ;;; :weight 'light)
-  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono 1.2-15.0")))
+
+
+
+(setq default-font "IBM Plex Mono 1.2-15.0")
 ;; ;;; https://github.com/supercomputra/SF-Mono-Font
-;; ;;;
-;; (set-face-attribute 'default nil :font "SF Mono-16.0")
-;; (add-to-list 'default-frame-alist '(font . "SF Mono-16.0"))
-;;
-;; (when (my-system-type-is-darwin)
-;;   (set-face-attribute 'default nil :font "SF Mono-16.0" :weight 'light)
-;;   (add-to-list 'default-frame-alist '(font . "SF Mono-16.0")))
+;; setq default-font "SF Mono-16.0")
+(set-face-attribute 'default nil :font default-font)
+(setq default-frame-alist
+  `(
+     ;; (undecorated . t)  ;;;;会导致所有边框全部消失无法拖动调整窗口大小 需要加上后面两句
+     ;; (drag-internal-border . 1)
+     ;; (internal-border-width . 5)
+     (vertical-scroll-bars) ;隐藏滚动条
+     (left-fringe . 0) ;关闭左fringe
+     (right-fringe . 0) ;关闭右fringe
+     (font . ,default-font)
+     (vertical-scroll-bars . nil)
+     ))
+(set-face-attribute 'region nil :inverse-video t)
+(set-face-attribute 'show-paren-match nil :foreground "black" :background "yellow")
+(setq-default left-margin-width 0 right-margin-width 0)
 
-(add-to-list 'default-frame-alist '(vertical-scroll-bars . nil))
-;; (add-to-list 'default-frame-alist '(background-color . "#161c23"))
-
-(setq use-dark-theme-mode nil)
+;; Set symbol for the border
+(set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?│))
+;;;
+;;; My tiny Theme
+;;;
+(setq use-dark-theme-mode t)
+(set-face-foreground 'default "#161c23")
+(set-face-background 'default "white")
 (if use-dark-theme-mode
   (progn
         (setq darker-window-bg-color "#26282F")
@@ -113,7 +122,7 @@
         (setq whitespace-tab-fg-color "#627D9D")
         ;;
         (setq hl-line-bg-color "#33485e")
-        ;;
+        ;; dark theme!
         (invert-face 'default)
     )
   (progn
@@ -133,9 +142,11 @@
         :foreground ,highlight-font-chars-face-fg
         :underline ,highlight-font-chars-face-underline
         :weight bold
-        )
-       ))
+        )))
   "custom highlight for treemacs current line")
+
+
+
 
 
 
@@ -207,106 +218,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- ;;;;  '(ahs-definition-face ((t (:inherit ahs-plugin-default-face))))
- ;;;;  '(ahs-definition-face-unfocused ((t (:inherit ahs-plugin-default-face))))
- ;;;;  '(ahs-face ((t (:inherit ahs-plugin-default-face))))
- ;;;;  '(ahs-plugin-default-face ((t (:background "#59dcb7" :foreground "Black"))))
- ;;;;  '(centaur-tabs-selected ((t (:inherit default :foreground "black" :background "#FFC44C" :weight normal))))
- ;;;;  '(centaur-tabs-selected-modified ((t (:inherit centaur-tabs-selected :foreground "black"))))
- ;;;;  '(centaur-tabs-unselected ((t (:foreground "#969696" :background "#262830"))))
- ;;;;  '(centaur-tabs-unselected-modified ((t (:inherit centaur-tabs-unselected :foreground "white"))))
- ;;;;  '(company-preview-common ((t (:inherit font-lock-comment :foreground "white" :weight normal))))
- ;;;;  '(corfu-default ((t (:inherit default))))
- ;;;;  '(counsel-outline-default ((t (:inherit green))))
- ;;;;  '(deadgrep-filename-face ((t (:inherit bold :foreground "green"))))
- ;;;;  '(deadgrep-match-face ((t (:foreground "#7fdc59" :background "#232d38" :weight normal))))
- ;;;;  '(deadgrep-search-term-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
- ;;;;  '(diff-added ((t (:extend t :foreground "green" :background "black"))))
- ;;;;  '(diff-indicator-added ((t (:extend t :foreground "green" :background "black"))))
- ;;;;  '(diff-indicator-removed ((t (:extend t :foreground "red" :background "black"))))
- ;;;;  '(diff-removed ((t (:extend t :foreground "red" :background "black"))))
- ;;;;  '(doom-modeline-buffer-file ((t (:inherit nil))))
- ;;;;  '(doom-modeline-buffer-major-mode ((t (:inherit nil))))
- ;;;;  '(doom-modeline-buffer-minor-mode ((t nil)))
- ;;;;  '(doom-modeline-buffer-modified ((t (:inherit nil))))
- ;;;;  '(doom-modeline-buffer-path ((t nil)))
- ;;;;  '(doom-modeline-god ((t (:foreground "red" :weight bold))))
- ;;;;  '(doom-modeline-info ((t (:inherit nil))))
- ;;;;  '(doom-modeline-project-dir ((t (:inherit nil))))
- ;;;;  '(doom-modeline-project-parent-dir ((t (:inherit nil))))
- ;;;;  '(doom-modeline-project-root-dir ((t (:inherit nil))))
- ;;;;  '(eglot-highlight-symbol-face ((t (:inherit highlight))))
- ;;;;  '(eldoc-box-body ((t (:inherit default))))
- ;;;;  '(flymake-diagnostic-at-point-posframe-background-face ((t (:background "dark magenta"))))
- ;;;;  '(flymake-error ((t (:foreground "DeepPink" :underline (:color foreground-color :style line :position line)))))
- ;;;;  '(flymake-error-echo ((t nil)))
- ;;;;  '(flymake-warning ((t (weight normal))))
- ;;;;  '(flymake-warning-echo ((t nil)))
- ;;;;  '(fringe ((t :background "#161c23")))
- ;;;;  '(header-line ((t :box (:line-width 4 :color "grey20" :style nil))))
- ;;;;  '(header-line-highlight ((t :box (:color "#e5ded6"))))
- ;;;;  '(helm-selection ((t (:foreground "white" :background "purple"))))
- ;;;;  '(help-argument-name ((t (:inherit italic :underline nil))))
- ;;;;  '(highlight ((t (:background "#7ED9B9" :foreground "black" :weight normal))))
- ;;;;  ;; '(hl-line ((t (:extend t :background "#33485e" :underline nil))))
- ;;;;  '(hydra-face-red ((t (:foreground "chocolate" :weight bold))))
- ;;;;  '(iedit-occurrence ((t (:inherit nil :foreground "yellow"))))
- ;;;;  '(isearch ((t (:background "orange1" :foreground "black" :weight normal :inverse-video nil))))
- ;;;;  '(ivy-current-match ((t (:inherit region :background nil :foreground nil))))
- ;;;;  '(ivy-posframe ((t (:background "black"))))
- ;;;;  '(ivy-posframe-border ((t (:background "green"))))
- ;;;;  '(keycast-key ((t)))
- ;;;;  '(lazy-highlight ((t (:background "light green" :foreground "black" :weight normal))))
- ;;;;  '(line-number ((t (:inherit default :foreground "#565575" :slant normal :weight normal))))
- ;;;;  '(line-number-current-line ((t (:inherit (hl-line default) :foreground "#CBE3E7" :slant normal :weight normal))))
- ;;;;  '(lsp-face-highlight-read ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
- ;;;;  '(lsp-face-highlight-textual ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
- ;;;;  '(lsp-face-highlight-write ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
- ;;;;  '(magit-diff-added ((t (:extend t :foreground "forest green"))))
- ;;;;  '(magit-diff-added-highlight ((t (:extend t :background "black" :foreground "green"))))
- ;;;;  '(magit-diff-file-heading ((t (:extend t :weight normal))))
- ;;;;  '(magit-diff-file-heading-highlight ((t (:extend t :background "black" :weight bold))))
- ;;;;  '(magit-diff-hunk-heading ((t (:extend t :background "#252832" :foreground "yellow4"))))
- ;;;;  '(magit-diff-hunk-heading-highlight ((t (:extend t :background "black" :foreground "yellow"))))
- ;;;;  '(magit-diff-removed ((t (:extend t :foreground "indian red"))))
- ;;;;  '(magit-diff-removed-highlight ((t (:extend t :background "black" :foreground "red"))))
- ;;;;  '(mc/region-face ((t (:foreground "#ff77cc" :inverse-video t :weight normal))))
- ;;;;  '(minibuffer-prompt ((t (:inherit default :foreground "white" :background "#1E2127" :weight normal))))
- ;;;;  '(mode-line ((t (:background "#262831" :foreground "#7AA2F7" :overline "#374250" :box nil))))
- ;;;;  '(mode-line-active ((t :box nil)))
- ;;;;  '(mode-line-highlight ((t :box nil)))
- ;;;;  ;; '(mode-line-inactive ((t (:box nil))))
- ;;;;  '(mode-line-inactive ((t (:background "#262831" :foreground "#C4C4C4" :overline "#374250" :box nil))))
- ;;;;  '(next-error ((t (:foreground "#000000" :background "#00ff00"))))
- ;;;;  '(region ((t (:inverse-video t :foreground nil :background nil))))
- ;;;;  '(show-paren-match ((t (:foreground "black" :background "yellow"))))
- ;;;;  '(symbol-overlay-default-face ((t (:inherit my-highlight-font-chars-face))))
- ;;;;  '(tab-bar-tab ((t :box (:line-width 4 :color "grey85" :style nil))))
- ;;;;  '(tab-bar-tab-inactive ((t :box (:line-width 4 :color "grey75" :style nil))))
- ;;;;  '(tab-line ((t (:inherit variable-pitch :background "#1F2335" :foreground "black"))))
- ;;;;  '(tab-line-tab ((t)))
- ;;;;  '(tab-line-tab-active ((t)))
- ;;;;  '(tab-line-tab-inactive ((t)))
- ;;;;  '(term-color-black ((t (:foreground "#282a36" :background "#6272a4"))))
- ;;;;  '(term-color-blue ((t (:foreground "#bd93f9" :background "#bd93f9"))))
- ;;;;  '(term-color-cyan ((t (:foreground "#8be9fd" :background "#8be9fd"))))
- ;;;;  '(term-color-green ((t (:foreground "#50fa7b" :background "#50fa7b"))))
- ;;;;  '(term-color-magenta ((t (:foreground "#ff79c6" :background "#ff79c6"))))
- ;;;;  '(term-color-red ((t (:foreground "#ff5555" :background "#ff5555"))))
- ;;;;  '(term-color-white ((t (:foreground "#f8f8f2" :background "#656555"))))
- ;;;;  '(term-color-yellow ((t (:foreground "#f1fa8c" :background "#f1fa8c"))))
- ;;;;  '(term-default-bg-color ((t (:inherit term-color-black))))
- ;;;;  '(term-default-fg-color ((t (:inherit term-color-white))))
- ;;;;  '(tty-menu-enabled-face ((t (:inherit hl-line))))
- ;;;;  '(tty-menu-selected-face ((t (:inherit eglot-highlight-symbol-face))))
- ;;;;  '(vertical-border ((t :background "#161c23" :foreground "#161c23")))
- ;;;;  '(whitespace-trailing ((t (:background "black" :foreground "#42546A" :weight bold))))
- ;;;;  '(widget-field ((t (:extend t :background "gray" :foreground "black"))))
- ;;;;  '(window-divider ((t (:foreground "green"))))
- ;;;;  '(window-divider-first-pixel ((t (:background "#161c23" :foreground "#161c23"))))
- ;;;;  '(window-divider-last-pixel ((t (:background "#161c23" :foreground "#161c23"))))
- ;;;;  '(xref-match ((t (:inherit region))))
- '(yas-field-highlight-face ((t (:foreground "#000000" :background "#7fdc59" :weight normal))))
  )
 
 

@@ -24,6 +24,12 @@
     (kbd "RET")
     #'company-complete-selection)
 
+  (with-eval-after-load 'flymake
+      (add-hook 'company-completion-started-hook   #'(lambda(&rest _) (flymake-mode 0))                 nil t)
+      (add-hook 'company-completion-finished-hook  #'(lambda(&rest _) (flymake-mode 1) (flymake-start)) nil t)
+      (add-hook 'company-completion-cancelled-hook #'(lambda(&rest _) (flymake-mode 1) (flymake-start)) nil t)
+  )
+
   (global-set-key (kbd "s-r") #'company-yasnippet))
 ;; Use (kbd "TAB") (or use (kbd "<tab>"), if you want to distinguish C-i from the <tab> key)
 
