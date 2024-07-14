@@ -27,6 +27,11 @@
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'my-gofmt-before-save nil t)
 
+  (with-eval-after-load 'exec-path-from-shell
+    (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
+
+  (setq go-ts-mode-indent-offset 4)
+
   (if (eq major-mode 'go-mode)
     (define-key go-mode-map    (kbd "s-<return>") #'my-go-mode-split-string)
     (define-key go-ts-mode-map (kbd "s-<return>") #'my-go-mode-split-string)
@@ -44,17 +49,8 @@
 )
 
 
-;; (add-hook 'go-mode-hook 'my-go-mode-hook)
-
-(with-eval-after-load 'exec-path-from-shell
-    (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
-
-
 (add-hook 'go-mode-hook #'my-go-mode-hook)
 (add-hook 'go-ts-mode-hook #'my-go-mode-hook)
-
-
-(add-hook 'go-ts-mode-hook #'(lambda () (setq go-ts-mode-indent-offset 4)))
 
 
 
