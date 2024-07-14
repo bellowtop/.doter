@@ -117,10 +117,10 @@
          (this-buffer-mode (symbol-name (buffer-mode bufname))))
     (and
       (eq buffer-read-only t)
-      (not
-        (seq-filter
-        (lambda (n) (string-prefix-p n this-buffer-mode))
-        should-not-display-dark-background-modes))
+      (not (seq-filter
+             (lambda (n) (string-prefix-p n this-buffer-mode))
+             should-not-display-dark-background-modes))
+      (not (derived-mode-p 'prog-mode))
       )))
 
 
