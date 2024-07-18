@@ -46,6 +46,8 @@
   (centaur-tabs-headline-match)
   (centaur-tabs-mode t)
   (push "*scratch" centaur-tabs-excluded-prefixes)
+  (push "*vc*" centaur-tabs-excluded-prefixes)
+  (push "Treemacs" centaur-tabs-excluded-prefixes)
   (push "*grep" centaur-tabs-excluded-prefixes)
   (push "*deadgrep" centaur-tabs-excluded-prefixes)
   (push "*Messages" centaur-tabs-excluded-prefixes)
