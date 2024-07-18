@@ -120,6 +120,7 @@
         (setq highlight-font-chars-face-underline nil)
         ;;
         (setq whitespace-tab-fg-color "#627D9D")
+        (setq whitespace-trailing-fg-color "#59728F")
         ;;
         (setq hl-line-bg-color "#33485e")
         ;; dark theme!
@@ -133,6 +134,7 @@
         (setq highlight-font-chars-face-underline t)
         ;;
         (setq whitespace-tab-fg-color "#627D9D")
+        (setq whitespace-trailing-fg-color "#59728F")
         ;;
         (setq hl-line-bg-color (face-background 'highlight))
     )
@@ -147,8 +149,7 @@
 
 
 
-
-
+(load-theme 'bogster t)
 
 
 (require 'init-god)
