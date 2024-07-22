@@ -36,7 +36,8 @@
     ;; centaur-tabs-gray-out-icons 'buffer
     centaur-tabs-set-icons nil
     ;; centaur-tabs-icon-scale-factor 0.8
-    centaur-tabs-set-modified-marker nil
+    centaur-tabs-set-modified-marker t
+    centaur-tabs-modified-marker "*"
     centaur-tabs-set-close-button nil
     centaur-tabs-left-edge-margin " "
     centaur-tabs-right-edge-margin " "
@@ -109,10 +110,12 @@
                    centaur-tabs-jump-identifier-selected
                    centaur-tabs-jump-identifier-unselected
                    centaur-tabs-dim-buffer-face))
-    (set-face-attribute face nil
-      :weight 'normal
-      :family "IBM Plex Mono"
-      :height 140))
+    (set-face-attribute face nil :weight 'normal :family "IBM Plex Mono" :height 140)
+    )
+
+  (set-face-attribute 'centaur-tabs-selected nil :inherit 'default :foreground "black" :background "#FFC44C" :weight 'normal)
+  (set-face-attribute 'centaur-tabs-selected-modified        nil :inherit 'default :foreground "black" :background "#FCE094" :weight 'normal)
+  (set-face-attribute 'centaur-tabs-modified-marker-selected nil :inherit 'default :foreground "black" :background "#FCE094" :weight 'normal)
 
   ;; ;; modified tab foreground
   ;; (set-face-foreground 'centaur-tabs-selected-modified "#61AFEF")
@@ -136,6 +139,7 @@
   (set-face-underline 'centaur-tabs-selected-modified nil)
   (set-face-underline 'centaur-tabs-selected nil)
   (set-face-underline 'centaur-tabs-modified-marker-selected nil)
+
 
   (unless (display-graphic-p)
     (setq centaur-tabs-set-icons nil)
