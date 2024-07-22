@@ -66,9 +66,10 @@
   (defun my-treemacs-delete-marked-or-current-file-without-confirm()
     (interactive)
     (with-simulated-input ("yes" "RET")
-      (if (eq treemacs--marked-paths nil)
+      (if (bound-and-true-p treemacs--marked-paths)
+        (treemacs-delete-marked-paths)
         (treemacs-delete-file)
-        (treemacs-delete-marked-paths)))
+        ))
     (treemacs-refresh))
 
   (defun my-treemacs-copy-marked-files-without-confirm()
