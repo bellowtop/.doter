@@ -21,6 +21,11 @@
     (flymake-start)
     ))
 
+(with-eval-after-load 'eglot
+  (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'my-highlight-font-chars-face)
+)
+
+
 
 (defun my-enable-paren-highlight ()
   (interactive)

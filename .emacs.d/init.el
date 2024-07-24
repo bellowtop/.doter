@@ -112,6 +112,7 @@
 (set-face-foreground 'default "#161c23")
 (set-face-background 'default "white")
 (set-face-attribute 'mode-line-inactive nil :box nil)
+(set-face-attribute 'mode-line-active   nil :box nil)
 
 
 
@@ -156,7 +157,7 @@
 
 
 
-(load-theme 'bogster t)
+;; (load-theme 'bogster t)
 
 
 (require 'init-god)
@@ -592,6 +593,9 @@
 (bind-key (kbd "C-k") #'my-delete-to-end)
 (bind-key (kbd "C-j") #'save-buffer)
 (bind-key (kbd "<RET>") #'newline-and-indent)
+
+(bind-key* (kbd "C-<wheel-up>") #'ignore)
+(bind-key* (kbd "C-<wheel-down>") #'ignore)
 
 
 (when (display-graphic-p)
