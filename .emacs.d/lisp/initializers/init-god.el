@@ -129,7 +129,10 @@
 (defun* refresh-current-mode ()
   (interactive)
   (unless (my-god-this-is-dark-background-buffer (buffer-name))
-    (set (make-local-variable 'face-remapping-alist) `((default :background ,editor-window-bg-color)))
+    (set (make-local-variable 'face-remapping-alist)
+         `((default :background ,editor-window-bg-color)
+           (line-number    :background ,editor-window-bg-color :foreground ,whitespace-tab-fg-color)
+           (whitespace-tab :background ,editor-window-bg-color :foreground ,whitespace-tab-fg-color)))
     )
   (cond
     ((my-god-this-is-legendary-buffer (buffer-name))
@@ -325,7 +328,7 @@
         (display-line-numbers-mode 1)
         (set-face-attribute 'line-number-current-line nil
                             :foreground (or (face-foreground 'line-number) 'unspecified)
-                            :background (or (face-background 'line-number) 'unspecified))
+                            :background editor-window-bg-color)
         )
       (when (display-graphic-p)
         (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
