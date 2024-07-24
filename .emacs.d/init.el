@@ -109,9 +109,10 @@
 ;;; My tiny Theme
 ;;;
 (setq use-dark-theme-mode t)
-(set-face-foreground 'default "#161c23")
+(set-face-foreground 'default "#26282F")
 (set-face-background 'default "white")
 (set-face-attribute 'mode-line-inactive nil :box nil)
+(set-face-attribute 'mode-line-active   nil :box nil)
 
 
 
@@ -120,6 +121,7 @@
 
 (if use-dark-theme-mode
   (progn
+        (setq editor-window-bg-color "#161c23")
         (setq darker-window-bg-color "#26282F")
         (setq darker-window-fg-color "white")
         ;;
@@ -134,6 +136,7 @@
         (invert-face 'default)
     )
   (progn
+        (setq editor-window-bg-color "#FFFFFF")
         (setq darker-window-bg-color "#FFFFFF")
         (setq darker-window-fg-color "black")
         ;;
@@ -156,7 +159,7 @@
 
 
 
-(load-theme 'bogster t)
+;; (load-theme 'bogster t)
 
 
 (require 'init-god)
@@ -592,6 +595,9 @@
 (bind-key (kbd "C-k") #'my-delete-to-end)
 (bind-key (kbd "C-j") #'save-buffer)
 (bind-key (kbd "<RET>") #'newline-and-indent)
+
+(bind-key* (kbd "C-<wheel-up>") #'ignore)
+(bind-key* (kbd "C-<wheel-down>") #'ignore)
 
 
 (when (display-graphic-p)

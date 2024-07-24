@@ -162,6 +162,9 @@
     (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
     (define-key god-local-mode-map (kbd "E") #'eval-region)
 
+    (define-key god-local-mode-map (kbd "F") #'my-projectile-find-file)
+    (define-key god-local-mode-map (kbd "M-F") #'my-projectile-switch-project-find-file)
+
     (define-key god-local-mode-map (kbd "*") #'my-search-selection)
     (define-key god-local-mode-map (kbd "/") #'isearch-forward)
     (define-key god-local-mode-map (kbd "n") #'my-isearch-forward)
