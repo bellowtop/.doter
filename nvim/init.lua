@@ -475,6 +475,13 @@ vim.g.multi_cursor_quit_key            = '<Esc>'
 --
 vim.g.surround_no_insert_mappings = 1
 
+
+local function nvim_tree_on_attach(bufnr)
+    local api = require "nvim-tree.api"
+    api.config.mappings.default_on_attach(bufnr)
+    vim.keymap.set('n', '<C-e>', api.tree.toggle_help, { noremap = true })
+end
+
 require'nvim-tree'.setup {
     renderer = {
         group_empty = true,
@@ -485,10 +492,11 @@ require'nvim-tree'.setup {
                 item = "├─",
                 edge = "│ ",
                 none = "  ",
-                },
-            }
+            },
         }
-    }
+    },
+    on_attach = nvim_tree_on_attach,
+}
 
 
 function find_and_focus_file()
@@ -1144,6 +1152,7 @@ autocmd FileType vista,NvimTree noremap <buffer> <c-i> <nop>
 autocmd FileType vista,NvimTree noremap <buffer> <c-o> <nop>
 autocmd FileType vista,NvimTree noremap <buffer> <c-h> <nop>
 autocmd FileType vista,NvimTree noremap <buffer> <c-l> <nop>
+autocmd FileType vista,NvimTree noremap <buffer> <c-e> <nop>
 autocmd FileType vista,NvimTree noremap <buffer> <Leader>L <nop>
 autocmd FileType vista,NvimTree noremap <buffer> <Leader>q <nop>
 autocmd FileType vista,NvimTree noremap <buffer> <Leader>x <nop>
