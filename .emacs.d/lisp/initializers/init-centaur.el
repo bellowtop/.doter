@@ -81,6 +81,10 @@
   :bind
   ("s-h" . centaur-tabs-backward)
   ("s-l" . centaur-tabs-forward)
+  ("C-S-<tab>" . centaur-tabs-backward)
+  ("C-<tab>"   . centaur-tabs-forward)
+  ("M-{"   . centaur-tabs-backward)
+  ("M-}"   . centaur-tabs-forward)
   ("s-t" . centaur-tabs--create-new-tab)
   ("s-n" . centaur-tabs--create-new-empty-buffer)
   ("s-w" . centaur-tabs--kill-this-buffer-dont-ask)
