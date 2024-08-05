@@ -82,7 +82,7 @@
   ("s-h" . centaur-tabs-backward)
   ("s-l" . centaur-tabs-forward)
   ("s-t" . centaur-tabs--create-new-tab)
-  ("s-n" . centaur-tabs--create-new-empty-buffer)
+  ;; ("s-n" . centaur-tabs--create-new-empty-buffer)
   ("s-w" . centaur-tabs--kill-this-buffer-dont-ask)
   ("s-1" . my-centaur-select-tab-1)
   ("s-2" . my-centaur-select-tab-2)

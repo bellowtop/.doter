@@ -111,8 +111,10 @@
 (setq use-dark-theme-mode t)
 (set-face-foreground 'default "#161c23")
 (set-face-background 'default "white")
-(set-face-attribute 'mode-line-inactive nil :box nil)
-(set-face-attribute 'mode-line-active   nil :box nil)
+(set-face-attribute 'mode-line-inactive    nil :box nil)
+(set-face-attribute 'mode-line-active      nil :box nil)
+(set-face-attribute 'mode-line-highlight   nil :box nil :foreground "green")
+(setq cursor-in-non-selected-windows nil)
 
 
 
@@ -157,7 +159,7 @@
 
 
 
-;; (load-theme 'bogster t)
+(load-theme 'bogster t)
 
 
 (require 'init-god)
