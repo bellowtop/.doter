@@ -94,6 +94,11 @@
   ("s-8" . my-centaur-select-tab-8)
   ("s-9" . my-centaur-select-tab-9))
 
+(setq centaur-tabs-font-height 140)
+(when (my-system-type-is-windows)
+  (setq centaur-tabs-font-height 100)
+  )
+
 (with-eval-after-load 'centaur-tabs
   (dolist (face '(centaur-tabs-default
                    centaur-tabs-unselected
@@ -110,7 +115,7 @@
                    centaur-tabs-jump-identifier-selected
                    centaur-tabs-jump-identifier-unselected
                    centaur-tabs-dim-buffer-face))
-    (set-face-attribute face nil :weight 'normal :family "IBM Plex Mono" :height 140)
+    (set-face-attribute face nil :weight 'normal :family "IBM Plex Mono" :height centaur-tabs-font-height)
     )
 
   (set-face-attribute 'centaur-tabs-selected nil :inherit 'default :foreground "black" :background "#FFC44C" :weight 'normal)

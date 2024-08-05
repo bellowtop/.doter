@@ -33,6 +33,7 @@
 
 ;; why ensure not work?
 (require 'ivy)
+(require 'counsel)
 
 (defun ivy-format-function-default (cands)
   "Transform CANDS into a string for minibuffer."

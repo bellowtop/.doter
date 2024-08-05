@@ -63,7 +63,9 @@
 
 
 
-(require 'init-eshell)
+(unless (my-system-type-is-windows)
+  (require 'init-eshell)
+)
 
 
 
@@ -80,10 +82,25 @@
 
 
 
+(when (my-system-type-is-windows)
+  (setq w32-pass-lwindow-to-system nil)
+  (setq w32-lwindow-modifier 'super) ; Left Windows key
 
+  (setq w32-pass-rwindow-to-system nil)
+  (setq w32-rwindow-modifier 'super) ; Right Windows key
 
+  (setq w32-pass-apps-to-system nil)
+  (setq w32-apps-modifier 'hyper) ; Menu key
+
+  (tool-bar-mode 0)
+  )
 
 (setq default-font "IBM Plex Mono 1.2-15.0")
+
+(when (my-system-type-is-windows)
+  (setq default-font "IBM Plex Mono 1.2-10.0")
+  )
+
 ;; ;;; https://github.com/supercomputra/SF-Mono-Font
 ;; setq default-font "SF Mono-16.0")
 (set-face-attribute 'default nil :font default-font)
@@ -97,7 +114,9 @@
      (right-fringe . 0) ;关闭右fringe
      (font . ,default-font)
      (vertical-scroll-bars . nil)
+     (fullscreen . maximized)
      ))
+
 (set-face-attribute 'region nil :inverse-video t)
 (set-face-attribute 'show-paren-match nil :foreground "black" :background "yellow")
 (setq-default left-margin-width 0 right-margin-width 0)

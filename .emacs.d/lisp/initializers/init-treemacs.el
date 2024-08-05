@@ -137,8 +137,19 @@ exists it returns /file/name_Copy2.ext etc."
     ;; add-hook no work????
     ;; ("<mouse-1>" . treemacs-single-click-expand-action)
     ("<double-mouse-1>" . treemacs-RET-action)
-    ))
+   )
+  (:map
+    global-map
+    ("C-c C-t" . treemacs)
+   )
+  )
 
+
+
+(setq treemacs-font-height 140)
+(when (my-system-type-is-windows)
+  (setq treemacs-font-height 100)
+  )
 
 (with-eval-after-load 'treemacs
   (require 'treemacs-nerd-icons)
@@ -161,7 +172,7 @@ exists it returns /file/name_Copy2.ext etc."
     (set-face-attribute face nil
       :family "IBM Plex Mono"
       :weight 'normal
-      :height 140
+      :height treemacs-font-height
       :foreground darker-window-fg-color
       :underline nil
       :inherit 'unspecified))

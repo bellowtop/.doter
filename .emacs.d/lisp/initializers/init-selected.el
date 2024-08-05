@@ -26,8 +26,9 @@
            ("C-d" . kill-region)
            )))
 
-(selected-global-mode 1)
-
+(unless (my-system-type-is-windows)
+  (selected-global-mode 1)
+  )
 
 (defun my-toggle-selected-keybinding ()
   "add special keybindings for visual selected mode"
