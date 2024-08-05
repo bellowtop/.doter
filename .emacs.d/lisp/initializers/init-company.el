@@ -5,6 +5,8 @@
 (add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'before-save-hook 'company-cancel)
 
+(require 'company)
+
 ;; company-posframe-mode
                                         ;  (require 'company-posframe)
                                         ;  (company-posframe-mode 1)

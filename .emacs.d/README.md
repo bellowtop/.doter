@@ -70,3 +70,10 @@ jdtls
 ```
 brew install autopep8
 ```
+
+
+### nerd fonts
+
+```
+M-x nerd-icons-install-fonts
+```
