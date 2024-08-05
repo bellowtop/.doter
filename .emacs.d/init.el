@@ -28,7 +28,6 @@
 
 (setq mac-command-modifier 'super)
 
-
 (require 'cl)
 (require 's)
 
@@ -418,7 +417,6 @@
 
 
 
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -623,10 +621,11 @@
 (require 'init-avy)
 
 
+(require 'which-key)
 (which-key-mode 1)
 
-
-(xclip-mode 1)
+;; (require 'xclip)
+;; (xclip-mode 1)
 
 
 (save-place-mode 1)
