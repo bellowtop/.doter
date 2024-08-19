@@ -113,7 +113,7 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (smerge-mode -1)
-;; (scroll-bar-mode -1)
+(scroll-bar-mode -1)
 (tab-bar-mode -1)
 
 
@@ -127,10 +127,6 @@
   ;;; (require 'awesome-tray)
   ;;; (awesome-tray-mode 1)
 
-  (when (my-system-type-is-darwin)
-    (menu-bar-mode 1))
-
-  (scroll-bar-mode -1)
   (set-fringe-mode 0)
   ;; (tab-bar-mode -1)
   ;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))

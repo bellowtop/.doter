@@ -93,12 +93,13 @@
   (setq w32-apps-modifier 'hyper) ; Menu key
 
   (tool-bar-mode 0)
+  (menu-bar-mode 0)
   )
 
 (setq default-font "IBM Plex Mono 1.2-15.0")
 
 (when (my-system-type-is-windows)
-  (setq default-font "IBM Plex Mono 1.2-10.0")
+  (setq default-font "Cascadia Mono-11.0")
   )
 
 ;; ;;; https://github.com/supercomputra/SF-Mono-Font
@@ -114,7 +115,7 @@
      (right-fringe . 0) ;关闭右fringe
      (font . ,default-font)
      (vertical-scroll-bars . nil)
-     (fullscreen . fullboth)
+     ;; (fullscreen . fullboth)
      ))
 
 (set-face-attribute 'region nil :inverse-video t)
@@ -496,11 +497,19 @@
 
 
 
+(use-package highlight-numbers
+  :defer t
+  :hook
+  (add-hook 'prog-mode-hook 'highlight-numbers-mode)
+  :init
+  )
+
 (use-package rust-mode
   :defer t :init)
 
 (use-package scala-mode
   :defer t :interpreter ("scala" . scala-mode))
+
 
 (use-package yaml-mode
   :defer t
@@ -521,11 +530,6 @@
 (require 'init-display-line-numbers)
 
 
-
-(use-package yaml-mode
-  :defer t
-  :hook
-  (prog-mode . highlight-numbers-mode))
 
 
 

@@ -5,7 +5,7 @@
   :config
   (dashboard-setup-startup-hook))
 
-(use-package dashboard-hackernews)
+;; (use-package dashboard-hackernews)
 
 
 
