@@ -114,7 +114,7 @@
      (right-fringe . 0) ;关闭右fringe
      (font . ,default-font)
      (vertical-scroll-bars . nil)
-     (fullscreen . maximized)
+     (fullscreen . fullboth)
      ))
 
 (set-face-attribute 'region nil :inverse-video t)

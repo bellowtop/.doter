@@ -14,6 +14,8 @@ set smarttab
 set expandtab
 set number
 set belloff=all
+set incsearch
+set wrapscan
 
 map H ^
 map L $
@@ -21,38 +23,32 @@ map ; <C-d>
 map ' <C-u>
 map <C-l> zz
 map m %
+map U <C-r>
 
 
-nnoremap <Leader>h :bprev<CR>
-nnoremap <Leader>l :bnext<CR>
+" nnoremap <Leader>h :bprev<CR>
+" nnoremap <Leader>l :bnext<CR>
 
-inoremap <M-d> <C-o>de
-inoremap <M-BS> <C-o>db
-inoremap <C-k> <C-o>d$
-inoremap <M-k> <C-o>d0
+" inoremap <M-d> <C-o>de
+" inoremap <M-BS> <C-o>db
+" inoremap <C-k> <C-o>d$
+" inoremap <M-k> <C-o>d0
 
 
-nnoremap <C-j> <ESC>:w<CR>
-inoremap <C-j> <ESC>:w<CR>
+" nnoremap <C-j> <ESC>:w<CR>
 
-inoremap <C-n> <C-o>j
-inoremap <C-d> <C-o>x
-inoremap <C-p> <C-o>k
-inoremap <C-e> <C-o>$
-inoremap <C-a> <C-o>^
-inoremap <C-b> <Left>
-inoremap <C-f> <Right>
-inoremap <C-k> <C-o>D
-inoremap <M-k> <C-o>d0
-inoremap <C-t> <C-o>O
-inoremap <C-l> <C-o>zz
-nnoremap <C-l> zz
-nnoremap <C-/> <C-o>u
+" inoremap <C-j> <ESC>:w<CR>
 
-vim.opt.clipboard:prepend("unnamed,unnamedplus")
-
-set hlsearch
-hi Search ctermfg=red ctermbg=yellow
-
-au FileType python setlocal formatprg=autopep8\ -
-
+" inoremap <C-n> <C-o>j
+" inoremap <C-d> <C-o>x
+" inoremap <C-p> <C-o>k
+" inoremap <C-e> <C-o>$
+" inoremap <C-a> <C-o>^
+" inoremap <C-b> <Left>
+" inoremap <C-f> <Right>
+" inoremap <C-k> <C-o>D
+" inoremap <M-k> <C-o>d0
+" inoremap <C-t> <C-o>O
+" inoremap <C-l> <C-o>zz
+" nnoremap <C-l> zz
+" nnoremap <C-/> <C-o>u
