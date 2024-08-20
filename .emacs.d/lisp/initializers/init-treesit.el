@@ -12,9 +12,13 @@
   ;; (push '(typescript-mode . typescript-ts-mode) major-mode-remap-alist)
   ;; ;; go-mode does not support treesitter yet.
   ;; (push '(go-mode . go-ts-mode) major-mode-remap-alist)
-  (push '(c-mode . c-ts-mode) major-mode-remap-alist)
-  (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
-  (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode)) ;; tell h file to c++-ts-mode
+
+  ;; windows emacs treesit is broken
+  (unless (my-system-type-is-windows)
+    (push '(c-mode . c-ts-mode) major-mode-remap-alist)
+    (push '(c++-mode . c++-ts-mode) major-mode-remap-alist)
+    (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-ts-mode)) ;; tell h file to c++-ts-mode
+    )
   (add-to-list 'auto-mode-alist '("\\.ros\\'" . lisp-mode)) ;; tell ros file to emacs lisp mode
   ;; (setq treesit-extra-load-path `( ,(expand-file-name "~/.emacs.d/.local/tree-sitter-grammars") ))
   )
@@ -22,6 +26,9 @@
 
 ;; invoke M-x treesit-auto-install-all to install treesit libs to ~/.emacs.d/tree-sitter/
 (use-package treesit-auto
-  :config (global-treesit-auto-mode))
+  :config
+  (global-treesit-auto-mode)
+  (setq treesit-auto-langs '(c cpp go python))
+  )
 
 (provide 'init-treesit)

@@ -43,6 +43,8 @@
   (add-to-list 'exec-path "E:/work/libraries/LLVM-19.1.0-rc2-Windows-X64/bin")
   ;; rg
   (add-to-list 'exec-path "E:/work/libraries/ripgrep-14.1.0-x86_64-pc-windows-msvc")
+  ;; gcc
+  (add-to-list 'exec-path "E:/work/libraries/mingw64/bin")
   )
 
 

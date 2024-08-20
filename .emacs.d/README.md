@@ -72,8 +72,14 @@ brew install autopep8
 ```
 
 
-### nerd fonts
+### install nerd fonts for treemacs
 
 ```
 M-x nerd-icons-install-fonts
+```
+
+### install treesit libs
+
+```
+M-x treesit-auto-install-all
 ```
