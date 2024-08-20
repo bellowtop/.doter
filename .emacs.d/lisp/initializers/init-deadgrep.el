@@ -51,9 +51,6 @@
   (advice-add 'deadgrep--arguments :filter-return #'deadgrep--include-args)
 )
 
-(when (my-system-type-is-windows)
-  (setq deadgrep-executable "~/.emacs.d/.local/rg")
-  )
 
 (defun deadgrep--include-args (rg-args)
   (push "--hidden" rg-args) ;; consider hidden folders/files

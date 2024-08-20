@@ -18,6 +18,17 @@
 (package-initialize)
 
 
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/emacswiki.org"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/blink-search"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/initializers"))
+(add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/lisp"))
+
+
+(require 'my-utils)
+
+
+
 (add-to-list 'exec-path "/usr/local/bin/")
 (add-to-list 'exec-path "/usr/bin/")
 (add-to-list 'exec-path "/opt/homebrew/bin")
@@ -25,6 +36,16 @@
 (setenv "PATH" (concat "/usr/local/bin:" (getenv "PATH")))
 (setenv "PATH" (concat "/usr/bin:" (getenv "PATH")))
 (setenv "PATH" (concat "/opt/homebrew/bin:" (getenv "PATH")))
+
+
+(when (my-system-type-is-windows)
+  ;; clangd
+  (add-to-list 'exec-path "E:/work/libraries/LLVM-19.1.0-rc2-Windows-X64/bin")
+  ;; rg
+  (add-to-list 'exec-path "E:/work/libraries/ripgrep-14.1.0-x86_64-pc-windows-msvc")
+  )
+
+
 
 (setq mac-command-modifier 'super)
 
@@ -47,11 +68,7 @@
 (make-directory "~/.emacs.d/.local/backups" t)
 
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/emacswiki.org"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/blink-search"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/initializers"))
-(add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/lisp"))
+
 
 
 
@@ -59,7 +76,7 @@
 (require 'dired+)
 
 
-(require 'my-utils)
+
 
 
 
