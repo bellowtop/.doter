@@ -1,4 +1,5 @@
 (require 'fringe)
+(require 'with-simulated-input)
 
 (use-package treemacs
   :init

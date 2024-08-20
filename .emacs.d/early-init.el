@@ -1,5 +1,3 @@
 (when (string-equal system-type "darwin")
   (add-to-list 'default-frame-alist '(undecorated . t))
 )
-(toggle-debug-on-error)
-(toggle-debug-on-error)
