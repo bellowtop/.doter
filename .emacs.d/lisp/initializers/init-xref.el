@@ -38,17 +38,12 @@
     (when (and (eq new-point orig-point) (eq new-buffer orig-buffer))
       (ivy-done))))
 
-(use-package ivy-xref
-  :ensure t
-  :after (ivy xref)
-  :init
-  (setq xref-show-definitions-function #'ivy-xref-show-defs)
-  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)
-  :bind
-  (:map
-    ivy-minibuffer-map
-    ("C-l" . ivy-xref-call-or-done)
-    ("M-l" . ivy-call-and-recenter)))
+
+(require 'ivy-xref)
+(setq xref-show-definitions-function #'ivy-xref-show-defs)
+(setq xref-show-xrefs-function #'ivy-xref-show-xrefs)
+(define-key ivy-minibuffer-map (kbd "C-l") #'ivy-xref-call-or-done)
+(define-key ivy-minibuffer-map (kbd "M-l") #'ivy-call-and-recenter)
 
 
 (provide 'init-xref)

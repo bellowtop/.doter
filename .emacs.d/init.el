@@ -83,9 +83,6 @@
 
 
 (when (my-system-type-is-windows)
-  (setq w32-pass-lwindow-to-system nil)
-  (setq w32-lwindow-modifier 'super) ; Left Windows key
-
   (setq w32-pass-rwindow-to-system nil)
   (setq w32-rwindow-modifier 'super) ; Right Windows key
 
@@ -99,7 +96,7 @@
 (setq default-font "IBM Plex Mono 1.2-15.0")
 
 (when (my-system-type-is-windows)
-  (setq default-font "Cascadia Mono-11.0")
+  (setq default-font "Cascadia Mono-10.0")
   )
 
 ;; ;;; https://github.com/supercomputra/SF-Mono-Font

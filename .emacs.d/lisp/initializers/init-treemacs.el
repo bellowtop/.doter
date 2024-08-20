@@ -192,6 +192,7 @@ exists it returns /file/name_Copy2.ext etc."
 
 (defun my-treemacs-add-and-display-current-project ()
   (interactive)
+  (require 'treemacs)
   (with-selected-window (get-buffer-window (current-buffer))
     (treemacs-add-and-display-current-project))
   (treemacs-find-file)
