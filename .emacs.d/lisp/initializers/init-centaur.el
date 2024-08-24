@@ -78,6 +78,12 @@
   (defun centaur-tabs-buffer-groups ()
     ;; only one group
     (list "GROUP"))
+  ;; disable some mouse event
+  (define-key centaur-tabs-mode-map (vector centaur-tabs-display-line 'mouse-3   ) 'ignore)
+  (define-key centaur-tabs-mode-map (vector centaur-tabs-display-line 'mouse-5   ) 'ignore)
+  (define-key centaur-tabs-mode-map (vector centaur-tabs-display-line 'mouse-4   ) 'ignore)
+  (define-key centaur-tabs-mode-map (vector centaur-tabs-display-line 'wheel-down) 'ignore)
+  (define-key centaur-tabs-mode-map (vector centaur-tabs-display-line 'wheel-up  ) 'ignore)
   :bind
   ("s-h" . centaur-tabs-backward)
   ("s-l" . centaur-tabs-forward)
