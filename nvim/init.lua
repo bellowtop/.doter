@@ -479,7 +479,7 @@ vim.g.surround_no_insert_mappings = 1
 local function nvim_tree_on_attach(bufnr)
     local api = require "nvim-tree.api"
     api.config.mappings.default_on_attach(bufnr)
-    vim.keymap.set('n', '<C-e>', api.tree.toggle_help, { noremap = true })
+    -- vim.keymap.set('n', '<C-e>', api.tree.toggle_help, { noremap = true })
 end
 
 require'nvim-tree'.setup {
