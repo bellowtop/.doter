@@ -60,7 +60,6 @@ otherwise assumed alphabetic."
   (fset 'c-indent-region 'clang-format-region)
   (bind-keys
    :map c++-ts-mode-map
-   ("<RET>" . newline-and-indent)
    ("C-c C-e" . clang-format-region)
    ("C-c C-f" . clang-format-buffer)
    ("M-o" . cff-find-other-file))
