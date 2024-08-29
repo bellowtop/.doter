@@ -455,7 +455,10 @@
 
 (use-package iedit
   :defer t
-  :bind (("C-M-'" . iedit-mode)))
+  :bind (("C-M-'" . iedit-mode))
+  :config
+  (set-face-attribute 'iedit-occurrence nil :foreground "black" :background "yellow")
+  )
 
 
 (require 'init-impatient-markdown)
