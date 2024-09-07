@@ -62,6 +62,7 @@ otherwise assumed alphabetic."
    :map c++-ts-mode-map
    ("C-c C-e" . clang-format-region)
    ("C-c C-f" . clang-format-buffer)
+   ("C-c C-c" . compile)
    ("M-o" . cff-find-other-file))
 
    (add-hook 'before-save-hook #'clang-format-buffer nil 'local) ;; add-hook for buffer local, nice!
@@ -76,6 +77,10 @@ otherwise assumed alphabetic."
 (require 'cmake-project)
 
 (defun maybe-cmake-project-mode ()
+  (bind-keys
+       :map cmake-ts-mode-map
+       ("C-c C-c" . compile)
+       )
   (if (or (file-exists-p "CMakeLists.txt")
           (file-exists-p (expand-file-name "CMakeLists.txt" (car (project-roots (project-current))))))
       (cmake-project-mode)))
