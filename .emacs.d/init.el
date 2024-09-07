@@ -467,9 +467,9 @@
 (require 'init-ace-window)
 
 
-(require 'init-centaur)
+;; (require 'init-centaur)
 
-;; (require 'init-tabline)
+(require 'init-tabline)
 
 
 (require 'init-blamer)

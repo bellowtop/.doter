@@ -28,6 +28,10 @@
 
 
 (use-package symbol-overlay
-  :hook (emacs-lisp-mode . symbol-overlay-mode))
+  :hook (emacs-lisp-mode . symbol-overlay-mode)
+  :config
+  (set-face-attribute 'symbol-overlay-default-face nil :inherit my-highlight-font-chars-face)
+)
+
 
 (provide 'init-emacs-lispy)

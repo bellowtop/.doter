@@ -113,7 +113,7 @@ function."
   ("s-h" . tab-line-switch-to-prev-tab)
   ("s-l" . tab-line-switch-to-next-tab)
   ("s-t" . tab-line-new-tab)
-  ("s-w" . tab-line-close-tab)
+  ("s-w" . kill-current-buffer)
   :config
   (defcustom tab-line-tab-min-width 10
     "Minimum width of a tab in characters."
@@ -146,9 +146,17 @@ function."
 
   ;;(dolist (mode '(ediff-mode process-menu-mode term-mode vterm-mode))
   ;;(add-to-list 'tab-line-exclude-modes mode))
+  ;; (dolist (mode '(ediff-mode process-menu-mode dired-mode dashboard-mode eshell-mode slime-repl-mode inferior-emacs-lisp-mode comint-mode
+  ;;                            help-mode Custom-mode deadgrep-mode lisp-interaction-mode
+  ;;                            special-mode compilation-mode fundamental-mode xref--xref-buffer-mode
+  ;;                            ))
+  ;;   (add-to-list 'tab-line-exclude-modes mode))
+
   (dolist (mode '(ediff-mode process-menu-mode))
     (add-to-list 'tab-line-exclude-modes mode))
+
   )
+
 
 (add-hook 'window-configuration-change-hook
   #'(lambda ()
@@ -158,6 +166,20 @@ function."
 
 ;; sort tabs
 ;;
+
+(defun my-editor-group(buf)
+  (let ((bufname (buffer-name buf)))
+    (if (my-god-this-is-normal-editor-buffer bufname) "" nil)))
+(setq tab-line-tabs-buffer-group-function #'my-editor-group)
+
+(defun buffer-comp-less-p(buf1 buf2)
+  (let ((name1 (buffer-name buf1))
+        (name2 (buffer-name buf2)))
+    (string< name1 name2)))
+(setq tab-line-tabs-buffer-group-sort-function #'buffer-comp-less-p)
+
+(setq tab-line-tabs-function 'tab-line-tabs-buffer-groups)
+
 ;; (setq my/current-tab-list (list (current-buffer)))
 ;; (setq tab-line-tabs-function 'tab-line-tabs-mode-buffers)
 ;; (defun tab-line-tabs-mode-buffers ()
@@ -181,9 +203,7 @@ function."
 ;;   (setq my/current-tab-list (delete (current-buffer) my/current-tab-list))
 ;;   (switch-to-buffer (nth 0 my/current-tab-list))
 ;;   )
-
-
-
+;;
 ;; (global-tab-line-mode t)
 
 (provide 'tabline)

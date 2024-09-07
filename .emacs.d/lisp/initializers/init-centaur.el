@@ -75,10 +75,10 @@
   (push "*hmoccur" centaur-tabs-excluded-prefixes)
   (push "*Ivy" centaur-tabs-excluded-prefixes)
   ;; (centaur-tabs-projectile-buffer-groups)
-  (defun centaur-tabs-buffer-groups ()
-    ;; only one group
-    (list "GROUP"))
-  ;; disable some mouse event
+  ;; (defun centaur-tabs-buffer-groups ()
+  ;;   ;; only one group
+  ;;   (list "GROUP"))
+  ;; ;; disable some mouse event
   (define-key centaur-tabs-mode-map (vector centaur-tabs-display-line 'mouse-3   ) 'ignore)
   (define-key centaur-tabs-mode-map (vector centaur-tabs-display-line 'mouse-5   ) 'ignore)
   (define-key centaur-tabs-mode-map (vector centaur-tabs-display-line 'mouse-4   ) 'ignore)
