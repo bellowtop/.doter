@@ -7,11 +7,12 @@
 
 
 ;; special-buffers are not affected by god-mode bindings, but affected by my-special-buffer-keys-minor-mode-map
-(setq special-buffer-modes (list "dired-mode"))
+(setq special-buffer-modes (list "dired-mode" "special-mode"))
 (setq special-buffers (list
                         "*Pos-Frame-Read*"
                         "*Treemacs"
                         "*Messages*"
+                        "*compilation*"
                         "HELLO"
                         "*Ibuffer*"
                         "*deadgrep"
@@ -29,7 +30,7 @@
                         "helm-*"
                         ;; "*helm-mode-switch-to-buffer*"
                         "*Helm Help*"
-                        "*Flymake diagnostics"
+                        "*Flymake"
                         "*ansi-term*"
                         "*fzf*"
                         "*Ilist*"
