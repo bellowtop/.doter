@@ -1,6 +1,8 @@
 ;; Taken from https://andreyor.st/posts/2020-05-10-making-emacs-tabs-look-like-in-atom/
 ;; https://github.com/andreyorst/dotfiles/blob/740d346088ce5a51804724659a895d13ed574f81/.config/emacs/README.org#tabline
 
+(setq my-tab-line-face-height 140)
+
 (defun my/set-tab-theme ()
   (let ((bg (face-attribute 'mode-line :background))
          (fg (face-attribute 'default :foreground))
@@ -12,7 +14,7 @@
          (box-width (/ (line-pixel-height) 4)))
     (set-face-attribute 'tab-line nil
       :background base :foreground fg
-      :family "IBM Plex Mono" :height 140
+      :family default-font-family :height my-tab-line-face-height
       :height 0.8
       :inherit nil
       :box (list :line-width -1 :color base)
@@ -22,26 +24,26 @@
       )
     (set-face-attribute 'tab-line-tab nil
       :foreground fg :background bg
-      :family "IBM Plex Mono" :height 140
+      :family default-font-family :height my-tab-line-face-height
       :weight 'normal
       :inherit nil
       :box (list :line-width box-width :color bg))
-    :family "IBM Plex Mono" :height 140
+    :family default-font-family :height my-tab-line-face-height
     (set-face-attribute 'tab-line-tab-inactive nil
       :foreground fg :background base
-      :family "IBM Plex Mono" :height 140
+      :family default-font-family :height my-tab-line-face-height
       :weight 'normal
       :inherit nil
       :box (list :line-width box-width :color base))
     (set-face-attribute 'tab-line-highlight nil
       :foreground "black" :background hl-bg
-      :family "IBM Plex Mono" :height 140
+      :family default-font-family :height my-tab-line-face-height
       :weight 'normal
       :inherit nil
       :box (list :line-width box-width :color hl-bg))
     (set-face-attribute 'tab-line-tab-current nil
       :foreground "black" :background hi-bg
-      :family "IBM Plex Mono" :height 140
+      :family default-font-family :height my-tab-line-face-height
       :weight 'normal
       :inherit nil
       :box (list :line-width box-width :color hi-bg))))
@@ -115,12 +117,12 @@ function."
   ("s-t" . tab-line-new-tab)
   ("s-w" . kill-current-buffer)
   :config
-  (defcustom tab-line-tab-min-width 10
+  (defcustom tab-line-tab-min-width 20
     "Minimum width of a tab in characters."
     :type 'integer
     :group 'tab-line)
 
-  (defcustom tab-line-tab-max-width 300
+  (defcustom tab-line-tab-max-width 30
     "Maximum width of a tab in characters."
     :type 'integer
     :group 'tab-line)

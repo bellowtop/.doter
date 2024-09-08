@@ -85,6 +85,7 @@
 
 
 (setq default-font "IBM Plex Mono 1.2-15.0")
+(setq default-font-family "IBM Plex Mono")
 ;; ;;; https://github.com/supercomputra/SF-Mono-Font
 ;; setq default-font "SF Mono-16.0")
 (set-face-attribute 'default nil :font default-font)
@@ -156,7 +157,14 @@
         :weight normal
         )))
   "custom highlight for treemacs current line")
-
+(defface my-highlight-font-words-face
+  `((t (
+        :background "cyan1"
+        :foreground "black"
+        :underline nil
+        :weight normal
+        )))
+  "custom highlight for treemacs current line")
 
 
 (load-theme 'bogster t)
