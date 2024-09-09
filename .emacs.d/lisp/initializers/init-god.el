@@ -19,6 +19,7 @@
                         "*xref"
                         "*Buffer"
                         "*Annotate"
+                        "*Completions*"
                         "*vc-diff*"
                         "*Packages"
                         "*lsp-log*"
