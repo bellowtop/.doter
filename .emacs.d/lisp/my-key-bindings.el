@@ -61,6 +61,8 @@
 
     (define-key map (kbd "s-d") #'my-mc/mark-next-like-this)
 
+    (define-key map (kbd "s-F") #'projectile-ripgrep)
+
     ;; (define-key map (kbd "C-M-f") #'projectile-find-file)
     ;; (define-key map (kbd "C-M-b") #'switch-to-buffer)
     ;; (define-key map (kbd "C-x C-b") #'switch-to-buffer)
