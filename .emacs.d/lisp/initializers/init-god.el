@@ -44,6 +44,7 @@
                           "*terminal*"
                           "*eshell*"
                           "*blink-search"
+                          "*ripgrep-search*"
                           "*blink search"
                           "*shell*"
                           "*dashboard*"
