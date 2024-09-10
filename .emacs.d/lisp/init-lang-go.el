@@ -35,6 +35,7 @@
   (if (eq major-mode 'go-mode)
     (define-key go-mode-map    (kbd "s-<return>") #'my-go-mode-split-string)
     (define-key go-ts-mode-map (kbd "s-<return>") #'my-go-mode-split-string)
+    (sp-local-pair 'prog-mode "{" nil :post-handlers '((indent-between-pair "RET")))
     )
 )
 
