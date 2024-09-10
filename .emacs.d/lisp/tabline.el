@@ -13,11 +13,11 @@
          (base (face-attribute 'mode-line :background))
          (box-width (/ (line-pixel-height) 4)))
     (set-face-attribute 'tab-line nil
-      :background base :foreground fg
+      :background 'unspecified :foreground 'unspecified
       :family default-font-family :height my-tab-line-face-height
       :height 0.8
-      :inherit nil
-      :box (list :line-width -1 :color base)
+      :inherit 'default
+      :box nil ;; (list :line-width -1 :color base)
       )
     (set-face-attribute 'tab-line-tab-modified nil
       :foreground modified-fg
@@ -171,7 +171,7 @@ function."
 
 (defun my-editor-group(buf)
   (let ((bufname (buffer-name buf)))
-    (if (my-god-this-is-normal-editor-buffer bufname) "" nil)))
+    (if (my-god-this-is-normal-editor-buffer bufname) "> " nil)))
 (setq tab-line-tabs-buffer-group-function #'my-editor-group)
 
 (defun buffer-comp-less-p(buf1 buf2)

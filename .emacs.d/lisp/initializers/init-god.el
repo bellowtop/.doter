@@ -56,7 +56,7 @@
                           "*Backtrace*"
                           "menu"
                           "*ielm*"
-                          "*Gofmt Errors*"
+                          "*Gofmt"
                           "*slime-repl"
                           "*Customize"))
 
