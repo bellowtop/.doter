@@ -352,6 +352,9 @@
 
 
 
+(require 'popwin)
+(popwin-mode 1)
+(global-set-key (kbd "C-z") popwin:keymap)
 
 
 (require 'init-nice-jumper)
@@ -477,7 +480,7 @@
 
 ;; (require 'init-centaur)
 
-(require 'init-tabline)
+;; (require 'init-tabline)
 
 
 (require 'init-blamer)
