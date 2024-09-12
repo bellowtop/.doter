@@ -43,6 +43,7 @@
                           "*Minibuf"
                           "*EGLOT"
                           "*terminal*"
+                          "*emacs"
                           "*eshell*"
                           "*blink-search"
                           "*ripgrep-search*"
@@ -318,7 +319,6 @@
   (setq cursor-type (if (display-graphic-p) 'box 'box))
   (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
   (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
-  (tab-line-mode (if (my-god-this-is-normal-editor-buffer (buffer-name)) 1 -1))
   (if (bound-and-true-p god-local-mode)
     (progn
       (hl-line-mode 1)
