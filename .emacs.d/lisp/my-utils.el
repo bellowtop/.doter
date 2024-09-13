@@ -361,7 +361,11 @@ If buffer-or-name is nil return current buffer's mode."
                        (current-buffer)
                        (buffer-list))) ;; this destroy * buffers too
   (if (bound-and-true-p centaur-tabs-mode)
-    (centaur-tabs-kill-other-buffers-in-current-group)))
+    (centaur-tabs-kill-other-buffers-in-current-group))
+  (if (bound-and-true-p global-eldoc-mode)
+    (eldoc-box-reset-frame))
+  (treemacs-find-file)
+  )
 
 
 
