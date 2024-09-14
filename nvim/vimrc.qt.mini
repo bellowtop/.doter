@@ -16,6 +16,7 @@ set number
 set belloff=all
 
 map H ^
+map S <ESC>:w<CR>
 map L $
 map ; <C-d>
 map ' <C-u>
