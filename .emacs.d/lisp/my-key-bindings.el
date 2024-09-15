@@ -42,8 +42,6 @@
 
 (bind-key* (kbd "M-j") #'gcm-scroll-down)
 (bind-key* (kbd "M-k") #'gcm-scroll-up)
-(bind-key* (kbd "C-;") #'gcm-scroll-down)
-(bind-key* (kbd "C-'") #'gcm-scroll-up)
 
 
 
