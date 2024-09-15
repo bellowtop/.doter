@@ -12,6 +12,7 @@
     (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
   (setq treemacs-expand-after-init nil)
   (setq treemacs-width-is-initially-locked nil)
+  (setq cursor-type nil)
   (treemacs-follow-mode 0)
 
   (global-set-key (kbd "C-c C-p") treemacs-project-map)

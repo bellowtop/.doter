@@ -60,13 +60,13 @@
                                (ht-set! tui-icons extension tui-icon))))
 
                          ;; directory and other icons
-                         (treemacs-create-icon :icon (format "%s%s" (nerd-icons-octicon "nf-oct-repo"   :face 'treemacs-nerd-icons-root-face) treemacs-nerd-icons-tab)
+                         (treemacs-create-icon :icon (format "%s%s" (nerd-icons-faicon "nf-fa-apple"   :face 'treemacs-nerd-icons-root-face) treemacs-nerd-icons-tab)
                                                :extensions (root-closed root-open)
                                                :fallback 'same-as-icon)
-                         (treemacs-create-icon :icon (format "%s%s%s%s%s" "- " "" "" (nerd-icons-faicon "nf-fa-folder_open"  :face 'treemacs-nerd-icons-file-face) treemacs-nerd-icons-tab)
+                         (treemacs-create-icon :icon (format "%s%s%s%s%s" "" "" "" (nerd-icons-faicon "nf-fa-caret_down"  :face 'treemacs-nerd-icons-file-face) treemacs-nerd-icons-tab)
                                                :extensions (dir-open)
                                                :fallback 'same-as-icon)
-                         (treemacs-create-icon :icon (format "%s%s%s%s%s" "+ " "" "" (nerd-icons-faicon "nf-fa-folder"  :face 'treemacs-nerd-icons-file-face) treemacs-nerd-icons-tab)
+                         (treemacs-create-icon :icon (format "%s%s%s%s%s" "" "" "" (nerd-icons-faicon "nf-fa-caret_right"  :face 'treemacs-nerd-icons-file-face) treemacs-nerd-icons-tab)
                                                :extensions (dir-closed)
                                                :fallback 'same-as-icon)
                          (treemacs-create-icon :icon (format "%s%s%s%s" " " "" (nerd-icons-faicon "nf-fa-folder_open"  :face 'treemacs-nerd-icons-file-face) treemacs-nerd-icons-tab)
