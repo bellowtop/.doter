@@ -176,7 +176,9 @@ exists it returns /file/name_Copy2.ext etc."
     )
 
   (unless (display-graphic-p)
-    (treemacs-load-theme "nerd-icons")))
+    (treemacs-load-theme "nerd-icons"))
+
+  )
 
 
 
