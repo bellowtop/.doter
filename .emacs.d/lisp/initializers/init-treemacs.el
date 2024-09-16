@@ -7,6 +7,7 @@
   (setq treemacs-space-between-root-nodes nil)
   (setq treemacs-show-hidden-files t)
   (setq treemacs-show-cursor t)
+  (setq treemacs-indentation 2)
   (setq treemacs-persist-file (expand-file-name "~/.emacs.d/.local/treemacs-persist"))
   (setq treemacs-last-error-persist-file
     (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))

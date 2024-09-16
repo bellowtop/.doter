@@ -75,9 +75,6 @@
 
 
 
-;; don't need it!!!
-(electric-indent-mode 0)
-
 
 
 
@@ -352,9 +349,9 @@
 
 
 
-(require 'popwin)
-(popwin-mode 1)
-(global-set-key (kbd "C-z") popwin:keymap)
+;; (require 'popwin)
+;; (popwin-mode 1)
+;; (global-set-key (kbd "C-z") popwin:keymap)
 
 
 (require 'init-nice-jumper)
@@ -555,7 +552,15 @@
 (add-hook 'lisp-mode-hook 'my-elisp-mode-hook)
 
 
-(require 'init-smartparens)
+;; (require 'init-smartparens)
+
+(use-package electric
+  :ensure t
+  :config
+  (electric-pair-mode 1)
+  (electric-indent-mode 1)
+)
+
 
 
 (require 'init-blink-search)
@@ -619,7 +624,7 @@
 (bind-key (kbd "C-S-k") #'my-delete-to-beginning)
 (bind-key (kbd "C-k") #'my-delete-to-end)
 (bind-key (kbd "C-j") #'save-buffer)
-(bind-key (kbd "<RET>") #'newline-and-indent)
+;; (bind-key (kbd "<RET>") #'newline-and-indent)
 
 (bind-key* (kbd "C-<wheel-up>") #'ignore)
 (bind-key* (kbd "C-<wheel-down>") #'ignore)
