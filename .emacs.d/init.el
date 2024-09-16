@@ -557,8 +557,9 @@
 (add-hook 'lisp-mode-hook 'my-elisp-mode-hook)
 
 
-;; (require 'init-smartparens)
-
+;; only import utility functions. don't activate smartparen mode.
+(require 'init-smartparens)
+;; activate electric mode.
 (use-package electric
   :ensure t
   :config

@@ -1,7 +1,8 @@
 (require 'smartparens-config)
 (require 'sp-sublimetext-like)
-(smartparens-global-mode 1)
-(smartparens-mode 1)
+
+; (smartparens-global-mode 1)
+; (smartparens-mode 1)
 
 
 (defun indent-between-pair (&rest _ignored)
@@ -43,7 +44,8 @@ respectively."
              (push-mark (+ 1 stop))
              ;; (setq deactivate-mark nil)
              ;; i prefer deactivate mark
-             (setq deactivate-mark t)))))
+             (setq deactivate-mark t)
+             ))))
 
 (def-region-pairs ((paren . "(")
                     (bracket . "[")
