@@ -55,7 +55,7 @@ otherwise assumed alphabetic."
 
 
 (defun my-c-ts-mode-hook()
-  (eglot-ensure)
+  (ignore-errors (eglot-ensure))
 
   (fset 'c-indent-region 'clang-format-region)
   (bind-keys

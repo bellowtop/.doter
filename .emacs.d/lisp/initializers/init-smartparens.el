@@ -11,8 +11,7 @@
   (indent-according-to-mode))
 
 (with-eval-after-load 'smartparens
-  ;; curly brace already handle newline, so no need here
-  ;; (sp-local-pair 'prog-mode "{" nil :post-handlers '((indent-between-pair "RET")))
+  (sp-local-pair 'prog-mode "{" nil :post-handlers '((indent-between-pair "RET")))
   (sp-local-pair 'prog-mode "[" nil :post-handlers '((indent-between-pair "RET")))
   (sp-local-pair 'prog-mode "(" nil :post-handlers '((indent-between-pair "RET")))
   (setq sp-highlight-pair-overlay nil))
