@@ -538,10 +538,15 @@
 
 
 
-(defun my-cmake-mode-hook ()
-  (setq cmake-tab-width 4))
+(defun my-cmake-ts-mode-hook ()
+  (setq cmake-tab-width 4)
+  (bind-keys
+    :map cmake-ts-mode-map
+    ("C-c C-c" . compile)
+    )
+  )
 
-(add-hook 'cmake-mode-hook 'my-cmake-mode-hook)
+(add-hook 'cmake-ts-mode-hook 'my-cmake-ts-mode-hook)
 
 
 (defun my-elisp-mode-hook ()
