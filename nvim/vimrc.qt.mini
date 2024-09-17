@@ -26,16 +26,11 @@ map m %
 
 nnoremap <Leader>h :bprev<CR>
 nnoremap <Leader>l :bnext<CR>
-
-inoremap <M-d> <C-o>de
-inoremap <M-BS> <C-o>db
-inoremap <C-k> <C-o>d$
-inoremap <M-k> <C-o>d0
-
-
 nnoremap <C-j> <ESC>:w<CR>
-inoremap <C-j> <ESC>:w<CR>
 
+" inoremap <M-d> <C-o>de
+" inoremap <M-BS> <C-o>db
+inoremap <C-j> <ESC>:w<CR>
 inoremap <C-n> <C-o>j
 inoremap <C-d> <C-o>x
 inoremap <C-p> <C-o>k
@@ -44,7 +39,6 @@ inoremap <C-a> <C-o>^
 inoremap <C-b> <Left>
 inoremap <C-f> <Right>
 inoremap <C-k> <C-o>D
-inoremap <M-k> <C-o>d0
 inoremap <C-t> <C-o>O
 inoremap <C-l> <C-o>zz
 nnoremap <C-l> zz
