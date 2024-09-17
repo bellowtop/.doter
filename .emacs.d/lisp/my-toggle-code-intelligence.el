@@ -55,8 +55,7 @@
   (interactive)
   (when my-code-intelligence
     (my-disable-eglot-highlight)
-    (smartparens-global-mode 0)
-    (smartparens-mode 0)
+    (electric-pair-mode 0)
     (undo-tree-mode 0)
     (setq my-code-intelligence nil)
     ;; (message "code-intelligence is disabled.")
@@ -66,8 +65,7 @@
   (interactive)
   (unless my-code-intelligence
     (my-enable-eglot-highlight)
-    (smartparens-global-mode 1)
-    (smartparens-mode 1)
+    (electric-pair-mode 1)
     (undo-tree-mode 1)
     (setq my-code-intelligence 't)
     ;; (message "code-intelligence is enabled.")
