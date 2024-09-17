@@ -23,7 +23,9 @@
 
 
 (bind-key* (kbd "C-c C-v") #'set-rectangular-region-anchor)
-(bind-key* (kbd "C-c C-o") #'my-occur)
+;; C-c C-o is preserved by ivy-occur, which is usefull when you want save ivy results to a temp buffer.
+;; so we change to C-c o
+(bind-key* (kbd "C-c o") #'my-occur)
 (bind-key* (kbd "C-c C-s") #'my-rg-at-point)
 (bind-key* (kbd "C-h C-c") #'shell)
 (bind-key* (kbd "C-h C-h") #'my-quit-other-window)
