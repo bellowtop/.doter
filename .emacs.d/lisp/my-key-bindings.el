@@ -81,6 +81,7 @@
 
 
     (define-key map (kbd "M-/") 'my-comment-region-or-line)
+    (define-key map (kbd "s-/") 'my-comment-region-or-line)
 
 
     (define-key map (kbd "C-s-,") 'xref-go-back)

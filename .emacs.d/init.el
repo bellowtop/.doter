@@ -119,6 +119,14 @@
  ;;;;  '(centaur-tabs-selected ((t ())))
  ;;;;  '(centaur-tabs-selected-modified ((t ())))
 
+
+(setq window-divider-color "#06C668")
+;; ;; (setq window-divider-right-color "green")
+;; (setq window-divider-right-color "#26282F")
+
+
+
+
 (if use-dark-theme-mode
   (progn
         (setq darker-window-bg-color "#26282F")
@@ -133,6 +141,9 @@
         (setq hl-line-bg-color "#33485e")
         ;; dark theme!
         (invert-face 'default)
+
+
+
     )
   (progn
         (setq darker-window-bg-color "#FFFFFF")
@@ -164,7 +175,23 @@
   "custom highlight for treemacs current line")
 
 
+
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(smerge-mode -1)
+(tab-bar-mode -1)
+
 (load-theme 'bogster t)
+
+(defun my-change-window-divider ()
+  (let ((display-table (or buffer-display-table standard-display-table)))
+    (set-display-table-slot display-table 5 ?│)
+    (set-window-display-table (selected-window) display-table)))
+(add-hook 'window-configuration-change-hook 'my-change-window-divider)
+
+(set-face-background 'vertical-border (face-background 'default))
+(set-face-foreground 'vertical-border window-divider-color)
+
 
 
 (require 'init-god)
