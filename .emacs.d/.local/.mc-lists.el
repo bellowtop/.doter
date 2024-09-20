@@ -198,6 +198,7 @@
          multiple-cursors-menu/my-mc/skip-to-next-like-this
          multiple-cursors-menu/my-mc/skip-to-previous-like-this
          my-M-x
+         my-break-to-multiple-lines
          my-escape-key
          my-god-mode
          my-mc/mark-all-like-this

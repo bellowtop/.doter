@@ -316,7 +316,13 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun my-occur ()
   (interactive)
-  (counsel-grep))
+  (if (region-active-p)
+    (let* ((start (region-beginning))
+            (end (region-end))
+            (input (buffer-substring-no-properties start end)))
+      (deactivate-mark)
+      (counsel-grep input))
+    (counsel-grep)))
 
 (defun my-rg-at-point ()
   (interactive)

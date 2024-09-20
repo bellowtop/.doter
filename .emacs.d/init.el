@@ -593,9 +593,9 @@
 
 
 ;; only import utility functions. don't activate smartparen mode.
-(require 'init-smartparens)
 ;; but still should init, so that some variables are set, such as sp-pair-list
-(sp--init)
+(require 'init-smartparens)
+
 ;; activate electric mode.
 (use-package electric
   :ensure t
