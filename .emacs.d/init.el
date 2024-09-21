@@ -559,7 +559,7 @@
                 (setq js-indent-level 4)
                 (with-eval-after-load 'eglot
                   (add-to-list 'eglot-server-programs
-                    `(qml-mode . ("/Users/jiechen/Qt/6.7.2/macos/bin/qmlls" "--verbose" "--build-dir" ,(concat (upward-find-file "build") "/build")))))
+                    `(qml-mode . ("/Users/jiechen/Qt/6.7.2/macos/bin/qmlls" "--verbose" "--build-dir" ,(concat (upward-find-file "build") "/build") "--no-cmake-calls"))))
                 )
             )
   :config
