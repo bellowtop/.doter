@@ -65,6 +65,8 @@ otherwise assumed alphabetic."
    ("C-c C-c" . compile)
    ("M-o" . cff-find-other-file))
 
+   ;; line coment, double forward slash
+   (c-ts-mode-toggle-comment-style -1)
    (add-hook 'before-save-hook #'clang-format-buffer nil 'local) ;; add-hook for buffer local, nice!
 
   (my-set-indent-from-clang-format)
