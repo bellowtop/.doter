@@ -28,6 +28,10 @@ nnoremap <Leader>h :bprev<CR>
 nnoremap <Leader>l :bnext<CR>
 nnoremap <C-j> <ESC>:w<CR>
 
+" visual mode paste, don't override yank ring.
+xnoremap p "_dP
+xnoremap P "_dP
+
 " inoremap <M-d> <C-o>de
 " inoremap <M-BS> <C-o>db
 inoremap <C-j> <ESC>:w<CR>
@@ -43,6 +47,7 @@ inoremap <C-t> <C-o>O
 inoremap <C-l> <C-o>zz
 nnoremap <C-l> zz
 nnoremap <C-/> <C-o>u
+inoremap <C-y> <ESC>pa
 
 vim.opt.clipboard:prepend("unnamed,unnamedplus")
 
