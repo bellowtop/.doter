@@ -14,6 +14,7 @@ set smarttab
 set expandtab
 set number
 set belloff=all
+set clipboard=unnamed
 
 map H ^
 map S <ESC>:w<CR>
