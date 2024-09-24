@@ -16,6 +16,11 @@
   (setq cursor-type nil)
   (treemacs-follow-mode 0)
 
+
+  (defun add-pointer-to-str(str) (propertize str 'pointer 'arrow))
+  (setq treemacs-file-name-transformer #'add-pointer-to-str)
+  (setq treemacs-directory-name-transformer #'add-pointer-to-str)
+
   (global-set-key (kbd "C-c C-p") treemacs-project-map)
   (global-set-key (kbd "C-c C-w") treemacs-workspace-map)
   ;; (treemacs-resize-icons 26)
@@ -93,7 +98,9 @@
     "")
   (defun change-treemacs-hl-line-mode ()
     (setq-local hl-line-face 'my-treemacs-custom-line-highlight)
-    (overlay-put hl-line-overlay 'face hl-line-face))
+    (overlay-put hl-line-overlay 'face hl-line-face)
+    ;; (overlay-put hl-line-overlay 'pointer 'arrow)
+    )
 
 
   ;; CAUTION: private api. copied from treemacs-core-utils.el
