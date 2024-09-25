@@ -26,6 +26,7 @@
   (require 'go-mode)
   (setq gofmt-command "goimports")
   (add-hook 'before-save-hook 'my-gofmt-before-save nil t)
+  (ignore-errors (indent-guide-global-mode -1))
 
   (with-eval-after-load 'exec-path-from-shell
     (exec-path-from-shell-copy-envs '("GOPATH" "GO111MODULE" "GOPROXY")))
