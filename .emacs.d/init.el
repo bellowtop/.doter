@@ -100,6 +100,7 @@
 (set-face-attribute 'region nil :inverse-video t)
 (set-face-attribute 'show-paren-match nil :foreground "black" :background "yellow")
 (setq-default left-margin-width 0 right-margin-width 0)
+(setq frame-resize-pixelwise t)
 
 ;; Set symbol for the border
 (set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?│))
@@ -204,6 +205,10 @@
 
 
 (require 'init-slime)
+
+
+(require 'indent-guide)
+(indent-guide-global-mode 1)
 
 
 ;; (require 'init-theme)
@@ -471,20 +476,20 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-	'(company-qml qml-mode csv-mode inkpot-theme srcery-theme package-lint with-simulated-input solaire-mode dashboard dashboard-hackernews blamer paredit slime-company symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+       '(company-qml qml-mode csv-mode inkpot-theme srcery-theme package-lint with-simulated-input solaire-mode dashboard dashboard-hackernews blamer paredit slime-company symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
-	'("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
+    '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
  '(safe-local-variable-values
-	'((eval font-lock-add-keywords nil
-		`((,(concat "("
-			  (regexp-opt
-				'("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl")
-				t)
-			  "\\_>")
-			1 'font-lock-variable-name-face)))))
+    '((eval font-lock-add-keywords nil
+        `((,(concat "("
+              (regexp-opt
+                '("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl")
+                t)
+              "\\_>")
+            1 'font-lock-variable-name-face)))))
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 
@@ -551,11 +556,17 @@
   (qml-mode . (lambda ()
                 ;; 使用空格代替 tab
                 (setq indent-tabs-mode nil)
-                (setq js-indent-level 4))
+                (setq js-indent-level 4)
+                ;; (with-eval-after-load 'eglot
+                ;;   (add-to-list 'eglot-server-programs
+                ;;     `(qml-mode . ("/Users/jiechen/work/code/qt/qtdeclarative/build/Qt_6_7_2_for_macOS-Debug/bin/qmlls" "--verbose" "--build-dir" ,(concat (upward-find-file "build") "/build") "--no-cmake-calls"))))
+                )
             )
   :config
   (add-to-list 'auto-mode-alist '("\\.qml\\'" . qml-mode))
   )
+
+
 
 (use-package ansible
   :defer t)
@@ -593,9 +604,9 @@
 
 
 ;; only import utility functions. don't activate smartparen mode.
-(require 'init-smartparens)
 ;; but still should init, so that some variables are set, such as sp-pair-list
-(sp--init)
+(require 'init-smartparens)
+
 ;; activate electric mode.
 (use-package electric
   :ensure t
