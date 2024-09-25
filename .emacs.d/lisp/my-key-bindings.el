@@ -45,6 +45,8 @@
 (bind-key* (kbd "M-j") #'gcm-scroll-down)
 (bind-key* (kbd "M-k") #'gcm-scroll-up)
 
+(bind-key* (kbd "s-w") #'kill-current-buffer)
+
 
 
 
