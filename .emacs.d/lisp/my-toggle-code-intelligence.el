@@ -16,13 +16,13 @@
   (ignore-errors
     (setq eglot-ignored-server-capabilities
       (delete ':documentHighlightProvider eglot-ignored-server-capabilities))
-    (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'my-highlight-font-chars-face)
+    (set-face-attribute 'eglot-highlight-symbol-face nil :inherit (if (display-graphic-p) 'my-highlight-font-chars-face 'my-highlight-font-words-face))
     (flymake-mode 1)
     (flymake-start)
     ))
 
 (with-eval-after-load 'eglot
-  (set-face-attribute 'eglot-highlight-symbol-face nil :inherit 'my-highlight-font-chars-face)
+  (set-face-attribute 'eglot-highlight-symbol-face nil :inherit (if (display-graphic-p) 'my-highlight-font-chars-face 'my-highlight-font-words-face))
 )
 
 
