@@ -26,6 +26,10 @@ kk() {
     tmux send-keys -R \; clear-history
 }
 
+hs() {
+    hub sync
+}
+
 alias ss='swift sh'
 alias sf='swiftformat'
 
