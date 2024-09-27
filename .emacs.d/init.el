@@ -110,9 +110,6 @@
 (setq use-dark-theme-mode t)
 (set-face-foreground 'default "#161c23")
 (set-face-background 'default "white")
-(set-face-attribute 'mode-line-inactive    nil :box nil)
-(set-face-attribute 'mode-line-active      nil :box nil)
-(set-face-attribute 'mode-line-highlight   nil :box nil :foreground "green")
 (setq cursor-in-non-selected-windows nil)
 
 
@@ -182,6 +179,16 @@
 (smerge-mode -1)
 (tab-bar-mode -1)
 
+
+
+(set-face-attribute 'mode-line-inactive    nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position "under"))
+(set-face-attribute 'mode-line-active      nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position "under"))
+(set-face-attribute 'mode-line-highlight   nil :box nil :foreground "green")
+
+;; for macOS, set tooltip font size by:
+;; defaults write org.gnu.Emacs NSToolTipsFontSize -int 16
+(set-face-font 'tooltip (frame-parameter nil 'font))
+
 (load-theme 'bogster t)
 
 (defun my-change-window-divider ()
@@ -190,8 +197,9 @@
     (set-window-display-table (selected-window) display-table)))
 (add-hook 'window-configuration-change-hook 'my-change-window-divider)
 
-(set-face-background 'vertical-border (face-background 'default))
-(set-face-foreground 'vertical-border window-divider-color)
+(set-face-attribute 'vertical-border nil :foreground window-divider-color
+                                         :background (face-background 'default)
+                                         :inherit 'unspecified)
 
 
 
@@ -476,7 +484,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-       '(company-qml qml-mode csv-mode inkpot-theme srcery-theme package-lint with-simulated-input solaire-mode dashboard dashboard-hackernews blamer paredit slime-company symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+    '(company-qml qml-mode csv-mode inkpot-theme srcery-theme package-lint with-simulated-input solaire-mode dashboard dashboard-hackernews blamer paredit slime-company symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
