@@ -159,7 +159,7 @@
 (defface my-highlight-font-chars-face
   `((t (
         :foreground ,highlight-font-chars-face-fg
-        :underline ,highlight-font-chars-face-underline
+        :underline (:color ,highlight-font-chars-face-fg :position t)
         :weight normal
         )))
   "custom highlight for treemacs current line")
