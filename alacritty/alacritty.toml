@@ -1,4 +1,4 @@
-import = ["/Users/bytedance/.config/alacritty/themes/challenger_deep.toml"]
+import = ["/Users/bytedance/.config/alacritty/themes/cyber_punk_neon.toml"]
 live_config_reload = true
 
 [colors]
@@ -24,12 +24,14 @@ print_events = false
 render_timer = false
 
 [font]
-size = 16.0
+size = 15.0
 # use_thin_strokes = true
 
+[font.normal]
+family = "FiraCode Nerd Font Mono"
+
 [font.bold]
-family = "IBM Plex Mono 1.2"
-style = "Regular"
+family = "DejaVuSansM Nerd Font Mono"
 
 [font.glyph_offset]
 x = 0
