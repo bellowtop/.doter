@@ -4,8 +4,8 @@
 (unless (display-graphic-p)
   (xterm-mouse-mode 1))
 
-(global-set-key (kbd "<mouse-4>") #' (lambda () (interactive) (scroll-down 3)))
-(global-set-key (kbd "<mouse-5>") #' (lambda () (interactive) (scroll-up 3)))
+(global-set-key (kbd "<mouse-4>") #' (lambda () (interactive) (scroll-down 2)))
+(global-set-key (kbd "<mouse-5>") #' (lambda () (interactive) (scroll-up 2)))
 
 (defadvice xref-find-definitions-at-mouse
   (before nice-jumper activate)
