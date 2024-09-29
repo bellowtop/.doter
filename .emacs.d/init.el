@@ -181,8 +181,8 @@
 
 
 
-(set-face-attribute 'mode-line-inactive    nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position "under"))
-(set-face-attribute 'mode-line-active      nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position "under"))
+(set-face-attribute 'mode-line-inactive    nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position t))
+(set-face-attribute 'mode-line-active      nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position t))
 (set-face-attribute 'mode-line-highlight   nil :box nil :foreground "green")
 
 ;; for macOS, set tooltip font size by:
@@ -274,7 +274,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(mode-line ((t (:background "#415367" :foreground "#e5ded6" :underline (:color foreground-color :style line :position t))))))
 
   ;; If there is more than one, they won't work right.
  ;;;;  '(ahs-definition-face ((t (:inherit ahs-plugin-default-face))))
