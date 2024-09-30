@@ -208,13 +208,13 @@
     (define-key god-local-mode-map (kbd "SPC m") #'deadgrep)
     (define-key god-local-mode-map (kbd "SPC o") #'cff-find-other-file)    ;; switch between c header/source file
     (define-key god-local-mode-map (kbd "SPC L") #'display-line-numbers-mode)
-    (define-key god-local-mode-map (kbd "SPC T") #'toggle-truncate-lines)
+    (define-key god-local-mode-map (kbd "SPC t") #'toggle-truncate-lines)
     (define-key god-local-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
 
     (define-key god-local-mode-map (kbd "SPC l") #'centaur-tabs-forward)
     (define-key god-local-mode-map (kbd "SPC h") #'centaur-tabs-backward)
 
-    (define-key god-local-mode-map (kbd "SPC t") #'treemacs)
+    (define-key god-local-mode-map (kbd "SPC 2") #'treemacs)
     (define-key god-local-mode-map (kbd "SPC n") #'my-neotree-toggle)
     (define-key god-local-mode-map (kbd "SPC N") #'my-neotree-find)
     (define-key god-local-mode-map (kbd "SPC s") #'counsel-imenu)
