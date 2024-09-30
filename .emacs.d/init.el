@@ -59,9 +59,9 @@
 (setq diredp-hide-details-initially-flag nil)
 (require 'dired+)
 
+(require 'custom-util-funcs)
 
 (require 'my-utils)
-
 
 
 (require 'init-eshell)
@@ -109,7 +109,7 @@
 ;;;
 (setq use-dark-theme-mode t)
 (set-face-foreground 'default "#161c23")
-(set-face-background 'default "white")
+(set-face-background 'default "#C6B8AD")
 (setq cursor-in-non-selected-windows nil)
 
 
@@ -437,7 +437,6 @@
 (require 'init-eldoc)
 
 
-(require 'custom-util-funcs)
 
 
 (require 'init-eglot)
