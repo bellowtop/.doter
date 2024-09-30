@@ -173,7 +173,7 @@ exists it returns /file/name_Copy2.ext etc."
       :family "IBM Plex Mono"
       :weight 'normal
       :height 140
-      :foreground darker-window-fg-color
+      :foreground "#CCCCCC"
       :underline nil
       :inherit 'unspecified))
 

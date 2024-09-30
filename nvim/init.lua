@@ -478,8 +478,25 @@ vim.g.surround_no_insert_mappings = 1
 
 local function nvim_tree_on_attach(bufnr)
     local api = require "nvim-tree.api"
-    api.config.mappings.default_on_attach(bufnr)
+    -- api.config.mappings.default_on_attach(bufnr)
     -- vim.keymap.set('n', '<C-e>', api.tree.toggle_help, { noremap = true })
+    vim.keymap.set('n', '<C-]>',   api.tree.change_root_to_node,        opts('CD'))
+    vim.keymap.set('n', '<CR>',    api.node.open.edit,                  opts('Open'))
+    vim.keymap.set('n', '<C-v>',   api.node.open.vertical,              opts('Open: Vertical Split'))
+    vim.keymap.set('n', '<C-x>',   api.node.open.horizontal,            opts('Open: Horizontal Split'))
+    vim.keymap.set('n', '<Tab>',   api.node.open.preview,               opts('Open Preview'))
+    vim.keymap.set('n', 'a',       api.fs.create,                       opts('Create File Or Directory'))
+    vim.keymap.set('n', 'd',       api.fs.remove,                       opts('Delete'))
+    vim.keymap.set('n', 'D',       api.fs.trash,                        opts('Trash'))
+    vim.keymap.set('n', 'o',       api.node.open.edit,                  opts('Open'))
+    vim.keymap.set('n', 'p',       api.fs.paste,                        opts('Paste'))
+    vim.keymap.set('n', 'P',       api.node.navigate.parent,            opts('Parent Directory'))
+    vim.keymap.set('n', 'q',       api.tree.close,                      opts('Close'))
+    vim.keymap.set('n', 'r',       api.fs.rename,                       opts('Rename'))
+    vim.keymap.set('n', 'g',       api.tree.reload,                     opts('Refresh'))
+    vim.keymap.set('n', 'x',       api.fs.cut,                          opts('Cut'))
+    vim.keymap.set('n', 'y',       api.fs.copy.filename,                opts('Copy Name'))
+    vim.keymap.set('n', 'Y',       api.fs.copy.relative_path,           opts('Copy Relative Path'))
 end
 
 require'nvim-tree'.setup {
@@ -951,8 +968,8 @@ cmp.setup({
       select = true,
     },
 
-    ["<Tab>"] =   cmp.mapping(cmp_select_next, { "i", "s" }),
-    ["<S-Tab>"] = cmp.mapping(cmp_select_prev, { "i", "s" }),
+    -- ["<Tab>"] =   cmp.mapping(cmp_select_next, { "i", "s" }),
+    -- ["<S-Tab>"] = cmp.mapping(cmp_select_prev, { "i", "s" }),
 
     ["<C-n>"] =   cmp.mapping(cmp_select_next, { "i", "s" }),
     ["<C-p>"] =   cmp.mapping(cmp_select_prev, { "i", "s" }),
@@ -1566,8 +1583,8 @@ vim.api.nvim_set_keymap("o", "il", ":normal vil<CR>", { noremap = true })
 
 
 
-vim.api.nvim_set_keymap("n", "<M-n>", "<C-e>",    { noremap = true } )
-vim.api.nvim_set_keymap("n", "<M-p>", "<C-y>",    { noremap = true } )
+vim.api.nvim_set_keymap("n", "<A-j>", "<C-e>",    { noremap = true } )
+vim.api.nvim_set_keymap("n", "<A-k>", "<C-y>",    { noremap = true } )
 
 
 
