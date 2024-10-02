@@ -750,4 +750,35 @@ If buffer-or-name is nil return current buffer's mode."
     (if found dirname nil)))
 
 
+(define-ibuffer-filter my-visiting-file
+  "Limit current view to buffers that are visiting a file."
+  (:description "visiting a file"
+    :reader nil)
+  (buffer-file-name buf))
+
+(defun side-ibuffer ()
+  (interactive)
+  (let ((buffer
+          (save-window-excursion
+            (ibuffer nil "*side-ibuffer*" '((my-visiting-file . t)))
+            (setq-local buffer-stale-function
+              (lambda (&rest ignore) t))
+            (setq-local revert-buffer-function
+              (lambda (&rest ignore)
+                (ibuffer-update nil t)))
+            (auto-revert-mode -1)
+            (setq-local display-buffer-base-action '(display-buffer-use-some-window))
+			(use-local-map (copy-keymap ibuffer-mode-map))
+			(local-set-key "q" #'(lambda() (interactive) (kill-this-buffer)))
+			(local-set-key "v" #'(lambda() (interactive) (ibuffer-visit-buffer-other-window-noselect)))
+			(local-set-key "o" #'(lambda() (interactive) (ibuffer-visit-buffer-other-window)))
+			(local-set-key (kbd "<mouse-1>") #'(lambda() (interactive) (ibuffer-visit-buffer-other-window)))
+            (local-set-key (kbd "RET") #'(lambda() (interactive) (ibuffer-visit-buffer-other-window) (my-quit-other-window)))
+            (current-buffer))))
+    (pop-to-buffer buffer
+      '(display-buffer-in-side-window
+         (side . right)))))
+
+
+
 (provide 'my-utils)
