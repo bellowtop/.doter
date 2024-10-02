@@ -134,11 +134,14 @@
 
 (defun* refresh-current-mode ()
   (interactive)
-  (when (my-god-this-is-dark-background-buffer (buffer-name))
+  (if (my-god-this-is-dark-background-buffer (buffer-name))
     (set (make-local-variable 'face-remapping-alist) `((default :background ,darker-window-bg-color)
+                                                       (fringe :background ,darker-window-bg-color)
                                                        (line-number :background ,darker-window-bg-color :foreground "#627d9d")
                                                        (line-number-current-line :background ,darker-window-bg-color :foreground "#627d9d")
-                                                       )))
+                                                        ))
+    (set (make-local-variable 'face-remapping-alist) `((fringe :background ,(face-background 'default))
+                                                        )))
   (cond
     ((my-god-this-is-legendary-buffer (buffer-name))
       ;; (message "%s is legendary buffer" (buffer-name))

@@ -92,8 +92,8 @@
      ;; (drag-internal-border . 1)
      ;; (internal-border-width . 5)
      (vertical-scroll-bars) ;隐藏滚动条
-     (left-fringe . 0) ;关闭左fringe
-     (right-fringe . 0) ;关闭右fringe
+     (left-fringe . 8) ;关闭左fringe
+     (right-fringe . 8) ;关闭右fringe
      (font . ,default-font)
      (vertical-scroll-bars . nil)
      ))
