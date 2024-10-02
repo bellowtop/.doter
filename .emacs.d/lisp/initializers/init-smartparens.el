@@ -4,7 +4,6 @@
 ; (smartparens-global-mode 1)
 ; (smartparens-mode 1)
 
-
 (defun indent-between-pair (&rest _ignored)
   (newline)
   (indent-according-to-mode)
@@ -13,7 +12,6 @@
 
 (with-eval-after-load 'smartparens
   ;; but still should init, so that some variables are set, such as sp-pair-list
-  (sp--init)
   (sp-local-pair 'prog-mode "{" nil :post-handlers '((indent-between-pair "RET")))
   (sp-local-pair 'prog-mode "[" nil :post-handlers '((indent-between-pair "RET")))
   (sp-local-pair 'prog-mode "(" nil :post-handlers '((indent-between-pair "RET")))

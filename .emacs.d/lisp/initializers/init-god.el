@@ -1,4 +1,5 @@
 (require 'god-mode)
+
 (setq god-exempt-major-modes nil)
 (setq god-exempt-predicates nil)
 (setq god-mode-alist '((nil . "C-") ("r" . "M-") ("R" . "C-M-")))
@@ -7,7 +8,7 @@
 
 
 ;; special-buffers are not affected by god-mode bindings, but affected by my-special-buffer-keys-minor-mode-map
-(setq special-buffer-modes (list "dired-mode" "special-mode"))
+(setq special-buffer-modes (list "dired-mode" "ibuffer-mode" "special-mode"))
 (setq special-buffers (list
                         "*Pos-Frame-Read*"
                         "*Treemacs"
@@ -317,6 +318,7 @@
   (setq cursor-type (if (display-graphic-p) 'box 'box))
   (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
   (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
+  (sp--maybe-init)
   (if (bound-and-true-p god-local-mode)
     (progn
       (hl-line-mode 1)
