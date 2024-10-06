@@ -392,10 +392,11 @@ If buffer-or-name is nil return current buffer's mode."
           (buffer-live-p buffer)
           (string-match "compilation" (buffer-name buffer))
           (string-match "finished" string)
-          (not
-            (with-current-buffer buffer
-              (goto-char (point-min))
-              (search-forward "warning" nil t))))
+          ;; (not
+          ;;   (with-current-buffer buffer
+          ;;     (goto-char (point-min))
+          ;;     (search-forward "warning" nil t)))
+          )
     (run-with-timer 1 nil
       (lambda (buf)
         (delete-windows-on buf)
