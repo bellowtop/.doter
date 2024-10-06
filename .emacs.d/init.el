@@ -267,8 +267,6 @@
 
 
 
-
-
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -447,6 +445,9 @@
 (require 'init-lang-go)
 
 
+(require 'init-cmake-project)
+
+
 (require 'init-lang-cpp)
 
 
@@ -564,11 +565,15 @@
                 ;; 使用空格代替 tab
                 (setq indent-tabs-mode nil)
                 (setq js-indent-level 4)
+                (c-ts-mode-toggle-comment-style -1)
+                (bind-keys :map qml-mode-map ("C-c C-b" . compile))
+                (bind-keys :map qml-mode-map ("s-b" . compile))
                 ;; (with-eval-after-load 'eglot
                 ;;   (add-to-list 'eglot-server-programs
                 ;;     `(qml-mode . ("/Users/jiechen/work/code/qt/qtdeclarative/build/Qt_6_7_2_for_macOS-Debug/bin/qmlls" "--verbose" "--build-dir" ,(concat (upward-find-file "build") "/build") "--no-cmake-calls"))))
                 )
             )
+  (qml-mode . maybe-cmake-project-mode)
   :config
   (add-to-list 'auto-mode-alist '("\\.qml\\'" . qml-mode))
   )
@@ -595,7 +600,8 @@
   (setq cmake-tab-width 4)
   (bind-keys
     :map cmake-ts-mode-map
-    ("C-c C-c" . compile)
+    ("C-c C-b" . compile)
+    ("s-b" . compile)
     )
   )
 
