@@ -77,6 +77,7 @@
          my-god-char-forward-and-insert-mode
          my-goto-match-paren
          my-join-lines
+         my-kill-region-and-insert-d-in-selected
          my-kill-whole-line-or-kill-region
          my-quit-god-mode
          my-replace-char
@@ -147,6 +148,7 @@
 
 (setq mc/cmds-to-run-once
       '(
+         +funcs/new-empty-buffer
          avy-goto-word-0
          beginning-of-buffer
          comment-region
