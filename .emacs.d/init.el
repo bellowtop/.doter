@@ -252,7 +252,7 @@
 
 
 ;; compile log with colors
-(add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
+;; (add-hook 'compilation-filter-hook 'ansi-color-compilation-filter)
 (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
 
 
@@ -538,6 +538,24 @@
 
 (require 'init-autopep8)
 
+
+(defun my-ripgrep-kill-buffer()
+  (interactive)
+  (ripgrep/kill-buffer)
+  (delete-window)
+  )
+
+(use-package ripgrep
+  :bind
+  (:map
+    ripgrep-search-mode-map
+    (";" . scroll-up-command)
+    ("'" . scroll-down-command)
+    ("k" . previous-line)
+    ("j" . next-line)
+    ("x" . my-ripgrep-kill-buffer)
+    )
+  )
 
 
 (use-package rust-mode
