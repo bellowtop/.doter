@@ -1590,6 +1590,9 @@ vim.api.nvim_set_keymap("o", "il", ":normal vil<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<A-j>", "<C-e>",    { noremap = true } )
 vim.api.nvim_set_keymap("n", "<A-k>", "<C-y>",    { noremap = true } )
 
+vim.api.nvim_set_keymap("n", "<A-h>", ":bprev<CR>",    { noremap = true } )
+vim.api.nvim_set_keymap("n", "<A-l>", ":bnext<CR>",    { noremap = true } )
+
 
 
 
