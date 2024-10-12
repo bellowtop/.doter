@@ -546,6 +546,8 @@
   )
 
 (use-package ripgrep
+  :config
+  (set-face-attribute 'ripgrep-match-face nil :inherit 'my-highlight-font-words-face)
   :bind
   (:map
     ripgrep-search-mode-map
