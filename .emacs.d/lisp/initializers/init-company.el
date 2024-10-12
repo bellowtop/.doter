@@ -6,15 +6,28 @@
 (add-hook 'before-save-hook 'company-cancel)
 
 ;; company-posframe-mode
-                                        ;  (require 'company-posframe)
-                                        ;  (company-posframe-mode 1)
+(require 'company-posframe)
+(company-posframe-mode 1)
 
 ;; http://company-mode.github.io/manual/Getting-Started.html#Initial-Setup
-(with-eval-after-load 'company
+(with-eval-after-load 'company-posframe
   (define-key company-mode-map (kbd "C-M-i") #'company-complete)
+
   (define-key company-active-map (kbd "<tab>") #'company-select-next-if-tooltip-visible-or-complete-selection)
   (define-key company-active-map (kbd "<backtab>") #'company-select-previous-or-abort)
   (define-key company-active-map (kbd "RET") #'company-complete-selection)
+
+
+  ;; patch this function, it has bug when posframe is active.
+  (defun company-select-next-if-tooltip-visible-or-complete-selection ()
+    (interactive)
+    (if (and t (> company-candidates-length 1))
+        (call-interactively 'company-select-next)
+      (call-interactively 'company-complete-selection)))
+
+  (define-key company-posframe-active-map (kbd "<tab>") #'company-select-next-if-tooltip-visible-or-complete-selection)
+  (define-key company-posframe-active-map (kbd "<backtab>") #'company-select-previous-or-abort)
+  (define-key company-posframe-active-map (kbd "RET") #'company-complete-selection)
 
   (with-eval-after-load 'flymake
       (add-hook 'company-completion-started-hook   #'(lambda(&rest _) (flymake-mode 0))                 nil t)
