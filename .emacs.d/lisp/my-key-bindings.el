@@ -215,6 +215,7 @@
     (define-key god-local-mode-map (kbd "SPC h") #'centaur-tabs-backward)
 
     (define-key god-local-mode-map (kbd "SPC 2") #'treemacs)
+    (define-key god-local-mode-map (kbd "SPC 3") #'side-ibuffer)
     (define-key god-local-mode-map (kbd "SPC n") #'my-neotree-toggle)
     (define-key god-local-mode-map (kbd "SPC N") #'my-neotree-find)
     (define-key god-local-mode-map (kbd "SPC s") #'counsel-imenu)

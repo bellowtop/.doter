@@ -131,7 +131,7 @@
     (menu-bar-mode 1))
 
   (scroll-bar-mode -1)
-  (set-fringe-mode 0)
+  (set-fringe-mode 1)
   ;; (tab-bar-mode -1)
   ;; (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark)) ;; dark themes use "dark"

@@ -26,11 +26,13 @@
   ;; (treemacs-resize-icons 26)
 
   (defun my-add-padding-for-treemacs ()
-    (set-window-margins (treemacs-get-local-window) 1 1)
-    (set-fringe-mode 0))
+    (set-window-margins (treemacs-get-local-window) 0 0)
+  )
 
   (defun dim-treemacs-window-background ()
-    (set (make-local-variable 'face-remapping-alist) `((default :background ,darker-window-bg-color))))
+    (set (make-local-variable 'face-remapping-alist) `((default :background ,darker-window-bg-color)
+                                                        (fringe :background ,darker-window-bg-color)))
+    )
 
   (defun my-decrease-treemacs-width ()
     (interactive)

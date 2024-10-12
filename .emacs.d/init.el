@@ -92,8 +92,8 @@
      ;; (drag-internal-border . 1)
      ;; (internal-border-width . 5)
      (vertical-scroll-bars) ;隐藏滚动条
-     (left-fringe . 0) ;关闭左fringe
-     (right-fringe . 0) ;关闭右fringe
+     (left-fringe . 8) ;关闭左fringe
+     (right-fringe . 8) ;关闭右fringe
      (font . ,default-font)
      (vertical-scroll-bars . nil)
      ))
@@ -264,8 +264,6 @@
 
 
 (require 'init-imenu)
-
-
 
 
 
@@ -447,6 +445,9 @@
 (require 'init-lang-go)
 
 
+(require 'init-cmake-project)
+
+
 (require 'init-lang-cpp)
 
 
@@ -483,7 +484,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-    '(company-qml qml-mode csv-mode inkpot-theme srcery-theme package-lint with-simulated-input solaire-mode dashboard dashboard-hackernews blamer paredit slime-company symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+    '(company-posframe company-qml qml-mode csv-mode inkpot-theme srcery-theme package-lint with-simulated-input solaire-mode dashboard dashboard-hackernews blamer paredit slime-company symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
@@ -584,11 +585,15 @@
                 ;; 使用空格代替 tab
                 (setq indent-tabs-mode nil)
                 (setq js-indent-level 4)
+                (c-ts-mode-toggle-comment-style -1)
+                (bind-keys :map qml-mode-map ("C-c C-b" . compile))
+                (bind-keys :map qml-mode-map ("s-b" . compile))
                 ;; (with-eval-after-load 'eglot
                 ;;   (add-to-list 'eglot-server-programs
                 ;;     `(qml-mode . ("/Users/jiechen/work/code/qt/qtdeclarative/build/Qt_6_7_2_for_macOS-Debug/bin/qmlls" "--verbose" "--build-dir" ,(concat (upward-find-file "build") "/build") "--no-cmake-calls"))))
                 )
             )
+  (qml-mode . maybe-cmake-project-mode)
   :config
   (add-to-list 'auto-mode-alist '("\\.qml\\'" . qml-mode))
   )
@@ -615,7 +620,8 @@
   (setq cmake-tab-width 4)
   (bind-keys
     :map cmake-ts-mode-map
-    ("C-c C-c" . compile)
+    ("C-c C-b" . compile)
+    ("s-b" . compile)
     )
   )
 
