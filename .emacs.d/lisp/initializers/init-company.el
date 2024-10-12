@@ -11,18 +11,10 @@
 
 ;; http://company-mode.github.io/manual/Getting-Started.html#Initial-Setup
 (with-eval-after-load 'company
-  (define-key
-    company-active-map
-    (kbd "<tab>")
-    #'company-select-next-if-tooltip-visible-or-complete-selection)
-  (define-key
-    company-active-map
-    (kbd "<backtab>")
-    #'company-select-previous-or-abort)
-  (define-key
-    company-active-map
-    (kbd "RET")
-    #'company-complete-selection)
+  (define-key company-mode-map (kbd "C-M-i") #'company-complete)
+  (define-key company-active-map (kbd "<tab>") #'company-select-next-if-tooltip-visible-or-complete-selection)
+  (define-key company-active-map (kbd "<backtab>") #'company-select-previous-or-abort)
+  (define-key company-active-map (kbd "RET") #'company-complete-selection)
 
   (with-eval-after-load 'flymake
       (add-hook 'company-completion-started-hook   #'(lambda(&rest _) (flymake-mode 0))                 nil t)
