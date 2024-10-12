@@ -42,11 +42,15 @@
 (bind-key* (kbd "M-M")  #'my-toggle-er/mark-outside-paren)
 (bind-key* (kbd "M-o")  #'ace-window)
 
+(bind-key* (kbd "M-H") #'previous-buffer)
+(bind-key* (kbd "M-L") #'next-buffer)
+
 (bind-key* (kbd "M-j") #'gcm-scroll-down)
 (bind-key* (kbd "M-k") #'gcm-scroll-up)
 
 (bind-key* (kbd "s-w") #'kill-current-buffer)
 (bind-key* (kbd "s-t") #'+funcs/new-empty-buffer)
+
 
 
 
@@ -99,6 +103,7 @@
 
     ;; (define-key map (kbd "M-u") 'upcase-dwim)
     ;; (define-key map (kbd "M-l") 'downcase-dwim)
+
 
     (define-prefix-command 'my-god-mode-leader-key)
     (define-prefix-command 'my-god-mode-dummmy-key)
