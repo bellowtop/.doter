@@ -16,6 +16,7 @@
 (use-package eglot
   :commands (eglot eglot-ensure)
   :config
+  (set-face-attribute 'eglot-diagnostic-tag-unnecessary-face nil :foreground "deeppink")
 
   ;; (advice-add 'eglot-rename                :after 'next-history-element)
 

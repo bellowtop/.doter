@@ -185,6 +185,10 @@
 (set-face-attribute 'mode-line-active      nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position t))
 (set-face-attribute 'mode-line-highlight   nil :box nil :foreground "green")
 
+
+(set-face-attribute 'isearch          nil :background "#FCE094" :foreground "black")
+(set-face-attribute 'lazy-highlight   nil :background "#EEB422" :foreground "#161c23")
+
 ;; for macOS, set tooltip font size by:
 ;; defaults write org.gnu.Emacs NSToolTipsFontSize -int 16
 (set-face-font 'tooltip (frame-parameter nil 'font))
@@ -405,9 +409,9 @@
 
 
 (with-eval-after-load 'pulse
-  ;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background "#1f4670")
-  ;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background 'unspecified :inverse-video t)
-  ;;   ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "green" :background "black")
+  ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background "#1f4670")
+  (set-face-attribute 'pulse-highlight-face nil :background 'unspecified :inherit 'my-highlight-font-words-face)
+  ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "green" :background "black")
   (setq pulse-delay 0.01) ;; pulse fast!
   )
 
