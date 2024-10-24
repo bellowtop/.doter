@@ -189,7 +189,9 @@
 (set-face-attribute 'isearch          nil :background "#FCE094" :foreground "black")
 (set-face-attribute 'lazy-highlight   nil :background "#EEB422" :foreground "#161c23")
 
-(set-face-attribute 'widget-field     nil :background "#C6B8AD")
+(with-eval-after-load 'wid-edit
+  (set-face-attribute 'widget-field     nil :background "#C6B8AD")
+  )
 
 
 
