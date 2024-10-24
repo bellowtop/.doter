@@ -189,6 +189,10 @@
 (set-face-attribute 'isearch          nil :background "#FCE094" :foreground "black")
 (set-face-attribute 'lazy-highlight   nil :background "#EEB422" :foreground "#161c23")
 
+(set-face-attribute 'widget-field     nil :background "#C6B8AD")
+
+
+
 ;; for macOS, set tooltip font size by:
 ;; defaults write org.gnu.Emacs NSToolTipsFontSize -int 16
 (set-face-font 'tooltip (frame-parameter nil 'font))
