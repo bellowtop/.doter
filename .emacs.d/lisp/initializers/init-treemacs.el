@@ -175,9 +175,34 @@ exists it returns /file/name_Copy2.ext etc."
       :family "IBM Plex Mono"
       :weight 'normal
       :height 140
-      :foreground "#57D8D4"
       :underline nil
       :inherit 'unspecified))
+
+  (dolist
+    (face '(treemacs-root-face
+             treemacs-directory-face
+             treemacs-directory-collapsed-face
+             ))
+    (set-face-attribute face nil
+      :foreground "#57D8D4"
+      ))
+
+  (dolist
+    (face '(treemacs-git-unmodified-face
+             treemacs-git-modified-face
+             treemacs-git-renamed-face
+             treemacs-git-ignored-face
+             treemacs-git-untracked-face
+             treemacs-git-added-face
+             treemacs-git-conflict-face
+             treemacs-file-face
+             ;; treemacs-nerd-icons-file-face
+             ;; treemacs-nerd-icons-root-face
+             treemacs-tags-face
+             ))
+    (set-face-attribute face nil
+      :foreground "#C6B8AD"
+      ))
 
   (when (display-graphic-p)
     (treemacs-load-theme "nerd-icons")
