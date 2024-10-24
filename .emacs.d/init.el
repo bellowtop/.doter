@@ -127,7 +127,7 @@
 
 (if use-dark-theme-mode
   (progn
-        (setq darker-window-bg-color "#26282F")
+        (setq darker-window-bg-color "#181818")
         (setq darker-window-fg-color "white")
         ;;
         (setq highlight-font-chars-face-fg "green")

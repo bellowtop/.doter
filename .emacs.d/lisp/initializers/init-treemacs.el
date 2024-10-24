@@ -175,7 +175,7 @@ exists it returns /file/name_Copy2.ext etc."
       :family "IBM Plex Mono"
       :weight 'normal
       :height 140
-      :foreground "#CCCCCC"
+      :foreground "#50c3c0"
       :underline nil
       :inherit 'unspecified))
 
