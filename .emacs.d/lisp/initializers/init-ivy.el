@@ -22,6 +22,12 @@
   (setq ivy-re-builders-alist
     ;; allow input not in order
     '((t . ivy--regex-ignore-order)))
+
+  (set-face-attribute 'ivy-minibuffer-match-face-1     nil :weight 'regular)
+  (set-face-attribute 'ivy-minibuffer-match-face-2     nil :weight 'regular)
+  (set-face-attribute 'ivy-minibuffer-match-face-3     nil :weight 'regular)
+  (set-face-attribute 'ivy-minibuffer-match-face-4     nil :weight 'regular)
+
   ;; donot show these buffers in counsel-switch-buffer
   (add-to-list 'ivy-ignore-buffers "\\*Messages\\*")
   (add-to-list 'ivy-ignore-buffers "\\*Help\\*")
