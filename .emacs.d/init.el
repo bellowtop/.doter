@@ -282,7 +282,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(mode-line ((t (:background "#415367" :foreground "#e5ded6" :underline (:color foreground-color :style line :position t))))))
+ '(mode-line ((t (:background "#415367" :foreground "#e5ded6" :underline (:color foreground-color :style line :position t)))))
+ '(pulse-highlight-face ((t (:inherit nil :extend nil :background "unspecified" :inverse-video t))))
+ '(pulse-highlight-start-face ((t (:background "#AAAA33" :inverse-video t))))
+ '(success ((t (:foreground "Green1" :weight regular)))))
 
   ;; If there is more than one, they won't work right.
  ;;;;  '(ahs-definition-face ((t (:inherit ahs-plugin-default-face))))
@@ -414,12 +417,12 @@
 
 
 
-(with-eval-after-load 'pulse
-  ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background "#1f4670")
-  (set-face-attribute 'pulse-highlight-face nil :background 'unspecified :inherit 'my-highlight-font-words-face)
-  ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "green" :background "black")
-  (setq pulse-delay 0.01) ;; pulse fast!
-  )
+;; (with-eval-after-load 'pulse
+;;   ;; (set-face-attribute 'pulse-highlight-face nil :foreground 'unspecified :background "#1f4670")
+;;   (set-face-attribute 'pulse-highlight-face nil :background 'unspecified :inherit 'my-highlight-font-words-face)
+;;   ;; (set-face-attribute 'pulse-highlight-start-face nil :foreground "green" :background "black")
+;;   (setq pulse-delay 0.01) ;; pulse fast!
+;;   )
 
 
 (require 'init-format-all)
