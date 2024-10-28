@@ -199,7 +199,8 @@
 ;; defaults write org.gnu.Emacs NSToolTipsFontSize -int 16
 (set-face-font 'tooltip (frame-parameter nil 'font))
 
-(load-theme 'bogster t)
+(load-theme 'vs2017 t)
+;; (load-theme 'bogster t)
 
 (defun my-change-window-divider ()
   (let ((display-table (or buffer-display-table standard-display-table)))
