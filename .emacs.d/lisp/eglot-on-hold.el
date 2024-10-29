@@ -50,11 +50,11 @@
 (defun eglot-on-hold--msg (orig-fun cb)
   "Show eglot highlight with a delay.
 Used to advice ORIG-FUN, which should be 'eglot-hover-eglot-function', CB is cb "
-  (message "in eglot-on-hold--msg")
+  ;; (message "in eglot-on-hold--msg")
   (when eglot-on-hold--msg-timer
     (cancel-timer eglot-on-hold--msg-timer)
     (setq eglot-on-hold--msg-timer nil))
-  (message "run-with-timer %s, %s" orig-fun eglot-on-hold-delay-interval)
+  ;; (message "run-with-timer %s, %s" orig-fun eglot-on-hold-delay-interval)
   (setq eglot-on-hold--msg-timer
     (run-with-timer eglot-on-hold-delay-interval nil orig-fun cb))
   )
