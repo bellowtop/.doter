@@ -1,4 +1,4 @@
-;;; eglot-on-hold.el --- Summary -*- lexical-binding: t; -*-
+;;; eldoc-on-hold.el --- Summary -*- lexical-binding: t; -*-
 
 ;; Copyright 2021 Google LLC
 ;;
@@ -33,15 +33,10 @@
 
 (eval-when-compile (require 'eglot))
 
-(defcustom eglot-on-hold-delay-interval 5.0
+(defcustom eglot-on-hold-delay-interval 0.5
   "Delayed time to display eglot."
   :group 'eglot-on-hold
   :type 'number)
-
-(defcustom eglot-on-hold-pick-up-cancel-company t
-  "Whether to cancel company popup when picking up"
-  :group 'eglot-on-hold
-  :type 'boolean)
 
 (defvar eglot-on-hold--msg-timer nil
   "Timer for displaying eglot messages.")
@@ -52,11 +47,10 @@
 (defvar eglot-on-hold--prev-interval nil
   "Internal variable to remember the user's preferred delay time.")
 
-
 (defun eglot-on-hold--msg (orig-fun cb)
   "Show eglot highlight with a delay.
-Used to advice ORIG-FUN, which should be 'eglot-hover-eglot-function',
-CB is used by eglot-hover-eglot-function "
+Used to advice ORIG-FUN, which should be 'eglot-hover-eglot-function', CB is cb "
+  (message "in eglot-on-hold--msg")
   (when eglot-on-hold--msg-timer
     (cancel-timer eglot-on-hold--msg-timer)
     (setq eglot-on-hold--msg-timer nil))
@@ -67,10 +61,8 @@ CB is used by eglot-hover-eglot-function "
 
 (defun eglot-on-hold--cancel-timer ()
   "Cancel the delayed eglot display if necessary."
-  (when (and eglot-on-hold--msg-timer
-             (or (not (eldoc--message-command-p last-command))
-                 this-command))
-    (cancel-timer eglot-on-hold--msg-timer)))
+  (when eglot-on-hold--no-delay-timer
+    (cancel-timer eglot-on-hold--no-delay-timer)))
 
 (define-minor-mode global-eglot-on-hold-mode
   "Enable global-eglot-on-hold mode."
@@ -82,9 +74,9 @@ CB is used by eglot-hover-eglot-function "
         (setq eglot-on-hold--no-delay-timer nil)
         (setq eglot-on-hold--use-timer t)
         (setq eglot-on-hold--prev-interval eglot-on-hold-delay-interval)
-        (advice-add 'eglot-hover-eglot-function :around #'eglot-on-hold--msg)
+        (advice-add 'eglot-hover-eldoc-function :around #'eglot-on-hold--msg)
         (add-hook 'post-command-hook #'eglot-on-hold--cancel-timer))
-    (advice-remove 'eglot-hover-eglot-function #'eglot-on-hold--msg)
+    (advice-remove 'eglot-hover-eldoc-function #'eglot-on-hold--msg)
     (when eglot-on-hold--msg-timer
       (cancel-timer eglot-on-hold--msg-timer))
     (when eglot-on-hold--no-delay-timer
