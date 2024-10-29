@@ -199,8 +199,14 @@
 ;; defaults write org.gnu.Emacs NSToolTipsFontSize -int 16
 (set-face-font 'tooltip (frame-parameter nil 'font))
 
-(load-theme 'vs2017 t)
-;; (load-theme 'bogster t)
+;; (use-package vscode-dark-plus-theme
+;;   :ensure t
+;;   :init
+;;   (load-theme 'vscode-dark-plus t)
+;;   (set-face-background 'default "#161c23")
+;;   )
+;; (load-theme 'vs2017 t)
+(load-theme 'bogster t)
 
 (defun my-change-window-divider ()
   (let ((display-table (or buffer-display-table standard-display-table)))
@@ -211,6 +217,7 @@
 (set-face-attribute 'vertical-border nil :foreground window-divider-color
                                          :background (face-background 'default)
                                          :inherit 'unspecified)
+
 
 
 
@@ -447,8 +454,6 @@
 
 
 (require 'init-eldoc)
-
-
 
 
 (require 'init-eglot)
