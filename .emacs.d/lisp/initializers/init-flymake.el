@@ -1,10 +1,40 @@
 
-
 ;; (use-package
 ;;   flymake-posframe
 ;;   :load-path "~/.emacs.d/lisp/flymake-posframe.el"
 ;;   :hook (flymake-mode . flymake-posframe-mode))
 
+
+(setq should-i-enable-flymake t)
+
+(defun please-enable-flymake() (message "set flag") (setq should-i-enable-flymake t))
+(defun please-disable-flymake() (message "clear flag") (setq should-i-enable-flymake nil))
+(defun i-should-enable-flymake() (message "check flag") (eq should-i-enable-flymake t))
+
+
+(setq-default backup-eglot--current-flymake-report-fn nil)
+
+
+(defun try-stop-flymake (&rest _)
+  (please-disable-flymake)
+  (flymake-mode 0)
+  (when (boundp 'eglot--current-flymake-report-fn)
+    (setq backup-eglot--current-flymake-report-fn eglot--current-flymake-report-fn)
+    (setq eglot--current-flymake-report-fn nil)
+    )
+  )
+
+(defun try-start-flymake (&rest _)
+  (please-enable-flymake)
+  (run-with-timer 0.3 nil #'(lambda()
+                            (when (i-should-enable-flymake)
+                              (when backup-eglot--current-flymake-report-fn
+                                (setq eglot--current-flymake-report-fn backup-eglot--current-flymake-report-fn)
+                                (set backup-eglot--current-flymake-report-fn nil))
+                              (flymake-mode 1)
+                              (flymake-start)
+                              )
+                            )))
 
 
 (use-package flymake-diagnostic-at-point

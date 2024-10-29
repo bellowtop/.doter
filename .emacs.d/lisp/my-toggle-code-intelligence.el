@@ -1,24 +1,28 @@
+(require 'init-flymake)
+
 (defvar my-code-intelligence 't
   "enable by default")
 
 
-(defun my-disable-eglot-highlight ()
+
+(defun my-disable-eglot-highlight (&rest _)
   (interactive)
+  (message "my-disable-eglot-highlight")
   (ignore-errors
     (setq eglot-ignored-server-capabilities
       (add-to-list 'eglot-ignored-server-capabilities ':documentHighlightProvider))
     (set-face-attribute 'eglot-highlight-symbol-face nil :inherit nil)
-    (flymake-mode 0)
+    (try-stop-flymake)
     ))
 
-(defun my-enable-eglot-highlight ()
+(defun my-enable-eglot-highlight (&rest _)
   (interactive)
+  (message "my-enable-eglot-highlight")
   (ignore-errors
     (setq eglot-ignored-server-capabilities
       (delete ':documentHighlightProvider eglot-ignored-server-capabilities))
     (set-face-attribute 'eglot-highlight-symbol-face nil :inherit (if (display-graphic-p) 'my-highlight-font-chars-face 'my-highlight-font-words-face))
-    (flymake-mode 1)
-    (flymake-start)
+    (try-start-flymake)
     ))
 
 (with-eval-after-load 'eglot
