@@ -181,12 +181,8 @@
 
 
 
-(set-face-attribute 'mode-line-inactive    nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position t))
-(set-face-attribute 'mode-line-active      nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position t))
-(set-face-attribute 'mode-line-highlight   nil :box nil :foreground "green")
 
 
-(set-face-attribute 'isearch          nil :background "#FCE094" :foreground "black")
 (set-face-attribute 'lazy-highlight   nil :background "#EEB422" :foreground "#161c23")
 
 (with-eval-after-load 'wid-edit
@@ -199,14 +195,26 @@
 ;; defaults write org.gnu.Emacs NSToolTipsFontSize -int 16
 (set-face-font 'tooltip (frame-parameter nil 'font))
 
-;; (use-package vscode-dark-plus-theme
-;;   :ensure t
-;;   :init
-;;   (load-theme 'vscode-dark-plus t)
-;;   (set-face-background 'default "#161c23")
-;;   )
+(use-package vscode-dark-plus-theme
+  :ensure t
+  :init
+  (load-theme 'vscode-dark-plus t)
+  (set-face-background 'default "#161c23")
+  (set-face-foreground 'isearch "white")
+  (set-face-attribute 'mode-line-inactive    nil :box nil :underline nil)
+  (set-face-attribute 'mode-line-active      nil :box nil :underline nil)
+  )
+
+
 ;; (load-theme 'vs2017 t)
-(load-theme 'bogster t)
+
+
+;; (load-theme 'bogster t)
+;; (set-face-attribute 'isearch               nil :background "#FCE094" :foreground "black")
+;; (set-face-attribute 'mode-line-inactive    nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position t))
+;; (set-face-attribute 'mode-line-active      nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position t))
+;; (set-face-attribute 'mode-line-highlight   nil :box nil :foreground "green")
+
 
 (defun my-change-window-divider ()
   (let ((display-table (or buffer-display-table standard-display-table)))
