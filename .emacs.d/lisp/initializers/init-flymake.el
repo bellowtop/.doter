@@ -30,7 +30,7 @@
                             (when (i-should-enable-flymake)
                               (when backup-eglot--current-flymake-report-fn
                                 (setq eglot--current-flymake-report-fn backup-eglot--current-flymake-report-fn)
-                                (set backup-eglot--current-flymake-report-fn nil))
+                                (setq backup-eglot--current-flymake-report-fn nil))
                               (flymake-mode 1)
                               (flymake-start)
                               )
