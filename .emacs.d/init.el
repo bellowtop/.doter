@@ -186,7 +186,7 @@
 (set-face-attribute 'lazy-highlight   nil :background "#EEB422" :foreground "#161c23")
 
 (with-eval-after-load 'wid-edit
-  (set-face-attribute 'widget-field     nil :background "#C6B8AD")
+  (set-face-attribute 'widget-field     nil :background "#C6B8AD" :foreground "black")
   )
 
 
@@ -201,6 +201,7 @@
   (load-theme 'vscode-dark-plus t)
   (set-face-background 'default "#161c23")
   (set-face-foreground 'isearch "white")
+  (set-face-background 'isearch "deeppink")
   (set-face-attribute 'mode-line-inactive    nil :box nil :underline nil)
   (set-face-attribute 'mode-line-active      nil :box nil :underline nil)
   )
