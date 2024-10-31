@@ -34,7 +34,8 @@
 (defun my-enable-paren-highlight ()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'show-paren-match nil :foreground "black" :background "yellow")))
+    (set-face-attribute 'show-paren-match nil :foreground "black" :background "yellow" :weight 'normal)))
+
 
 (defun my-disable-paren-highlight ()
   (interactive)

@@ -98,7 +98,7 @@
      (vertical-scroll-bars . nil)
      ))
 (set-face-attribute 'region nil :inverse-video t)
-(set-face-attribute 'show-paren-match nil :foreground "black" :background "yellow")
+(set-face-attribute 'show-paren-match nil :foreground "black" :background "yellow" :weight 'normal)
 (setq-default left-margin-width 0 right-margin-width 0)
 (setq frame-resize-pixelwise t)
 
@@ -241,8 +241,8 @@
 (require 'init-slime)
 
 
-(require 'indent-guide)
-(indent-guide-global-mode 1)
+;; (require 'indent-guide)
+;; (indent-guide-global-mode 1)
 
 
 ;; (require 'init-theme)
@@ -299,8 +299,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(mode-line ((t (:background "#415367" :foreground "#e5ded6" :underline (:color foreground-color :style line :position t)))))
- '(pulse-highlight-face ((t (:inherit nil :extend nil :background "unspecified" :inverse-video t))))
- '(pulse-highlight-start-face ((t (:background "#AAAA33" :inverse-video t))))
  '(success ((t (:foreground "Green1" :weight regular)))))
 
   ;; If there is more than one, they won't work right.
