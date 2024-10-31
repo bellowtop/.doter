@@ -12,14 +12,17 @@
 ;; (setq my-term-popup-engine 'corfu-terminal)
 (setq my-term-popup-engine 'popon)
 
-(setq my-term-popup-show-p nil)
+(setq-default my-term-popup-show-p nil)
 
 (defun my-term-popup-close (&rest args)
   (interactive)
-  (corfu--popup-hide)
-  (if (window-parameter (get-buffer-window) 'popon-list)
-    (popon-kill-all))
-  (setq my-term-popup-show-p nil))
+  (when my-term-popup-show-p
+    (message "my-term-popup-close")
+    (corfu--popup-hide)
+    (if (window-parameter (get-buffer-window) 'popon-list)
+      (popon-kill-all))
+    (setq my-term-popup-show-p nil))
+  )
 
 
 
@@ -31,8 +34,8 @@
                   (buffer-string)))
             (lines (string-split str "\n"))
             )
-      (my-show-popup lines)
-      (setq my-term-popup-show-p t))))
+        (my-show-popup lines)
+        (setq my-term-popup-show-p t))))
 
 
 
