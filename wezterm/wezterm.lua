@@ -9,6 +9,7 @@ local mytable = require "lib/mystdlib".mytable
 
 local cfg_misc = {
   window_close_confirmation = "NeverPrompt",
+  -- window_decorations = "TITLE | RESIZE",
   window_decorations = "RESIZE",
   check_for_updates = false,
 

@@ -1,5 +1,19 @@
 (require 'ibuffer)
 
+(setq ibuffer-formats '((mark modified " "
+                         (name 24 24 :left :elide)
+                         " "
+                          filename)
+                         (mark modified read-only locked " "
+                           (name 18 18 :left :elide)
+                           " "
+                           (size 9 -1 :right)
+                           " "
+                           (mode 16 16 :left :elide)
+                           " "
+                           filename-and-process)
+                         ))
+
 (define-ibuffer-filter my-visiting-file
   "Limit current view to buffers that are visiting a file."
   (:description "visiting a file"
