@@ -27,7 +27,7 @@
 ;; so we change to C-c o
 (bind-key* (kbd "C-c o") #'my-occur)
 (bind-key* (kbd "C-c C-s") #'my-rg-at-point)
-(bind-key* (kbd "C-h C-c") #'shell)
+(bind-key* (kbd "C-h C-c") #'vterm)
 (bind-key* (kbd "C-h C-h") #'my-quit-other-window)
 (bind-key* (kbd "C-h h")   #'my-quit-other-buffer)
 
@@ -35,7 +35,7 @@
 (bind-key* (kbd "C-x C-b") #'ibuffer)
 (bind-key* (kbd "C-x C-f") #'my-find-files)
 (bind-key* (kbd "C-x C-k") #'kill-this-buffer)
-(bind-key* (kbd "C-c b") #'my-blink-search)
+;; (bind-key* (kbd "C-c b") #'my-blink-search)
 
 (bind-key* (kbd "M-RET") #'my-break-to-multiple-lines)
 (bind-key* (kbd "M-m")  #'my-toggle-er/mark-inside-paren)

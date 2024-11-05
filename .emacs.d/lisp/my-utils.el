@@ -751,4 +751,10 @@ If buffer-or-name is nil return current buffer's mode."
     (if found dirname nil)))
 
 
+
+(defun start-zsh-term()
+  (interactive)
+  (vterm))
+
+
 (provide 'my-utils)
