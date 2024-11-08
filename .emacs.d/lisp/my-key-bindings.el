@@ -35,7 +35,8 @@
 (bind-key* (kbd "C-x C-b") #'ibuffer)
 (bind-key* (kbd "C-x C-f") #'my-find-files)
 (bind-key* (kbd "C-x C-k") #'kill-this-buffer)
-;; (bind-key* (kbd "C-c b") #'my-blink-search)
+(bind-key* (kbd "C-c b") #'switch-to-buffer)
+(bind-key* (kbd "C-M-b") #'switch-to-buffer)
 
 (bind-key* (kbd "M-RET") #'my-break-to-multiple-lines)
 (bind-key* (kbd "M-m")  #'my-toggle-er/mark-inside-paren)
@@ -72,7 +73,6 @@
     (define-key map (kbd "s-F") #'projectile-ripgrep)
 
     ;; (define-key map (kbd "C-M-f") #'projectile-find-file)
-    ;; (define-key map (kbd "C-M-b") #'switch-to-buffer)
     ;; (define-key map (kbd "C-x C-b") #'switch-to-buffer)
 
     (define-key map (kbd "C-h .") #'eldoc-doc-buffer)

@@ -7,7 +7,7 @@
 
 
 (setq
-  scroll-margin 2
+  scroll-margin 0
   scroll-conservatively 101
   scroll-up-aggressively 0.01
   scroll-down-aggressively 0.01
