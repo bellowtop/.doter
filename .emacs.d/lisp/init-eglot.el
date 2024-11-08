@@ -18,8 +18,8 @@
   :config
   (set-face-attribute 'eglot-diagnostic-tag-unnecessary-face nil :foreground "deeppink")
 
-  (require 'eglot-on-hold)
-  (global-eglot-on-hold-mode 1)
+  ;; (require 'eglot-on-hold)
+  ;; (global-eglot-on-hold-mode 1)
 
   ;; (advice-add 'eglot-rename                :after 'next-history-element)
 

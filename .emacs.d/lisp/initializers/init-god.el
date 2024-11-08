@@ -44,6 +44,7 @@
                           "*Minibuf"
                           "*EGLOT"
                           "*terminal*"
+                          "*vterm"
                           "*emacs"
                           "*eshell*"
                           "*blink-search"
@@ -109,6 +110,14 @@
     (or (my-god-this-is-special-buffer bufname)
       (my-god-this-is-legendary-buffer bufname))))
 
+(defun my-god-should-enable-hi-line-mode ()
+  (interactive)
+  (not (bound-and-true-p smerge-mode))
+  )
+
+(defun my-god-should-enable-line-number-mode()
+  t
+  )
 
 
 (setq should-not-display-dark-background-modes (list
@@ -146,22 +155,17 @@
     ((my-god-this-is-legendary-buffer (buffer-name))
       ;; (message "%s is legendary buffer" (buffer-name))
       (god-local-mode 0)
-      (hl-line-mode 0)
       (my-keys-minor-mode 0)
       (my-special-buffer-keys-minor-mode 0))
     ((my-god-this-is-special-buffer (buffer-name))
       ;; (message "%s is special buffer" (buffer-name))
       (god-local-mode 0)
-      (hl-line-mode 1)
       (my-keys-minor-mode 0)
       (my-special-buffer-keys-minor-mode 1))
     (t
       ;; (message "%s not a special buffer" (buffer-name))
       (god-local-mode 1) ;; start local mode
-      (hl-line-mode 1)
       (my-keys-minor-mode 1)
-      ;; (visual-line-mode 1)
-      ;; (global-visual-line-mode 1) ;;
       (setq my-god-mode-is-active-flag t)
       (my-special-buffer-keys-minor-mode 0))
     ))
@@ -324,15 +328,17 @@
   (sp--maybe-init)
   (if (bound-and-true-p god-local-mode)
     (progn
-      (hl-line-mode 1)
       ;; (set-face-attribute 'hl-line nil :background (face-background 'default))
       (set-face-background 'hl-line hl-line-bg-color)
       ;; reset
       (when (my-god-this-is-normal-editor-buffer (buffer-name))
-        (display-line-numbers-mode 1)
-        (set-face-attribute 'line-number-current-line nil
-                            :foreground (or (face-foreground 'line-number) 'unspecified)
-                            :background (or (face-background 'line-number) 'unspecified))
+        (if (my-god-should-enable-hi-line-mode) (hl-line-mode 1) (hl-line-mode 0))
+        (when (my-god-should-enable-line-number-mode)
+          (display-line-numbers-mode 1)
+          (set-face-attribute 'line-number-current-line nil
+            :foreground (or (face-foreground 'line-number) 'unspecified)
+            :background (or (face-background 'line-number) 'unspecified))
+          )
         )
       ;; (when (display-graphic-p)
       ;;  (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
@@ -357,10 +363,10 @@
       ;; (set-face-attribute 'hl-line nil :background (face-background 'default))
       ;; (set-face-background 'hl-line hl-line-bg-color)
       (when (my-god-this-is-normal-editor-buffer (buffer-name))
-        (display-line-numbers-mode 1)
-        (set-face-attribute 'line-number-current-line nil
-                            :foreground "black"
-                            :background "#7fdc59")
+        (when (my-god-should-enable-line-number-mode)
+          (display-line-numbers-mode 1)
+          (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
+          )
         )
       ;; (when (display-graphic-p)
       ;;   (set-face-attribute 'window-divider nil :foreground window-divider-right-color)
