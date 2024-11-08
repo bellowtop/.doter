@@ -70,3 +70,14 @@ jdtls
 ```
 brew install autopep8
 ```
+
+
+
+### hack
+hack `elpa/treemacs-20240229.2108/treemacs-rendering.el` (function `treemacs--create-file-button-strings`) for alignment
+
+```
+      ;; hack by sekirocc. for icon alignment
+      (format "%s%s" (if (display-graphic-p) treemacs-nerd-icons-tab "") (treemacs-icon-for-file ,path))
+
+```

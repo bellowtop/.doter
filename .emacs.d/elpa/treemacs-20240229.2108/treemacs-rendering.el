@@ -258,7 +258,8 @@ DEPTH indicates how deep in the filetree the current button is."
     (inline-quote
      (list
       ,prefix
-      (treemacs-icon-for-file ,path)
+      ;; hack by sekirocc. for icon alignment
+      (format "%s%s" (if (display-graphic-p) treemacs-nerd-icons-tab "") (treemacs-icon-for-file ,path))
       (propertize (->> ,path file-name-nondirectory (funcall treemacs-file-name-transformer))
                   'button '(t)
                   'category t
