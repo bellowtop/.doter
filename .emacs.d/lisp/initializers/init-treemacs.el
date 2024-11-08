@@ -18,8 +18,12 @@
 
 
   (defun add-pointer-to-str(str) (propertize str 'pointer 'arrow))
-  (setq treemacs-file-name-transformer #'add-pointer-to-str)
+  (defun add-pointer-to-str-for-file-node(str) (propertize str 'pointer 'arrow))
+  (setq treemacs-file-name-transformer #'add-pointer-to-str-for-file-node)
   (setq treemacs-directory-name-transformer #'add-pointer-to-str)
+
+  (defun add-tab-space-str-before-file-icon(str) (message "str") (format "%s%s" treemacs-nerd-icons-tab str))
+  (advice-add 'treemacs-icon-for-file :filter-return #'add-tab-space-str-before-file-icon)
 
   (global-set-key (kbd "C-c C-p") treemacs-project-map)
   (global-set-key (kbd "C-c C-w") treemacs-workspace-map)

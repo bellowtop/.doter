@@ -14,6 +14,7 @@
   :foreground whitespace-tab-fg-color)
 
 (set-face-attribute 'whitespace-trailing nil
+  :foreground 'unspecified
   :background whitespace-trailing-fg-color
   )
 
