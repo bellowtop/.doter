@@ -917,6 +917,16 @@ require 'nt-cpp-tools'.setup({
 --
 local cmp = require'cmp'
 local luasnip = require'luasnip'
+-- vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
+vim.keymap.set({"i", "s"}, "<TAB>", function() luasnip.jump( 1) end, {silent = true})
+vim.keymap.set({"i", "s"}, "<S-TAB>", function() luasnip.jump(-1) end, {silent = true})
+
+-- vim.keymap.set({"i", "s"}, "<C-E>", function()
+--   if ls.choice_active() then
+--     ls.change_choice(1)
+--   end
+-- end, {silent = true})
+
 
 
 local has_words_before = function()
