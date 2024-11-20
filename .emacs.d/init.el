@@ -183,7 +183,8 @@
 
 
 
-(set-face-attribute 'lazy-highlight   nil :background "#EEB422" :foreground "#161c23")
+;; (set-face-attribute 'lazy-highlight   nil :background "#EEB422" :foreground "#161c23")
+(set-face-attribute 'lazy-highlight   nil :background "#7FDC59" :foreground "#161c23")
 
 (with-eval-after-load 'wid-edit
   (set-face-attribute 'widget-field     nil :background "#C6B8AD" :foreground "black")

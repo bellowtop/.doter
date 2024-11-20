@@ -74,6 +74,7 @@
     (define-key map (kbd "s-d") #'my-mc/mark-next-like-this)
 
     (define-key map (kbd "s-F") #'projectile-ripgrep)
+    (define-key map (kbd "s-S") #'deadgrep)
 
     ;; (define-key map (kbd "C-M-f") #'projectile-find-file)
     ;; (define-key map (kbd "C-x C-b") #'switch-to-buffer)
@@ -254,7 +255,7 @@
 
     (define-key god-local-mode-map (kbd ", r r") #'httpd-start)
     (define-key god-local-mode-map (kbd ", r k") #'httpd-stop)
-    (define-key god-local-mode-map (kbd ", ,") #'my-delete-other-windows)
+    (define-key god-local-mode-map (kbd ", ,") #'my-quit-other-window)
 
     (define-key god-local-mode-map (kbd ", i \"") #'er/mark-inside-quotes)
     (define-key god-local-mode-map (kbd ", a \"") #'er/mark-outside-quotes)

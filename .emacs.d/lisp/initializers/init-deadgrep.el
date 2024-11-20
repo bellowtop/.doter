@@ -18,7 +18,7 @@
 (use-package deadgrep
   :ensure t
   :config
-  (setq-default deadgrep--context (cons 3 3))
+  (setq-default deadgrep--context (cons 2 2))
   (setq-default deadgrep-max-line-length 2000)
   :bind
   (("C-c g" . deadgrep)
@@ -45,10 +45,12 @@
   :hook (deadgrep-edit-mode . my-deadgrep-edit-enter)
   :init
   (advice-add 'deadgrep-visit-result :after 'xref-pulse-momentarily)
-  (advice-add 'deadgrep-visit-result :after 'my-delete-other-windows)
+  (advice-add 'deadgrep-visit-result :after 'my-quit-other-window)
   (advice-add 'deadgrep-visit-result-other-window :after 'xref-pulse-momentarily)
   (advice-add 'deadgrep-edit-mode :after 'xref-pulse-momentarily)
   (advice-add 'deadgrep--arguments :filter-return #'deadgrep--include-args)
+  (add-hook 'deadgrep-mode-hook 'my-quit-other-window)
+  (set-face-attribute 'deadgrep-match-face nil :inherit 'lazy-highlight)
 )
 
 

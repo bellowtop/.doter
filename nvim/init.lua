@@ -416,7 +416,8 @@ vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>b', builtin.buffers, {})
 vim.keymap.set('n', '<leader>s', builtin.lsp_document_symbols, {})
 vim.keymap.set('n', '<leader>p', file_browser.file_browser, {})
-vim.keymap.set('n', 'F',         recent_files.pick, {})
+vim.keymap.set('n', 'F',         custom_find_files, {})
+vim.keymap.set('n', '<leader>F', recent_files.pick, {})
 
 
 
@@ -1247,6 +1248,10 @@ vim.api.nvim_set_keymap("i", "<M-BS>", "<C-w>", { noremap = true } )
 vim.keymap.set("i", "<M-d>", function() disable_diagnostic_temp_then_reactivate('"normal dwa"') end, { noremap = true })
 vim.keymap.set("i", "<M-f>", function() disable_diagnostic_temp_then_reactivate('"normal wa"') end, { noremap = true })
 vim.keymap.set("i", "<M-b>", function() disable_diagnostic_temp_then_reactivate('"normal ba"') end, { noremap = true })
+
+vim.keymap.set("n", "<M-d>", function() disable_diagnostic_temp_then_reactivate('"normal dw"') end, { noremap = true })
+vim.keymap.set("n", "<M-f>", function() disable_diagnostic_temp_then_reactivate('"normal w"') end, { noremap = true })
+vim.keymap.set("n", "<M-b>", function() disable_diagnostic_temp_then_reactivate('"normal b"') end, { noremap = true })
 
 -- vim.keymap.set("i", "<C-_>", function() vim.cmd.execute('"normal ua"') end, { noremap = true })
 vim.keymap.set("i", "<C-_>", function() disable_diagnostic_temp_then_reactivate('"normal ua"') end, { noremap = true })
