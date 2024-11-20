@@ -610,12 +610,6 @@ If buffer-or-name is nil return current buffer's mode."
     (/ (window-body-width) 4)))
 
 
-(defun my-delete-other-windows ()
-  (interactive)
-  (delete-other-windows)
-  (recenter-top-bottom))
-
-
 (defun my-forward-char-no-cross-line ()
   (interactive)
   (unless (my-is-end-of-line)
