@@ -588,6 +588,13 @@
   )
 
 
+(use-package vterm
+  :commands vterm
+  :config
+  (setq vterm-timer-delay 0.001)
+  (setq vterm-max-scrollback 10000))
+
+
 (use-package rust-mode
   :defer t :init)
 

@@ -214,6 +214,7 @@ exists it returns /file/name_Copy2.ext etc."
     ;; (treemacs-load-theme "all-the-icons")
     ;; (require 'treemacs-compatibility)
     ;; (treemacs-load-all-the-icons-with-workaround-font "Segoe UI")
+
     )
 
   (unless (display-graphic-p)
@@ -221,6 +222,10 @@ exists it returns /file/name_Copy2.ext etc."
 
   )
 
+
+(with-eval-after-load 'cfrs
+  (set-face-attribute 'cfrs-border-color nil :background "yellow")
+)
 
 
 (defun my-treemacs-add-and-display-current-project ()
