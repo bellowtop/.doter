@@ -35,6 +35,13 @@
   (add-to-list 'ivy-ignore-buffers "\\*EGLOT")
   (add-to-list 'ivy-ignore-buffers "\\*rdm\\*")
   (add-to-list 'ivy-ignore-buffers "\\*Backtrace\\*")
+  (add-to-list 'ivy-ignore-buffers "\\*ripgrep-search\\*")
+  (add-to-list 'ivy-ignore-buffers "\\*vterm\\*")
+  (add-to-list 'ivy-ignore-buffers "\\*dashboard\\*")
+  (add-to-list 'ivy-ignore-buffers "\\*xref\\*")
+  (add-to-list 'ivy-ignore-buffers "\\*deadgrep")
+  (add-to-list 'ivy-ignore-buffers "\\*Semantic")
+  (add-to-list 'ivy-ignore-buffers "\\*Flymake")
   (add-to-list 'ivy-ignore-buffers "\\*Ibuffer\\*"))
 
 ;; why ensure not work?

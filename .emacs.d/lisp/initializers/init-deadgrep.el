@@ -49,7 +49,7 @@
   (advice-add 'deadgrep-visit-result-other-window :after 'xref-pulse-momentarily)
   (advice-add 'deadgrep-edit-mode :after 'xref-pulse-momentarily)
   (advice-add 'deadgrep--arguments :filter-return #'deadgrep--include-args)
-  (add-hook 'deadgrep-mode-hook 'my-quit-other-window)
+  (add-hook 'deadgrep-finished-hook 'my-quit-other-window)
   (set-face-attribute 'deadgrep-match-face nil :inherit 'lazy-highlight)
 )
 
