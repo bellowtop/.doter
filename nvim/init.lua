@@ -658,7 +658,7 @@ local custom_attach = function(client, bufnr)
 
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', '\\', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
   vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
@@ -918,36 +918,11 @@ require 'nt-cpp-tools'.setup({
 --
 local cmp = require'cmp'
 local luasnip = require'luasnip'
--- vim.keymap.set({"i"}, "<C-K>", function() ls.expand() end, {silent = true})
-vim.keymap.set({"i", "s"}, "<TAB>", function() luasnip.jump( 1) end, {silent = true})
-vim.keymap.set({"i", "s"}, "<S-TAB>", function() luasnip.jump(-1) end, {silent = true})
-
--- vim.keymap.set({"i", "s"}, "<C-E>", function()
---   if ls.choice_active() then
---     ls.change_choice(1)
---   end
--- end, {silent = true})
-
-
-
-local has_words_before = function()
-  unpack = unpack or table.unpack
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
-local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
 
 
 local cmp_select_next = function(fallback)
     if cmp.visible() then
       cmp.select_next_item()
-    -- elseif vim.fn["vsnip#available"](1) == 1 then
-    --   feedkey("<Plug>(vsnip-expand-or-jump)", "")
-    -- elseif has_words_before() then
-    --   cmp.complete()
     else
       fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
     end
@@ -956,8 +931,6 @@ end
 local cmp_select_prev = function(fallback)
     if cmp.visible() then
       cmp.select_prev_item()
-    -- elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-    --   feedkey("<Plug>(vsnip-jump-prev)", "")
     else
       fallback()
     end
@@ -985,13 +958,46 @@ cmp.setup({
 
     -- ["<Tab>"] =   cmp.mapping(cmp_select_next, { "i", "s" }),
     -- ["<S-Tab>"] = cmp.mapping(cmp_select_prev, { "i", "s" }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.locally_jumpable(1) then
+        luasnip.jump(1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.locally_jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+
+    ['<CR>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+            if luasnip.expandable() then
+                luasnip.expand()
+            else
+                cmp.confirm({
+                    select = true,
+                })
+            end
+        else
+            fallback()
+        end
+    end),
 
     ["<C-n>"] =   cmp.mapping(cmp_select_next, { "i", "s" }),
     ["<C-p>"] =   cmp.mapping(cmp_select_prev, { "i", "s" }),
     ['<C-g>'] =   cmp.close,
 
     ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+
+
   },
 
   sources = cmp.config.sources({
@@ -1356,8 +1362,8 @@ vim.api.nvim_set_keymap("n", "'", "<C-u>", { noremap = true })
 vim.api.nvim_set_keymap("v", ";", "<C-d>", { noremap = true })
 vim.api.nvim_set_keymap("v", "' ", "<C-u>", { noremap = true })
 
-vim.api.nvim_set_keymap("n", "\\\\", "zz", { noremap = true })
-vim.api.nvim_set_keymap("n", "\\|",  "zt", { noremap = true })
+-- vim.api.nvim_set_keymap("n", "\\\\", "zz", { noremap = true })
+-- vim.api.nvim_set_keymap("n", "\\|",  "zt", { noremap = true })
 
 vim.api.nvim_set_keymap("n", "th", ":tabfirst<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "tj", ":tabnext<CR>", { noremap = true })
