@@ -353,11 +353,14 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-only-current-buffer ()
   "Kill all non-star other buffers."
   (interactive)
-  (mapc 'kill-buffer (delq
-                       (current-buffer)
-                       (remove-if-not 'buffer-file-name (buffer-list)))) ;; this keep * buffers alive
-  (if (bound-and-true-p centaur-tabs-mode)
-    (centaur-tabs-kill-other-buffers-in-current-group)))
+  (let ((orig-eglot-active (bound-and-true-p eglot--managed-mode)))
+    (ignore-errors (eglot-shutdown-all))
+    (mapc 'kill-buffer (delq
+                         (current-buffer)
+                         (remove-if-not 'buffer-file-name (buffer-list)))) ;; this keep * buffers alive
+    (if (bound-and-true-p centaur-tabs-mode)
+      (centaur-tabs-kill-other-buffers-in-current-group))
+    (if orig-eglot-active (eglot-ensure))))
 
 ;; delete all other buffers, only keep current one.
 (defun my-only-current-buffer-include-specials ()

@@ -16,7 +16,7 @@
 
 (defun my-disable-eglot-highlight (&rest _)
   (interactive)
-  (message "my-disable-eglot-highlight")
+  ;; (message "my-disable-eglot-highlight")
   (ignore-errors
     (setq eglot-ignored-server-capabilities
       (add-to-list 'eglot-ignored-server-capabilities ':documentHighlightProvider))
@@ -26,7 +26,7 @@
 
 (defun my-enable-eglot-highlight (&rest _)
   (interactive)
-  (message "my-enable-eglot-highlight")
+  ;; (message "my-enable-eglot-highlight")
   (ignore-errors
     (setq eglot-ignored-server-capabilities
       (delete ':documentHighlightProvider eglot-ignored-server-capabilities))
