@@ -56,6 +56,9 @@
 (bind-key* (kbd "s-w") #'kill-current-buffer)
 (bind-key* (kbd "s-t") #'+funcs/new-empty-buffer)
 
+;; jump with C-- C-=, like vscode
+(bind-key* (kbd "C--") 'nice-jumper/backward)
+(bind-key* (kbd "C-_") 'nice-jumper/forward)
 
 
 
@@ -73,8 +76,8 @@
 
     (define-key map (kbd "s-d") #'my-mc/mark-next-like-this)
 
-    (define-key map (kbd "s-F") #'projectile-ripgrep)
-    (define-key map (kbd "s-S") #'deadgrep)
+    (define-key map (kbd "s-S") #'projectile-ripgrep)
+    (define-key map (kbd "s-F") #'deadgrep)
 
     ;; (define-key map (kbd "C-M-f") #'projectile-find-file)
     ;; (define-key map (kbd "C-x C-b") #'switch-to-buffer)
