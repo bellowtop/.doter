@@ -30,7 +30,7 @@ require('packer').startup(function(use)
   -- lspconfig for clangd
   use 'p00f/clangd_extensions.nvim'
 
-  use 'rhysd/vim-clang-format'
+  use "lukas-reineke/lsp-format.nvim"
 
 
   use {
@@ -649,6 +649,8 @@ end
 
 
 
+require("lsp-format").setup{}
+
 
 local custom_attach = function(client, bufnr)
   local bufopts = { silent=true, buffer=bufnr }
@@ -743,6 +745,10 @@ local custom_attach = function(client, bufnr)
     local msg = string.format("Language server %s started!", client.name)
     vim.notify(msg, vim.log.levels.DEBUG, { title = "Nvim-config" })
   end
+
+
+  require("lsp-format").on_attach(client, bufnr)
+
 end
 
 
@@ -789,6 +795,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local lspconfig = require('lspconfig')
 
 
+
 -- local servers = { "gopls",  "rust_analyzer", "zls", "clangd" }
 -- for _, lsp in ipairs(servers) do
 --   if vim.fn.executable(lsp) == 1 then
@@ -798,6 +805,7 @@ local lspconfig = require('lspconfig')
 
 
 if vim.fn.executable("clangd") then
+
   lspconfig.clangd.setup {
     on_attach = custom_attach,
     capabilities = capabilities,
@@ -868,9 +876,9 @@ require("clangd_extensions").setup({
 
 
 
-vim.cmd([[
-autocmd FileType c,cpp ClangFormatAutoEnable
-]])
+-- vim.cmd([[
+-- autocmd FileType c,cpp ClangFormatAutoEnable
+-- ]])
 
 
 
@@ -1251,11 +1259,11 @@ vim.api.nvim_set_keymap("i", "<C-t>", "<C-o>O", { noremap = true } )
 vim.api.nvim_set_keymap("i", "<M-BS>", "<C-w>", { noremap = true } )
 
 -- vim.keymap.set("i", "<M-d>", function() vim.cmd.execute('"normal dwa"') end, { noremap = true })
-vim.keymap.set("i", "<M-d>", function() disable_diagnostic_temp_then_reactivate('"normal dwa"') end, { noremap = true })
+vim.keymap.set("i", "<M-d>", function() disable_diagnostic_temp_then_reactivate('"normal dea"') end, { noremap = true })
 vim.keymap.set("i", "<M-f>", function() disable_diagnostic_temp_then_reactivate('"normal wa"') end, { noremap = true })
 vim.keymap.set("i", "<M-b>", function() disable_diagnostic_temp_then_reactivate('"normal ba"') end, { noremap = true })
 
-vim.keymap.set("n", "<M-d>", function() disable_diagnostic_temp_then_reactivate('"normal dw"') end, { noremap = true })
+vim.keymap.set("n", "<M-d>", function() disable_diagnostic_temp_then_reactivate('"normal de"') end, { noremap = true })
 vim.keymap.set("n", "<M-f>", function() disable_diagnostic_temp_then_reactivate('"normal w"') end, { noremap = true })
 vim.keymap.set("n", "<M-b>", function() disable_diagnostic_temp_then_reactivate('"normal b"') end, { noremap = true })
 
