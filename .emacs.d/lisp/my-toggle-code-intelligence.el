@@ -4,6 +4,15 @@
   "enable by default")
 
 
+(defvar my-eglot-highlight-symbol-face-saved nil
+  "saved value for eglot-highlight-symbol-face")
+
+
+(with-eval-after-load 'eglot
+  (set-face-attribute 'eglot-highlight-symbol-face nil :inherit (if (display-graphic-p) 'my-highlight-font-words-face 'my-highlight-font-words-face))
+  (setq my-eglot-highlight-symbol-face-saved (face-attribute 'eglot-highlight-symbol-face :inherit))
+  )
+
 
 (defun my-disable-eglot-highlight (&rest _)
   (interactive)
@@ -21,13 +30,9 @@
   (ignore-errors
     (setq eglot-ignored-server-capabilities
       (delete ':documentHighlightProvider eglot-ignored-server-capabilities))
-    (set-face-attribute 'eglot-highlight-symbol-face nil :inherit (if (display-graphic-p) 'my-highlight-font-chars-face 'my-highlight-font-words-face))
+    (set-face-attribute 'eglot-highlight-symbol-face nil :inherit my-eglot-highlight-symbol-face-saved)
     (try-start-flymake)
     ))
-
-(with-eval-after-load 'eglot
-  (set-face-attribute 'eglot-highlight-symbol-face nil :inherit (if (display-graphic-p) 'my-highlight-font-chars-face 'my-highlight-font-words-face))
-)
 
 
 

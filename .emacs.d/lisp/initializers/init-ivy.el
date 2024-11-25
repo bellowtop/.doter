@@ -40,6 +40,7 @@
   (add-to-list 'ivy-ignore-buffers "\\*dashboard\\*")
   (add-to-list 'ivy-ignore-buffers "\\*xref\\*")
   (add-to-list 'ivy-ignore-buffers "\\*deadgrep")
+  (add-to-list 'ivy-ignore-buffers "\\*Customize")
   (add-to-list 'ivy-ignore-buffers "\\*Semantic")
   (add-to-list 'ivy-ignore-buffers "\\*Flymake")
   (add-to-list 'ivy-ignore-buffers "\\*Ibuffer\\*"))
