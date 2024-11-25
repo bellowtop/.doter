@@ -7,9 +7,9 @@
 
 (setq should-i-enable-flymake t)
 
-(defun please-enable-flymake() (message "set flag") (setq should-i-enable-flymake t))
-(defun please-disable-flymake() (message "clear flag") (setq should-i-enable-flymake nil))
-(defun i-should-enable-flymake() (message "check flag") (eq should-i-enable-flymake t))
+(defun please-enable-flymake() (setq should-i-enable-flymake t))
+(defun please-disable-flymake() (setq should-i-enable-flymake nil))
+(defun i-should-enable-flymake() (eq should-i-enable-flymake t))
 
 
 (setq-default backup-eglot--current-flymake-report-fn nil)
