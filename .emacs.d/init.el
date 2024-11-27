@@ -592,7 +592,14 @@
   :commands vterm
   :config
   (setq vterm-timer-delay 0.001)
-  (setq vterm-max-scrollback 10000))
+  (setq vterm-max-scrollback 10000)
+  (define-key vterm-mode-map (kbd "<drag-mouse-1>")  #'(lambda(click)
+                                                         (interactive "e")
+                                                         (vterm-copy-mode 1)
+                                                         (mouse-set-region click)))
+  (define-key vterm-copy-mode-map (kbd "M-i")  #'er/expand-region)
+  (define-key vterm-copy-mode-map (kbd "M-w")  #'vterm-copy-mode-done)
+  )
 
 
 (use-package rust-mode

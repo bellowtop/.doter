@@ -32,10 +32,12 @@
 (defun my-toggle-selected-keybinding ()
   "add special keybindings for visual selected mode"
   (interactive)
-  (if (bound-and-true-p selected-region-active-mode)
+  (if (or (bound-and-true-p selected-region-active-mode)
+        (bound-and-true-p vterm-copy-mode))
     (progn
-      ;; only non-special buffer need this timer.
-      (when (my-god-this-is-normal-editor-buffer (buffer-name))
+      ;; only non-special buffer and vterm buffer need this timer.
+      (when (or (my-god-this-is-normal-editor-buffer (buffer-name))
+              (string= "*vterm*" (buffer-name)))
         (when (bound-and-true-p selected-active-timer)
           (cancel-timer selected-active-timer))
         (setq selected-active-timer (run-with-timer 0.05 nil #'(lambda ()
@@ -47,7 +49,6 @@
 
       )
     (progn
-      ;; (message "not selected-region-active mode")
       (my-enable-eglot-highlight)
       (my-enable-symbol-overlay-highlight)
       (my-enable-paren-highlight))))
