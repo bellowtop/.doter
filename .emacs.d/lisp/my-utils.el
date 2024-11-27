@@ -687,6 +687,7 @@ If buffer-or-name is nil return current buffer's mode."
   (if (display-graphic-p)
     ;; graphic, use eldoc-box
     (if (and (bound-and-true-p eldoc-box--frame)
+          (frame-live-p eldoc-box--frame)
           (frame-visible-p eldoc-box--frame))
       (eldoc-box-quit-frame)
       (eldoc-box-help-at-point))
