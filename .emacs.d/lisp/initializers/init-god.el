@@ -42,6 +42,7 @@
 (setq legendary-buffers (list
                           "*this-buffer-is-left-alone-without-god-mode-at-all"
                           "*Minibuf"
+                          "*Compile"
                           "*EGLOT"
                           "*terminal*"
                           "*vterm"
