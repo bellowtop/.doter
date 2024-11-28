@@ -28,8 +28,7 @@
 (bind-key* (kbd "C-c o") #'my-occur)
 (bind-key* (kbd "C-c C-s") #'my-rg-at-point)
 
-(bind-key* (kbd "C-h C-c") #'my-toggle-vterm)
-(bind-key* (kbd "C-c C-h") #'my-toggle-vterm)
+(bind-key* (kbd "C-'") #'my-toggle-vterm)
 
 (bind-key* (kbd "C-h C-h") #'my-quit-other-window)
 (bind-key* (kbd "C-h h")   #'my-quit-other-buffer)
