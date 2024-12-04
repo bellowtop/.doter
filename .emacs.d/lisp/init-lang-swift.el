@@ -4,7 +4,7 @@
   :config
   (add-to-list 'eglot-server-programs '(swift-mode . ("xcrun" "sourcekit-lsp")))
   (add-hook 'swift-mode-hook 'eglot-ensure)
-  (add-hook 'before-save-hook 'format-all-buffer)
+  (add-hook 'before-save-hook 'format-all-buffer nil 'local)
 )
 
 
