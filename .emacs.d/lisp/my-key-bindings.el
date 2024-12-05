@@ -127,15 +127,21 @@
     (define-key god-local-mode-map (kbd "q")   'my-god-mode-window-key)
 
     ;; God mode key mappings
+    (define-key god-local-mode-map (kbd "B") #'switch-to-buffer)
+    (define-key god-local-mode-map (kbd "Q") #'my-quit-other-window)
+
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
     (define-key god-local-mode-map (kbd "w") #'my-forward-to-word)
     (define-key god-local-mode-map (kbd "b") #'backward-word)
-    (define-key god-local-mode-map (kbd "B") #'switch-to-buffer)
     (define-key god-local-mode-map (kbd "k") #'previous-line)
     (define-key god-local-mode-map (kbd "j") #'next-line)
-    (define-key god-local-mode-map (kbd "Q") #'my-quit-other-window)
     (define-key god-local-mode-map (kbd "l") #'my-forward-char-no-cross-line)
     (define-key god-local-mode-map (kbd "h") #'my-backward-char-no-cross-line)
+    (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)
+    (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)
+    (define-key god-local-mode-map (kbd "$") #'mwim-end-of-code-or-line)
+    (define-key god-local-mode-map (kbd "0") #'mwim-beginning-of-code-or-line)
+
     (define-key god-local-mode-map (kbd "v") #'my-set-mark-command-or-deactivate-mark)
     (define-key god-local-mode-map (kbd "V") #'my-select-current-line-and-forward-line)
     (define-key god-local-mode-map (kbd "J") #'my-join-lines)
@@ -172,10 +178,6 @@
     (define-key god-local-mode-map (kbd "z m") #'my-hs-toggle-all)
     (define-key god-local-mode-map (kbd "z z") #'recenter)
 
-    (define-key god-local-mode-map (kbd "L") #'mwim-end-of-code-or-line)
-    (define-key god-local-mode-map (kbd "H") #'mwim-beginning-of-code-or-line)
-    (define-key god-local-mode-map (kbd "$") #'mwim-end-of-code-or-line)
-    (define-key god-local-mode-map (kbd "0") #'mwim-beginning-of-code-or-line)
     (define-key god-local-mode-map (kbd "A") #'my-god-mwin-end-and-insert-mode)
     (define-key god-local-mode-map (kbd "I") #'my-god-mwin-beginning-and-insert-mode)
     (define-key god-local-mode-map (kbd "E") #'eval-region)
@@ -314,6 +316,10 @@
     (define-key map (kbd "j") #'next-line)
     (define-key map (kbd "l") #'my-forward-char-no-cross-line)
     (define-key map (kbd "h") #'my-backward-char-no-cross-line)
+    (define-key map (kbd "L") #'mwim-end-of-code-or-line)
+    (define-key map (kbd "H") #'mwim-beginning-of-code-or-line)
+    (define-key map (kbd "v") #'my-set-mark-command-or-deactivate-mark)
+    (define-key map (kbd "V") #'my-select-current-line-and-forward-line)
 
     (define-key map (kbd "f") #'avy-goto-word-0)
     (define-key map (kbd "M-x") #'my-M-x)

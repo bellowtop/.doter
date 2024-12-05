@@ -5,8 +5,12 @@
 
 ;; company-mode
 (setq company-dabbrev-downcase nil)
+
+(setq company-backends '((company-capf company-keywords company-files company-dabbrev)))
+
 (add-hook 'after-init-hook 'global-company-mode)
 (add-hook 'before-save-hook 'company-cancel)
+
 
 ;; company-posframe-mode
 (require 'company-posframe)
@@ -15,6 +19,8 @@
 ;; http://company-mode.github.io/manual/Getting-Started.html#Initial-Setup
 (with-eval-after-load 'company-posframe
   (define-key company-mode-map (kbd "C-M-i") #'company-complete)
+
+  (set-face-attribute 'company-tooltip-common nil :weight 'normal :foreground "#7FDC59" :background "#161c23")
 
   (define-key company-active-map (kbd "<tab>") #'company-select-next-if-tooltip-visible-or-complete-selection)
   (define-key company-active-map (kbd "<backtab>") #'company-select-previous-or-abort)

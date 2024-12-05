@@ -18,6 +18,10 @@
   :config
   (set-face-attribute 'eglot-diagnostic-tag-unnecessary-face nil :foreground "deeppink")
 
+  ;; don't touch company!
+  ;; I set some defaults (specifically company-backends) in init-company.el
+  (setq eglot-stay-out-of '(company))
+
   ;; (require 'eglot-on-hold)
   ;; (global-eglot-on-hold-mode 1)
 
