@@ -3,7 +3,12 @@
   :after eglot
   :config
   (add-to-list 'eglot-server-programs '(swift-mode . ("xcrun" "sourcekit-lsp")))
-  (add-hook 'swift-mode-hook 'eglot-ensure)
+
+  (add-hook 'swift-mode-hook #'(lambda()
+                                 (if (string= (file-name-extension buffer-file-name) "swiftinterface")
+                                   (message "swift interface files ignored by eglot.")
+                                   (eglot-ensure))))
+
   (add-hook 'before-save-hook 'format-all-buffer nil 'local)
 )
 

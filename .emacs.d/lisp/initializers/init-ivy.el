@@ -76,15 +76,20 @@
    (defun my-ivy-posframe-get-size ()
      "Set the ivy-posframe size according to the current frame."
      (let ((height (or ivy-posframe-height (or (+ ivy-height 2) 20)))
-            (width (or ivy-posframe-width (round (* .80 (frame-width))))))
+            (width (or ivy-posframe-width (round (* .50 (frame-width))))))
        (list :height height :min-height height :min-width width)))
 
    (setq ivy-posframe-size-function 'my-ivy-posframe-get-size)
-   (setq ivy-posframe-parameters '((:internal-border-width . 10)
-                                    (:internal-border-color . "white")))
-
    (setq ivy-posframe-display-functions-alist
      '((t . ivy-posframe-display-at-frame-center)))
+
+   ;; padding 10
+   (set-face-attribute 'ivy-posframe nil :background "black")
+   (set-face-attribute 'ivy-posframe-border nil :background (face-background 'ivy-posframe))
+   (setq ivy-posframe-border-width 10)
+   ;; (setq ivy-posframe-parameters '((:internal-border-width . 10)
+   ;;                                  (:internal-border-color . "white")))
+
 
    (ivy-posframe-mode 1))
 

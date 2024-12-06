@@ -20,7 +20,14 @@
 (with-eval-after-load 'company-posframe
   (define-key company-mode-map (kbd "C-M-i") #'company-complete)
 
-  (set-face-attribute 'company-tooltip-common nil :weight 'normal :foreground "#7FDC59" :background "#161c23")
+  (set-face-attribute 'company-tooltip-common nil :weight 'normal :foreground "#7FDC59")
+  (setq company-tooltip-scrollbar-width 0)
+
+  ;; padding 10
+  (set-face-attribute 'company-tooltip nil :background "black")
+  (setq company-posframe-show-params (list
+                                       :internal-border-color (face-background 'company-tooltip)
+                                       :internal-border-width 10))
 
   (define-key company-active-map (kbd "<tab>") #'company-select-next-if-tooltip-visible-or-complete-selection)
   (define-key company-active-map (kbd "<backtab>") #'company-select-previous-or-abort)
@@ -46,5 +53,10 @@
 ;; Use (kbd "TAB") (or use (kbd "<tab>"), if you want to distinguish C-i from the <tab> key)
 
 
+
+
+;; company-posframe-mode
+(require 'company-prescient)
+(company-prescient-mode 1)
 
 (provide 'init-company)
