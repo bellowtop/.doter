@@ -601,7 +601,9 @@
   (define-key vterm-copy-mode-map (kbd "M-i")  #'er/expand-region)
   (define-key vterm-copy-mode-map (kbd "M-w")  #'vterm-copy-mode-done)
 
-  (add-hook 'vterm-copy-mode-hook #'my-special-buffer-keys-minor-mode)
+  (add-hook 'vterm-copy-mode-hook #'(lambda() (if (bound-and-true-p vterm-copy-mode)
+                                                (my-special-buffer-keys-minor-mode 1)
+                                                (my-special-buffer-keys-minor-mode 0))))
   )
 
 
