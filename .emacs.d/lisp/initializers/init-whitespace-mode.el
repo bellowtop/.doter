@@ -7,7 +7,7 @@
 (setq-default tab-width 4)
 
 
-(add-hook 'before-save-hook #'delete-trailing-whitespace)
+(add-hook 'before-save-hook #'delete-trailing-whitespace nil t)
 
 (set-face-attribute 'whitespace-tab nil
   :background (face-background 'default)
