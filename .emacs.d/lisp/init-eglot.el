@@ -16,7 +16,13 @@
 (use-package eglot
   :commands (eglot eglot-ensure)
   :config
-  (set-face-attribute 'eglot-diagnostic-tag-unnecessary-face nil :foreground "deeppink")
+  (set-face-attribute 'eglot-diagnostic-tag-unnecessary-face nil
+                      :underline '(:color foreground-color :style wave :position nil)
+                      :foreground "yellow")
+  (set-face-attribute 'eglot-diagnostic-tag-deprecated-face  nil
+                      :underline '(:color foreground-color :style wave :position nil)
+                      :strike-through nil
+                      :foreground "yellow")
 
   ;; don't touch company!
   ;; I set some defaults (specifically company-backends) in init-company.el

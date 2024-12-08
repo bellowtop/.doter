@@ -81,7 +81,7 @@
 
 
 
-(setq default-font "IBM Plex Mono 1.2-15.0")
+(setq default-font "IBM Plex Mono-15.0")
 (setq default-font-family "IBM Plex Mono")
 ;; ;;; https://github.com/supercomputra/SF-Mono-Font
 ;; setq default-font "SF Mono-16.0")
