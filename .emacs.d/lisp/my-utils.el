@@ -763,7 +763,9 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun my-toggle-vterm ()
   (interactive)
-  (if (eq (buffer-mode) 'vterm-mode) (flip-buffer-to-window) (vterm)))
+  (if (eq (buffer-mode) 'vterm-mode)
+    (switch-to-buffer (other-buffer (current-buffer)))
+    (vterm)))
 
 
 (defun start-zsh-term()
