@@ -597,9 +597,12 @@
                                                          (interactive "e")
                                                          (vterm-copy-mode 1)
                                                          (mouse-set-region click)))
-  (define-key vterm-mode-map (kbd "C-c [")  #'vterm-copy-mode)
+  (define-key vterm-mode-map (kbd "s-C")  #'vterm-copy-mode)
   (define-key vterm-copy-mode-map (kbd "M-i")  #'er/expand-region)
   (define-key vterm-copy-mode-map (kbd "M-w")  #'vterm-copy-mode-done)
+
+  ;; toggle
+  (define-key vterm-copy-mode-map (kbd "s-C")  #'vterm-copy-mode)
 
   (add-hook 'vterm-copy-mode-hook #'(lambda() (if (bound-and-true-p vterm-copy-mode)
                                                 (my-special-buffer-keys-minor-mode 1)
