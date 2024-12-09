@@ -130,12 +130,23 @@
 
 
 
+(defun my-most-recent-normal-buffer()
+  (interactive)
+  (let ((bufs (seq-filter
+                (lambda(elt) (my-god-this-is-normal-editor-buffer (buffer-name elt)))
+                (buffer-list))))
+    (when (length> bufs 1)
+      (nth 1 bufs))))
+
 
 
 (defun flip-buffer-to-window ()
   "Flips to the last-visited buffer in this window."
   (interactive)
-  (switch-to-buffer (other-buffer (current-buffer))))
+  (let ((recent (my-most-recent-normal-buffer)))
+    (switch-to-buffer (or recent (other-buffer (current-buffer)))))
+  )
+
 
 
 (defun json-to-single-line (beg end)
