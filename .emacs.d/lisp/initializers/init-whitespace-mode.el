@@ -6,8 +6,9 @@
                                      (newline-mark ?\n [?\x203a ?\n] [?\\ ?\n])))
 (setq-default tab-width 4)
 
+(add-hook 'prog-mode-hook #'(lambda()
+                              (add-hook 'before-save-hook #'delete-trailing-whitespace)))
 
-(add-hook 'before-save-hook #'delete-trailing-whitespace nil t)
 
 (set-face-attribute 'whitespace-tab nil
   :background (face-background 'default)
