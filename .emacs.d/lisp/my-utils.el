@@ -661,17 +661,21 @@ If buffer-or-name is nil return current buffer's mode."
   (interactive "p")
   (if (not my-visual-line-selection)
     (next-line)
-    (if (< (line-number-at-pos) my-visual-line-start-num)
-      (progn
-        (end-of-line 2)
-        (beginning-of-line)
-        )
-      (progn
-        (save-excursion
+    (let ((curr-line (line-number-at-pos)))
+      (cond
+        ((< curr-line my-visual-line-start-num)
+          (end-of-line 2)
+          (beginning-of-line)
+          )
+        ((= curr-line my-visual-line-start-num)
           (goto-line my-visual-line-start-num)
           (beginning-of-line)
-          (set-mark-command nil))
-        (end-of-line 2)
+          (set-mark-command nil)
+          (end-of-line 2)
+          )
+        (t
+          (end-of-line 2)
+          )
         )
       )
     ))
@@ -680,20 +684,24 @@ If buffer-or-name is nil return current buffer's mode."
   (interactive "p")
   (if (not my-visual-line-selection)
     (previous-line)
-    (if (> (line-number-at-pos) my-visual-line-start-num)
-      (progn
-        (previous-line)
-        (end-of-line))
-      (progn
-        (save-excursion
+    (let ((curr-line (line-number-at-pos)))
+      (cond
+        ((> curr-line my-visual-line-start-num)
+          (previous-line)
+          (end-of-line)
+          )
+        ((= curr-line my-visual-line-start-num)
           (goto-line my-visual-line-start-num)
           (end-of-line)
-          (set-mark-command nil))
-        (previous-line)
-        (beginning-of-line)
-        )
-      )
-    ))
+          (set-mark-command nil)
+          (previous-line)
+          (beginning-of-line)
+          )
+        (t
+          (previous-line)
+          (beginning-of-line)
+          )
+        ))))
 
 (defun my-kill-word()
   (interactive)
