@@ -587,7 +587,7 @@ If buffer-or-name is nil return current buffer's mode."
           )
         )
       )
-    (setq my-visual-line-start-num curr-line)
+    (setq my-visual-line-start-num (line-number-at-pos))
     (beginning-of-line)
     (set-mark-command nil)
     (end-of-line)))
