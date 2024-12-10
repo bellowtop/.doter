@@ -552,23 +552,30 @@ If buffer-or-name is nil return current buffer's mode."
   )
 
 
+(setq my-visual-line-selection nil)
+(setq my-visual-line-start-num nil)
+
 (defun my-select-current-line-and-forward-line (arg)
   "Select the current line and move the cursor by ARG lines IF
   no region is selected.
   If a region is already selected when calling this command, only move
   the cursor by ARG lines."
   (interactive "p")
+  (setq my-visual-line-selection t)
+  (setq my-visual-line-start-num (line-number-at-pos))
   (if (use-region-p)
     (let ((beg (region-beginning))
            (end (region-end)))
       (goto-char beg)
       (beginning-of-line)
       (set-mark-command nil)
+      (setq my-visual-line-start-num (line-number-at-pos))
       (goto-char end)
       (end-of-line))
+    (setq my-visual-line-start-num (line-number-at-pos))
     (forward-line 0)
     (set-mark-command nil)
-    (forward-line arg)))
+    (end-of-line)))
 
 
 (defun my-join-lines (arg)
@@ -649,6 +656,44 @@ If buffer-or-name is nil return current buffer's mode."
           (forward-char distance)
           (forward-to-word 1)))
       (forward-to-word 1))))
+
+(defun my-next-line(args)
+  (interactive "p")
+  (if (not my-visual-line-selection)
+    (next-line)
+    (if (< (line-number-at-pos) my-visual-line-start-num)
+      (progn
+        (end-of-line 2)
+        (beginning-of-line)
+        )
+      (progn
+        (save-excursion
+          (goto-line my-visual-line-start-num)
+          (beginning-of-line)
+          (set-mark-command nil))
+        (end-of-line 2)
+        )
+      )
+    ))
+
+(defun my-previous-line(args)
+  (interactive "p")
+  (if (not my-visual-line-selection)
+    (previous-line)
+    (if (> (line-number-at-pos) my-visual-line-start-num)
+      (progn
+        (previous-line)
+        (end-of-line))
+      (progn
+        (save-excursion
+          (goto-line my-visual-line-start-num)
+          (end-of-line)
+          (set-mark-command nil))
+        (previous-line)
+        (beginning-of-line)
+        )
+      )
+    ))
 
 (defun my-kill-word()
   (interactive)
