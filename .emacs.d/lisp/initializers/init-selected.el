@@ -32,6 +32,8 @@
 (defun my-toggle-selected-keybinding ()
   "add special keybindings for visual selected mode"
   (interactive)
+  (unless (bound-and-true-p selected-region-active-mode)
+    (setq my-visual-line-selection nil))
   (if (or (bound-and-true-p selected-region-active-mode)
         (bound-and-true-p vterm-copy-mode))
     (progn
