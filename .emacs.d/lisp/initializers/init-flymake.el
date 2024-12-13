@@ -17,7 +17,7 @@
 
 (defun try-stop-flymake (&rest _)
   (please-disable-flymake)
-  (flymake-mode 0)
+  (flymake-mode 1)
   (when (boundp 'eglot--current-flymake-report-fn)
     (setq backup-eglot--current-flymake-report-fn eglot--current-flymake-report-fn)
     (setq eglot--current-flymake-report-fn nil)
