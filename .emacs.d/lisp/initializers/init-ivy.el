@@ -85,10 +85,14 @@
 
    ;; padding 10
    (set-face-attribute 'ivy-posframe nil :background "black")
-   (set-face-attribute 'ivy-posframe-border nil :background (face-background 'ivy-posframe))
-   (setq ivy-posframe-border-width 10)
-   ;; (setq ivy-posframe-parameters '((:internal-border-width . 10)
-   ;;                                  (:internal-border-color . "white")))
+
+   ;; (set-face-attribute 'ivy-posframe-border nil :background (face-background 'ivy-posframe))
+   ;; (setq ivy-posframe-border-width 10)
+   (set-face-attribute 'ivy-posframe-border nil :background (face-foreground 'vertical-border))
+   (setq ivy-posframe-border-width 1)
+
+   (setq ivy-posframe-parameters '((left-fringe . 8)
+                                    (right-fringe . 8)))
 
 
    (ivy-posframe-mode 1))

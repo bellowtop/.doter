@@ -98,7 +98,7 @@
      (vertical-scroll-bars . nil)
      ))
 (set-face-attribute 'region nil :inverse-video t)
-(set-face-attribute 'show-paren-match nil :foreground "black" :background "yellow" :weight 'normal)
+(set-face-attribute 'show-paren-match nil :foreground "green" :background "#11501B" :weight 'normal :underline '(:position t))
 (setq-default left-margin-width 0 right-margin-width 0)
 (setq frame-resize-pixelwise t)
 
@@ -108,7 +108,7 @@
 ;;; My tiny Theme
 ;;;
 (setq use-dark-theme-mode t)
-(set-face-foreground 'default "#161c23")
+(set-face-foreground 'default "#D1D2CE")
 (set-face-background 'default "#C6B8AD")
 (setq cursor-in-non-selected-windows nil)
 
@@ -165,7 +165,7 @@
   "custom highlight for treemacs current line")
 (defface my-highlight-font-words-face
   `((t (
-        :background "#59dcb7"
+        :background "#06C668"
         :foreground "black"
         :underline nil
         :weight normal

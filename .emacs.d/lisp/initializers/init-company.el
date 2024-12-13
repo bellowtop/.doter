@@ -25,9 +25,16 @@
 
   ;; padding 10
   (set-face-attribute 'company-tooltip nil :background "black")
+  ;; (setq company-posframe-show-params (list
+  ;;                                      :internal-border-color (face-background 'company-tooltip)
+  ;;                                      :internal-border-width 10))
+
   (setq company-posframe-show-params (list
-                                       :internal-border-color (face-background 'company-tooltip)
-                                       :internal-border-width 10))
+                                       :internal-border-color (face-foreground 'vertical-border)
+                                       :internal-border-width 1
+                                       :left-fringe 8
+                                       :right-fringe 8
+                                       :line-height 1.2))
 
   (define-key company-active-map (kbd "<tab>") #'company-select-next-if-tooltip-visible-or-complete-selection)
   (define-key company-active-map (kbd "<backtab>") #'company-select-previous-or-abort)
