@@ -511,20 +511,47 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-    '(company-prescient prescient eterm-256color vterm company-posframe company-qml qml-mode csv-mode inkpot-theme srcery-theme package-lint with-simulated-input solaire-mode dashboard dashboard-hackernews blamer paredit slime-company symbol-overlay elisp-autofmt corfu-terminal py-autopep8 popon format-all apheleia ivy-xref jsonrpc imenu-list treesit-auto highlight-numbers modus-themes nano-theme vs-dark-theme treemacs-all-the-icons centaur-tabs bazel general swift-mode color-theme-sanityinc-tomorrow lispy markdown-mode vscode-dark-plus-theme diminish eglot elisp-def elisp-refs slime elisp-slime-nav leetcode srefactor ivy-posframe counsel ivy popup-switcher popwin beacon rjsx-mode typescript-mode impatient-mode reformatter auto-dim-other-buffers atom-one-dark-theme jdecomp smart-jump ansible moe-theme selected benchmark-init with-proxy valign markdown-toc markdownfmt disable-mouse rainbow-delimiters key-chord google-c-style phi-search switch-buffer-functions yasnippet highlight-parentheses undo-tree nimbus-theme challenger-deep-theme afternoon-theme smooth-scrolling project There are no known projectsile-mode smart-mode-line cyberpunk-theme lsp-python-ms protobuf-mode vue-mode xclip mwim ripgrep neotree easy-kill helm-rg))
+    '(There afternoon-theme ansible apheleia are atom-one-dark-theme
+       auto-dim-other-buffers bazel beacon benchmark-init blamer
+       centaur-tabs challenger-deep-theme
+       color-theme-sanityinc-tomorrow company-posframe
+       company-prescient company-qml corfu-terminal counsel csv-mode
+       cyberpunk-theme dashboard dashboard-hackernews diminish
+       disable-mouse easy-kill eglot elisp-autofmt elisp-def
+       elisp-refs elisp-slime-nav eterm-256color format-all general
+       google-c-style helm-rg highlight-numbers highlight-parentheses
+       imenu-list impatient-mode inkpot-theme ivy ivy-posframe
+       ivy-xref jdecomp jsonrpc key-chord known leetcode lispy
+       lsp-python-ms markdown-mode markdown-toc markdownfmt
+       modus-themes moe-theme mwim nano-theme neotree nimbus-theme no
+       package-lint paredit phi-search popon popup-switcher popwin
+       prescient project projectsile-mode protobuf-mode py-autopep8
+       qml-mode rainbow-delimiters reformatter ripgrep rjsx-mode
+       selected slime slime-company smart-jump smart-mode-line
+       smooth-scrolling solaire-mode srcery-theme srefactor swift-mode
+       switch-buffer-functions symbol-overlay treemacs-all-the-icons
+       treesit-auto typescript-mode undo-tree valign vs-dark-theme
+       vscode-dark-plus-theme vterm vue-mode with-proxy
+       with-simulated-input xclip yasnippet))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(projectile-globally-ignored-directories
-    '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
+    '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$"
+       "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$"
+       "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$"
+       "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$"
+       ".cache" "build"))
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
  '(safe-local-variable-values
     '((eval font-lock-add-keywords nil
-        `((,(concat "("
-              (regexp-opt
-                '("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl")
-                t)
-              "\\_>")
-            1 'font-lock-variable-name-face)))))
+        `
+        ((,(concat "("
+             (regexp-opt
+               '("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op"
+                  "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl")
+               t)
+             "\\_>")
+           1 'font-lock-variable-name-face)))))
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
 

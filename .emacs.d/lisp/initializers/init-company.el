@@ -36,7 +36,7 @@
                                        :right-fringe 8
                                        :line-height 1.2))
 
-  (define-key company-active-map (kbd "<tab>") #'company-select-next-if-tooltip-visible-or-complete-selection)
+  (define-key company-active-map (kbd "<TAB>") #'company-select-next-if-tooltip-visible-or-complete-selection)
   (define-key company-active-map (kbd "<backtab>") #'company-select-previous-or-abort)
   (define-key company-active-map (kbd "RET") #'company-complete-selection)
 
@@ -48,7 +48,7 @@
         (call-interactively 'company-select-next)
       (call-interactively 'company-complete-selection)))
 
-  (define-key company-posframe-active-map (kbd "<tab>") #'company-select-next-if-tooltip-visible-or-complete-selection)
+  (define-key company-posframe-active-map (kbd "<TAB>") #'company-select-next-if-tooltip-visible-or-complete-selection)
   (define-key company-posframe-active-map (kbd "<backtab>") #'company-select-previous-or-abort)
   (define-key company-posframe-active-map (kbd "RET") #'company-complete-selection)
 

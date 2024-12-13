@@ -674,28 +674,20 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun my-next-line(args)
   (interactive "p")
-  (unless my-visual-line-selection
-    (next-line)
-    (cl-return)
-    )
-  (let ((curr-line (line-number-at-pos)))
-    (cond
-      ((< curr-line my-visual-line-start-num)
-        (end-of-line 2)
-        (beginning-of-line)
-        )
-      ((= curr-line my-visual-line-start-num)
-        (goto-line my-visual-line-start-num)
-        (beginning-of-line)
-        (set-mark-command nil)
-        (end-of-line 2)
-        )
-      (t
-        (end-of-line 2)
-        )
-      )
-    )
-  )
+  (if my-visual-line-selection
+    (let ((curr-line (line-number-at-pos)))
+      (cond
+        ((< curr-line my-visual-line-start-num)
+          (end-of-line 2)
+          (beginning-of-line))
+        ((= curr-line my-visual-line-start-num)
+          (goto-line my-visual-line-start-num)
+          (beginning-of-line)
+          (set-mark-command nil)
+          (end-of-line 2))
+        (t
+          (end-of-line 2))))
+    (next-line)))
 
 (defun my-previous-line(args)
   (interactive "p")
