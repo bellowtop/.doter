@@ -710,9 +710,7 @@ If buffer-or-name is nil return current buffer's mode."
           (beginning-of-line)
           )
         ))
-    (previous-line)
-    (cl-return))
-  )
+    (previous-line)))
 
 (defun my-kill-word()
   (interactive)
