@@ -24,6 +24,10 @@
                       :strike-through nil
                       :foreground "yellow")
 
+    ;; golang 的参数补全
+  (setq-default eglot-workspace-configuration
+                '((gopls (usePlaceholders . t))))
+
   ;; don't touch company!
   ;; I set some defaults (specifically company-backends) in init-company.el
   (setq eglot-stay-out-of '(company))
