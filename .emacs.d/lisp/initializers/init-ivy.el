@@ -1,7 +1,3 @@
-(setq-default my-posframe-border-width (if (display-graphic-p) 1 0))
-(setq-default my-posframe-fringe-width (if (display-graphic-p) 8 0))
-
-
 (use-package ivy
   :ensure t
   :diminish (ivy-mode . "")

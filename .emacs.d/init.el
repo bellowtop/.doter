@@ -102,6 +102,11 @@
 (setq-default left-margin-width 0 right-margin-width 0)
 (setq frame-resize-pixelwise t)
 
+(setq my-posframe-border-width (if (display-graphic-p) 1 0))
+(setq my-posframe-fringe-width (if (display-graphic-p) 8 0))
+
+
+
 ;; Set symbol for the border
 (set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?│))
 ;;;
