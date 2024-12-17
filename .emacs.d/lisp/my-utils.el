@@ -826,9 +826,11 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-toggle-vterm ()
   (interactive)
   (if (eq (buffer-mode) 'vterm-mode)
-    (if (bound-and-true-p popwin-mode)
-      (popwin:close-popup-window)
-      (switch-to-buffer (other-buffer (current-buffer))))
+    (cond
+      ((bound-and-true-p popwin-mode) (popwin:close-popup-window))
+      ((bound-and-true-p popper-mode) (popper-toggle))
+      (t (switch-to-buffer (other-buffer (current-buffer))))
+      )
     (vterm)))
 
 
