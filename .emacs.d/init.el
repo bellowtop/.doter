@@ -516,20 +516,47 @@
   '(leetcode-prefer-language "cpp")
   '(leetcode-save-solutions t)
   '(package-selected-packages
-     '(There afternoon-theme ansible apheleia are atom-one-dark-theme auto-dim-other-buffers bazel beacon benchmark-init blamer centaur-tabs challenger-deep-theme color-theme-sanityinc-tomorrow company-posframe company-prescient company-qml corfu-terminal counsel csv-mode cyberpunk-theme dashboard dashboard-hackernews diminish disable-mouse easy-kill eglot elisp-autofmt elisp-def elisp-refs elisp-slime-nav eterm-256color format-all general google-c-style helm-rg highlight-numbers highlight-parentheses imenu-list impatient-mode inkpot-theme ivy ivy-posframe ivy-xref jdecomp jsonrpc key-chord known leetcode lispy lsp-python-ms markdown-mode markdown-toc markdownfmt modus-themes moe-theme mwim nano-theme neotree nimbus-theme no package-lint paredit phi-search popon popup-switcher popwin prescient project projectsile-mode protobuf-mode py-autopep8 qml-mode rainbow-delimiters reformatter ripgrep rjsx-mode selected slime slime-company smart-jump smart-mode-line smooth-scrolling solaire-mode srcery-theme srefactor swift-mode switch-buffer-functions symbol-overlay treemacs-all-the-icons treesit-auto typescript-mode undo-tree valign vs-dark-theme vscode-dark-plus-theme vterm vue-mode with-proxy with-simulated-input xclip yasnippet))
+     '(There afternoon-theme ansible apheleia are atom-one-dark-theme
+        auto-dim-other-buffers bazel beacon benchmark-init blamer
+        centaur-tabs challenger-deep-theme
+        color-theme-sanityinc-tomorrow company-posframe
+        company-prescient company-qml corfu-terminal counsel csv-mode
+        cyberpunk-theme dashboard dashboard-hackernews diminish
+        disable-mouse easy-kill eglot elisp-autofmt elisp-def
+        elisp-refs elisp-slime-nav eterm-256color format-all general
+        google-c-style helm-rg highlight-numbers highlight-parentheses
+        imenu-list impatient-mode inkpot-theme ivy ivy-posframe
+        ivy-xref jdecomp jsonrpc key-chord known leetcode lispy
+        lsp-python-ms markdown-mode markdown-toc markdownfmt
+        modus-themes moe-theme mwim nano-theme neotree nimbus-theme no
+        package-lint paredit phi-search popon popup-switcher popwin
+        posframe prescient project projectsile-mode protobuf-mode
+        py-autopep8 qml-mode rainbow-delimiters reformatter ripgrep
+        rjsx-mode selected slime slime-company smart-jump
+        smart-mode-line smooth-scrolling solaire-mode srcery-theme
+        srefactor swift-mode switch-buffer-functions symbol-overlay
+        treemacs-all-the-icons treesit-auto typescript-mode undo-tree
+        valign vs-dark-theme vscode-dark-plus-theme vterm vue-mode
+        with-proxy with-simulated-input xclip yasnippet))
   '(pos-tip-background-color "#1d1d2b")
   '(pos-tip-foreground-color "#d4d4d6")
   '(projectile-globally-ignored-directories
-     '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
+     '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$"
+        "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$"
+        "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$"
+        "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$"
+        ".cache" "build"))
   '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
   '(safe-local-variable-values
      '((eval font-lock-add-keywords nil
-         `((,(concat "("
-               (regexp-opt
-                 '("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl")
-                 t)
-               "\\_>")
-             1 'font-lock-variable-name-face)))))
+         `
+         ((,(concat "("
+              (regexp-opt
+                '("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op"
+                   "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl")
+                t)
+              "\\_>")
+            1 'font-lock-variable-name-face)))))
   '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
   '(warning-suppress-types '((use-package) (lsp-mode))))
 

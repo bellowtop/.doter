@@ -31,9 +31,9 @@
 
   (setq company-posframe-show-params (list
                                        :internal-border-color (face-foreground 'vertical-border)
-                                       :internal-border-width 1
-                                       :left-fringe 8
-                                       :right-fringe 8
+                                       :internal-border-width my-posframe-border-width
+                                       :left-fringe my-posframe-fringe-width
+                                       :right-fringe my-posframe-fringe-width
                                        :line-height 1.2))
 
   (define-key company-active-map (kbd "<TAB>") #'company-select-next-if-tooltip-visible-or-complete-selection)
@@ -45,7 +45,7 @@
   (defun company-select-next-if-tooltip-visible-or-complete-selection ()
     (interactive)
     (if (and t (> company-candidates-length 1))
-        (call-interactively 'company-select-next)
+      (call-interactively 'company-select-next)
       (call-interactively 'company-complete-selection)))
 
   (define-key company-posframe-active-map (kbd "<TAB>") #'company-select-next-if-tooltip-visible-or-complete-selection)
