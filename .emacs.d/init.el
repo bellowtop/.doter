@@ -450,7 +450,10 @@
          "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
          )))
   (popper-mode +1)
-  (popper-echo-mode +1))
+  (popper-echo-mode +1)
+  :config
+  (setq popper-window-height 0.33)
+  )
 
 
 
