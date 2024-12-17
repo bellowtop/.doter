@@ -8,8 +8,8 @@
      (define-key dired-mode-map (kbd "SPC") 'my-god-mode-leader-key-1)
      (define-key dired-mode-map (kbd "SPC b") #'switch-to-buffer)
      (define-key dired-mode-map (kbd "SPC B") #'ibuffer)
-    ;; (define-key dired-mode-map (kbd "SPC k") #'kill-this-buffer)
-    (define-key dired-mode-map (kbd "SPC k") #'kill-current-buffer)
+     ;; (define-key dired-mode-map (kbd "SPC k") #'kill-this-buffer)
+     (define-key dired-mode-map (kbd "SPC k") #'kill-current-buffer)
      (define-key dired-mode-map (kbd "SPC K") #'my-only-current-buffer)
      (define-key dired-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
      (define-key dired-mode-map (kbd "SPC f") #'my-projectile-find-file)
@@ -29,6 +29,7 @@
 (bind-key* (kbd "C-c C-s") #'my-rg-at-point)
 
 (bind-key* (kbd "C-'") #'my-toggle-vterm)
+(bind-key* (kbd "C-`") #'my-toggle-vterm)
 
 (bind-key* (kbd "C-h C-h") #'my-quit-other-window)
 (bind-key* (kbd "C-h h")   #'my-quit-other-buffer)
@@ -334,30 +335,30 @@
 
 
 (bind-keys* :prefix-map my-ctrl-w-window-operations-map
-           :prefix "C-w"
-           ("o" . ace-window)
-           ("l" . windmove-right)
-           ("h" . windmove-left)
-           ("k" . windmove-up)
-           ("j" . windmove-down)
-           ("Q" . delete-window)
-           ("d" . delete-other-windows)
-           ("v" . split-window-right)
-           ("s" . split-window-below)
-           ("t" . transpose-frame)
-           ("w" . other-window)
+  :prefix "C-w"
+  ("o" . ace-window)
+  ("l" . windmove-right)
+  ("h" . windmove-left)
+  ("k" . windmove-up)
+  ("j" . windmove-down)
+  ("Q" . delete-window)
+  ("d" . delete-other-windows)
+  ("v" . split-window-right)
+  ("s" . split-window-below)
+  ("t" . transpose-frame)
+  ("w" . other-window)
 
-           ("]" . my-enlarge-half-width)
-           ("[" . my-shrink-half-width)
-           ("=" . my-enlarge-half-height)
-           ("-" . my-shrink-half-height)
+  ("]" . my-enlarge-half-width)
+  ("[" . my-shrink-half-width)
+  ("=" . my-enlarge-half-height)
+  ("-" . my-shrink-half-height)
 
-           ("C-l" . windmove-right)
-           ("C-h" . windmove-left)
-           ("C-k" . windmove-up)
-           ("C-j" . windmove-down)
-           ("," . flip-buffer-to-window)
-)
+  ("C-l" . windmove-right)
+  ("C-h" . windmove-left)
+  ("C-k" . windmove-up)
+  ("C-j" . windmove-down)
+  ("," . flip-buffer-to-window)
+  )
 
 
 
