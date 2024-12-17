@@ -1,3 +1,7 @@
+(setq-default my-posframe-border-width (if (display-graphic-p) 1 0))
+(setq-default my-posframe-fringe-width (if (display-graphic-p) 8 0))
+
+
 (use-package ivy
   :ensure t
   :diminish (ivy-mode . "")
@@ -59,42 +63,42 @@
     "\n----------------------------------------------------\n\n"))
 
 
- (use-package ivy-posframe
-   :after (ivy)
-   :config
+(use-package ivy-posframe
+  :after (ivy)
+  :config
 
-   (defun ivy-format-function-default (cands)
-     "Transform CANDS into a string for minibuffer."
-     (concat
-       "---------------------------------------------------\n"
-       (ivy--format-function-generic
-         (lambda (str)
-           (concat " > " (ivy--add-face str 'ivy-current-match) ""))
-         (lambda (str) (concat "   " str "")) cands "\n")
-       "\n----------------------------------------------------\n\n"))
+  (defun ivy-format-function-default (cands)
+    "Transform CANDS into a string for minibuffer."
+    (concat
+      "---------------------------------------------------\n"
+      (ivy--format-function-generic
+        (lambda (str)
+          (concat " > " (ivy--add-face str 'ivy-current-match) ""))
+        (lambda (str) (concat "   " str "")) cands "\n")
+      "\n----------------------------------------------------\n\n"))
 
-   (defun my-ivy-posframe-get-size ()
-     "Set the ivy-posframe size according to the current frame."
-     (let ((height (or ivy-posframe-height (or (+ ivy-height 2) 20)))
-            (width (or ivy-posframe-width (round (* .50 (frame-width))))))
-       (list :height height :min-height height :min-width width)))
+  (defun my-ivy-posframe-get-size ()
+    "Set the ivy-posframe size according to the current frame."
+    (let ((height (or ivy-posframe-height (or (+ ivy-height 2) 20)))
+           (width (or ivy-posframe-width (round (* .50 (frame-width))))))
+      (list :height height :min-height height :min-width width)))
 
-   (setq ivy-posframe-size-function 'my-ivy-posframe-get-size)
-   (setq ivy-posframe-display-functions-alist
-     '((t . ivy-posframe-display-at-frame-center)))
+  (setq ivy-posframe-size-function 'my-ivy-posframe-get-size)
+  (setq ivy-posframe-display-functions-alist
+    '((t . ivy-posframe-display-at-frame-center)))
 
-   ;; padding 10
-   (set-face-attribute 'ivy-posframe nil :background "black")
+  ;; padding 10
+  (set-face-attribute 'ivy-posframe nil :background "black")
 
-   ;; (set-face-attribute 'ivy-posframe-border nil :background (face-background 'ivy-posframe))
-   ;; (setq ivy-posframe-border-width 10)
-   (set-face-attribute 'ivy-posframe-border nil :background (face-foreground 'vertical-border))
-   (setq ivy-posframe-border-width 1)
+  ;; (set-face-attribute 'ivy-posframe-border nil :background (face-background 'ivy-posframe))
+  ;; (setq ivy-posframe-border-width 10)
+  (set-face-attribute 'ivy-posframe-border nil :background (face-foreground 'vertical-border))
+  (setq ivy-posframe-border-width my-posframe-border-width)
 
-   (setq ivy-posframe-parameters '((left-fringe . 8)
-                                    (right-fringe . 8)))
+  (setq ivy-posframe-parameters `((left-fringe . ,my-posframe-fringe-width)
+                                   (right-fringe . ,my-posframe-fringe-width)))
 
 
-   (ivy-posframe-mode 1))
+  (ivy-posframe-mode 1))
 
 (provide 'init-ivy)
