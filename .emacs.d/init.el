@@ -421,9 +421,12 @@
 
 
 
-;; (require 'popwin)
-;; (popwin-mode 1)
+(require 'popwin)
+(popwin-mode 1)
+(push 'vterm-mode popwin:special-display-config)
 ;; (global-set-key (kbd "C-z") popwin:keymap)
+
+
 
 
 (require 'init-nice-jumper)

@@ -4,8 +4,8 @@
 (defun my-util-split-long-line-to-sub-lines (long-line wrap-width)
   (interactive)
   (let ((total-len (string-width long-line))
-        (idx 0)
-        (collected ()))
+         (idx 0)
+         (collected ()))
     (while (> (- total-len idx) wrap-width)
       (push (substring long-line idx (+ idx wrap-width)) collected)
       (setq idx (+ idx wrap-width)))
@@ -18,8 +18,8 @@
 
 (defun my-util-seperate-string (line max-length)
   (let ((remains line)
-        (result-lines ())
-        )
+         (result-lines ())
+         )
     (while (> (length remains) max-length)
       (push (substring remains 0 max-length) result-lines)
       (setq remains (substring remains max-length nil))
@@ -826,7 +826,9 @@ If buffer-or-name is nil return current buffer's mode."
 (defun my-toggle-vterm ()
   (interactive)
   (if (eq (buffer-mode) 'vterm-mode)
-    (switch-to-buffer (other-buffer (current-buffer)))
+    (if (bound-and-true-p popwin-mode)
+      (popwin:close-popup-window)
+      (switch-to-buffer (other-buffer (current-buffer))))
     (vterm)))
 
 

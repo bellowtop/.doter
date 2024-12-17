@@ -18,7 +18,8 @@
 
 (use-package neotree
   :ensure t
-  :init (setq neo-theme 'arrow)
+  :init
+  (setq neo-theme 'nerd)
   ;; (setq neo-auto-indent-point 't)
   (setq neo-confirm-create-file 'off-p)
   (setq neo-confirm-create-directory 'off-p)
