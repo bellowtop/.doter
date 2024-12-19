@@ -158,6 +158,9 @@
     (define-key god-local-mode-map (kbd "i") #'my-quit-god-mode)
     (define-key god-local-mode-map (kbd "m") #'my-goto-match-paren)
 
+    (define-key god-local-mode-map (kbd "`") #'popper-toggle-but-other-window)
+    (define-key god-local-mode-map (kbd "M-`") #'popper-cycle-but-other-window)
+
     (define-key god-local-mode-map (kbd "s") #'my-replace-char)
     (define-key god-local-mode-map (kbd "x") #'my-delete-char-or-kill-region)
 
