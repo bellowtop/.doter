@@ -833,6 +833,24 @@ If buffer-or-name is nil return current buffer's mode."
       )
     (vterm)))
 
+(defun popper-toggle-but-other-window()
+  (interactive)
+  (popper-toggle)
+  (run-with-timer 0.05 nil
+    (lambda ()
+      (when popper-open-popup-alist
+        (other-window -1))
+      )))
+
+(defun popper-cycle-but-other-window()
+  (interactive)
+  (popper-cycle 0)
+  (run-with-timer 0.05 nil
+    (lambda ()
+      (when popper-open-popup-alist
+        (other-window -1))
+      )))
+
 
 (defun start-zsh-term()
   (interactive)
