@@ -48,17 +48,6 @@
 ;; why ensure not work?
 (require 'ivy)
 
-(defun ivy-format-function-default (cands)
-  "Transform CANDS into a string for minibuffer."
-  (concat
-    "---------------------------------------------------\n"
-    (ivy--format-function-generic
-      (lambda (str)
-        (concat " > " (ivy--add-face str 'ivy-current-match) ""))
-      (lambda (str) (concat "   " str "")) cands "\n")
-    "\n----------------------------------------------------\n\n"))
-
-
 (use-package ivy-posframe
   :after (ivy)
   :config
@@ -66,12 +55,15 @@
   (defun ivy-format-function-default (cands)
     "Transform CANDS into a string for minibuffer."
     (concat
-      "---------------------------------------------------\n"
+      (propertize
+        (format "%s\n" (make-string (round (* .50 (frame-width))) ?─))
+        'face
+        '(:inherit 'my-highlight-font-words-face :inverse-video t))
       (ivy--format-function-generic
         (lambda (str)
           (concat " > " (ivy--add-face str 'ivy-current-match) ""))
         (lambda (str) (concat "   " str "")) cands "\n")
-      "\n----------------------------------------------------\n\n"))
+      "\n"))
 
   (defun my-ivy-posframe-get-size ()
     "Set the ivy-posframe size according to the current frame."

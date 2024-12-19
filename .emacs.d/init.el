@@ -558,7 +558,7 @@
   '(pos-tip-background-color "#1d1d2b")
   '(pos-tip-foreground-color "#d4d4d6")
   '(projectile-globally-ignored-directories
-     '("/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
+     '("\\.emacs\\.d/\\.local/autosaves" "\\.emacs\\.d/\\.local/backups" "/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
   '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
   '(safe-local-variable-values
      '((eval font-lock-add-keywords nil
