@@ -81,7 +81,7 @@
 
 
 
-(setq default-font "IBM Plex Mono-15.0")
+(setq default-font "IBM Plex Mono 1.2-15.0")
 (setq default-font-family "IBM Plex Mono")
 ;; ;;; https://github.com/supercomputra/SF-Mono-Font
 ;; setq default-font "SF Mono-16.0")
@@ -452,7 +452,7 @@
   (popper-mode +1)
   (popper-echo-mode +1)
   :config
-  (setq popper-window-height 0.33)
+  (setq popper-window-height 0.5)
   )
 
 
@@ -641,8 +641,9 @@
                                                          (vterm-copy-mode 1)
                                                          (mouse-set-region click)))
   (define-key vterm-mode-map (kbd "s-C")  #'vterm-copy-mode)
+  (define-key vterm-mode-map (kbd "C-s-c")  #'(lambda() (interactive) (vterm-send-key "c" nil nil t)))
   (define-key vterm-copy-mode-map (kbd "M-i")  #'er/expand-region)
-  (define-key vterm-copy-mode-map (kbd "M-w")  #'vterm-copy-mode-done)
+  (define-key vterm-copy-mode-map (kbd "M-w")  #'vterm-copy-mode-doe)
 
   ;; toggle
   (define-key vterm-copy-mode-map (kbd "s-C")  #'vterm-copy-mode)
@@ -654,6 +655,7 @@
   (keymap-unset vterm-mode-map "M-`")
   ;; M-: is heavily used too.
   (keymap-unset vterm-mode-map "M-:")
+  ;;
   )
 
 
@@ -890,7 +892,8 @@
 (require 'init-modeline)
 
 
-(toggle-truncate-lines t)
+(toggle-truncate-lines nil)
+(toggle-continuation-fringe-indicator)
 
 
 (global-auto-revert-mode 1)

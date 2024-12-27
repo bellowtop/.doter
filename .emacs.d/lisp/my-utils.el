@@ -857,4 +857,12 @@ If buffer-or-name is nil return current buffer's mode."
   (vterm))
 
 
+(defun toggle-continuation-fringe-indicator ()
+  (interactive)
+  (setq-default
+    fringe-indicator-alist
+    (if (assq 'continuation fringe-indicator-alist)
+      (delq (assq 'continuation fringe-indicator-alist) fringe-indicator-alist)
+      (cons '(continuation right-curly-arrow left-curly-arrow) fringe-indicator-alist))))
+
 (provide 'my-utils)
