@@ -119,6 +119,7 @@
     (define-prefix-command 'my-god-mode-viewer-key)
     (define-prefix-command 'my-god-mode-delete-key)
     (define-prefix-command 'my-god-mode-window-key)
+    (define-prefix-command 'my-god-mode-spsexp-key)
 
     (define-key god-local-mode-map (kbd "SPC") 'my-god-mode-leader-key)
     (define-key god-local-mode-map (kbd ",")   'my-god-mode-dummmy-key)
@@ -126,6 +127,7 @@
     (define-key god-local-mode-map (kbd "z")   'my-god-mode-viewer-key)
     (define-key god-local-mode-map (kbd "d")   'my-god-mode-delete-key)
     (define-key god-local-mode-map (kbd "q")   'my-god-mode-window-key)
+    (define-key god-local-mode-map (kbd "S")   'my-god-mode-spsexp-key)
 
     ;; God mode key mappings
     (define-key god-local-mode-map (kbd "B") #'switch-to-buffer)
@@ -175,6 +177,11 @@
     (define-key god-local-mode-map (kbd "d H") #'my-delete-to-beginning)
     (define-key god-local-mode-map (kbd "d L") #'my-delete-to-end)
     (define-key god-local-mode-map (kbd "d G") #'my-delete-to-eof)
+
+    (define-key god-local-mode-map (kbd "S d") #'sp-delete-sexp)
+    (define-key god-local-mode-map (kbd "S u") #'sp-unwrap-sexp)
+    (define-key god-local-mode-map (kbd "S f") #'sp-forward-sexp)
+    (define-key god-local-mode-map (kbd "S b") #'sp-backward-sexp)
 
     ;; (define-key god-local-mode-map (kbd "<RET>") #'next-line)
 
