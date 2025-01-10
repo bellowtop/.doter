@@ -97,7 +97,7 @@
      (font . ,default-font)
      (vertical-scroll-bars . nil)
      ))
-(set-face-attribute 'region nil :inverse-video t)
+(set-face-attribute 'region nil :inverse-video nil)
 (set-face-attribute 'show-paren-match nil :foreground "green" :background "#11501B" :weight 'normal :underline '(:position t))
 (setq-default left-margin-width 0 right-margin-width 0)
 (setq frame-resize-pixelwise t)
@@ -427,8 +427,6 @@
 ;; (global-set-key (kbd "C-z") popwin:keymap)
 
 
-
-
 (use-package popper
   :ensure t ; or :straight t
   :bind (("C-`"   . popper-toggle)
@@ -452,7 +450,7 @@
   (popper-mode +1)
   (popper-echo-mode +1)
   :config
-  (setq popper-window-height 0.5)
+  (setq popper-window-height 0.6)
   )
 
 
@@ -636,13 +634,13 @@
   :config
   (setq vterm-timer-delay 0.001)
   (setq vterm-max-scrollback 10000)
-  (define-key vterm-mode-map (kbd "<drag-mouse-1>")  #'(lambda(click)
-                                                         (interactive "e")
-                                                         (vterm-copy-mode 1)
-                                                         (mouse-set-region click)))
+  ;; (define-key vterm-mode-map (kbd "<drag-mouse-1>")  #'(lambda(click)
+  ;;                                                        (interactive "e")
+  ;;                                                        (vterm-copy-mode 1)
+  ;;                                                        (mouse-set-region click)))
   (define-key vterm-mode-map (kbd "s-C")  #'vterm-copy-mode)
   (define-key vterm-mode-map (kbd "C-s-c")  #'(lambda() (interactive) (vterm-send-key "c" nil nil t)))
-  (define-key vterm-copy-mode-map (kbd "M-i")  #'er/expand-region)
+  (define-key vterm-mode-map (kbd "M-i")  #'er/expand-region)
   (define-key vterm-copy-mode-map (kbd "M-w")  #'vterm-copy-mode-doe)
 
   ;; toggle

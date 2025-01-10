@@ -79,6 +79,8 @@
          my-join-lines
          my-kill-region-and-insert-d-in-selected
          my-kill-whole-line-or-kill-region
+         my-next-line
+         my-previous-line
          my-quit-god-mode
          my-replace-char
          my-select-current-line-and-forward-line
