@@ -645,6 +645,10 @@ If buffer-or-name is nil return current buffer's mode."
   (shrink-window-horizontally
     (/ (window-body-width) 4)))
 
+(defun my-enarge-window-height()
+  (interactive)
+  (enlarge-window 1000))
+
 
 (defun my-forward-char-no-cross-line ()
   (interactive)
@@ -864,5 +868,10 @@ If buffer-or-name is nil return current buffer's mode."
     (if (assq 'continuation fringe-indicator-alist)
       (delq (assq 'continuation fringe-indicator-alist) fringe-indicator-alist)
       (cons '(continuation right-curly-arrow left-curly-arrow) fringe-indicator-alist))))
+
+(defun my-toggle-truncate-lines-and-word-wrap()
+  (interactive)
+  (toggle-truncate-lines)
+  (toggle-word-wrap))
 
 (provide 'my-utils)

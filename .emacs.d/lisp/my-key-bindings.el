@@ -234,7 +234,7 @@
     (define-key god-local-mode-map (kbd "SPC m") #'deadgrep)
     (define-key god-local-mode-map (kbd "SPC o") #'cff-find-other-file)    ;; switch between c header/source file
     (define-key god-local-mode-map (kbd "SPC L") #'display-line-numbers-mode)
-    (define-key god-local-mode-map (kbd "SPC t") #'toggle-truncate-lines)
+    (define-key god-local-mode-map (kbd "SPC t") #'my-toggle-truncate-lines-and-word-wrap)
     (define-key god-local-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
 
     (define-key god-local-mode-map (kbd "SPC l") #'centaur-tabs-forward)
@@ -367,7 +367,7 @@
   ("C-h" . windmove-left)
   ("C-k" . windmove-up)
   ("C-j" . windmove-down)
-  ("," . flip-buffer-to-window)
+  ("`" . my-enarge-window-height)
   )
 
 
