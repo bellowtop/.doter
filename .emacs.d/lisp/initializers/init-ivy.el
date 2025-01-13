@@ -55,10 +55,10 @@
   (defun ivy-format-function-default (cands)
     "Transform CANDS into a string for minibuffer."
     (concat
-      (propertize
-        (format "%s\n" (make-string (round (* .50 (frame-width))) ?─))
-        'face
-        '(:inherit 'my-highlight-font-words-face :inverse-video t))
+      ;; (propertize
+      ;;   (format "%s\n" (make-string (round (* .50 (frame-width))) ?─))
+      ;;   'face
+      ;;   '(:inherit 'my-highlight-font-words-face :inverse-video t))
       (ivy--format-function-generic
         (lambda (str)
           (concat " > " (ivy--add-face str 'ivy-current-match) ""))
