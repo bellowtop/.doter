@@ -7,6 +7,7 @@
   (defun my-kill-region-and-insert-d-in-selected()
     (interactive)
     (kill-region (region-beginning) (region-end))
+    (when my-visual-line-selection (delete-forward-char 1))
     (unless (bound-and-true-p god-local-mode)
       (insert-char ?d))
     )
