@@ -70,6 +70,7 @@
                         "lisp-mode"
                         "slime-mode"
                         "minibuffer-mode"
+                        "inferior-python-mode"
                         "deadgrep-edit-mode"))
 
 
@@ -122,9 +123,9 @@
 
 
 (setq should-not-display-dark-background-modes (list
-                        "dired-mode"
-                        "dashboard-mode"
-                        ))
+                                                 "dired-mode"
+                                                 "dashboard-mode"
+                                                 ))
 
 
 (defun my-god-this-is-dark-background-buffer (bufname)
@@ -146,9 +147,9 @@
   (interactive)
   (if (my-god-this-is-dark-background-buffer (buffer-name))
     (set (make-local-variable 'face-remapping-alist) `((default :background ,darker-window-bg-color)
-                                                       (fringe :background ,darker-window-bg-color)
-                                                       (line-number :background ,darker-window-bg-color :foreground "#627d9d")
-                                                       (line-number-current-line :background ,darker-window-bg-color :foreground "#627d9d")
+                                                        (fringe :background ,darker-window-bg-color)
+                                                        (line-number :background ,darker-window-bg-color :foreground "#627d9d")
+                                                        (line-number-current-line :background ,darker-window-bg-color :foreground "#627d9d")
                                                         ))
     (set (make-local-variable 'face-remapping-alist) `((fringe :background ,(face-background 'default))
                                                         )))
