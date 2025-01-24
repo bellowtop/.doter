@@ -98,7 +98,6 @@
      (font . ,default-font)
      (vertical-scroll-bars . nil)
      ))
-(set-face-attribute 'region nil :inverse-video nil)
 (set-face-attribute 'show-paren-match nil :foreground "green" :background "#11501B" :weight 'normal :underline '(:position t))
 (setq-default left-margin-width 0 right-margin-width 0)
 (setq frame-resize-pixelwise t)
@@ -219,6 +218,7 @@
 ;;   (set-face-background 'isearch "deeppink")
 ;;   (set-face-attribute 'mode-line-inactive    nil :box nil :underline nil)
 ;;   (set-face-attribute 'mode-line-active      nil :box nil :underline nil)
+;;   (set-face-attribute 'region nil :inverse-video nil)
 ;;   )
 
 
@@ -226,7 +226,10 @@
 
 
 (load-theme 'bogster t)
-(set-face-attribute 'isearch               nil :background "#FCE094" :foreground "black")
+;; (set-face-attribute 'isearch               nil :background "#FCE094" :foreground "black")
+(set-face-background 'default "#161c23")
+(set-face-foreground 'isearch "white")
+(set-face-background 'isearch "deeppink")
 (set-face-attribute 'mode-line-inactive    nil :box nil :underline nil)
 (set-face-attribute 'mode-line-active      nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position t))
 (set-face-attribute 'mode-line-highlight   nil :box nil :foreground "green")
