@@ -110,13 +110,12 @@
 
 ;; Set symbol for the border
 (set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?│))
-;;;
-;;; My tiny Theme
-;;;
-(setq use-dark-theme-mode t)
-(set-face-foreground 'default "#D1D2CE")
-(set-face-background 'default "#C6B8AD")
+
+
+
 (setq cursor-in-non-selected-windows nil)
+
+
 
 
 
@@ -131,6 +130,7 @@
 
 
 
+(setq use-dark-theme-mode t)
 (if use-dark-theme-mode
   (progn
     (setq darker-window-bg-color "#181818")
@@ -143,12 +143,7 @@
     (setq whitespace-trailing-fg-color "#59728F")
     ;;
     (setq hl-line-bg-color "#1b2129")
-    ;; dark theme!
-    (invert-face 'default)
-
-
-
-    )
+  )
   (progn
     (setq darker-window-bg-color "#FFFFFF")
     (setq darker-window-fg-color "black")
@@ -162,6 +157,19 @@
     (setq hl-line-bg-color (face-background 'highlight))
     )
   )
+
+
+;;;
+;;; My tiny Theme
+;;;
+(defun my-tiny-theme()
+    (set-face-foreground 'default "#D1D2CE")
+    (set-face-background 'default "#C6B8AD")
+    (when use-dark-theme-mode
+        (invert-face 'default)
+      )
+)
+
 (defface my-highlight-font-chars-face
   `((t (
          :foreground ,highlight-font-chars-face-fg
@@ -202,26 +210,26 @@
 ;; defaults write org.gnu.Emacs NSToolTipsFontSize -int 16
 (set-face-font 'tooltip (frame-parameter nil 'font))
 
-(use-package vscode-dark-plus-theme
-  :ensure t
-  :init
-  (load-theme 'vscode-dark-plus t)
-  (set-face-background 'default "#161c23")
-  (set-face-foreground 'isearch "white")
-  (set-face-background 'isearch "deeppink")
-  (set-face-attribute 'mode-line-inactive    nil :box nil :underline nil)
-  (set-face-attribute 'mode-line-active      nil :box nil :underline nil)
-  )
+;; (use-package vscode-dark-plus-theme
+;;   :ensure t
+;;   :init
+;;   (load-theme 'vscode-dark-plus t)
+;;   (set-face-background 'default "#161c23")
+;;   (set-face-foreground 'isearch "white")
+;;   (set-face-background 'isearch "deeppink")
+;;   (set-face-attribute 'mode-line-inactive    nil :box nil :underline nil)
+;;   (set-face-attribute 'mode-line-active      nil :box nil :underline nil)
+;;   )
 
 
 ;; (load-theme 'vs2017 t)
 
 
-;; (load-theme 'bogster t)
-;; (set-face-attribute 'isearch               nil :background "#FCE094" :foreground "black")
-;; (set-face-attribute 'mode-line-inactive    nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position t))
-;; (set-face-attribute 'mode-line-active      nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position t))
-;; (set-face-attribute 'mode-line-highlight   nil :box nil :foreground "green")
+(load-theme 'bogster t)
+(set-face-attribute 'isearch               nil :background "#FCE094" :foreground "black")
+(set-face-attribute 'mode-line-inactive    nil :box nil :underline nil)
+(set-face-attribute 'mode-line-active      nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position t))
+(set-face-attribute 'mode-line-highlight   nil :box nil :foreground "green")
 
 
 (defun my-change-window-divider ()
