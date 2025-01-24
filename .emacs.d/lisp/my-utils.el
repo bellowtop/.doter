@@ -874,4 +874,10 @@ If buffer-or-name is nil return current buffer's mode."
   (toggle-truncate-lines)
   (toggle-word-wrap))
 
+(defun compileandrun()
+  (interactive)
+  (let* ((src (file-name-nondirectory (buffer-file-name)))
+          (exe (file-name-sans-extension src)))
+    (compile (concat "g++ " src " -std=c++20 " " -o " exe " && ./" exe))))
+
 (provide 'my-utils)
