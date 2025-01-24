@@ -55,6 +55,7 @@
                           "*dashboard*"
                           "*slime"
                           "*sldb"
+                          "*leetcode"
                           "magit"
                           "git-rebase-todo"
                           "*Backtrace*"
