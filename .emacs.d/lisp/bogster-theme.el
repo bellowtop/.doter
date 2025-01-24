@@ -80,6 +80,17 @@
     (font-lock-builtin-face               (:foreground bogster-lgreen))
     (font-lock-property-use-face          (:foreground bogster-blue))
 
+    (rainbow-delimiters-depth-1-face          (:foreground "gold"))
+    (rainbow-delimiters-depth-2-face          (:foreground "orchid"))
+    (rainbow-delimiters-depth-3-face          (:foreground "LightSkyBlue"))
+    (rainbow-delimiters-depth-4-face          (:foreground "gold"))
+    (rainbow-delimiters-depth-5-face          (:foreground "orchid"))
+    (rainbow-delimiters-depth-6-face          (:foreground "LightSkyBlue"))
+    (rainbow-delimiters-depth-7-face          (:foreground "gold"))
+    (rainbow-delimiters-depth-8-face          (:foreground "orchid"))
+    (rainbow-delimiters-depth-9-face          (:foreground "LightSkyBlue"))
+    (rainbow-delimiters-unmatched-face        (:foreground "red"))
+
 
     (helm-selection                       (:background "#364D2D"))
     (helm-source-header                   (:foreground "#00ff00"))
