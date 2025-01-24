@@ -77,6 +77,7 @@
 
   ;; padding 10
   (set-face-attribute 'ivy-posframe nil :background "black")
+  (set-face-attribute 'fringe nil :background "black")
 
   ;; (set-face-attribute 'ivy-posframe-border nil :background (face-background 'ivy-posframe))
   ;; (setq ivy-posframe-border-width 10)
