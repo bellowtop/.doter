@@ -9,6 +9,10 @@
      ("<backtab>" . ivy-previous-line)
      ("<escape>" . keyboard-escape-quit)))
   :config (ivy-mode 1)
+
+  ;; donot sort mark ring
+  (ivy-configure 'counsel-mark-ring :sort-fn #'ignore)
+
   ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
   (setq counsel-switch-buffer-preview-virtual-buffers nil)
   (setq ivy-use-virtual-buffers t)

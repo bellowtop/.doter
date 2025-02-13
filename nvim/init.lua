@@ -22,6 +22,11 @@ require('packer').startup(function(use)
   use 'neovim/nvim-lspconfig'
   use 'kevinhwang91/nvim-bqf'
 
+  use {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+  }
+
 
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
   use {'nvim-treesitter/playground'}
@@ -47,6 +52,14 @@ require('packer').startup(function(use)
   use { 'nvim-telescope/telescope.nvim', tag =  '0.1.4' }
   use { "nvim-telescope/telescope-file-browser.nvim" }
   use { "smartpde/telescope-recent-files" }
+
+  use({
+    "princejoogie/dir-telescope.nvim",
+    -- telescope.nvim is a required dependency
+    requires = {"nvim-telescope/telescope.nvim"},
+    config = function()
+    end,
+  })
 
   use { "dhananjaylatkar/cscope_maps.nvim" }
 
@@ -100,6 +113,13 @@ require('packer').startup(function(use)
   use 'ziglang/zig.vim'
 
   use 'keith/swift.vim'
+
+  use {
+    "pmizio/typescript-tools.nvim",
+    requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+  }
+
+  use 'b3nj5m1n/kommentary'
 
 
   if install_plugins then
@@ -411,13 +431,25 @@ local custom_find_files = function()
   }
 end
 
+
+
+require("dir-telescope").setup()
+require("telescope").load_extension("dir")
+local telescope_dir = require("telescope").extensions.dir
+
+
+
 vim.keymap.set('n', '<leader>f', custom_find_files, {})
 vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>G', builtin.grep_string, {})
 vim.keymap.set('n', '<leader>b', builtin.buffers, {})
 vim.keymap.set('n', '<leader>s', builtin.lsp_document_symbols, {})
 vim.keymap.set('n', '<leader>p', file_browser.file_browser, {})
 vim.keymap.set('n', 'F',         custom_find_files, {})
 vim.keymap.set('n', '<leader>F', recent_files.pick, {})
+
+vim.keymap.set('n', '<leader>df', telescope_dir.find_files, {})
+vim.keymap.set('n', '<leader>dg', telescope_dir.live_grep, {})
 
 
 
@@ -875,7 +907,6 @@ require("clangd_extensions").setup({
 })
 
 
-
 -- vim.cmd([[
 -- autocmd FileType c,cpp ClangFormatAutoEnable
 -- ]])
@@ -899,6 +930,16 @@ require 'nt-cpp-tools'.setup({
 })
 
 
+require("mason").setup()
+local mason_lsp = require('mason-lspconfig')
+mason_lsp.setup({
+  ensure_installed = { 'ts_ls', },
+  automatic_installation = true,
+})
+
+require("typescript-tools").setup {
+    on_attach = custom_attach,
+}
 
 
 
@@ -1066,7 +1107,7 @@ require('cscope_maps').setup({
     -- "true" does not open picker for single result, just JUMP
     skip_picker_for_single_result = false, -- "false" or "true"
     -- these args are directly passed to "cscope -f <db_file> <args>"
-    db_build_cmd_args = { "-bqkv" },
+    db_build_cmd = {args = { "-bqkv" }},
     -- statusline indicator, default is cscope executable
     statusline_indicator = nil,
   }
@@ -1105,6 +1146,19 @@ vim.cmd([[
 ]])
 
 
+
+
+
+
+vim.g.kommentary_create_default_mappings = false
+
+local kommentary_config = require('kommentary.config')
+kommentary_config.configure_language("c", { prefer_single_line_comments = true, })
+kommentary_config.configure_language("cpp", { prefer_single_line_comments = true, })
+
+vim.api.nvim_set_keymap("n", "<A-/>", "<Plug>kommentary_line_default", {})
+vim.api.nvim_set_keymap("v", "<A-/>", "<Plug>kommentary_visual_default", {})
+vim.api.nvim_set_keymap("i", "<A-/>", "<Plug>kommentary_line_default", {})
 
 
 
