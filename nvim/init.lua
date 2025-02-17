@@ -592,7 +592,7 @@ augroup END
 --
 vim.g.vista_echo_cursor_strategy = 'floating_win'
 
-vim.api.nvim_set_keymap("n", "<Leader>v",         ":Vista!!",  { noremap = true } )
+vim.api.nvim_set_keymap("n", "<Leader>v",         ":Vista!!<CR>",  { noremap = true } )
 
 
 
