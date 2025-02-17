@@ -1,0 +1,12 @@
+---
+  BasedOnStyle: LLVM
+  IndentWidth: 4
+  TabWidth: 4
+  ColumnLimit: 120
+  PointerAlignment: Left
+  ReferenceAlignment: Left
+
+  BinPackArguments: false
+  BinPackParameters: false
+  ExperimentalAutoDetectBinPacking: false
+  AllowAllParametersOfDeclarationOnNextLine: false
