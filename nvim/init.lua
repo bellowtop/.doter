@@ -481,6 +481,7 @@ augroup END
 --
 vim.g.AutoPairsShortcutToggle = ''
 vim.g.AutoPairsShortcutJump = ''
+vim.g.AutoPairsShortcutBackInsert = ''
 
 
 
@@ -1084,6 +1085,8 @@ cmp.setup.cmdline(':', {
 })
 
 
+vim.keymap.set("i", "<C-Tab>", function() require('cmp').mapping.complete() end, { noremap = true })
+
 
 
 
@@ -1477,6 +1480,10 @@ vim.api.nvim_set_keymap("c", "w!!",        "%!sudo tee > /dev/null %",     { nor
 vim.api.nvim_set_keymap("n", ">", ':exe "vertical resize +20"<CR>', { noremap = true } )
 vim.api.nvim_set_keymap("n", "<", ':exe "vertical resize -20"<CR>', { noremap = true } )
 
+
+
+vim.api.nvim_set_keymap("s", "<BS>", "<BS>i", { noremap = true })
+vim.api.nvim_set_keymap("s", "<C-k>", "<BS>i<C-o>D", { noremap = true } )
 
 
 vim.cmd([[
