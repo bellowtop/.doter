@@ -857,6 +857,23 @@ if vim.fn.executable("gopls") then
     flags = {
       debounce_text_changes = 500,
     },
+    settings = {
+      gopls = {
+        analyses = {
+          unusedparams = true,
+        },
+        usePlaceholders = true,
+        completeUnimported = true,
+        staticcheck = true,
+        semanticTokens = true,
+        ["ui.inlayhint.hints"] = {
+          compositeLiteralFields = true,
+          constantValues = true,
+          parameterNames = true,
+          functionTypeParameters = true,
+        },
+      },
+    },
   }
 end
 
