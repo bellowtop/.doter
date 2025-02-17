@@ -79,7 +79,8 @@ pacman -Sy cscope ctags
 #
 #
 # snap install universal-ctags --classic
-# brew install ctags
+# brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+# brew link --overwrite universal-ctags
 # brew install cscope
 ```
 
