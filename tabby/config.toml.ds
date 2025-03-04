@@ -1,11 +1,11 @@
 [model.chat.http]
 kind = "openai/chat"
-model_name = "your_model"
+model_name = "deepseek-chat"
 api_endpoint = "https://api.deepseek.com/v1"
 api_key = "your-api-key"
 
 [model.completion.http]
 kind = "deepseek/completion"
-model_name = "your_model"
+model_name = "deepseek-chat"
 api_endpoint = "https://api.deepseek.com/beta"
 api_key = "your-api-key"

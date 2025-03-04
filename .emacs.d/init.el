@@ -52,6 +52,8 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/emacswiki.org"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/blink-search"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/xcode-theme"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/tabby.el"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/initializers"))
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/lisp"))
 
@@ -82,7 +84,7 @@
 
 
 
-(setq default-font "IBM Plex Mono 1.2-15.0")
+(setq default-font "IBM Plex Mono-15.0")
 (setq default-font-family "IBM Plex Mono")
 ;; ;;; https://github.com/supercomputra/SF-Mono-Font
 ;; setq default-font "SF Mono-16.0")
@@ -127,6 +129,8 @@
 ;; (setq window-divider-right-color "#26282F")
 
 
+
+(setq-default cursor-in-non-selected-windows nil)
 
 
 (setq use-dark-theme-mode t)
@@ -225,13 +229,22 @@
 ;; (load-theme 'vs2017 t)
 
 
-(load-theme 'bogster t)
+(load-theme 'doom-xcode t)
+
+
+;; (require 'xcode-dark-theme)
+;; (load-theme 'xcode-dark t)
+;; (set-face-attribute 'region nil :background "#214283")
+
+
+
+;; (load-theme 'bogster t)
 ;; (set-face-attribute 'isearch               nil :background "#FCE094" :foreground "black")
 (set-face-background 'default "#161c23")
 (set-face-foreground 'isearch "white")
 (set-face-background 'isearch "deeppink")
 (set-face-attribute 'mode-line-inactive    nil :box nil :underline nil)
-(set-face-attribute 'mode-line-active      nil :box nil :underline `(:color ,highlight-font-chars-face-fg :position t))
+(set-face-attribute 'mode-line-active      nil :box nil :underline nil)
 (set-face-attribute 'mode-line-highlight   nil :box nil :foreground "green")
 
 
@@ -761,6 +774,12 @@
 (require 'init-blink-search)
 
 
+(require 'tabby)
+(add-hook 'python-ts-mode-hook 'tabby-mode)
+(define-key tabby-completion-map (kbd "M-<tab>") 'tabby-accept-completion)
+
+
+
 (require 'init-ivy)
 
 
@@ -896,6 +915,7 @@
 
 
 (set-face-background 'line-number (face-background 'default))
+(set-face-foreground 'line-number "gray33")
 (set-face-background 'line-number-current-line (face-background 'hl-line))
 
 

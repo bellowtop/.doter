@@ -10,3 +10,6 @@
 [submodule ".emacs.d/lisp/blink-search"]
 	path = .emacs.d/lisp/blink-search
 	url = https://github.com/manateelazycat/blink-search.git
+[submodule ".emacs.d/lisp/tabby.el"]
+	path = .emacs.d/lisp/tabby.el
+	url = https://github.com/alan-w-255/tabby.el.git
