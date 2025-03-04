@@ -23,7 +23,7 @@ ln -s ~/.doter/kak              ~/.config/kak
 ln -s ~/.doter/git              ~/.config/git
 
 mkdir -p ~/.tabby
-ln -s ~/.doter/tabby/config.toml ~/.tabby/config.toml
+cp ~/.doter/tabby/config.toml ~/.tabby/config.toml
 
 ```
 
