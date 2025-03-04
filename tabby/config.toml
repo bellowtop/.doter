@@ -10,3 +10,9 @@ model_name = "qwen2.5-coder-32b-instruct"                 # Example code complet
 api_endpoint = "http://localhost:1234/v1"
 api_key = ""
 prompt_template = "<PRE> {prefix} <SUF>{suffix} <MID>"  # Example prompt template for CodeLlama models
+
+[model.embedding.http]
+kind = "openai/embedding"
+model_name = "qwen2.5-coder-32b-instruct"
+api_endpoint = "http://localhost:1234/v1"
+api_key = ""
