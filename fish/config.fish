@@ -105,3 +105,6 @@ alias gst='git stash'
 alias gstp='git stash pop'
 
 alias gup='git pull'
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/jiechen/.cache/lm-studio/bin
