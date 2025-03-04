@@ -68,6 +68,7 @@
 (setq legendary-modes (list
                         "*this-buffer-is-left-alone-without-god-mode-at-all"
                         "cfrs-input-mode"
+                        "fundamental-mode"
                         "lisp-mode"
                         "slime-mode"
                         "minibuffer-mode"
