@@ -6,13 +6,13 @@
                                   (and (minibuffer-window-active-p (minibuffer-window))
                                     (with-selected-window (minibuffer-window)
                                       (eq window (minibuffer-selected-window))))))
-                            (if (bound-and-true-p god-local-mode)
+                            ;; (if (bound-and-true-p god-local-mode)
                               '(:inherit mode-line-active)
-                              `(
-                                :foreground  ,(face-foreground 'line-number-current-line)
-                                :background ,(face-background 'line-number-current-line)
-                               )
-                            )
+                              ;; `(
+                              ;;   :foreground  ,(face-foreground 'line-number-current-line)
+                              ;;   :background ,(face-background 'line-number-current-line)
+                              ;;  )
+                            ;; )
                             'mode-line-buffer-id)
       'mouse-face
       'mode-line-highlight

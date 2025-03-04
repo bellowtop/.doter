@@ -4,7 +4,7 @@
   :init
   :config
   (setq treemacs-hide-gitignored-files-mode 1)
-  (setq treemacs-space-between-root-nodes nil)
+  (setq treemacs-space-between-root-nodes t)
   (setq treemacs-show-hidden-files t)
   (setq treemacs-show-cursor t)
   (setq treemacs-indentation 2)
@@ -173,7 +173,7 @@ exists it returns /file/name_Copy2.ext etc."
              treemacs-directory-collapsed-face
              treemacs-file-face
              ;; treemacs-nerd-icons-file-face
-             ;; treemacs-nerd-icons-root-face
+             treemacs-nerd-icons-root-face
              treemacs-tags-face))
     (set-face-attribute face nil
       :family "IBM Plex Mono"
