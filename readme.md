@@ -21,6 +21,10 @@ ln -s ~/.doter/alacritty        ~/.config/alacritty
 ln -s ~/.doter/karabiner        ~/.config/karabiner
 ln -s ~/.doter/kak              ~/.config/kak
 ln -s ~/.doter/git              ~/.config/git
+
+mkdir -p ~/.tabby
+ln -s ~/.doter/tabby/config.toml ~/.tabby/config.toml
+
 ```
 
 #### common tools
