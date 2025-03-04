@@ -52,7 +52,6 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/emacswiki.org"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/blink-search"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/xcode-theme"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/tabby.el"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/initializers"))
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/lisp"))
@@ -162,16 +161,16 @@
   )
 
 
-;;;
-;;; My tiny Theme
-;;;
-(defun my-tiny-theme()
-    (set-face-foreground 'default "#D1D2CE")
-    (set-face-background 'default "#C6B8AD")
-    (when use-dark-theme-mode
-        (invert-face 'default)
-      )
-)
+;; ;;;
+;; ;;; My tiny Theme
+;; ;;;
+;; (defun my-tiny-theme()
+;;     (set-face-foreground 'default "#D1D2CE")
+;;     (set-face-background 'default "#C6B8AD")
+;;     (when use-dark-theme-mode
+;;         (invert-face 'default)
+;;       )
+;; )
 
 (defface my-highlight-font-chars-face
   `((t (
@@ -199,6 +198,8 @@
 
 
 
+
+(set-face-foreground 'default "#D1D2CE")
 
 ;; (set-face-attribute 'lazy-highlight   nil :background "#EEB422" :foreground "#161c23")
 (set-face-attribute 'lazy-highlight   nil :background "#7FDC59" :foreground "#161c23")
@@ -913,10 +914,9 @@
 
 (global-hl-line-mode 0)
 
+(set-face-attribute 'line-number              nil :background (face-background 'default) :foreground "gray33" :slant 'normal :weight 'normal)
+(set-face-attribute 'line-number-current-line nil :background (face-background 'hl-line) :foreground "white"  :slant 'normal :weight 'normal)
 
-(set-face-background 'line-number (face-background 'default))
-(set-face-foreground 'line-number "gray33")
-(set-face-background 'line-number-current-line (face-background 'hl-line))
 
 
 (require 'init-modeline)
