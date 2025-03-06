@@ -18,13 +18,14 @@
 
 ;; http://company-mode.github.io/manual/Getting-Started.html#Initial-Setup
 (with-eval-after-load 'company-posframe
-  (define-key company-mode-map (kbd "C-M-i") #'company-complete)
+  ;; (define-key company-mode-map (kbd "C-M-i") #'company-complete)
 
   (set-face-attribute 'company-tooltip-common nil :weight 'normal :foreground "#7FDC59")
   (setq company-tooltip-scrollbar-width 0)
 
   ;; padding 10
   (set-face-attribute 'company-tooltip nil :background "black")
+  (set-face-attribute 'company-tooltip-selection nil :weight 'normal)
   ;; (setq company-posframe-show-params (list
   ;;                                      :internal-border-color (face-background 'company-tooltip)
   ;;                                      :internal-border-width 10))
@@ -32,8 +33,8 @@
   (setq company-posframe-show-params (list
                                        :internal-border-color (face-foreground 'vertical-border)
                                        :internal-border-width my-posframe-border-width
-                                       :left-fringe my-posframe-fringe-width
-                                       :right-fringe my-posframe-fringe-width
+                                       :left-fringe 0 ;; my-posframe-fringe-width
+                                       :right-fringe 0 ;; my-posframe-fringe-width
                                        :line-height 1.2))
 
   (define-key company-active-map (kbd "<TAB>") #'company-select-next-if-tooltip-visible-or-complete-selection)
