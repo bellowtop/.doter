@@ -45,3 +45,5 @@ export PATH="$HOME/zig/zls/bin:$PATH"
 export PATH="$HOME/zig/zig-macos-aarch64:$PATH"
 export PATH="$HOME/.roswell/bin:$PATH"
 
+export VCPKG_ROOT="$HOME/vcpkg"
+

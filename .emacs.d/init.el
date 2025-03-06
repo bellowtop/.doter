@@ -233,6 +233,8 @@
 (load-theme 'doom-xcode t)
 (set-face-attribute 'font-lock-keyword-face nil :weight 'normal)
 (set-face-attribute 'region nil :background "#214283")
+(set-face-attribute 'isearch nil :weight 'normal)
+(set-face-attribute 'lazy-highlight nil :weight 'normal)
 
 
 ;; (require 'xcode-dark-theme)
