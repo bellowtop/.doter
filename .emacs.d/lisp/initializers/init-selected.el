@@ -14,13 +14,15 @@
 
   (defun my-select-to-eol()
     (interactive)
-    (end-of-line)
-    (exchange-point-and-mark))
+    (mwim-end-of-code-or-line)
+    ;; (exchange-point-and-mark)
+    )
 
   (defun my-select-to-bol()
     (interactive)
-    (beginning-of-line)
-    (exchange-point-and-mark))
+    (mwim-beginning-of-code-or-line)
+    ;; (exchange-point-and-mark)
+    )
 
   :bind ((:map
            selected-keymap
