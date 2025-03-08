@@ -83,7 +83,7 @@
 
 
 
-(setq default-font "IBM Plex Mono-15.0")
+(setq default-font "IBM Plex Mono 1.2-15.0")
 (setq default-font-family "IBM Plex Mono")
 ;; ;;; https://github.com/supercomputra/SF-Mono-Font
 ;; setq default-font "SF Mono-16.0")
@@ -160,6 +160,13 @@
     )
   )
 
+
+(defun my-set-bigger-spacing ()
+  (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15))
+  ;; (setq-local default-text-properties '(line-spacing 0 line-height t))
+  )
+;; (add-hook 'text-mode-hook 'my-set-bigger-spacing)
+;; (add-hook 'prog-mode-hook 'my-set-bigger-spacing)
 
 ;; ;;;
 ;; ;;; My tiny Theme
