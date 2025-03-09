@@ -82,6 +82,8 @@
   ;; padding 10
   (set-face-attribute 'ivy-posframe nil :background "black")
   (set-face-attribute 'fringe nil :background "black")
+  ;; ivy window is dark
+  (set-face-attribute 'ivy-current-match nil :background "black")
 
   ;; (set-face-attribute 'ivy-posframe-border nil :background (face-background 'ivy-posframe))
   ;; (setq ivy-posframe-border-width 10)
