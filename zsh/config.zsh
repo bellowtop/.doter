@@ -30,6 +30,10 @@ hs() {
     hub sync
 }
 
+loadconda(){
+    source /opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh
+}
+
 alias ss='swift sh'
 alias sf='swiftformat'
 
