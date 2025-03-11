@@ -1438,11 +1438,13 @@ vim.api.nvim_set_keymap("v", "<C-j>",     "<ESC>:w<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<Leader>j", ":w<CR>", { noremap = true })
 
 
+-- c in visual mode is copy
+vim.api.nvim_set_keymap("v", "c", "y", { noremap = true })
 
 vim.api.nvim_set_keymap("n", ";", "<C-d>", { noremap = true })
 vim.api.nvim_set_keymap("n", "'", "<C-u>", { noremap = true })
 vim.api.nvim_set_keymap("v", ";", "<C-d>", { noremap = true })
-vim.api.nvim_set_keymap("v", "' ", "<C-u>", { noremap = true })
+vim.api.nvim_set_keymap("v", "'", "<C-u>", { noremap = true })
 
 -- vim.api.nvim_set_keymap("n", "\\\\", "zz", { noremap = true })
 -- vim.api.nvim_set_keymap("n", "\\|",  "zt", { noremap = true })
