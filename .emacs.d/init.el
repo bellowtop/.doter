@@ -83,7 +83,7 @@
 
 
 
-(setq default-font "IBM Plex Mono 1.2-15.0")
+(setq default-font "IBM Plex Mono 1.2-14.0")
 (setq default-font-family "IBM Plex Mono")
 ;; ;;; https://github.com/supercomputra/SF-Mono-Font
 ;; setq default-font "SF Mono-16.0")
@@ -266,7 +266,7 @@
     (set-window-display-table (selected-window) display-table)))
 (add-hook 'window-configuration-change-hook 'my-change-window-divider)
 
-(set-face-attribute 'vertical-border nil :foreground window-divider-color
+(set-face-attribute 'vertical-border nil :foreground "#353535" ;; window-divider-color
   :background (face-background 'default)
   :inherit 'unspecified)
 

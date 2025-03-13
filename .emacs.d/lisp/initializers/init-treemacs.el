@@ -4,7 +4,7 @@
   :init
   :config
   (setq treemacs-hide-gitignored-files-mode 1)
-  (setq treemacs-space-between-root-nodes t)
+  (setq treemacs-space-between-root-nodes nil)
   (setq treemacs-show-hidden-files t)
   (setq treemacs-show-cursor t)
   (setq treemacs-indentation 2)
