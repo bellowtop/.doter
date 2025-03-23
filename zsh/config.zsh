@@ -35,7 +35,7 @@ loadconda(){
 }
 
 export DEVLOG="/Users/jiechen/work/code/cpp/dev/"
-specsync() {
+ssp() {
     local my_curr_dir=$(basename "$PWD")
     local my_logdev_dir="${DEVLOG}/cursor_chats/${my_curr_dir}"
     # 创建目标目录
@@ -46,7 +46,7 @@ specsync() {
         return 1
     fi
     for i in $(ls ".specstory/history/"); do
-        ln "$(pwd)/.specstory/history/$i" "${my_logdev_dir}/$i" || true
+        cp "$(pwd)/.specstory/history/$i" "${my_logdev_dir}/$i" || true
     done
 }
 
