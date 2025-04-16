@@ -35,7 +35,7 @@ loadconda(){
 }
 
 export DEVLOG="/Users/jiechen/work/code/cpp/dev/"
-specsync() {
+ssp() {
     local my_curr_dir=$(basename "$PWD")
     local my_logdev_dir="${DEVLOG}/cursor_chats/${my_curr_dir}"
     # 创建目标目录
@@ -49,6 +49,85 @@ specsync() {
         ln "$(pwd)/.specstory/history/$i" "${my_logdev_dir}/$i" || true
     done
 }
+
+sssp () {
+    cd "$DEVLOG"
+
+    # 目标 dev 目录路径
+    local my_logdev_dir="${DEVLOG}/cursor_chats"
+
+    # 确保目标目录存在
+    mkdir -p "$my_logdev_dir"
+
+    # 使用 fd 查找所有 .specstory 目录
+    echo "Finding all .specstory directories..."
+    specstory_dirs=$(fd '.specstory' '/Users/jiechen/work/code' -t d -d 4 -H)
+
+    # 检查是否找到任何 .specstory 目录
+    if [[ -z "$specstory_dirs" ]]; then
+        echo "No .specstory directories found."
+        return 1
+    fi
+
+
+    # 记录当前分支名称
+    current_branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+
+    # 如果有未提交的修改，先 stash 它们
+    if [[ $(git status --porcelain) ]]; then
+        echo "Stashing local changes..."
+        git stash push -m "Before ssp operation"
+    else
+        echo "No local changes to stash."
+    fi
+
+
+    # 切换到 ssp 分支
+    echo "Switching to ssp branch..."
+    git checkout ssp || { echo "Failed to switch to ssp branch"; return 1; }
+
+    # 遍历每个找到的 .specstory/history 目录并复制文件
+    echo "Copying files from found .specstory/history directories..."
+    while IFS= read -r specstory_dir; do
+        history_dir="$specstory_dir/history"
+        if [ -d "$history_dir" ]; then
+            echo "Processing $history_dir..."
+            for i in $(ls "$history_dir/"); do
+                cp "$history_dir/$i" "${my_logdev_dir}/$i" || true
+            done
+        else
+            echo "Skipping $specstory_dir: no history directory found."
+        fi
+    done <<< "$specstory_dirs"
+
+
+    # 添加文件到 git 并提交
+    echo "Committing changes..."
+    git add "$my_logdev_dir"
+    git commit -m "update" || { echo "Failed to commit changes"; return 1; }
+
+    # 推送分支到远程仓库
+    echo "Pushing changes to origin/ssp..."
+    git push origin ssp || { echo "Failed to push changes"; return 1; }
+
+    # 切换回原来的分支
+    echo "Switching back to original branch..."
+    git checkout "$current_branch" || { echo "Failed to switch back to original branch"; return 1; }
+
+    # 如果之前有 stash，恢复它
+    if [[ $(git stash list | grep "Before ssp operation") ]]; then
+        echo "Applying stashed changes..."
+        git stash pop || { echo "Failed to apply stashed changes"; return 1; }
+    else
+        echo "No stashed changes to apply."
+    fi
+
+    echo "Operation completed successfully."
+
+    cd -
+}
+
+
 
 
 alias ss='swift sh'
