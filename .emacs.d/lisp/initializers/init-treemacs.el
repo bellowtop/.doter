@@ -128,6 +128,7 @@ exists it returns /file/name_Copy2.ext etc."
       new-path))
 
 
+
   (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
   (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
   (add-hook 'treemacs-mode-hook #'dim-treemacs-window-background)
@@ -209,18 +210,39 @@ exists it returns /file/name_Copy2.ext etc."
       ))
 
   (when (display-graphic-p)
-    (treemacs-load-theme "nerd-icons")
+    ;; (treemacs-load-theme "nerd-icons")
     ;; (require 'treemacs-all-the-icons)
-    ;; (treemacs-load-theme "all-the-icons")
+    ;; (treemacs-load-theme "doom-atom")
     ;; (require 'treemacs-compatibility)
     ;; (treemacs-load-all-the-icons-with-workaround-font "Segoe UI")
 
     )
 
-  (unless (display-graphic-p)
-    (treemacs-load-theme "nerd-icons"))
+  ;; (unless (display-graphic-p)
+  ;;   (treemacs-load-theme "nerd-icons"))
 
-  )
+
+  (treemacs-create-theme "simple"
+    :config
+    (progn
+      (treemacs-create-icon :icon (format "%s\t" (all-the-icons-octicon "repo" :height 1.2 :v-adjust -0.1 :face 'font-lock-string-face))
+                            :extensions (root-closed root-open)
+                            :fallback 'same-as-icon)
+      (treemacs-create-icon :icon (format "%s%s" (all-the-icons-material "expand_more" :height 1.2 :v-adjust -0.2 :face 'default)
+                                          (propertize " " 'display '(space . (:width (0)))))
+                            :extensions (dir-open)
+                            :fallback 'same-as-icon)
+      (treemacs-create-icon :icon (format "%s%s" (all-the-icons-material "chevron_right" :height 1.2 :v-adjust -0.2 :face 'default)
+                                          (propertize " " 'display '(space . (:width (0)))))
+                            :extensions (dir-closed)
+                            :fallback 'same-as-icon)
+      (treemacs-create-icon :icon (propertize " " 'display '(space . (:width (18))))
+                            :extensions (fallback)
+                            :fallback 'same-as-icon)))
+
+  (treemacs-load-theme "simple")
+
+)
 
 
 (with-eval-after-load 'cfrs
@@ -236,6 +258,7 @@ exists it returns /file/name_Copy2.ext etc."
   (treemacs-select-window)
   (when (display-graphic-p)
     (setq-local cursor-type 'box)))
+
 
 
 (provide 'init-treemacs)

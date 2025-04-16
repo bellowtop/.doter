@@ -46,7 +46,7 @@ ssp() {
         return 1
     fi
     for i in $(ls ".specstory/history/"); do
-        ln "$(pwd)/.specstory/history/$i" "${my_logdev_dir}/$i" || true
+        cp "$(pwd)/.specstory/history/$i" "${my_logdev_dir}/$i" || true
     done
 }
 

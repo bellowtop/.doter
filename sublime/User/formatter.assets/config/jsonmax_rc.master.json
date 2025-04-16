@@ -1,0 +1,15 @@
+{
+    "indent": 4,
+    "sort_keys": false,
+    "skipkeys": false,       // Skips non-basic type keys (string, integer, float, boolean, or null)
+    "ensure_ascii": false,   // Set to false to support non-ASCII chars (e.g., Chinese); otherwise, outputs ASCII only
+    "check_circular": true,  // Enables checking for circular references in data structures
+    "allow_nan": true,       // Allows NaN (not a number) and Infinity values in the output
+    "item_separator": ",",
+    "key_separator": ": ",
+    "brace_newline": false,
+    "bracket_newline": false,
+    "array_bracket_spacing": false,
+    "keep_arrays_single_line": false,
+    "max_arrays_line_length": 120
+}
