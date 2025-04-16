@@ -315,6 +315,19 @@
                             "to": [{ "key_code": "right_command" }]
                         }
                     ]
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 32767,
+                        "vendor_id": 6700
+                    },
+                    "simple_modifications": [
+                        {
+                            "from": { "key_code": "right_command" },
+                            "to": [{ "key_code": "right_option" }]
+                        }
+                    ]
                 }
             ],
             "fn_function_keys": [
