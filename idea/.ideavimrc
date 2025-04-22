@@ -45,7 +45,7 @@ map f <Plug>(easymotion-bd-w)
 
 
 map <M-d> <Plug>NextOccurrence
-map <C-n> <Plug>NextOccurrence
+map <M-n> <Plug>NextOccurrence
 
 
 map H ^
@@ -104,6 +104,8 @@ inoremap <C-a> :action EditorLineStart <CR>
 inoremap <C-e> :action EditorLineEnd <CR>
 inoremap <C-f> :action EditorRight <CR>
 inoremap <C-b> :action EditorLeft <CR>
+inoremap <C-n> :action EditorDown <CR>
+inoremap <C-p> :action EditorUp <CR>
 inoremap <C-k> :action EditorDeleteToLineEnd <CR>
 inoremap <M-k> :action EditorDeleteToLineStart <CR>
 inoremap <M-d> :action EditorDeleteToWordEnd <CR>
