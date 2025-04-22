@@ -45,7 +45,6 @@ map f <Plug>(easymotion-bd-w)
 
 
 map <M-d> <Plug>NextOccurrence
-map <C-n> <Plug>NextOccurrence
 
 
 map H ^
