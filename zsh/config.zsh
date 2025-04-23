@@ -1,5 +1,22 @@
-
 # export TERM=xterm-24bit
+
+# 确保历史记录追加到文件而不是覆盖
+setopt APPEND_HISTORY
+# 每次执行命令后立即将其写入历史记录文件
+setopt INC_APPEND_HISTORY
+# 允许多个终端会话共享历史记录
+setopt SHARE_HISTORY
+# 增大历史记录大小
+HISTSIZE=10000
+SAVEHIST=20000
+# 忽略重复的命令
+setopt HIST_IGNORE_ALL_DUPS
+# 忽略以空格开头的命令
+setopt HIST_IGNORE_SPACE
+# 忽略简单的命令（如 `ls`）
+setopt HIST_NO_STORE
+
+
 
 
 alias vim="nvim"
@@ -190,4 +207,5 @@ export PATH="$HOME/zig/zig-macos-aarch64:$PATH"
 export PATH="$HOME/.roswell/bin:$PATH"
 
 export VCPKG_ROOT="$HOME/vcpkg"
+
 
