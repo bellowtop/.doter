@@ -1,0 +1,7 @@
+# 每次执行命令后立即将其写入历史记录文件
+shopt -s histappend
+PROMPT_COMMAND='history -a; history -c; history -r'
+
+# 增大历史记录大小
+HISTSIZE=10000
+HISTFILESIZE=20000
