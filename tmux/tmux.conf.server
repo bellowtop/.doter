@@ -146,7 +146,8 @@ set -g status-fg '#ffffff'
 set -g status-left '#[fg=#000000,bg=#00ff00] [#S] #[default] '
 # 状态栏右侧显示时间
 #set -g status-right '#[fg=white,bg=#55bb00] [#h] #[fg=white,bg=#009c00] %Y-%m-%d #[fg=white,bg=#007700] %H:%M:%S '
-set -g status-right '#[fg=white,bg=#444444] [#h] #[fg=white,bg=#666666] %Y-%m-%d #[fg=white,bg=#888888] %H:%M '
+#set -g status-right '#[fg=white,bg=#444444] [#h] #[fg=white,bg=#666666] %Y-%m-%d #[fg=white,bg=#888888] %H:%M '
+#set -g status-right "#[fg=blue]#S #I:#P #[fg=yellow]%F %H:%M #[fg=green]"
 
 # 当前激活窗口在状态栏的展位格式
 setw -g window-status-current-format '#[bg=#ff0000, fg=#ffffff, bold]*[#I] #W*'
@@ -157,8 +158,8 @@ setw -g window-status-format '#[bg=#0000ff, fg=#ffffff] [#I] #W '
 
 # show session name, window & pane number, date and time on right side of
 # status bar
-set -g status-right-length 60
-set -g status-right "#[fg=blue]#S #I:#P #[fg=yellow]%F %H:%M #[fg=green]"
+set -g status-right-length 0
+set -g status-right ""
 
 set-option -g status-position bottom
 
