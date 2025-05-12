@@ -13,8 +13,8 @@ local cfg_misc = {
   window_decorations = "RESIZE",
   check_for_updates = false,
 
-  default_cursor_style = 'SteadyBar',
-  cursor_thickness = "3px",
+  -- default_cursor_style = 'SteadyBar',
+  -- cursor_thickness = "3px",
 
   -- Avoid unexpected config breakage and unusable terminal
   automatically_reload_config = true,

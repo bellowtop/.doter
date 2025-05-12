@@ -51,6 +51,12 @@ install epc, emacs/lisp/blink-search need this.
 pip3 install epc  --break-system-packages
 
 
+emacs in macOS, enlarge tooltip fonts.
+```
+defaults write org.gnu.Emacs NSToolTipsFontSize -int 16
+```
+
+
 #### kak
 
 make sure `python` command exists. if you only have `python3`, then make a link.
