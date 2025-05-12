@@ -150,6 +150,7 @@ sssp () {
             echo "Failed to switch to ssp branch."
             return 1
         }
+        git pull origin ssp
 
         # 遍历每个找到的 .specstory/history 目录并复制文件
         echo "Copying files from found .specstory/history directories..."
@@ -161,15 +162,28 @@ sssp () {
             history_dir="$specstory_dir/history"
             if [ -d "$history_dir" ]; then
                 echo "Processing $history_dir..."
-                for file_path in "$history_dir"/*; do
-                    if [[ -f "$file_path" ]]; then
-                        echo "Copying file: $file_path -> ${my_logdev_dir}/$repo_name/$(basename "$file_path")"
-                        cp "$file_path" "${my_logdev_dir}/$repo_name/$(basename "$file_path")" || true
+                for file_path in $(ls -A "$history_dir" 2>/dev/null); do
+                    if [[ -f "$history_dir/$file_path" ]]; then
+                        echo "Copying file: $history_dir/$file_path -> ${my_logdev_dir}/$repo_name/$file_path"
+                        cp "$history_dir/$file_path" "${my_logdev_dir}/$repo_name/$file_path" || true
                     fi
                 done
             else
                 echo "Skipping $specstory_dir: no history directory found."
             fi
+
+            # if [ -d "$history_dir" ]; then
+            #     echo "Processing $history_dir..."
+            #     for file_path in "$history_dir"/*; do
+            #         if [[ -f "$file_path" ]]; then
+            #             echo "Copying file: $file_path -> ${my_logdev_dir}/$repo_name/$(basename "$file_path")"
+            #             cp "$file_path" "${my_logdev_dir}/$repo_name/$(basename "$file_path")" || true
+            #         fi
+            #     done
+            # else
+            #     echo "Skipping $specstory_dir: no history directory found."
+            # fi
+
         done <<< "$specstory_dirs"
 
         # 添加文件到 git 并提交
