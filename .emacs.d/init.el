@@ -201,7 +201,7 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (smerge-mode -1)
-(tab-bar-mode -1)
+(tab-bar-mode 1)
 
 
 
@@ -701,7 +701,11 @@
 
 
 (use-package rust-mode
-  :defer t :init)
+  :defer t
+  :init
+  :hook
+  (rust-mode . eglot-ensure)
+  )
 
 (use-package scala-mode
   :defer t :interpreter ("scala" . scala-mode))
