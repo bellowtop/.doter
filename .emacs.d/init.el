@@ -761,6 +761,7 @@
   :defer t
   :config
   (setq highlight-indent-guides-method 'character)
+  (setq highlight-indent-guides-auto-enabled nil)
   (set-face-foreground 'highlight-indent-guides-character-face "#434752")
   :hook
   (prog-mode . highlight-indent-guides-mode))
