@@ -17,13 +17,11 @@
   (treemacs-follow-mode 0)
 
 
-  (defun add-pointer-to-str(str) (propertize str 'pointer 'arrow))
-  (defun add-pointer-to-str-for-file-node(str) (propertize str 'pointer 'arrow))
-  (setq treemacs-file-name-transformer #'add-pointer-to-str-for-file-node)
-  (setq treemacs-directory-name-transformer #'add-pointer-to-str)
+  ;; (defun add-pointer-to-str(str) (propertize str 'pointer 'arrow))
+  ;; (defun add-pointer-to-str-for-file-node(str) (propertize str 'pointer 'arrow))
+  ;; (setq treemacs-file-name-transformer #'add-pointer-to-str-for-file-node)
+  ;; (setq treemacs-directory-name-transformer #'add-pointer-to-str)
 
-  (defun add-tab-space-str-before-file-icon(str) (message "str") (format "%s%s" treemacs-nerd-icons-tab str))
-  (advice-add 'treemacs-icon-for-file :filter-return #'add-tab-space-str-before-file-icon)
 
   (global-set-key (kbd "C-c C-p") treemacs-project-map)
   (global-set-key (kbd "C-c C-w") treemacs-workspace-map)
@@ -159,7 +157,8 @@ exists it returns /file/name_Copy2.ext etc."
 
 
 (with-eval-after-load 'treemacs
-  (require 'treemacs-nerd-icons)
+  (require 'treemacs-all-the-icons)
+  (treemacs-load-theme "all-the-icons")
 
   (dolist
     (face '(treemacs-root-face
@@ -173,8 +172,6 @@ exists it returns /file/name_Copy2.ext etc."
              treemacs-directory-face
              treemacs-directory-collapsed-face
              treemacs-file-face
-             ;; treemacs-nerd-icons-file-face
-             treemacs-nerd-icons-root-face
              treemacs-tags-face))
     (set-face-attribute face nil
       :family "IBM Plex Mono"
@@ -201,25 +198,11 @@ exists it returns /file/name_Copy2.ext etc."
              treemacs-git-added-face
              treemacs-git-conflict-face
              treemacs-file-face
-             ;; treemacs-nerd-icons-file-face
-             ;; treemacs-nerd-icons-root-face
              treemacs-tags-face
              ))
     (set-face-attribute face nil
       :foreground "#C6B8AD"
       ))
-
-  (when (display-graphic-p)
-    ;; (treemacs-load-theme "nerd-icons")
-    ;; (require 'treemacs-all-the-icons)
-    ;; (treemacs-load-theme "doom-atom")
-    ;; (require 'treemacs-compatibility)
-    ;; (treemacs-load-all-the-icons-with-workaround-font "Segoe UI")
-
-    )
-
-  ;; (unless (display-graphic-p)
-  ;;   (treemacs-load-theme "nerd-icons"))
 
 
   (treemacs-create-theme "simple"
@@ -240,7 +223,7 @@ exists it returns /file/name_Copy2.ext etc."
                             :extensions (fallback)
                             :fallback 'same-as-icon)))
 
-  (treemacs-load-theme "simple")
+  ;; (treemacs-load-theme "simple")
 
 )
 
