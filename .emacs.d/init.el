@@ -240,7 +240,7 @@
 
 (load-theme 'doom-xcode t)
 (set-face-attribute 'font-lock-keyword-face nil :weight 'normal)
-(set-face-attribute 'region nil :background "#214283")
+(set-face-attribute 'region nil :background "#214283" :distant-foreground "#707080")
 (set-face-attribute 'isearch nil :weight 'normal)
 (set-face-attribute 'lazy-highlight nil :weight 'normal)
 
@@ -762,7 +762,8 @@
   :config
   (setq highlight-indent-guides-method 'character)
   (setq highlight-indent-guides-auto-enabled nil)
-  (set-face-foreground 'highlight-indent-guides-character-face "#434752")
+  (set-face-attribute 'highlight-indent-guides-character-face nil
+                      :inherit 'shadow)
   :hook
   (prog-mode . highlight-indent-guides-mode))
 
