@@ -3,8 +3,8 @@
   :hook
   (prog-mode . format-all-mode)
   (prog-mode . format-all-ensure-formatter)
-  :config
-  (setq format-all-formatters
+  :init
+  (setq-default format-all-formatters
       '(("Rust" (rustfmt "--edition" "2021"))))
   ;;   :config
   ;;   (setq-default format-all-formatters

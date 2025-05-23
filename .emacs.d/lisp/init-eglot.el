@@ -145,6 +145,18 @@
 )
 
 
+(use-package sideline
+  :after eglot
+  :config
+  (sideline-mode)
+  (setq sideline-backends-right '(
+                                  sideline-eglot     ; `eglot'
+                                  sideline-flymake   ; `eglot' uses `flymake' by default
+                                  ))
+  (setq sideline-eglot-code-actions-prefix "-> ")
+  )
+
+
 (use-package eglot-booster
   :after eglot
   :config (eglot-booster-mode))

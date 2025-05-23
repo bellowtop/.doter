@@ -69,6 +69,7 @@
                         "*this-buffer-is-left-alone-without-god-mode-at-all"
                         "cfrs-input-mode"
                         "fundamental-mode"
+                        "help-mode"
                         "lisp-mode"
                         "slime-mode"
                         "minibuffer-mode"
