@@ -326,7 +326,7 @@
 
 
 (defun my-god-mode-update-cursor-type ()
-  ;; (setq cursor-type (if (bound-and-true-p god-local-mode) 'bar 'bar))
+  ;; (setq cursor-type (if (bound-and-true-p god-local-mode) 'box 'bar))
   (setq cursor-type (if (display-graphic-p) 'box 'box))
   (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
   (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
@@ -340,10 +340,10 @@
         (if (my-god-should-enable-hi-line-mode) (hl-line-mode 1) (hl-line-mode 0))
         (when (my-god-should-enable-line-number-mode)
           (display-line-numbers-mode 1)
-          (set-face-foreground 'line-number-current-line "gray33")
-          ;; (set-face-attribute 'line-number-current-line nil
-          ;;   :foreground (or (face-foreground 'line-number) 'unspecified)
-          ;;   :background (or (face-background 'line-number) 'unspecified))
+          ;; (set-face-foreground 'line-number-current-line "gray33")
+           (set-face-attribute 'line-number-current-line nil
+             :foreground (or (face-foreground 'line-number) 'unspecified)
+             :background (or (face-background 'line-number) 'unspecified))
           )
         )
       ;; (when (display-graphic-p)
@@ -371,8 +371,8 @@
       (when (my-god-this-is-normal-editor-buffer (buffer-name))
         (when (my-god-should-enable-line-number-mode)
           (display-line-numbers-mode 1)
-          (set-face-foreground 'line-number-current-line "#7fdc59")
-          ;; (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
+          ;; (set-face-foreground 'line-number-current-line "#7fdc59")
+          (set-face-attribute 'line-number-current-line nil :foreground "black" :background "#7fdc59")
           )
         )
       ;; (when (display-graphic-p)
