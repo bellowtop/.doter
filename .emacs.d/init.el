@@ -763,7 +763,7 @@
   (setq highlight-indent-guides-method 'character)
   (setq highlight-indent-guides-auto-enabled nil)
   (set-face-attribute 'highlight-indent-guides-character-face nil
-                      :inherit 'shadow)
+    :inherit 'shadow)
   :hook
   (prog-mode . highlight-indent-guides-mode))
 
