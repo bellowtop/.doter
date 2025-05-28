@@ -28,6 +28,7 @@
 (bind-key* (kbd "C-c o") #'my-occur)
 (bind-key* (kbd "C-c C-s") #'my-rg-at-point)
 
+(bind-key* (kbd "s-j") #'my-toggle-vterm)
 (bind-key* (kbd "C-'") #'my-toggle-vterm)
 ;; (bind-key* (kbd "C-`") #'my-toggle-vterm)
 

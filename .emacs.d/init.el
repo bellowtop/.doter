@@ -765,6 +765,7 @@
   :config
   (setq highlight-indent-guides-method 'character)
   (setq highlight-indent-guides-auto-enabled nil)
+  (setq highlight-indent-guides-character ?\x258f)
   (set-face-attribute 'highlight-indent-guides-character-face nil :inherit 'shadow)
   (defun my-highlighter (level responsive display)
     (if (> 1 level) ; replace `1' with the number of guides you want to hide

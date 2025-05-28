@@ -30,7 +30,10 @@
 (use-package symbol-overlay
   :hook (emacs-lisp-mode . symbol-overlay-mode)
   :config
-  (set-face-attribute 'symbol-overlay-default-face nil :inherit 'my-highlight-font-words-face)
+  (set-face-attribute 'symbol-overlay-default-face nil
+                      :inherit 'my-highlight-font-words-face
+                      :foreground nil
+                      :background nil)
 )
 
 

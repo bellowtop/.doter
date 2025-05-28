@@ -127,6 +127,8 @@
 
 (setq should-not-display-dark-background-modes (list
                                                  "dired-mode"
+                                                 "vterm-mode"
+                                                 "minibuffer-mode"
                                                  "dashboard-mode"
                                                  ))
 
