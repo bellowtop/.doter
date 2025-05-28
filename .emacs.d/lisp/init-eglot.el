@@ -17,10 +17,10 @@
   :commands (eglot eglot-ensure)
   :config
   (set-face-attribute 'eglot-diagnostic-tag-unnecessary-face nil
-                      :underline '(:color foreground-color :style wave :position nil)
+                      :underline nil ; '(:color foreground-color :style wave :position nil)
                       :foreground "yellow")
   (set-face-attribute 'eglot-diagnostic-tag-deprecated-face  nil
-                      :underline '(:color foreground-color :style wave :position nil)
+                      :underline nil ; '(:color foreground-color :style wave :position nil)
                       :strike-through nil
                       :foreground "yellow")
 

@@ -574,6 +574,10 @@
 (require 'init-yasnippet)
 
 
+(use-package typescript-ts-mode
+  :hook (tsx-ts-mode . eglot-ensure))
+
+
 ;; (use-package transpose-frame
 ;;   :defer t)
 
@@ -598,8 +602,6 @@
      '(sideline-eglot sideline-flymake sideline highlight-indent-guides treemacs-nerd-icons treemacs python-ts poetry dockerfile-mode popper spacious-padding There afternoon-theme ansible apheleia are atom-one-dark-theme auto-dim-other-buffers bazel beacon benchmark-init blamer centaur-tabs challenger-deep-theme color-theme-sanityinc-tomorrow company-posframe company-prescient company-qml corfu-terminal counsel csv-mode cyberpunk-theme dashboard dashboard-hackernews diminish disable-mouse easy-kill eglot elisp-autofmt elisp-def elisp-refs elisp-slime-nav eterm-256color format-all general google-c-style helm-rg highlight-numbers highlight-parentheses imenu-list impatient-mode inkpot-theme ivy ivy-posframe ivy-xref jdecomp jsonrpc key-chord known leetcode lispy lsp-python-ms markdown-mode markdown-toc markdownfmt modus-themes moe-theme mwim nano-theme neotree nimbus-theme no package-lint paredit phi-search popon popup-switcher popwin prescient project projectsile-mode protobuf-mode py-autopep8 qml-mode rainbow-delimiters reformatter ripgrep rjsx-mode selected slime slime-company smart-jump smart-mode-line smooth-scrolling solaire-mode srcery-theme srefactor swift-mode switch-buffer-functions symbol-overlay treemacs-all-the-icons treesit-auto typescript-mode undo-tree valign vs-dark-theme vscode-dark-plus-theme vterm vue-mode with-proxy with-simulated-input xclip yasnippet))
   '(pos-tip-background-color "#1d1d2b")
   '(pos-tip-foreground-color "#d4d4d6")
-  '(projectile-globally-ignored-directories
-     '("\\.emacs\\.d/\\.local/autosaves" "\\.emacs\\.d/\\.local/backups" "/opt/homebrew" "^\\.idea$" "^\\.vscode$" "^\\.ensime_cache$" "^\\.eunit$" "^\\.git$" "^\\.hg$" "^\\.fslckout$" "^_FOSSIL_$" "^\\.bzr$" "^_darcs$" "^\\.pijul$" "^\\.tox$" "^\\.svn$" "^\\.stack-work$" "^\\.ccls-cache$" "^\\.cache$" "^\\.clangd$" ".cache" "build"))
   '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
   '(safe-local-variable-values
      '((eval font-lock-add-keywords nil
@@ -763,8 +765,12 @@
   :config
   (setq highlight-indent-guides-method 'character)
   (setq highlight-indent-guides-auto-enabled nil)
-  (set-face-attribute 'highlight-indent-guides-character-face nil
-    :inherit 'shadow)
+  (set-face-attribute 'highlight-indent-guides-character-face nil :inherit 'shadow)
+  (defun my-highlighter (level responsive display)
+    (if (> 1 level) ; replace `1' with the number of guides you want to hide
+        nil
+      (highlight-indent-guides--highlighter-default level responsive display)))
+  (setq highlight-indent-guides-highlighter-function 'my-highlighter)
   :hook
   (prog-mode . highlight-indent-guides-mode))
 

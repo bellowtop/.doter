@@ -1,20 +1,58 @@
 
 
-(setq ignored-projectile-projects (list "/opt/homebrew/" "Xcode.app"))
-(defun ignored-projectile-project (project-root)
-  (seq-filter (lambda (candidate) (string-search candidate project-root))
-    ignored-projectile-projects))
 
-(setq-default
-  projectile-cache-file (expand-file-name "~/.emacs.d/.local/projectile.cache")
-  projectile-known-projects-file (expand-file-name "~/.emacs.d/.local/projectile-bookmarks.eld")
-  projectile-enable-caching t
-  projectile-indexing-method 'native
-  projectile-track-known-projects-automatically t
-  projectile-ignored-project-function 'ignored-projectile-project)
 
-(require 'projectile)
-(projectile-mode 1)
+(use-package projectile
+  :ensure t
+  :config
+  (setq projectile-globally-ignored-directories
+        '("node_modules"
+          ".next"
+          ".nuxt"
+          "dist"
+          "build"
+          "coverage"
+          ".nyc_output"
+          "public/build"
+          "static/build"
+          "\\.emacs\\.d/\\.local/autosaves"
+          "\\.emacs\\.d/\\.local/backups"
+          "/opt/homebrew"
+          "^\\.idea$"
+          "^\\.vscode$"
+          "^\\.ensime_cache$"
+          "^\\.eunit$"
+          "^\\.git$"
+          "^\\.hg$"
+          "^\\.fslckout$"
+          "^_FOSSIL_$"
+          "^\\.bzr$"
+          "^_darcs$"
+          "^\\.pijul$"
+          "^\\.tox$"
+          "^\\.svn$"
+          "^\\.stack-work$"
+          "^\\.ccls-cache$"
+          "^\\.cache$"
+          "^\\.clangd$"
+          ".cache"))
+
+    (setq ignored-projectile-projects (list "/opt/homebrew/" "Xcode.app" "node_modules"))
+    (defun ignored-projectile-project (project-root)
+      (seq-filter (lambda (candidate) (string-search candidate project-root))
+        ignored-projectile-projects))
+
+    (setq-default
+      projectile-cache-file (expand-file-name "~/.emacs.d/.local/projectile.cache")
+      projectile-known-projects-file (expand-file-name "~/.emacs.d/.local/projectile-bookmarks.eld")
+      projectile-enable-caching t
+      projectile-indexing-method 'native
+      projectile-track-known-projects-automatically t
+      projectile-ignored-project-function 'ignored-projectile-project)
+
+    (projectile-mode +1)
+)
+
 
 
 

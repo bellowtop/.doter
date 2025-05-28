@@ -2,6 +2,14 @@
   :demand t
   :custom
   (treesit-font-lock-level 4) ;; skittles highlighting
+  :mode (("\\.tsx\\'" . tsx-ts-mode)
+         ("\\.js\\'"  . typescript-ts-mode)
+         ("\\.mjs\\'" . typescript-ts-mode)
+         ("\\.mts\\'" . typescript-ts-mode)
+         ("\\.cjs\\'" . typescript-ts-mode)
+         ("\\.ts\\'"  . typescript-ts-mode)
+         ("\\.jsx\\'" . tsx-ts-mode)
+         ("\\.json\\'" .  json-ts-mode))
   :init
   (push '(css-mode . css-ts-mode) major-mode-remap-alist)
   (push '(sh-mode . bash-ts-mode) major-mode-remap-alist)

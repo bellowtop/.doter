@@ -47,5 +47,6 @@ This variable is nil if the current buffer isn't visiting a file.")
 (setq-default mode-line-buffer-identification `(:eval (my-buffer-identification
                                                         (or buffer-filename-with-git-directory ""))))
 
+(set-face-attribute 'mode-line-highlight nil :foreground "black")
 
 (provide 'init-modeline)
