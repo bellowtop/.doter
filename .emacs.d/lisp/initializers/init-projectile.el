@@ -11,6 +11,7 @@
           ".nuxt"
           "dist"
           "build"
+          "target"
           "coverage"
           ".nyc_output"
           "public/build"
