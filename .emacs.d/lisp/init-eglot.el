@@ -147,8 +147,9 @@
 
 (use-package sideline
   :after eglot
+  :hook
+  (prog-mode . sideline-mode)
   :config
-  (sideline-mode)
   (setq sideline-backends-right '(
                                   sideline-eglot     ; `eglot'
                                   sideline-flymake   ; `eglot' uses `flymake' by default
