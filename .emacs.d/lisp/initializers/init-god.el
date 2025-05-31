@@ -366,6 +366,7 @@
       ;; (set-face-attribute 'mode-line nil :background "#38424B")
       (set-face-foreground 'vertical-border "#353535")
       (set-face-foreground 'tab-bar-tab "#FFFFFF")
+      (set-face-background 'tab-bar-tab nil)
 
       ;; (set-face-foreground 'vertical-border "#374250")
       )
@@ -374,7 +375,8 @@
       ;; (set-face-background 'hl-line hl-line-bg-color)
       (when (my-god-this-is-normal-editor-buffer (buffer-name))
         (set-face-foreground 'vertical-border "#7fdc59")
-        (set-face-foreground 'tab-bar-tab "#7fdc59")
+        (set-face-foreground 'tab-bar-tab "black")
+        (set-face-background 'tab-bar-tab "yellow")
         (when (my-god-should-enable-line-number-mode)
           (display-line-numbers-mode 1)
           ;; (set-face-foreground 'line-number-current-line "#7fdc59")
