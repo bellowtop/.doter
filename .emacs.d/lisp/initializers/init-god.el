@@ -364,7 +364,7 @@
       ;; (set-cursor-color "red")
       ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
       ;; (set-face-attribute 'mode-line nil :background "#38424B")
-      (set-face-foreground 'vertical-border "#353535")
+      ;; (set-face-foreground 'vertical-border "#353535")
       (set-face-foreground 'tab-bar-tab "#FFFFFF")
       (set-face-background 'tab-bar-tab nil)
 
@@ -374,7 +374,7 @@
       ;; (set-face-attribute 'hl-line nil :background (face-background 'default))
       ;; (set-face-background 'hl-line hl-line-bg-color)
       (when (my-god-this-is-normal-editor-buffer (buffer-name))
-        (set-face-foreground 'vertical-border "#7fdc59")
+        ;; (set-face-foreground 'vertical-border "#7fdc59")
         (set-face-foreground 'tab-bar-tab "black")
         (set-face-background 'tab-bar-tab "yellow")
         (when (my-god-should-enable-line-number-mode)

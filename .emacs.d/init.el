@@ -201,7 +201,17 @@
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (smerge-mode -1)
+
+
+
 (tab-bar-mode 1)
+
+(defun my-tab-name-formatter (tab index)
+  (propertize
+    (format " %s" (alist-get 'name tab))
+    'face (funcall tab-bar-tab-face-function tab)
+    ))
+(setq tab-bar-tab-name-format-function 'my-tab-name-formatter)
 
 
 
