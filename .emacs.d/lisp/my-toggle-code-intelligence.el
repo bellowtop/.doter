@@ -43,7 +43,8 @@
 (defun my-enable-paren-highlight ()
   (interactive)
   (ignore-errors
-    (set-face-attribute 'show-paren-match nil :foreground "green" :background 'unspecified :weight 'normal :underline '(:position t))))
+    (set-face-attribute 'show-paren-match nil :foreground "green" :background "#11501B" :weight 'normal :underline '(:position t))
+    ;; (set-face-attribute 'show-paren-match nil :foreground "green" :background 'unspecified :weight 'normal :underline '(:position t))))
 
 
 (defun my-disable-paren-highlight ()

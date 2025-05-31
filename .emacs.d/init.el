@@ -142,7 +142,7 @@
     (setq highlight-font-chars-face-underline t)
     ;;
     (setq whitespace-tab-fg-color "#627D9D")
-    (setq whitespace-trailing-fg-color "#59728F")
+    (setq whitespace-trailing-fg-color "#161c23")
     ;;
     (setq hl-line-bg-color "#1b2129")
     )
@@ -154,7 +154,7 @@
     (setq highlight-font-chars-face-underline t)
     ;;
     (setq whitespace-tab-fg-color "#627D9D")
-    (setq whitespace-trailing-fg-color "#59728F")
+    (setq whitespace-trailing-fg-color "#161c23")
     ;;
     (setq hl-line-bg-color (face-background 'highlight))
     )
@@ -166,8 +166,8 @@
   (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15))
   ;; (setq-local default-text-properties '(line-spacing 0 line-height t))
   )
-;; (add-hook 'text-mode-hook 'my-set-bigger-spacing)
-;; (add-hook 'prog-mode-hook 'my-set-bigger-spacing)
+; (add-hook 'text-mode-hook 'my-set-large-line-height)
+; (add-hook 'prog-mode-hook 'my-set-large-line-height)
 
 ;; ;;;
 ;; ;;; My tiny Theme
@@ -189,8 +189,8 @@
   "custom highlight for treemacs current line")
 (defface my-highlight-font-words-face
   `((t (
-         :background "#06C668"
-         :foreground "black"
+         :background "#5114FA"
+         ;; :foreground "black"
          :underline nil
          :weight normal
          )))
@@ -240,6 +240,7 @@
 
 (load-theme 'doom-xcode t)
 (set-face-attribute 'font-lock-keyword-face nil :weight 'normal)
+(set-face-attribute 'font-lock-preprocessor-face nil :weight 'normal)
 (set-face-attribute 'region nil :background "#214283" :distant-foreground "#707080")
 (set-face-attribute 'isearch nil :weight 'normal)
 (set-face-attribute 'lazy-highlight nil :weight 'normal)

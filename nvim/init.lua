@@ -1195,7 +1195,7 @@ vim.api.nvim_set_keymap("n", "<Leader>O",         ":CtrlSFOpen<CR> ",           
 vim.g.ctrlsf_backend = 'rg'
 vim.g.ctrlsf_auto_focus = { at = "start" }
 vim.g.ctrlsf_search_mode = 'async'
-vim.g.ctrlsf_extra_backend_args = { rg = '--no-ignore --hidden --glob "!.git"' }
+vim.g.ctrlsf_extra_backend_args = { rg = '--no-ignore --hidden --glob "!.git" --glob "!backups"' }
 
 
 

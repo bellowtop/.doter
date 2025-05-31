@@ -1,3 +1,4 @@
+(require 'flymake)
 
 ;; (use-package
 ;;   flymake-posframe
@@ -37,6 +38,8 @@
                             )))
 
 
+(set-face-attribute 'flymake-error nil :underline nil :foreground "DeepPink")
+(set-face-attribute 'flymake-note nil :underline nil)
 
 ;;
 ;; deprecated, use sideline to display flymake messages

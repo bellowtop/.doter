@@ -62,7 +62,7 @@
       (propertize
         (format "%s\n" (make-string (round (* .50 (frame-width))) ?─))
         'face
-        '(:inherit my-highlight-font-words-face :inverse-video t))
+        '(:foreground "#06C668"))
       (ivy--format-function-generic
         (lambda (str)
           (concat " > " (ivy--add-face str 'ivy-current-match) ""))
