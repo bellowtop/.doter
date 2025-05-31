@@ -130,7 +130,7 @@ exists it returns /file/name_Copy2.ext etc."
   (add-hook 'treemacs-mode-hook #'my-add-padding-for-treemacs)
   (add-hook 'treemacs-mode-hook #'display-treemacs-widow-in-ace-window-selection)
   (add-hook 'treemacs-mode-hook #'dim-treemacs-window-background)
-  (add-hook 'treemacs-mode-hook #'change-treemacs-hl-line-mode)
+  ;; (add-hook 'treemacs-mode-hook #'change-treemacs-hl-line-mode)
   (add-hook 'treemacs-mode-hook #'my-special-buffer-keys-minor-mode)
   ;; (add-hook 'treemacs-mode-hook #'my-set-bigger-spacing)
   :bind
