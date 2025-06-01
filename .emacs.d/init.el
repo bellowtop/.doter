@@ -708,6 +708,8 @@
   (keymap-unset vterm-mode-map "M-`")
   ;; M-: is heavily used too.
   (keymap-unset vterm-mode-map "M-:")
+  :hook
+  (vterm-mode . (lambda() (selected-mode -1)))
   ;;
   )
 
@@ -750,6 +752,7 @@
                 )
     )
   (qml-mode . maybe-cmake-project-mode)
+  (qml-mode . (lambda() (format-all-mode -1)))
   :config
   (add-to-list 'auto-mode-alist '("\\.qml\\'" . qml-mode))
   )

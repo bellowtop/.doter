@@ -50,12 +50,10 @@
   (message "toggle selected keybinding")
   (unless (bound-and-true-p selected-region-active-mode)
     (setq my-visual-line-selection nil))
-  (if (or (bound-and-true-p selected-region-active-mode)
-        (bound-and-true-p vterm-copy-mode))
+  (if (bound-and-true-p selected-region-active-mode)
     (progn
       ;; only non-special buffer and vterm buffer need this timer.
-      (when (or (my-god-this-is-normal-editor-buffer (buffer-name))
-              (string= "*vterm*" (buffer-name)))
+      (when (my-god-this-is-normal-editor-buffer (buffer-name))
         (when (bound-and-true-p selected-active-timer) (cancel-timer selected-active-timer))
         (setq selected-active-timer (run-with-timer 0.05 nil #'(lambda ()
                                                                  (when (region-active-p)
