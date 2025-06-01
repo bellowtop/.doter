@@ -1,7 +1,14 @@
+;; -*- lexical-binding: t -*-
+;;; init-lang-zig.el --- Zig language configuration
 
+;;; Commentary:
 ;;
-;; hacks for zig-mode format.
+;; Zig language configuration
 ;;
+
+;;; Code:
+
+;; Commented out custom format hooks - using default for now
 ;; (defun my-zig-mode-hook ()
 ;;   (remove-hook 'before-save-hook 'zig-before-save-hook)
 ;;   (add-hook 'after-save-hook 'zig-before-save-hook)
@@ -9,7 +16,8 @@
 ;; )
 ;; (add-hook 'zig-mode-hook 'my-zig-mode-hook)
 
-;; trigger eglot
-(add-hook 'zig-mode-hook 'eglot-ensure)
+;; Additional Zig-specific configuration can be added here
 
 (provide 'init-lang-zig)
+
+;;; init-lang-zig.el ends here

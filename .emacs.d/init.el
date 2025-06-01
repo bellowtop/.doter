@@ -12,6 +12,31 @@
         ("melpa" . "https://melpa.org/packages/")
         ("org" . "http://orgmode.org/elpa/")))
 
+;; 完全禁止自动包管理
+(setq package-enable-at-startup nil
+      package-check-signature nil
+      ;; 禁止自动安装选中的包
+      package-install-upgrade-built-in nil)
+
+;; 禁用 package-selected-packages 的自动安装机制
+(defun package--save-selected-packages (&rest _args)
+  "Do nothing to prevent automatic package installation."
+  nil)
+
+;; 阻止启动时自动刷新包列表
+(defvar my-startup-finished nil)
+(defun my-block-package-refresh (orig-fun &rest args)
+  "Block package-refresh-contents during startup."
+  (when my-startup-finished
+    (apply orig-fun args)))
+
+(advice-add 'package-refresh-contents :around #'my-block-package-refresh)
+
+;; 启动完成后恢复正常行为
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (setq my-startup-finished t)))
+
 (package-initialize)
 
 ;;; Performance Optimization
@@ -304,7 +329,7 @@
  '(leetcode-prefer-language "cpp")
  '(leetcode-save-solutions t)
  '(package-selected-packages
-   '(yank-indent jtsx sideline-eglot sideline-flymake sideline highlight-indent-guides treemacs-nerd-icons treemacs python-ts poetry dockerfile-mode popper spacious-padding There afternoon-theme ansible apheleia are atom-one-dark-theme auto-dim-other-buffers bazel beacon benchmark-init blamer centaur-tabs challenger-deep-theme color-theme-sanityinc-tomorrow company-posframe company-prescient company-qml corfu-terminal counsel csv-mode cyberpunk-theme dashboard dashboard-hackernews diminish disable-mouse easy-kill eglot elisp-autofmt elisp-def elisp-refs elisp-slime-nav eterm-256color format-all general google-c-style helm-rg highlight-numbers highlight-parentheses imenu-list impatient-mode inkpot-theme ivy ivy-posframe ivy-xref jdecomp jsonrpc key-chord known leetcode lispy lsp-python-ms markdown-mode markdown-toc markdownfmt modus-themes moe-theme mwim nano-theme neotree nimbus-theme no package-lint paredit phi-search popon popup-switcher popwin prescient project projectsile-mode protobuf-mode py-autopep8 qml-mode rainbow-delimiters reformatter ripgrep rjsx-mode selected slime slime-company smart-jump smart-mode-line smooth-scrolling solaire-mode srcery-theme srefactor swift-mode switch-buffer-functions symbol-overlay treemacs-all-the-icons treesit-auto typescript-mode undo-tree valign vs-dark-theme vscode-dark-plus-theme vterm vue-mode with-proxy with-simulated-input xclip yasnippet))
+   '(yank-indent jtsx sideline-eglot sideline-flymake sideline highlight-indent-guides treemacs-nerd-icons treemacs python-ts poetry dockerfile-mode popper spacious-padding afternoon-theme ansible apheleia atom-one-dark-theme auto-dim-other-buffers bazel beacon benchmark-init blamer centaur-tabs challenger-deep-theme color-theme-sanityinc-tomorrow company-posframe company-prescient company-qml corfu-terminal counsel csv-mode cyberpunk-theme dashboard dashboard-hackernews diminish disable-mouse easy-kill eglot elisp-autofmt elisp-def elisp-refs elisp-slime-nav eterm-256color format-all general google-c-style helm-rg highlight-numbers highlight-parentheses imenu-list impatient-mode inkpot-theme ivy ivy-posframe ivy-xref jdecomp jsonrpc key-chord known leetcode lispy lsp-python-ms markdown-mode markdown-toc markdownfmt modus-themes moe-theme mwim nano-theme neotree nimbus-theme package-lint paredit phi-search popon popup-switcher popwin prescient project projectsile-mode protobuf-mode py-autopep8 qml-mode rainbow-delimiters reformatter ripgrep rjsx-mode selected slime slime-company smart-jump smart-mode-line smooth-scrolling solaire-mode srcery-theme srefactor swift-mode switch-buffer-functions symbol-overlay treemacs-all-the-icons treesit-auto typescript-mode undo-tree valign vs-dark-theme vscode-dark-plus-theme vterm vue-mode with-proxy with-simulated-input xclip yasnippet))
  '(pos-tip-background-color "#1d1d2b")
  '(pos-tip-foreground-color "#d4d4d6")
  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
@@ -378,10 +403,7 @@
 
 ;;; Programming Languages
 (use-package rust-mode
-  :ensure t
-  :hook
-  (rust-mode . eglot-ensure)
-  (rust-ts-mode . eglot-ensure))
+  :ensure t)
 
 (use-package scala-mode
   :ensure t

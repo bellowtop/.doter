@@ -1,3 +1,6 @@
+;; -*- lexical-binding: t -*-
+;;; init-lang-cpp.el --- C/C++ language configuration
+
 (require 'clang-format)
 (require 'cff)
 
@@ -22,6 +25,7 @@ otherwise assumed alphabetic."
 
 
 (defun my-set-indent-from-clang-format()
+  "Set indentation and tab settings based on .clang-format configuration."
   (let* ((clang-format-config
           (shell-command-to-string "clang-format -dump-config"))
          (c-offset (get-clang-format-option clang-format-config "IndentWidth" t))
@@ -56,8 +60,7 @@ otherwise assumed alphabetic."
 
 
 (defun my-c-ts-mode-hook()
-  (ignore-errors (eglot-ensure))
-
+  "Hook for C/C++ tree-sitter modes."
   (fset 'c-indent-region 'clang-format-region)
   (bind-keys
    :map c++-ts-mode-map

@@ -1,5 +1,8 @@
+;; -*- lexical-binding: t -*-
+;;; init-lang-typescript.el --- TypeScript language configuration
+
 (use-package typescript-ts-mode
-  :hook (tsx-ts-mode . eglot-ensure))
+  :mode ("\\.ts\\'" "\\.tsx\\'"))
 
 (use-package jtsx
   :ensure t
@@ -43,14 +46,16 @@
     (define-key mode-map (kbd "C-c j v") 'jtsx-rearrange-jsx-attributes-vertically))
 
   (defun jtsx-bind-keys-to-jtsx-jsx-mode-map ()
-      (jtsx-bind-keys-to-mode-map jtsx-jsx-mode-map))
+    "Bind JTSX keys to jsx mode map."
+    (jtsx-bind-keys-to-mode-map jtsx-jsx-mode-map))
 
   (defun jtsx-bind-keys-to-jtsx-tsx-mode-map ()
-      (jtsx-bind-keys-to-mode-map jtsx-tsx-mode-map))
+    "Bind JTSX keys to tsx mode map."
+    (jtsx-bind-keys-to-mode-map jtsx-tsx-mode-map))
 
   (add-hook 'jtsx-jsx-mode-hook 'jtsx-bind-keys-to-jtsx-jsx-mode-map)
   (add-hook 'jtsx-tsx-mode-hook 'jtsx-bind-keys-to-jtsx-tsx-mode-map))
 
-
-
 (provide 'init-lang-typescript)
+
+;;; init-lang-typescript.el ends here
