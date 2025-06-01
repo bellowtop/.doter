@@ -1,7 +1,11 @@
+;; -*- lexical-binding: t -*-
+;;; my-utils.el --- Personal utility functions
+
 (require 'f)
 
 
 (defun my-util-split-long-line-to-sub-lines (long-line wrap-width)
+  "Split LONG-LINE into sub-lines with WRAP-WIDTH."
   (interactive)
   (let ((total-len (string-width long-line))
          (idx 0)
@@ -17,6 +21,7 @@
 ;; (string-width "It is useful to include newlines")
 
 (defun my-util-seperate-string (line max-length)
+  "Separate LINE into chunks of MAX-LENGTH."
   (let ((remains line)
          (result-lines ())
          )
@@ -34,6 +39,7 @@
 
 
 (defun my-util-read-fmt-content (filepath)
+  "Read and format content from FILEPATH."
   (interactive)
   (let ((file-content (f-read-text filepath)))
     (with-temp-buffer
@@ -131,6 +137,7 @@
 
 
 (defun my-most-recent-normal-buffer()
+  "Return the most recent normal buffer."
   (interactive)
   (let ((bufs (seq-filter
                 (lambda(elt) (my-god-this-is-normal-editor-buffer (buffer-name elt)))
@@ -141,7 +148,7 @@
 
 
 (defun flip-buffer-to-window ()
-  "Flips to the last-visited buffer in this window."
+  "Flip to the last-visited buffer in this window."
   (interactive)
   (let ((recent (my-most-recent-normal-buffer)))
     (switch-to-buffer (or recent (other-buffer (current-buffer)))))
@@ -179,6 +186,7 @@
 
 
 (defun my-show-file-name ()
+  "Show the current buffer's file name."
   (interactive)
   (message (buffer-file-name)))
 
@@ -186,6 +194,7 @@
 
 
 (defun my-copied-content-is-end-of-newline ()
+  "Check if copied content ends with newline."
   (interactive)
   (string-suffix-p "\n" (current-kill 0 'DONT-MOVE)))
 

@@ -1,205 +1,197 @@
+;; -*- lexical-binding: t -*-
+;;; init-god.el --- God mode configuration
+
 (require 'god-mode)
 
-(setq god-exempt-major-modes nil)
-(setq god-exempt-predicates nil)
-(setq god-mode-alist '((nil . "C-") ("r" . "M-") ("R" . "C-M-")))
-
-
-
+(setq god-exempt-major-modes nil
+      god-exempt-predicates nil
+      god-mode-alist '((nil . "C-") ("r" . "M-") ("R" . "C-M-")))
 
 ;; special-buffers are not affected by god-mode bindings, but affected by my-special-buffer-keys-minor-mode-map
 (setq special-buffer-modes (list "dired-mode" "ibuffer-mode" "special-mode"))
 (setq special-buffers (list
-                        "*Pos-Frame-Read*"
-                        "*Treemacs"
-                        "*Messages*"
-                        "*compilation*"
-                        "HELLO"
-                        "*Ibuffer*"
-                        "*deadgrep"
-                        "*xref"
-                        "*Buffer"
-                        "*Annotate"
-                        "*Completions*"
-                        "*vc-diff*"
-                        "*Packages"
-                        "*lsp-log*"
-                        "*Help*"
-                        "*Ivy"
-                        "*Occur*"
-                        "*info*"
-                        "*Warnings*"
-                        "helm-*"
-                        ;; "*helm-mode-switch-to-buffer*"
-                        "*Helm Help*"
-                        "*Flymake"
-                        "*ansi-term*"
-                        "*fzf*"
-                        "*Ilist*"
-                        "*NeoTree*"))
+                       "*Pos-Frame-Read*"
+                       "*Treemacs"
+                       "*Messages*"
+                       "*compilation*"
+                       "HELLO"
+                       "*Ibuffer*"
+                       "*deadgrep"
+                       "*xref"
+                       "*Buffer"
+                       "*Annotate"
+                       "*Completions*"
+                       "*vc-diff*"
+                       "*Packages"
+                       "*lsp-log*"
+                       "*Help*"
+                       "*Ivy"
+                       "*Occur*"
+                       "*info*"
+                       "*Warnings*"
+                       "helm-*"
+                       "*Helm Help*"
+                       "*Flymake"
+                       "*ansi-term*"
+                       "*fzf*"
+                       "*Ilist*"
+                       "*NeoTree*"))
 
 ;; legendary-buffers are not affected by god-mode AND my-special-buffer-keys-minor-mode-map
 (setq legendary-buffers (list
-                          "*this-buffer-is-left-alone-without-god-mode-at-all"
-                          "*Minibuf"
-                          "*Compile"
-                          "*EGLOT"
-                          "*terminal*"
-                          "*vterm"
-                          "*emacs"
-                          "*eshell*"
-                          "*blink-search"
-                          "*ripgrep-search*"
-                          "*blink search"
-                          "*shell*"
-                          "*dashboard*"
-                          "*slime"
-                          "*sldb"
-                          "*leetcode"
-                          "magit"
-                          "git-rebase-todo"
-                          "*Backtrace*"
-                          "menu"
-                          "*ielm*"
-                          "*Gofmt"
-                          "*slime-repl"
-                          "*Customize"))
+                         "*this-buffer-is-left-alone-without-god-mode-at-all"
+                         "*Minibuf"
+                         "*Compile"
+                         "*EGLOT"
+                         "*terminal*"
+                         "*vterm"
+                         "*emacs"
+                         "*eshell*"
+                         "*blink-search"
+                         "*ripgrep-search*"
+                         "*blink search"
+                         "*shell*"
+                         "*dashboard*"
+                         "*slime"
+                         "*sldb"
+                         "*leetcode"
+                         "magit"
+                         "git-rebase-todo"
+                         "*Backtrace*"
+                         "menu"
+                         "*ielm*"
+                         "*Gofmt"
+                         "*slime-repl"
+                         "*Customize"))
 
 (setq legendary-modes (list
-                        "*this-buffer-is-left-alone-without-god-mode-at-all"
-                        "cfrs-input-mode"
-                        "fundamental-mode"
-                        "help-mode"
-                        "lisp-mode"
-                        "slime-mode"
-                        "minibuffer-mode"
-                        "inferior-python-mode"
-                        "deadgrep-edit-mode"))
-
-
-
-
+                       "*this-buffer-is-left-alone-without-god-mode-at-all"
+                       "cfrs-input-mode"
+                       "fundamental-mode"
+                       "help-mode"
+                       "lisp-mode"
+                       "slime-mode"
+                       "minibuffer-mode"
+                       "inferior-python-mode"
+                       "deadgrep-edit-mode"))
 
 (defun my-god-this-is-special-buffer (bufname)
+  "Check if BUFNAME is a special buffer."
   (interactive)
   (let ((this-buffer-name (string-trim bufname))
-         (this-buffer-mode (symbol-name (buffer-mode bufname))))
+        (this-buffer-mode (symbol-name (buffer-mode bufname))))
     (or
-      (seq-filter
-        (lambda (n) (string-prefix-p n this-buffer-name))
-        special-buffers)
-      (seq-filter
-        (lambda (n) (string-prefix-p n this-buffer-mode))
-        special-buffer-modes))))
+     (seq-filter
+      (lambda (n) (string-prefix-p n this-buffer-name))
+      special-buffers)
+     (seq-filter
+      (lambda (n) (string-prefix-p n this-buffer-mode))
+      special-buffer-modes))))
 
-(defun* my-god-this-is-legendary-buffer (bufname)
+(defun my-god-this-is-legendary-buffer (bufname)
+  "Check if BUFNAME is a legendary buffer."
   (interactive)
   ;; (message "buffer-mode type is %s" (type-of (buffer-mode bufname))) ==> symbol
   ;;;; use symbol-name convert symbol to string; And for the reverse, (intern "some-string") to get symbol
   (let ((this-buffer-name (string-trim bufname))
-         (this-buffer-mode (symbol-name (buffer-mode bufname))))
+        (this-buffer-mode (symbol-name (buffer-mode bufname))))
     ;; (message "this-buffer-name %s" this-buffer-name)
     ;; (message "this-buffer-mode %s" this-buffer-mode)
     (or
-      (seq-filter
-        (lambda (n) (string-prefix-p n this-buffer-name))
-        legendary-buffers)
-      (seq-filter
-        (lambda (n) (string-prefix-p n this-buffer-mode))
-        legendary-modes))))
-
+     (seq-filter
+      (lambda (n) (string-prefix-p n this-buffer-name))
+      legendary-buffers)
+     (seq-filter
+      (lambda (n) (string-prefix-p n this-buffer-mode))
+      legendary-modes))))
 
 (defun my-god-this-is-normal-editor-buffer (bufname)
+  "Check if BUFNAME is a normal editor buffer."
   (interactive)
   (not
-    (or (my-god-this-is-special-buffer bufname)
-      (my-god-this-is-legendary-buffer bufname))))
+   (or (my-god-this-is-special-buffer bufname)
+       (my-god-this-is-legendary-buffer bufname))))
 
 (defun my-god-should-enable-hi-line-mode ()
+  "Check if hi-line mode should be enabled."
   (interactive)
-  (not (bound-and-true-p smerge-mode))
-  )
+  (not (bound-and-true-p smerge-mode)))
 
 (defun my-god-should-enable-line-number-mode()
-  t
-  )
-
+  "Check if line number mode should be enabled."
+  t)
 
 (setq should-not-display-dark-background-modes (list
-                                                 "dired-mode"
-                                                 "vterm-mode"
-                                                 "minibuffer-mode"
-                                                 "dashboard-mode"
-                                                 ))
-
+                                                "dired-mode"
+                                                "vterm-mode"
+                                                "minibuffer-mode"
+                                                "dashboard-mode"))
 
 (defun my-god-this-is-dark-background-buffer (bufname)
+  "Check if BUFNAME should have dark background."
   (interactive)
   (let ((this-buffer-name (string-trim bufname))
-         (this-buffer-mode (symbol-name (buffer-mode bufname))))
+        (this-buffer-mode (symbol-name (buffer-mode bufname))))
     (and
-      (eq buffer-read-only t)
-      (not (seq-filter
-             (lambda (n) (string-prefix-p n this-buffer-mode))
-             should-not-display-dark-background-modes))
-      (not (derived-mode-p 'prog-mode))
-      )))
-
+     (eq buffer-read-only t)
+     (not (seq-filter
+           (lambda (n) (string-prefix-p n this-buffer-mode))
+           should-not-display-dark-background-modes))
+     (not (derived-mode-p 'prog-mode)))))
 
 (setq my-god-mode-is-active-flag nil)
 
-(defun* refresh-current-mode ()
+(defun refresh-current-mode ()
+  "Refresh the current mode settings based on buffer type."
   (interactive)
   (if (my-god-this-is-dark-background-buffer (buffer-name))
-    (set (make-local-variable 'face-remapping-alist) `((default :background ,darker-window-bg-color)
-                                                        (fringe :background ,darker-window-bg-color)
-                                                        (line-number :background ,darker-window-bg-color :foreground "#627d9d")
-                                                        (line-number-current-line :background ,darker-window-bg-color :foreground "#627d9d")
-                                                        ))
-    (set (make-local-variable 'face-remapping-alist) `((fringe :background ,(face-background 'default))
-                                                        )))
+      (set (make-local-variable 'face-remapping-alist)
+           `((default :background ,darker-window-bg-color)
+             (fringe :background ,darker-window-bg-color)
+             (line-number :background ,darker-window-bg-color :foreground "#627d9d")
+             (line-number-current-line :background ,darker-window-bg-color :foreground "#627d9d")))
+    (set (make-local-variable 'face-remapping-alist)
+         `((fringe :background ,(face-background 'default)))))
   (cond
-    ((my-god-this-is-legendary-buffer (buffer-name))
-      ;; (message "%s is legendary buffer" (buffer-name))
-      (god-local-mode 0)
-      (my-keys-minor-mode 0)
-      (my-special-buffer-keys-minor-mode 0))
-    ((my-god-this-is-special-buffer (buffer-name))
-      ;; (message "%s is special buffer" (buffer-name))
-      (god-local-mode 0)
-      (my-keys-minor-mode 0)
-      (my-special-buffer-keys-minor-mode 1))
-    (t
-      ;; (message "%s not a special buffer" (buffer-name))
-      (god-local-mode 1) ;; start local mode
-      (my-keys-minor-mode 1)
-      (setq my-god-mode-is-active-flag t)
-      (my-special-buffer-keys-minor-mode 0))
-    ))
+   ((my-god-this-is-legendary-buffer (buffer-name))
+    ;; (message "%s is legendary buffer" (buffer-name))
+    (god-local-mode 0)
+    (my-keys-minor-mode 0)
+    (my-special-buffer-keys-minor-mode 0))
+   ((my-god-this-is-special-buffer (buffer-name))
+    ;; (message "%s is special buffer" (buffer-name))
+    (god-local-mode 0)
+    (my-keys-minor-mode 0)
+    (my-special-buffer-keys-minor-mode 1))
+   (t
+    ;; (message "%s not a special buffer" (buffer-name))
+    (god-local-mode 1) ;; start local mode
+    (my-keys-minor-mode 1)
+    (setq my-god-mode-is-active-flag t)
+    (my-special-buffer-keys-minor-mode 0))))
 
 (add-hook 'find-file-hook 'refresh-current-mode)
 
 (defun my-quit-god-mode ()
+  "Quit god mode."
   (interactive)
   (god-local-mode 0)
   (setq my-god-mode-is-active-flag nil))
 
 (defun my-toggle-god-mode ()
+  "Toggle god mode."
   (interactive)
   (if (bound-and-true-p god-local-mode)
-    (my-quit-god-mode)
+      (my-quit-god-mode)
     (refresh-current-mode)))
 
-
-
-
 (defun my-god-mode-with-switch-any-buffer (prev curr)
+  "Handle god mode when switching buffers from PREV to CURR."
   (cl-assert (eq curr (current-buffer))) ;; Always t
   ;; (message "%S -> %S -> %S" prev curr (string-trim (buffer-name curr)))
   (refresh-current-mode))
 
 (add-hook 'switch-buffer-functions #'my-god-mode-with-switch-any-buffer)
-
 
 (defun my-god-below-newline-and-insert-mode ()
   (interactive)
@@ -229,7 +221,6 @@
   (interactive)
   (forward-char)
   (my-quit-god-mode))
-
 
 ;; donot warnning, just wrap search
 (defun isearch-repeat-forward+ ()
@@ -292,7 +283,6 @@
 (define-key god-mode-isearch-map (kbd "r") 'isearch-repeat-backward+)
 (define-key god-mode-isearch-map (kbd "RET") #'isearch-exit)
 
-
 (defun my-search-selection ()
   "search for selected text"
   (interactive)
@@ -309,23 +299,17 @@
       (isearch-forward-symbol-at-point)
       (god-mode-isearch-activate))))
 
-
 (defun my-isearch-forward ()
   (interactive)
   (isearch-mode t nil nil nil)
   (god-mode-isearch-activate)
   (isearch-repeat-forward+))
 
-
 (defun my-isearch-backward ()
   (interactive)
   (isearch-mode nil nil nil nil)
   (god-mode-isearch-activate)
   (isearch-repeat-backward+))
-
-
-
-
 
 (defun my-god-mode-update-cursor-type ()
   ;; (setq cursor-type (if (bound-and-true-p god-local-mode) 'box 'bar))
@@ -403,10 +387,7 @@
       )
     ))
 
-
-
 (add-hook 'god-mode-enabled-hook 'my-god-mode-update-cursor-type)
 (add-hook 'god-mode-disabled-hook 'my-god-mode-update-cursor-type)
-
 
 (provide 'init-god)
