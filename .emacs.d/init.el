@@ -398,8 +398,7 @@
                                                  (my-special-buffer-keys-minor-mode 0))))
   (keymap-unset vterm-mode-map "M-`")
   (keymap-unset vterm-mode-map "M-:")
-  :hook
-  (vterm-mode . (lambda() (selected-mode -1))))
+  )
 
 ;;; Programming Languages
 (use-package rust-mode
