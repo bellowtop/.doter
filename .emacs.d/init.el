@@ -82,23 +82,14 @@
 (require 'bind-key) ; more powerful than global-set-key! seems have the highest priority
 
 ;;; Local Libraries (immediate loading required)
-(use-package dired+
-  :ensure nil
-  :demand t
-  :init
-  (setq diredp-hide-details-initially-flag nil))
+(require 'init-dired-plus)
 
 (require 'custom-util-funcs)
 (require 'my-utils)
 (require 'init-eshell)
 
 ;;; Benchmark
-(use-package benchmark-init
-  :ensure t
-  :demand t
-  :config
-  ;; To disable collection of benchmark data after init is done.
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+(require 'init-benchmark)
 
 ;;; Font and UI Configuration
 (setq default-font "IBM Plex Mono 1.2-14.0"
@@ -289,31 +280,7 @@
 (require 'my-highlight-current-line)
 
 ;;; Popup Windows
-(use-package popper
-  :ensure t
-  :demand t
-  :bind (("C-`"   . popper-toggle)
-         ("M-`"   . popper-cycle)
-         ("C-M-`" . popper-toggle-type))
-  :init
-  (setq popper-reference-buffers
-        '("\\*Messages\\*"
-          "Output\\*$"
-          "\\*Async Shell Command\\*"
-          help-mode
-          compilation-mode))
-  ;; Match eshell, shell, term and/or vterm buffers
-  (setq popper-reference-buffers
-        (append popper-reference-buffers
-                '("^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
-                  "^\\*shell.*\\*$"  shell-mode  ;shell as a popup
-                  "^\\*term.*\\*$"   term-mode   ;term as a popup
-                  "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
-                  )))
-  (popper-mode +1)
-  (popper-echo-mode +1)
-  :config
-  (setq popper-window-height 0.6))
+(require 'init-popper)
 
 ;;; Navigation and Jumping
 (require 'init-nice-jumper)
@@ -327,9 +294,7 @@
 (setq ansi-color-map (ansi-color-make-color-map))
 
 ;;; Rainbow Delimiters
-(use-package rainbow-delimiters
-  :ensure t
-  :hook (prog-mode . rainbow-delimiters-mode))
+(require 'init-rainbow-delimiters)
 
 ;;; Development Tools
 (require 'init-eldoc)
@@ -380,11 +345,7 @@
 ;;; Text and Programming Modes
 (require 'init-whitespace-mode)
 
-(use-package iedit
-  :ensure t
-  :bind (("C-M-'" . iedit-mode))
-  :config
-  (set-face-attribute 'iedit-occurrence nil :foreground "black" :background "yellow"))
+(require 'init-iedit)
 
 (require 'init-impatient-markdown)
 (require 'init-ace-window)
@@ -394,98 +355,28 @@
 (require 'init-autopep8)
 
 ;;; Search Tools
-(defun my-ripgrep-kill-buffer()
-  (interactive)
-  (ripgrep/kill-buffer)
-  (delete-window))
-
-(use-package ripgrep
-  :ensure t
-  :config
-  (set-face-attribute 'ripgrep-match-face nil :inherit 'my-highlight-font-words-face)
-  :bind
-  (:map ripgrep-search-mode-map
-        (";" . scroll-up-command)
-        ("'" . scroll-down-command)
-        ("k" . previous-line)
-        ("j" . next-line)
-        ("x" . my-ripgrep-kill-buffer)))
+(require 'init-ripgrep)
 
 ;;; Terminal Emulator
-(use-package vterm
-  :ensure t
-  :commands vterm
-  :config
-  (setq vterm-timer-delay 0.001
-        vterm-max-scrollback 10000)
-  (define-key vterm-mode-map (kbd "s-C")  #'vterm-copy-mode)
-  (define-key vterm-mode-map (kbd "C-s-c")  #'(lambda() (interactive) (vterm-send-key "c" nil nil t)))
-  (define-key vterm-mode-map (kbd "M-i")  #'er/expand-region)
-  (define-key vterm-copy-mode-map (kbd "M-w")  #'vterm-copy-mode-done)
-  (define-key vterm-copy-mode-map (kbd "s-C")  #'vterm-copy-mode)
-  (add-hook 'vterm-copy-mode-hook #'(lambda() (if (bound-and-true-p vterm-copy-mode)
-                                                   (my-special-buffer-keys-minor-mode 1)
-                                                 (my-special-buffer-keys-minor-mode 0))))
-  (keymap-unset vterm-mode-map "M-`")
-  (keymap-unset vterm-mode-map "M-:")
-  )
+(require 'init-vterm)
 
 ;;; Programming Languages
-(use-package rust-mode
-  :ensure t)
+(require 'init-lang-rust)
 
-(use-package scala-mode
-  :ensure t
-  :interpreter ("scala" . scala-mode))
+(require 'init-lang-scala)
 
-(use-package yaml-mode
-  :ensure t
-  :hook
-  (yaml-mode . display-line-numbers-mode)
-  (yaml-ts-mode . display-line-numbers-mode)
-  :config
-  (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
-  (add-to-list 'auto-mode-alist '("\\.yml\\.j2\\'" . yaml-mode))
-  (add-to-list 'auto-mode-alist '("\\.yaml\\'" . yaml-mode))
-  (add-to-list 'auto-mode-alist '("\\.yaml\\.j2\\'" . yaml-mode)))
+(require 'init-lang-yaml)
 
-(use-package qml-mode
-  :ensure t
-  :hook
-  (qml-mode . (lambda ()
-                (setq indent-tabs-mode nil
-                      js-indent-level 4)
-                (c-ts-mode-toggle-comment-style -1)
-                (bind-keys :map qml-mode-map ("C-c C-b" . compile))
-                (bind-keys :map qml-mode-map ("s-b" . compile))))
-  (qml-mode . maybe-cmake-project-mode)
-  (qml-mode . (lambda() (format-all-mode -1)))
-  :config
-  (add-to-list 'auto-mode-alist '("\\.qml\\'" . qml-mode)))
+(require 'init-lang-qml)
 
-(use-package ansible
-  :ensure t)
+(require 'init-ansible)
 
 ;;; Display and Visual Enhancements
 (require 'init-display-line-numbers)
 
-(use-package highlight-numbers
-  :ensure t
-  :hook (prog-mode . highlight-numbers-mode))
+(require 'init-highlight-numbers)
 
-(use-package highlight-indent-guides
-  :ensure t
-  :config
-  (setq highlight-indent-guides-method 'character
-        highlight-indent-guides-auto-enabled nil
-        highlight-indent-guides-character ?\x258f)
-  (set-face-attribute 'highlight-indent-guides-character-face nil :inherit 'shadow)
-  (defun my-highlighter (level responsive display)
-    (if (> 1 level)
-        nil
-      (highlight-indent-guides--highlighter-default level responsive display)))
-  (setq highlight-indent-guides-highlighter-function 'my-highlighter)
-  :hook (prog-mode . highlight-indent-guides-mode))
+(require 'init-highlight-indent-guides)
 
 ;;; Mode-specific Hooks
 (defun my-cmake-ts-mode-hook ()
@@ -507,22 +398,12 @@
 ;;; Smart Parentheses and Electric Mode
 (require 'init-smartparens)
 
-(use-package electric
-  :ensure t
-  :demand t
-  :config
-  (electric-pair-mode 1)
-  (electric-indent-mode 1))
+(require 'init-electric)
 
 ;;; Additional Tools
 (require 'init-blink-search)
 
-(use-package tabby
-  :ensure nil
-  :demand t
-  :config
-  (add-hook 'python-ts-mode-hook 'tabby-mode)
-  (define-key tabby-completion-map (kbd "M-<tab>") 'tabby-accept-completion))
+(require 'init-tabby)
 
 (require 'init-ivy)
 (require 'init-flymake)
@@ -594,27 +475,12 @@
 (xclip-mode 1)
 (save-place-mode 1)
 
-(use-package mwim
-  :ensure t
-  :demand t
-  :config
-  (global-set-key [remap move-end-of-line] #'mwim-end-of-code-or-line)
-  (global-set-key [remap move-beginning-of-line] #'mwim-beginning-of-code-or-line))
+(require 'init-mwim)
 
-(use-package yank-indent
-  :ensure t
-  :demand t
-  :config
-  (global-yank-indent-mode 1))
+(require 'init-yank-indent)
 
 ;; semantic-refactor, use in c++ mode
-(use-package srefactor
-  :ensure t
-  :demand t
-  :config
-  (semantic-mode 1) ;; -> this is optional for Lisp
-  (define-key c-mode-map (kbd "M-RET") 'srefactor-refactor-at-point)
-  (define-key c++-mode-map (kbd "M-RET") 'srefactor-refactor-at-point))
+(require 'init-srefactor)
 
 (require 'my-toggle-code-intelligence)
 (add-hook 'isearch-mode-hook #'my-disable-code-intelligence)
@@ -650,8 +516,7 @@
 (require 'init-hydra)
 (require 'init-deadgrep)
 
-(use-package highlight
-  :ensure t)
+(require 'init-highlight)
 
 (require 'init-dired-ibuffer)
 
