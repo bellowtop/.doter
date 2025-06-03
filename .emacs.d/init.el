@@ -104,8 +104,6 @@
         ;; (fullscreen . maximized)
         (vertical-scroll-bars . nil)))
 
-
-
 (defun center-frame ()
   "Center the frame on the screen."
   (interactive)
@@ -125,9 +123,6 @@
 (when (display-graphic-p)
   ;; 在窗口设置完成后调用
   (add-hook 'window-setup-hook 'center-frame t))
-
-
-
 
 (set-face-attribute 'show-paren-match nil
                     :foreground "green"
@@ -377,23 +372,6 @@
 (require 'init-highlight-numbers)
 
 (require 'init-highlight-indent-guides)
-
-;;; Mode-specific Hooks
-(defun my-cmake-ts-mode-hook ()
-  (setq cmake-tab-width 4)
-  (bind-keys
-   :map cmake-ts-mode-map
-   ("C-c C-b" . compile)
-   ("s-b" . compile)))
-
-(add-hook 'cmake-ts-mode-hook 'my-cmake-ts-mode-hook)
-
-(defun my-elisp-mode-hook ()
-  (setq indent-tabs-mode nil
-        lisp-indent-offset 2))
-
-(add-hook 'emacs-lisp-mode-hook 'my-elisp-mode-hook)
-(add-hook 'lisp-mode-hook 'my-elisp-mode-hook)
 
 ;;; Smart Parentheses and Electric Mode
 (require 'init-smartparens)
