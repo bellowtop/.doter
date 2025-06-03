@@ -4,6 +4,10 @@
 ;; load emacs 24's package system. Add MELPA repository.
 (define-key special-event-map [config-changed-event] #'ignore)
 
+;;; ===================================================================
+;;; CORE SYSTEM SETUP
+;;; ===================================================================
+
 ;;; Package Management
 (require 'package)
 (setq package-archives
@@ -81,15 +85,42 @@
 (require 's)
 (require 'bind-key) ; more powerful than global-set-key! seems have the highest priority
 
-;;; Local Libraries (immediate loading required)
-(require 'init-dired-plus)
-
+;;; Utility Libraries (no dependencies, loaded first)
 (require 'custom-util-funcs)
 (require 'my-utils)
 (require 'init-eshell)
 
-;;; Benchmark
-(require 'init-benchmark)
+;;; ===================================================================
+;;; BASIC SETTINGS & MODES
+;;; ===================================================================
+
+;;; Basic Settings
+(setq warning-minimum-level :emergency
+      visible-bell t
+      ring-bell-function #'ignore
+      custom-safe-themes t
+      recenter-redisplay nil
+      blink-cursor-blinks 0
+      blink-cursor-interval 0.3)
+
+(set-default 'truncate-lines t)
+
+;; lsp-mode session file
+(setq lsp-session-file (expand-file-name "~/.emacs.d/.local/.lsp-session-v1"))
+(setq smex-save-file (expand-file-name "~/.emacs.d/.local/smex-items.cache"))
+
+;; compile log with colors
+(add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
+
+;;; Terminal-specific Configuration
+(unless (display-graphic-p)
+  (require 'my-catch-term-escape-key)
+  (require 'init-term-cursor)
+  (require 'my-term-popup))
+
+;;; ===================================================================
+;;; UI & VISUAL CONFIGURATION
+;;; ===================================================================
 
 ;;; Font and UI Configuration
 (setq default-font "IBM Plex Mono 1.2-14.0"
@@ -124,6 +155,19 @@
   ;; 在窗口设置完成后调用
   (add-hook 'window-setup-hook 'center-frame t))
 
+;;; UI Mode Configuration
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(smerge-mode -1)
+(tab-bar-mode 1)
+
+(defun my-tab-name-formatter (tab index)
+  (propertize
+   (format " %s" (alist-get 'name tab))
+   'face (funcall tab-bar-tab-face-function tab)))
+(setq tab-bar-tab-name-format-function 'my-tab-name-formatter)
+
+;;; Frame and Border Configuration
 (set-face-attribute 'show-paren-match nil
                     :foreground "green"
                     :background "#11501B"
@@ -139,8 +183,16 @@
 
 ;; Set symbol for the border
 (set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?│))
+;; truncate-lines right margin sign
+(set-display-table-slot standard-display-table 0 ?→)
 
 (setq cursor-in-non-selected-windows nil)
+
+(defun my-change-window-divider ()
+  (let ((display-table (or buffer-display-table standard-display-table)))
+    (set-display-table-slot display-table 5 ?│)
+    (set-window-display-table (selected-window) display-table)))
+(add-hook 'window-configuration-change-hook 'my-change-window-divider)
 
 ;;; Theme Configuration
 (setq window-divider-color "#06C668")
@@ -170,6 +222,7 @@
   (interactive)
   (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15)))
 
+;;; Custom Faces
 (defface my-highlight-font-chars-face
   `((t (:foreground ,highlight-font-chars-face-fg
         :underline (:color ,highlight-font-chars-face-fg :position t)
@@ -181,18 +234,6 @@
         :underline nil
         :weight normal)))
   "custom highlight for treemacs current line")
-
-;;; UI Mode Configuration
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(smerge-mode -1)
-(tab-bar-mode 1)
-
-(defun my-tab-name-formatter (tab index)
-  (propertize
-   (format " %s" (alist-get 'name tab))
-   'face (funcall tab-bar-tab-face-function tab)))
-(setq tab-bar-tab-name-format-function 'my-tab-name-formatter)
 
 ;;; Theme Loading and Face Configuration
 (set-face-foreground 'default "#D1D2CE")
@@ -219,16 +260,40 @@
 (set-face-attribute 'mode-line-active nil :box nil :underline nil)
 (set-face-attribute 'mode-line-highlight nil :box nil :foreground "green")
 
-(defun my-change-window-divider ()
-  (let ((display-table (or buffer-display-table standard-display-table)))
-    (set-display-table-slot display-table 5 ?│)
-    (set-window-display-table (selected-window) display-table)))
-(add-hook 'window-configuration-change-hook 'my-change-window-divider)
-
 (set-face-attribute 'vertical-border nil
                     :foreground "#353535"
                     :background (face-background 'default)
                     :inherit 'unspecified)
+
+;;; Terminal Colors
+(require 'ansi-color)
+(setq ansi-color-names-vector ["black" "tomato" "PaleGreen2" "gold1" "DeepSkyBlue1" "MediumOrchid1" "cyan" "white"])
+(setq ansi-color-map (ansi-color-make-color-map))
+
+;;; Line Numbers and Visual Enhancements
+;; for hl-line+.el
+(setq hl-line-inhibit-highlighting-for-modes
+      '(dired-mode deadgrep-mode deadgrep-edit-mode treemacs-mode))
+
+(global-hl-line-mode 0)
+
+(set-face-attribute 'line-number              nil :background (face-background 'default) :foreground "gray33" :slant 'normal :weight 'normal)
+(set-face-attribute 'line-number-current-line nil :background (face-background 'hl-line) :foreground "white"  :slant 'normal :weight 'normal)
+
+(toggle-truncate-lines nil)
+(toggle-continuation-fringe-indicator)
+
+;;; ===================================================================
+;;; CORE MODULES & LIBRARIES
+;;; ===================================================================
+
+;;; Local Libraries (immediate loading required)
+(require 'init-dired-plus)
+
+;; Call functions from my-utils after loading
+
+;;; Benchmark
+(require 'init-benchmark)
 
 ;;; Core Initializers (immediate loading required)
 (require 'init-god)
@@ -239,29 +304,207 @@
 
 (global-unset-key [(control z)])
 
-;;; Terminal-specific Configuration
-(unless (display-graphic-p)
-  (require 'my-catch-term-escape-key)
-  (require 'init-term-cursor)
-  (require 'my-term-popup))
+;;; ===================================================================
+;;; EDITING & TEXT MANIPULATION
+;;; ===================================================================
 
-;;; Basic Settings
-(setq warning-minimum-level :emergency
-      visible-bell t
-      ring-bell-function #'ignore
-      custom-safe-themes t
-      recenter-redisplay nil
-      blink-cursor-blinks 0
-      blink-cursor-interval 0.3)
+;;; Basic Editing Enhancements
+(delete-selection-mode 1)
+(column-number-mode 1)
+(global-auto-revert-mode 1)
+(superword-mode 1)  ; treats underscores as part of words
 
-(set-default 'truncate-lines t)
-
-;; compile log with colors
-(add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
-
+;;; Text and Programming Modes
+(require 'init-whitespace-mode)
+(require 'init-iedit)
 (require 'init-expand-region)
 (toggle-truncate-lines t)
+
+;;; Smart Parentheses and Electric Mode
+(require 'init-smartparens)
+(require 'init-electric)
+
+;;; Enhanced Editing Tools
+(require 'init-mwim)
+(require 'init-yank-indent)
+(require 'init-srefactor)
+
+;;; Advice for Enhanced Editing
+(defadvice kill-region (before slick-cut activate compile)
+  "When called interactively with no active region, kill a single line instead."
+  (interactive
+   (if mark-active
+       (list (region-beginning) (region-end))
+     (list (line-beginning-position) (line-beginning-position 2)))))
+
+(defadvice kill-ring-save (before slick-copy activate compile)
+  "When called interactively with no active region, copy a single line instead."
+  (interactive
+   (if mark-active
+       (list (region-beginning) (region-end))
+     (message "Copied line")
+     (list (line-beginning-position) (line-beginning-position 2)))))
+
+;;; ===================================================================
+;;; NAVIGATION & SEARCH
+;;; ===================================================================
+
+;;; Navigation and Jumping
+(require 'init-nice-jumper)
+(require 'init-mouse)
+(require 'init-xref)
+(require 'init-avy)
+(require 'init-scroll-keys)
+
+;;; Search Tools
+(require 'init-ripgrep)
+
+;;; Popup Windows
+(require 'init-popper)
+
+;;; ===================================================================
+;;; VISUAL ENHANCEMENTS & THEMES
+;;; ===================================================================
+
+;;; Display and Visual Enhancements
+(require 'init-display-line-numbers)
+(require 'init-highlight-numbers)
+(require 'init-highlight-indent-guides)
+(require 'init-rainbow-delimiters)
+(require 'my-highlight-current-line)
+(require 'init-highlight)
+
+;;; UI and Navigation Tools
+(require 'init-all-the-icons)
+(require 'init-neotree)
+(require 'init-treemacs)
+(require 'init-multi-cursor)
+(require 'init-undo-tree)
+(require 'init-hydra)
+(require 'init-deadgrep)
+(require 'init-dired-ibuffer)
+
+;;; ===================================================================
+;;; DEVELOPMENT TOOLS & IDE FEATURES
+;;; ===================================================================
+
+;;; Code Intelligence and LSP
+(require 'init-eldoc)
+(require 'init-eglot)
+(require 'init-company)
+(require 'init-yasnippet)
+(require 'init-flymake)
+
+;;; Code Intelligence Toggle
+(require 'my-toggle-code-intelligence)
+(add-hook 'isearch-mode-hook #'my-disable-code-intelligence)
+(add-hook 'isearch-mode-end-hook #'my-enable-code-intelligence)
+
+;;; Additional Tools
+(require 'init-blink-search)
+(require 'init-tabby)
+(require 'init-ivy)
+(require 'init-format-all)
+
+;;; ===================================================================
+;;; PROGRAMMING LANGUAGES
+;;; ===================================================================
+
+;;; Language Support
+(require 'init-lang-go)
+(require 'init-cmake-project)
+(require 'init-lang-cpp)
+(require 'init-lang-python)
+(require 'init-lang-zig)
+(require 'init-lang-typescript)
+(require 'init-lang-swift)
+(require 'init-lang-rust)
+(require 'init-lang-scala)
+(require 'init-lang-yaml)
+(require 'init-lang-qml)
+(require 'init-ansible)
+
+;;; Lisp Development
+(require 'init-emacs-lispy)
+
+;;; ===================================================================
+;;; SPECIAL MODES & TOOLS
+;;; ===================================================================
+
+;;; Terminal Emulator
+(require 'init-vterm)
+
+;;; Special Mode Tools
+(require 'init-impatient-markdown)
+(require 'init-ace-window)
+(require 'init-blamer)
+(require 'init-diminish)
+(require 'init-dashboard)
+(require 'init-autopep8)
 (require 'init-imenu)
+(require 'init-modeline)
+
+;;; Text Mode Enhancements
+(add-hook 'org-mode-hook #'valign-mode)
+(add-hook 'markdown-mode-hook #'valign-mode)
+
+;;; ===================================================================
+;;; KEY BINDINGS & COMMANDS
+;;; ===================================================================
+
+;;; Custom Key Functions
+(defun my-escape-key ()
+  (interactive)
+  (refresh-current-mode)
+  (when isearch-mode (isearch-abort) (isearch-abort))  ;; must double abort
+  (when (my-god-this-is-normal-editor-buffer (buffer-name))
+    (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode 0))
+    (when (bound-and-true-p iedit-mode) (iedit-done)) ;; exit iedit mode, if needed.
+    (ignore-errors (company-cancel))
+    (ignore-errors (remove-all-highlight)))
+  (ignore-errors (flymake-start)) ;; but show errors
+  (ignore-errors (blink-search-quit))
+  (keyboard-quit)
+  (keyboard-quit-context+)) ;; from custom-util-funcs.el
+
+;;; Global Key Bindings
+(bind-key (kbd "<escape>") #'my-escape-key)
+(bind-key (kbd "<escape>") #'minibuffer-keyboard-quit minibuffer-local-map)
+
+(bind-key (kbd "C-S-k") #'my-delete-to-beginning)
+(bind-key (kbd "C-k") #'my-delete-to-end)
+(bind-key (kbd "C-j") #'save-buffer)
+
+(bind-key* (kbd "C-<wheel-up>") #'ignore)
+(bind-key* (kbd "C-<wheel-down>") #'ignore)
+
+(when (display-graphic-p)
+  (bind-key [escape] 'my-escape-key)
+  (define-key input-decode-map [?\C-\[] (kbd "<C-[>"))
+  (bind-key (kbd "<C-[>") 'my-escape-key))
+
+;;; ===================================================================
+;;; FINAL SETUP & MINIBUFFER
+;;; ===================================================================
+
+;;; Final Setup
+(which-key-mode 1)
+(xclip-mode 1)
+(save-place-mode 1)
+
+;;; View Mode and Minibuffer Setup
+(add-hook 'view-mode-hook 'View-exit)
+
+;; Diactive my all special keys for minibuffer
+(add-hook 'minibuffer-setup-hook #'(lambda () (my-keys-minor-mode 0)))
+(add-hook 'minibuffer-setup-hook #'(lambda () (my-special-buffer-keys-minor-mode 0)))
+
+(require 'init-selected)
+(put 'scroll-left 'disabled nil)
+
+;;; ===================================================================
+;;; CUSTOM VARIABLES & FACES
+;;; ===================================================================
 
 ;;; Custom Faces Configuration
 (custom-set-faces
@@ -271,38 +514,6 @@
  ;; If there is more than one, they won't work right.
  '(mode-line ((t (:background "#415367" :foreground "#e5ded6" :underline (:color foreground-color :style line :position t)))))
  '(success ((t (:foreground "Green1" :weight regular)))))
-
-(require 'my-highlight-current-line)
-
-;;; Popup Windows
-(require 'init-popper)
-
-;;; Navigation and Jumping
-(require 'init-nice-jumper)
-(require 'init-mouse)
-(require 'init-xref)
-
-(require 'init-format-all)
-
-;;; Terminal Colors
-(setq ansi-color-names-vector ["black" "tomato" "PaleGreen2" "gold1" "DeepSkyBlue1" "MediumOrchid1" "cyan" "white"])
-(setq ansi-color-map (ansi-color-make-color-map))
-
-;;; Rainbow Delimiters
-(require 'init-rainbow-delimiters)
-
-;;; Development Tools
-(require 'init-eldoc)
-(require 'init-eglot)
-(require 'init-lang-go)
-(require 'init-cmake-project)
-(require 'init-lang-cpp)
-(require 'init-lang-python)
-(require 'init-lang-zig)
-(require 'init-lang-typescript)
-(require 'init-lang-swift)
-(require 'init-company)
-(require 'init-yasnippet)
 
 ;;; Custom Variables
 (custom-set-variables
@@ -333,179 +544,5 @@
 			  1 'font-lock-variable-name-face)))))
  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
  '(warning-suppress-types '((use-package) (lsp-mode))))
-
-;; lsp-mode session file
-(setq lsp-session-file (expand-file-name "~/.emacs.d/.local/.lsp-session-v1"))
-
-;;; Text and Programming Modes
-(require 'init-whitespace-mode)
-
-(require 'init-iedit)
-
-(require 'init-impatient-markdown)
-(require 'init-ace-window)
-(require 'init-blamer)
-(require 'init-diminish)
-(require 'init-dashboard)
-(require 'init-autopep8)
-
-;;; Search Tools
-(require 'init-ripgrep)
-
-;;; Terminal Emulator
-(require 'init-vterm)
-
-;;; Programming Languages
-(require 'init-lang-rust)
-
-(require 'init-lang-scala)
-
-(require 'init-lang-yaml)
-
-(require 'init-lang-qml)
-
-(require 'init-ansible)
-
-;;; Display and Visual Enhancements
-(require 'init-display-line-numbers)
-
-(require 'init-highlight-numbers)
-
-(require 'init-highlight-indent-guides)
-
-;;; Smart Parentheses and Electric Mode
-(require 'init-smartparens)
-
-(require 'init-electric)
-
-;;; Additional Tools
-(require 'init-blink-search)
-
-(require 'init-tabby)
-
-(require 'init-ivy)
-(require 'init-flymake)
-
-;;; Basic Editing Enhancements
-(delete-selection-mode 1)
-(add-hook 'org-mode-hook #'valign-mode)
-(add-hook 'markdown-mode-hook #'valign-mode)
-(column-number-mode 1)
-
-(require 'init-scroll-keys)
-
-;; truncate-lines right margin sign
-(set-display-table-slot standard-display-table 0 ?→)
-
-;;; Key Bindings and Commands
-(defun my-escape-key ()
-  (interactive)
-  (refresh-current-mode)
-  (when isearch-mode (isearch-abort) (isearch-abort))  ;; must double abort
-  (when (my-god-this-is-normal-editor-buffer (buffer-name))
-    (when (bound-and-true-p multiple-cursors-mode) (multiple-cursors-mode 0))
-    (when (bound-and-true-p iedit-mode) (iedit-done)) ;; exit iedit mode, if needed.
-    (ignore-errors (company-cancel))
-    (ignore-errors (remove-all-highlight)))
-  (ignore-errors (flymake-start)) ;; but show errors
-  (ignore-errors (blink-search-quit))
-  (keyboard-quit)
-  (keyboard-quit-context+)) ;; from custom-util-funcs.el
-
-(bind-key (kbd "<escape>") #'my-escape-key)
-(bind-key (kbd "<escape>") #'minibuffer-keyboard-quit minibuffer-local-map)
-
-;; Global key bindings
-(bind-key (kbd "C-S-k") #'my-delete-to-beginning)
-(bind-key (kbd "C-k") #'my-delete-to-end)
-(bind-key (kbd "C-j") #'save-buffer)
-
-(bind-key* (kbd "C-<wheel-up>") #'ignore)
-(bind-key* (kbd "C-<wheel-down>") #'ignore)
-
-(when (display-graphic-p)
-  (bind-key [escape] 'my-escape-key)
-  (define-key input-decode-map [?\C-\[] (kbd "<C-[>"))
-  (bind-key (kbd "<C-[>") 'my-escape-key))
-
-(setq smex-save-file (expand-file-name "~/.emacs.d/.local/smex-items.cache"))
-
-;;; Advice for Enhanced Editing
-(defadvice kill-region (before slick-cut activate compile)
-  "When called interactively with no active region, kill a single line instead."
-  (interactive
-   (if mark-active
-       (list (region-beginning) (region-end))
-     (list (line-beginning-position) (line-beginning-position 2)))))
-
-(defadvice kill-ring-save (before slick-copy activate compile)
-  "When called interactively with no active region, copy a single line instead."
-  (interactive
-   (if mark-active
-       (list (region-beginning) (region-end))
-     (message "Copied line")
-     (list (line-beginning-position) (line-beginning-position 2)))))
-
-(require 'init-avy)
-
-;;; Final Setup
-(which-key-mode 1)
-(xclip-mode 1)
-(save-place-mode 1)
-
-(require 'init-mwim)
-
-(require 'init-yank-indent)
-
-;; semantic-refactor, use in c++ mode
-(require 'init-srefactor)
-
-(require 'my-toggle-code-intelligence)
-(add-hook 'isearch-mode-hook #'my-disable-code-intelligence)
-(add-hook 'isearch-mode-end-hook #'my-enable-code-intelligence)
-
-(require 'init-emacs-lispy)
-
-;; for hl-line+.el
-(setq hl-line-inhibit-highlighting-for-modes
-      '(dired-mode deadgrep-mode deadgrep-edit-mode treemacs-mode))
-
-(global-hl-line-mode 0)
-
-(set-face-attribute 'line-number              nil :background (face-background 'default) :foreground "gray33" :slant 'normal :weight 'normal)
-(set-face-attribute 'line-number-current-line nil :background (face-background 'hl-line) :foreground "white"  :slant 'normal :weight 'normal)
-
-(require 'init-modeline)
-
-(toggle-truncate-lines nil)
-(toggle-continuation-fringe-indicator)
-
-(global-auto-revert-mode 1)
-
-;;;  treats underscores as part of words
-(superword-mode 1)
-
-;;; UI and Navigation Tools
-(require 'init-all-the-icons)
-(require 'init-neotree)
-(require 'init-treemacs)
-(require 'init-multi-cursor)
-(require 'init-undo-tree)
-(require 'init-hydra)
-(require 'init-deadgrep)
-
-(require 'init-highlight)
-
-(require 'init-dired-ibuffer)
-
-;;; View Mode and Minibuffer Setup
-(add-hook 'view-mode-hook 'View-exit)
-
-;; Diactive my all special keys for minibuffer
-(add-hook 'minibuffer-setup-hook #'(lambda () (my-keys-minor-mode 0)))
-(add-hook 'minibuffer-setup-hook #'(lambda () (my-special-buffer-keys-minor-mode 0)))
-
-(require 'init-selected)
-(put 'scroll-left 'disabled nil)
 
 ;;; init.el ends here
