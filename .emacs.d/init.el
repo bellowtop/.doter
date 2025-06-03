@@ -110,7 +110,33 @@
         (left-fringe . 8) ;关闭左fringe
         (right-fringe . 8) ;关闭右fringe
         (font . ,default-font)
+        ;; (fullscreen . maximized)
         (vertical-scroll-bars . nil)))
+
+
+
+(defun center-frame ()
+  "Center the frame on the screen."
+  (interactive)
+  ;; 获取显示器的尺寸
+  (let* ((screen-width (x-display-pixel-width))
+         (screen-height (x-display-pixel-height))
+         ;; 获取当前框架的尺寸
+         (frame-width (frame-pixel-width))
+         (frame-height (frame-pixel-height))
+         ;; 计算新的框架位置
+         (left (/ (- screen-width frame-width) 2))
+         (top (/ (- screen-height frame-height) 2)))
+    ;; 设置框架的位置
+    (set-frame-position (selected-frame) left top)))
+
+;; 在图形界面模式下应用此功能
+(when (display-graphic-p)
+  ;; 在窗口设置完成后调用
+  (add-hook 'window-setup-hook 'center-frame t))
+
+
+
 
 (set-face-attribute 'show-paren-match nil
                     :foreground "green"
@@ -149,6 +175,10 @@
         whitespace-tab-fg-color "#627D9D"
         whitespace-trailing-fg-color "#161c23"
         hl-line-bg-color (face-background 'highlight)))
+
+(defun my-set-small-line-height ()
+  (interactive)
+  (setq-local default-text-properties '(line-spacing 0 line-height 1)))
 
 (defun my-set-large-line-height ()
   (interactive)

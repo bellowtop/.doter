@@ -889,4 +889,12 @@ If buffer-or-name is nil return current buffer's mode."
           (exe (file-name-sans-extension src)))
     (compile (concat "g++ " src " -std=c++20 " " -o " exe " && ./" exe))))
 
+
+(defun save-buffer-without-hooks ()
+  "Save current buffer without running any before/after save hooks."
+  (interactive)
+  (let ((before-save-hook nil)
+         (after-save-hook nil))
+    (save-buffer)))
+
 (provide 'my-utils)
