@@ -69,6 +69,7 @@
                        "cfrs-input-mode"
                        "fundamental-mode"
                        "help-mode"
+                       "xwidget-webkit-mode"
                        "lisp-mode"
                        "slime-mode"
                        "minibuffer-mode"
@@ -122,22 +123,37 @@
   t)
 
 (setq should-not-display-dark-background-modes (list
-                                                "dired-mode"
-                                                "vterm-mode"
-                                                "minibuffer-mode"
-                                                "dashboard-mode"))
+                                                 "dired-mode"
+                                                 "vterm-mode"
+                                                 "xwidget-webkit-mode"
+                                                 "minibuffer-mode"
+                                                 "dashboard-mode"))
+
+(setq should-not-display-no-paddings-modes (list
+                                                "xwidget-webkit-mode"
+                                                ))
 
 (defun my-god-this-is-dark-background-buffer (bufname)
   "Check if BUFNAME should have dark background."
   (interactive)
   (let ((this-buffer-name (string-trim bufname))
-        (this-buffer-mode (symbol-name (buffer-mode bufname))))
+         (this-buffer-mode (symbol-name (buffer-mode bufname))))
     (and
-     (eq buffer-read-only t)
-     (not (seq-filter
-           (lambda (n) (string-prefix-p n this-buffer-mode))
-           should-not-display-dark-background-modes))
-     (not (derived-mode-p 'prog-mode)))))
+      (eq buffer-read-only t)
+      (not (seq-filter
+             (lambda (n) (string-prefix-p n this-buffer-mode))
+             should-not-display-dark-background-modes))
+      (not (derived-mode-p 'prog-mode)))))
+
+(defun my-god-this-buffer-window-no-padding (bufname)
+  "Check if BUFNAME window shoudn't have padding."
+  (interactive)
+  (let ((this-buffer-name (string-trim bufname))
+         (this-buffer-mode (symbol-name (buffer-mode bufname))))
+    (seq-filter
+      (lambda (n) (string-prefix-p n this-buffer-mode))
+      should-not-display-no-paddings-modes)
+    ))
 
 (setq my-god-mode-is-active-flag nil)
 
@@ -152,6 +168,11 @@
              (line-number-current-line :background ,darker-window-bg-color :foreground "#627d9d")))
     (set (make-local-variable 'face-remapping-alist)
          `((fringe :background ,(face-background 'default)))))
+  (when (my-god-this-buffer-window-no-padding (buffer-name))
+    (set (make-local-variable 'face-remapping-alist)
+      `((left-fringe . 0)
+         (right-fringe . 0)
+         )))
   (cond
    ((my-god-this-is-legendary-buffer (buffer-name))
     ;; (message "%s is legendary buffer" (buffer-name))
