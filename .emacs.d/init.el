@@ -171,6 +171,9 @@
       'face (funcall tab-bar-tab-face-function tab))))
 
 (setq tab-bar-tab-name-format-function 'my-tab-name-formatter)
+;; New Tab
+(setq tab-bar-new-tab-choice
+      (lambda () (generate-new-buffer "untitled")))
 
 ;;; Frame and Border Configuration
 (set-face-attribute 'show-paren-match nil
@@ -473,13 +476,19 @@
           ("C-c w s" . my/xwidget-webkit-search))
   :bind (:map xwidget-webkit-mode-map
           ("r" . xwidget-webkit-reload)
-          ("b" . xwidget-webkit-back)
-          ("f" . xwidget-webkit-forward)
-          ("j" . xwidget-webkit-scroll-down)
-          ("k" . xwidget-webkit-scroll-up)
+          ("L" . xwidget-webkit-back)
+          ("H" . xwidget-webkit-forward)
+          ("j" . xwidget-webkit-scroll-up-line)
+          ("k" . xwidget-webkit-scroll-down-line)
           ("+" . xwidget-webkit-zoom-in)
           ("-" . xwidget-webkit-zoom-out)
-          )
+          ;; 添加复制粘贴绑定
+          ("s-c" . xwidget-webkit-copy-selection-as-kill)
+          ("s-v" . xwidget-webkit-paste)
+          ("s-a" . xwidget-webkit-select-all)          ; Cmd+A 全选
+          ("s-r" . xwidget-webkit-reload)              ; Cmd+R 刷新
+          ("s-l" . xwidget-webkit-current-url)
+        )
   :config
   (defun my/xwidget-webkit-search ()
     "搜索功能"
