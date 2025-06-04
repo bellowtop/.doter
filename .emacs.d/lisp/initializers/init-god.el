@@ -130,8 +130,18 @@
                                                  "dashboard-mode"))
 
 (setq should-not-display-no-paddings-modes (list
-                                                "xwidget-webkit-mode"
-                                                ))
+                                             "xwidget-webkit-mode"))
+(defun my/set-margins-all-windows ()
+  "给所有窗口设置边距，排除指定的 major mode"
+  (dolist (window (window-list))
+    (with-current-buffer (window-buffer window)
+      (if (member (symbol-name major-mode) should-not-display-no-paddings-modes)
+        (set-window-margins window 0 0)      ; 排除的模式设置为0
+        (set-window-margins window 1 1)))))  ; 其他模式设置边距
+
+;; 在窗口配置改变时自动设置边距
+(add-hook 'window-configuration-change-hook #'my/set-margins-all-windows)
+
 
 (defun my-god-this-is-dark-background-buffer (bufname)
   "Check if BUFNAME should have dark background."
@@ -160,19 +170,13 @@
 (defun refresh-current-mode ()
   "Refresh the current mode settings based on buffer type."
   (interactive)
-  (if (my-god-this-is-dark-background-buffer (buffer-name))
+  (when (my-god-this-is-dark-background-buffer (buffer-name))
       (set (make-local-variable 'face-remapping-alist)
            `((default :background ,darker-window-bg-color)
-             (fringe :background ,darker-window-bg-color)
              (line-number :background ,darker-window-bg-color :foreground "#627d9d")
-             (line-number-current-line :background ,darker-window-bg-color :foreground "#627d9d")))
-    (set (make-local-variable 'face-remapping-alist)
-         `((fringe :background ,(face-background 'default)))))
+             (line-number-current-line :background ,darker-window-bg-color :foreground "#627d9d"))))
   (when (my-god-this-buffer-window-no-padding (buffer-name))
-    (set (make-local-variable 'face-remapping-alist)
-      `((left-fringe . 0)
-         (right-fringe . 0)
-         )))
+    (setq-local window-margins '(0 . 0)))
   (cond
    ((my-god-this-is-legendary-buffer (buffer-name))
     ;; (message "%s is legendary buffer" (buffer-name))
@@ -333,10 +337,9 @@
   (isearch-repeat-backward+))
 
 (defun my-god-mode-update-cursor-type ()
-  ;; (setq cursor-type (if (bound-and-true-p god-local-mode) 'box 'bar))
   (setq cursor-type (if (display-graphic-p) 'box 'box))
   (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
-  (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
+  ;; (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
   (sp--maybe-init)
   (if (bound-and-true-p god-local-mode)
     (progn

@@ -57,6 +57,11 @@
 (bind-key* (kbd "s-w") #'kill-current-buffer)
 (bind-key* (kbd "s-t") #'+funcs/new-empty-buffer)
 
+(bind-key* (kbd "s-<backspace>") #'my-delete-to-bol)
+
+(bind-key* (kbd "s-h") #'tab-previous)
+(bind-key* (kbd "s-l") #'tab-next)
+
 ;; jump with C-- C-=, like vscode
 (bind-key* (kbd "C--") 'nice-jumper/backward)
 (bind-key* (kbd "C-_") 'nice-jumper/forward)
@@ -227,7 +232,7 @@
     (define-key god-local-mode-map (kbd "SPC M-k") #'my-only-current-buffer-include-specials)
 
     (define-key god-local-mode-map (kbd "C-\\") #'my-toggle-eldoc-box-help-at-point)
-    (define-key god-local-mode-map (kbd "SPC R") #'my-revert-buffer-no-confirm)
+    (define-key god-local-mode-map (kbd "SPC R") #'revert-buffer)
 
     (define-key god-local-mode-map (kbd "SPC M-f") #'my-projectile-switch-project-find-file)
     (define-key god-local-mode-map (kbd "SPC f") #'my-projectile-find-file)
@@ -236,6 +241,7 @@
     (define-key god-local-mode-map (kbd "SPC o") #'cff-find-other-file)    ;; switch between c header/source file
     (define-key god-local-mode-map (kbd "SPC L") #'display-line-numbers-mode)
     (define-key god-local-mode-map (kbd "SPC t") #'my-toggle-truncate-lines-and-word-wrap)
+    (define-key god-local-mode-map (kbd "SPC T") #'my-untabify-buffer)
     (define-key god-local-mode-map (kbd "SPC x") #'delete-window)   ;; delete this window
 
     (define-key god-local-mode-map (kbd "SPC l") #'centaur-tabs-forward)

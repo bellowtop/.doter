@@ -128,12 +128,12 @@
 
 (set-face-attribute 'default nil :font default-font)
 (setq default-frame-alist
-      `((vertical-scroll-bars) ;隐藏滚动条
-        (left-fringe . 8) ;关闭左fringe
-        (right-fringe . 8) ;关闭右fringe
+      `((vertical-scroll-bars . nil) ;隐藏滚动条
+        (left-fringe . 0) ;关闭左fringe
+        (right-fringe . 0) ;关闭右fringe
         (font . ,default-font)
         ;; (fullscreen . maximized)
-        (vertical-scroll-bars . nil)))
+        ))
 
 (defun center-frame ()
   "Center the frame on the screen."
@@ -254,16 +254,24 @@
 (set-face-attribute 'lazy-highlight nil :weight 'normal)
 
 (set-face-background 'default "#161c23")
-(set-face-foreground 'isearch "white")
-(set-face-background 'isearch "deeppink")
+
 (set-face-attribute 'mode-line-inactive nil :box nil :underline nil)
 (set-face-attribute 'mode-line-active nil :box nil :underline nil)
 (set-face-attribute 'mode-line-highlight nil :box nil :foreground "green")
 
+(set-face-attribute 'isearch nil
+  :foreground "white"
+  :background "deeppink")
+
 (set-face-attribute 'vertical-border nil
-                    :foreground "#353535"
-                    :background (face-background 'default)
-                    :inherit 'unspecified)
+  :foreground "#353535"
+  :background (face-background 'default)
+  :inherit 'unspecified)
+
+(set-face-attribute 'fringe nil
+  :foreground 'unspecified
+  :background 'unspecified
+  :inherit 'default)
 
 ;;; Terminal Colors
 (require 'ansi-color)
@@ -277,8 +285,17 @@
 
 (global-hl-line-mode 0)
 
-(set-face-attribute 'line-number              nil :background (face-background 'default) :foreground "gray33" :slant 'normal :weight 'normal)
-(set-face-attribute 'line-number-current-line nil :background (face-background 'hl-line) :foreground "white"  :slant 'normal :weight 'normal)
+(set-face-attribute 'line-number nil
+  :background (face-background 'default)
+  :foreground "gray33"
+  :slant 'normal
+  :weight 'normal)
+
+(set-face-attribute 'line-number-current-line nil
+  :background (face-background 'hl-line)
+  :foreground "white"
+  :slant 'normal
+  :weight 'normal)
 
 (toggle-truncate-lines nil)
 (toggle-continuation-fringe-indicator)
@@ -443,6 +460,30 @@
 (require 'init-autopep8)
 (require 'init-imenu)
 (require 'init-modeline)
+
+
+(use-package xwidget
+  :ensure nil
+  :bind (("C-c w o" . xwidget-webkit-browse-url)
+          ("C-c w s" . my/xwidget-webkit-search))
+  :bind (:map xwidget-webkit-mode-map
+          ("r" . xwidget-webkit-reload)
+          ("b" . xwidget-webkit-back)
+          ("f" . xwidget-webkit-forward)
+          ("j" . xwidget-webkit-scroll-down)
+          ("k" . xwidget-webkit-scroll-up)
+          ("+" . xwidget-webkit-zoom-in)
+          ("-" . xwidget-webkit-zoom-out)
+          )
+  :config
+  (defun my/xwidget-webkit-search ()
+    "搜索功能"
+    (interactive)
+    (let ((query (read-string "Search: ")))
+      (xwidget-webkit-browse-url (concat "https://www.google.com/search?q=" 
+                                   (url-hexify-string query))))))
+
+
 
 ;;; Text Mode Enhancements
 (add-hook 'org-mode-hook #'valign-mode)

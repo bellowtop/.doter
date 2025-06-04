@@ -40,10 +40,11 @@
   ;; Configure clangd parameters
   (add-to-list 'eglot-server-programs
                '((c++-mode c-mode c++-ts-mode c-ts-mode) . ("clangd"
-                                                            "--background-index"
-                                                            "--clang-tidy"
-                                                            "--completion-style=detailed"
-                                                            "--header-insertion=iwyu")))
+                                                            "--compile-commands-dir=build"
+                                                            ;; "--background-index"
+                                                            "--header-insertion=never"
+                                                            "--log=error"
+                                                            )))
 
   ;; Swift-specific server configuration
   (add-to-list 'eglot-server-programs '(swift-mode . ("xcrun" "sourcekit-lsp")))

@@ -238,6 +238,12 @@ If buffer-or-name is nil return current buffer's mode."
   (re-search-forward "\\w\\b" nil t)
   (goto-char (match-beginning 0)))
 
+(defun my-delete-to-bol (args)
+  (interactive "p")
+  (set-mark-command nil)
+  (beginning-of-line)
+  (delete-region (region-beginning) (region-end)))
+
 (defun my-delete-to-beginning (args)
   (interactive "p")
   (set-mark-command nil)
@@ -896,5 +902,34 @@ If buffer-or-name is nil return current buffer's mode."
   (let ((before-save-hook nil)
          (after-save-hook nil))
     (save-buffer)))
+
+
+(defun my-set-buffer-use-tabs ()
+  (interactive)
+  (make-local-variable 'indent-tabs-mode)
+  (setq indent-tabs-mode t)
+  (make-local-variable 'tab-width)
+  (setq tab-width 4)
+  )
+
+(defun my-set-buffer-use-space ()
+  (interactive)
+  (make-local-variable 'indent-tabs-mode)
+  (setq indent-tabs-mode nil)
+  (make-local-variable 'tab-width)
+  (setq tab-width 4)
+  )
+
+(defun my-untabify-buffer ()
+  "将当前缓冲区中的所有 Tab 替换为 4 个空格。"
+  (interactive)
+  (my-set-buffer-use-space)
+  (untabify (point-min) (point-max)))
+
+(defun my-tabify-buffer ()
+  "将当前缓冲区中的所有 Tab 替换为 4 个空格。"
+  (interactive)
+  (my-set-buffer-use-tabs)
+  (tabify (point-min) (point-max)))
 
 (provide 'my-utils)
