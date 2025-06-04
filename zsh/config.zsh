@@ -16,7 +16,7 @@ setopt HIST_IGNORE_SPACE
 # 忽略简单的命令（如 `ls`）
 setopt HIST_NO_STORE
 
-
+export GIT_PAGER=less
 
 
 alias vim="nvim"

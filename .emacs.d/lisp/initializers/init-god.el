@@ -373,8 +373,8 @@
       ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
       ;; (set-face-attribute 'mode-line nil :background "#38424B")
       ;; (set-face-foreground 'vertical-border "#353535")
-      (set-face-foreground 'tab-bar-tab "#FFFFFF")
-      (set-face-background 'tab-bar-tab nil)
+      (set-face-foreground 'tab-bar-tab "black")
+      (set-face-background 'tab-bar-tab "green")
 
       ;; (set-face-foreground 'vertical-border "#374250")
       )

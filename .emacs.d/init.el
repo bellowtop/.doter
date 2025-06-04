@@ -162,9 +162,14 @@
 (tab-bar-mode 1)
 
 (defun my-tab-name-formatter (tab index)
-  (propertize
-   (format " %s" (alist-get 'name tab))
-   'face (funcall tab-bar-tab-face-function tab)))
+  (let* ((current (eq (car tab) 'current-tab))
+          (buffer (and current (window-buffer)))
+          (name (if buffer (buffer-name buffer) (alist-get 'name tab)))
+          (modified (and buffer (buffer-modified-p buffer))))
+    (propertize
+      (format " %s %s " name (if modified "*" ""))
+      'face (funcall tab-bar-tab-face-function tab))))
+
 (setq tab-bar-tab-name-format-function 'my-tab-name-formatter)
 
 ;;; Frame and Border Configuration
@@ -480,7 +485,7 @@
     "搜索功能"
     (interactive)
     (let ((query (read-string "Search: ")))
-      (xwidget-webkit-browse-url (concat "https://www.google.com/search?q=" 
+      (xwidget-webkit-browse-url (concat "https://www.google.com/search?q="
                                    (url-hexify-string query))))))
 
 
