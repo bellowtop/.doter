@@ -33,6 +33,7 @@
   ;; don't show these buffers in counsel-switch-buffer
   (dolist (buffer '("\\*Messages\\*"
                     "\\*Help\\*"
+                    "\\*Warnings\\*"
                     "\\*Compile-Log\\*"
                     "\\*EGLOT"
                     "\\*rdm\\*"
@@ -41,6 +42,7 @@
                     "\\*vterm\\*"
                     "\\*dashboard\\*"
                     "\\*xref\\*"
+                    "\\*xwidget-webkit"
                     "\\*deadgrep"
                     "\\*Customize"
                     "\\*Semantic"
