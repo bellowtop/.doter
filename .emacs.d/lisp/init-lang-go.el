@@ -20,6 +20,7 @@
   :mode ("\\.go\\'" . go-ts-mode)
   :init
   (add-hook 'go-ts-mode-hook #'eglot-ensure)
+  (add-hook 'go-ts-mode-hook #'(lambda() (highlight-indent-guides-mode -1)))
   :config
   (setq gofmt-command "gofmt")
   (setq go-ts-mode-indent-offset 4)
