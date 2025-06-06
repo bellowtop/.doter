@@ -32,7 +32,9 @@
   (popper-mode +1)
   (popper-echo-mode +1)
   :config
-  (setq popper-window-height 0.6))
+  (defun my-popper-maximum-height() (interactive) (setq popper-window-height (- (window-height) 2)))
+  (defun my-popper-restore-height() (interactive) (setq popper-window-height 0.6))
+  (my-popper-restore-height))
 
 (provide 'init-popper)
 
