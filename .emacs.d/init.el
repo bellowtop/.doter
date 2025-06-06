@@ -472,8 +472,7 @@
 
 (use-package xwidget
   :ensure nil
-  :bind (("C-c w o" . xwidget-webkit-browse-url)
-          ("C-c w s" . my/xwidget-webkit-search))
+  :bind (("C-c w s" . my/xwidget-webkit-search))
   :bind (:map xwidget-webkit-mode-map
           ("r" . xwidget-webkit-reload)
           ("L" . xwidget-webkit-back)
@@ -496,6 +495,18 @@
     (let ((query (read-string "Search: ")))
       (xwidget-webkit-browse-url (concat "https://www.google.com/search?q="
                                    (url-hexify-string query))))))
+
+
+(use-package xwwp
+  :ensure t
+  :config
+  (require 'xwwp)
+  :bind (("C-c w o" . xwwp))
+  :custom
+  (xwwp-follow-link-completion-system 'ivy)
+  :bind (:map xwidget-webkit-mode-map
+              ("v" . xwwp-follow-link)))
+
 
 
 

@@ -46,9 +46,6 @@
                                                             "--log=error"
                                                             ))
                )
-  (add-to-list 'eglot-server-programs
-             '((go-mode go-ts-mode) . ((:gopls . ((completeUnimported . :json-false))))))
-
   ;; Swift-specific server configuration
   (add-to-list 'eglot-server-programs '(swift-mode . ("xcrun" "sourcekit-lsp")))
 

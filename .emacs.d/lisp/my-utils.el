@@ -932,4 +932,18 @@ If buffer-or-name is nil return current buffer's mode."
   (my-set-buffer-use-tabs)
   (tabify (point-min) (point-max)))
 
+
+(defun my-hide-title-bar ()
+  (interactive)
+  (modify-frame-parameters nil '((undecorated . t)))
+  (my-M-x)
+  )
+
+(defun my-show-title-bar ()
+  (interactive)
+  (modify-frame-parameters nil '((undecorated . nil)))
+  (my-M-x)
+  )
+
+
 (provide 'my-utils)
