@@ -339,7 +339,7 @@
 (defun my-god-mode-update-cursor-type ()
   (setq cursor-type (if (display-graphic-p) 'box 'box))
   (set-cursor-color (if (bound-and-true-p god-local-mode) "red" "red"))
-  ;; (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
+  (blink-cursor-mode (if (bound-and-true-p god-local-mode) -1 -1))
   (sp--maybe-init)
   (if (bound-and-true-p god-local-mode)
     (progn

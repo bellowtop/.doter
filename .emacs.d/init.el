@@ -77,7 +77,6 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/blink-search"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/tabby.el"))
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/markdown-xwidget"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/initializers"))
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/lisp"))
 
@@ -429,7 +428,6 @@
 ;;; Additional Tools
 (require 'init-blink-search)
 (require 'init-tabby)
-;; (require 'init-markdown-xwidget)
 (require 'init-ivy)
 (require 'init-format-all)
 
@@ -462,7 +460,7 @@
 (require 'init-vterm)
 
 ;;; Special Mode Tools
-(require 'init-impatient-markdown)
+(require 'init-markdown)
 (require 'init-ace-window)
 (require 'init-blamer)
 (require 'init-diminish)
