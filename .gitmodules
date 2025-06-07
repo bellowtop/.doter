@@ -13,3 +13,6 @@
 [submodule ".emacs.d/lisp/tabby.el"]
 	path = .emacs.d/lisp/tabby.el
 	url = https://github.com/alan-w-255/tabby.el.git
+[submodule ".emacs.d/lisp/markdown-xwidget"]
+	path = .emacs.d/lisp/markdown-xwidget
+	url = https://github.com/cfclrk/markdown-xwidget.git

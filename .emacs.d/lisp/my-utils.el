@@ -945,5 +945,13 @@ If buffer-or-name is nil return current buffer's mode."
   (my-M-x)
   )
 
+(defun my-set-proxy()
+  (interactive)
+  (setenv "http_proxy" "http://127.0.0.1:9910")
+  (setenv "https_proxy" "http://127.0.0.1:9910")
+  (setenv "HTTP_PROXY" "http://127.0.0.1:9910")
+  (setenv "HTTPS_PROXY" "http://127.0.0.1:9910")
+)
+
 
 (provide 'my-utils)

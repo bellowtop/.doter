@@ -27,6 +27,8 @@
   (add-to-list 'auto-mode-alist '("\\.mm\\'" . c++-ts-mode)) ;; tell h file to c++-ts-mode
   (add-to-list 'auto-mode-alist '("\\.ros\\'" . lisp-mode)) ;; tell ros file to emacs lisp mode
   ;; (setq treesit-extra-load-path `( ,(expand-file-name "~/.emacs.d/.local/tree-sitter-grammars") ))
+  (add-to-list 'treesit-language-source-alist
+             '(mermaid "https://github.com/KmacK/tree-sitter-mermaid" "v0.1.0"))
   )
 
 
