@@ -58,6 +58,8 @@
 
   ;; Don't interfere with company configuration
   (setq eglot-stay-out-of '(company))
+  ;; Don't show indicator
+  (setq eglot-code-action-indicator "")
 
   ;; Performance and behavior settings
   (setq eglot-autoshutdown t

@@ -8,7 +8,7 @@
       god-mode-alist '((nil . "C-") ("r" . "M-") ("R" . "C-M-")))
 
 ;; special-buffers are not affected by god-mode bindings, but affected by my-special-buffer-keys-minor-mode-map
-(setq special-buffer-modes (list "dired-mode" "ibuffer-mode" "special-mode"))
+(setq special-buffer-modes (list "dired-mode" "ibuffer-mode" "special-mode" "native-comp-limple-mode"))
 (setq special-buffers (list
                        "*Pos-Frame-Read*"
                        "*Treemacs"
