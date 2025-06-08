@@ -75,8 +75,8 @@
   :after eglot
   :hook (prog-mode . sideline-mode)
   :config
-  (setq sideline-backends-right '(sideline-eglot     ; `eglot'
-                                  sideline-flymake)  ; `eglot' uses `flymake' by default
+  (setq sideline-backends-right '(;; sideline-eglot     ; `eglot'
+                                  sideline-flymake)     ; `eglot' uses `flymake' by default
         sideline-eglot-code-actions-prefix "-> "))
 
 (provide 'init-eglot)

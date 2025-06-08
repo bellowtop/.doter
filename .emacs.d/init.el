@@ -239,6 +239,7 @@
 
 (defface my-highlight-font-words-face
   `((t (:background "#5114FA"
+        :foreground "white"
         :underline nil
         :weight normal)))
   "custom highlight for treemacs current line")
