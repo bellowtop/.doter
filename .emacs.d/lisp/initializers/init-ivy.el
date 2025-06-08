@@ -75,7 +75,7 @@
 
   ;; Configuration
   (setq ivy-posframe-size-function 'my-ivy-posframe-get-size
-        ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center))
+        ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-bottom-left))
         ivy-posframe-border-width my-posframe-border-width
         ivy-posframe-parameters `((left-fringe . ,my-posframe-fringe-width)
                                   (right-fringe . ,my-posframe-fringe-width)))
