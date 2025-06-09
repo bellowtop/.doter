@@ -132,7 +132,7 @@
         (left-fringe . 0) ;关闭左fringe
         (right-fringe . 0) ;关闭右fringe
         (font . ,default-font)
-        ;; (fullscreen . maximized)
+        (fullscreen . maximized)
         ))
 
 (defun center-frame ()
@@ -150,10 +150,10 @@
     ;; 设置框架的位置
     (set-frame-position (selected-frame) left top)))
 
-;; 在图形界面模式下应用此功能
-(when (display-graphic-p)
-  ;; 在窗口设置完成后调用
-  (add-hook 'window-setup-hook 'center-frame t))
+;; ;; 在图形界面模式下应用此功能
+;; (when (display-graphic-p)
+;;   ;; 在窗口设置完成后调用
+;;   (add-hook 'window-setup-hook 'center-frame t))
 
 ;;; UI Mode Configuration
 (tool-bar-mode -1)
