@@ -113,6 +113,7 @@
     ;; (define-key map (kbd "C-M-;") 'avy-goto-word-0)
     (define-key map (kbd "M-s") 'my-save-buffer)
     (define-key map (kbd "C-j") 'my-save-buffer)
+    (define-key map (kbd "C-c j") 'my-save-buffer-without-hooks)
     (define-key map (kbd "M-q") 'my-toggle-god-mode)
 
     ;; (define-key map (kbd "M-u") 'upcase-dwim)

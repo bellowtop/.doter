@@ -77,7 +77,12 @@
   :config
   (setq sideline-backends-right '(;; sideline-eglot     ; `eglot'
                                   sideline-flymake)     ; `eglot' uses `flymake' by default
-        sideline-eglot-code-actions-prefix "-> "))
+        sideline-eglot-code-actions-prefix "-> ")
+  (set-face-attribute 'sideline-flymake-error nil
+                      :inherit nil
+                      :background "gray"
+                      :foreground "black")
+  )
 
 (provide 'init-eglot)
 

@@ -566,6 +566,14 @@ If buffer-or-name is nil return current buffer's mode."
   ;; (my-quit-mc-mode-if-need)
   )
 
+(defun my-save-buffer-without-hooks ()
+  "delete current word, goto insert mode"
+  (interactive)
+  (save-buffer-without-hooks)
+  (refresh-current-mode)
+  ;; (my-quit-mc-mode-if-need)
+  )
+
 
 (setq my-visual-line-selection nil)
 (setq my-visual-line-start-num nil)
