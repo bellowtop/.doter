@@ -49,6 +49,14 @@
   ;; Swift-specific server configuration
   (add-to-list 'eglot-server-programs '(swift-mode . ("xcrun" "sourcekit-lsp")))
 
+  ;; 自定义查找引用行为：不包含定义
+  (cl-defmethod xref-backend-references ((_backend (eql eglot)) _identifier)
+    (or
+      eglot--lsp-xref-refs
+      (eglot--lsp-xrefs-for-method
+        :textDocument/references
+        :extra-params `(:context (:includeDeclaration nil)))))
+
   ;; Swift mode hook with special handling for .swiftinterface files
   (defun my-swift-eglot-hook ()
     (if (string= (file-name-extension buffer-file-name) "swiftinterface")
@@ -78,6 +86,12 @@
   (setq sideline-backends-right '(;; sideline-eglot     ; `eglot'
                                   sideline-flymake)     ; `eglot' uses `flymake' by default
         sideline-eglot-code-actions-prefix "-> ")
+  )
+
+(use-package sideline-flymake
+  :ensure t
+  :after sideline
+  :config
   (set-face-attribute 'sideline-flymake-error nil
                       :inherit nil
                       :background "gray"
