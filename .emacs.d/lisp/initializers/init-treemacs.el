@@ -12,7 +12,7 @@
   (setq treemacs-last-error-persist-file
     (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
   (setq treemacs-expand-after-init nil)
-  (setq treemacs-width-is-initially-locked nil)
+  (setq treemacs-width-is-initially-locked t)
   (setq cursor-type nil)
   (treemacs-follow-mode 0)
 
@@ -35,6 +35,13 @@
     (set (make-local-variable 'face-remapping-alist) `((default :background ,darker-window-bg-color)
                                                         (fringe :background ,darker-window-bg-color)))
     )
+
+  (setq-default treemacs-width 35)
+  
+  (defun my-reset-treemacs-width ()
+    (interactive)
+    ;; call inner api
+    (treemacs--set-width 35))
 
   (defun my-decrease-treemacs-width ()
     (interactive)

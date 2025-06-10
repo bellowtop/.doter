@@ -30,7 +30,8 @@
 
 (set-face-attribute 'avy-lead-face nil
   :background (face-background 'default)
-  :foreground "#E20000")
+  :weight 'normal
+  :foreground "deeppink")
 
 (set-face-attribute 'avy-lead-face-0 nil
   :background (face-background 'default)

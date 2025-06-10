@@ -352,7 +352,13 @@ If buffer-or-name is nil return current buffer's mode."
 
 (defun my-rg-at-point ()
   (interactive)
-  (counsel-rg))
+  (if (region-active-p)
+    (let* ((start (region-beginning))
+            (end (region-end))
+            (input (buffer-substring-no-properties start end)))
+      (deactivate-mark)
+      (counsel-rg (concat input " ")))
+    (counsel-rg)))
 
 (defun my-find-files ()
   (interactive)
