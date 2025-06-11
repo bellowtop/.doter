@@ -36,6 +36,7 @@
 (use-package symbol-overlay
   :hook (emacs-lisp-mode . symbol-overlay-mode)
   :config
+  (setq symbol-overlay-idle-time 0.1)
   (set-face-attribute 'symbol-overlay-default-face nil
                       :inherit 'my-highlight-font-words-face
                       :foreground (face-foreground 'my-highlight-font-words-face)
