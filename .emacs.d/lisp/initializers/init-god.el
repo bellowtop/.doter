@@ -8,7 +8,15 @@
       god-mode-alist '((nil . "C-") ("r" . "M-") ("R" . "C-M-")))
 
 ;; special-buffers are not affected by god-mode bindings, but affected by my-special-buffer-keys-minor-mode-map
-(setq special-buffer-modes (list "dired-mode" "ibuffer-mode" "special-mode" "native-comp-limple-mode"))
+(setq special-buffer-modes
+  (list
+    "dired-mode"
+    "ibuffer-mode"
+    "special-mode"
+    "native-comp-limple-mode"
+    "image-mode"
+    ))
+
 (setq special-buffers (list
                        "*Pos-Frame-Read*"
                        "*Treemacs"
@@ -67,13 +75,13 @@
 (setq legendary-modes (list
                        "*this-buffer-is-left-alone-without-god-mode-at-all"
                        "cfrs-input-mode"
-                       "fundamental-mode"
                        "help-mode"
                        "xwidget-webkit-mode"
                        "lisp-mode"
                        "slime-mode"
                        "minibuffer-mode"
                        "inferior-python-mode"
+                       "fundamental-mode"
                        "deadgrep-edit-mode"))
 
 (defun my-god-this-is-special-buffer (bufname)

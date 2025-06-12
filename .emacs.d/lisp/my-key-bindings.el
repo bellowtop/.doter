@@ -67,6 +67,9 @@
 (bind-key* (kbd "C-_") 'nice-jumper/forward)
 
 
+(bind-key* (kbd "C-c f") 'my-find-char-forward)
+(bind-key* (kbd "C-c F") 'my-find-char-backward)
+
 
 
 (defvar my-keys-minor-mode-map
@@ -224,6 +227,7 @@
 
     (define-key god-local-mode-map (kbd "SPC SPC") #'my-mark-ring)
     (define-key god-local-mode-map (kbd "SPC b") #'counsel-switch-buffer)
+    (define-key god-local-mode-map (kbd "SPC C-b") #'projectile-switch-to-buffer)
     (define-key god-local-mode-map (kbd "SPC B") #'ibuffer)
     ;; (define-key god-local-mode-map (kbd "SPC B") #'helm-buffers-list)
     ;; (define-key god-local-mode-map (kbd "SPC k") #'kill-this-buffer)

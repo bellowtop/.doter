@@ -968,4 +968,21 @@ If buffer-or-name is nil return current buffer's mode."
 )
 
 
+(defun my-find-char-forward (char)
+  "Move point to the next occurrence of CHAR on the current line."
+  (interactive (list (read-char "Find char: ")))
+  (let ((pos (search-forward (char-to-string char) (line-end-position) t)))
+    (if pos
+      (goto-char pos)
+      (message "Character `%c' not found in this line." char))))
+
+(defun my-find-char-backward (char)
+  "Move point to the previous occurrence of CHAR on the current line."
+  (interactive (list (read-char "Find char backwards: ")))
+  (let ((pos (search-backward (char-to-string char) (line-beginning-position) t)))
+    (if pos
+      (goto-char pos)
+      (message "Character `%c' not found in this line." char))))
+
+
 (provide 'my-utils)

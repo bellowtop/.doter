@@ -36,10 +36,9 @@
                                                         (fringe :background ,darker-window-bg-color)))
     )
 
-  (setq-default treemacs-width 35)
-  
   (defun my-reset-treemacs-width ()
     (interactive)
+    (setq-default treemacs-width 35)
     ;; call inner api
     (treemacs--set-width 35))
 
@@ -143,6 +142,7 @@ exists it returns /file/name_Copy2.ext etc."
   :bind
   (:map
     treemacs-mode-map
+    ("=" . my-reset-treemacs-width)
     ("F" . my-projectile-find-file-in-treemacs)
     ("M" . my-treemacs-mark-or-unmark-path-at-point)
     ("U" . treemacs-reset-marks)

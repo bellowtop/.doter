@@ -356,6 +356,11 @@
 (require 'init-yank-indent)
 (require 'init-srefactor)
 
+
+;; .gitignore  .dockerignore
+(add-to-list 'auto-mode-alist '("\\.*ignore\\'" . conf-mode))
+
+
 ;;; Advice for Enhanced Editing
 (defadvice kill-region (before slick-cut activate compile)
   "When called interactively with no active region, kill a single line instead."
