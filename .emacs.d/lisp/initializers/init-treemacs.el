@@ -197,6 +197,13 @@ exists it returns /file/name_Copy2.ext etc."
       ))
 
   (dolist
+    (face '(treemacs-git-modified-face
+             ))
+    (set-face-attribute face nil
+      :foreground "#D0BF68"
+      ))
+
+  (dolist
     (face '(treemacs-git-unmodified-face
              treemacs-git-modified-face
              treemacs-git-renamed-face
