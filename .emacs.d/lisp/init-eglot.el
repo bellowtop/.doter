@@ -24,6 +24,21 @@
   (tsx-ts-mode . eglot-ensure)
   ((rust-mode rust-ts-mode) . eglot-ensure)
   :config
+
+  (defvar my-eglot-ensure-is-enabled t
+  "控制是否允许 eglot-ensure 实际运行。")
+  (defun my-toggle-eglot-ensure () (interactive) (setq my-eglot-ensure-is-enabled (not my-eglot-ensure-is-enabled)))
+  (defun my/around-eglot-ensure (orig-fun &rest args)
+    "根据开关决定是否真正调用 eglot-ensure。"
+    (if my-eglot-ensure-is-enabled
+        (apply orig-fun args)
+      (message "[Eglot] eglot-ensure 已被阻止，使用 symbol-overlay-mode 代替高亮")
+      (symbol-overlay-mode 1)
+      ))
+  (advice-add 'eglot-ensure :around #'my/around-eglot-ensure)
+
+
+
   ;; Face configuration for diagnostics
   (set-face-attribute 'eglot-diagnostic-tag-unnecessary-face nil
                       :underline nil
