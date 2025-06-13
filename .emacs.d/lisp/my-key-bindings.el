@@ -69,6 +69,7 @@
 
 (bind-key* (kbd "C-c f") 'my-find-char-forward)
 (bind-key* (kbd "C-c F") 'my-find-char-backward)
+(bind-key* (kbd "C-c \\") 'my-toggle-eldoc-box-help-at-point)
 
 
 
@@ -144,6 +145,7 @@
     (define-key god-local-mode-map (kbd "Q") #'my-quit-other-window)
 
     (define-key god-local-mode-map (kbd "f") #'avy-goto-word-0)
+    (define-key god-local-mode-map (kbd "t") #'avy-goto-char-in-line)
     (define-key god-local-mode-map (kbd "w") #'my-forward-to-word)
     (define-key god-local-mode-map (kbd "b") #'backward-word)
     (define-key god-local-mode-map (kbd "k") #'my-previous-line)
@@ -293,6 +295,7 @@
     (define-key god-local-mode-map (kbd "g R") #'eglot-rename)
     (define-key god-local-mode-map (kbd "g i") #'eglot-find-implementation)
     (define-key god-local-mode-map (kbd "g a") #'eglot-code-actions)
+    (define-key god-local-mode-map (kbd "g q") #'eglot-reconnect)
     (define-key god-local-mode-map (kbd "g g") #'beginning-of-buffer)
     (define-key god-local-mode-map (kbd "G") #'end-of-buffer)
     (define-key god-local-mode-map (kbd "g G") #'end-of-buffer)

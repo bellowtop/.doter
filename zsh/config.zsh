@@ -254,6 +254,7 @@ export PATH="/opt/homebrew/bin:$PATH"
 
 export GOPATH="$HOME/work/workspaces/go"
 export PATH="$GOPATH/bin:$PATH"
+export GOPROXY=https://goproxy.cn,direct
 
 export PATH="$HOME/Library/Application Support/JetBrains/Toolbox/scripts:$PATH"
 

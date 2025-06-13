@@ -357,8 +357,10 @@
 (require 'init-srefactor)
 
 
-;; .gitignore  .dockerignore
-(add-to-list 'auto-mode-alist '("\\.*ignore\\'" . conf-mode))
+;; .gitignore  .dockerignore .npmignore
+(add-to-list 'auto-mode-alist '("\\.[^.]+ignore\\'" . conf-mode))
+;; .env
+(add-to-list 'auto-mode-alist '("\\.env.*\\'" . conf-mode))
 
 
 ;;; Advice for Enhanced Editing
@@ -525,6 +527,13 @@
   (xwwp-follow-link-completion-system 'ivy)
   :bind (:map xwidget-webkit-mode-map
               ("v" . xwwp-follow-link)))
+
+
+(use-package hl-todo
+  :ensure t
+  :config
+  (global-hl-todo-mode 1)
+  )
 
 
 

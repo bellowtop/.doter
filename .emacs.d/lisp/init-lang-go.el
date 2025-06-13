@@ -22,7 +22,6 @@
   (add-hook 'go-ts-mode-hook #'eglot-ensure)
   (add-hook 'go-ts-mode-hook #'(lambda() (highlight-indent-guides-mode -1)))
   :config
-  (setq gofmt-command "gofmt")
   (setq go-ts-mode-indent-offset 4)
   (defun my-go-mode-split-string(arg)
     "Split Go string expressions with appropriate formatting."
@@ -31,12 +30,13 @@
     (insert-char 43) ; insert char +
     (newline)
     (forward-char)
-    (gofmt))
+    )
 
   (defun my-go-before-save ()
     (when (derived-mode-p 'go-ts-mode)
-      (gofmt)
-      (eglot-code-action-organize-imports)
+      ;; 整理 imports（作用于整个 buffer）
+      (eglot-code-action-organize-imports (point-min) (point-max))
+      ;; 或者模拟交互式, 自动传point (call-interactively #'eglot-code-action-organize-imports)
       (eglot-format-buffer)))
 
   (add-hook 'before-save-hook #'my-go-before-save)

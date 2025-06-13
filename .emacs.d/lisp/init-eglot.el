@@ -37,6 +37,10 @@
   (setq-default eglot-workspace-configuration
                 '((gopls (usePlaceholders . t))))
 
+  ;; Configure gopls
+  (add-to-list 'eglot-server-programs
+             '(go-ts-mode . ("gopls")))
+
   ;; Configure clangd parameters
   (add-to-list 'eglot-server-programs
                '((c++-mode c-mode c++-ts-mode c-ts-mode) . ("clangd"

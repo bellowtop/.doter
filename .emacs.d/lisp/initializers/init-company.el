@@ -12,7 +12,10 @@
   :config
   ;; company-mode settings
   (setq company-dabbrev-downcase nil
-        company-backends '((company-capf company-keywords company-files company-dabbrev))))
+        ;; company-backends '((company-capf company-keywords company-files company-dabbrev))
+        company-backends '((company-capf company-keywords company-files))
+        )
+  )
 
 (use-package company-posframe
   :ensure t

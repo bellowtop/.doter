@@ -38,12 +38,27 @@
     (when (and (eq new-point orig-point) (eq new-buffer orig-buffer))
       (ivy-done))))
 
+
+(defun my-xref-show-xrefs-function (xrefs buffer)
+  "Jump to the first xref if there's only one result."
+  (let* ((actual-xrefs (funcall xrefs)))
+    (if (= (length actual-xrefs) 1)
+      (let* ((item (car actual-xrefs))
+              (location (xref-item-location item))
+              (target-buffer (find-file-noselect (xref-location-group location))))
+        (switch-to-buffer target-buffer)
+        (goto-char (point-min))
+        (forward-line (1- (xref-file-location-line location)))
+        (forward-char (xref-file-location-column location)))
+      (ivy-xref-show-xrefs xrefs buffer))))
+
+
 (use-package ivy-xref
   :ensure t
   :after (ivy xref)
   :init
   (setq xref-show-definitions-function #'ivy-xref-show-defs)
-  (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)
+  (setq xref-show-xrefs-function #'my-xref-show-xrefs-function)
   :bind
   (:map
     ivy-minibuffer-map

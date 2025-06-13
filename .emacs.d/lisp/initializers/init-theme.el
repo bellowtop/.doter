@@ -32,9 +32,9 @@
 
 ;; (require 'autothemer)
 
-;; (load-theme 'bogster t)
+(load-theme 'bogster t)
 ;; (load-theme 'srcery t)
-(load-theme 'nimbus t)
+;; (load-theme 'nimbus t)
 
 ;; ;; (load-theme 'spolsky t)
 ;; (if (display-graphic-p)
