@@ -35,6 +35,17 @@
 
 
 
+(defvar my/nice-jumper--in-progress nil)
+
+(defun my/nice-jumper-record-jump (&rest _)
+  "记录当前跳转位置到 nice-jumper，防止重复触发。"
+  (unless (or my/nice-jumper--in-progress
+              nice-jumper--jumping)
+    (let ((my/nice-jumper--in-progress t))
+      (unwind-protect
+          (nice-jumper--set-jump)
+        (setq my/nice-jumper--in-progress nil)))))
+
 (defun my/nice-jumper-remove-all-advice ()
   "移除所有绑定到 my/nice-jumper-record-jump 的 advice。"
   (interactive)
@@ -45,6 +56,7 @@
          (advice-remove symbol fn)))
      nil))
   (message "✅ 已移除所有 my/nice-jumper-record-jump 的 advice"))
+
 
 
 (provide 'init-nice-jumper)
