@@ -67,8 +67,6 @@
 (bind-key* (kbd "C-_") 'nice-jumper/forward)
 
 
-(bind-key* (kbd "C-c f") 'my-find-char-forward)
-(bind-key* (kbd "C-c F") 'my-find-char-backward)
 (bind-key* (kbd "C-c \\") 'my-toggle-eldoc-box-help-at-point)
 
 
