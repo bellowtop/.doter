@@ -123,7 +123,7 @@
 ;;; ===================================================================
 
 ;;; Font and UI Configuration
-(setq default-font "IBM Plex Mono 1.2-14.0"
+(setq default-font "IBM Plex Mono-14.0"
       default-font-family "IBM Plex Mono")
 
 (set-face-attribute 'default nil :font default-font)
@@ -229,7 +229,9 @@
 
 (defun my-set-large-line-height ()
   (interactive)
-  (setq-local default-text-properties '(line-spacing 0.15 line-height 1.15)))
+  (setq-local default-text-properties '(line-spacing 0.10 line-height 1.10)))
+
+(my-set-large-line-height)
 
 ;;; Custom Faces
 (defface my-highlight-font-chars-face
@@ -256,7 +258,13 @@
 ;; defaults write org.gnu.Emacs NSToolTipsFontSize -int 16
 (set-face-font 'tooltip (frame-parameter nil 'font))
 
-(load-theme 'doom-xcode t)
+
+(use-package vscode-dark-plus-theme
+  :ensure t
+  :config
+  (load-theme 'vscode-dark-plus t))
+
+;; (load-theme 'doom-xcode t)
 (set-face-attribute 'font-lock-keyword-face nil :weight 'normal)
 (set-face-attribute 'font-lock-preprocessor-face nil :weight 'normal)
 (set-face-attribute 'region nil :background "#214283" :distant-foreground "#707080")
