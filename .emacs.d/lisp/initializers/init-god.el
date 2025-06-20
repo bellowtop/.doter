@@ -381,8 +381,11 @@
       ;; (set-face-attribute 'mode-line nil :box '(:line-width 1 :color "gray" ))
       ;; (set-face-attribute 'mode-line nil :background "#38424B")
       ;; (set-face-foreground 'vertical-border "#353535")
-      (set-face-foreground 'tab-bar-tab "black")
-      (set-face-background 'tab-bar-tab "green")
+      (set-face-attribute 'tab-bar-tab nil
+                    :foreground "black"
+                    :background "green"
+                    :box '(:line-width (3 . 3) :color "green" :style flat-button)
+                    )
 
       ;; (set-face-foreground 'vertical-border "#374250")
       )
@@ -391,8 +394,12 @@
       ;; (set-face-background 'hl-line hl-line-bg-color)
       (when (my-god-this-is-normal-editor-buffer (buffer-name))
         ;; (set-face-foreground 'vertical-border "#7fdc59")
-        (set-face-foreground 'tab-bar-tab "black")
-        (set-face-background 'tab-bar-tab "yellow")
+
+        (set-face-attribute 'tab-bar-tab nil
+                    :foreground "black"
+                    :background "yellow"
+                    :box '(:line-width (3 . 3) :color "yellow" :style flat-button)
+                    )
         (when (my-god-should-enable-line-number-mode)
           (display-line-numbers-mode 1)
           ;; (set-face-foreground 'line-number-current-line "#7fdc59")

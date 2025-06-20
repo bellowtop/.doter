@@ -172,6 +172,7 @@
 
 (setq tab-bar-tab-name-format-function 'my-tab-name-formatter)
 (setq tab-bar-auto-width-max '((200) 20))   ;; default is ((220) 20), a little bit wider
+
 ;; New Tab
 (setq tab-bar-new-tab-choice
       (lambda () (generate-new-buffer "untitled")))
@@ -403,6 +404,8 @@
 
 ;;; Popup Windows
 (require 'init-popper)
+
+(require 'hide-mode-line)
 
 ;;; ===================================================================
 ;;; VISUAL ENHANCEMENTS & THEMES
