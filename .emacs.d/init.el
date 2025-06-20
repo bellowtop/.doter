@@ -224,6 +224,7 @@
         whitespace-trailing-fg-color "#161c23"
         hl-line-bg-color (face-background 'highlight)))
 
+
 (defun my-set-small-line-height ()
   (interactive)
   (setq-local default-text-properties '(line-spacing 0 line-height 1)))
@@ -232,7 +233,11 @@
   (interactive)
   (setq-local default-text-properties '(line-spacing 0.10 line-height 1.10)))
 
-(my-set-large-line-height)
+(add-hook 'text-mode-hook #'my-set-large-line-height)
+(add-hook 'prog-mode-hook #'my-set-large-line-height)
+(add-hook 'conf-mode-hook #'my-set-large-line-height)
+(add-hook 'org-mode-hook  #'my-set-large-line-height)
+
 
 ;;; Custom Faces
 (defface my-highlight-font-chars-face
@@ -405,7 +410,8 @@
 ;;; Popup Windows
 (require 'init-popper)
 
-(require 'hide-mode-line)
+(require 'hidden-mode-line)
+
 
 ;;; ===================================================================
 ;;; VISUAL ENHANCEMENTS & THEMES
