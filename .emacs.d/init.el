@@ -207,6 +207,20 @@
 ;;; Theme Configuration
 (setq window-divider-color "#06C668")
 
+
+
+(window-divider-mode 1)
+;; 水平 window 分隔线
+(setq window-divider-default-places 'bottom-only)
+(setq window-divider-default-bottom-width 1)
+(setq window-divider-default-right-width 1)
+;; 跟 mode-line 一样的颜色
+(set-face-foreground 'window-divider "#415367")
+(set-face-foreground 'window-divider-first-pixel "#415367")
+(set-face-foreground 'window-divider-last-pixel "#415367")
+
+
+
 (setq use-dark-theme-mode t)
 (if use-dark-theme-mode
     (setq darker-window-bg-color "#181818"

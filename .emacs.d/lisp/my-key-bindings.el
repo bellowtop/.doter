@@ -62,6 +62,9 @@
 (bind-key* (kbd "s-h") #'tab-previous)
 (bind-key* (kbd "s-l") #'tab-next)
 
+(bind-key* (kbd "s-b") #'treemacs)
+
+
 ;; jump with C-- C-=, like vscode
 (bind-key* (kbd "C--") 'nice-jumper/backward)
 (bind-key* (kbd "C-_") 'nice-jumper/forward)
