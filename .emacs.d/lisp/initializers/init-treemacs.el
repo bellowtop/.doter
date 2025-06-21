@@ -183,7 +183,7 @@ exists it returns /file/name_Copy2.ext etc."
     (set-face-attribute face nil
       :family "IBM Plex Mono"
       :weight 'normal
-      :height 140
+      :height 150
       :underline nil
       :inherit 'unspecified))
 
