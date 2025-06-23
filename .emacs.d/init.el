@@ -282,7 +282,9 @@
 (use-package vscode-dark-plus-theme
   :ensure t
   :config
-  (load-theme 'vscode-dark-plus t))
+  (load-theme 'vscode-dark-plus t)
+  (set-face-attribute 'font-lock-keyword-face nil :foreground "orchid")
+  )
 
 ;; (load-theme 'doom-xcode t)
 (set-face-attribute 'font-lock-keyword-face nil :weight 'normal)
