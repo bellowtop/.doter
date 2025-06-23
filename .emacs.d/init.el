@@ -245,7 +245,7 @@
 
 (defun my-set-large-line-height ()
   (interactive)
-  (setq-local default-text-properties '(line-spacing 0.10 line-height 1.10)))
+  (setq-local default-text-properties '(line-spacing 0.11 line-height 1.11)))
 
 (add-hook 'text-mode-hook #'my-set-large-line-height)
 (add-hook 'prog-mode-hook #'my-set-large-line-height)

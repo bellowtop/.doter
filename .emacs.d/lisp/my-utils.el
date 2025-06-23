@@ -861,7 +861,7 @@ If buffer-or-name is nil return current buffer's mode."
   (if (eq (buffer-mode) 'vterm-mode)
     (cond
       ((bound-and-true-p popwin-mode) (popwin:close-popup-window))
-      ((bound-and-true-p popper-mode) (popper-toggle))
+      ((bound-and-true-p popper-mode) (popper-close-latest))
       (t (switch-to-buffer (other-buffer (current-buffer))))
       )
     (vterm)))
