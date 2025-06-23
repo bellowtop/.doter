@@ -196,7 +196,7 @@
 ;; truncate-lines right margin sign
 (set-display-table-slot standard-display-table 0 ?→)
 
-(setq cursor-in-non-selected-windows nil)
+(setq-default cursor-in-non-selected-windows nil)
 
 (defun my-change-window-divider ()
   (let ((display-table (or buffer-display-table standard-display-table)))
@@ -209,7 +209,6 @@
 
 
 
-(window-divider-mode 1)
 ;; 水平 window 分隔线
 (setq window-divider-default-places 'bottom-only)
 (setq window-divider-default-bottom-width 1)
@@ -218,6 +217,7 @@
 (set-face-foreground 'window-divider "#415367")
 (set-face-foreground 'window-divider-first-pixel "#415367")
 (set-face-foreground 'window-divider-last-pixel "#415367")
+(window-divider-mode 1)
 
 
 
