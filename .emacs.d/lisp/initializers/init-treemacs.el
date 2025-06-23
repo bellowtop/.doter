@@ -12,7 +12,7 @@
   (setq treemacs-last-error-persist-file
     (expand-file-name "~/.emacs.d/.local/treemacs-persist-at-last-error"))
   (setq treemacs-expand-after-init nil)
-  (setq treemacs-width-is-initially-locked t)
+  (setq treemacs-width-is-initially-locked nil)
   (setq cursor-type nil)
   (treemacs-follow-mode 0)
 
@@ -138,7 +138,7 @@ exists it returns /file/name_Copy2.ext etc."
   (add-hook 'treemacs-mode-hook #'dim-treemacs-window-background)
   ;; (add-hook 'treemacs-mode-hook #'change-treemacs-hl-line-mode)
   (add-hook 'treemacs-mode-hook #'my-special-buffer-keys-minor-mode)
-  ;; (add-hook 'treemacs-mode-hook #'my-set-bigger-spacing)
+  (add-hook 'treemacs-mode-hook #'my-set-large-line-height)
   :bind
   (:map
     treemacs-mode-map
