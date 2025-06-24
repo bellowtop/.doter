@@ -16,7 +16,7 @@
 (use-package ripgrep
   :ensure t
   :config
-  (set-face-attribute 'ripgrep-match-face nil :inherit 'my-highlight-font-words-face)
+  ;; Face configuration moved to custom-set-faces
   :bind
   (:map ripgrep-search-mode-map
         (";" . scroll-up-command)

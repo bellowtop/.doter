@@ -37,16 +37,7 @@
       ))
   (advice-add 'eglot-ensure :around #'my/around-eglot-ensure)
 
-
-
-  ;; Face configuration for diagnostics
-  (set-face-attribute 'eglot-diagnostic-tag-unnecessary-face nil
-                      :underline nil
-                      :foreground "yellow")
-  (set-face-attribute 'eglot-diagnostic-tag-deprecated-face nil
-                      :underline nil
-                      :strike-through nil
-                      :foreground "yellow")
+  ;; Face configuration moved to custom-set-faces
 
   ;; Server configurations for specific languages
   (setq-default eglot-workspace-configuration
@@ -74,7 +65,7 @@
       eglot--lsp-xref-refs
       (eglot--lsp-xrefs-for-method
         :textDocument/references
-        :extra-params `(:context (:includeDeclaration nil)))))
+        :extra-params `(:context (:includeDeclaration :json-false)))))
 
   ;; Swift mode hook with special handling for .swiftinterface files
   (defun my-swift-eglot-hook ()
@@ -111,10 +102,7 @@
   :ensure t
   :after sideline
   :config
-  (set-face-attribute 'sideline-flymake-error nil
-                      :inherit nil
-                      :background "gray"
-                      :foreground "black")
+  ;; Face configuration moved to custom-set-faces
   )
 
 (provide 'init-eglot)

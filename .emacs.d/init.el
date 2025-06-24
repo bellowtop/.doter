@@ -178,12 +178,6 @@
       (lambda () (generate-new-buffer "untitled")))
 
 ;;; Frame and Border Configuration
-(set-face-attribute 'show-paren-match nil
-                    :foreground "green"
-                    :background "#11501B"
-                    :weight 'normal
-                    :underline '(:position t))
-
 (setq-default left-margin-width 0
               right-margin-width 0)
 (setq frame-resize-pixelwise t)
@@ -207,19 +201,12 @@
 ;;; Theme Configuration
 (setq window-divider-color "#06C668")
 
-
-
 ;; 水平 window 分隔线
 (setq window-divider-default-places 'bottom-only)
 (setq window-divider-default-bottom-width 1)
 (setq window-divider-default-right-width 1)
 ;; 跟 mode-line 一样的颜色
-(set-face-foreground 'window-divider "#415367")
-(set-face-foreground 'window-divider-first-pixel "#415367")
-(set-face-foreground 'window-divider-last-pixel "#415367")
 (window-divider-mode 1)
-
-
 
 (setq use-dark-theme-mode t)
 (if use-dark-theme-mode
@@ -238,7 +225,6 @@
         whitespace-trailing-fg-color "#161c23"
         hl-line-bg-color (face-background 'highlight)))
 
-
 (defun my-set-small-line-height ()
   (interactive)
   (setq-local default-text-properties '(line-spacing 0 line-height 1)))
@@ -251,7 +237,6 @@
 (add-hook 'prog-mode-hook #'my-set-large-line-height)
 (add-hook 'conf-mode-hook #'my-set-large-line-height)
 (add-hook 'org-mode-hook  #'my-set-large-line-height)
-
 
 ;;; Custom Faces
 (defface my-highlight-font-chars-face
@@ -268,20 +253,11 @@
   "custom highlight for treemacs current line")
 
 ;;; Theme Loading and Face Configuration
-(set-face-foreground 'default "#D1D2CE")
-(set-face-attribute 'lazy-highlight nil :background "#7FDC59" :foreground "#161c23")
-
-(with-eval-after-load 'wid-edit
-  (set-face-attribute 'widget-field nil :background "#C6B8AD" :foreground "black"))
-
-;; for macOS, set tooltip font size by:
-;; defaults write org.gnu.Emacs NSToolTipsFontSize -int 16
-(set-face-font 'tooltip (frame-parameter nil 'font))
-
-
 (use-package vscode-dark-plus-theme
   :ensure t
   :config
+  ;; 禁用有问题的 org-todo box 配置
+  (setq vscode-dark-plus-box-org-todo nil)
   (load-theme 'vscode-dark-plus t)
   (add-hook 'after-load-theme-hook
             (lambda ()
@@ -289,31 +265,6 @@
   )
 
 ;; (load-theme 'doom-xcode t)
-(set-face-attribute 'font-lock-keyword-face nil :weight 'normal)
-(set-face-attribute 'font-lock-preprocessor-face nil :weight 'normal)
-(set-face-attribute 'region nil :background "#214283" :distant-foreground "#707080")
-(set-face-attribute 'isearch nil :weight 'normal)
-(set-face-attribute 'lazy-highlight nil :weight 'normal)
-
-(set-face-background 'default "#161c23")
-
-(set-face-attribute 'mode-line-inactive nil :box nil :underline nil)
-(set-face-attribute 'mode-line-active nil :box nil :underline nil)
-(set-face-attribute 'mode-line-highlight nil :box nil :foreground "green")
-
-(set-face-attribute 'isearch nil
-  :foreground "white"
-  :background "deeppink")
-
-(set-face-attribute 'vertical-border nil
-  :foreground "#353535"
-  :background (face-background 'default)
-  :inherit 'unspecified)
-
-(set-face-attribute 'fringe nil
-  :foreground 'unspecified
-  :background 'unspecified
-  :inherit 'default)
 
 ;;; Terminal Colors
 (require 'ansi-color)
@@ -326,18 +277,6 @@
       '(dired-mode deadgrep-mode deadgrep-edit-mode treemacs-mode))
 
 (global-hl-line-mode 0)
-
-(set-face-attribute 'line-number nil
-  :background (face-background 'default)
-  :foreground "gray33"
-  :slant 'normal
-  :weight 'normal)
-
-(set-face-attribute 'line-number-current-line nil
-  :background (face-background 'hl-line)
-  :foreground "white"
-  :slant 'normal
-  :weight 'normal)
 
 (toggle-truncate-lines nil)
 (toggle-continuation-fringe-indicator)
@@ -388,12 +327,10 @@
 (require 'init-yank-indent)
 (require 'init-srefactor)
 
-
 ;; .gitignore  .dockerignore .npmignore
 (add-to-list 'auto-mode-alist '("\\.[^.]+ignore\\'" . conf-mode))
 ;; .env
 (add-to-list 'auto-mode-alist '("\\.env.*\\'" . conf-mode))
-
 
 ;;; Advice for Enhanced Editing
 (defadvice kill-region (before slick-cut activate compile)
@@ -429,7 +366,6 @@
 (require 'init-popper)
 
 (require 'hidden-mode-line)
-
 
 ;;; ===================================================================
 ;;; VISUAL ENHANCEMENTS & THEMES
@@ -525,7 +461,6 @@
 (require 'init-imenu)
 (require 'init-modeline)
 
-
 (use-package xwidget
   :ensure nil
   :bind (("C-c w s" . my/xwidget-webkit-search))
@@ -552,7 +487,6 @@
       (xwidget-webkit-browse-url (concat "https://www.google.com/search?q="
                                    (url-hexify-string query))))))
 
-
 (use-package xwwp
   :ensure t
   :config
@@ -563,15 +497,11 @@
   :bind (:map xwidget-webkit-mode-map
               ("v" . xwwp-follow-link)))
 
-
 (use-package hl-todo
   :ensure t
   :config
   (global-hl-todo-mode 1)
   )
-
-
-
 
 ;;; Text Mode Enhancements
 (add-hook 'org-mode-hook #'valign-mode)
@@ -642,7 +572,82 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(mode-line ((t (:background "#415367" :foreground "#e5ded6" :underline (:color foreground-color :style line :position t)))))
- '(success ((t (:foreground "Green1" :weight regular)))))
+ '(success ((t (:foreground "Green1" :weight regular))))
+ ;; 基础界面颜色
+ '(default ((t (:foreground "#D1D2CE" :background "#161c23" :font "IBM Plex Mono-15.0"))))
+ '(show-paren-match ((t (:foreground "green" :background "#11501B" :weight normal :underline (:position t)))))
+ '(lazy-highlight ((t (:background "#7FDC59" :foreground "#161c23" :weight normal))))
+ '(widget-field ((t (:background "#C6B8AD" :foreground "black"))))
+ '(font-lock-keyword-face ((t (:foreground "orchid" :weight normal))))
+ '(font-lock-preprocessor-face ((t (:weight normal))))
+ '(region ((t (:background "#214283" :distant-foreground "#707080"))))
+ '(isearch ((t (:foreground "white" :background "deeppink" :weight normal))))
+ '(mode-line-inactive ((t (:box nil :underline nil))))
+ '(mode-line-active ((t (:box nil :underline nil))))
+ '(mode-line-highlight ((t (:box nil :foreground "green"))))
+ '(vertical-border ((t (:foreground "#353535" :background "#161c23" :inherit unspecified))))
+ '(fringe ((t (:foreground unspecified :background unspecified :inherit default))))
+ '(line-number ((t (:background "#161c23" :foreground "gray33" :slant normal :weight normal))))
+ '(line-number-current-line ((t (:background "#1b2129" :foreground "white" :slant normal :weight normal))))
+ ;; 窗口分隔线
+ '(window-divider ((t (:foreground "#415367"))))
+ '(window-divider-first-pixel ((t (:foreground "#415367"))))
+ '(window-divider-last-pixel ((t (:foreground "#415367"))))
+ ;; 工具提示
+ '(tooltip ((t (:font "IBM Plex Mono-15.0"))))
+ ;; Company 补全
+ '(company-tooltip-common ((t (:weight normal :foreground "#7FDC59"))))
+ '(company-tooltip ((t (:background "black"))))
+ '(company-tooltip-selection ((t (:weight normal))))
+ ;; Ivy 搜索
+ '(ivy-minibuffer-match-face-1 ((t (:weight regular))))
+ '(ivy-minibuffer-match-face-2 ((t (:weight regular))))
+ '(ivy-minibuffer-match-face-3 ((t (:weight regular))))
+ '(ivy-minibuffer-match-face-4 ((t (:weight regular))))
+ ;; Avy 跳转
+ '(avy-lead-face ((t (:background "#161c23" :weight normal :foreground "deeppink"))))
+ '(avy-lead-face-0 ((t (:background "#161c23" :foreground "#FFB400"))))
+ ;; Whitespace 模式
+ '(whitespace-tab ((t (:foreground unspecified :background unspecified :inherit shadow))))
+ '(whitespace-trailing ((t (:foreground unspecified :background unspecified :inherit shadow))))
+ ;; Treemacs 主题
+ '(treemacs-root-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#57D8D4"))))
+ '(treemacs-directory-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#57D8D4"))))
+ '(treemacs-directory-collapsed-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#57D8D4"))))
+ '(treemacs-git-modified-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#D0BF68"))))
+ '(treemacs-git-unmodified-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-git-renamed-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-git-ignored-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-git-untracked-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-git-added-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-git-conflict-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-file-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-tags-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ ;; CFRS 边框
+ '(cfrs-border-color ((t (:background "yellow"))))
+ ;; 其他工具
+ '(ripgrep-match-face ((t (:inherit my-highlight-font-words-face))))
+ '(yas-field-highlight-face ((t (:inherit my-highlight-font-words-face))))
+ '(symbol-overlay-default-face ((t (:inherit my-highlight-font-words-face :foreground "#5114FA" :background "white"))))
+ '(deadgrep-match-face ((t (:inherit lazy-highlight))))
+ ;; God 模式标签
+ '(tab-bar-tab ((t (:foreground "black" :background "yellow" :box (:line-width 3 :color "yellow" :style flat-button)))))
+ ;; Eglot 高亮
+ '(eglot-highlight-symbol-face ((t (:inherit my-highlight-font-words-face))))
+ ;; Flymake 诊断
+ '(flymake-error ((t (:foreground "DeepPink" :underline nil))))
+ '(flymake-warning ((t (:underline nil))))
+ '(flymake-note ((t (:underline nil))))
+ ;; Eglot 诊断标签
+ '(eglot-diagnostic-tag-unnecessary-face ((t (:underline nil :foreground "yellow"))))
+ '(eglot-diagnostic-tag-deprecated-face ((t (:underline nil :strike-through nil :foreground "yellow"))))
+ ;; Sideline Flymake
+ '(sideline-flymake-error ((t (:inherit nil :background "gray" :foreground "black"))))
+ ;; Highlight Indent Guides
+ '(shadow ((t (:foreground "#444444"))))
+ '(highlight-indent-guides-character-face ((t (:inherit shadow))))
+ ;; Iedit
+ '(iedit-occurrence ((t (:foreground "black" :background "yellow")))))
 
 ;;; Custom Variables
 (custom-set-variables

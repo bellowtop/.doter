@@ -12,8 +12,7 @@
 
 
 (with-eval-after-load 'eglot
-  (set-face-attribute 'eglot-highlight-symbol-face nil :inherit (if (display-graphic-p) 'my-highlight-font-words-face 'my-highlight-font-words-face))
-  (setq my-eglot-highlight-symbol-face-saved (face-attribute 'eglot-highlight-symbol-face :inherit))
+  (setq my-eglot-highlight-symbol-face-saved 'my-highlight-font-words-face)
   )
 
 
@@ -25,6 +24,7 @@
       (ignore-errors
         (setq eglot-ignored-server-capabilities
           (add-to-list 'eglot-ignored-server-capabilities ':documentHighlightProvider))
+        ;; Dynamic face change - disable highlight
         (set-face-attribute 'eglot-highlight-symbol-face nil :inherit nil)
         (try-stop-flymake)))))
 
@@ -34,6 +34,7 @@
   (ignore-errors
     (setq eglot-ignored-server-capabilities
       (delete ':documentHighlightProvider eglot-ignored-server-capabilities))
+    ;; Dynamic face change - restore highlight
     (set-face-attribute 'eglot-highlight-symbol-face nil :inherit my-eglot-highlight-symbol-face-saved)
     (try-start-flymake)
     ))
@@ -43,6 +44,7 @@
 (defun my-enable-paren-highlight ()
   (interactive)
   (ignore-errors
+    ;; Dynamic face change - enable paren highlight
     (set-face-attribute 'show-paren-match nil :foreground "green" :background "#11501B" :weight 'normal :underline '(:position t))
     ;; (set-face-attribute 'show-paren-match nil :foreground "green" :background 'unspecified :weight 'normal :underline '(:position t))
     ))
@@ -53,6 +55,7 @@
   (run-with-timer my-disable-timeout nil
     (lambda ()
       (ignore-errors
+        ;; Dynamic face change - disable paren highlight
         (set-face-attribute 'show-paren-match nil :foreground "green" :background 'unspecified)))))
 
 ;; (set-face-attribute 'show-paren-match nil :foreground 'unspecified :background 'unspecified :weight 'bold)))

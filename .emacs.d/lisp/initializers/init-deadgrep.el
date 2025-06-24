@@ -51,7 +51,7 @@
   (advice-add 'deadgrep--arguments :filter-return #'deadgrep--include-args)
   (add-hook 'deadgrep-finished-hook 'my-quit-other-window)
   :config
-  (set-face-attribute 'deadgrep-match-face nil :inherit 'lazy-highlight)
+  ;; Face configuration moved to custom-set-faces
 )
 
 

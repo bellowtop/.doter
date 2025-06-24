@@ -24,12 +24,6 @@
         ;; configure regexp engine - allow input not in order
         ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
 
-  ;; Face configuration
-  (set-face-attribute 'ivy-minibuffer-match-face-1 nil :weight 'regular)
-  (set-face-attribute 'ivy-minibuffer-match-face-2 nil :weight 'regular)
-  (set-face-attribute 'ivy-minibuffer-match-face-3 nil :weight 'regular)
-  (set-face-attribute 'ivy-minibuffer-match-face-4 nil :weight 'regular)
-
   ;; don't show these buffers in counsel-switch-buffer
   (dolist (buffer '("\\*Messages\\*"
                     "\\*Help\\*"
@@ -80,10 +74,10 @@
         ivy-posframe-parameters `((left-fringe . ,my-posframe-fringe-width)
                                   (right-fringe . ,my-posframe-fringe-width)))
 
-  ;; Face configuration
-  (set-face-attribute 'ivy-posframe nil :background "black")
-  (set-face-attribute 'fringe nil :background "black")
-  (set-face-attribute 'ivy-posframe-border nil :background (face-foreground 'vertical-border))
+  ;; 安全地设置 posframe 的 face 属性
+  (with-eval-after-load 'ivy-posframe
+    (set-face-attribute 'ivy-posframe nil :background "black")
+    (set-face-attribute 'ivy-posframe-border nil :background "#353535"))
 
   (ivy-posframe-mode 1))
 

@@ -18,10 +18,7 @@
                                      (warning . nil)
                                      (note . nil)))
 
-  ;; 可选：修改错误提示样式，去掉讨厌的红色波浪线
-  (set-face-attribute 'flymake-error nil :foreground "DeepPink" :underline nil)
-  (set-face-attribute 'flymake-warning nil :underline nil)
-  (set-face-attribute 'flymake-note nil :underline nil)
+  ;; Face configuration moved to custom-set-faces
 
   ;; 添加一个快捷键来手动触发 flymake 检查
   (define-key flymake-mode-map (kbd "C-c f") #'flymake-start)

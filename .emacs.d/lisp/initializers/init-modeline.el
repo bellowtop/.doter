@@ -98,6 +98,6 @@ This variable is nil if the current buffer isn't visiting a file.")
               `(:eval (my-buffer-identification-cached
                        (or buffer-filename-with-git-directory ""))))
 
-(set-face-attribute 'mode-line-highlight nil :foreground "black")
+;; Face configuration moved to custom-set-faces
 
 (provide 'init-modeline)

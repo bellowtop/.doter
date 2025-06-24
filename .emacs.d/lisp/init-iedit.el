@@ -12,7 +12,8 @@
   :ensure t
   :bind (("C-M-'" . iedit-mode))
   :config
-  (set-face-attribute 'iedit-occurrence nil :foreground "black" :background "yellow"))
+  ;; Face configuration moved to custom-set-faces
+  )
 
 (provide 'init-iedit)
 

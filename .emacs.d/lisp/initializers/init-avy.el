@@ -1,4 +1,3 @@
-
 (require 'avy)
 (setq avy-keys (list ?a ?s ?d ?f ?g ?w ?e ?v ?m ?n ?i ?o ?h ?j ?k ?l ?\;))
 (setq avy-background 't)
@@ -26,15 +25,5 @@
     (when (boundp hl-line-mode) (hl-line-mode 1))
     )
   '((name . "avy-success-end")))
-
-
-(set-face-attribute 'avy-lead-face nil
-  :background (face-background 'default)
-  :weight 'normal
-  :foreground "deeppink")
-
-(set-face-attribute 'avy-lead-face-0 nil
-  :background (face-background 'default)
-  :foreground "#FFB400")
 
 (provide 'init-avy)

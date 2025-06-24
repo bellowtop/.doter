@@ -24,11 +24,6 @@
   :config
   (company-posframe-mode 1)
 
-  ;; Face configuration
-  (set-face-attribute 'company-tooltip-common nil :weight 'normal :foreground "#7FDC59")
-  (set-face-attribute 'company-tooltip nil :background "black")
-  (set-face-attribute 'company-tooltip-selection nil :weight 'normal)
-
   ;; Posframe settings
   (setq company-tooltip-scrollbar-width 0
         company-posframe-show-params (list

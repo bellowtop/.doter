@@ -167,58 +167,6 @@ exists it returns /file/name_Copy2.ext etc."
   (require 'treemacs-all-the-icons)
   (treemacs-load-theme "all-the-icons")
 
-  (dolist
-    (face '(treemacs-root-face
-             treemacs-git-unmodified-face
-             treemacs-git-modified-face
-             treemacs-git-renamed-face
-             treemacs-git-ignored-face
-             treemacs-git-untracked-face
-             treemacs-git-added-face
-             treemacs-git-conflict-face
-             treemacs-directory-face
-             treemacs-directory-collapsed-face
-             treemacs-file-face
-             treemacs-tags-face))
-    (set-face-attribute face nil
-      :family "IBM Plex Mono"
-      :weight 'normal
-      :height 150
-      :underline nil
-      :inherit 'unspecified))
-
-  (dolist
-    (face '(treemacs-root-face
-             treemacs-directory-face
-             treemacs-directory-collapsed-face
-             ))
-    (set-face-attribute face nil
-      :foreground "#57D8D4"
-      ))
-
-  (dolist
-    (face '(treemacs-git-modified-face
-             ))
-    (set-face-attribute face nil
-      :foreground "#D0BF68"
-      ))
-
-  (dolist
-    (face '(treemacs-git-unmodified-face
-             treemacs-git-modified-face
-             treemacs-git-renamed-face
-             treemacs-git-ignored-face
-             treemacs-git-untracked-face
-             treemacs-git-added-face
-             treemacs-git-conflict-face
-             treemacs-file-face
-             treemacs-tags-face
-             ))
-    (set-face-attribute face nil
-      :foreground "#C6B8AD"
-      ))
-
-
   (treemacs-create-theme "simple"
     :config
     (progn
@@ -243,7 +191,7 @@ exists it returns /file/name_Copy2.ext etc."
 
 
 (with-eval-after-load 'cfrs
-  (set-face-attribute 'cfrs-border-color nil :background "yellow")
+  ;; CFRS face configuration moved to custom-set-faces
 )
 
 
