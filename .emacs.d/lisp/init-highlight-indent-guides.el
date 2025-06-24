@@ -14,7 +14,6 @@
   (setq highlight-indent-guides-method 'character
         highlight-indent-guides-auto-enabled nil
         highlight-indent-guides-character ?\x258f)
-
   (set-face-attribute 'shadow nil :foreground "#444444")
   (set-face-attribute 'highlight-indent-guides-character-face nil :inherit 'shadow)
   (defun my-highlighter (level responsive display)
