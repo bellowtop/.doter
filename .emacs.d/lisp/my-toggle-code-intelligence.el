@@ -80,6 +80,7 @@
     (my-disable-eglot-highlight)
     (electric-pair-mode 0)
     (undo-tree-mode 0)
+    (symbol-overlay-mode 0)
     (setq my-code-intelligence nil)
     ;; (message "code-intelligence is disabled.")
     ))

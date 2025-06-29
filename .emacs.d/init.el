@@ -417,6 +417,11 @@
 (add-hook 'isearch-mode-hook #'my-change-cursor-type-when-isearch)
 (add-hook 'isearch-mode-end-hook #'my-change-cursor-type-when-isearch)
 
+;; Safe isearch 全局高亮
+(require 'my-isearch-highlight-all)
+(add-hook 'isearch-update-post-hook #'my-isearch-highlight-all-matches)
+(add-hook 'isearch-mode-end-hook #'my-isearch-cleanup)
+
 ;;; Additional Tools
 (require 'init-blink-search)
 (require 'init-tabby)
@@ -628,7 +633,7 @@
  ;; 其他工具
  '(ripgrep-match-face ((t (:inherit my-highlight-font-words-face))))
  '(yas-field-highlight-face ((t (:inherit my-highlight-font-words-face))))
- '(symbol-overlay-default-face ((t (:inherit my-highlight-font-words-face :foreground "#5114FA" :background "white"))))
+ '(symbol-overlay-default-face ((t (:inherit my-highlight-font-words-face))))
  '(deadgrep-match-face ((t (:inherit lazy-highlight))))
  ;; God 模式标签
  '(tab-bar-tab ((t (:foreground "black" :background "yellow" :box (:line-width 3 :color "yellow" :style flat-button)))))
