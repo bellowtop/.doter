@@ -123,7 +123,7 @@
 ;;; ===================================================================
 
 ;;; Font and UI Configuration
-(setq default-font "IBM Plex Mono-15.0"
+(setq default-font "IBM Plex Mono-14.5"
       default-font-family "IBM Plex Mono")
 
 (set-face-attribute 'default nil :font default-font)

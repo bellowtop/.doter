@@ -1,0 +1,22 @@
+#
+# Git Aliases Remote Load Configuration
+REMOTE_GIT_ALIASES="$HOME/.git_aliases"
+REMOTE_GIT_ALIASES_URL="https://gist.github.com/bellowtop/c7903257c2a949d3c0d81f6b8d9ff4f9/raw/8f36d6b405da01833a01bb5eadf333d6a5e35289/.git_aliases"
+
+# Download the file only if it doesn't exist
+if [[ ! -f "$REMOTE_GIT_ALIASES" ]]; then
+    if command -v curl >/dev/null 2>&1; then
+        echo "Downloading Git aliases from $REMOTE_GIT_ALIASES_URL..."
+        curl -o "$REMOTE_GIT_ALIASES" -L "$REMOTE_GIT_ALIASES_URL"
+    else
+        echo "Error: curl not found. Please install curl."
+        exit 1
+    fi
+fi
+
+# Source the alias file if it exists
+if [[ -f "$REMOTE_GIT_ALIASES" ]]; then
+    source "$REMOTE_GIT_ALIASES"
+else
+    echo "Error: Failed to load Git aliases. File not found."
+file
