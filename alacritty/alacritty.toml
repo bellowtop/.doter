@@ -10,10 +10,6 @@ text = "#FFFFFF"
 blink_interval = 500
 unfocused_hollow = true
 
-[cursor.style]
-blinking = "Always"
-shape = "Beam"
-
 [debug]
 log_level = "OFF"
 persistent_logging = false
@@ -789,7 +785,7 @@ semantic_escape_chars = ",│`|:\"' ()[]{}<>"
 decorations = "transparent"
 dynamic_padding = false
 opacity = 1.0
-startup_mode = "Windowed"
+startup_mode = "Maximized"
 
 [window.padding]
 x = 0
