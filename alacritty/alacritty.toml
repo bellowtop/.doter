@@ -88,6 +88,11 @@ key = "L"
 mods = "Command"
 
 [[keyboard.bindings]]
+chars = "\u0013h"
+key = "H"
+mods = "Command"
+
+[[keyboard.bindings]]
 chars = "\u0013n"
 key = "T"
 mods = "Command"

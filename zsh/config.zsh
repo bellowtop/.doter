@@ -19,6 +19,12 @@ setopt HIST_NO_STORE
 export GIT_PAGER=less
 
 
+if command -v fzf >/dev/null 2>&1
+then
+source <(fzf --zsh)
+fi
+
+
 alias vim="nvim"
 alias em="/Applications/Emacs.app/Contents/MacOS/Emacs -nw"
 alias ee="/Applications/Emacs.app/Contents/MacOS/Emacs"
