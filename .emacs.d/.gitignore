@@ -73,3 +73,4 @@ transient/
 elpy/
 package-quickstart.el
 .lsp-session*
+projects.eld

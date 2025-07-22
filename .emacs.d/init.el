@@ -14,7 +14,7 @@
       '(("gnu" . "https://elpa.gnu.org/packages/")
         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
         ("melpa" . "https://melpa.org/packages/")
-        ("org" . "http://orgmode.org/elpa/")))
+        ))
 
 ;; 完全禁止自动包管理
 (setq package-enable-at-startup nil
