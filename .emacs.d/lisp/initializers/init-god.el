@@ -80,6 +80,8 @@
                        "lisp-mode"
                        "slime-mode"
                        "minibuffer-mode"
+                       "eat-mode"
+                       "vterm-mode"
                        "inferior-python-mode"
                        "fundamental-mode"
                        "cnfonts-ui-mode"

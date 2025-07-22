@@ -520,6 +520,14 @@
   (global-hl-todo-mode 1)
   )
 
+
+(use-package claude-code
+  :bind-keymap
+  ("C-c c" . claude-code-command-map) ;; or your preferred key
+  :config
+  (claude-code-mode))
+
+
 ;;; Text Mode Enhancements
 (add-hook 'org-mode-hook #'valign-mode)
 (add-hook 'markdown-mode-hook #'valign-mode)
