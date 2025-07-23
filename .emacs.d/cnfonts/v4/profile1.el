@@ -2,7 +2,7 @@
 (setq cnfonts--custom-set-fontnames
       '(
         ("IBM Plex Mono" "IBM Plex Mono 1.2" "Monaco" "Consolas" "DejaVu Sans Mono" "Droid Sans Mono" "PragmataPro Mono" "Courier" "Courier New" "Ubuntu Mono" "Liberation Mono" "MonacoB" "MonacoB2" "MonacoBSemi" "Droid Sans Mono Pro" "Inconsolata" "Source Code Pro" "Lucida Console" "Envy Code R" "Andale Mono" "Lucida Sans Typewriter" "monoOne" "Lucida Typewriter" "Panic Sans" "Hack" "Bitstream Vera Sans Mono" "HyperFont" "PT Mono" "Ti92Pluspc" "Excalibur Monospace" "Menlof" "Cousine" "Fira Mono" "Lekton" "M+ 1mn" "BPmono" "Free Mono" "Anonymous Pro" "ProFont" "ProFontWindows" "Latin Modern Mono" "Code 2002" "ProggyCleanTT" "ProggyTinyTT" "Iosevka Term" "Inconsolata-dz" "American Typewriter" "Menlo" "Anka/Coder Condensed" "Fantasque Sans Mono" "M+ 1m" "CamingoCode" "Office Code Pro" "Roboto Mono" "Input Mono" "Courier Prime Code" "NanumGothicCoding" "Monoid" "Edlo" "Iosevka" "Mononoki" "Robot Mono" "Fantasque" "Fira Code" "Go Mono" "Noto Sans Mono CJK" "InputMonoCompressed" "Hasklig" "Terminus" "FantasqueSansMono" "AnonymousPro" "Arimo" "D2Coding" "Inconsolata-g" "Noto Mono" "ProFont for Powerline" "Meslo" "Meslo Dotted" "Symbol Neu" "Tinos" "Space Mono" "SFMono Nerd Font")
-        ("PingFang SC" "兰亭黑-简" "IBM Plex Sans SC" "华文仿宋" "STKaiti" "STSong" "STFangsong" "华文楷体" "Hiragino Sans GB" "微软雅黑" "Noto Sans Mono CJK SC" "Noto Sans Mono CJK TC" "Noto Sans CJK SC" "Noto Sans CJK TC" "Microsoft Yahei" "Microsoft YaHei Mono" "Microsoft_Yahei" "Ubuntu Mono" "文泉驿等宽微米黑" "文泉驿等宽正黑" "黑体" "Source Han Serif CN" "Source Han Sans CN" "思源黑体 CN" "思源宋体 CN" "文泉驿正黑" "文泉驿点阵正黑" "SimHei" "SimSun" "NSimSun" "FangSong" "KaiTi" "FangSong_GB2312" "KaiTi_GB2312" "LiSu" "YouYuan" "新宋体" "宋体" "楷体_GB2312" "仿宋_GB2312" "幼圆" "隶书" "STXihei" "STXingkai" "华文行楷" "华文细黑")
+        ("等距更纱黑体 SC" "JuliaMono" "IBM Plex Sans SC" "兰亭黑-简" "PingFang SC" "Hiragino Sans GB" "华文仿宋" "STKaiti" "STSong" "STFangsong" "华文楷体" "微软雅黑" "Noto Sans Mono CJK SC" "Noto Sans Mono CJK TC" "Noto Sans CJK SC" "Noto Sans CJK TC" "Microsoft Yahei" "Microsoft YaHei Mono" "Microsoft_Yahei" "Ubuntu Mono" "文泉驿等宽微米黑" "文泉驿等宽正黑" "黑体" "Source Han Serif CN" "Source Han Sans CN" "思源黑体 CN" "思源宋体 CN" "文泉驿正黑" "文泉驿点阵正黑" "SimHei" "SimSun" "NSimSun" "FangSong" "KaiTi" "FangSong_GB2312" "KaiTi_GB2312" "LiSu" "YouYuan" "新宋体" "宋体" "楷体_GB2312" "仿宋_GB2312" "幼圆" "隶书" "STXihei" "STXingkai" "华文行楷" "华文细黑")
         ("HanaMinB" "SimSun-ExtB" "MingLiU-ExtB" "PMingLiU-ExtB" "MingLiU_HKSCS-ExtB" "Hanazono Mincho" "Hanazono Mincho A" "Hanazono Mincho B" "Hanazono Mincho C" "Hanazono Mincho Ex" "Hanazono Mincho Ex A1" "Hanazono Mincho Ex A2" "Hanazono Mincho Ex B" "Hanazono Mincho Ex C" "Hanazono Mincho I")
         ("Segoe UI Symbol" "Symbola" "Standard Symbols L")
         ("NanumGothic" "Arial Unicode MS" "MS Gothic" "Lucida Sans Unicode")
@@ -20,7 +20,7 @@
         (11.5 13.5 13.5 11.5 11.5)
         (12   14.0 14.0 12   12  )
         (12.5 14.5 14.5 12.5 12.5)
-        (13   14.0 14.0 13.0 13.0)
+        (13   15.0 13.0 13.0 13.0)
         (13.5 16.0 16.0 13.5 13.5)
         (14   16.5 16.5 14   14  )
         (14.5 17.0 17.0 14.5 14.5)

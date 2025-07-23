@@ -82,6 +82,7 @@
                        "minibuffer-mode"
                        "inferior-python-mode"
                        "fundamental-mode"
+                       "cnfonts-ui-mode"
                        "deadgrep-edit-mode"))
 
 (defun my-god-this-is-special-buffer (bufname)

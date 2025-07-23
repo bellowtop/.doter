@@ -314,6 +314,8 @@
 ;; 添加两个字号增大缩小的快捷键
 ;; (define-key cnfonts-mode-map (kbd "C--") #'cnfonts-decrease-fontsize)
 ;; (define-key cnfonts-mode-map (kbd "C-=") #'cnfonts-increase-fontsize)
+(setq cnfonts-personal-fontnames '(("IBM Plex Mono") ("IBM Plex Sans SC" "PingFang SC" "等距更纱黑体 SC")))
+
 
 
 ;;; Basic Editing Enhancements
