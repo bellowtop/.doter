@@ -238,6 +238,9 @@
 (add-hook 'conf-mode-hook #'my-set-large-line-height)
 (add-hook 'org-mode-hook  #'my-set-large-line-height)
 
+;; set global proxy
+(my-set-proxy)
+
 ;;; Custom Faces
 (defface my-highlight-font-chars-face
   `((t (:foreground ,highlight-font-chars-face-fg
@@ -531,6 +534,7 @@
                    (display-buffer-in-side-window)
                    (side . right)
                    (window-width . 90)))
+  (setq claude-code-terminal-backend 'eat)
   )
 
 
