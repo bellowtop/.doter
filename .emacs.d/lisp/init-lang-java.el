@@ -43,6 +43,8 @@
 ;; Helper function for jdtls contact
 (defun eglot-jdtls-contact (interactive)
   `(,(file-name-concat jdt-language-server-dir "bin" "jdtls")
+    ;; 指定 Java 运行时路径
+    "--java-executable" ,(file-name-concat java-runtime-path "bin" "java")
     ;; Use macOS ARM config for M1 Mac
     "-configuration" ,jdt-language-server-config-dir
     "-data" ,(file-name-concat
@@ -50,7 +52,11 @@
               (file-name-base (directory-file-name (project-root (eglot--current-project)))))
     ;; Lombok support for Java annotations (optional)
     ;; Uncomment to use Maven repository lombok: ,(concat "--jvm-arg=-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))
-    ,(concat "--jvm-arg=-javaagent:" java-lombok-jar)))
+    ,(concat "--jvm-arg=-javaagent:" java-lombok-jar)
+    ;; JVM memory and GC settings
+    "--jvm-arg=-Xmx2G"
+    "--jvm-arg=-XX:+UseG1GC"
+    "--jvm-arg=-XX:+UseStringDeduplication"))
 
 ;; Configure java-ts-mode (Tree-sitter Java mode)
 (use-package java-ts-mode
@@ -251,17 +257,225 @@
 
 (use-package jdecomp
   :commands (jdecomp-mode)
-  :config
+  :init
+  ;; 预配置反编译器设置（在包加载前）
   (setq jdecomp-decompiler-type 'fernflower
-        ;; Option 1: Use IntelliJ IDEA CE's decompiler (recommended for better compatibility)
-        jdecomp-decompiler-paths `((fernflower . "/Applications/IntelliJ IDEA CE.app/Contents/plugins/java-decompiler/lib/java-decompiler.jar"))
-        ;; Option 2: Use Eclipse JDT LS bundled decompiler
-        ;; jdecomp-decompiler-paths `((fernflower . ,(expand-file-name "config_mac_arm/org.eclipse.osgi/59/0/.cp/lib/java-decompiler-engine-231.9011.34.jar" jdt-language-server-dir)))
-        ;; Option 3: Use JetBrains Toolbox decompiler (if installed via Toolbox)
-        ;; jdecomp-decompiler-paths `((fernflower . ,(expand-file-name "~/Library/Application Support/JetBrains/Toolbox/apps/IDEA-C/ch-0/xxx.xxx.x/plugins/java-decompiler/lib/java-decompiler.jar")))
-        jdecomp-decompiler-options '((fernflower "-hes=0" "-hdc=0" "-fdi=0"))))
+        ;; 使用简化的反编译器路径选择
+        jdecomp-decompiler-paths
+        (let ((cfr-decompiler (file-name-concat java-dev-dir "cfr/cfr.jar"))
+              (intellij-decompiler "/Applications/IntelliJ IDEA CE.app/Contents/plugins/java-decompiler/lib/java-decompiler.jar"))
+          `((fernflower . ,(cond
+                            ;; 1. 优先使用 CFR 反编译器（推荐，兼容性好）
+                            ((file-exists-p cfr-decompiler) cfr-decompiler)
+                            ;; 2. 备选：IntelliJ IDEA 反编译器
+                            ((file-exists-p intellij-decompiler) intellij-decompiler)
+                            ;; 3. 默认：CFR 路径（稍后下载）
+                            (t cfr-decompiler)))))
+        jdecomp-decompiler-options '((fernflower "-hes=0" "-hdc=0" "-fdi=0"))
+        ;; 设置临时目录，避免 nil 路径问题
+        jdecomp-temp-dir (file-name-concat temporary-file-directory "jdecomp")
+        ;; 确保输出目录存在
+        jdecomp-output-directory (file-name-concat temporary-file-directory "jdecomp-output"))
 
+  :config
+  ;; 确保临时目录存在
+  (unless (file-directory-p jdecomp-temp-dir)
+    (make-directory jdecomp-temp-dir t))
 
+  ;; 确保输出目录存在
+  (when (boundp 'jdecomp-output-directory)
+    (unless (file-directory-p jdecomp-output-directory)
+      (make-directory jdecomp-output-directory t)))
+
+  ;; 调试信息：显示反编译器配置
+  (message "JDecomp: Using decompiler at %s"
+           (cdr (assq jdecomp-decompiler-type jdecomp-decompiler-paths)))
+  (message "JDecomp: Temp directory: %s" jdecomp-temp-dir)
+  (when (boundp 'jdecomp-output-directory)
+    (message "JDecomp: Output directory: %s" jdecomp-output-directory))
+
+  ;; 为 .class 文件自动启用 jdecomp-mode
+  (add-to-list 'auto-mode-alist '("\\.class\\'" . jdecomp-mode))
+
+  ;; 增强错误处理和调试
+  (defun jdecomp-safe-mode ()
+    "Safely enable jdecomp with error handling."
+    (condition-case err
+        (progn
+          (message "JDecomp: Attempting to decompile %s" (buffer-name))
+          ;; 确保必要的变量已设置
+          (unless jdecomp-temp-dir
+            (setq jdecomp-temp-dir (file-name-concat temporary-file-directory "jdecomp")))
+          (unless (file-directory-p jdecomp-temp-dir)
+            (make-directory jdecomp-temp-dir t))
+
+          ;; 确保输出目录设置
+          (unless (boundp 'jdecomp-output-directory)
+            (setq jdecomp-output-directory (file-name-concat temporary-file-directory "jdecomp-output")))
+          (unless (file-directory-p jdecomp-output-directory)
+            (make-directory jdecomp-output-directory t))
+
+          ;; 验证反编译器路径
+          (let ((decompiler-path (cdr (assq jdecomp-decompiler-type jdecomp-decompiler-paths))))
+            (unless (and decompiler-path (file-exists-p decompiler-path))
+              (error "Decompiler not found at: %s" decompiler-path)))
+
+          ;; 确保反编译器类型和选项设置
+          (unless jdecomp-decompiler-type
+            (setq jdecomp-decompiler-type 'fernflower))
+          (unless jdecomp-decompiler-options
+            (setq jdecomp-decompiler-options '((fernflower "-hes=0" "-hdc=0" "-fdi=0"))))
+
+          (jdecomp-mode 1)
+          (message "JDecomp: Successfully enabled for %s" (buffer-name)))
+      (error
+       (message "JDecomp error in %s: %s" (buffer-name) err)
+       (fundamental-mode))))
+
+  ;; 自动刷新空白的反编译 buffer
+  (defun jdecomp-auto-refresh ()
+    "Auto refresh if buffer appears empty."
+    (when (and (eq major-mode 'jdecomp-mode)
+               (= (buffer-size) 0))
+      (message "JDecomp: Buffer empty, attempting refresh...")
+      (jdecomp-mode -1)
+      (jdecomp-mode 1)))
+
+  ;; 添加 hook 进行自动检查
+  (add-hook 'jdecomp-mode-hook #'jdecomp-auto-refresh)
+
+  ;; 为 Java 相关的归档文件也启用反编译
+  (add-to-list 'auto-mode-alist '("\\.jar\\'" . archive-mode))
+
+  ;; 增强 Java 调试信息
+  (advice-add 'jdecomp-mode :before
+              (lambda (&rest _)
+                "Show debug info when enabling jdecomp-mode."
+                (when (called-interactively-p 'any)
+                  (message "JDecomp: Manual activation in buffer: %s" (buffer-name)))))
+
+  ;; 添加修复命令
+  (defun jdecomp-fix-setup ()
+    "Fix jdecomp configuration issues."
+    (interactive)
+    (message "JDecomp: Fixing configuration...")
+
+    ;; 重新设置临时目录
+    (setq jdecomp-temp-dir (file-name-concat temporary-file-directory "jdecomp"))
+    (unless (file-directory-p jdecomp-temp-dir)
+      (make-directory jdecomp-temp-dir t))
+
+    ;; 设置输出目录
+    (setq jdecomp-output-directory (file-name-concat temporary-file-directory "jdecomp-output"))
+    (unless (file-directory-p jdecomp-output-directory)
+      (make-directory jdecomp-output-directory t))
+
+    ;; 确保反编译器类型设置
+    (unless jdecomp-decompiler-type
+      (setq jdecomp-decompiler-type 'fernflower))
+
+    ;; 确保反编译器路径设置
+    (unless jdecomp-decompiler-paths
+      (let ((cfr-decompiler (file-name-concat java-dev-dir "cfr/cfr.jar"))
+            (intellij-decompiler "/Applications/IntelliJ IDEA CE.app/Contents/plugins/java-decompiler/lib/java-decompiler.jar"))
+        (setq jdecomp-decompiler-paths
+              `((fernflower . ,(cond
+                                ;; 1. 优先使用 CFR 反编译器
+                                ((file-exists-p cfr-decompiler) cfr-decompiler)
+                                ;; 2. 备选：IntelliJ IDEA 反编译器
+                                ((file-exists-p intellij-decompiler) intellij-decompiler)
+                                ;; 3. 默认：CFR 路径
+                                (t cfr-decompiler)))))))
+
+    ;; 确保反编译器选项设置
+    (unless jdecomp-decompiler-options
+      (setq jdecomp-decompiler-options '((fernflower "-hes=0" "-hdc=0" "-fdi=0"))))
+
+    ;; 验证反编译器
+    (let ((decompiler-path (cdr (assq jdecomp-decompiler-type jdecomp-decompiler-paths))))
+      (if (and decompiler-path (file-exists-p decompiler-path))
+          (message "JDecomp: ✅ Configuration fixed successfully!")
+        (message "JDecomp: ⚠️ Decompiler not found at: %s" decompiler-path)))
+
+    ;; 显示当前配置
+    (message "JDecomp: Current settings:")
+    (message "  - Type: %s" jdecomp-decompiler-type)
+    (message "  - Temp dir: %s" jdecomp-temp-dir)
+    (message "  - Output dir: %s" jdecomp-output-directory)
+    (message "  - Decompiler: %s" (cdr (assq jdecomp-decompiler-type jdecomp-decompiler-paths))))
+
+  ;; 处理 JDT Language Server 的特殊 URI
+  (defun jdecomp-handle-jdt-uri ()
+    "Handle JDT Language Server URI for decompilation."
+    (interactive)
+    (when (string-match "jdt:/contents/" (or (buffer-file-name) ""))
+      (message "JDecomp: Detected JDT URI: %s" (buffer-name))
+      ;; 禁用自动保存和备份，避免文件名过长问题
+      (setq-local auto-save-default nil)
+      (setq-local make-backup-files nil)
+      (setq-local create-lockfiles nil)
+      (setq-local auto-save-mode nil)
+      ;; 设置 buffer 为只读，因为这是虚拟内容
+      (setq-local buffer-read-only t)
+      (let ((content (buffer-string)))
+        (if (string-empty-p content)
+            (progn
+              (message "JDecomp: Buffer is empty, this is expected for JDT URIs")
+              (message "JDecomp: Use 'Go to Definition' (M-.) or 'Find References' instead")
+              (message "JDecomp: JDT LS handles decompilation automatically"))
+          (message "JDecomp: JDT URI content loaded successfully")))))
+
+  ;; 为 JDT URI 添加特殊处理
+  (add-hook 'find-file-hook #'jdecomp-handle-jdt-uri)
+
+  ;; 添加长文件名保护函数
+  (defun jdecomp-protect-long-filenames ()
+    "Protect against long filename issues in auto-save."
+    (when (and (buffer-file-name)
+               (> (length (buffer-file-name)) 200))  ; 文件名超过 200 字符
+      (message "JDecomp: Long filename detected, disabling auto-save features")
+      (setq-local auto-save-default nil)
+      (setq-local make-backup-files nil)
+      (setq-local create-lockfiles nil)
+      (setq-local auto-save-mode nil)))
+
+  ;; 为所有文件添加长文件名保护
+  (add-hook 'find-file-hook #'jdecomp-protect-long-filenames)
+
+  ;; 增强的 buffer 检查
+  (defun jdecomp-check-buffer-status ()
+    "Check and report buffer status for debugging."
+    (interactive)
+    (let ((file-name (buffer-file-name))
+          (buffer-size (buffer-size))
+          (major-mode-name (symbol-name major-mode)))
+      (message "=== JDecomp Buffer Status ===")
+      (message "Buffer name: %s" (buffer-name))
+      (message "File name: %s" (or file-name "No file"))
+      (message "Buffer size: %d bytes" buffer-size)
+      (message "Major mode: %s" major-mode-name)
+      (message "Read-only: %s" (if buffer-read-only "Yes" "No"))
+      (message "Auto-save: %s" (if auto-save-mode "Enabled" "Disabled"))
+      (message "Backup files: %s" (if make-backup-files "Enabled" "Disabled"))
+
+      (when file-name
+        (message "File name length: %d characters" (length file-name))
+        (when (> (length file-name) 200)
+          (message "⚠️  WARNING: File name is very long (>200 chars)"))
+        (cond
+         ((string-match "jdt:/contents/" file-name)
+          (message "Type: JDT Language Server URI")
+          (message "Note: JDT URIs are handled by LSP, not jdecomp")
+          (message "Auto-save disabled: %s" (if auto-save-mode "No" "Yes")))
+         ((string-match "\\.class\\'" file-name)
+          (message "Type: Local .class file")
+          (message "Should use: jdecomp-mode"))
+         ((string-match "\\.jar\\'" file-name)
+          (message "Type: JAR archive")
+          (message "Should use: archive-mode"))
+         (t
+          (message "Type: Other file"))))
+      (message "=========================")))
 
 
 (provide 'init-lang-java)
