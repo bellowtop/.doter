@@ -59,20 +59,6 @@
   ;; Swift-specific server configuration
   (add-to-list 'eglot-server-programs '(swift-mode . ("xcrun" "sourcekit-lsp")))
 
-  ;; Java configuration
-  (setq jdt-language-server-latest-dir (expand-file-name "~/.emacs.d/.local/jdt-language-server-latest"))
-  (setq jdt-language-server-workspaces (expand-file-name "~/.emacs.d/.local/jdt-language-server-workspaces"))
-  (add-to-list 'eglot-server-programs
-    `(java-ts-mode .
-       (,(file-name-concat jdt-language-server-latest-dir "bin" "jdtls")
-         "-configuration"
-         ,(file-name-concat jdt-language-server-latest-dir "config_mac_arm")
-         "-data"
-         ,(file-name-concat
-            jdt-language-server-workspaces
-            (file-name-base (directory-file-name (project-root (eglot--current-project))))
-            ))))
-
   ;; 自定义查找引用行为：不包含定义
   (cl-defmethod xref-backend-references ((_backend (eql eglot)) _identifier)
     (or
