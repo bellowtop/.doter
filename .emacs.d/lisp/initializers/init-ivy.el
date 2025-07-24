@@ -31,6 +31,7 @@
                     "\\*Compile-Log\\*"
                     "\\*EGLOT"
                     "\\*rdm\\*"
+                    "\\*claude"
                     "\\*Backtrace\\*"
                     "\\*ripgrep-search\\*"
                     "\\*vterm\\*"

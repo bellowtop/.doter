@@ -459,6 +459,7 @@
 (require 'init-lang-scala)
 (require 'init-lang-yaml)
 (require 'init-lang-qml)
+(require 'init-language-java)
 (require 'init-ansible)
 
 ;;; Lisp Development
@@ -536,7 +537,7 @@
                    (display-buffer-in-side-window)
                    (side . right)
                    (window-width . 90)))
-  (setq claude-code-terminal-backend 'eat)
+  (setq claude-code-terminal-backend 'vterm)
   )
 
 
@@ -611,7 +612,7 @@
  '(mode-line ((t (:background "#415367" :foreground "#e5ded6" :underline (:color foreground-color :style line :position t)))))
  '(success ((t (:foreground "Green1" :weight regular))))
  ;; 基础界面颜色
- '(default ((t (:foreground "#D1D2CE" :background "#161c23" :font "IBM Plex Mono-15.0"))))
+ '(default ((t (:foreground "#D1D2CE" :background "#161c23" :font "IBM Plex Mono-14.5"))))
  '(show-paren-match ((t (:foreground "green" :background "#11501B" :weight normal :underline (:position t)))))
  '(lazy-highlight ((t (:background "#7FDC59" :foreground "#161c23" :weight normal))))
  '(widget-field ((t (:background "#C6B8AD" :foreground "black"))))
@@ -648,18 +649,18 @@
  '(whitespace-tab ((t (:foreground unspecified :background unspecified :inherit shadow))))
  '(whitespace-trailing ((t (:foreground unspecified :background unspecified :inherit shadow))))
  ;; Treemacs 主题
- '(treemacs-root-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#57D8D4"))))
- '(treemacs-directory-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#57D8D4"))))
- '(treemacs-directory-collapsed-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#57D8D4"))))
- '(treemacs-git-modified-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#D0BF68"))))
- '(treemacs-git-unmodified-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-git-renamed-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-git-ignored-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-git-untracked-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-git-added-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-git-conflict-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-file-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-tags-face ((t (:family "IBM Plex Mono" :weight normal :height 150 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-root-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#57D8D4"))))
+ '(treemacs-directory-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#57D8D4"))))
+ '(treemacs-directory-collapsed-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#57D8D4"))))
+ '(treemacs-git-modified-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#D0BF68"))))
+ '(treemacs-git-unmodified-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-git-renamed-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-git-ignored-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-git-untracked-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-git-added-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-git-conflict-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-file-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+ '(treemacs-tags-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
  ;; CFRS 边框
  '(cfrs-border-color ((t (:background "yellow"))))
  ;; 其他工具
