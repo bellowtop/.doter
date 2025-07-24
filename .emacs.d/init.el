@@ -459,7 +459,7 @@
 (require 'init-lang-scala)
 (require 'init-lang-yaml)
 (require 'init-lang-qml)
-(require 'init-language-java)
+(require 'init-lang-java)
 (require 'init-ansible)
 
 ;;; Lisp Development
@@ -612,7 +612,7 @@
  '(mode-line ((t (:background "#415367" :foreground "#e5ded6" :underline (:color foreground-color :style line :position t)))))
  '(success ((t (:foreground "Green1" :weight regular))))
  ;; 基础界面颜色
- '(default ((t (:foreground "#D1D2CE" :background "#161c23" :font "IBM Plex Mono-14.5"))))
+ ;; '(default ((t (:foreground "#D1D2CE" :background "#161c23" :font "IBM Plex Mono-14.5"))))
  '(show-paren-match ((t (:foreground "green" :background "#11501B" :weight normal :underline (:position t)))))
  '(lazy-highlight ((t (:background "#7FDC59" :foreground "#161c23" :weight normal))))
  '(widget-field ((t (:background "#C6B8AD" :foreground "black"))))

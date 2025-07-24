@@ -17,89 +17,111 @@
 
 
 
-(setq dap-java-test-runner (expand-file-name "~/.emacs.d/.local/eclipse.jdt.ls/test-runner/junit-platform-console-standalone.jar"))
-(setq dap-breakpoints-file (expand-file-name "~/.emacs.d/.local/.dap-breakpoints"))
+;; Java development environment paths
+(defvar java-local-dir (expand-file-name "~/.emacs.d/.local"))
+(defvar java-dev-dir (file-name-concat java-local-dir "java"))
+(defvar java-lombok-dir (file-name-concat java-dev-dir "lombok"))
+(defvar java-test-runner-dir (file-name-concat java-dev-dir "test-runner"))
+(defvar java-debug-dir (file-name-concat java-dev-dir "debug"))
+(defvar java-bundles-dir (file-name-concat java-dev-dir "bundles"))
 
+;; JDT Language Server paths
+(defvar jdt-language-server-dir (file-name-concat java-local-dir "jdt-language-server-latest"))
+(defvar jdt-language-server-workspaces (file-name-concat java-local-dir "jdt-language-server-workspaces"))
+(defvar jdt-language-server-config-dir (file-name-concat jdt-language-server-dir "config_mac_arm"))
 
-(setq eglot-java-junit-platform-console-standalone-jar 
-      (expand-file-name "~/.emacs.d/.local/eclipse.jdt.ls/test-runner/junit-platform-console-standalone.jar"))
+;; Java development JAR files
+(defvar java-lombok-jar (file-name-concat java-lombok-dir "lombok.jar"))
+(defvar java-junit-platform-console-standalone-jar (file-name-concat java-test-runner-dir "junit-platform-console-standalone.jar"))
 
+;; Java formatter configuration
+(defvar java-google-style-formatter (file-name-concat java-local-dir "eclipse-java-google-style.xml"))
 
-;; Download http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=org.junit.platform&a=junit-platform-console-standalone&v=LATEST
-(defvar +java/junit-platform-console-standalone-jar
-  (expand-file-name "~/.emacs.d/.local/eclipse.jdt.ls/test-runner/junit-platform-console-standalone.jar"))
-  ;; (expand-file-name (locate-user-emacs-file "cache/language-server/java/junit-console/junit-platform-console-standalone.jar")))
+;; Java runtime configuration
+(defvar java-runtime-path "/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home")
 
-(add-hook-run-once 'java-mode-hook #'+java/eglot-setup)
+;; Helper function for jdtls contact
+(defun eglot-jdtls-contact (interactive)
+  `(,(file-name-concat jdt-language-server-dir "bin" "jdtls")
+    ;; Use macOS ARM config for M1 Mac
+    "-configuration" ,jdt-language-server-config-dir
+    "-data" ,(file-name-concat
+              jdt-language-server-workspaces
+              (file-name-base (directory-file-name (project-root (eglot--current-project)))))
+    ;; Lombok support for Java annotations (optional)
+    ;; Uncomment to use Maven repository lombok: ,(concat "--jvm-arg=-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))
+    ,(concat "--jvm-arg=-javaagent:" java-lombok-jar)))
 
-(defun +java/eglot-setup ()
-  (unless (featurep 'eglot)
-    (require 'eglot))
+;; Configure java-ts-mode (Tree-sitter Java mode)
+(use-package java-ts-mode
+  :mode "\\.java\\'"
+  :config
+  ;; Configure eglot to use jdtls for java-ts-mode
+  (add-to-list 'eglot-server-programs '(java-ts-mode . eglot-jdtls-contact))
 
-  (defun +eglot/jdtls-contact (interactive)
-    `("jdtls"
-      ;; "-configuration" ,(expand-file-name "cache/language-server/java/jdtls/config_linux" user-emacs-directory)
-      "-configuration" ,(expand-file-name "~/.emacs.d/.local/cache/language-server/java/jdtls/config_linux")
-      "-data" ,(expand-file-name (file-name-base (directory-file-name (project-root (eglot--current-project))))
-                                 (expand-file-name "~/.emacs.d/.local/cache/java-workspace"))
-      ;;,(concat "--jvm-arg=-javaagent:" (expand-file-name "~/.m2/repository/org/projectlombok/lombok/1.18.20/lombok-1.18.20.jar"))))
-      ,(concat "--jvm-arg=-javaagent:" (expand-file-name "~/.emacs.d/.local/cache/lombok/lombok.jar"))))
-
-  (add-to-list 'eglot-server-programs '(java-mode . +eglot/jdtls-contact))
-
-  (cl-defmethod eglot-initialization-options ((server eglot-lsp-server) &context (major-mode java-mode))
-    `(:settings
-      (:java
-       (:configuration
-        (:runtime [(:name "JavaSE-1.8" :path "/usr/local/jdk-8")
-                   (:name "JavaSE-11" :path "/usr/local/graalvm-ce-java11-22.0.0.2")
-                   (:name "JavaSE-17" :path "/usr/local/graalvm-ce-java17-22.0.0.2" :default t)])
-        :format (:settings (:url ,(expand-file-name "~/.emacs.d/.local/eclipse-java-google-style.xml")
-                                 :profile "GoogleStyle"))
-        ;; NOTE: https://github.com/redhat-developer/vscode-java/issues/406#issuecomment-356303715
-        ;; > We enabled it by default so that workspace-wide errors can be reported (eg. removing a public method in one class would cause compilation errors in other files consuming that method).
-        ;; for large workspaces, it may make sense to be able to disable autobuild if it negatively impacts performance.
-        :autobuild (:enabled t)
-        ;; https://github.com/dgileadi/vscode-java-decompiler
-        :contentProvider (:preferred "fernflower"))
-       :completion
-       (:guessMethodArguments t
-        :overwrite t
-        :enabled t
-        :favoriteStaticMembers ["org.junit.Assert.*"
-                                "org.junit.Assume.*"
-                                "org.junit.jupiter.api.Assertions.*"
-                                "org.junit.jupiter.api.Assumptions.*"
-                                "org.junit.jupiter.api.DynamicContainer.*"
-                                "org.junit.jupiter.api.DynamicTest.*"
-                                "org.mockito.Mockito.*"
-                                "org.mockito.ArgumentMatchers.*"
-                                "org.mockito.Answers.*"]))
-      ;; support non standard LSP `java/classFileContents', `Location' items that have a `jdt://...' uri
-      ;; https://github.com/eclipse/eclipse.jdt.ls/issues/1384
-      :extendedClientCapabilities (:classFileContentsSupport t)
-      ;; bundles: decompilers, etc.
-      ;; https://github.com/dgileadi/dg.jdt.ls.decompiler
-
-      :bundles ,(let ((bundles-dir (expand-file-name "~/.emacs.d/.local/cache/language-server/java/bundles"))
-      ;; :bundles ,(let ((bundles-dir (expand-file-name (locate-user-emacs-file "cache/language-server/java/bundles" user-emacs-directory)))
-                      jdtls-bundles)
-                  (->> (when (file-directory-p bundles-dir)
-                         (directory-files bundles-dir t "\\.jar$"))
-                       (append jdtls-bundles)
-                       (apply #'vector)))))
-
-  (+eglot/set-leader-keys)
-
+  ;; Set up keybindings for java-ts-mode
   (+funcs/major-mode-leader-keys
-   java-mode-map
+   java-ts-mode-map
    "r" '(nil :which-key "run")
    "rt" '(eglot-java-run-test :which-key "run-test-at-point")
    "rm" '(eglot-java-run-main :which-key "run-main"))
 
-  (eglot-ensure)
+  :hook (java-ts-mode . eglot-ensure)
+)
 
-  (add-hook 'java-mode-hook #'eglot-ensure))
+;; Helper function for Java LSP initialization options
+(defun java-eglot-initialization-options ()
+  "JDT LS initialization options for java-ts-mode."
+  `(:settings
+    (:java
+     (:configuration
+      ;; Update Java runtime paths for macOS with Homebrew OpenJDK
+      (:runtime [(:name "JavaSE-21" :path ,java-runtime-path :default t)])
+      :format (:settings (:url ,java-google-style-formatter
+                               :profile "GoogleStyle"))
+      ;; NOTE: https://github.com/redhat-developer/vscode-java/issues/406#issuecomment-356303715
+      ;; > We enabled it by default so that workspace-wide errors can be reported (eg. removing a public method in one class would cause compilation errors in other files consuming that method).
+      ;; for large workspaces, it may make sense to be able to disable autobuild if it negatively impacts performance.
+      :autobuild (:enabled t)
+      ;; https://github.com/dgileadi/vscode-java-decompiler
+      :contentProvider (:preferred "fernflower"))
+     :completion
+     (:guessMethodArguments t
+      :overwrite t
+      :enabled t
+      :favoriteStaticMembers ["org.junit.Assert.*"
+                              "org.junit.Assume.*"
+                              "org.junit.jupiter.api.Assertions.*"
+                              "org.junit.jupiter.api.Assumptions.*"
+                              "org.junit.jupiter.api.DynamicContainer.*"
+                              "org.junit.jupiter.api.DynamicTest.*"
+                              "org.mockito.Mockito.*"
+                              "org.mockito.ArgumentMatchers.*"
+                              "org.mockito.Answers.*"]))
+    ;; support non standard LSP `java/classFileContents', `Location' items that have a `jdt://...' uri
+    ;; https://github.com/eclipse/eclipse.jdt.ls/issues/1384
+    :extendedClientCapabilities (:classFileContentsSupport t)
+    ;; bundles: decompilers, etc.
+    ;; https://github.com/dgileadi/dg.jdt.ls.decompiler
+
+    ;; Additional JDT LS bundles (extensions, decompilers, etc.)
+    :bundles ,(let ((bundles-dir java-bundles-dir)
+                    ;; Alternative: use JDT LS plugins directory
+                    ;; (bundles-dir (expand-file-name "plugins" jdt-language-server-dir))
+                    jdtls-bundles)
+                (->> (when (file-directory-p bundles-dir)
+                       (directory-files bundles-dir t "\\.jar$"))
+                     (append jdtls-bundles)
+                     (apply #'vector)))))
+
+;; 确保 Eglot 已经加载
+(with-eval-after-load 'eglot
+  ;; 方法特化 - 确保 Eglot 已经加载
+  (cl-defmethod eglot-initialization-options
+    ((server eglot-lsp-server)          ; 参数类型约束：server 必须是 eglot-lsp-server 类型
+     &context                           ; 开始上下文约束
+     (major-mode java-ts-mode))         ; 上下文约束：当前 major-mode 必须是 java-ts-mode
+    (java-eglot-initialization-options)))
 
 
 ;; https://github.com/yveszoundi/eglot-java/blob/main/eglot-java.el
@@ -185,16 +207,14 @@
          (cp                   (eglot-java--project-classpath (buffer-file-name) "test"))
          (current-file-is-test (not (equal ':json-false (eglot-java--file--test-p (buffer-file-name))))))
 
-    (unless (file-exists-p +java/junit-platform-console-standalone-jar)
-      (user-error "%s doest not exit" +java/junit-platform-console-standalone-jar))
+    (unless (file-exists-p java-junit-platform-console-standalone-jar)
+      (user-error "%s doest not exit" java-junit-platform-console-standalone-jar))
 
     (if current-file-is-test
         (compile
          (concat "java -jar "
-                 +java/junit-platform-console-standalone-jar
-                 (if (string-match-p "#" fqcn)
-                     " -m "
-                   " -c ")
+                 java-junit-platform-console-standalone-jar
+                 (if (string-match-p "#" fqcn) " -m " " -c ")
                  fqcn
                  " -class-path "
                  (mapconcat #'identity cp path-separator)
@@ -216,59 +236,28 @@
          t)
       (user-error "No main method found in this file! Is the file saved?!"))))
 
+
+
+
 ;; http://www.tianxiangxiong.com/2017/02/12/decompiling-java-classfiles-in-emacs.html
 ;; https://github.com/xiongtx/jdecomp
 ;; https://github.com/JetBrains/intellij-community/tree/master/plugins/java-decompiler/engine
-;; java -cp /home/zsxh/.local/share/JetBrains/Toolbox/apps/IDEA-C/ch-0/203.7148.57/plugins/java-decompiler/lib/java-decompiler.jar org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler [-<option>=<value>]* [<source>]+ <destination>
+;; Example: java -cp /path/to/JetBrains/Toolbox/apps/IDEA-C/ch-0/xxx/plugins/java-decompiler/lib/java-decompiler.jar org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler [-<option>=<value>]* [<source>]+ <destination>
 ;; TODO: `jdecomp--fernflower-decompile-file' should extract all A.class and A${anonymous}.class
+
 (use-package jdecomp
   :commands (jdecomp-mode)
   :config
   (setq jdecomp-decompiler-type 'fernflower
-        jdecomp-decompiler-paths `((fernflower . ,(expand-file-name "~/.emacs.d/.local/cache/language-server/java/bundles/dg.jdt.ls.decompiler.fernflower-0.0.3.jar")))
-        ;; jdecomp-decompiler-paths `((fernflower . ,(expand-file-name "~/.local/share/JetBrains/Toolbox/apps/IDEA-C/ch-0/203.7148.57/plugins/java-decompiler/lib/java-decompiler.jar")))
+        ;; Option 1: Use IntelliJ IDEA CE's decompiler (recommended for better compatibility)
+        jdecomp-decompiler-paths `((fernflower . "/Applications/IntelliJ IDEA CE.app/Contents/plugins/java-decompiler/lib/java-decompiler.jar"))
+        ;; Option 2: Use Eclipse JDT LS bundled decompiler
+        ;; jdecomp-decompiler-paths `((fernflower . ,(expand-file-name "config_mac_arm/org.eclipse.osgi/59/0/.cp/lib/java-decompiler-engine-231.9011.34.jar" jdt-language-server-dir)))
+        ;; Option 3: Use JetBrains Toolbox decompiler (if installed via Toolbox)
+        ;; jdecomp-decompiler-paths `((fernflower . ,(expand-file-name "~/Library/Application Support/JetBrains/Toolbox/apps/IDEA-C/ch-0/xxx.xxx.x/plugins/java-decompiler/lib/java-decompiler.jar")))
         jdecomp-decompiler-options '((fernflower "-hes=0" "-hdc=0" "-fdi=0"))))
 
-;; POM.xml format
-(add-hook-run-once
- 'pom-xml-mode-hook
- (lambda nil
-   (setq +java/pom-formatter-buffer-name "*format pom xml*")
 
-   (add-to-list 'display-buffer-alist
-                `(,+java/pom-formatter-buffer-name display-buffer-below-selected))
-
-   (defun +java/sortpom-formatter ()
-     (interactive)
-     (let ((output-buffer (get-buffer-create +java/pom-formatter-buffer-name))
-           (cmd (s-join " " '("mvn"
-                              "com.github.ekryd.sortpom:sortpom-maven-plugin:sort"
-                              ;; "-Dsort.nrOfIndentSpace=4"
-                              "-Dsort.keepBlankLines"
-                              "-Dsort.predefinedSortOrder=custom_1"
-                              "-Dsort.createBackupFile=false"))))
-       (async-shell-command cmd output-buffer)))
-
-   (defun +java/tidy:check ()
-     (interactive)
-     (let ((output-buffer (get-buffer-create +java/pom-formatter-buffer-name))
-           (cmd "mvn tidy:check"))
-       (async-shell-command cmd output-buffer)))
-
-   (defun +java/tidy:pom ()
-     (interactive)
-     (let ((output-buffer (get-buffer-create +java/pom-formatter-buffer-name))
-           (cmd "mvn tidy:pom"))
-       (async-shell-command cmd output-buffer)))
-
-   ;; NOTE: xml-format-maven-plugin
-   ;; https://acegi.github.io/xml-format-maven-plugin/usage.html
-
-   (+funcs/major-mode-leader-keys
-    pom-xml-mode-map
-    "c" '(+java/tidy:check :which-key "tidy:check")
-    "f" '(+java/tidy:pom :which-key "tidy:pom")
-    "F" '(+java/sortpom-formatter :which-key "sortpom:sort"))))
 
 
 (provide 'init-lang-java)

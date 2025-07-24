@@ -106,3 +106,4 @@ w3m/history
 w3m/w3mcache*
 # SpecStory explanation file
 .specstory/.what-is-this.md
+.specstory
