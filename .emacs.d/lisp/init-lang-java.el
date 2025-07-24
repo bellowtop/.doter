@@ -477,6 +477,123 @@
           (message "Type: Other file"))))
       (message "=========================")))
 
+  ;; 快速修复长文件名问题
+  (defun jdecomp-fix-long-filename ()
+    "Fix current buffer's long filename issues."
+    (interactive)
+    (when (buffer-file-name)
+      (let ((filename-length (length (buffer-file-name))))
+        (message "JDecomp: Current filename length: %d" filename-length)
+        (when (> filename-length 200)
+          (message "JDecomp: Fixing long filename issues...")
+          (setq-local auto-save-default nil)
+          (setq-local make-backup-files nil)
+          (setq-local create-lockfiles nil)
+          (setq-local auto-save-mode nil)
+          (when (string-match "jdt:/contents/" (buffer-file-name))
+            (setq-local buffer-read-only t)
+            (message "JDecomp: Set JDT URI buffer as read-only"))
+          (message "JDecomp: ✅ Long filename protections applied")))))
+
+  ;; 详细的调试函数
+  (defun jdecomp-debug-decompile ()
+    "Detailed debugging for decompilation issues."
+    (interactive)
+    (let ((file-name (buffer-file-name))
+          (buffer-content (buffer-string))
+          (buffer-size (buffer-size)))
+
+      (message "=== JDecomp Debug Analysis ===")
+      (message "Buffer: %s" (buffer-name))
+      (message "File: %s" (or file-name "No file"))
+      (message "Size: %d bytes" buffer-size)
+      (message "Major mode: %s" major-mode)
+      (message "Read-only: %s" buffer-read-only)
+
+      (when file-name
+        (cond
+         ;; JDT URI 分析
+         ((string-match "jdt:/contents/" file-name)
+          (message "Type: JDT Language Server URI")
+          (message "Content empty: %s" (if (string-empty-p buffer-content) "YES" "NO"))
+          (when (string-empty-p buffer-content)
+            (message "🔍 JDT URI is empty - this is normal")
+            (message "💡 Solutions:")
+            (message "   1. Wait for JDT LS to load content")
+            (message "   2. Try M-x revert-buffer")
+            (message "   3. Use LSP navigation: M-. (go to definition)")
+            (message "   4. Check if JDT LS is running")
+            (message "   5. Try closing and reopening the file"))
+          (unless (string-empty-p buffer-content)
+            (message "✅ JDT URI has content (%d chars)" (length buffer-content))))
+
+         ;; .class 文件分析
+         ((string-match "\\.class\\'" file-name)
+          (message "Type: Local .class file")
+          (message "Should use jdecomp-mode")
+          (message "Current jdecomp config:")
+          (message "  - Type: %s" (if (boundp 'jdecomp-decompiler-type) jdecomp-decompiler-type "NOT SET"))
+          (message "  - Paths: %s" (if (boundp 'jdecomp-decompiler-paths)
+                                       (cdr (assq jdecomp-decompiler-type jdecomp-decompiler-paths))
+                                     "NOT SET"))
+          (when (boundp 'jdecomp-decompiler-paths)
+            (let ((decompiler-path (cdr (assq jdecomp-decompiler-type jdecomp-decompiler-paths))))
+              (message "  - Decompiler exists: %s" (if (file-exists-p decompiler-path) "YES" "NO"))
+              (unless (file-exists-p decompiler-path)
+                (message "❌ Decompiler not found at: %s" decompiler-path)
+                (message "💡 Run: M-x jdecomp-fix-setup"))))
+
+          (when (string-empty-p buffer-content)
+            (message "❌ .class file content is empty")
+            (message "💡 Try:")
+            (message "   1. M-x jdecomp-mode")
+            (message "   2. M-x jdecomp-safe-mode")
+            (message "   3. Check file permissions")
+            (message "   4. Verify decompiler installation")))
+
+         (t
+          (message "Type: Other file type")))
+
+        ;; 通用检查
+        (message "File exists: %s" (if (file-exists-p file-name) "YES" "NO"))
+        (message "File readable: %s" (if (file-readable-p file-name) "YES" "NO"))
+        (when (file-exists-p file-name)
+          (message "File size on disk: %d bytes" (nth 7 (file-attributes file-name)))))
+
+      (message "=========================")))
+
+  ;; 手动测试反编译器
+  (defun jdecomp-test-decompiler ()
+    "Test the decompiler manually."
+    (interactive)
+    (cond
+     ((not (boundp 'jdecomp-decompiler-paths))
+      (message "❌ jdecomp-decompiler-paths not set"))
+
+     (t
+      (let ((decompiler-path (cdr (assq jdecomp-decompiler-type jdecomp-decompiler-paths))))
+        (message "Testing decompiler: %s" decompiler-path)
+        (cond
+         ((not (file-exists-p decompiler-path))
+          (message "❌ Decompiler not found at: %s" decompiler-path))
+
+         ((not (executable-find "java"))
+          (message "❌ Java not found in PATH"))
+
+         (t
+          (message "✅ Decompiler exists")
+          (message "✅ Java is available")
+          (let ((test-cmd (format "java -jar '%s' --help" decompiler-path)))
+            (message "Testing command: %s" test-cmd)
+            (condition-case err
+                (let ((output (shell-command-to-string test-cmd)))
+                  (if (string-match "CFR\\|fernflower\\|help" output)
+                      (message "✅ Decompiler is working")
+                    (message "⚠️  Decompiler output unexpected")))
+              (error (message "❌ Decompiler test failed: %s" err))))))))))
+
+)  ;; 关闭 use-package jdecomp 块
+
 
 (provide 'init-lang-java)
 
