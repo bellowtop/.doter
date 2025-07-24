@@ -54,10 +54,15 @@
 
 ;; Configure java-ts-mode (Tree-sitter Java mode)
 (use-package java-ts-mode
+  :when (and (treesit-available-p) (treesit-language-available-p 'java))
   :mode "\\.java\\'"
   :config
+  ;; Ensure .java files use java-ts-mode instead of java-mode
+  (add-to-list 'major-mode-remap-alist '(java-mode . java-ts-mode))
+
   ;; Configure eglot to use jdtls for java-ts-mode
-  (add-to-list 'eglot-server-programs '(java-ts-mode . eglot-jdtls-contact))
+  (with-eval-after-load 'eglot
+    (add-to-list 'eglot-server-programs '(java-ts-mode . eglot-jdtls-contact)))
 
   ;; Set up keybindings for java-ts-mode
   (+funcs/major-mode-leader-keys
@@ -66,8 +71,7 @@
    "rt" '(eglot-java-run-test :which-key "run-test-at-point")
    "rm" '(eglot-java-run-main :which-key "run-main"))
 
-  :hook (java-ts-mode . eglot-ensure)
-)
+  :hook (java-ts-mode . eglot-ensure))
 
 ;; Helper function for Java LSP initialization options
 (defun java-eglot-initialization-options ()
