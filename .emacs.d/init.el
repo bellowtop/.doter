@@ -625,7 +625,7 @@
  '(mode-line-highlight ((t (:box nil :foreground "green"))))
  '(vertical-border ((t (:foreground "#353535" :background "#161c23" :inherit unspecified))))
  '(fringe ((t (:foreground unspecified :background unspecified :inherit default))))
- '(line-number ((t (:background "#161c23" :foreground "gray33" :slant normal :weight normal))))
+ '(line-number ((t (:inherit default :foreground "gray33" :slant normal :weight normal))))
  '(line-number-current-line ((t (:background "#1b2129" :foreground "white" :slant normal :weight normal))))
  ;; 窗口分隔线
  '(window-divider ((t (:foreground "#415367"))))
