@@ -669,6 +669,7 @@
  '(symbol-overlay-default-face ((t (:inherit my-highlight-font-words-face))))
  '(deadgrep-match-face ((t (:inherit lazy-highlight))))
  ;; God 模式标签
+ '(tab-bar ((t (:background "#1e1e1e" :height 120))))
  '(tab-bar-tab ((t (:foreground "black" :background "yellow" :box (:line-width 3 :color "yellow" :style flat-button)))))
  ;; Eglot 高亮
  '(eglot-highlight-symbol-face ((t (:inherit my-highlight-font-words-face))))
