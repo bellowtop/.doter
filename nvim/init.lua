@@ -121,6 +121,10 @@ require('packer').startup(function(use)
 
   use 'b3nj5m1n/kommentary'
 
+  use {
+    "coder/claudecode.nvim"
+  }
+
 
   if install_plugins then
     require('packer').sync()
@@ -316,6 +320,38 @@ vim.g.lightline = {
 
 
 
+
+
+--
+-- claudecode
+--
+--
+
+require("claudecode").setup{}
+
+-- 快捷键配置
+local keymap = vim.keymap.set
+
+-- AI/Claude Code 相关快捷键
+keymap("n", "<leader>ac", "<cmd>ClaudeCode<cr>", { desc = "Toggle Claude" })
+keymap("n", "<leader>af", "<cmd>ClaudeCodeFocus<cr>", { desc = "Focus Claude" })
+keymap("n", "<leader>ar", "<cmd>ClaudeCode --resume<cr>", { desc = "Resume Claude" })
+keymap("n", "<leader>aC", "<cmd>ClaudeCode --continue<cr>", { desc = "Continue Claude" })
+keymap("n", "<leader>am", "<cmd>ClaudeCodeSelectModel<cr>", { desc = "Select Claude model" })
+keymap("n", "<leader>ab", "<cmd>ClaudeCodeAdd %<cr>", { desc = "Add current buffer" })
+keymap("v", "<leader>as", "<cmd>ClaudeCodeSend<cr>", { desc = "Send to Claude" })
+
+-- 文件树中的快捷键（需要检测文件类型）
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "NvimTree", "neo-tree", "oil" },
+  callback = function()
+    keymap("n", "<leader>at", "<cmd>ClaudeCodeTreeAdd<cr>", { desc = "Add file", buffer = true })
+  end,
+})
+
+-- Diff 管理
+keymap("n", "<leader>aa", "<cmd>ClaudeCodeDiffAccept<cr>", { desc = "Accept diff" })
+keymap("n", "<leader>ad", "<cmd>ClaudeCodeDiffDeny<cr>", { desc = "Deny diff" })
 
 
 
