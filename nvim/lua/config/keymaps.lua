@@ -226,6 +226,9 @@ function M.setup()
   vim.api.nvim_set_keymap("n", "K", "<nop>", { noremap = true })
   vim.api.nvim_set_keymap("n", "Q", "<nop>", { noremap = true })
 
+  -- Close other windows with Ctrl-h Ctrl-h
+  vim.api.nvim_set_keymap("n", "<C-h><C-h>", "<cmd>only<cr>", { noremap = true, silent = true })
+
   -- CMP completion
   vim.keymap.set("i", "<C-Tab>", function() require('cmp').mapping.complete() end, { noremap = true })
 end

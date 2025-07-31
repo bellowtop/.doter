@@ -108,28 +108,6 @@ function M.setup()
     endfunction
   ]])
 
-  -- Highlight function
-  vim.cmd([[
-    function! MyHighlights() abort
-        " for term
-        hi Search                       cterm=reverse           ctermfg=214         ctermbg=232
-        hi SpellCap                                             ctermfg=black       ctermbg=green
-
-        hi SignColumn                                           ctermfg=white       ctermbg=black
-        hi VertSplit                                            ctermfg=green       ctermbg=black
-        hi multiple_cursors_cursor                              ctermfg=green       ctermbg=red
-        hi multiple_cursors_visual                              ctermfg=black       ctermbg=white
-
-        " for gui
-        hi Search                       gui=reverse                guifg=goldenrod2         guibg=black
-        hi SpellCap                                             guifg=black         guibg=springgreen
-
-        hi SignColumn                                           guifg=white
-        hi VertSplit                                            guifg=springgreen   guibg=NONE
-        hi multiple_cursors_cursor                              guifg=springgreen   guibg=red
-        hi multiple_cursors_visual                              guifg=black         guibg=white
-    endfunction
-  ]])
 
   -- Check for local override file
   local function file_exists(name)

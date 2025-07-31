@@ -13,6 +13,7 @@ end
 -- Load core configuration modules
 require('config.options').setup()     -- Vim options and global settings
 require('config.functions').setup()   -- Custom functions and utilities
+require('config.highlights')          -- Color scheme and highlights
 require('config.autocmds').setup()    -- Autocommands
 require('config.keymaps').setup()     -- Key mappings
 
@@ -30,8 +31,6 @@ require('plugins.cscope').setup()     -- cscope
 require('plugins.kommentary').setup() -- kommentary
 
 
--- Apply colorscheme
-vim.cmd('colorscheme bogster')
 
 -- Function key mappings
 vim.api.nvim_set_keymap("n", "<F3>", ":set wrap!<Enter>", { noremap = true })

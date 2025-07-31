@@ -53,7 +53,7 @@ local function custom_attach(client, bufnr)
 
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', '\\\\', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gh', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
   vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
@@ -131,6 +131,14 @@ function M.setup()
     signs = true,
     severity_sort = true,
   }
+
+  -- Set diagnostic colors
+  vim.cmd([[
+    hi DiagnosticError guifg=#ff6b6b
+    hi DiagnosticWarn guifg=#feca57
+    hi DiagnosticInfo guifg=#48cae4
+    hi DiagnosticHint guifg=#95e1d3
+  ]])
 
   -- Change border of documentation hover window
   lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
@@ -252,6 +260,13 @@ function M.setup()
       }
     }
   })
+
+
+  -- python lsp
+  require('lspconfig').basedpyright.setup({
+    on_attach = custom_attach,
+  })
+
 end
 
 return M

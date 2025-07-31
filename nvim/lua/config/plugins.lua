@@ -18,6 +18,9 @@ function M.setup()
     -- Package manager
     use 'wbthomason/packer.nvim'
 
+    -- Colorschemes
+    use 'Mofiqul/vscode.nvim'
+
     -- File management
     use 'nvim-tree/nvim-web-devicons'
     use 'nvim-tree/nvim-tree.lua'
@@ -71,7 +74,10 @@ function M.setup()
     use { 'prettier/vim-prettier', run = 'npm install' }
     use 'schickling/vim-bufonly'
     use 'rbgrouleff/bclose.vim'
-    use 'Yggdroot/indentLine'
+
+    -- use 'Yggdroot/indentLine'
+    use "lukas-reineke/indent-blankline.nvim"
+
 
     -- Language support
     use 'fatih/vim-go'
