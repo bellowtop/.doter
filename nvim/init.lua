@@ -24,7 +24,11 @@ require('plugins.telescope').setup()  -- Telescope fuzzy finder
 require('plugins.nvim-cmp').setup()   -- Completion engine
 require('plugins.nvim-tree').setup()  -- File explorer
 require('plugins.treesitter').setup() -- Syntax highlighting
-require('plugins.other-plugins').setup() -- Other plugin configurations
+require('plugins.bqf').setup()        -- bqf
+require('plugins.claudecode').setup() -- claudecode
+require('plugins.cscope').setup()     -- cscope
+require('plugins.kommentary').setup() -- kommentary
+
 
 -- Apply colorscheme
 vim.cmd('colorscheme bogster')
@@ -38,4 +42,4 @@ vim.api.nvim_set_keymap("n", "zm", ":call ToggleFold()<Enter>", { noremap = true
 vim.api.nvim_set_keymap("n", "zo", "zA", { noremap = true })
 vim.api.nvim_set_keymap("v", "Y", ":call <sid>CopyToTmux()<cr>", { silent = true })
 
-print("✓ Neovim configuration loaded successfully!")
+-- print("✓ Neovim configuration loaded successfully!")
