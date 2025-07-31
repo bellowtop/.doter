@@ -22,6 +22,16 @@ vim.cmd([[
       hi NvimTreeNormal                                       ctermfg=white       ctermbg=234
       hi NvimTreeEndOfBuffer                                  ctermfg=234         ctermbg=234
 
+      " Tabline
+      hi TabLine                                              ctermfg=white       ctermbg=234
+      hi TabLineFill                                          ctermfg=white       ctermbg=234
+      hi TabLineSel                                           ctermfg=white       ctermbg=237
+
+      " BufferLine
+      hi BufferLineFill                                       ctermfg=white       ctermbg=234
+      hi BufferLineBackground                                 ctermfg=white       ctermbg=234
+      hi BufferLineBuffer                                     ctermfg=white       ctermbg=234
+
       " for gui
       hi Normal                                                                   guibg=#181818
       hi NonText                                              guifg=#415367       guibg=#181818
@@ -39,6 +49,16 @@ vim.cmd([[
       " NvimTree
       hi NvimTreeNormal                                       guifg=white         guibg=#181818
       hi NvimTreeEndOfBuffer                                  guifg=#181818       guibg=#181818
+
+      " Tabline
+      hi TabLine                                              guifg=white         guibg=#181818
+      hi TabLineFill                                          guifg=white         guibg=#181818
+      hi TabLineSel                                           guifg=white         guibg=#383b3e
+
+      " BufferLine
+      hi BufferLineFill                                       guifg=white         guibg=#181818
+      hi BufferLineBackground                                 guifg=white         guibg=#181818
+      hi BufferLineBuffer                                     guifg=white         guibg=#181818
   endfunction
 ]])
 
