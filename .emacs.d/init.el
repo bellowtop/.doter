@@ -526,23 +526,24 @@
   )
 
 
-;; (use-package claude-code
-;;   :bind-keymap
-;;   ("C-c c" . claude-code-command-map) ;; or your preferred key
-;;   :bind
-;;   (("s-\"" . claude-code-toggle))
-;;   :config
-;;   (claude-code-mode)
-;;   (add-to-list 'display-buffer-alist
-;;                  '("^\\*claude"
-;;                    (display-buffer-in-side-window)
-;;                    (side . right)
-;;                    (window-width . 90)))
-;;   (setq claude-code-terminal-backend 'vterm)
-;;   )
+(use-package claude-code
+  :bind-keymap
+  ("C-c c" . claude-code-command-map) ;; or your preferred key
+  :bind
+  (("s-\"" . claude-code-toggle))
+  :config
+  (claude-code-mode)
+  (add-to-list 'display-buffer-alist
+                 '("^\\*claude"
+                   (display-buffer-in-side-window)
+                   (side . right)
+                   (window-width . 90)))
+  (setq claude-code-terminal-backend 'vterm)
+  (setq claude-code-vterm-buffer-multiline-output nil)
+  )
 
-(use-package claudemacs
-  :vc (:fetcher github :repo "cpoile/claudemacs"))
+;; (use-package claudemacs
+;;   :vc (:fetcher github :repo "cpoile/claudemacs"))
 
 
 ;;; Text Mode Enhancements
