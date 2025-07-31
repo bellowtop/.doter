@@ -13,7 +13,7 @@ vim.cmd([[
       hi SpellCap                                             ctermfg=black       ctermbg=green
 
       hi SignColumn                                           ctermfg=white       ctermbg=234
-      " "hi WinSeparator                                         ctermfg=237         ctermbg=NONE
+      hi WinSeparator                                         ctermfg=237         ctermbg=NONE
       hi CursorLine                                           cterm=NONE          ctermbg=NONE
       hi multiple_cursors_cursor                              ctermfg=green       ctermbg=red
       hi multiple_cursors_visual                              ctermfg=black       ctermbg=white
@@ -27,7 +27,7 @@ vim.cmd([[
       hi SpellCap                                             guifg=black         guibg=springgreen
 
       hi SignColumn                                           guifg=white         guibg=#181818
-      " "hi WinSeparator                                         guifg=#383b3e       guibg=NONE
+      hi WinSeparator                                         guifg=#383b3e       guibg=NONE
       hi CursorLine                                           gui=NONE            guibg=NONE
       hi multiple_cursors_cursor                              guifg=springgreen   guibg=red
       hi multiple_cursors_visual                              guifg=black         guibg=white

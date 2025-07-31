@@ -4,7 +4,7 @@ function M.setup()
   -- File type settings
   vim.cmd([[
     filetype plugin indent on
-    
+
     autocmd FileType qf wincmd J
     autocmd BufRead,BufNewFile *.json set filetype=json
     autocmd BufNewFile,BufRead *.webapp set filetype=json
