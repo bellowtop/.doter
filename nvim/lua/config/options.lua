@@ -85,7 +85,7 @@ function M.setup()
   end
 
   -- Plugin-specific settings
-  
+
   -- Auto-pairs
   g.AutoPairsShortcutToggle = ''
   g.AutoPairsShortcutJump = ''
@@ -168,6 +168,10 @@ function M.setup()
       filename = 'LightlineTruncatedFileName'
     },
   }
+
+  -- Lightline-bufferline 过滤特殊 buffer
+  g['lightline#bufferline#exclude_ft'] = { 'help', 'man', 'qf', 'fugitive', 'NvimTree', 'TelescopePrompt', 'claude' }
+  g['lightline#bufferline#exclude_name'] = { '[No Name]' }
 end
 
 return M

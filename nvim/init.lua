@@ -16,6 +16,7 @@ require('config.functions').setup()   -- Custom functions and utilities
 require('config.highlights')          -- Color scheme and highlights
 require('config.autocmds').setup()    -- Autocommands
 require('config.keymaps').setup()     -- Key mappings
+require('config.proxy').setup()       -- SetProxy
 
 -- Load LSP configuration
 require('config.lsp').setup()         -- Language Server Protocol setup
