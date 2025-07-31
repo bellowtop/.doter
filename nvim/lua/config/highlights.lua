@@ -18,6 +18,10 @@ vim.cmd([[
       hi multiple_cursors_cursor                              ctermfg=green       ctermbg=red
       hi multiple_cursors_visual                              ctermfg=black       ctermbg=white
 
+      " NvimTree
+      hi NvimTreeNormal                                       ctermfg=white       ctermbg=234
+      hi NvimTreeEndOfBuffer                                  ctermfg=234         ctermbg=234
+
       " for gui
       hi Normal                                                                   guibg=#181818
       hi NonText                                              guifg=#415367       guibg=#181818
@@ -31,6 +35,10 @@ vim.cmd([[
       hi CursorLine                                           gui=NONE            guibg=NONE
       hi multiple_cursors_cursor                              guifg=springgreen   guibg=red
       hi multiple_cursors_visual                              guifg=black         guibg=white
+
+      " NvimTree
+      hi NvimTreeNormal                                       guifg=white         guibg=#181818
+      hi NvimTreeEndOfBuffer                                  guifg=#181818       guibg=#181818
   endfunction
 ]])
 
