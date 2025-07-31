@@ -49,7 +49,21 @@ local function custom_attach(client, bufnr)
   local bufopts = { silent=true, buffer=bufnr }
 
   vim.keymap.set('n', 'gF', vim.lsp.buf.format, bufopts)
-  vim.keymap.set('n', 'gR', LspRename, bufopts)
+  vim.keymap.set('n', 'gR', function() 
+    vim.lsp.buf.references({ includeDeclaration = false }, {
+      on_list = function(options)
+        if #options.items == 1 then
+          vim.api.nvim_command('edit ' .. options.items[1].filename)
+          vim.api.nvim_win_set_cursor(0, {options.items[1].lnum, options.items[1].col - 1})
+          -- Pulse the current line after jumping
+          require('config.functions').pulse_current_line()
+        else
+          vim.fn.setqflist({}, ' ', options)
+          vim.cmd('copen')
+        end
+      end
+    })
+  end, bufopts)
 
   vim.keymap.set('n', 'gD', function() 
     vim.lsp.buf.declaration()

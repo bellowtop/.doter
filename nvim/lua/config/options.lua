@@ -37,6 +37,7 @@ function M.setup()
   opt.listchars = { tab = '▸ ', trail = '·', extends = '❯', precedes = '❮', nbsp = '×' }
   opt.list = true
   opt.number = true
+  opt.signcolumn = "yes"  -- Always show sign column to prevent layout shifts
   opt.modeline = false
   opt.wrap = false
   opt.ruler = true
