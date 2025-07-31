@@ -584,6 +584,13 @@ If buffer-or-name is nil return current buffer's mode."
 (setq my-visual-line-selection nil)
 (setq my-visual-line-start-num nil)
 
+
+(add-hook 'deactivate-mark-hook
+  (lambda ()
+    (setq my-visual-line-selection nil
+      my-visual-line-start-num nil)))
+
+
 (defun my-select-current-line-and-forward-line (arg)
   "Select the current line and move the cursor by ARG lines IF
   no region is selected.

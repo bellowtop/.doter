@@ -48,8 +48,6 @@
   "add special keybindings for visual selected mode"
   (interactive)
   ;; (message "toggle selected keybinding")
-  (unless (bound-and-true-p selected-region-active-mode)
-    (setq my-visual-line-selection nil))
   (if (bound-and-true-p selected-region-active-mode)
     (progn
       ;; only non-special buffer and vterm buffer need this timer.
