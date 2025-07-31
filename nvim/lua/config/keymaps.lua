@@ -110,16 +110,16 @@ function M.setup()
   vim.api.nvim_set_keymap("i", "<C-q>", "<Esc>", { noremap = true })
   vim.api.nvim_set_keymap("n", "<C-q>", "a", { noremap = true })
 
-  -- QuickFix toggle
-  vim.api.nvim_set_keymap("n", "<C-h><C-h>", ":QFix<CR>", { noremap = true })
-
   -- Buffer navigation
-  vim.api.nvim_set_keymap("n", "<Leader>h", ":bprev<CR>", { noremap = true })
-  vim.api.nvim_set_keymap("n", "<Leader>l", ":bnext<CR>", { noremap = true })
-  vim.api.nvim_set_keymap("n", "<C-s>h", ":bprev<CR>", { noremap = true })
-  vim.api.nvim_set_keymap("n", "<C-s>l", ":bnext<CR>", { noremap = true })
-  vim.api.nvim_set_keymap("n", "<Leader>k", ":Bclose<CR>", { noremap = true })
-  vim.api.nvim_set_keymap("n", "<Leader>K", ":BufOnly<CR> :bfirst<CR>", { noremap = true })
+  keymap("n", "<Leader>h", "<cmd>bprev<cr>", { desc = "Previous buffer" })
+  keymap("n", "<Leader>l", "<cmd>bnext<cr>", { desc = "Next buffer" })
+  keymap("n", "<C-s>h", "<cmd>bprev<cr>", { desc = "Previous buffer" })
+  keymap("n", "<C-s>l", "<cmd>bnext<cr>", { desc = "Next buffer" })
+  keymap("n", "<Leader>k", "<cmd>Bclose<cr>", { desc = "Close buffer" })
+  keymap("n", "<Leader>K", "<cmd>BufOnly<cr><cmd>bfirst<cr>", { desc = "Close all other buffers" })
+
+  -- Window management
+  keymap("n", "<C-h><C-h>", "<cmd>only<cr>", { desc = "Close other windows" })
 
   -- Window management
   vim.api.nvim_set_keymap("n", "<Leader>x", "<C-w>c", { noremap = true })
@@ -223,14 +223,28 @@ function M.setup()
   vim.api.nvim_set_keymap("n", "<A-l>", ":bnext<CR>", { noremap = true })
 
   -- Disable some keys
-  vim.api.nvim_set_keymap("n", "K", "<nop>", { noremap = true })
-  vim.api.nvim_set_keymap("n", "Q", "<nop>", { noremap = true })
-
-  -- Close other windows with Ctrl-h Ctrl-h
-  vim.api.nvim_set_keymap("n", "<C-h><C-h>", "<cmd>only<cr>", { noremap = true, silent = true })
+  keymap("n", "K", "<nop>", { desc = "Disabled" })
+  keymap("n", "Q", "<nop>", { desc = "Disabled" })
 
   -- CMP completion
   vim.keymap.set("i", "<C-Tab>", function() require('cmp').mapping.complete() end, { noremap = true })
+
+  -- Function key mappings (moved from init.lua)
+  local functions = require('config.functions')
+  keymap("n", "<F3>", "<cmd>set wrap!<cr>", { desc = "Toggle line wrap" })
+  keymap("n", "<F4>", functions.toggle_mouse, { desc = "Toggle mouse" })
+  keymap("n", "<F6>", "<cmd>LspRestart<cr>", { desc = "Restart LSP" })
+  keymap("n", "<F8>", "*", { desc = "Search word under cursor" })
+  keymap("n", "zm", functions.toggle_fold, { desc = "Toggle fold level" })
+  keymap("n", "zo", "zA", { desc = "Toggle fold" })
+  keymap("v", "Y", functions.copy_to_tmux, { silent = true, desc = "Copy to tmux" })
+
+  -- Copy file path
+  keymap("n", "<leader>PP", function()
+    local filepath = vim.fn.expand('%:p')
+    vim.fn.setreg('+', filepath)
+    print('Copied to clipboard: ' .. filepath)
+  end, { desc = "Copy absolute file path to clipboard" })
 end
 
 return M

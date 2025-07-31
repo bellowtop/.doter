@@ -6,6 +6,9 @@ function M.setup()
       open = 'o',
       openc = '<CR>',
     },
+    preview = {
+      winblend = 0,  -- Remove transparency from preview window
+    },
   })
 end
 

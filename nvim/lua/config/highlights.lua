@@ -1,66 +1,53 @@
 -- Apply colorscheme
 vim.cmd('colorscheme vscode')
 
--- Custom highlight settings
+-- Custom highlight settings using vim.cmd for compatibility
 vim.cmd([[
-  function! MyHighlights() abort
-      " for term
-      hi Normal                                               ctermfg=white       ctermbg=234
-      hi NonText                                              ctermfg=59          ctermbg=234
-      hi EndOfBuffer                                          ctermfg=234         ctermbg=234
-      hi LineNr                                               ctermfg=59          ctermbg=234
-      hi Search                       cterm=reverse           ctermfg=214         ctermbg=232
-      hi SpellCap                                             ctermfg=black       ctermbg=green
+  " Terminal colors
+  hi Normal                  ctermfg=white       ctermbg=234         guibg=#181818
+  hi NonText                 ctermfg=59          ctermbg=234         guifg=#415367       guibg=#181818
+  hi EndOfBuffer             ctermfg=234         ctermbg=234         guifg=#181818       guibg=#181818
+  hi LineNr                  ctermfg=59          ctermbg=234         guifg=#415367       guibg=#181818
+  hi Search                  cterm=reverse       ctermfg=214         ctermbg=232         gui=reverse         guifg=goldenrod2    guibg=black
+  hi SpellCap                ctermfg=black       ctermbg=green       guifg=black         guibg=springgreen
 
-      hi SignColumn                                           ctermfg=white       ctermbg=234
-      hi WinSeparator                                         ctermfg=237         ctermbg=NONE
-      hi CursorLine                                           cterm=NONE          ctermbg=NONE
-      hi multiple_cursors_cursor                              ctermfg=green       ctermbg=red
-      hi multiple_cursors_visual                              ctermfg=black       ctermbg=white
+  " UI elements
+  hi SignColumn              ctermfg=white       ctermbg=234         guifg=white         guibg=#181818
+  hi WinSeparator            ctermfg=237                             guifg=#569CD6       guibg=NONE
+  hi CursorLine              cterm=NONE                              gui=NONE            guibg=NONE
 
-      " NvimTree
-      hi NvimTreeNormal                                       ctermfg=white       ctermbg=234
-      hi NvimTreeEndOfBuffer                                  ctermfg=234         ctermbg=234
+  " Multiple cursors
+  hi multiple_cursors_cursor ctermfg=green       ctermbg=red         guifg=springgreen   guibg=red
+  hi multiple_cursors_visual ctermfg=black       ctermbg=white       guifg=black         guibg=white
 
-      " Tabline
-      hi TabLine                                              ctermfg=white       ctermbg=234
-      hi TabLineFill                                          ctermfg=white       ctermbg=234
-      hi TabLineSel                                           ctermfg=white       ctermbg=237
+  " NvimTree
+  hi NvimTreeNormal          ctermfg=white       ctermbg=234         guifg=white         guibg=#181818
+  hi NvimTreeEndOfBuffer     ctermfg=234         ctermbg=234         guifg=#181818       guibg=#181818
 
-      " BufferLine
-      hi BufferLineFill                                       ctermfg=white       ctermbg=234
-      hi BufferLineBackground                                 ctermfg=white       ctermbg=234
-      hi BufferLineBuffer                                     ctermfg=white       ctermbg=234
+  " Tabline
+  hi TabLine                 ctermfg=white       ctermbg=234         guifg=white         guibg=#181818
+  hi TabLineFill             ctermfg=white       ctermbg=234         guifg=white         guibg=#181818
+  hi TabLineSel              ctermfg=white       ctermbg=237         guifg=white         guibg=#383b3e
 
-      " for gui
-      hi Normal                                                                   guibg=#181818
-      hi NonText                                              guifg=#415367       guibg=#181818
-      hi EndOfBuffer                                          guifg=#181818       guibg=#181818
-      hi LineNr                                               guifg=#415367       guibg=#181818
-      hi Search                       gui=reverse                guifg=goldenrod2         guibg=black
-      hi SpellCap                                             guifg=black         guibg=springgreen
+  " BufferLine
+  hi BufferLineFill          ctermfg=white       ctermbg=234         guifg=white         guibg=#181818
+  hi BufferLineBackground    ctermfg=white       ctermbg=234         guifg=white         guibg=#181818
+  hi BufferLineBuffer        ctermfg=white       ctermbg=234         guifg=white         guibg=#181818
 
-      hi SignColumn                                           guifg=white         guibg=#181818
-      hi WinSeparator                                         guifg=#383b3e       guibg=NONE
-      hi CursorLine                                           gui=NONE            guibg=NONE
-      hi multiple_cursors_cursor                              guifg=springgreen   guibg=red
-      hi multiple_cursors_visual                              guifg=black         guibg=white
-
-      " NvimTree
-      hi NvimTreeNormal                                       guifg=white         guibg=#181818
-      hi NvimTreeEndOfBuffer                                  guifg=#181818       guibg=#181818
-
-      " Tabline
-      hi TabLine                                              guifg=white         guibg=#181818
-      hi TabLineFill                                          guifg=white         guibg=#181818
-      hi TabLineSel                                           guifg=white         guibg=#383b3e
-
-      " BufferLine
-      hi BufferLineFill                                       guifg=white         guibg=#181818
-      hi BufferLineBackground                                 guifg=white         guibg=#181818
-      hi BufferLineBuffer                                     guifg=white         guibg=#181818
-  endfunction
+  " LSP floating windows
+  hi FloatBorder             guifg=#569CD6       guibg=NONE
+  hi NormalFloat             guifg=white         guibg=#1e1e1e
 ]])
 
--- Call MyHighlights immediately after defining it
-vim.cmd('call MyHighlights()')
+-- Create autocmd to reapply highlights when colorscheme changes
+vim.api.nvim_create_autocmd('ColorScheme', {
+  pattern = '*',
+  callback = function()
+    vim.cmd([[
+      " Reapply custom highlights
+      hi FloatBorder           guifg=#569CD6       guibg=NONE
+      hi NormalFloat           guifg=white         guibg=#1e1e1e
+    ]])
+  end,
+  desc = 'Reapply custom highlights after colorscheme change'
+})

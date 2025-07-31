@@ -51,8 +51,14 @@ local function custom_attach(client, bufnr)
   vim.keymap.set('n', 'gF', vim.lsp.buf.format, bufopts)
   vim.keymap.set('n', 'gR', LspRename, bufopts)
 
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'gD', function() 
+    vim.lsp.buf.declaration()
+    vim.defer_fn(function() require('config.functions').pulse_current_line() end, 100)
+  end, bufopts)
+  vim.keymap.set('n', 'gd', function() 
+    vim.lsp.buf.definition()
+    vim.defer_fn(function() require('config.functions').pulse_current_line() end, 100)
+  end, bufopts)
   vim.keymap.set('n', 'gh',
     function()
         vim.lsp.buf.hover { border = "single", max_height = 25, max_width = 120 }
@@ -74,7 +80,21 @@ local function custom_attach(client, bufnr)
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, bufopts)
   vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, bufopts)
 
-  vim.keymap.set('n', 'gr', function() vim.lsp.buf.references({ includeDeclaration = false }) end, bufopts)
+  vim.keymap.set('n', 'grr', function() 
+    vim.lsp.buf.references({ includeDeclaration = false }, {
+      on_list = function(options)
+        if #options.items == 1 then
+          vim.api.nvim_command('edit ' .. options.items[1].filename)
+          vim.api.nvim_win_set_cursor(0, {options.items[1].lnum, options.items[1].col - 1})
+          -- Pulse the current line after jumping
+          require('config.functions').pulse_current_line()
+        else
+          vim.fn.setqflist({}, ' ', options)
+          vim.cmd('copen')
+        end
+      end
+    })
+  end, bufopts)
 
   if client.server_capabilities.documentFormattingProvider then
     vim.keymap.set("n", "gF", vim.lsp.buf.format)
@@ -144,7 +164,7 @@ function M.setup()
     hi DiagnosticHint guifg=#95e1d3
   ]])
 
-  -- Change border of documentation hover window
+  -- Configure LSP handlers
   lsp.handlers["textDocument/hover"] = lsp.with(vim.lsp.handlers.hover, {
     border = "rounded",
   })
