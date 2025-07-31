@@ -63,8 +63,21 @@
 (setq projectile-completion-system 'ivy)
 
 (defun my-projectile-find-file ()
+  "Find file in current project. If text is selected, use it as initial input."
   (interactive)
-  (projectile-find-file))
+  (let ((initial-input (when (region-active-p)
+                         (buffer-substring-no-properties (region-beginning) (region-end)))))
+    (when (region-active-p)
+      (deactivate-mark))
+    (if initial-input
+        (let* ((project-root (projectile-acquire-root))
+               (file (projectile-completing-read "Find file: "
+                                                 (projectile-project-files project-root)
+                                                 :initial-input initial-input)))
+          (when file
+            (find-file (expand-file-name file project-root))
+            (run-hooks 'projectile-find-file-hook)))
+      (projectile-find-file))))
 
 (defun my-projectile-switch-project-find-file ()
   (interactive)
