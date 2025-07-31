@@ -78,6 +78,7 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/blink-search"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/tabby.el"))
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/initializers"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/claudemacs"))
 (add-to-list 'custom-theme-load-path (expand-file-name "~/.emacs.d/lisp"))
 
 ;;; Core Libraries
@@ -525,20 +526,23 @@
   )
 
 
-(use-package claude-code
-  :bind-keymap
-  ("C-c c" . claude-code-command-map) ;; or your preferred key
-  :bind
-  (("s-\"" . claude-code-toggle))
-  :config
-  (claude-code-mode)
-  (add-to-list 'display-buffer-alist
-                 '("^\\*claude"
-                   (display-buffer-in-side-window)
-                   (side . right)
-                   (window-width . 90)))
-  (setq claude-code-terminal-backend 'vterm)
-  )
+;; (use-package claude-code
+;;   :bind-keymap
+;;   ("C-c c" . claude-code-command-map) ;; or your preferred key
+;;   :bind
+;;   (("s-\"" . claude-code-toggle))
+;;   :config
+;;   (claude-code-mode)
+;;   (add-to-list 'display-buffer-alist
+;;                  '("^\\*claude"
+;;                    (display-buffer-in-side-window)
+;;                    (side . right)
+;;                    (window-width . 90)))
+;;   (setq claude-code-terminal-backend 'vterm)
+;;   )
+
+(use-package claudemacs
+  :vc (:fetcher github :repo "cpoile/claudemacs"))
 
 
 ;;; Text Mode Enhancements
