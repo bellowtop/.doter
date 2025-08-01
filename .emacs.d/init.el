@@ -11,16 +11,16 @@
 ;;; Package Management
 (require 'package)
 (setq package-archives
-      '(("gnu" . "https://elpa.gnu.org/packages/")
-        ("nongnu" . "https://elpa.nongnu.org/nongnu/")
-        ("melpa" . "https://melpa.org/packages/")
-        ))
+  '(("gnu" . "https://elpa.gnu.org/packages/")
+     ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+     ("melpa" . "https://melpa.org/packages/")
+     ))
 
 ;; 完全禁止自动包管理
 (setq package-enable-at-startup nil
-      package-check-signature nil
-      ;; 禁止自动安装选中的包
-      package-install-upgrade-built-in nil)
+  package-check-signature nil
+  ;; 禁止自动安装选中的包
+  package-install-upgrade-built-in nil)
 
 ;; 禁用 package-selected-packages 的自动安装机制
 (defun package--save-selected-packages (&rest _args)
@@ -38,21 +38,21 @@
 
 ;; 启动完成后恢复正常行为
 (add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq my-startup-finished t)))
+  (lambda ()
+    (setq my-startup-finished t)))
 
 (package-initialize)
 
 ;;; Performance Optimization
 ;; Minimize garbage collection during startup
 (setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.6)
+  gc-cons-percentage 0.6)
 
 ;; Lower threshold back to 16 MiB after startup (default is 800kB)
 (add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq gc-cons-threshold (* 16 1024 1024)
-                  gc-cons-percentage 0.1)))
+  (lambda ()
+    (setq gc-cons-threshold (* 16 1024 1024)
+      gc-cons-percentage 0.1)))
 
 ;;; Path Configuration
 (add-to-list 'exec-path "/usr/local/bin/")
@@ -97,12 +97,12 @@
 
 ;;; Basic Settings
 (setq warning-minimum-level :emergency
-      visible-bell t
-      ring-bell-function #'ignore
-      custom-safe-themes t
-      recenter-redisplay nil
-      blink-cursor-blinks 0
-      blink-cursor-interval 0.3)
+  visible-bell t
+  ring-bell-function #'ignore
+  custom-safe-themes t
+  recenter-redisplay nil
+  blink-cursor-blinks 0
+  blink-cursor-interval 0.3)
 
 (set-default 'truncate-lines t)
 
@@ -125,29 +125,29 @@
 
 ;;; Font and UI Configuration
 (setq default-font "IBM Plex Mono-14.5"
-      default-font-family "IBM Plex Mono")
+  default-font-family "IBM Plex Mono")
 
 (set-face-attribute 'default nil :font default-font)
 (setq default-frame-alist
-      `((vertical-scroll-bars . nil) ;隐藏滚动条
-        (left-fringe . 0) ;关闭左fringe
-        (right-fringe . 0) ;关闭右fringe
-        (font . ,default-font)
-        (fullscreen . maximized)
-        ))
+  `((vertical-scroll-bars . nil) ;隐藏滚动条
+     (left-fringe . 0) ;关闭左fringe
+     (right-fringe . 0) ;关闭右fringe
+     (font . ,default-font)
+     (fullscreen . maximized)
+     ))
 
 (defun center-frame ()
   "Center the frame on the screen."
   (interactive)
   ;; 获取显示器的尺寸
   (let* ((screen-width (x-display-pixel-width))
-         (screen-height (x-display-pixel-height))
-         ;; 获取当前框架的尺寸
-         (frame-width (frame-pixel-width))
-         (frame-height (frame-pixel-height))
-         ;; 计算新的框架位置
-         (left (/ (- screen-width frame-width) 2))
-         (top (/ (- screen-height frame-height) 2)))
+          (screen-height (x-display-pixel-height))
+          ;; 获取当前框架的尺寸
+          (frame-width (frame-pixel-width))
+          (frame-height (frame-pixel-height))
+          ;; 计算新的框架位置
+          (left (/ (- screen-width frame-width) 2))
+          (top (/ (- screen-height frame-height) 2)))
     ;; 设置框架的位置
     (set-frame-position (selected-frame) left top)))
 
@@ -176,15 +176,15 @@
 
 ;; New Tab
 (setq tab-bar-new-tab-choice
-      (lambda () (generate-new-buffer "untitled")))
+  (lambda () (generate-new-buffer "untitled")))
 
 ;;; Frame and Border Configuration
 (setq-default left-margin-width 0
-              right-margin-width 0)
+  right-margin-width 0)
 (setq frame-resize-pixelwise t)
 
 (setq my-posframe-border-width (if (display-graphic-p) 1 0)
-      my-posframe-fringe-width (if (display-graphic-p) 8 0))
+  my-posframe-fringe-width (if (display-graphic-p) 8 0))
 
 ;; Set symbol for the border
 (set-display-table-slot standard-display-table 'vertical-border (make-glyph-code ?│))
@@ -211,20 +211,20 @@
 
 (setq use-dark-theme-mode t)
 (if use-dark-theme-mode
-    (setq darker-window-bg-color "#181818"
-          darker-window-fg-color "white"
-          highlight-font-chars-face-fg "green"
-          highlight-font-chars-face-underline t
-          whitespace-tab-fg-color "#627D9D"
-          whitespace-trailing-fg-color "#161c23"
-          hl-line-bg-color "#1b2129")
+  (setq darker-window-bg-color "#181818"
+    darker-window-fg-color "white"
+    highlight-font-chars-face-fg "green"
+    highlight-font-chars-face-underline t
+    whitespace-tab-fg-color "#627D9D"
+    whitespace-trailing-fg-color "#161c23"
+    hl-line-bg-color "#1b2129")
   (setq darker-window-bg-color "#FFFFFF"
-        darker-window-fg-color "black"
-        highlight-font-chars-face-fg 'unspecified
-        highlight-font-chars-face-underline t
-        whitespace-tab-fg-color "#627D9D"
-        whitespace-trailing-fg-color "#161c23"
-        hl-line-bg-color (face-background 'highlight)))
+    darker-window-fg-color "black"
+    highlight-font-chars-face-fg 'unspecified
+    highlight-font-chars-face-underline t
+    whitespace-tab-fg-color "#627D9D"
+    whitespace-trailing-fg-color "#161c23"
+    hl-line-bg-color (face-background 'highlight)))
 
 (defun my-set-small-line-height ()
   (interactive)
@@ -234,10 +234,10 @@
   (interactive)
   (setq-local default-text-properties '(line-spacing 0.11 line-height 1.11)))
 
-(add-hook 'text-mode-hook #'my-set-large-line-height)
-(add-hook 'prog-mode-hook #'my-set-large-line-height)
-(add-hook 'conf-mode-hook #'my-set-large-line-height)
-(add-hook 'org-mode-hook  #'my-set-large-line-height)
+;; (add-hook 'text-mode-hook #'my-set-large-line-height)
+;; (add-hook 'prog-mode-hook #'my-set-large-line-height)
+;; (add-hook 'conf-mode-hook #'my-set-large-line-height)
+;; (add-hook 'org-mode-hook  #'my-set-large-line-height)
 
 ;; set global proxy
 (my-set-proxy)
@@ -245,15 +245,15 @@
 ;;; Custom Faces
 (defface my-highlight-font-chars-face
   `((t (:foreground ,highlight-font-chars-face-fg
-        :underline (:color ,highlight-font-chars-face-fg :position t)
-        :weight normal)))
+         :underline (:color ,highlight-font-chars-face-fg :position t)
+         :weight normal)))
   "custom highlight for treemacs current line")
 
 (defface my-highlight-font-words-face
   `((t (:background "#5114FA"
-        :foreground "white"
-        :underline nil
-        :weight normal)))
+         :foreground "white"
+         :underline nil
+         :weight normal)))
   "custom highlight for treemacs current line")
 
 ;;; Theme Loading and Face Configuration
@@ -264,8 +264,8 @@
   (setq vscode-dark-plus-box-org-todo nil)
   (load-theme 'vscode-dark-plus t)
   (add-hook 'after-load-theme-hook
-            (lambda ()
-              (set-face-attribute 'font-lock-keyword-face nil :foreground "orchid")))
+    (lambda ()
+      (set-face-attribute 'font-lock-keyword-face nil :foreground "orchid")))
   )
 
 ;; (load-theme 'doom-xcode t)
@@ -278,7 +278,7 @@
 ;;; Line Numbers and Visual Enhancements
 ;; for hl-line+.el
 (setq hl-line-inhibit-highlighting-for-modes
-      '(dired-mode deadgrep-mode deadgrep-edit-mode treemacs-mode))
+  '(dired-mode deadgrep-mode deadgrep-edit-mode treemacs-mode))
 
 (global-hl-line-mode 0)
 
@@ -352,17 +352,17 @@
 (defadvice kill-region (before slick-cut activate compile)
   "When called interactively with no active region, kill a single line instead."
   (interactive
-   (if mark-active
-       (list (region-beginning) (region-end))
-     (list (line-beginning-position) (line-beginning-position 2)))))
+    (if mark-active
+      (list (region-beginning) (region-end))
+      (list (line-beginning-position) (line-beginning-position 2)))))
 
 (defadvice kill-ring-save (before slick-copy activate compile)
   "When called interactively with no active region, copy a single line instead."
   (interactive
-   (if mark-active
-       (list (region-beginning) (region-end))
-     (message "Copied line")
-     (list (line-beginning-position) (line-beginning-position 2)))))
+    (if mark-active
+      (list (region-beginning) (region-end))
+      (message "Copied line")
+      (list (line-beginning-position) (line-beginning-position 2)))))
 
 ;;; ===================================================================
 ;;; NAVIGATION & SEARCH
@@ -500,7 +500,7 @@
           ("s-a" . xwidget-webkit-select-all)          ; Cmd+A 全选
           ("s-r" . xwidget-webkit-reload)              ; Cmd+R 刷新
           ("s-l" . xwidget-webkit-current-url)
-        )
+          )
   :config
   (defun my/xwidget-webkit-search ()
     "搜索功能"
@@ -517,7 +517,7 @@
   :custom
   (xwwp-follow-link-completion-system 'ivy)
   :bind (:map xwidget-webkit-mode-map
-              ("v" . xwwp-follow-link)))
+          ("v" . xwwp-follow-link)))
 
 (use-package hl-todo
   :ensure t
@@ -534,10 +534,10 @@
   :config
   (claude-code-mode)
   (add-to-list 'display-buffer-alist
-                 '("^\\*claude"
-                   (display-buffer-in-side-window)
-                   (side . right)
-                   (window-width . 90)))
+    '("^\\*claude"
+       (display-buffer-in-side-window)
+       (side . right)
+       (window-width . 90)))
   (setq claude-code-terminal-backend 'vterm)
   (setq claude-code-vterm-buffer-multiline-output nil)
   )
@@ -610,117 +610,124 @@
 
 ;;; Custom Faces Configuration
 (custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(mode-line ((t (:background "#415367" :foreground "#e5ded6" :underline (:color foreground-color :style line :position t)))))
- '(success ((t (:foreground "Green1" :weight regular))))
- ;; 基础界面颜色
- ;; '(default ((t (:foreground "#D1D2CE" :background "#161c23" :font "IBM Plex Mono-14.5"))))
- '(show-paren-match ((t (:foreground "green" :background "#11501B" :weight normal :underline (:position t)))))
- '(lazy-highlight ((t (:background "#7FDC59" :foreground "#161c23" :weight normal))))
- '(widget-field ((t (:background "#C6B8AD" :foreground "black"))))
- '(font-lock-keyword-face ((t (:foreground "orchid" :weight normal))))
- '(font-lock-preprocessor-face ((t (:weight normal))))
- '(region ((t (:background "#214283" :distant-foreground "#707080"))))
- '(isearch ((t (:foreground "white" :background "deeppink" :weight normal))))
- '(mode-line-inactive ((t (:box nil :underline nil))))
- '(mode-line-active ((t (:box nil :underline nil))))
- '(mode-line-highlight ((t (:box nil :foreground "green"))))
- '(vertical-border ((t (:foreground "#353535" :background "#161c23" :inherit unspecified))))
- '(fringe ((t (:foreground unspecified :background unspecified :inherit default))))
- '(line-number ((t (:inherit default :foreground "gray33" :slant normal :weight normal))))
- '(line-number-current-line ((t (:background "#1b2129" :foreground "white" :slant normal :weight normal))))
- ;; 窗口分隔线
- '(window-divider ((t (:foreground "#415367"))))
- '(window-divider-first-pixel ((t (:foreground "#415367"))))
- '(window-divider-last-pixel ((t (:foreground "#415367"))))
- ;; 工具提示
- '(tooltip ((t (:font "IBM Plex Mono-15.0"))))
- ;; Company 补全
- '(company-tooltip-common ((t (:weight normal :foreground "#7FDC59"))))
- '(company-tooltip ((t (:background "black"))))
- '(company-tooltip-selection ((t (:weight normal))))
- ;; Ivy 搜索
- '(ivy-minibuffer-match-face-1 ((t (:weight regular))))
- '(ivy-minibuffer-match-face-2 ((t (:weight regular))))
- '(ivy-minibuffer-match-face-3 ((t (:weight regular))))
- '(ivy-minibuffer-match-face-4 ((t (:weight regular))))
- ;; Avy 跳转
- '(avy-lead-face ((t (:background "#161c23" :weight normal :foreground "deeppink"))))
- '(avy-lead-face-0 ((t (:background "#161c23" :foreground "#FFB400"))))
- ;; Whitespace 模式
- '(whitespace-tab ((t (:foreground unspecified :background unspecified :inherit shadow))))
- '(whitespace-trailing ((t (:foreground unspecified :background unspecified :inherit shadow))))
- ;; Treemacs 主题
- '(treemacs-root-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#57D8D4"))))
- '(treemacs-directory-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#57D8D4"))))
- '(treemacs-directory-collapsed-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#57D8D4"))))
- '(treemacs-git-modified-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#D0BF68"))))
- '(treemacs-git-unmodified-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-git-renamed-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-git-ignored-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-git-untracked-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-git-added-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-git-conflict-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-file-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- '(treemacs-tags-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
- ;; CFRS 边框
- '(cfrs-border-color ((t (:background "yellow"))))
- ;; 其他工具
- '(ripgrep-match-face ((t (:inherit my-highlight-font-words-face))))
- '(yas-field-highlight-face ((t (:inherit my-highlight-font-words-face))))
- '(symbol-overlay-default-face ((t (:inherit my-highlight-font-words-face))))
- '(deadgrep-match-face ((t (:inherit lazy-highlight))))
- ;; God 模式标签
- '(tab-bar ((t (:background "#1e1e1e" :height 120))))
- '(tab-bar-tab ((t (:foreground "black" :background "yellow" :box (:line-width 3 :color "yellow" :style flat-button)))))
- ;; Eglot 高亮
- '(eglot-highlight-symbol-face ((t (:inherit my-highlight-font-words-face))))
- ;; Flymake 诊断
- '(flymake-error ((t (:foreground "DeepPink" :underline nil))))
- '(flymake-warning ((t (:underline nil))))
- '(flymake-note ((t (:underline nil))))
- ;; Eglot 诊断标签
- '(eglot-diagnostic-tag-unnecessary-face ((t (:underline nil :foreground "yellow"))))
- '(eglot-diagnostic-tag-deprecated-face ((t (:underline nil :strike-through nil :foreground "yellow"))))
- ;; Sideline Flymake
- '(sideline-flymake-error ((t (:inherit nil :background "gray" :foreground "black"))))
- ;; Highlight Indent Guides
- '(shadow ((t (:foreground "#444444"))))
- '(highlight-indent-guides-character-face ((t (:inherit shadow))))
- ;; Iedit
- '(iedit-occurrence ((t (:foreground "black" :background "yellow")))))
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  '(avy-lead-face ((t (:background "#161c23" :weight normal :foreground "deeppink"))))
+  '(avy-lead-face-0 ((t (:background "#161c23" :foreground "#FFB400"))))
+  '(cfrs-border-color ((t (:background "yellow"))))
+  '(company-tooltip ((t (:background "black"))))
+  '(company-tooltip-common ((t (:weight normal :foreground "#7FDC59"))))
+  '(company-tooltip-selection ((t (:weight normal))))
+  '(deadgrep-match-face ((t (:inherit lazy-highlight))))
+  '(eglot-diagnostic-tag-deprecated-face ((t (:underline nil :strike-through nil :foreground "yellow"))))
+  '(eglot-diagnostic-tag-unnecessary-face ((t (:underline nil :foreground "yellow"))))
+  '(eglot-highlight-symbol-face ((t (:inherit my-highlight-font-words-face))))
+  '(flymake-error ((t (:foreground "DeepPink" :underline nil))))
+  '(flymake-note ((t (:underline nil))))
+  '(flymake-warning ((t (:underline nil))))
+  '(font-lock-keyword-face ((t (:foreground "orchid" :weight normal))))
+  '(font-lock-preprocessor-face ((t (:weight normal))))
+  '(fringe ((t (:foreground unspecified :background unspecified :inherit default))))
+  '(highlight-indent-guides-character-face ((t (:inherit shadow))))
+  '(iedit-occurrence ((t (:foreground "black" :background "yellow"))))
+  '(isearch ((t (:foreground "white" :background "deeppink" :weight normal))))
+  '(ivy-minibuffer-match-face-1 ((t (:weight regular))))
+  '(ivy-minibuffer-match-face-2 ((t (:weight regular))))
+  '(ivy-minibuffer-match-face-3 ((t (:weight regular))))
+  '(ivy-minibuffer-match-face-4 ((t (:weight regular))))
+  '(lazy-highlight ((t (:background "#7FDC59" :foreground "#161c23" :weight normal))))
+  '(line-number ((t (:inherit default :foreground "gray33" :slant normal :weight normal))))
+  '(line-number-current-line ((t (:background "#1b2129" :foreground "white" :slant normal :weight normal))))
+  '(mode-line ((t (:background "#415367" :foreground "#e5ded6" :underline (:color foreground-color :style line :position t)))))
+  '(mode-line-active ((t (:box nil :underline nil))))
+  '(mode-line-highlight ((t (:box nil :foreground "green"))))
+  '(mode-line-inactive ((t (:box nil :underline nil))))
+  '(region ((t (:background "#214283" :distant-foreground "#707080"))))
+  '(ripgrep-match-face ((t (:inherit my-highlight-font-words-face))))
+  '(shadow ((t (:foreground "#444444"))))
+  '(show-paren-match ((t (:foreground "green" :background "#11501B" :weight normal :underline (:position t)))))
+  '(sideline-flymake-error ((t (:inherit nil :background "gray" :foreground "black"))))
+  '(success ((t (:foreground "Green1" :weight regular))))
+  '(symbol-overlay-default-face ((t (:inherit my-highlight-font-words-face))))
+  '(tab-bar ((t (:background "#1e1e1e" :height 120))))
+  '(tab-bar-tab ((t (:foreground "black" :background "yellow" :box (:line-width 3 :color "yellow" :style flat-button)))))
+  '(tooltip ((t (:font "IBM Plex Mono-15.0"))))
+  '(treemacs-directory-collapsed-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#57D8D4"))))
+  '(treemacs-directory-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#57D8D4"))))
+  '(treemacs-file-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+  '(treemacs-git-added-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+  '(treemacs-git-conflict-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+  '(treemacs-git-ignored-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+  '(treemacs-git-modified-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#D0BF68"))))
+  '(treemacs-git-renamed-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+  '(treemacs-git-unmodified-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+  '(treemacs-git-untracked-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+  '(treemacs-root-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#57D8D4"))))
+  '(treemacs-tags-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))
+  '(vertical-border ((t (:inherit nil :background "#161c23" :foreground "#569CD6"))))
+  '(whitespace-tab ((t (:foreground unspecified :background unspecified :inherit shadow))))
+  '(whitespace-trailing ((t (:foreground unspecified :background unspecified :inherit shadow))))
+  '(widget-field ((t (:background "#C6B8AD" :foreground "black"))))
+  '(window-divider ((t (:foreground "#415367"))))
+  '(window-divider-first-pixel ((t (:foreground "#415367"))))
+  '(window-divider-last-pixel ((t (:foreground "#415367"))))
+  '(yas-field-highlight-face ((t (:inherit my-highlight-font-words-face)))))
 
 ;;; Custom Variables
 (custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(auto-save-file-name-transforms '((".*" "~/.emacs.d/.local/autosaves/\\1" t)))
- '(auto-save-list-file-prefix (expand-file-name "~/.emacs.d/.local/auto-save-list/"))
- '(backup-directory-alist '((".*" . "~/.emacs.d/.local/backups/")))
- '(create-lockfiles nil)
- '(helm-minibuffer-history-key "M-p")
- '(inhibit-startup-screen t)
- '(leetcode-prefer-language "cpp")
- '(leetcode-save-solutions t)
- '(package-selected-packages
-   '(yank-indent jtsx sideline-eglot sideline-flymake sideline highlight-indent-guides treemacs-nerd-icons treemacs python-ts poetry dockerfile-mode popper spacious-padding afternoon-theme ansible apheleia atom-one-dark-theme auto-dim-other-buffers bazel beacon benchmark-init blamer centaur-tabs challenger-deep-theme color-theme-sanityinc-tomorrow company-posframe company-prescient company-qml corfu-terminal counsel csv-mode cyberpunk-theme dashboard dashboard-hackernews diminish disable-mouse easy-kill eglot elisp-autofmt elisp-def elisp-refs elisp-slime-nav eterm-256color format-all general google-c-style helm-rg highlight-numbers highlight-parentheses imenu-list impatient-mode inkpot-theme ivy ivy-posframe ivy-xref jdecomp jsonrpc key-chord known leetcode lispy lsp-python-ms markdown-mode markdown-toc markdownfmt modus-themes moe-theme mwim nano-theme neotree nimbus-theme package-lint paredit phi-search popon popup-switcher popwin prescient project projectsile-mode protobuf-mode py-autopep8 qml-mode rainbow-delimiters reformatter ripgrep rjsx-mode selected slime slime-company smart-jump smart-mode-line smooth-scrolling solaire-mode srcery-theme srefactor swift-mode switch-buffer-functions symbol-overlay treemacs-all-the-icons treesit-auto typescript-mode undo-tree valign vs-dark-theme vscode-dark-plus-theme vterm vue-mode with-proxy with-simulated-input xclip yasnippet))
- '(pos-tip-background-color "#1d1d2b")
- '(pos-tip-foreground-color "#d4d4d6")
- '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
- '(safe-local-variable-values
-   '((eval font-lock-add-keywords nil
-		   `((,(concat "("
-					   (regexp-opt
-						'("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl")
-						t)
-					   "\\_>")
-			  1 'font-lock-variable-name-face)))))
- '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
- '(warning-suppress-types '((use-package) (lsp-mode))))
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+  '(auto-save-file-name-transforms '((".*" "~/.emacs.d/.local/autosaves/\\1" t)))
+  '(auto-save-list-file-prefix (expand-file-name "~/.emacs.d/.local/auto-save-list/"))
+  '(backup-directory-alist '((".*" . "~/.emacs.d/.local/backups/")))
+  '(create-lockfiles nil)
+  '(helm-minibuffer-history-key "M-p")
+  '(inhibit-startup-screen t)
+  '(leetcode-prefer-language "cpp")
+  '(leetcode-save-solutions t)
+  '(package-selected-packages
+     '(yank-indent jtsx sideline-eglot sideline-flymake sideline
+        highlight-indent-guides treemacs-nerd-icons treemacs python-ts
+        poetry dockerfile-mode popper spacious-padding afternoon-theme
+        ansible apheleia atom-one-dark-theme auto-dim-other-buffers
+        bazel beacon benchmark-init blamer centaur-tabs
+        challenger-deep-theme color-theme-sanityinc-tomorrow
+        company-posframe company-prescient company-qml corfu-terminal
+        counsel csv-mode cyberpunk-theme dashboard dashboard-hackernews
+        diminish disable-mouse easy-kill eglot elisp-autofmt elisp-def
+        elisp-refs elisp-slime-nav eterm-256color format-all general
+        google-c-style helm-rg highlight-numbers highlight-parentheses
+        imenu-list impatient-mode inkpot-theme ivy ivy-posframe
+        ivy-xref jdecomp jsonrpc key-chord known leetcode lispy
+        lsp-python-ms markdown-mode markdown-toc markdownfmt
+        modus-themes moe-theme mwim nano-theme neotree nimbus-theme
+        package-lint paredit phi-search popon popup-switcher popwin
+        prescient project projectsile-mode protobuf-mode py-autopep8
+        qml-mode rainbow-delimiters reformatter ripgrep rjsx-mode
+        selected slime slime-company smart-jump smart-mode-line
+        smooth-scrolling solaire-mode srcery-theme srefactor swift-mode
+        switch-buffer-functions symbol-overlay treemacs-all-the-icons
+        treesit-auto typescript-mode undo-tree valign vs-dark-theme
+        vscode-dark-plus-theme vterm vue-mode with-proxy
+        with-simulated-input xclip yasnippet))
+  '(pos-tip-background-color "#1d1d2b")
+  '(pos-tip-foreground-color "#d4d4d6")
+  '(recentf-save-file (expand-file-name "~/.emacs.d/.local/recentf"))
+  '(safe-local-variable-values
+     '((eval font-lock-add-keywords nil
+         `
+         ((,(concat "("
+              (regexp-opt
+                '("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op"
+                   "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl")
+                t)
+              "\\_>")
+            1 'font-lock-variable-name-face)))))
+  '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
+  '(warning-suppress-types '((use-package) (lsp-mode))))
 
 ;;; init.el ends here
