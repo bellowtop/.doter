@@ -965,7 +965,7 @@ If buffer-or-name is nil return current buffer's mode."
   (setenv "https_proxy" "http://127.0.0.1:9910")
   (setenv "HTTP_PROXY" "http://127.0.0.1:9910")
   (setenv "HTTPS_PROXY" "http://127.0.0.1:9910")
-)
+  )
 
 
 (defun my-find-char-forward (char)
@@ -984,5 +984,20 @@ If buffer-or-name is nil return current buffer's mode."
       (goto-char pos)
       (message "Character `%c' not found in this line." char))))
 
+(defun run-command-in-directory (dir cmd &rest args)
+  "Run a command in the specified directory.
+If DIR is nil, use `default-directory'.
+Return trimmed stdout if success, nil otherwise."
+  (let* ((default-directory (or dir default-directory))
+          (stdout-buffer (generate-new-buffer " *tmp-stdout*"))
+          (exit-status (condition-case nil
+                         (apply #'call-process cmd nil (list stdout-buffer nil) nil args)
+                         (file-missing nil))))
+    (unwind-protect
+      (if (eq exit-status 0)
+        (with-current-buffer stdout-buffer
+          (string-trim (buffer-string)))
+        nil)
+      (kill-buffer stdout-buffer))))
 
 (provide 'my-utils)

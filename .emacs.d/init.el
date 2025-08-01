@@ -238,7 +238,6 @@
 (add-hook 'prog-mode-hook #'my-set-large-line-height)
 (add-hook 'conf-mode-hook #'my-set-large-line-height)
 (add-hook 'org-mode-hook  #'my-set-large-line-height)
-(add-hook 'vterm-mode-hook  #'my-set-large-line-height)
 
 ;; set global proxy
 (my-set-proxy)
@@ -441,7 +440,7 @@
 
 ;;; Additional Tools
 (require 'init-blink-search)
-(require 'init-tabby)
+;; (require 'init-tabby)
 (require 'init-ivy)
 (require 'init-format-all)
 
