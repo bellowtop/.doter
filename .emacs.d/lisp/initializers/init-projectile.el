@@ -57,6 +57,32 @@
       projectile-track-known-projects-automatically t
       projectile-ignored-project-function 'ignored-projectile-project)
 
+
+    (setq projectile-project-root-files
+       '("pyproject.toml"     ; Python (uv, poetry, etc.)
+         "Cargo.toml"         ; Rust
+         "package.json"       ; Node.js/JavaScript
+         "go.mod"             ; Go
+         "pom.xml"            ; Java Maven
+         "build.gradle"       ; Java Gradle
+         "composer.json"      ; PHP
+         "Gemfile"            ; Ruby
+         "mix.exs"            ; Elixir
+         "Project.toml"       ; Julia
+         "dune-project"       ; OCaml
+         "stack.yaml"         ; Haskell Stack
+         "cabal.project"))    ; Haskell Cabal
+
+    (setq projectile-project-root-files-bottom-up
+       '("pyproject.toml"
+         "Cargo.toml"
+         "package.json"
+         "go.mod"
+         ".git"
+         ".hg"
+         ".bzr"
+         ".svn"))
+
     (projectile-mode +1)
 )
 
