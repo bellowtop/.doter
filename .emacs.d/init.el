@@ -530,7 +530,10 @@
   :bind-keymap
   ("C-c c" . claude-code-command-map) ;; or your preferred key
   :bind
-  (("s-\"" . claude-code-toggle))
+  (("s-\"" . claude-code-toggle)
+    ("s-S-<return>" . claude-code-send-return)
+    ("s-S-<backspace>" . claude-code-send-escape)
+    ("s-:" . claude-code-send-command))
   :config
   (claude-code-mode)
   (add-to-list 'display-buffer-alist
@@ -541,7 +544,6 @@
   (setq claude-code-terminal-backend 'vterm)
   (setq claude-code-vterm-buffer-multiline-output nil)
   )
-
 ;; (use-package claudemacs
 ;;   :vc (:fetcher github :repo "cpoile/claudemacs"))
 
@@ -630,7 +632,7 @@
   '(font-lock-keyword-face ((t (:foreground "orchid" :weight normal))))
   '(font-lock-preprocessor-face ((t (:weight normal))))
   '(fringe ((t (:foreground unspecified :background unspecified :inherit default))))
-  '(highlight-indent-guides-character-face ((t (:inherit shadow))))
+  '(highlight-indent-guides-character-face ((t (:inherit font-lock-doc-markup-face))))
   '(iedit-occurrence ((t (:foreground "black" :background "yellow"))))
   '(isearch ((t (:foreground "white" :background "deeppink" :weight normal))))
   '(ivy-minibuffer-match-face-1 ((t (:weight regular))))
@@ -648,12 +650,14 @@
   '(ripgrep-match-face ((t (:inherit my-highlight-font-words-face))))
   '(shadow ((t (:foreground "#444444"))))
   '(show-paren-match ((t (:foreground "green" :background "#11501B" :weight normal :underline (:position t)))))
-  '(sideline-flymake-error ((t (:inherit nil :background "gray" :foreground "black"))))
+  '(sideline-flymake-error ((t (:inherit nil :background "red" :foreground "white"))))
+  '(sideline-flymake-warning ((t (:inherit nil :background "lightyellow" :foreground "black"))))
+  '(sideline-flymake-note ((t (:inherit nil :background "lightblue" :foreground "black"))))
   '(success ((t (:foreground "Green1" :weight regular))))
   '(symbol-overlay-default-face ((t (:inherit my-highlight-font-words-face))))
   '(tab-bar ((t (:background "#1e1e1e" :height 120))))
   '(tab-bar-tab ((t (:foreground "black" :background "yellow" :box (:line-width 3 :color "yellow" :style flat-button)))))
-  '(tooltip ((t (:font "IBM Plex Mono-15.0"))))
+  '(tooltip ((t (:font "IBM Plex Mono-15.0" :box (:line-width 1 :color "gray" :style released-button)))))
   '(treemacs-directory-collapsed-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#57D8D4"))))
   '(treemacs-directory-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#57D8D4"))))
   '(treemacs-file-face ((t (:family "IBM Plex Mono" :weight normal :height 140 :underline nil :inherit unspecified :foreground "#C6B8AD"))))

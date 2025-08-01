@@ -13,7 +13,10 @@
   :config
   (setq highlight-indent-guides-method 'character
         highlight-indent-guides-auto-enabled nil
-        highlight-indent-guides-character ?\x258f)
+        ;; highlight-indent-guides-character ?\x258f
+        ;; highlight-indent-guides-character ?\x250A
+        highlight-indent-guides-character ?\x2506
+        )
 
   ;; Face configuration moved to custom-set-faces
   (defun my-highlighter (level responsive display)

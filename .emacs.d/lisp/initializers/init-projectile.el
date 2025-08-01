@@ -7,6 +7,9 @@
   :config
   (setq projectile-globally-ignored-directories
         '("node_modules"
+          ".venv"
+          "venv"
+          ".specstory"
           ".next"
           ".nuxt"
           "dist"
