@@ -535,8 +535,9 @@
     ("s-S-<backspace>" . claude-code-send-escape)
     ("s-y" . claude-code-send-region)
     ("s-:" . claude-code-send-command))
+  :hook
+  (prog-mode . claude-code-mode)
   :config
-  (claude-code-mode)
   (add-to-list 'display-buffer-alist
     '("^\\*claude"
        (display-buffer-in-side-window)
