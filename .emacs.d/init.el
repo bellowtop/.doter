@@ -479,7 +479,7 @@
 (require 'init-blamer)
 (require 'init-diminish)
 (require 'init-dashboard)
-(require 'init-autopep8)
+; (require 'init-autopep8)
 (require 'init-imenu)
 (require 'init-modeline)
 
@@ -533,6 +533,7 @@
   (("s-\"" . claude-code-toggle)
     ("s-S-<return>" . claude-code-send-return)
     ("s-S-<backspace>" . claude-code-send-escape)
+    ("s-y" . claude-code-send-region)
     ("s-:" . claude-code-send-command))
   :config
   (claude-code-mode)
@@ -626,7 +627,7 @@
   '(eglot-diagnostic-tag-deprecated-face ((t (:underline nil :strike-through nil :foreground "yellow"))))
   '(eglot-diagnostic-tag-unnecessary-face ((t (:underline nil :foreground "yellow"))))
   '(eglot-highlight-symbol-face ((t (:inherit my-highlight-font-words-face))))
-  '(flymake-error ((t (:foreground "DeepPink" :underline nil))))
+  '(flymake-error ((t (:foreground "Yellow" :underline nil))))
   '(flymake-note ((t (:underline nil))))
   '(flymake-warning ((t (:underline nil))))
   '(font-lock-keyword-face ((t (:foreground "orchid" :weight normal))))
