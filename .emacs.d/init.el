@@ -545,6 +545,7 @@
        (window-width . 90)))
   (setq claude-code-terminal-backend 'vterm)
   (setq claude-code-vterm-buffer-multiline-output nil)
+  (advice-add 'claude-code-send-region :after #'deactivate-mark)
   )
 ;; (use-package claudemacs
 ;;   :vc (:fetcher github :repo "cpoile/claudemacs"))
