@@ -31,8 +31,6 @@ require('plugins.bqf').setup()            -- bqf
 require('plugins.claudecode').setup()     -- claudecode
 require('plugins.cscope').setup()         -- cscope
 require('plugins.kommentary').setup()     -- kommentary
-
-
-
+require('plugins.trouble').setup()        -- Trouble.nvim for better diagnostics display
 
 -- print("✓ Neovim configuration loaded successfully!")

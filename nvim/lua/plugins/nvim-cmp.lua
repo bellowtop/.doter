@@ -44,8 +44,8 @@ function M.setup()
         else
           fallback()
         end
-      end, { "i", "s" }),
-      
+      end, { "i", "s", "c" }),
+
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
@@ -54,7 +54,7 @@ function M.setup()
         else
           fallback()
         end
-      end, { "i", "s" }),
+      end, { "i", "s", "c" }),
 
       ['<CR>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
@@ -68,10 +68,10 @@ function M.setup()
         else
           fallback()
         end
-      end),
+      end, { "i", "s", "c" }),
 
-      ["<C-n>"] = cmp.mapping(cmp_select_next, { "i", "s" }),
-      ["<C-p>"] = cmp.mapping(cmp_select_prev, { "i", "s" }),
+      ["<C-n>"] = cmp.mapping(cmp_select_next, { "i", "s", "c" }),
+      ["<C-p>"] = cmp.mapping(cmp_select_prev, { "i", "s", "c" }),
       ['<C-g>'] = cmp.close,
       ['<C-y>'] = cmp.config.disable,
     },

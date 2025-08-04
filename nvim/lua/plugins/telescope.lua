@@ -9,6 +9,7 @@ function M.setup()
   require('telescope').setup{
     defaults = {
       scroll_strategy = "limit",
+      -- Default action for all pickers
       mappings = {
         i = {
           ["<C-g>"] = telescope_actions.close,
@@ -23,6 +24,18 @@ function M.setup()
           ["<C-k>" ] = function() vim.api.nvim_input "<C-o>D" end,
           ["<M-k>" ] = function() vim.api.nvim_input "<C-o>d0" end,
           ["<C-t>" ] = function() vim.api.nvim_input "<C-o>O" end,
+
+          -- Send results to quickfix list
+          ["<C-q>"] = telescope_actions.send_to_qflist,
+          -- Send results to location list
+          ["<C-l>"] = telescope_actions.send_to_loclist,
+          -- Send to quickfix and open trouble
+          ["<M-CR>"] = function(prompt_bufnr)
+            telescope_actions.send_to_qflist(prompt_bufnr)
+            vim.schedule(function()
+              require('trouble').open('quickfix')
+            end)
+          end,
         },
         n = {
           ["<C-g>"] = telescope_actions.close,
@@ -38,9 +51,22 @@ function M.setup()
             local height = vim.api.nvim_win_get_height(results_win)
             ts_action_set.shift_selection(prompt_bufnr, -math.floor(height/2))
           end,
+
+          -- Send results to quickfix list
+          ["<C-q>"] = telescope_actions.send_to_qflist,
+          -- Send results to location list
+          ["<C-l>"] = telescope_actions.send_to_loclist,
+          -- Send to quickfix and open trouble
+          ["<M-CR>"] = function(prompt_bufnr)
+            telescope_actions.send_to_qflist(prompt_bufnr)
+            vim.schedule(function()
+              require('trouble').open('quickfix')
+            end)
+          end,
         },
       }
     },
+
     extensions = {
       fzf = {
         fuzzy = true,
@@ -57,8 +83,6 @@ function M.setup()
 
   require("dir-telescope").setup()
   require("telescope").load_extension("dir")
-
-
 
 end
 
