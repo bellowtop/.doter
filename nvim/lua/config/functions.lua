@@ -205,7 +205,6 @@ function M.setup()
   if file_exists(vim.fn.expand("~/.config/nvim/local.lua")) then
     require("local")
   end
-end
 
 end
 
