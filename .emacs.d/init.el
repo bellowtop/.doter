@@ -390,7 +390,7 @@
 ;;; Display and Visual Enhancements
 (require 'init-display-line-numbers)
 (require 'init-highlight-numbers)
-(require 'init-highlight-indent-guides)
+;; (require 'init-highlight-indent-guides)
 (require 'init-rainbow-delimiters)
 (require 'my-highlight-current-line)
 (require 'init-highlight)
@@ -549,6 +549,27 @@
   )
 ;; (use-package claudemacs
 ;;   :vc (:fetcher github :repo "cpoile/claudemacs"))
+
+
+
+(use-package indent-bars
+  :custom
+  (indent-bars-no-descend-lists t) ; no extra bars in continued func arg lists
+  (indent-bars-treesit-support t)
+  (indent-bars-treesit-ignore-blank-lines-types '("module"))
+  ;; Minimal colorpop:
+  (indent-bars-color '(highlight :face-bg t :blend 0.5))
+  (indent-bars-pattern ".")
+  (indent-bars-width-frac 0.1)
+  (indent-bars-pad-frac 0.1)
+  (indent-bars-zigzag nil)
+  (indent-bars-color-by-depth '(:regexp "outline-\\([0-9]+\\)" :blend 1) ); blend=1: blend with BG only
+  (indent-bars-highlight-current-depth '(:blend 0.5)) ; pump up the BG blend on current
+  (indent-bars-display-on-blank-lines t)
+  :hook
+  (prog-mode . indent-bars-mode)
+  )
+
 
 
 ;;; Text Mode Enhancements
