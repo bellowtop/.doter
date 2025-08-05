@@ -545,7 +545,7 @@
        (window-width . 90)))
   (setq claude-code-terminal-backend 'vterm)
   (setq claude-code-vterm-buffer-multiline-output nil)
-  (advice-add 'claude-code-send-region :after #'deactivate-mark)
+  (advice-add 'claude-code-send-region :after #'(lambda(&arg) (deactivate-mark)(beginning-of-line)))
   )
 ;; (use-package claudemacs
 ;;   :vc (:fetcher github :repo "cpoile/claudemacs"))
@@ -568,6 +568,15 @@
   (indent-bars-display-on-blank-lines t)
   :hook
   (prog-mode . indent-bars-mode)
+  :config
+  ;; 设置 flymake face 的优先级，让 indent-bars 的竖线不被覆盖
+  (add-hook 'indent-bars-mode-hook
+    (lambda ()
+      (when indent-bars-mode
+        ;; 设置 flymake face 的优先级为较低值
+        (set-face-attribute 'flymake-error nil :priority 100)
+        (set-face-attribute 'flymake-warning nil :priority 100)
+        (set-face-attribute 'flymake-note nil :priority 100))))
   )
 
 
@@ -650,9 +659,9 @@
   '(eglot-diagnostic-tag-deprecated-face ((t (:underline nil :strike-through nil :foreground "yellow"))))
   '(eglot-diagnostic-tag-unnecessary-face ((t (:underline nil :foreground "yellow"))))
   '(eglot-highlight-symbol-face ((t (:inherit my-highlight-font-words-face))))
-  '(flymake-error ((t (:foreground "Yellow" :underline nil :weight normal))))
-  '(flymake-note ((t (:underline nil))))
-  '(flymake-warning ((t (:underline nil))))
+  '(flymake-error ((t (:foreground "Yellow" :underline nil :weight normal :priority 100))))
+  '(flymake-note ((t (:underline nil :priority 100))))
+  '(flymake-warning ((t (:underline nil :priority 100))))
   '(font-lock-keyword-face ((t (:foreground "orchid" :weight normal))))
   '(font-lock-preprocessor-face ((t (:weight normal))))
   '(fringe ((t (:foreground unspecified :background unspecified :inherit default))))
