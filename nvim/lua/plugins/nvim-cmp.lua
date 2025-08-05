@@ -81,6 +81,16 @@ function M.setup()
           fallback()
         end
       end, { "i", "s" }),
+
+      ['<Esc>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.close()
+        else
+          -- 模拟按键退出命令行模式到编辑器
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-c>', true, true, true), 'n', true)
+        end
+      end, { "c" }),
+
     },
 
     sources = cmp.config.sources({
