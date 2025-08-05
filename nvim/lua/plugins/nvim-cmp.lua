@@ -74,6 +74,13 @@ function M.setup()
       ["<C-p>"] = cmp.mapping(cmp_select_prev, { "i", "s", "c" }),
       ['<C-g>'] = cmp.close,
       ['<C-y>'] = cmp.config.disable,
+      ['<Esc>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.close()
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
     },
 
     sources = cmp.config.sources({
@@ -95,6 +102,26 @@ function M.setup()
 
   -- Use buffer source for `/`
   cmp.setup.cmdline('/', {
+    completion = {
+      autocomplete = false, -- 禁用自动补全
+    },
+    mapping = {
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        else
+          cmp.complete({ config = { sources = { { name = 'buffer' } } } })
+        end
+      end, { "c" }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end, { "c" }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
     sources = {
       { name = 'buffer' }
     }
@@ -102,6 +129,26 @@ function M.setup()
 
   -- Use cmdline & path source for `:`
   cmp.setup.cmdline(':', {
+    completion = {
+      autocomplete = false, -- 禁用自动补全
+    },
+    mapping = {
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        else
+          cmp.complete({ config = { sources = { { name = 'path' }, { name = 'cmdline' } } } })
+        end
+      end, { "c" }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end, { "c" }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
     sources = cmp.config.sources({
       { name = 'path' }
     }, {
