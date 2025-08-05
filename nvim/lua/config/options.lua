@@ -56,7 +56,7 @@ function M.setup()
   -- Mouse and timing
   opt.mouse = "a"
   opt.maxmempattern = 20000
-  opt.timeoutlen = 1000
+  opt.timeoutlen = 0
   opt.ttimeoutlen = 0
 
   -- Search

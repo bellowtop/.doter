@@ -1,5 +1,7 @@
 local M = {}
 
+local functions = require('config.functions')
+
 local function disable_diagnostic_temp_then_reactivate(c)
   vim.diagnostic.disable()
   vim.cmd.execute(c)
@@ -230,7 +232,6 @@ function M.setup()
   vim.keymap.set("i", "<C-Tab>", function() require('cmp').mapping.complete() end, { noremap = true })
 
   -- Function key mappings (moved from init.lua)
-  local functions = require('config.functions')
   keymap("n", "<F3>", "<cmd>set wrap!<cr>", { desc = "Toggle line wrap" })
   keymap("n", "<F4>", functions.toggle_mouse, { desc = "Toggle mouse" })
   keymap("n", "<F6>", "<cmd>LspRestart<cr>", { desc = "Restart LSP" })

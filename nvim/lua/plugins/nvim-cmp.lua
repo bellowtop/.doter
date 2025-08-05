@@ -44,8 +44,8 @@ function M.setup()
         else
           fallback()
         end
-      end, { "i", "s" }),
-      
+      end, { "i", "s", "c" }),
+
       ["<S-Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_prev_item()
@@ -54,7 +54,7 @@ function M.setup()
         else
           fallback()
         end
-      end, { "i", "s" }),
+      end, { "i", "s", "c" }),
 
       ['<CR>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
@@ -68,12 +68,29 @@ function M.setup()
         else
           fallback()
         end
-      end),
+      end, { "i", "s", "c" }),
 
-      ["<C-n>"] = cmp.mapping(cmp_select_next, { "i", "s" }),
-      ["<C-p>"] = cmp.mapping(cmp_select_prev, { "i", "s" }),
+      ["<C-n>"] = cmp.mapping(cmp_select_next, { "i", "s", "c" }),
+      ["<C-p>"] = cmp.mapping(cmp_select_prev, { "i", "s", "c" }),
       ['<C-g>'] = cmp.close,
       ['<C-y>'] = cmp.config.disable,
+      ['<Esc>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.close()
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+
+      ['<Esc>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.close()
+        else
+          -- 模拟按键退出命令行模式到编辑器
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<C-c>', true, true, true), 'n', true)
+        end
+      end, { "c" }),
+
     },
 
     sources = cmp.config.sources({
@@ -95,6 +112,26 @@ function M.setup()
 
   -- Use buffer source for `/`
   cmp.setup.cmdline('/', {
+    completion = {
+      autocomplete = false, -- 禁用自动补全
+    },
+    mapping = {
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        else
+          cmp.complete({ config = { sources = { { name = 'buffer' } } } })
+        end
+      end, { "c" }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end, { "c" }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
     sources = {
       { name = 'buffer' }
     }
@@ -102,6 +139,26 @@ function M.setup()
 
   -- Use cmdline & path source for `:`
   cmp.setup.cmdline(':', {
+    completion = {
+      autocomplete = false, -- 禁用自动补全
+    },
+    mapping = {
+      ['<Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        else
+          cmp.complete({ config = { sources = { { name = 'path' }, { name = 'cmdline' } } } })
+        end
+      end, { "c" }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end, { "c" }),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    },
     sources = cmp.config.sources({
       { name = 'path' }
     }, {
