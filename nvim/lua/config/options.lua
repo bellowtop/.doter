@@ -85,6 +85,30 @@ function M.setup()
     opt.termguicolors = true
   end
 
+  -- Clipboard settings
+  if vim.fn.has("clipboard") == 1 then
+    if vim.fn.has("macunix") == 1 then
+      opt.clipboard = "unnamed"  -- Use system clipboard on macOS
+      -- Set pbcopy and pbpaste for better macOS integration
+      vim.g.clipboard = {
+        name = "macOS",
+        copy = {
+          ["+"] = "pbcopy",
+          ["*"] = "pbcopy",
+        },
+        paste = {
+          ["+"] = "pbpaste",
+          ["*"] = "pbpaste",
+        },
+        cache_enabled = 1,
+      }
+    elseif vim.fn.has("unix") == 1 then
+      opt.clipboard = "unnamedplus"  -- Use system clipboard on Linux
+    end
+  else
+    vim.notify("Neovim was not compiled with clipboard support", vim.log.levels.WARN)
+  end
+
   -- Plugin-specific settings
 
   -- Auto-pairs
