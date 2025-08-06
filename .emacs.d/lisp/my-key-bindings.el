@@ -64,6 +64,21 @@
 
 (bind-key* (kbd "s-b") #'treemacs)
 
+(bind-key* (kbd "s-[") #'indent-rigidly-left)
+(bind-key* (kbd "s-]") #'indent-rigidly-right)
+
+;; 定义向左缩进函数（每次移动 tab-width 个空格）
+(defun indent-rigidly-left (start end)
+  "向左 rigidly 缩进选中区域一个 tab-width。"
+  (interactive "r")
+  (indent-rigidly start end (- tab-width)))
+
+;; 定义向右缩进函数（每次移动 tab-width 个空格）
+(defun indent-rigidly-right (start end)
+  "向右 rigidly 缩进选中区域一个 tab-width。"
+  (interactive "r")
+  (indent-rigidly start end tab-width))
+
 
 ;; jump with C-- C-=, like vscode
 (bind-key* (kbd "C--") 'nice-jumper/backward)
