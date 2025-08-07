@@ -573,10 +573,9 @@
   (add-hook 'indent-bars-mode-hook
     (lambda ()
       (when indent-bars-mode
-        ;; 设置 flymake face 的优先级为较低值
-        (set-face-attribute 'flymake-error nil :priority 100)
-        (set-face-attribute 'flymake-warning nil :priority 100)
-        (set-face-attribute 'flymake-note nil :priority 100))))
+        ;; 注意：:priority 属性在当前的 Emacs 版本中不被支持
+        ;; 如果需要优先级控制，可以考虑其他方法
+        )))
   )
 
 
@@ -659,9 +658,9 @@
   '(eglot-diagnostic-tag-deprecated-face ((t (:underline nil :strike-through nil :foreground "yellow"))))
   '(eglot-diagnostic-tag-unnecessary-face ((t (:underline nil :foreground "yellow"))))
   '(eglot-highlight-symbol-face ((t (:inherit my-highlight-font-words-face))))
-  '(flymake-error ((t (:foreground "Yellow" :underline nil :weight normal :priority 100))))
-  '(flymake-note ((t (:underline nil :priority 100))))
-  '(flymake-warning ((t (:underline nil :priority 100))))
+  '(flymake-error ((t (:foreground "Yellow" :underline nil :weight normal))))
+  '(flymake-note ((t (:underline nil))))
+  '(flymake-warning ((t (:underline nil))))
   '(font-lock-keyword-face ((t (:foreground "orchid" :weight normal))))
   '(font-lock-preprocessor-face ((t (:weight normal))))
   '(fringe ((t (:foreground unspecified :background unspecified :inherit default))))
