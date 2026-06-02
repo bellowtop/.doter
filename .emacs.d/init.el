@@ -170,7 +170,7 @@
                   (alist-get 'name tab)))
           (modified (and buffer (buffer-modified-p buffer))))
     (propertize
-      (format " %s %s " name (if modified "*" ""))
+      (format " %d:%s %s " index name (if modified "*" ""))
       'face (funcall tab-bar-tab-face-function tab))))
 
 (setq tab-bar-tab-name-format-function 'my-tab-name-formatter)

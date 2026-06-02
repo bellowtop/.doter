@@ -142,9 +142,11 @@ alive the call fails immediately via the PID check."
 (defun ns/eat-flush ()
   (ns/send-if-changed (or (ns/eat-get-input) "")))
 
-(defun ns/eat-on-update ()
+(defun ns/eat-on-update (&rest _)
   "Called by eat-update-hook after every terminal redraw."
-  (when ns/enabled
+  (when (and ns/enabled
+             (bound-and-true-p eat-terminal)
+             (eat-term-live-p eat-terminal))
     (when (timerp ns/debounce-timer) (cancel-timer ns/debounce-timer))
     (let ((buf (current-buffer)))
       (setq ns/debounce-timer
@@ -152,7 +154,7 @@ alive the call fails immediately via the PID check."
               (lambda ()
                 (when (buffer-live-p buf)
                   (with-current-buffer buf
-                    (ns/eat-flush)))))))))
+                    (ns/eat-flush))))))))
 
 (defun ns/on-post-prompt (&rest _)
   "Record input-start and clear HUD when a new shell prompt appears."
@@ -247,8 +249,9 @@ Capped at 1000 chars.  NativeSpeaker extracts the last sentence internally."
            ns/socket-path
            (truncate-string-to-width ns/last-sent 50 nil nil "…")))
 
-(with-eval-after-load 'eat
-  (enable-native-speaker))
+;; Auto-enable disabled; run M-x enable-native-speaker manually when needed.
+;; (with-eval-after-load 'eat
+;;   (enable-native-speaker))
 
 (provide 'init-native-speaker)
 ;;; init-native-speaker.el ends here

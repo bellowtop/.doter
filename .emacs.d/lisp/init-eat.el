@@ -90,6 +90,33 @@
   (add-hook 'eat-mode-hook #'diego--eat-font-setup)
   (add-hook 'eat-mode-hook (lambda () (face-remap-add-relative 'nobreak-space :underline nil)))
 
+  ;; Buffer renaming via shell OSC title sequences
+  ;; Add to .zshrc:
+  ;;   preexec() { echo -ne "\033]0;$1\007"; }
+  ;;   precmd()  { echo -ne "\033]0;zsh\007"; }
+  (defvar-local eat-last-title nil
+    "Last title set by terminal.")
+
+  (defun eat-set-title-handler (terminal title)
+    "Rename buffer when terminal title changes."
+    (when (and (buffer-live-p (current-buffer))
+               (not (equal title eat-last-title)))
+      (setq eat-last-title title)
+      (let* ((cmd (car (split-string title " " t)))
+             (name (if (or (string-empty-p title)
+                           (string-equal cmd "zsh"))
+                       "eat"
+                     cmd)))
+        (rename-buffer (generate-new-buffer-name name) t))))
+
+  (defun eat-setup-title-hook ()
+    "Setup title handler for current eat buffer."
+    (when (bound-and-true-p eat-terminal)
+      (eat-term-set-parameter eat-terminal 'set-title-function
+                               #'eat-set-title-handler)))
+
+  (add-hook 'eat-mode-hook #'eat-setup-title-hook)
+
   ;; Override eat ANSI colors to match ansi-color-names-vector (dark theme readable)
   (with-eval-after-load 'eat
     (custom-set-faces

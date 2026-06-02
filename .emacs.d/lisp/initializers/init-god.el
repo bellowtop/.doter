@@ -455,7 +455,7 @@ When switching to an existing buffer, respects the buffer's prior god-mode state
       (set-face-attribute 'tab-bar-tab nil
                     :foreground "black"
                     :background "#199DFF"
-                    :box '(:line-width (2 . 2) :color "#199DFF" :style flat-button)
+                    :box '(:line-width (1 . 2) :color "#199DFF" :style flat-button)
                     )
 
       ;; (set-face-foreground 'vertical-border "#374250")
@@ -469,7 +469,7 @@ When switching to an existing buffer, respects the buffer's prior god-mode state
         (set-face-attribute 'tab-bar-tab nil
                     :foreground "black"
                     :background "yellow"
-                    :box '(:line-width (2 . 2) :color "yellow" :style flat-button)
+                    :box '(:line-width (1 . 2) :color "yellow" :style flat-button)
                     )
         (when (my-god-should-enable-line-number-mode)
           (display-line-numbers-mode 1)
