@@ -67,7 +67,9 @@
 (bind-key* (kbd "s-n") #'+funcs/new-empty-buffer)
 (bind-key* (kbd "s-N") #'make-frame)
 
-(bind-key* (kbd "s-T") (lambda () (interactive) (eat nil t)))
+(bind-key* (kbd "s-T") (lambda () (interactive)
+  (let ((display-buffer-overriding-action '(display-buffer-same-window)))
+    (eat nil t))))
 
 (defun my-split-window-right ()
   (interactive)

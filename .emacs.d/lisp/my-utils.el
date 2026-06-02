@@ -959,14 +959,30 @@ If buffer-or-name is nil return current buffer's mode."
 
 
 
+(defvar my-popup-eat-buffer-name "*eat-popup*"
+  "Buffer name for the dedicated popup eat terminal.")
+
+(defun my-get-or-create-popup-eat-buffer ()
+  (or (get-buffer my-popup-eat-buffer-name)
+      (let ((buf (get-buffer-create my-popup-eat-buffer-name)))
+        (with-current-buffer buf
+          (unless (eq major-mode 'eat-mode)
+            (eat-mode))
+          (unless (and (bound-and-true-p eat-terminal)
+                       (eat-term-parameter eat-terminal 'eat--process))
+            (eat-exec buf (buffer-name) "/usr/bin/env" nil
+                      (list "sh" "-c" (or explicit-shell-file-name
+                                          (getenv "ESHELL")
+                                          shell-file-name)))))
+        buf)))
+
 (defun my-toggle-vterm ()
   (interactive)
-  (if (eq (buffer-mode) 'eat-mode)
+  (if (derived-mode-p 'eat-mode)
     (cond
-      ((bound-and-true-p popwin-mode) (popwin:close-popup-window))
       ((bound-and-true-p popper-mode) (popper-close-latest))
-      (t (switch-to-buffer (other-buffer (current-buffer)))))
-    (eat)))
+      (t (delete-window)))
+    (display-buffer (my-get-or-create-popup-eat-buffer))))
 
 (defun popper-toggle-but-other-window()
   (interactive)
@@ -1340,18 +1356,34 @@ to the interface/class/type declaration, then extracts the full block."
 
 
 (defun my-project-switch-to-buffer ()
-    (interactive)
-    (let* ((bufs (if (project-current)
-                     (mapcar #'buffer-name (project-buffers (project-current)))
-                   (mapcar #'buffer-name (buffer-list))))
-           (filtered (seq-filter
-                      (lambda (name)
-                        (not (seq-some (lambda (pat) (string-match-p pat name))
-                                       ivy-ignore-buffers)))
-                      bufs)))
-      (ivy-read "Buffer: " filtered
-                :action #'switch-to-buffer
-                :caller 'my-project-switch-to-buffer)))
+  (interactive)
+  (let* ((ignored-p (lambda (name)
+                      (seq-some (lambda (pat) (string-match-p pat name))
+                                ivy-ignore-buffers)))
+         (all-names (mapcar #'buffer-name (buffer-list)))
+         (project-bufs (when (project-current)
+                         (seq-filter (lambda (n) (not (funcall ignored-p n)))
+                           (mapcar #'buffer-name
+                                   (project-buffers (project-current))))))
+         (normal-bufs (seq-filter (lambda (n)
+                                    (and (not (funcall ignored-p n))
+                                         (not (member n project-bufs))))
+                                  all-names))
+         (ignored-bufs (seq-filter ignored-p all-names)))
+    (ivy-read "Buffer: "
+              (lambda (input)
+                (if (string-empty-p input)
+                    (or project-bufs normal-bufs)
+                  (let ((project-matches (ivy--re-filter input project-bufs)))
+                    (if (or (null project-bufs) project-matches)
+                        project-matches
+                      (let ((normal-matches (ivy--re-filter input normal-bufs)))
+                        (if normal-matches
+                            normal-matches
+                          (ivy--re-filter input ignored-bufs)))))))
+              :dynamic-collection t
+              :action #'switch-to-buffer
+              :caller 'my-project-switch-to-buffer)))
 
 
 

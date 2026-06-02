@@ -30,18 +30,22 @@
   (setq eat-minimum-latency 0.008
         eat-maximum-latency 0.033)
 
-  (add-to-list 'display-buffer-alist
-    '("^\\*eat" (display-buffer-same-window)))
-
   ;; Kill window when buffer is killed
-  (add-hook 'eat-mode-hook
-    (lambda ()
-      (add-hook 'kill-buffer-hook
-        (lambda ()
-          (let ((window (get-buffer-window (current-buffer))))
-            (when (and window (not (one-window-p)))
-              (delete-window window))))
-        nil t)))
+  (defun my-eat-kill-window-on-buffer-kill ()
+    (let ((window (get-buffer-window (current-buffer))))
+      (when (and window
+                 (window-parent window)
+                 (seq-find (lambda (w)
+                             (and (not (eq w window))
+                                  (not (window-parameter w 'window-side))))
+                           (window-list (window-frame window) 'no-mini)))
+        (delete-window window))))
+
+  (defun my-eat-setup-kill-window-hook ()
+    (remove-hook 'kill-buffer-hook #'my-eat-kill-window-on-buffer-kill t)
+    (add-hook 'kill-buffer-hook #'my-eat-kill-window-on-buffer-kill nil t))
+
+  (add-hook 'eat-mode-hook #'my-eat-setup-kill-window-hook)
 
   ;; Legendary buffer management: eat/claude buffers are always legendary
   (defun my-toggle-legendary-buffer-for-eat (&optional arg)
@@ -87,37 +91,16 @@
       (dolist (pair '((#x273B . ?*) (#x273D . ?*) (#x2722 . ?+) (#x2736 . ?+) (#x2733 . ?*)))
         (aset tbl (car pair) (vector (cdr pair))))))
 
+  (defun my-eat-nobreak-space-setup ()
+    (face-remap-add-relative 'nobreak-space :underline nil))
+
   (add-hook 'eat-mode-hook #'diego--eat-font-setup)
-  (add-hook 'eat-mode-hook (lambda () (face-remap-add-relative 'nobreak-space :underline nil)))
+  (add-hook 'eat-mode-hook #'my-eat-nobreak-space-setup)
 
-  ;; Buffer renaming via shell OSC title sequences
-  ;; Add to .zshrc:
-  ;;   preexec() { echo -ne "\033]0;$1\007"; }
-  ;;   precmd()  { echo -ne "\033]0;zsh\007"; }
-  (defvar-local eat-last-title nil
-    "Last title set by terminal.")
+  ;; Disable eat's built-in buffer renaming based on foreground process name
+  (advice-add 'eat-update-buffer-name :override #'ignore)
 
-  (defun eat-set-title-handler (terminal title)
-    "Rename buffer when terminal title changes."
-    (when (and (buffer-live-p (current-buffer))
-               (not (equal title eat-last-title)))
-      (setq eat-last-title title)
-      (let* ((cmd (car (split-string title " " t)))
-             (name (if (or (string-empty-p title)
-                           (string-equal cmd "zsh"))
-                       "eat"
-                     cmd)))
-        (rename-buffer (generate-new-buffer-name name) t))))
-
-  (defun eat-setup-title-hook ()
-    "Setup title handler for current eat buffer."
-    (when (bound-and-true-p eat-terminal)
-      (eat-term-set-parameter eat-terminal 'set-title-function
-                               #'eat-set-title-handler)))
-
-  (add-hook 'eat-mode-hook #'eat-setup-title-hook)
-
-  ;; Override eat ANSI colors to match ansi-color-names-vector (dark theme readable)
+;; Override eat ANSI colors to match ansi-color-names-vector (dark theme readable)
   (with-eval-after-load 'eat
     (custom-set-faces
       '(eat-term-color-0  ((t (:foreground "black"))))

@@ -392,9 +392,3 @@ fi
     export FORCE_COLOR=3
 fi
 
-
-# 将当前执行的命令发送出去
-preexec() { echo -ne "\033]0;$1\007"; }
-precmd()  { echo -ne "\033]0;zsh\007"; }
-
-
