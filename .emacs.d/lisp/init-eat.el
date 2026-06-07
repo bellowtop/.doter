@@ -67,7 +67,7 @@
         (lambda ()
           (interactive)
           (eat-self-input 1 ?\M-h)))))
-  
+
   (define-key eat-semi-char-mode-map (kbd "C-s-c") #'my-eat-send-ctrl-c)
   (keymap-unset eat-semi-char-mode-map "M-`")
   (keymap-unset eat-semi-char-mode-map "M-:")
