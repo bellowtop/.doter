@@ -60,8 +60,14 @@
   (define-key eat-semi-char-mode-map (kbd "M->") #'end-of-buffer)
   (define-key eat-semi-char-mode-map (kbd "M-<") #'beginning-of-buffer)
   (define-key eat-semi-char-mode-map (kbd "M-i") #'er/expand-region)
-  (define-key eat-semi-char-mode-map (kbd "M-h") #'windmove-left)
-  (define-key eat-semi-char-mode-map (kbd "M-l") #'windmove-right)
+
+  (dolist (key '("M-h"  "M-l"))
+    (let ((k key))
+      (define-key eat-semi-char-mode-map (kbd k)
+        (lambda ()
+          (interactive)
+          (eat-self-input 1 ?\M-h)))))
+  
   (define-key eat-semi-char-mode-map (kbd "C-s-c") #'my-eat-send-ctrl-c)
   (keymap-unset eat-semi-char-mode-map "M-`")
   (keymap-unset eat-semi-char-mode-map "M-:")

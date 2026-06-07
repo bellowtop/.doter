@@ -49,6 +49,12 @@ bind H select-pane -L
 bind J select-pane -D
 bind K select-pane -U
 bind L select-pane -R
+
+bind -n M-h select-pane -L
+bind -n M-l select-pane -R
+bind -n M-k select-pane -U
+bind -n M-j select-pane -D
+
 # press o cycle through panes
 bind -r o select-pane -t :.+
 
