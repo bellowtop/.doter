@@ -43,6 +43,8 @@
           "^\\.ccls-cache$"
           "^\\.cache$"
           "^\\.clangd$"
+          "^\\.ccbus$"
+          "^\\.claude$"
           ".cache"))
 
     (setq ignored-projectile-projects (list "/opt/homebrew/" "Xcode.app" "node_modules"))
@@ -75,11 +77,7 @@
          "cabal.project"))    ; Haskell Cabal
 
     (setq projectile-project-root-files-bottom-up
-       '("pyproject.toml"
-         "Cargo.toml"
-         "package.json"
-         "go.mod"
-         ".git"
+       '(".git"
          ".hg"
          ".bzr"
          ".svn"))

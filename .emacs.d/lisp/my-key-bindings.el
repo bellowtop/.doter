@@ -106,6 +106,9 @@
 (bind-key* (kbd "s-3") #'(lambda() (interactive) (tab-bar-select-tab 3)))
 (bind-key* (kbd "s-4") #'(lambda() (interactive) (tab-bar-select-tab 4)))
 (bind-key* (kbd "s-5") #'(lambda() (interactive) (tab-bar-select-tab 5)))
+(bind-key* (kbd "s-6") #'(lambda() (interactive) (tab-bar-select-tab 6)))
+(bind-key* (kbd "s-7") #'(lambda() (interactive) (tab-bar-select-tab 7)))
+(bind-key* (kbd "s-8") #'(lambda() (interactive) (tab-bar-select-tab 8)))
 (bind-key* (kbd "s-9") #'(lambda() (interactive) (tab-bar-select-tab (length (tab-bar-tabs)))))
 
 (bind-key* (kbd "s-b") #'treemacs)

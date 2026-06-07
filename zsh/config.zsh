@@ -392,3 +392,8 @@ fi
     export FORCE_COLOR=3
 fi
 
+
+
+# vim ~/.oh-my-zsh/themes/eastwood.zsh-theme
+# don't display full dir path, it may be too long.
+export PROMPT='$(git_custom_status)%{$fg[cyan]%}[%c]%{$reset_color%}%B$%b '
