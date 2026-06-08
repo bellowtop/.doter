@@ -80,7 +80,7 @@ With prefix ARG, switch to Claude buffer after sending."
   (if my-bailian-api-key
     (progn
       (setenv "ANTHROPIC_BASE_URL" "https://coding.dashscope.aliyuncs.com/apps/anthropic")
-      (setenv "ANTHROPIC_MODEL" "qwen3.6-plus")
+      (setenv "ANTHROPIC_MODEL" "glm-5")
       (setenv "ANTHROPIC_AUTH_TOKEN" my-bailian-api-key)
       ;; (setenv "http_proxy" nil)
       ;; (setenv "https_proxy" nil)

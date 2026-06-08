@@ -64,14 +64,17 @@ bind -r k switch-client -p
 # last session
 bind -r u switch-client -l
 
+
+
 # and use h and l to cycle thru panes
 bind -r h select-window -t :-
 bind -r l select-window -t :+
 # last window
 bind -r i last-window
-bind -r g choose-session
 
 
+bind C-s choose-tree -s
+bind space choose-tree -s
 
 # # resize panes using PREFIX H, J, K, L
 # bind H resize-pane -L 5

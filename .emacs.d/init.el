@@ -389,7 +389,15 @@
 
 (setq switch-to-prev-buffer-skip
   (lambda (window buffer bury-or-kill)
-    (string-match-p "\\`\\*" (buffer-name buffer))))
+    (or
+      ;; 跳过 * 开头的 internal buffer
+      (string-match-p "\\`\\*" (buffer-name buffer))
+      ;; 跳过非当前 project 的 buffer
+      (let ((current-root
+             (buffer-local-value 'projectile-project-root (window-buffer window))))
+        (and current-root
+             (with-current-buffer buffer
+               (not (equal projectile-project-root current-root))))))))
 
 ;;; Text and Programming Modes
 (require 'init-whitespace-mode)
@@ -613,6 +621,28 @@
   :ensure t
   :defer t
   )
+
+
+;; (use-package sis
+;;   :ensure t
+;;   :config
+;;   (setq sis-english-source "com.apple.keylayout.ABC")
+;;   (sis-ism-lazyman-config
+;;     "com.apple.keylayout.ABC"
+;;     "com.baidu.inputmethod.BaiduIM.pinyin"
+;;     'macism)
+
+;;   ;; 【关键】设置需要强制英文的前缀键
+;;   (setq sis-prefix-override-keys '("C-x" "C-c" "C-w"))
+
+;;   ;; ;; 开启自动化
+;;   ;; (sis-global-respect-mode t)
+;;   ;; (sis-global-context-mode t)
+;;   ;; (sis-global-inline-mode t)
+
+;;   ;; god-mode 状态切换时强制英文
+;;   (add-hook 'god-mode-enabled-hook #'sis-set-english)
+;;   (add-hook 'god-mode-disabled-hook #'sis-context))
 
 
 ;;; Text Mode Enhancements

@@ -45,6 +45,7 @@
           "^\\.clangd$"
           "^\\.ccbus$"
           "^\\.claude$"
+          "^\\.understand-anything$"
           ".cache"))
 
     (setq ignored-projectile-projects (list "/opt/homebrew/" "Xcode.app" "node_modules"))
