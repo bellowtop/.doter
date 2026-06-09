@@ -16,7 +16,7 @@
   (defun my-eat-copy-region (&optional arg)
     (interactive "p")
     (if (use-region-p)
-        (kill-ring-save (region-beginning) (region-end))
+      (kill-ring-save (region-beginning) (region-end))
       (save-excursion
         (copy-region-as-kill (line-beginning-position) (line-end-position)))))
 
@@ -28,17 +28,17 @@
   (setq eat-scroll-to-bottom-on-output nil)
   ;; Batch terminal output updates to reduce redisplay overhead
   (setq eat-minimum-latency 0.008
-        eat-maximum-latency 0.033)
+    eat-maximum-latency 0.033)
 
   ;; Kill window when buffer is killed
   (defun my-eat-kill-window-on-buffer-kill ()
     (let ((window (get-buffer-window (current-buffer))))
       (when (and window
-                 (window-parent window)
-                 (seq-find (lambda (w)
-                             (and (not (eq w window))
-                                  (not (window-parameter w 'window-side))))
-                           (window-list (window-frame window) 'no-mini)))
+              (window-parent window)
+              (seq-find (lambda (w)
+                          (and (not (eq w window))
+                            (not (window-parameter w 'window-side))))
+                (window-list (window-frame window) 'no-mini)))
         (delete-window window))))
 
   (defun my-eat-setup-kill-window-hook ()
@@ -61,12 +61,14 @@
   (define-key eat-semi-char-mode-map (kbd "M-<") #'beginning-of-buffer)
   (define-key eat-semi-char-mode-map (kbd "M-i") #'er/expand-region)
 
-  (dolist (key '("M-h"  "M-l"))
+  ;; f1~f9
+  (cl-loop for num from 1 to 9
+    for key-str = (format "<f%d>" num)
+    do (define-key eat-semi-char-mode-map (kbd key-str) 'eat-self-input))
+
+  (dolist (key '("M-h" "M-l" "M-o"))
     (let ((k key))
-      (define-key eat-semi-char-mode-map (kbd k)
-        (lambda ()
-          (interactive)
-          (eat-self-input 1 ?\M-h)))))
+      (define-key eat-semi-char-mode-map (kbd k) 'eat-self-input)))
 
   (define-key eat-semi-char-mode-map (kbd "C-s-c") #'my-eat-send-ctrl-c)
   (keymap-unset eat-semi-char-mode-map "M-`")
@@ -106,7 +108,7 @@
   ;; Disable eat's built-in buffer renaming based on foreground process name
   (advice-add 'eat-update-buffer-name :override #'ignore)
 
-;; Override eat ANSI colors to match ansi-color-names-vector (dark theme readable)
+  ;; Override eat ANSI colors to match ansi-color-names-vector (dark theme readable)
   (with-eval-after-load 'eat
     (custom-set-faces
       '(eat-term-color-0  ((t (:foreground "black"))))

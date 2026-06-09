@@ -370,7 +370,7 @@
 ;; (define-key cnfonts-mode-map (kbd "C--") #'cnfonts-decrease-fontsize)
 ;; (define-key cnfonts-mode-map (kbd "C-=") #'cnfonts-increase-fontsize)
 (setq cnfonts-use-system-type t)
-(setq cnfonts-personal-fontnames '(("IBM Plex Mono") ("IBM Plex Sans SC" "PingFang SC" "等距更纱黑体 SC")))
+(setq cnfonts-personal-fontnames '(("IBM Plex Mono") ("IBM Plex Sans SC" "PingFang SC" "等距更纱黑体 SC") ("Symbola") ("Apple Color Emoji")))
 
 ;; Emoji 字体调小一点
 (when (member "Apple Color Emoji" (font-family-list))

@@ -51,7 +51,7 @@
 (bind-key* (kbd "M-RET") #'my-break-to-multiple-lines)
 (bind-key* (kbd "M-m")  #'my-toggle-er/mark-inside-paren)
 (bind-key* (kbd "M-M")  #'my-toggle-er/mark-outside-paren)
-(bind-key* (kbd "M-o")  #'ace-window)
+(bind-key (kbd "M-o")  #'ace-window)
 (bind-key* (kbd "M-s-o")  #'ff-find-other-file)
 
 (bind-key* (kbd "M-H") #'previous-buffer)
