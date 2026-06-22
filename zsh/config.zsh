@@ -334,7 +334,6 @@ alias ss='swift sh'
 alias sf='swiftformat'
 
 
-export PATH="/opt/homebrew/bin:$PATH"
 
 export GOPATH="$HOME/work/workspaces/go"
 export PATH="$GOPATH/bin:$PATH"
@@ -347,6 +346,12 @@ export PATH="$HOME/zig/zig-macos-aarch64:$PATH"
 export PATH="$HOME/.roswell/bin:$PATH"
 export PATH="$HOME/platform-tools:$PATH"
 export PATH="$HOME/.rustup/toolchains/stable-aarch64-apple-darwin/bin:$PATH"
+export PATH="$HOME/.claude_priv/bin:$PATH"
+
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
 
 export VCPKG_ROOT="$HOME/vcpkg"
 
