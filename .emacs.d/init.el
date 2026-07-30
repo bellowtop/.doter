@@ -314,7 +314,7 @@
 ;; (load-theme 'doom-material-dark t)
 (advice-add 'load-theme :after
   (lambda (&rest _)
-    (set-face-attribute 'region nil :foreground 'unspecified)))
+    (set-face-attribute 'region nil :foreground nil)))
 (load-theme 'kaolin-galaxy t)
 
 ;;; Terminal Colors
@@ -747,7 +747,7 @@
   '(mode-line-active ((t (:background "#1a202c" :foreground "green" :box nil :underline nil))))
   '(mode-line-highlight ((t (:box nil :foreground "green"))))
   '(mode-line-inactive ((t (:background "#1a202c" :foreground "#a0aec0" :box nil :underline nil))))
-  '(region ((t (:background "#1a3a5c" :distant-foreground "#707080"))))
+  '(region ((t (:background "#1a3a5c"))))
   '(rg-context-face ((t (:inherit nil :foreground "#C6B8AD"))))
   '(rg-match-face ((t (:inherit lazy-highlight))))
   '(ripgrep-match-face ((t (:inherit my-highlight-font-words-face))))

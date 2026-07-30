@@ -90,6 +90,27 @@ With prefix ARG, switch to Claude buffer after sending."
       )
     (message "should set aliyun bailian api-key")))
 
+(setq my-ds-api-key nil)
+(defun claude-code-ds (&optional api-key)
+  (interactive)
+  (when (called-interactively-p 'interactive)
+    (setq api-key (read-string "DeepSeek API Key: ")))
+  (when (and api-key (not (string-empty-p api-key)))
+    (setq my-ds-api-key api-key))
+  (if my-ds-api-key
+    (progn
+      (setenv "ANTHROPIC_BASE_URL" "https://api.deepseek.com/anthropic")
+      (setenv "ANTHROPIC_AUTH_TOKEN" my-ds-api-key)
+      (setenv "ANTHROPIC_MODEL" "deepseek-v4-pro[1m]")
+      (setenv "ANTHROPIC_DEFAULT_OPUS_MODEL" "deepseek-v4-pro[1m]")
+      (setenv "ANTHROPIC_DEFAULT_SONNET_MODEL" "deepseek-v4-pro[1m]")
+      (setenv "ANTHROPIC_DEFAULT_HAIKU_MODEL" "deepseek-v4-flash")
+      (setenv "CLAUDE_CODE_SUBAGENT_MODEL" "deepseek-v4-flash")
+      (setenv "CLAUDE_CODE_EFFORT_LEVEL" "max")
+      (claude-code)
+      )
+    (message "should set deepseek api-key")))
+
 
 (defun reset-claude-code-env()
   (interactive)
