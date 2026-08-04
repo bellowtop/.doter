@@ -220,7 +220,8 @@
     highlight-font-chars-face-underline t
     whitespace-tab-fg-color "#627D9D"
     whitespace-trailing-fg-color "#161c23"
-    hl-line-bg-color "#1b2129")
+    ;; hl-line-bg-color "#1b2129")
+    hl-line-bg-color nil)
   (setq darker-window-bg-color "#FFFFFF"
     darker-window-fg-color "black"
     highlight-font-chars-face-fg 'unspecified
@@ -757,6 +758,7 @@
   '(sideline-flymake-note ((t (:inherit nil :background "lightblue" :foreground "black"))))
   '(sideline-flymake-warning ((t (:inherit nil :background "lightyellow" :foreground "black"))))
   '(success ((t (:foreground "Green1" :weight regular))))
+  '(markdown-code-face ((t (:background unspecified))))
   '(symbol-overlay-default-face ((t (:inherit my-highlight-font-words-face))))
   '(tab-bar ((t (:background "#1e1e1e"))))
   '(tab-bar-tab ((t (:background "#199DFF" :distant-foreground "black" :foreground "#199DFF" :box (:line-width (2 . 2) :color "#199DFF" :style flat-button) :height 1.0))))
