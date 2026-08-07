@@ -1,0 +1,13 @@
+;; -*- no-byte-compile: t; lexical-binding: nil -*-
+(define-package "sideline-eglot" "20260101.541"
+  "Show eglot information with sideline."
+  '((emacs    "29.1")
+    (eglot    "1.12.29")
+    (sideline "0.1.0")
+    (ht       "2.4"))
+  :url "https://github.com/emacs-sideline/sideline-eglot"
+  :commit "aeb1991a7f25301438806a06c588e7e732c6f533"
+  :revdesc "aeb1991a7f25"
+  :keywords '("convenience" "eglot")
+  :authors '(("Jen-Chieh" . "jcs090218@gmail.com"))
+  :maintainers '(("Jen-Chieh" . "jcs090218@gmail.com")))

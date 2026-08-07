@@ -59,7 +59,7 @@ function M.setup()
   })
 
   -- 默认的代理
-  set_proxy('http://localhost:9910')
+  -- set_proxy('http://localhost:9910')
 
 end
 

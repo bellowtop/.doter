@@ -1,0 +1,95 @@
+;;; dashboard-hackernews.el --- Display Hacker News on dashboard -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2018 by Hayato KAJIYAMA
+
+;; Author:  Hayato KAJIYAMA <kaji1216@gmail.com>
+;; URL: https://github.com/hyakt/emacs-dashboard-hackernews
+;; Package-Version: 20260521.1635
+;; Package-Revision: ecc8c1eeca10
+;; Package-Requires: ((emacs "24") (dashboard "1.2.5") (request "0.3.0"))
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; Display Hacker News on dashboard.
+
+;;; Code:
+
+(require 'request)
+(require 'dashboard)
+(require 'dashboard-widgets)
+
+(add-to-list 'dashboard-item-generators '(hackernews . dashboard-hackernews-insert))
+(add-to-list 'dashboard-items '(hackernews) t)
+
+(defvar dashboard-hackernews-items ())
+
+(defconst dashboard-hackernews-api-version "v0"
+  "Currently supported version of the Hacker News API.")
+
+(defconst dashboard-hackernews-api-top-format
+  (format "https://hacker-news.firebaseio.com/%s/topstories.json"
+          dashboard-hackernews-api-version)
+  "Format of targeted Hacker News API URLs.")
+
+(defconst dashboard-hackernews-site-item-format
+  (format "https://hacker-news.firebaseio.com/%s/item"
+          dashboard-hackernews-api-version)
+  "Format of Hacker News website item URLs.")
+
+(defun dashboard-hackernews-get-ids (callback)
+  "Get hackernews ids, and execute CALLBACK function."
+  (request
+   dashboard-hackernews-api-top-format
+   :sync t
+   :parser 'json-read
+   :success (cl-function
+             (lambda (&key data &allow-other-keys)
+               (funcall callback data)))))
+
+(defun dashboard-hackernews-get-item (id callback)
+  "Get hackernews article from ID, and execute CALLBACK function."
+  (request
+   (format "%s/%s.json" dashboard-hackernews-site-item-format id)
+   :parser 'json-read
+   :success (cl-function
+             (lambda (&key data &allow-other-keys)
+               (funcall callback data)))))
+
+(defun dashboard-hackernews-insert (list-size)
+  "Add the list of LIST-SIZE items from hackernews."
+  (dashboard-hackernews-get-ids
+   (lambda (ids)
+     (dotimes (i list-size)
+       (dashboard-hackernews-get-item
+        (elt ids i) (lambda (item) (push item dashboard-hackernews-items))))))
+  (dashboard-insert-section
+   "Hackernews:"
+   (mapcar (lambda (story)
+             (propertize (format "[%3d] %s"
+                                 (alist-get 'score story)
+                                 (decode-coding-string (alist-get 'title story) 'utf-8))
+                         'dashboard-url (alist-get 'url story)))
+           dashboard-hackernews-items)
+   list-size
+   'hackernews
+   (dashboard-get-shortcut 'hackernews)
+   `(lambda (&rest _)
+      (let ((url (get-text-property 0 'dashboard-url ,el)))
+        (when url (browse-url url))))
+   el))
+
+(provide 'dashboard-hackernews)
+;;; dashboard-hackernews.el ends here

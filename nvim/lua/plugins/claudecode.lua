@@ -16,6 +16,10 @@ vim.api.nvim_create_user_command('ClaudeCCR', function()
   switch_claude_terminal_cmd('ccr code')
 end, {})
 
+vim.api.nvim_create_user_command('ClaudeDS', function()
+  switch_claude_terminal_cmd('claude-ds')
+end, {})
+
 return {
   {
     "coder/claudecode.nvim",
