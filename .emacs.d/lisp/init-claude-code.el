@@ -107,6 +107,7 @@ With prefix ARG, switch to Claude buffer after sending."
       (setenv "ANTHROPIC_DEFAULT_HAIKU_MODEL" "deepseek-v4-flash")
       (setenv "CLAUDE_CODE_SUBAGENT_MODEL" "deepseek-v4-flash")
       (setenv "CLAUDE_CODE_EFFORT_LEVEL" "max")
+      (setenv "CLAUDE_CODE_DISABLE_ALTERNATE_SCREEN" "1")
       (claude-code)
       )
     (message "should set deepseek api-key")))
