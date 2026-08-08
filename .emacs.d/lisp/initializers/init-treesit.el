@@ -45,6 +45,22 @@
   :config
   ;; markdown-ts-mode applies bold face to all paragraph text (upstream bug)
   (setq treesit-auto-langs (remove 'markdown treesit-auto-langs))
+
+  ;; perf: treesit-auto--build-major-mode-remap-alist is called on every
+  ;; set-auto-mode-0 (every file open) and calls treesit-language-available-p
+  ;; for each language, hitting the filesystem ~20+ times.  Cache it.
+  (defvar my-treesit-auto--remap-alist-cache nil
+    "Cached result of `treesit-auto--build-major-mode-remap-alist'.")
+  (advice-add 'treesit-auto--build-major-mode-remap-alist :around
+              (lambda (orig-fun &rest args)
+                (or my-treesit-auto--remap-alist-cache
+                    (setq my-treesit-auto--remap-alist-cache
+                          (apply orig-fun args)))))
+
+  ;; bust cache after installing new grammars
+  (advice-add 'treesit-auto-install-all :after
+              (lambda (&rest _) (setq my-treesit-auto--remap-alist-cache nil)))
+
   (global-treesit-auto-mode))
 
 (provide 'init-treesit)
