@@ -166,7 +166,7 @@
           (buffer (and current (window-buffer)))
           (explicit-name (alist-get 'explicit-name tab))
           (name (if (and buffer (not explicit-name))
-                    (buffer-name buffer)
+                  (buffer-name buffer)
                   (alist-get 'name tab)))
           (modified (and buffer (buffer-modified-p buffer))))
     (propertize
@@ -395,10 +395,10 @@
       (string-match-p "\\`\\*" (buffer-name buffer))
       ;; 跳过非当前 project 的 buffer
       (let ((current-root
-             (buffer-local-value 'projectile-project-root (window-buffer window))))
+              (buffer-local-value 'projectile-project-root (window-buffer window))))
         (and current-root
-             (with-current-buffer buffer
-               (not (equal projectile-project-root current-root))))))))
+          (with-current-buffer buffer
+            (not (equal projectile-project-root current-root))))))))
 
 ;;; Text and Programming Modes
 (require 'init-whitespace-mode)
@@ -658,7 +658,7 @@
 (defun my-escape-key ()
   (interactive)
   (if (derived-mode-p 'eat-mode)
-      (eat-self-input 1 ?\e)
+    (eat-self-input 1 ?\e)
     (my-init-god-mode-for-new-buffer)  ;; ESC always forces god-mode on
     (when isearch-mode (isearch-abort) (isearch-abort))  ;; must double abort
     (when (my-god-this-is-normal-editor-buffer (buffer-name))
@@ -720,9 +720,31 @@
   '(bold ((t (:slant normal :weight normal :height 130 :width normal :foundry "nil" :family "IBM Plex Mono"))))
   '(cfrs-border-color ((t (:background "yellow"))))
   '(company-tooltip ((t (:background "black"))))
-  '(company-tooltip-common ((t (:weight normal :foreground "#7FDC59"))))
-  '(company-tooltip-selection ((t (:weight normal))))
+  '(company-tooltip-annotation ((t (:foreground "#7F848E" :slant normal :weight normal))))
+  '(company-tooltip-annotation-selection ((t (:foreground "#7F848E" :slant normal :weight normal))))
+  '(company-tooltip-common ((t (:foreground "#61AFEF" :weight normal))))
+  '(company-tooltip-common-selection ((t (:foreground "#61AFEF" :weight normal))))
+  '(company-tooltip-scrollbar-thumb ((t (:background "#3E4451"))))
+  '(company-tooltip-scrollbar-track ((t (:background "#2a2931"))))
+  '(company-tooltip-selection ((t (:background "#3E4451" :foreground "#d4d4d6" :weight normal))))
   '(deadgrep-match-face ((t (:inherit lazy-highlight))))
+  '(eat-term-color-0 ((t (:foreground "black"))))
+  '(eat-term-color-1 ((t (:foreground "tomato"))))
+  '(eat-term-color-10 ((t (:foreground "PaleGreen2"))))
+  '(eat-term-color-11 ((t (:foreground "gold1"))))
+  '(eat-term-color-12 ((t (:foreground "DeepSkyBlue1"))))
+  '(eat-term-color-13 ((t (:foreground "MediumOrchid1"))))
+  '(eat-term-color-14 ((t (:foreground "cyan"))))
+  '(eat-term-color-15 ((t (:foreground "white"))))
+  '(eat-term-color-2 ((t (:foreground "PaleGreen2"))))
+  '(eat-term-color-3 ((t (:foreground "gold1"))))
+  '(eat-term-color-4 ((t (:foreground "DeepSkyBlue1"))))
+  '(eat-term-color-5 ((t (:foreground "MediumOrchid1"))))
+  '(eat-term-color-6 ((t (:foreground "cyan"))))
+  '(eat-term-color-7 ((t (:foreground "white"))))
+  '(eat-term-color-8 ((t (:foreground "gray50"))))
+  '(eat-term-color-9 ((t (:foreground "tomato"))))
+  '(eat-term-faint ((t (:inherit font-lock-comment-face :weight light))))
   '(eglot-diagnostic-tag-deprecated-face ((t (:underline nil :strike-through nil :foreground "yellow"))))
   '(eglot-diagnostic-tag-unnecessary-face ((t (:foreground "gray" :underline nil))))
   '(eglot-mode-line ((t (:inherit nil :weight bold))))
@@ -744,6 +766,7 @@
   '(lazy-highlight ((t (:background "#7FDC59" :foreground "#161c23" :weight normal))))
   '(line-number ((t (:inherit default :foreground "gray33" :slant normal :weight normal))))
   '(line-number-current-line ((t (:background "#1b2129" :foreground "white" :slant normal :weight normal))))
+  '(markdown-code-face ((t (:background unspecified))))
   '(mode-line ((t (:background "#415367" :foreground "#e5ded6" :underline (:color foreground-color :style line :position t)))))
   '(mode-line-active ((t (:background "#1a202c" :foreground "green" :box nil :underline nil))))
   '(mode-line-highlight ((t (:box nil :foreground "green"))))
@@ -758,7 +781,6 @@
   '(sideline-flymake-note ((t (:inherit nil :background "lightblue" :foreground "black"))))
   '(sideline-flymake-warning ((t (:inherit nil :background "lightyellow" :foreground "black"))))
   '(success ((t (:foreground "Green1" :weight regular))))
-  '(markdown-code-face ((t (:background unspecified))))
   '(symbol-overlay-default-face ((t (:inherit my-highlight-font-words-face))))
   '(tab-bar ((t (:background "#1e1e1e"))))
   '(tab-bar-tab ((t (:background "#199DFF" :distant-foreground "black" :foreground "#199DFF" :box (:line-width (2 . 2) :color "#199DFF" :style flat-button) :height 1.0))))
@@ -839,6 +861,7 @@
         (python-shell-interpreter . "uv")
         (eglot-server-programs
           (python-mode "basedpyright-langserver" "--stdio"))))
+  '(typescript-ts-indent-offset 2 nil nil "Customized with use-package jtsx")
   '(warning-suppress-log-types '((emacs) (use-package) (lsp-mode)))
   '(warning-suppress-types '((use-package) (lsp-mode))))
 
