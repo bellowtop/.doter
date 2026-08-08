@@ -39,12 +39,12 @@
                       (eglot-ensure)))
 
   (zig-mode . eglot-ensure)
-  (tsx-ts-mode . eglot-ensure)
-  (js-ts-mode . eglot-ensure)
-  (typescript-ts-mode . eglot-ensure)
-  (jtsx-typescript-mode . eglot-ensure)
-  (jtsx-tsx-mode . eglot-ensure)
-  (jtsx-jsx-mode . eglot-ensure)
+  (tsx-ts-mode . my-eglot-ensure-deferred)
+  (js-ts-mode . my-eglot-ensure-deferred)
+  (typescript-ts-mode . my-eglot-ensure-deferred)
+  (jtsx-typescript-mode . my-eglot-ensure-deferred)
+  (jtsx-tsx-mode . my-eglot-ensure-deferred)
+  (jtsx-jsx-mode . my-eglot-ensure-deferred)
   (clojure-ts-mode . eglot-ensure)
 
   (swift-mode . (lambda ()
@@ -153,6 +153,13 @@
       (symbol-overlay-mode 1)
       ))
   (advice-add 'eglot-ensure :around #'my/around-eglot-ensure)
+
+  ;; 延迟启动 eglot，避免打开文件时同步等待 LSP 初始化导致卡顿。
+  ;; TypeScript/TSX 项目的 typescript-language-server 启动和分析较慢，
+  ;; 用 idle timer 让文件先显示出来，LSP 在 Emacs 空闲时再连。
+  (defun my-eglot-ensure-deferred ()
+    "Call `eglot-ensure' after a short idle period so file opens instantly."
+    (run-with-idle-timer 0.3 nil #'eglot-ensure))
 
   ;; Face configuration moved to custom-set-faces
 
