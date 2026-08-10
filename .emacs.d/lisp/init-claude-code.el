@@ -29,6 +29,9 @@
        (side . right)
        (window-width . 90)
        (window-parameters . ((no-other-window . nil)))))
+  (set-face-attribute 'claude-code-repl-face nil
+                      :background "#1e1e1e"
+                      :foreground "#d4d4d4"
   (setq claude-code-terminal-backend 'eat)
 (setq claude-code-sandbox-program "claude")
   (setq claude-code-newline-keybinding-style 'newline-on-alt-return)

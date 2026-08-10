@@ -161,14 +161,35 @@
 (tab-bar-mode 1)
 (server-start)
 
+(defvar my-tab-bar-ignored-buffer-regexps
+  '("^\\*Treemacs" "^\\*NeoTree" "^\\*Woof" "^\\*Popper"
+    "^\\*compilation" "^\\*Help" "^\\*Apropos" "^\\*eldoc"
+    "^\\*Messages" "^\\*Embark" "^\\*which-key"
+    "^\\*Backtrace" "^\\*Warnings" "^\\*Ibuffer"
+    "^\\*claude")
+  "Buffer name regexps that should not be used as tab names.")
+
+(defvar my-tab-last-good-name (make-hash-table :test 'equal))
+
 (defun my-tab-name-formatter (tab index)
   (let* ((current (eq (car tab) 'current-tab))
-          (buffer (and current (window-buffer)))
-          (explicit-name (alist-get 'explicit-name tab))
-          (name (if (and buffer (not explicit-name))
-                  (buffer-name buffer)
-                  (alist-get 'name tab)))
-          (modified (and buffer (buffer-modified-p buffer))))
+         (buffer (and current (window-buffer)))
+         (explicit-name (alist-get 'explicit-name tab))
+         (stored-name (alist-get 'name tab))
+         (buf-name (and buffer (buffer-name buffer)))
+         (ignored-p (and buf-name
+                         (cl-some (lambda (re) (string-match-p re buf-name))
+                                  my-tab-bar-ignored-buffer-regexps)))
+         (name
+          (cond
+           (explicit-name stored-name)
+           ((not buffer) stored-name)
+           (ignored-p
+            (or (gethash index my-tab-last-good-name) stored-name))
+           (t
+            (puthash index buf-name my-tab-last-good-name)
+            buf-name)))
+         (modified (and buffer (not ignored-p) (buffer-modified-p buffer))))
     (propertize
       (format " %d:%s %s " index name (if modified "*" ""))
       'face (funcall tab-bar-tab-face-function tab))))
