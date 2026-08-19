@@ -24,6 +24,28 @@
     (interactive)
     (eat-self-input 1 ?\C-c))
 
+
+  (defun my-eat-clear-scrollback ()
+    "Clear Eat's screen and scrollback, like Terminal's Cmd-K, then
+  redraw the shell prompt (\\C-l)."
+    (interactive)
+    (unless eat-terminal
+      (user-error ""))
+    (let ((cmd (ignore-errors
+                 (format "%s" (process-command
+                                (get-buffer-process (current-buffer)))))))
+      (unless (string-match-p
+                "\\<\\(zsh\\|bash\\|sh\\|fish\\|nu\\|elvish\\|ksh\\)\\>"
+                cmd)
+        (user-error "Refusing to clear scrollback: %s" (or cmd "no process"))
+        ))
+    (let ((inhibit-read-only t)
+           (inhibit-modification-hooks t)
+           (buffer-undo-list t))
+      (eat-term-process-output eat-terminal "\e[3J")
+      (eat-term-redisplay eat-terminal))
+    (eat-term-send-string eat-terminal "\C-l"))
+
   (setq eat-kill-buffer-on-exit t)
   (setq eat-scroll-to-bottom-on-output nil)
   ;; Batch terminal output updates to reduce redisplay overhead
@@ -71,6 +93,7 @@
       (define-key eat-semi-char-mode-map (kbd k) 'eat-self-input)))
 
   (define-key eat-semi-char-mode-map (kbd "C-s-c") #'my-eat-send-ctrl-c)
+  (define-key eat-semi-char-mode-map (kbd "s-k") #'my-eat-clear-scrollback)
   (keymap-unset eat-semi-char-mode-map "M-`")
   (keymap-unset eat-semi-char-mode-map "M-:")
 

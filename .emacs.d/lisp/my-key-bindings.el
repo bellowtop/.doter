@@ -61,7 +61,6 @@
 (bind-key* (kbd "M-k") #'gcm-scroll-up)
 
 (bind-key* (kbd "s-w") #'kill-current-buffer)
-(bind-key* (kbd "s-k") #'my-toggle-eldoc-box-help-at-point)
 (bind-key* (kbd "s-K") #'my/eldoc-box-show-type-definition)
 (bind-key* (kbd "s-t") #'tab-bar-new-tab)
 (bind-key* (kbd "s-n") #'+funcs/new-empty-buffer)
