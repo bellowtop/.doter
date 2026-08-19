@@ -94,6 +94,11 @@
     (eat-yank)
     (yank)))
 (bind-key* (kbd "s-v") #'my-s-v)
+;; Emacs >= 28: yank 不再自行删除 active region，改由 delete-selection-mode 的
+;; pre-hook 按 this-command 的 delete-selection 属性处理。my-s-v 是包装函数，
+;; 必须显式声明，否则粘贴不会替换选区（文本重叠）。eat 里返回 nil 保持原样。
+(put 'my-s-v 'delete-selection
+  (lambda () (unless (derived-mode-p 'eat-mode) 'yank)))
 (bind-key* (kbd "s-a") #'mark-whole-buffer)
 
 (bind-key* (kbd "s-<backspace>") #'my-delete-to-bol)

@@ -154,25 +154,6 @@ function M.setup()
     desc = 'Disable conflicting keymaps in file trees'
   })
 
-  -- EasyMotion diagnostic management
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'EasyMotionPromptBegin',
-    callback = function()
-      vim.diagnostic.disable()
-    end,
-    desc = 'Disable diagnostics during EasyMotion'
-  })
-
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'EasyMotionPromptEnd',
-    callback = function()
-      vim.defer_fn(function()
-        vim.diagnostic.enable()
-      end, 5000)
-    end,
-    desc = 'Re-enable diagnostics after EasyMotion'
-  })
-
   -- BQF quickfix settings
   vim.api.nvim_create_autocmd('FileType', {
     pattern = 'qf',
@@ -220,14 +201,18 @@ function M.setup()
     desc = 'Set Claude Code keymaps for file trees'
   })
 
-  -- Update lightline (if using lightline)
-  if vim.fn.exists('*lightline#update') == 1 then
-    vim.api.nvim_create_autocmd({ 'BufWritePost', 'TextChanged', 'TextChangedI' }, {
-      pattern = '*',
-      command = 'call lightline#update()',
-      desc = 'Update lightline on text changes'
-    })
-  end
+  -- Keep special buffers out of the buffer tabline (terminal, quickfix,
+  -- nvim-tree, telescope, help, ...): lualine's buffers component only
+  -- shows listed buffers, so any buffer with a special buftype is unlisted.
+  vim.api.nvim_create_autocmd({ 'BufEnter', 'BufNewFile' }, {
+    pattern = '*',
+    callback = function()
+      if vim.bo.buftype ~= '' then
+        vim.opt_local.buflisted = false
+      end
+    end,
+    desc = 'Hide special buffers from buffer tabline'
+  })
 end
 
 return M

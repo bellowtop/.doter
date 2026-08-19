@@ -92,6 +92,8 @@ function M.setup()
   keymap("n", "<Leader>l", "<cmd>bnext<cr>", { desc = "Next buffer" })
   keymap("n", "<C-s>h", "<cmd>bprev<cr>", { desc = "Previous buffer" })
   keymap("n", "<C-s>l", "<cmd>bnext<cr>", { desc = "Next buffer" })
+  keymap("n", "<M-h>", "<cmd>bprev<cr>", { desc = "Previous buffer" })
+  keymap("n", "<M-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
   keymap("n", "<Leader>k", "<cmd>Bclose<cr>", { desc = "Close buffer" })
   keymap("n", "<Leader>K", "<cmd>BufOnly<cr><cmd>bfirst<cr>", { desc = "Close all other buffers" })
 

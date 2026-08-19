@@ -20,6 +20,20 @@ return {
           lualine_y = { "progress" },
           lualine_z = { "location" },
         },
+        -- Top buffer tabs (replaces lightline-bufferline)
+        tabline = {
+          lualine_a = {
+            {
+              "buffers",
+              icons_enabled = false, -- no file-type icons
+              symbols = {
+                modified = "*", -- plain asterisk for modified buffers
+                alternate_file = "", -- no alternate-buffer marker
+                directory = "",
+              },
+            },
+          },
+        },
         extensions = { "fugitive", "nvim-tree" },
       })
     end,

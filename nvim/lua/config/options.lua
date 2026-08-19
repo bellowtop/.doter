@@ -170,27 +170,6 @@ function M.setup()
   -- Kommentary
   g.kommentary_create_default_mappings = false
 
-  -- Lightline
-  g.lightline = {
-    colorscheme = 'ayu_mirage',
-    active = {
-      left = { { 'mode', 'paste' }, { 'readonly', 'filename', 'modified' } }
-    },
-    tabline = {
-      left = { { 'buffers' } },
-      right = { { 'close' } }
-    },
-    component_expand = {
-      buffers = 'lightline#bufferline#buffers'
-    },
-    component_type = {
-      buffers = 'tabsel'
-    },
-    component_function = {
-      filename = 'LightlineRelativeFilename'
-    },
-  }
-
   -- 用 vim.cmd 定义一个 Vim script 函数
   vim.cmd([[
     function! LightlineRelativeFilename()

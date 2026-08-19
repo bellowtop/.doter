@@ -15,10 +15,9 @@
 
   (defun my-eat-copy-region (&optional arg)
     (interactive "p")
-    (if (use-region-p)
-      (kill-ring-save (region-beginning) (region-end))
-      (save-excursion
-        (copy-region-as-kill (line-beginning-position) (line-end-position)))))
+    ;; No-op without a region, matching native terminal Cmd-C semantics
+    (when (use-region-p)
+      (kill-ring-save (region-beginning) (region-end))))
 
   (defun my-eat-send-ctrl-c ()
     (interactive)
