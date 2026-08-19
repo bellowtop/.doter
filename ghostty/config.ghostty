@@ -57,11 +57,11 @@ keybind = super+b=text:\x18\x40\x73\x62
 # SUPER+SHIFT+;  → C-x @ s :
 keybind = super+shift+semicolon=text:\x18\x40\x73\x3a
 
-# SUPER+SHIFT+J  → C-s C-j
-keybind = super+shift+j=text:\x13\x0a
+# SUPER+SHIFT+J  → C-s j（tmux switch-client -n，小写 j）
+keybind = super+shift+j=text:\x13\x6a
 
-# SUPER+SHIFT+K  → C-s C-k
-keybind = super+shift+k=text:\x13\x0b
+# SUPER+SHIFT+K  → C-s K（tmux clear-history，大写 K）
+keybind = super+shift+k=text:\x13\x4b
 
 # SUPER+SHIFT+H  → C-s C-s h
 keybind = super+shift+h=text:\x13\x13\x68

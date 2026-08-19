@@ -47,10 +47,18 @@
 
   (setq eat-kill-buffer-on-exit t)
   (setq eat-scroll-to-bottom-on-output nil)
-  ;; Render terminal output immediately.  The defaults (8–33ms) batch
-  ;; output, which delays shell echo and makes typed characters laggy.
-  (setq eat-minimum-latency 0
-    eat-maximum-latency 0)
+  ;; Latency is read per-buffer (eat--filter references them in the
+  ;; process buffer, so setq-local wins).  Interactive shells render
+  ;; echo immediately; Claude Code's streaming output keeps the default
+  ;; batching (8–33ms) to limit redisplay cost and flicker.
+  (defun my-eat-set-latency ()
+    (if (string-match-p "\\*claude" (buffer-name))
+        (progn
+          (setq-local eat-minimum-latency 0.008)
+          (setq-local eat-maximum-latency 0.033))
+      (setq-local eat-minimum-latency 0)
+      (setq-local eat-maximum-latency 0)))
+  (add-hook 'eat-mode-hook #'my-eat-set-latency)
 
   ;; Kill window when buffer is killed
   (defun my-eat-kill-window-on-buffer-kill ()

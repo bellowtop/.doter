@@ -5,6 +5,11 @@
 (use-package projectile
   :ensure t
   :config
+  ;; projectile 3.x: entries are gitignore-style patterns (plain name
+  ;; matches at any depth, slash anchors at project root), NOT regexps.
+  ;; Anchored regexes like "^\\.git$" silently stop matching -- keep this
+  ;; list in gitignore style.  /opt/homebrew is handled by
+  ;; ignored-projectile-project below instead.
   (setq projectile-globally-ignored-directories
         '("node_modules"
           ".venv"
@@ -20,33 +25,32 @@
           ".nyc_output"
           "public/build"
           "static/build"
-          "\\.emacs\\.d/\\.local/autosaves"
-          "\\.emacs\\.d/\\.local/auto-save-list"
-          "\\.emacs\\.d/\\.local/cache"
-          "\\.emacs\\.d/\\.local/backup"
-          "\\.emacs\\.d/\\.local/backups"
-          "/opt/homebrew"
-          "^\\.idea$"
-          "^\\.vscode$"
-          "^\\.ensime_cache$"
-          "^\\.eunit$"
-          "^\\.git$"
-          "^\\.hg$"
-          "^\\.fslckout$"
-          "^_FOSSIL_$"
-          "^\\.bzr$"
-          "^_darcs$"
-          "^\\.pijul$"
-          "^\\.tox$"
-          "^\\.svn$"
-          "^\\.stack-work$"
-          "^\\.ccls-cache$"
-          "^\\.cache$"
-          "^\\.clangd$"
-          "^\\.ccbus$"
-          "^\\.claude$"
-          "^\\.understand-anything$"
-          ".cache"))
+          "__pycache__"
+          ".emacs.d/.local/autosaves"
+          ".emacs.d/.local/auto-save-list"
+          ".emacs.d/.local/cache"
+          ".emacs.d/.local/backup"
+          ".emacs.d/.local/backups"
+          ".idea"
+          ".vscode"
+          ".ensime_cache"
+          ".eunit"
+          ".git"
+          ".hg"
+          ".fslckout"
+          "_FOSSIL_"
+          ".bzr"
+          "_darcs"
+          ".pijul"
+          ".tox"
+          ".svn"
+          ".stack-work"
+          ".ccls-cache"
+          ".cache"
+          ".clangd"
+          ".ccbus"
+          ".claude"
+          ".understand-anything"))
 
     (setq ignored-projectile-projects (list "/opt/homebrew/" "Xcode.app" "node_modules"))
     (defun ignored-projectile-project (project-root)
