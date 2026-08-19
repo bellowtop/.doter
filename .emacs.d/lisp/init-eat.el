@@ -47,20 +47,28 @@
 
   (setq eat-kill-buffer-on-exit t)
   (setq eat-scroll-to-bottom-on-output nil)
-  ;; Batch terminal output updates to reduce redisplay overhead
-  (setq eat-minimum-latency 0.008
-    eat-maximum-latency 0.033)
+  ;; Render terminal output immediately.  The defaults (8–33ms) batch
+  ;; output, which delays shell echo and makes typed characters laggy.
+  (setq eat-minimum-latency 0
+    eat-maximum-latency 0)
 
   ;; Kill window when buffer is killed
   (defun my-eat-kill-window-on-buffer-kill ()
     (let ((window (get-buffer-window (current-buffer))))
-      (when (and window
+      (if (and window
               (window-parent window)
               (seq-find (lambda (w)
                           (and (not (eq w window))
                             (not (window-parameter w 'window-side))))
                 (window-list (window-frame window) 'no-mini)))
-        (delete-window window))))
+        (delete-window window)
+        ;; Only window in frame: kill-buffer-hook runs before
+        ;; replace-buffer-in-windows, so switch away first to prevent
+        ;; switch-to-prev-buffer from guessing a buffer.  *scratch* is
+        ;; normally skipped by switch-to-prev-buffer-skip (name starts
+        ;; with `*'), hence the explicit switch.
+        (when window
+          (set-window-buffer window (get-buffer-create "*scratch*"))))))
 
   (defun my-eat-setup-kill-window-hook ()
     (remove-hook 'kill-buffer-hook #'my-eat-kill-window-on-buffer-kill t)
