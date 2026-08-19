@@ -1,10 +1,16 @@
 local toggle_key = "<C-t>"
 
 -- ClaudeCode terminal command switcher using environment variable
+-- claudecode.nvim captures terminal_cmd at setup() time, so setting the env
+-- var alone is not enough; re-apply it through terminal.setup() to take
+-- effect in the running session.
 local function switch_claude_terminal_cmd(new_cmd)
   vim.env.CLAUDE_TERMINAL_CMD = new_cmd
+  local ok, terminal = pcall(require, "claudecode.terminal")
+  if ok and type(terminal.setup) == "function" then
+    terminal.setup({}, new_cmd, {})
+  end
   print("Switched ClaudeCode terminal command to: " .. new_cmd)
-  print("Please restart Claude Code for the change to take effect: :ClaudeCode")
 end
 
 -- Create user commands for switching terminal commands

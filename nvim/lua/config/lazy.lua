@@ -20,7 +20,7 @@ function M.setup()
   -- Configure lazy.nvim
   require("lazy").setup("plugins", {
     defaults = {
-      lazy = false, -- should plugins be lazy-loaded?
+      lazy = true, -- lazy-load plugins by default (specs declare their own triggers)
     },
     install = {
       missing = true, -- install missing plugins on startup

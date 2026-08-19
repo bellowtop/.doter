@@ -1,15 +1,5 @@
 return {
-  -- Markdown support
-  {
-    "godlygeek/tabular",
-    ft = "markdown",
-    cmd = "Tabularize",
-  },
-  {
-    "plasticboy/vim-markdown",
-    ft = "markdown",
-    dependencies = { "godlygeek/tabular" },
-  },
+  -- Markdown support (highlighting is built into Neovim 0.12 via treesitter)
   {
     "mzlogin/vim-markdown-toc",
     ft = "markdown",
@@ -21,8 +11,12 @@ return {
     },
   },
   {
-    "kannokanno/previm",
+    "iamcco/markdown-preview.nvim",
+    build = ":call mkdp#util#install()",
     ft = "markdown",
-    cmd = "PrevimOpen",
+    cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewToggle" },
+    keys = {
+      { "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown Preview" },
+    },
   },
 }

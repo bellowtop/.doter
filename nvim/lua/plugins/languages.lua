@@ -1,17 +1,4 @@
 return {
-  -- Go
-  {
-    "fatih/vim-go",
-    ft = "go",
-    build = ":GoUpdateBinaries",
-  },
-
-  -- Rust
-  {
-    "rust-lang/rust.vim",
-    ft = "rust",
-  },
-
   -- JSON
   {
     "elzr/vim-json",

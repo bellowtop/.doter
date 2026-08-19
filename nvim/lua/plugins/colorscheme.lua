@@ -11,8 +11,4 @@ return {
     "folke/tokyonight.nvim",
     lazy = true,
   },
-  {
-    "wojciechkepka/bogster",
-    lazy = true,
-  },
 }

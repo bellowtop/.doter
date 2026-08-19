@@ -46,61 +46,55 @@ return {
     end,
   },
 
-  -- Multiple cursors
+  -- Jump (replaces easymotion)
   {
-    "terryma/vim-multiple-cursors",
+    "folke/flash.nvim",
+    event = "VeryLazy",
     keys = {
-      { "<C-n>", mode = { "n", "v" } },
-      { "<C-p>", mode = { "n", "v" } },
-      { "<C-x>", mode = { "n", "v" } },
+      { "f", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash Jump" },
+      { "F", mode = { "n", "x", "o" }, function() require("flash").jump({ search = { forward = false } }) end, desc = "Flash Jump Back" },
+      { "gs", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
     },
+    config = function()
+      require("flash").setup()
+    end,
   },
 
-  -- Easy motion
+  -- Surround (replaces vim-surround; keys kept for muscle memory)
   {
-    "easymotion/vim-easymotion",
+    "echasnovski/mini.surround",
+    version = "*",
     keys = {
-      { "f", "<Plug>(easymotion-bd-w)", mode = "n", desc = "EasyMotion word" },
-      "<leader><leader>",
+      { "ys", desc = "Add Surrounding", mode = "n" },
+      { "ds", desc = "Delete Surrounding", mode = "n" },
+      { "cs", desc = "Replace Surrounding", mode = "n" },
+      { "S", desc = "Add Surrounding Visual", mode = "v" },
     },
-  },
-
-  -- Surround
-  {
-    "tpope/vim-surround",
-    keys = {
-      "cs",
-      "ds",
-      "ys",
-      { "S", mode = "v" },
-    },
+    config = function()
+      require("mini.surround").setup({
+        mappings = {
+          add = "ys", -- gsa
+          delete = "ds", -- gsd
+          replace = "cs", -- gsr
+          find = "gsf",
+          find_left = "gsF",
+          highlight = "gsh",
+          update_n_lines = "gsn",
+          suffix_last = "l",
+          suffix_next = "n",
+        },
+      })
+      -- Keep vim-surround's visual-mode key for muscle memory
+      vim.keymap.set("v", "S", function()
+        require("mini.surround").add()
+      end, { desc = "Add Surrounding" })
+    end,
   },
 
   -- Repeat
   {
     "tpope/vim-repeat",
     keys = ".",
-  },
-
-  -- Prettier
-  {
-    "prettier/vim-prettier",
-    build = "npm install",
-    keys = {
-      { "<leader>R", ":<Plug>(Prettier):retab", desc = "Format with Prettier" },
-    },
-    ft = {
-      "javascript",
-      "typescript",
-      "css",
-      "scss",
-      "json",
-      "graphql",
-      "markdown",
-      "vue",
-      "yaml",
-      "html"
-    },
   },
 
   -- Buffer management

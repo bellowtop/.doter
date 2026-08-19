@@ -114,13 +114,6 @@ return {
       })
 
       -- Set configuration for specific filetype
-      cmp.setup.filetype('gitcommit', {
-        sources = cmp.config.sources({
-          { name = 'cmp_git' },
-        }, {
-          { name = 'buffer' },
-        })
-      })
 
       -- Use buffer source for `/`
       cmp.setup.cmdline('/', {

@@ -1,18 +1,28 @@
 return {
   -- Status line
   {
-    "itchyny/lightline.vim",
+    "nvim-lualine/lualine.nvim",
     event = "VimEnter",
-    dependencies = {
-      "mengelbrecht/lightline-bufferline",
-    },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
-      -- Lightline configuration would go here
+      require("lualine").setup({
+        options = {
+          theme = "vscode",
+          component_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" },
+          globalstatus = true,
+        },
+        sections = {
+          lualine_a = { "mode" },
+          lualine_b = { "branch", "diff", "diagnostics" },
+          lualine_c = { "filename" },
+          lualine_x = { "encoding", "fileformat", "filetype" },
+          lualine_y = { "progress" },
+          lualine_z = { "location" },
+        },
+        extensions = { "fugitive", "nvim-tree" },
+      })
     end,
-  },
-  {
-    "mengelbrecht/lightline-bufferline",
-    lazy = true,
   },
 
   -- Which key
@@ -24,9 +34,7 @@ return {
       vim.o.timeoutlen = 300
     end,
     config = function()
-      require("which-key").setup({
-        -- 使用默认配置，which-key 不应该干扰 <C-,>
-      })
+      require("which-key").setup({})
     end,
   },
 }

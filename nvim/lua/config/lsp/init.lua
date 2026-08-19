@@ -340,6 +340,22 @@ function M.setup()
     }
   end
 
+  if vim.fn.executable("rust-analyzer") then
+    vim.lsp.config.rust_analyzer = {
+      cmd = { "rust-analyzer" },
+      filetypes = { "rust" },
+      on_attach = custom_attach,
+      capabilities = capabilities,
+      settings = {
+        ["rust-analyzer"] = {
+          checkOnSave = { command = "clippy" },
+          inlayHints = { enable = true },
+        },
+      },
+    }
+    vim.lsp.enable("rust_analyzer")
+  end
+
   -- Clangd extensions
   require("clangd_extensions").setup({
     server = {
@@ -412,20 +428,9 @@ function M.setup()
   -- TypeScript setup is now handled in lua/plugins/lsp.lua with lazy loading
   -- (FileType autocmd 已在函数开头设置)
 
-  -- C++ tools
-  require("nt-cpp-tools").setup({
-    preview = {
-      quit = "q",
-      accept = "<tab>",
-    },
-    header_extension = "h",
-    source_extension = "cpp",
-    custom_define_class_function_commands = {
-      TSCppImplWrite = {
-        output_handle = require("nt-cpp-tools.output_handlers").get_add_to_cpp(),
-      },
-    },
-  })
+  -- C++ method implementation is covered by clangd code actions
+  -- (implement function / generate declaration); nvim-treesitter-cpp-tools
+  -- was removed with nvim-treesitter (archived, incompatible with 0.12).
 
   -- python lsp
   if vim.fn.executable("basedpyright-langserver") == 1 then
