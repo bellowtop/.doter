@@ -52,7 +52,9 @@ ki() {
 }
 
 kk() {
-    tmux send-keys -R \; clear-history
+    if [[ -n "$TMUX_PANE" ]]; then
+        tmux send-keys -R \; clear-history
+    fi
 }
 
 hs() {
