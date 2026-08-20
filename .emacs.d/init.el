@@ -162,7 +162,8 @@
 (server-start)
 
 (defvar my-tab-bar-ignored-buffer-regexps
-  '("^\\*Treemacs" "^\\*NeoTree" "^\\*Woof" "^\\*Popper"
+  '("^ \\*Treemacs" "^ \\*Minibuf" "^ \\*Pos-Frame"
+    "^\\*NeoTree" "^\\*Woof" "^\\*Popper"
     "^\\*compilation" "^\\*Help" "^\\*Apropos" "^\\*eldoc"
     "^\\*Messages" "^\\*Embark" "^\\*which-key"
     "^\\*Backtrace" "^\\*Warnings" "^\\*Ibuffer"
