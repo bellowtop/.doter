@@ -30,10 +30,10 @@
        (window-width . 90)
        (window-parameters . ((no-other-window . nil)))))
   (set-face-attribute 'claude-code-repl-face nil
-                      :background "#1e1e1e"
-                      :foreground "#d4d4d4")
+    :background "#1e1e1e"
+    :foreground "#d4d4d4")
   (setq claude-code-terminal-backend 'eat)
-(setq claude-code-sandbox-program "claude")
+  (setq claude-code-sandbox-program "claude")
   (setq claude-code-newline-keybinding-style 'newline-on-alt-return)
 
   (defun my-send-command-with-buffer-or-region-context (cmd &optional arg)
@@ -104,9 +104,12 @@ With prefix ARG, switch to Claude buffer after sending."
     (progn
       (setenv "ANTHROPIC_BASE_URL" "https://api.deepseek.com/anthropic")
       (setenv "ANTHROPIC_AUTH_TOKEN" my-ds-api-key)
-      (setenv "ANTHROPIC_MODEL" "deepseek-v4-pro[1m]")
-      (setenv "ANTHROPIC_DEFAULT_OPUS_MODEL" "deepseek-v4-pro[1m]")
-      (setenv "ANTHROPIC_DEFAULT_SONNET_MODEL" "deepseek-v4-pro[1m]")
+      ;; (setenv "ANTHROPIC_MODEL" "deepseek-v4-pro[1m]")
+      ;; (setenv "ANTHROPIC_DEFAULT_OPUS_MODEL" "deepseek-v4-pro[1m]")
+      ;; (setenv "ANTHROPIC_DEFAULT_SONNET_MODEL" "deepseek-v4-pro[1m]")
+      (setenv "ANTHROPIC_MODEL" "deepseek-v4-flash")
+      (setenv "ANTHROPIC_DEFAULT_OPUS_MODEL" "deepseek-v4-flash")
+      (setenv "ANTHROPIC_DEFAULT_SONNET_MODEL" "deepseek-v4-flash")
       (setenv "ANTHROPIC_DEFAULT_HAIKU_MODEL" "deepseek-v4-flash")
       (setenv "CLAUDE_CODE_SUBAGENT_MODEL" "deepseek-v4-flash")
       (setenv "CLAUDE_CODE_EFFORT_LEVEL" "max")

@@ -113,13 +113,6 @@ function M.setup()
 
   -- Auto-pairs configuration removed (now using nvim-autopairs with its own config)
 
-  -- Multiple cursors
-  g.multi_cursor_use_default_mapping = 0
-  g.multi_cursor_start_word_key = '<C-n>'
-  g.multi_cursor_next_key = '<C-n>'
-  g.multi_cursor_skip_key = '<C-x>'
-  g.multi_cursor_quit_key = '<Esc>'
-
   -- Surround
   g.surround_no_insert_mappings = 1
 

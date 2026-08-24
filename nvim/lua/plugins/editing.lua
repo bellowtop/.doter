@@ -46,17 +46,57 @@ return {
     end,
   },
 
-  -- Jump (replaces easymotion)
+  -- Easy motion (original plugin; f = bidirectional word jump, as before)
+  {
+    "easymotion/vim-easymotion",
+    keys = {
+      { "f", "<Plug>(easymotion-bd-w)", mode = "n", desc = "EasyMotion word" },
+      "<leader><leader>",
+    },
+  },
+
+  -- Jump (flash kept for treesitter jumps only; char mode disabled so it
+  -- does not take over f/F/t/T)
   {
     "folke/flash.nvim",
     event = "VeryLazy",
     keys = {
-      { "f", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash Jump" },
-      { "F", mode = { "n", "x", "o" }, function() require("flash").jump({ search = { forward = false } }) end, desc = "Flash Jump Back" },
       { "gs", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
     },
     config = function()
-      require("flash").setup()
+      require("flash").setup({
+        modes = {
+          char = { enabled = false },
+        },
+      })
+    end,
+  },
+
+  -- Multiple cursors (replaces vim-multiple-cursors; C-n muscle memory kept)
+  {
+    "jake-stewart/multicursor.nvim",
+    branch = "1.0",
+    event = "VeryLazy",
+    config = function()
+      local mc = require("multicursor-nvim")
+      mc.setup()
+
+      local set = vim.keymap.set
+
+      -- Add next occurrence of the word/selection (old multi_cursor_* keys)
+      set({ "n", "x" }, "<C-n>", function() mc.matchAddCursor(1) end, { desc = "MultiCursor: add next match" })
+      set({ "n", "x" }, "<C-x>", function() mc.matchSkipCursor(1) end, { desc = "MultiCursor: skip next match" })
+
+      -- Only active while multiple cursors exist, so <Esc> still exits Visual
+      mc.addKeymapLayer(function(layerSet)
+        layerSet("n", "<esc>", function()
+          if not mc.cursorsEnabled() then
+            mc.enableCursors()
+          else
+            mc.clearCursors()
+          end
+        end)
+      end)
     end,
   },
 
@@ -64,11 +104,11 @@ return {
   {
     "echasnovski/mini.surround",
     version = "*",
+    event = "VeryLazy",
     keys = {
       { "ys", desc = "Add Surrounding", mode = "n" },
       { "ds", desc = "Delete Surrounding", mode = "n" },
       { "cs", desc = "Replace Surrounding", mode = "n" },
-      { "S", desc = "Add Surrounding Visual", mode = "v" },
     },
     config = function()
       require("mini.surround").setup({
@@ -84,10 +124,11 @@ return {
           suffix_next = "n",
         },
       })
-      -- Keep vim-surround's visual-mode key for muscle memory
-      vim.keymap.set("v", "S", function()
-        require("mini.surround").add()
-      end, { desc = "Add Surrounding" })
+      -- Keep vim-surround's visual-mode key for muscle memory.
+      -- String form with <C-u>: add() must run after leaving Visual mode
+      -- (marks '< '>' persist), same pattern as vim-surround's own vnoremap.
+      vim.keymap.set("x", "S", [[:<C-u>lua require('mini.surround').add('visual')<CR>]],
+        { noremap = true, silent = true, desc = "Add Surrounding" })
     end,
   },
 
