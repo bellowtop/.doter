@@ -27,7 +27,7 @@
     '("^\\*claude"
        (display-buffer-in-side-window)
        (side . right)
-       (window-width . 90)
+       (window-width . 120)
        (window-parameters . ((no-other-window . nil)))))
   (set-face-attribute 'claude-code-repl-face nil
     :background "#1e1e1e"

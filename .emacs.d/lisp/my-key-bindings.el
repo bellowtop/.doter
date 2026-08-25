@@ -76,7 +76,7 @@
   (when (derived-mode-p 'eat-mode)
     (other-window 1)
     (eat nil t)))
-(bind-key* (kbd "C-t") #'claude-code-toggle)
+;; (bind-key* (kbd "C-t") #'claude-code-toggle)
 (bind-key* (kbd "s-o") #'claude-code-toggle)
 
 
