@@ -34,6 +34,7 @@
                     "\\*claude"
                     "\\*Backtrace\\*"
                     "\\*ripgrep-search\\*"
+                    "\\*floating-eat"
                     "\\*eat\\*"
                     "\\*eat"
                     "\\*markdown-output*"

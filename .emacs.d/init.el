@@ -289,10 +289,10 @@
   (interactive)
   (setq-local line-spacing 0.15))
 
-; (add-hook 'text-mode-hook #'my-set-large-line-height)
-; (add-hook 'prog-mode-hook #'my-set-large-line-height)
-; (add-hook 'conf-mode-hook #'my-set-large-line-height)
-; (add-hook 'org-mode-hook  #'my-set-large-line-height)
+(add-hook 'text-mode-hook #'my-set-large-line-height)
+(add-hook 'prog-mode-hook #'my-set-large-line-height)
+(add-hook 'conf-mode-hook #'my-set-large-line-height)
+(add-hook 'org-mode-hook  #'my-set-large-line-height)
 
 ;; set global proxy
 ;; (my-set-proxy)
@@ -306,12 +306,12 @@
 
 
 
-                                        ; (defface my-highlight-font-words-face
-                                        ;   `((t (:background "forest green"
-                                        ;          :foreground "cornsilk"
-                                        ;          :underline nil
-                                        ;          :weight normal)))
-                                        ;   "custom highlight for treemacs current line")
+; (defface my-highlight-font-words-face
+;   `((t (:background "forest green"
+;          :foreground "cornsilk"
+;          :underline nil
+;          :weight normal)))
+;   "custom highlight for treemacs current line")
 
 (defface my-highlight-font-words-face
   `((t (:background "#1e3a5f"
@@ -610,7 +610,7 @@
 
 
 
-; (require 'init-claude-code)
+;; (require 'init-claude-code)
 (require 'init-eat-claude)
 
 ;; (require 'claude-posframe)
@@ -792,7 +792,9 @@
   '(lazy-highlight ((t (:background "#7FDC59" :foreground "#161c23" :weight normal))))
   '(line-number ((t (:inherit default :foreground "gray33" :slant normal :weight normal))))
   '(line-number-current-line ((t (:background "#1b2129" :foreground "white" :slant normal :weight normal))))
+  '(markdown-bold-face ((t (:inherit nil))))
   '(markdown-code-face ((t (:background unspecified))))
+  '(markdown-header-face ((t (:foreground "#49bdb0" :weight regular))))
   '(mode-line ((t (:background "#415367" :foreground "#e5ded6" :underline (:color foreground-color :style line :position t)))))
   '(mode-line-active ((t (:background "#1a202c" :foreground "green" :box nil :underline nil))))
   '(mode-line-highlight ((t (:box nil :foreground "green"))))

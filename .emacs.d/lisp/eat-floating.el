@@ -3,7 +3,7 @@
 ;; Copyright (C) 2026  jiechen
 
 ;; Author: jiechen
-;; Version: 0.1.0
+;; Version: 0.2.0
 ;; Package-Requires: ((emacs "26.1") (eat "0.9"))
 ;; Keywords: terminals, frames
 
@@ -17,13 +17,22 @@
 ;;     (require 'eat-floating)
 ;;     (global-set-key (kbd "C-`") #'eat-floating-toggle)
 ;;
-;; The shell process keeps running while the terminal is hidden;
-;; toggling only shows and hides the frame.  The frame is closed
-;; automatically when the shell process exits.
+;; The terminal is scoped per project: toggling inside a project
+;; (projectile) shows or hides that project's own session, which is
+;; created on first toggle with its working directory set to the
+;; project root — handy for running `claude' against the current
+;; project.  Outside any project a single default session is used.
+;; Sessions keep running while the frame is hidden; toggling only
+;; shows and hides the frame.  The frame is closed automatically when
+;; the displayed session's process exits.
 
 ;;; Code:
 
 (require 'eat)
+(require 'projectile nil t)
+
+(declare-function projectile-project-p "projectile" nil)
+(declare-function projectile-project-root "projectile" nil)
 
 (defgroup eat-floating nil
   "A floating Eat terminal in a child frame."
@@ -31,7 +40,8 @@
   :prefix "eat-floating-")
 
 (defcustom eat-floating-buffer-name "*floating-eat*"
-  "Name of the buffer that holds the floating Eat terminal."
+  "Name of the floating terminal buffer used outside any project.
+Inside a project the buffer is named `*floating-eat:<project>-<hash>*'."
   :type 'string
   :group 'eat-floating)
 
@@ -52,7 +62,7 @@
   :group 'eat-floating)
 
 (defcustom eat-floating-prewarm nil
-  "Pre-start the shell in the background after Emacs loads.
+  "Pre-start the default shell in the background after Emacs loads.
 
 The first toggle then opens instantly: the shell startup cost (often
 hundreds of ms for a configured zsh) is paid once at idle time
@@ -91,24 +101,104 @@ Keeps the toggle state consistent if the frame is closed through
 (add-hook 'delete-frame-functions #'eat-floating--on-frame-deleted)
 
 (defun eat-floating--on-process-exit (_process)
-  "Close the floating frame when its shell process exits."
-  (eat-floating--close-frame))
+  "Close the floating frame when the displayed session's process exits.
+The teardown is deferred with a zero timer: focus and redraw calls
+made from inside a process sentinel leave the parent frame's cursor
+undrawn on macOS NS, while the same calls from the timer context
+behave like the interactive toggle.  The hook is buffer-local, so
+`current-buffer' is the session whose process exited; a hidden
+session's exit does not touch the frame."
+  (when (and (frame-live-p eat-floating-frame)
+             (eq (current-buffer)
+                 (window-buffer (frame-selected-window eat-floating-frame))))
+    (let ((frame eat-floating-frame))
+      (run-with-timer 0 nil
+                      (lambda ()
+                        ;; The user may have re-toggled a new session in
+                        ;; the meantime; only close the recorded frame.
+                        (when (eq frame eat-floating-frame)
+                          (eat-floating--close-frame)))))))
 
-(defun eat-floating--ensure-buffer ()
-  "Return the Eat buffer, starting the shell if it is not running."
-  (let ((buffer (get-buffer-create eat-floating-buffer-name)))
+(defun eat-floating--project-root ()
+  "Return the current project's root, or nil outside any project."
+  (when (and (require 'projectile nil t)
+             (fboundp 'projectile-project-p)
+             (projectile-project-p))
+    (ignore-errors (projectile-project-root))))
+
+(defun eat-floating--buffer-name-for-root (root)
+  "Return the floating terminal buffer name for project ROOT."
+  (let* ((dir (expand-file-name (directory-file-name root)))
+         (base (file-name-nondirectory dir))
+         (hash (substring (sha1 dir) 0 8)))
+    (format "*floating-eat:%s-%s*" base hash)))
+
+(defun eat-floating--project-buffer-name ()
+  "Buffer name of the current project's floating terminal.
+Outside any project, `eat-floating-buffer-name'."
+  (if-let* ((root (eat-floating--project-root)))
+      (eat-floating--buffer-name-for-root root)
+    eat-floating-buffer-name))
+
+(defun eat-floating-project-buffer ()
+  "Return the current project's floating Eat buffer, or nil."
+  (get-buffer (eat-floating--project-buffer-name)))
+
+(defun eat-floating--ensure-buffer (&optional root)
+  "Return the Eat buffer for project ROOT (current project if nil).
+Start the shell if it is not running; on first start the working
+directory is ROOT (no cd outside a project)."
+  (let* ((root (or root (eat-floating--project-root)))
+         (name (if root
+                   (eat-floating--buffer-name-for-root root)
+                 eat-floating-buffer-name))
+         (buffer (get-buffer-create name)))
     (with-current-buffer buffer
-      (add-hook 'eat-exit-hook #'eat-floating--on-process-exit nil t)
+      ;; Depth 0: close the frame before eat's own `eat--kill-buffer'
+      ;; (depth 90) kills the buffer — otherwise the child frame would
+      ;; be left on screen showing a replacement buffer.
+      (add-hook 'eat-exit-hook #'eat-floating--on-process-exit 0 t)
       ;; `eat-exec' does not set the buffer mode, so enable it first.
       (unless (and (derived-mode-p 'eat-mode)
                    (get-buffer-process buffer))
+        (when root
+          ;; `eat-exec' spawns the process from the buffer's
+          ;; `default-directory', so this cd applies on first open.
+          (setq-local default-directory root))
         (eat-mode)
-        (eat-exec buffer "floating-eat"
-                  eat-floating-shell-command nil nil)))
+        (eat-exec buffer name eat-floating-shell-command nil nil)))
+    buffer))
+
+(defun eat-floating--show-buffer (buffer &optional focus)
+  "Display BUFFER in the floating frame, creating the frame if needed.
+Focus the frame when FOCUS is non-nil."
+  (let* ((frame (if (frame-live-p eat-floating-frame)
+                    (progn
+                      (make-frame-visible eat-floating-frame)
+                      eat-floating-frame)
+                  (eat-floating--create-frame)))
+         (win (frame-selected-window frame)))
+    (unless (eq (window-buffer win) buffer)
+      (set-window-dedicated-p win nil)
+      (set-window-buffer win buffer)
+      (set-window-dedicated-p win t))
+    (when focus
+      (select-frame-set-input-focus frame))
+    (redisplay)))
+
+(defun eat-floating-ensure-visible (&optional buffer)
+  "Show the floating terminal, creating the current project's session if needed.
+Show BUFFER when given.  The frame is focused only when it was hidden;
+when already visible, its buffer is switched in place instead."
+  (let ((buffer (or buffer (eat-floating--ensure-buffer))))
+    (if (and (frame-live-p eat-floating-frame)
+             (frame-visible-p eat-floating-frame))
+        (eat-floating--show-buffer buffer)
+      (eat-floating--show-buffer buffer t))
     buffer))
 
 (defun eat-floating--prewarm ()
-  "Start the floating shell in the background, if enabled."
+  "Start the default floating shell in the background, if enabled."
   (when eat-floating-prewarm
     (eat-floating--ensure-buffer)))
 
@@ -164,30 +254,26 @@ Keeps the toggle state consistent if the frame is closed through
 
 ;;;###autoload
 (defun eat-floating-toggle ()
-  "Show or hide the floating Eat terminal."
+  "Show or hide the floating Eat terminal for the current project.
+When the frame is already visible with a different project's session,
+switch to the current project's session instead of hiding."
   (interactive)
-  (if (frame-live-p eat-floating-frame)
-      (eat-floating--close-frame)
-    ;; Show.
-    (let ((frame (eat-floating--create-frame))
-          (buffer (eat-floating--ensure-buffer)))
-      (set-window-buffer (frame-selected-window frame) buffer)
-      (set-window-dedicated-p (frame-selected-window frame) t)
-      ;; Move both the Lisp selection and the OS keyboard focus to the
-      ;; child frame.  Plain `select-frame' does not transfer keyboard
-      ;; focus, so typing would keep going to the parent frame.
-      (select-frame-set-input-focus frame)
-      ;; Paint the terminal content before the command returns; without
-      ;; this the frame shows up empty for one event-loop turn until the
-      ;; next redisplay.
-      (redisplay))))
+  (let ((buffer (eat-floating--ensure-buffer)))
+    (if (and (frame-live-p eat-floating-frame)
+             (frame-visible-p eat-floating-frame))
+        (if (eq (window-buffer (frame-selected-window eat-floating-frame))
+                buffer)
+            (eat-floating--close-frame)
+          ;; Visible but showing another project's session: switch.
+          (eat-floating--show-buffer buffer t))
+      (eat-floating--show-buffer buffer t))))
 
 ;;;###autoload
 (defun eat-floating-kill ()
-  "Close the floating terminal and kill its shell process."
+  "Close the floating terminal and kill the current project's shell process."
   (interactive)
   (eat-floating--close-frame)
-  (let ((buffer (get-buffer eat-floating-buffer-name)))
+  (let ((buffer (eat-floating-project-buffer)))
     (when (buffer-live-p buffer)
       (kill-buffer buffer))))
 

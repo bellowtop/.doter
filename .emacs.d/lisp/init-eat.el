@@ -76,7 +76,11 @@
         ;; normally skipped by switch-to-prev-buffer-skip (name starts
         ;; with `*'), hence the explicit switch.
         (when window
-          (set-window-buffer window (get-buffer-create "*scratch*"))))))
+          (unless (window-dedicated-p window)
+            ;; Dedicated windows (e.g. the floating Eat child frame)
+            ;; are owned by their dedicator, which closes them from its
+            ;; own exit hook; set-window-buffer here would error.
+            (set-window-buffer window (get-buffer-create "*scratch*")))))))
 
   (defun my-eat-setup-kill-window-hook ()
     (remove-hook 'kill-buffer-hook #'my-eat-kill-window-on-buffer-kill t)

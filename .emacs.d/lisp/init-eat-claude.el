@@ -28,8 +28,9 @@
 
 (defcustom my-eat-claude-buffer-name nil
   "Eat buffer that runs the `claude' session.
-Nil uses the floating Eat terminal (eat-floating), falling back to the
-most recently used Eat buffer."
+Nil uses the current project's floating Eat terminal (eat-floating),
+or the default one outside any project, falling back to the most
+recently used Eat buffer."
   :type '(choice (const :tag "Auto" nil) string)
   :group 'my-eat-claude)
 
@@ -42,6 +43,7 @@ most recently used Eat buffer."
   "Return the Eat buffer that should receive input, or nil."
   (or (and my-eat-claude-buffer-name
            (get-buffer my-eat-claude-buffer-name))
+      (eat-floating-project-buffer)
       (get-buffer eat-floating-buffer-name)
       (cl-find-if (lambda (buf)
                     (with-current-buffer buf
@@ -72,21 +74,15 @@ most recently used Eat buffer."
       (format "@%s:%d-%d" file start end))))
 
 (defun my-eat-claude--floating-p (buf)
-  "Return non-nil when BUF is the floating Eat terminal's buffer."
-  (and buf (string= (buffer-name buf) eat-floating-buffer-name)))
+  "Return non-nil when BUF is one of the floating Eat terminal buffers."
+  (and buf (string-match-p "\\`\\*floating-eat" (buffer-name buf))))
 
 (defun my-eat-claude--show (buf &optional force-show)
-  "Make the floating terminal visible when BUF is its buffer and it is hidden.
+  "Make the floating terminal visible when BUF is one of its buffers.
 Show regardless of `my-eat-claude-auto-show' when FORCE-SHOW is non-nil."
   (when (and (my-eat-claude--floating-p buf)
              (or my-eat-claude-auto-show force-show))
-    (cond ((not (frame-live-p eat-floating-frame))
-           ;; Frame gone: recreate it (toggle also focuses it).
-           (eat-floating-toggle))
-          ((not (frame-visible-p eat-floating-frame))
-           ;; Frame exists but is hidden: show and focus it.
-           (make-frame-visible eat-floating-frame)
-           (select-frame-set-input-focus eat-floating-frame)))))
+    (eat-floating-ensure-visible buf)))
 
 (defun my-eat-claude--send-ref (ref &optional deactivate force-show)
   "Type REF into the Eat session running `claude'.
@@ -96,7 +92,7 @@ to `my-eat-claude--show'."
   (let* ((buf (my-eat-claude--buffer))
          (fresh (not buf)))
     (unless buf
-      (eat-floating-toggle)
+      (eat-floating-ensure-visible)
       (setq buf (my-eat-claude--buffer))
       (unless buf
         (user-error "No Eat terminal running")))
