@@ -289,10 +289,10 @@
   (interactive)
   (setq-local line-spacing 0.15))
 
-(add-hook 'text-mode-hook #'my-set-large-line-height)
-(add-hook 'prog-mode-hook #'my-set-large-line-height)
-(add-hook 'conf-mode-hook #'my-set-large-line-height)
-(add-hook 'org-mode-hook  #'my-set-large-line-height)
+; (add-hook 'text-mode-hook #'my-set-large-line-height)
+; (add-hook 'prog-mode-hook #'my-set-large-line-height)
+; (add-hook 'conf-mode-hook #'my-set-large-line-height)
+; (add-hook 'org-mode-hook  #'my-set-large-line-height)
 
 ;; set global proxy
 ;; (my-set-proxy)
