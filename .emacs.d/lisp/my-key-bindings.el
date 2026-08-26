@@ -354,8 +354,8 @@
     (define-key god-local-mode-map (kbd "SPC I") #'my-imenu-filter-struct-eglot)
 
 
-    (define-key god-local-mode-map (kbd "SPC a s") #'claude-code-send-region)
-    (define-key god-local-mode-map (kbd "SPC a b") #'claude-code-send-buffer-file)
+    (define-key god-local-mode-map (kbd "SPC a s") #'my-eat-claude-send-region)
+    (define-key god-local-mode-map (kbd "SPC a b") #'my-eat-claude-send-buffer)
 
     (define-key god-local-mode-map (kbd "@") #'my-treemacs-add-and-display-current-project)
     (define-key god-local-mode-map (kbd "SPC @") #'treemacs-add-and-display-current-project)

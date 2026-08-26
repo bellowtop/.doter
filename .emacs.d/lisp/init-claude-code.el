@@ -17,8 +17,6 @@
   (("s-\"" . claude-code-toggle)
     ("s-S-<return>" . claude-code-send-return)
     ("s-S-<backspace>" . claude-code-send-escape)
-    ("s-Y" . claude-code-send-region)
-    ("s-y" . my-send-command-with-buffer-or-region-context)
     ("s-:" . claude-code-send-command))
   :hook
   (prog-mode . claude-code-mode)

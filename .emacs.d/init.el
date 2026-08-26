@@ -554,6 +554,7 @@
 ;;; Terminal Emulator
 (require 'init-eat)
 (require 'eat-floating)
+(require 'init-eat-claude)
 
 ;;; Special Mode Tools
 (require 'init-markdown)
@@ -609,7 +610,8 @@
 
 
 
-(require 'init-claude-code)
+; (require 'init-claude-code)
+(require 'init-eat-claude)
 
 ;; (require 'claude-posframe)
 (require 'gitignore-generator)
