@@ -39,6 +39,7 @@
                       (eglot-ensure)))
 
   (zig-mode . eglot-ensure)
+  (markdown-mode . eglot-ensure)
   (tsx-ts-mode . my-eglot-ensure-deferred)
   (js-ts-mode . my-eglot-ensure-deferred)
   (typescript-ts-mode . my-eglot-ensure-deferred)
@@ -181,6 +182,9 @@
 
   ;; Swift-specific server configuration
   (add-to-list 'eglot-server-programs '(swift-mode . ("xcrun" "sourcekit-lsp")))
+
+  ;; Markdown-specific server configuration
+  (add-to-list 'eglot-server-programs '(markdown-mode . ("mpls" "--tabs")))
 
   ;; Python server configuration
   (add-to-list 'eglot-server-programs '(python-ts-mode . ("basedpyright-langserver" "--stdio")))
