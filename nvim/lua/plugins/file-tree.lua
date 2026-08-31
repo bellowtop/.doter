@@ -29,6 +29,10 @@ return {
       local function nvim_tree_on_attach(bufnr)
         local api = require "nvim-tree.api"
 
+        -- Load default mappings first (includes <LeftRelease>/<2-LeftMouse> clicks),
+        -- then the explicit sets below override the defaults on top.
+        api.config.mappings.default_on_attach(bufnr)
+
         local function opts(desc)
           return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
         end

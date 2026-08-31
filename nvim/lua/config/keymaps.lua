@@ -31,7 +31,7 @@ function M.setup()
 
   -- Comment keymaps are now handled by lazy.nvim in plugins/comments.lua
 
-  -- CtrlSF keymaps are now handled by lazy.nvim in plugins/navigation.lua
+  -- Search keymaps are now handled by lazy.nvim in plugins/telescope.lua
 
   -- Prettier keymaps are now handled by lazy.nvim in plugins/editing.lua
 

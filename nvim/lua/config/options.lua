@@ -138,12 +138,6 @@ function M.setup()
   g.vim_markdown_conceal_code_blocks = 0
   g.bclose_no_plugin_maps = 1
 
-  -- CtrlSF
-  g.ctrlsf_backend = 'rg'
-  g.ctrlsf_auto_focus = { at = "start" }
-  g.ctrlsf_search_mode = 'async'
-  g.ctrlsf_extra_backend_args = { rg = '--no-ignore --hidden --glob "!.git" --glob "!backups" --glob "!node_modules"' }
-
   -- Go settings
   g.go_imports_autosave = 1
   g.go_fmt_autosave = 1

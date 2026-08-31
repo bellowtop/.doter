@@ -1,3 +1,25 @@
+-- grep with ctrlsf's old scope (no-ignore, hidden) and the term prefilled in the prompt
+-- telescope's default vimgrep args are required for its output parser (--no-heading etc.)
+local grep_args = {
+  'rg', '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case',
+  '--no-ignore', '--hidden', '--glob', '!.git', '--glob', '!backups', '--glob', '!node_modules',
+}
+
+local function grep_with_text(text)
+  require('telescope.builtin').grep_string {
+    vimgrep_arguments = grep_args,
+    default_text = text,
+  }
+end
+
+local function grep_visual_selection()
+  local saved = vim.fn.getreg('a')
+  vim.cmd('silent noautocmd normal! "ay')
+  local search = vim.trim(vim.fn.getreg('a'))
+  vim.fn.setreg('a', saved)
+  grep_with_text(search)
+end
+
 return {
   {
     "nvim-lua/plenary.nvim",
@@ -18,6 +40,8 @@ return {
       "princejoogie/dir-telescope.nvim",
     },
     keys = {
+      { "<leader>m", function() grep_with_text(vim.fn.expand('<cword>')) end, desc = "Search Word Under Cursor" },
+      { "<leader>m", mode = "v", grep_visual_selection, desc = "Search Selection" },
       {
         "<leader>f",
         function()
