@@ -477,6 +477,7 @@
   ("C-h" . windmove-left)
   ("C-k" . windmove-up)
   ("C-j" . windmove-down)
+  ("C-n" . treemacs-next-workspace)
   ("`" . my-enarge-window-height)
   )
 
