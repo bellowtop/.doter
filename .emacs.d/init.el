@@ -196,7 +196,7 @@
       'face (funcall tab-bar-tab-face-function tab))))
 
 (setq tab-bar-tab-name-format-function 'my-tab-name-formatter)
-(setq tab-bar-auto-width-max '((440) 40))   ;; default is ((220) 20), a little bit wider
+(setq tab-bar-auto-width-max '((330) 40))   ;; default is ((220) 20), a little bit wider
 (setq tab-bar-separator "")
 
 ;; New Tab
